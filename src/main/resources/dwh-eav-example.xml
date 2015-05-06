@@ -1,0 +1,103 @@
+<dwh-eav order="chronological">
+	<!-- 
+	Chronologisch impliziert, dass der zeitstempel eines nachfolgenden elementes 
+	größer als alle vorangehenden elemente sein muss. 
+	Der Zeitstempel eines Fakts kann vor dem Encounter-Start liegen 
+	-->
+	<visit>
+		<patid>12345</patid>
+		<surname>Dampf</surname>
+		<name>A</name>
+		<name>B</name>
+		<birthdate>2001-01-01</birthdate>
+		<deathdate>2020</deathdate>
+		<sex>F</sex>
+		<encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">12345</encounter>
+		<location></location>
+		<provider>xxxa</provider>
+		<facts>
+			<!-- Eintraege zu Demonstrations-/Testzwecken -->
+			
+			<!--  test parsing of partial time stamps -->
+			<eav-item concept="T:date:secs" start="2014-09-07T10:40:03"/>
+			<eav-item concept="T:date:mins" start="2014-09-07T10:40"/>
+			<eav-item concept="T:date:hours" start="2014-09-07T10"/>
+			<eav-item concept="T:date:day" start="2014-09-07"/>
+			<eav-item concept="T:date:month" start="2014-09"/>
+			<eav-item concept="T:date:year" start="2014"/>
+			
+			<!-- test parsing of data types -->
+			<eav-item concept="T:type:str" type="xsi:string">abc123</eav-item>
+			<eav-item concept="T:type:int" type="xsi:integer">123</eav-item>
+			<!-- value attributes can be used in elements eav-item and value -->
+			<eav-item concept="T:type:dec" type="xsi:decimal" unit="mm" flag="A">123.456</eav-item>
+
+			<!--  test group items -->
+			
+			<eav-group concept="T:group:1">
+				<value modifier="T:mod:1"/>
+				<value modifier="T:mod:2" type="xsi:string">def456</value>
+				<value modifier="T:mod:3" type="xsi:decimal" unit="mm" flag="A">78.9</value>
+			</eav-group>			
+			
+			<!-- 
+			Jedes eav-item hat einen Konzept-Kode. Der Kode besteht
+			aus <Präfix>:<Kode>. Präfix gibt das Kodiersystem an.
+			Z.B. L: für LOINC, S: für SNOMED-CT, usw.
+			
+			Datentypen wenn möglich aus xsi:string, xsi:integer, xsi:decimal wählen.
+			Wenn kein Wert enthalten ist, dann kann der Datentyp weggelassen werden
+			(wie z.B. bei Aufnahmeuhrzeit)
+			
+			Nachfolgend einige Abschnitte aus dem Notaufnahmeprotokoll umgesetzt 
+			-->
+			
+			<!-- 1	ID des Krankenhauses -->
+			<!-- 2	ID der Notaufnahme -->
+			<!-- 3	PatientenId im Basismodul -->
+			<eav-item concept="L:21866-9" type="xsi:string">XX23412XXX</eav-item>
+			<!-- weitere metadaten -->
+			<!-- 12 Rankin Scale (0..6) -->
+			<eav-item concept="L:75859-9" type="xsi:integer">0</eav-item>
+			<!-- 13 Gender -->
+			<eav-item concept="L:46098-0" type="xsi:integer">0</eav-item>
+			
+
+			<!-- 14/15 Aufnahmedatum/uhrzeit -->
+			<eav-item concept="S:305056002" timestamp="2014-09-07T10:40:03"/>
+			<!-- 16 Schwanger -->
+			<!-- 17 Tetanusschutz L:11458-7-->
+			 
+
+			<!-- 18 Isolation
+			<!-- 20 Atemfrequenz L:9279-1 -->
+			<!-- 21 Sauerstoffsättigung 59408-5 -->
+			<!-- 22 Systolischer Blutdruck 8480-6  -->
+			<!-- 23 Herzfrequenz 8867-4 -->
+
+
+			<!-- 28 Pupillenweite bei Aufnahme in der Notaufnahme -->
+			<eav-group concept="246095009" timestamp="xxx"><!-- condition of pupil -->
+				<value modifier="8966001"/><!-- left eye -->
+
+				<!-- einer von den folgenden -->
+				<value modifier="408094002"/><!-- no value -->
+				<value modifier="37125009"/><!-- wide pupil -->
+				<value modifier="420335002"/><!-- medium sized pupil -->
+				<value modifier="301939004"/><!-- small pupil -->
+			<eav-group>
+			<!-- Rechtes Auge analog zu oben -->
+			<eav-group concept="S:246095009" timestamp="xxx">
+				<value modifier="S:18944008"/><!-- right eye -->
+				<value modifier="301939004"/><!-- small pupil -->
+			<eav-group>
+			<!-- 30 Körperkerntemperatur -->
+			<eav-item concept="S:276885007" type="xsi:decimal">40.00</eav-item>
+			<!-- 31 Schmerz bei Aufnahme, loinc-schmerzskala 0-10 ggf. Answer list LL2335-9-->
+			<eav-item concept="L:72514-3" type="xsi:integer">0</eav-item>
+			<!-- 31 Zuweisung -->
+		</facts>
+	</visit>
+
+	<!-- weitere eav -->
+</dwh-eav>
