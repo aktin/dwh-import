@@ -1,5 +1,8 @@
 package org.aktin.dwh.etl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -8,8 +11,11 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
 import javax.xml.transform.Source;
+import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -43,6 +49,8 @@ public class RestServer implements Provider<Source>{
 
     	factory = TransformerFactory.newInstance();
     	// TODO Use factory.newTemplates(..) to prepare for multiple transformations
+
+    	
     	
 	}
 	
@@ -69,7 +77,7 @@ public class RestServer implements Provider<Source>{
             return new StreamSource(new StringReader("<!DOCTYPE html><html><head></head><body>ERROR</body></html>"));
         }
         
-    	
+    	/*/
     	log.info("Request class: "+request.getClass());
     	try {
 			Transformer t = factory.newTransformer();
@@ -81,7 +89,67 @@ public class RestServer implements Provider<Source>{
 		} catch (TransformerException e) {
 			log.log(Level.SEVERE, "Transformation failed",e);
 		}
-    	
-        return new StreamSource(new StringReader("<!DOCTYPE html><html><head></head><body>OK</body></html>"));
+    	//*/
+    	String str = runSchematron (request);
+    	String ret = "<!DOCTYPE html><html><head></head><body> OK 222</body></html>";
+        return new StreamSource(new StringReader(str));
+	}
+	
+
+	public String runSchematron () {
+		File schFile = new File("src/main/resources/schematron/testschema.sch");
+		// new File("src/main/resources/schematron/aktin-basism.sch")
+		Source schemaSCH = new StreamSource(schFile);
+		return runSchematron(schemaSCH);
+	}
+
+	public String runSchematron (Source request) {
+		try {
+			File svrlFile = new File("src/main/resources/schematron/iso-xslt2/iso_svrl_for_xslt2.xsl");
+			File temXslFile = new File("src/main/resources/schematron/tmp_schematron.xsl");
+			File testXmlIn = new File("src/main/resources/schematron/test_in.xml");
+			
+        	Source schemaXSLT = new StreamSource(svrlFile);
+        	
+			Templates t1schematron = factory.newTemplates(schemaXSLT);
+			Result schemaOut = new StreamResult(new FileOutputStream(temXslFile));
+			
+			Transformer t1 = factory.newTransformer();
+			t1.setOutputProperties(t1schematron.getOutputProperties());
+			
+			StringWriter w = new StringWriter();
+			StreamResult result = new StreamResult(w);
+			
+			t1.transform(request, schemaOut);
+
+			log.info("Transform successful"+schemaOut.toString());
+			//return w.toString();
+
+			// -------
+			//*/
+	    	Source schemaSCHX = new StreamSource(temXslFile);
+	    	Source sourceIn = new StreamSource(testXmlIn);
+	    	
+			Templates t2schematron = factory.newTemplates(schemaSCHX);
+
+			Result resultOut = new StreamResult(new FileOutputStream("src/main/resources/schematron/testOut.xml"));
+
+			Transformer t2 = factory.newTransformer();
+			t2.setOutputProperties(t2schematron.getOutputProperties());
+			
+			t2.transform(sourceIn, result);
+			return w.toString();
+			//*/
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
