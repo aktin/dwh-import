@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="2.16.840.1.113883.1.11.20130"
+             name="RoleClassEmergencyContact"
+             displayName="RoleClassEmergencyContact"
+             effectiveDate="2011-07-26T00:00:00"
+             statusCode="final"
+             versionLabel="DEFN=UV=VO=1099-20110726"
+             url="http://art-decor.org/decor/services/"
+             ident="ad2bbr-"
+             referencedFrom="aktin-">
+      <desc language="en-US">
+                <b>description: </b>
+                <p>An entity to be contacted in the event of an emergency.</p>
+            </desc>
+      <sourceCodeSystem id="2.16.840.1.113883.5.110" identifierName="Role Class"/>
+      <conceptList>
+                <concept code="ECON"
+                  codeSystem="2.16.840.1.113883.5.110"
+                  displayName="emergency contact"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>
