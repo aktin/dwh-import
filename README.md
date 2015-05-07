@@ -34,7 +34,8 @@ Beim Import des DWH-XML sollen ggf. vorher existierende Daten zum Fall gelöscht 
 ein vollständiger Fall übertragen.
 
 
-=== RESTful API ===
+RESTful API
+-----------
 
 PUT /aktin/dwh/<patid>/<visit>/cda
 oder PUT /aktin/dwh/cda (wenn Patid und Visit aus Inhalt hervorgeht)
@@ -82,7 +83,8 @@ Replies:
 
 
 
-=== Implementierung ===
+Implementierung
+---------------
 Für jede CDA-Version gibt es zwei Transformationen (XSLT):
 1. CDA nach EAV
 2. EAV nach CDA
