@@ -79,8 +79,8 @@ public class RestServer implements Provider<Source>{
 	
 
 	public String runSchematron () {
-		File schFile = new File("src/main/resources/schematron/tstBuchSchema1.sch");
-		// File schFile = new File("src/main/resources/schematron/testschema.sch");
+//		File schFile = new File("src/main/resources/schematron/tstBuchSchema1.sch");
+		File schFile = new File("src/main/resources/schematron/testschema.sch");
 		// File schFile = new File("src/main/resources/schematron/aktin-basism.sch");
 
 		Source schemaSCH = new StreamSource(schFile);
@@ -92,7 +92,6 @@ public class RestServer implements Provider<Source>{
 			File svrlFile = new File("src/main/resources/schematron/iso-xslt2/iso_svrl_for_xslt2.xsl");
 			File temXslFile = new File("src/main/resources/schematron/tmp_schematron.xsl");
 			File testXmlIn = new File("src/main/resources/schematron/test_in.xml");
-			File testXmlIn1 = new File("src/main/resources/schematron/test_in.xml");
 			//*/
         	Source schemaXSLT = new StreamSource(svrlFile);
         	
@@ -107,33 +106,31 @@ public class RestServer implements Provider<Source>{
 			
 			t1.transform(request, schemaOut);
 
-			log.info("Transform successful: ");
 //			return "<!DOCTYPE html><html><head></head><body> OK 222</body></html>";
 
-			// -------
+			//////////////
 //			/*/
 	    	Source schemaSCHX = new StreamSource(temXslFile);
-	    	Source sourceIn = new StreamSource(testXmlIn1);
+	    	Source sourceIn = new StreamSource(testXmlIn);
 	    	
 			Templates t2schematron = factory.newTemplates(schemaSCHX);
 
-			Result resultOut = new StreamResult(new FileOutputStream("src/main/resources/schematron/testOut.xml"));
+//			Result resultOut = new StreamResult(new FileOutputStream("src/main/resources/schematron/testOut.xml"));
 
-			Transformer t2 = factory.newTransformer();
-			t2.setOutputProperties(t2schematron.getOutputProperties());
+			Transformer t2 = factory.newTransformer(schemaSCHX);
+			//t2.setOutputProperties(t2schematron.getOutputProperties());
 
 			StringWriter w = new StringWriter();
 			StreamResult result = new StreamResult(w);
 			
 			t2.transform(sourceIn, result);
+			log.info("Transform successful: " + w.toString());
 			return w.toString();
 			//*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.log(Level.SEVERE, "Transformation failed",e);
-		} finally {
-			log.info("transform end ---- ");
-		}
+		} 
 		return null;
 	}
 }

@@ -1,5 +1,7 @@
 
-<schema xmlns="http://www.ascc.net/xml/schematron" >
+<schema xmlns="http://www.ascc.net/xml/schematron" 
+     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+     queryBinding="xslt">
      <pattern name="Print both cases">
           <rule context="AAA">
                <assert test="BBB">BBB element is missing.</assert>

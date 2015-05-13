@@ -1,11 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" queryBinding="xslt">
- 
-	<xsl:key name="myKey" match="person" use="@xml:id"/>
- 
-	<pattern id="p3">
-		<rule context="autor">
-			<assert test="key('myKey', @ref)">[p3] autor/@ref muss auf ein person/@xml:id verweisen</assert>
-		</rule>
-	</pattern>
- 
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.ascc.net/xml/schematron" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" queryBinding="xslt">
+     <pattern name="Print both cases">
+          <rule context="AAA">
+               <assert test="BBB">BBB element is missing.</assert>
+               <report test="BBB">BBB element is present.<br/></report>
+               <assert test="@name">AAA misses attribute name.</assert>
+               <report test="@name">AAA contains attribute name.</report>
+          </rule>
+     </pattern>
+     <pattern name="Print positive result only">
+          <rule context="AAA">
+               <report test="BBB">BBB element is present.</report>
+               <report test="@name">AAA contains attribute name.</report>
+          </rule>
+     </pattern>
+     <pattern name="Print negative result only">
+          <rule context="AAA">
+               <assert test="BBB">BBB element is missing.</assert>
+               <assert test="@name">AAA misses attribute name.</assert>
+          </rule>
+     </pattern>
 </schema>
