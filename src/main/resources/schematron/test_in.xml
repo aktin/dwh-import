@@ -1,0 +1,30 @@
+<literatur>
+	<buecher>
+		<buch xml:id="b1">
+			<autor ref="p1">Mann, Thomas</autor>
+			<titel>Der Zauberberg</titel>
+			<isbn>978-3-596-29433-6</isbn>
+			<href>http://d-nb.info/942764498</href>
+		</buch>
+		<buch xml:id="b2">
+			<autor ref="p2">Mann,Klaus</autor>
+			<titel>Mephisto</titel>
+			<isbn>3-10-046705-1</isbn>
+			<href>http://d nb.info/959653694</href>
+		</buch>
+		<buch xml:id="b3">
+			<autor ref="b1"></autor>
+			<titel></titel>
+		</buch>
+	</buecher>
+	<autoren>
+		<person xml:id="p1">
+			<vorname>Thomas</vorname>
+			<nachname>Mann</nachname>
+		</person>
+		<person xml:id="p2">
+			<vorname>Klaus</vorname>
+			<nachname>Mann</nachname>
+		</person>
+	</autoren>
+</literatur>

@@ -3,7 +3,7 @@
      <pattern name="Print both cases">
           <rule context="AAA">
                <assert test="BBB">BBB element is missing.</assert>
-               <report test="BBB">BBB element is present.</report>
+               <report test="BBB">BBB element is present.<br/></report>
                <assert test="@name">AAA misses attribute name.</assert>
                <report test="@name">AAA contains attribute name.</report>
           </rule>
