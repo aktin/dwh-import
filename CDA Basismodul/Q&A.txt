@@ -1,0 +1,41 @@
+Gegenüber einem inhaltsleeren Eclipse-generierten Testdatensatz auf Basis der CDA.xsd gibt es viele Abweichungen (überwiegend optionale Elemente)
+optionale nullFlavor Attribute kommen im Beispiel CDA kaum vor
+=> Inhaltlich egal, aber wie geht man damit um?
+=> Erstmal nur die wichtigen Elemente, Handling von nullFlavor ggf. später weiter prüfen
+
+3.2.2 Dokumenten-Level-Kodes für die Module
+=> laut PDF (3.2.2) Basis -- 68552-9 -- Emergency medicine Emergency department Admission evaluation note
+=> im Beispiel CDA 34878-9 -- Emergency medicine Note (unspezifischer)
+=> Vermutung: 34878-9 ist das Hauptdokument und die BAsisdoku ist 68552-9 => Ist aber auch nicht konsistent mit dem Beispiel
+
+Auf ART-DECOR ist die Kardinalitätangabe merkwürdig. "0..1 required" kommt häufig vor 
+=> ToDo in HL7/CDA Dokus recherchieren
+
+HL7 Data Types
+http://www.mexi.be/documents/hl7/ch200020.htm
+Konf: R=Required (0..1 required => 0 ok, aber Unterlemente können da sein), F=Fixed (Inhalt festgelegt)
+
+Namespace: z.B. cda:low statt hl7:low => müsste das nicht in der XML-Datei abgebildet werden? Namespace=HL7?
+
+Usability: Die Darstellung der CDA-Definitionen auf ART-DECOR sind sehr verschachtelt und undeutlich:
+Die HTML-Baumansicht verweist teilweise auf repräsentierende Template-IDs. Dort sind dann die Datenelemente beschrieben.
+Aber z.B. das erste Konzept "Patient" - nur "Patientenname" verweist auf eine TemplateID. Diese wird aber im Storyboard nicht verwendet. 
+Nicht alle Einträge im Beispiel CDA haben überhaupt eine TemplateID, obwohl es auf ART-DECOR beschrieben ist. Z.T. stehen auch andere IDs da (Patient)
+=> Es gibt nichts besseres als die Template-Ansicht auf ART DECOR. Danach vorgehen, Unstimmigkeiten und Fragen dokumentieren
+
+ART-DEKO Formular-Ansicht?? (erwähnt im Webinar 18:30)
+
+informationRecipient und Acuityobservation enthalten "Choice" - dies ist im HL7 Wiki und in Beispielen nicht abgebildet.. Fehler in der Definition?
+
+Eclipse Warnung "more than one schema has been specified without a namspace name"
+
+OIDs werden in zwei Varianten angegeben 
+<id root="1.2.276.0.76.3.2.234567891"/>
+<id root="1.2.276.0.76.4.17" extension="9814184919"/>
+
+Welche Regeln müssen im Bezug auf Gültigkeit von OIDs beachtet werden?
+
+Definition für den HL7 Datentyp SD.TEXT? Kann anscheinend beliebige Texte enthalten, auch strukturiert z.B. HTML/XML Tabellenstrukturen
+Datentyp wird an mehreren Stellen verwendet und es stehen im Beispiel auch teilweise "Nutzdaten" drin.
+
+In vielen Fällen wird ein ValueSet vorgegeben, das einen bestimmten Code hat, z.B. valueSet="1.2.276.0.76.11.48"; im CDA steht aber nur codeSystem="2.16.840.1.113883.6.96" (Snomed) - das ist nicht falsch, aber die Angabe des ValueSet wäre spezifischer und ist in der CDA-Definition beschrieben.
