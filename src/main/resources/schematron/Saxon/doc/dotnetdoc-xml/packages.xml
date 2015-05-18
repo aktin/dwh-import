@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="dotnetdoc-packages">
+   <section id="Saxon.Api">
+      <div>
+         <p>This namespace contains Saxon's application programming interfaces for using XSLT, XQuery, XPath and XSD on .NET</p>
+         <p>The top-level object is the <code>Processor</code>; this allows creation of factory classes for using each
+                            of the different processing languages.</p>
+      </div>
+   </section>
+</article>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache>
+    <dir>
+        <xsltTestDriver>
+            <workingDir>
+                /home/ond1/work/development/intellij/workspace/project/xslt20-test/WWW/XML/Group/xslt20-test/TestSuiteStagingArea
+            </workingDir>
+            <resultsDir/>
+        </xsltTestDriver>
+        <xslt30TestDriver>
+            <workingDir>
+                /home/ond1/work/development/intellij/workspace/project/xslt20-test/WWW/XML/Group/xslt20-test/TestSuiteStagingArea
+            </workingDir>
+            <resultsDir/>
+        </xslt30TestDriver>
+        <XMarkBenchmarkTestDriver>
+            <workingDir>/home/ond1/work/development/xmark</workingDir>
+            <resultsDir/>
+        </XMarkBenchmarkTestDriver>
+        <fotsTestDriver>
+            <workingDir>/home/ond1/work/development/intellij/workspace/project/SaxonDev2/QT3-test-suite/QT3-test-suite
+            </workingDir>
+            <resultsDir/>
+        </fotsTestDriver>
+        <schemaTestDriver>
+            <workingDir>/home/ond1/work/development/intellij/workspace/project/xsts-current</workingDir>
+            <resultsDir/>
+        </schemaTestDriver>
+        <updateTestDriver>
+            <workingDir>home</workingDir>
+            <resultsDir/>
+        </updateTestDriver>
+    </dir>
+</cache>

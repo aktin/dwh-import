@@ -3,6 +3,7 @@ package org.aktin.dwh.etl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.logging.Level;
@@ -72,15 +73,43 @@ public class RestServer implements Provider<Source>{
             return new StreamSource(new StringReader("<!DOCTYPE html><html><head></head><body>ERROR</body></html>"));
         }
 
+        String str = runXSLT();
     	//String str = runSchematron (request);
-    	String str = runSchematron ();
+//    	String str = runSchematron ();
         return new StreamSource(new StringReader(str));
 	}
 	
 
+	public String runXSLT () {
+		try {
+			
+			File xsltFile = new File ("src/main/resources/schematron/Saxon/samples/styles/books.xsl");
+			File xmlFile = new File ("src/main/resources/schematron/Saxon/samples/data/books.xml");
+			
+			File outFile = new File ("src/main/resources/schematron/Saxon/samples/tmp_out.html");
+        	
+			Source schemaXSLT = new StreamSource(xsltFile);
+			Source inSource = new StreamSource(xmlFile);
+			
+			Templates t1schematron = factory.newTemplates(schemaXSLT);
+			OutputStream schemaOutStream = new FileOutputStream(outFile);
+			Result schemaOut = new StreamResult(schemaOutStream);
+			
+			Transformer t1 = factory.newTransformer();
+			t1.setOutputProperties(t1schematron.getOutputProperties());
+			
+			t1.transform(inSource, schemaOut);
+			schemaOutStream.close();
+			return "<!DOCTYPE html><html><head></head><body> ready </body></html>";
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Transformation failed",e);
+		} 
+		return null;
+	}
+
 	public String runSchematron () {
-//		File schFile = new File("src/main/resources/schematron/tstBuchSchema1.sch");
-		File schFile = new File("src/main/resources/schematron/testschema.sch");
+		File schFile = new File("src/main/resources/schematron/tstBuchSchema1.sch");
+//		File schFile = new File("src/main/resources/schematron/testschema.sch");
 		// File schFile = new File("src/main/resources/schematron/aktin-basism.sch");
 
 		Source schemaSCH = new StreamSource(schFile);
@@ -96,7 +125,8 @@ public class RestServer implements Provider<Source>{
         	Source schemaXSLT = new StreamSource(svrlFile);
         	
 			Templates t1schematron = factory.newTemplates(schemaXSLT);
-			Result schemaOut = new StreamResult(new FileOutputStream(temXslFile));
+			OutputStream schemaOutStream = new FileOutputStream(temXslFile);
+			Result schemaOut = new StreamResult(schemaOutStream);
 			
 			Transformer t1 = factory.newTransformer();
 			t1.setOutputProperties(t1schematron.getOutputProperties());
@@ -105,7 +135,7 @@ public class RestServer implements Provider<Source>{
 //			StreamResult result = new StreamResult(w);
 			
 			t1.transform(request, schemaOut);
-
+			schemaOutStream.close();
 //			return "<!DOCTYPE html><html><head></head><body> OK 222</body></html>";
 
 			//////////////
@@ -125,6 +155,8 @@ public class RestServer implements Provider<Source>{
 			
 			t2.transform(sourceIn, result);
 			log.info("Transform successful: " + w.toString());
+			
+			
 			return w.toString();
 			//*/
 		} catch (Exception e) {
