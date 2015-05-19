@@ -45,14 +45,16 @@ public class XMLParser {
 		
 		File inXML, inSCH, inXSL, outXSL, outXML;
 		// init
+		inXML = new File("src/main/resources/schematron/test_in_ab.xml");
 //		inXML = new File("src/main/resources/schematron/test_in.xml");
 //		inXML = new File("src/main/resources/dwh-eav-example.xml");
-		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
+//		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
+//		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01.xml");
 
 //		inSCH = new File("src/main/resources/schematron/tstBuchSchema1.sch");
 //		inSCH = new File("src/main/resources/schematron/tstBuchSchema1.sch");
-//		inSCH =  new File("src/main/resources/schematron/testschema.sch");
-		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
+		inSCH =  new File("src/main/resources/schematron/testschema.sch");
+//		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
 		
 		
 		outXSL = new File("src/main/resources/schematron/tmp_schematron.xsl");
@@ -63,8 +65,8 @@ public class XMLParser {
 		Source sourceSCH = new StreamSource(inSCH);
 		Source sourceXML = new StreamSource(inXML);
 		
-//		StringWriter w = new StringWriter();
-//		StreamResult result = new StreamResult(w);
+		StringWriter w = new StringWriter();
+		StreamResult result = new StreamResult(w);
 //		
 //		OutputStream streamXSL;
 //		Result resultXSL;
@@ -76,7 +78,7 @@ public class XMLParser {
 			Schema myschema = sFactory.newSchema(sourceSCH);
 			Validator validator = myschema.newValidator();
 			
-			validator.validate(sourceXML);
+			validator.validate(sourceXML, result);
 			
 //			
 //			streamXSL = new FileOutputStream(outXSL);
@@ -91,7 +93,8 @@ public class XMLParser {
 			
 
 //			schemaOutStream.close();
-			log.info("success!");
+			log.info("success! ");
+			log.info("end " +  w.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
