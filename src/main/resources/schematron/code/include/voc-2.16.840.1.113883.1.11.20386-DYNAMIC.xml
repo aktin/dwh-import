@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="2.16.840.1.113883.1.11.20386"
+             name="SeverityObservationCode"
+             displayName="SeverityObservationCode"
+             effectiveDate="2011-07-26T00:00:00"
+             statusCode="final"
+             versionLabel="DEFN=UV=VO=1099-20110726"
+             url="http://art-decor.org/decor/services/"
+             ident="ad2bbr-"
+             referencedFrom="aktin-">
+      <sourceCodeSystem id="2.16.840.1.113883.5.4" identifierName="Act Code"/>
+      <conceptList>
+                <concept code="SEV"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Severity Observation"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.50"
+             name="Pupilreaction"
+             displayName="Pupillenreaktion"
+             effectiveDate="2015-03-03T00:00:00"
+             statusCode="draft">
+      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
+      <conceptList>
+                <concept code="301949001"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Brisk pupil near reaction (finding)"
+                  level="0"
+                  type="L"/>
+                <concept code="301948009"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Delayed pupil near reaction (finding)"
+                  level="0"
+                  type="L"/>
+                <concept code="13353005"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Absent pupil reaction (finding)"
+                  level="0"
+                  type="L"/>
+                <exception code="UNK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Unbekannt"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>
