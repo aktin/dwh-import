@@ -45,16 +45,16 @@ public class XMLParser {
 		
 		File inXML, inSCH, inXSL, outXSL, outXML;
 		// init
-		inXML = new File("src/main/resources/schematron/test_in_ab.xml");
+//		inXML = new File("src/main/resources/schematron/test_in_ab.xml");
 //		inXML = new File("src/main/resources/schematron/test_in.xml");
 //		inXML = new File("src/main/resources/dwh-eav-example.xml");
-//		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
+		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
 //		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01.xml");
 
 //		inSCH = new File("src/main/resources/schematron/tstBuchSchema1.sch");
 //		inSCH = new File("src/main/resources/schematron/tstBuchSchema1.sch");
-		inSCH =  new File("src/main/resources/schematron/testschema.sch");
-//		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
+//		inSCH =  new File("src/main/resources/schematron/testschema.sch");
+		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
 		
 		
 		outXSL = new File("src/main/resources/schematron/tmp_schematron.xsl");
@@ -94,9 +94,10 @@ public class XMLParser {
 
 //			schemaOutStream.close();
 			log.info("success! ");
-			log.info("end " +  w.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			log.info("end " +  w.toString());
 		}
 	}
 	
