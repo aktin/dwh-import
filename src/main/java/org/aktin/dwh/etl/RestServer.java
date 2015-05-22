@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +32,8 @@ import javax.xml.ws.http.HTTPBinding;
 /**
  * Provides REST interfaces to emulate an i2b2 server.
  * @author Raphael
+ * 
+ * Example: curl -i -X POST http://localhost:9000/aktin/dwh -H "Content-Type: text/xml" --data-binary "@basismodul-beispiel-storyboard01.xml"
  *
  */
 @WebServiceProvider()
@@ -73,13 +76,13 @@ public class RestServer implements Provider<Source>{
             return new StreamSource(new StringReader("<!DOCTYPE html><html><head></head><body>ERROR</body></html>"));
         }
 
-        String str = runXSLT();
-    	//String str = runSchematron (request);
+//      String str = runXSLT();
+		String str = runSchematron (request);
 //    	String str = runSchematron ();
         return new StreamSource(new StringReader(str));
 	}
 	
-
+/*
 	public String runXSLT () {
 		try {
 			
@@ -116,47 +119,50 @@ public class RestServer implements Provider<Source>{
 		return runSchematron(schemaSCH);
 	}
 
+*/
 	public String runSchematron (Source request) {
 		try {
-			File svrlFile = new File("src/main/resources/schematron/iso-xslt2/iso_svrl_for_xslt2.xsl");
-			File temXslFile = new File("src/main/resources/schematron/tmp_schematron.xsl");
-			File testXmlIn = new File("src/main/resources/schematron/test_in.xml");
-			//*/
-        	Source schemaXSLT = new StreamSource(svrlFile);
-        	
-			Templates t1schematron = factory.newTemplates(schemaXSLT);
-			OutputStream schemaOutStream = new FileOutputStream(temXslFile);
-			Result schemaOut = new StreamResult(schemaOutStream);
-			
-			Transformer t1 = factory.newTransformer();
-			t1.setOutputProperties(t1schematron.getOutputProperties());
-			
-//			StringWriter w = new StringWriter();
-//			StreamResult result = new StreamResult(w);
-			
-			t1.transform(request, schemaOut);
-			schemaOutStream.close();
-//			return "<!DOCTYPE html><html><head></head><body> OK 222</body></html>";
+			File XSLFile = new File("src/main/resources/schematron/aktin-basism.xsl");
+			File outFile = new File("src/main/resources/schematron/TransformationErrors.xml");
+			File Step1Out = new File("src/main/resources/schematron/TransformationResult.xml");
 
-			//////////////
-//			/*/
-	    	Source schemaSCHX = new StreamSource(temXslFile);
-	    	Source sourceIn = new StreamSource(testXmlIn);
-	    	
-			Templates t2schematron = factory.newTemplates(schemaSCHX);
-
-//			Result resultOut = new StreamResult(new FileOutputStream("src/main/resources/schematron/testOut.xml"));
-
-			Transformer t2 = factory.newTransformer(schemaSCHX);
-			//t2.setOutputProperties(t2schematron.getOutputProperties());
-
-			StringWriter w = new StringWriter();
-			StreamResult result = new StreamResult(w);
-			
-			t2.transform(sourceIn, result);
-			log.info("Transform successful: " + w.toString());
+	
+        	Source schemaXSLT = new StreamSource(XSLFile);
+			Templates schematron = factory.newTemplates(schemaXSLT);
 			
 			
+			OutputStream TransOutStream = new FileOutputStream(Step1Out);
+			Result result = new StreamResult(TransOutStream);
+	
+			Transformer transformer1 = factory.newTransformer(schemaXSLT);
+			transformer1.setOutputProperty(OutputKeys.INDENT, "yes");
+			
+			transformer1.transform(request, result);
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			// Optionale zweite Transformation (Herausfiltern der Fehlermeldungen aus dem Validierungsbericht)
+			// Zum Überspringen unten auf Identity Transform umstellen
+			
+			File XSLFile2 = new File("src/main/resources/schematron/Show_Error_Only.xsl");
+			
+			schemaXSLT = new StreamSource(XSLFile2);
+			Source input = new StreamSource(Step1Out);
+						
+        	/*  //Alternative Ausgabe in Datei
+			OutputStream OutStream = new FileOutputStream(outFile);
+			Result output = new StreamResult(OutStream);
+			*/
+						
+			//Ausgabe in Stream Result
+			StringWriter w = new StringWriter(); 
+			StreamResult output = new StreamResult(w);
+			
+//			Transformer transformer2 = factory.newTransformer();  //Identity Transformer (um die gesamte Ausgabe zu sehen)
+			Transformer transformer2 = factory.newTransformer(schemaXSLT);
+			transformer2.setOutputProperty(OutputKeys.INDENT, "yes");
+			
+			transformer2.transform(input, output);
+					
 			return w.toString();
 			//*/
 		} catch (Exception e) {

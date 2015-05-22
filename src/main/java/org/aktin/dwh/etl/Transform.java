@@ -14,7 +14,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-
 public class Transform {
 	
 	TransformerFactory factory;
@@ -111,7 +110,7 @@ public class Transform {
 			
 			transformer4.transform(CDA, CDAOut);
 			
-			log.info("Basismodul Transformation(4) done");
+			log.info("Basismodul Transformation (4) done");
 
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "Transformation failed",e);
