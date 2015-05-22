@@ -49,46 +49,83 @@ public class Transform {
 
 
 	public void transform() {
-		try {
-			
-//			File xsltFile = new File ("src/main/resources/schematron/Saxon/samples/styles/books.xsl");
-//			File xmlFile = new File ("src/main/resources/schematron/Saxon/samples/data/books.xml");			
-//			File outFile = new File ("src/main/resources/schematron/Saxon/samples/tmp_out.html");
-			
+		try {			
 			File SchematronFile = new File("src/main/resources/schematron/aktin-basism.sch");
-			//File SchematronFile = new File("src/main/resources/schematron/aktin-basismTEST.sch");
-			File XSLFile = new File("src/main/resources/schematron/iso-xslt2/iso_svrl_for_xslt2.xsl");
-			File outFile1 = new File("src/main/resources/schematron/aktin-basism.xsl");
+			File XSLFile1 = new File("src/main/resources/schematron/iso-xslt2/iso_dsdl_include.xsl");
+						
+			File Step1Out = new File("src/main/resources/schematron/aktin-basism_STEP1.xsl");
         	
-			Source schemaXSLT = new StreamSource(XSLFile);
+			Source schemaXSLT = new StreamSource(XSLFile1);
 			Source Schematron = new StreamSource(SchematronFile);
 			
-			OutputStream schemaOutStream = new FileOutputStream(outFile1);
-			Result schemaOut = new StreamResult(schemaOutStream);
+			OutputStream TransOutStream = new FileOutputStream(Step1Out);
+			Result schemaOut = new StreamResult(TransOutStream);
 			
-			//Transformer t1 = factory.newTransformer(); //identity transformer
-			Transformer transformer = factory.newTransformer(schemaXSLT);
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			Transformer transformer1 = factory.newTransformer(schemaXSLT);
+			transformer1.setOutputProperty(OutputKeys.INDENT, "yes");
 			
-			transformer.transform(Schematron, schemaOut);
+			transformer1.transform(Schematron, schemaOut);
 			
-			log.info("Schematron Transformation done");
+			log.info("Schematron Transformation 1 done");
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			
+			File XSLFile2 = new File("src/main/resources/schematron/iso-xslt2/iso_abstract_expand.xsl");
+			
+			File Step2File = new File("src/main/resources/schematron/aktin-basism_STEP2.xsl");
+        	
+			schemaXSLT = new StreamSource(XSLFile2);
+			Source Input2 = new StreamSource(Step1Out);
+			
+			TransOutStream = new FileOutputStream(Step2File);
+			Result Step2Out = new StreamResult(TransOutStream);
+			
+			Transformer transformer2 = factory.newTransformer(schemaXSLT);
+			transformer2.setOutputProperty(OutputKeys.INDENT, "yes");
+			
+			transformer2.transform(Input2, Step2Out);
+			
+			log.info("Schematron Transformation 2 done");
+			
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+			File XSLFile3 = new File("src/main/resources/schematron/iso-xslt2/iso_svrl_for_xslt2.xsl");
+			
+			File Step3File = new File("src/main/resources/schematron/aktin-basism.xsl");
+        	
+			schemaXSLT = new StreamSource(XSLFile3);
+			Source Input3 = new StreamSource(Step2File);
+			
+			TransOutStream = new FileOutputStream(Step3File);
+			Result Step3Out = new StreamResult(TransOutStream);
+			
+			Transformer transformer3 = factory.newTransformer(schemaXSLT);
+			transformer3.setOutputProperty(OutputKeys.INDENT, "yes");
+			
+			transformer3.transform(Input3, Step3Out);
+			
+			log.info("Schematron Transformation 3 done");
+			
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+			
 			
 			File CDAFile = new File ("src/main/resources/basismodul-beispiel-storyboard01_complete.xml");
 			File outFile2 = new File("src/main/resources/basismodul-TransformationResult.xml");
 			
-			Source schemaXSLT2 = new StreamSource(outFile1);
+			schemaXSLT = new StreamSource(Step3File);
 			Source CDA = new StreamSource(CDAFile);
 			
 			OutputStream CDAOutStream = new FileOutputStream(outFile2);
 			Result CDAOut = new StreamResult(CDAOutStream);
 			
-			Transformer transformer2 = factory.newTransformer(schemaXSLT2);
-			transformer2.setOutputProperty(OutputKeys.INDENT, "yes");
+			Transformer transformer4 = factory.newTransformer(schemaXSLT);
+			transformer4.setOutputProperty(OutputKeys.INDENT, "yes");
 			
-			transformer2.transform(CDA, CDAOut);
+			transformer4.transform(CDA, CDAOut);
 			
-			log.info("Basismodul Transformation done");
+			log.info("Basismodul Transformation(4) done");
 
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "Transformation failed",e);
