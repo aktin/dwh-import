@@ -2,32 +2,17 @@ package org.aktin.dwh.etl;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.Resource;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
-import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.ws.Endpoint;
-import javax.xml.ws.Provider;
-import javax.xml.ws.Service;
-import javax.xml.ws.ServiceMode;
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.WebServiceProvider;
-import javax.xml.ws.handler.MessageContext;
-import javax.xml.ws.http.HTTPBinding;
-
-import org.aktin.dwh.ulicor.XMLParser;
 
 
 public class Transform {
@@ -38,7 +23,7 @@ public class Transform {
 		factory = TransformerFactory.newInstance();
 	}
 	
-	private static final Logger log = Logger.getLogger(XMLParser.class.getName());
+	private static final Logger log = Logger.getLogger(Transform.class.getName());
 	
 	public static void main(String[] args) {
 		Transform p = new Transform();
@@ -111,7 +96,8 @@ public class Transform {
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			
 			
-			File CDAFile = new File ("src/main/resources/basismodul-beispiel-storyboard01_complete.xml");
+//			File CDAFile = new File("CDA Basismodul/basismodul-test-file.xml");
+			File CDAFile = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
 			File outFile2 = new File("src/main/resources/basismodul-TransformationResult.xml");
 			
 			schemaXSLT = new StreamSource(Step3File);

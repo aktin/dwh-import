@@ -31,42 +31,29 @@ public class SchematronValidator {
 		SchematronValidator p = new SchematronValidator();
 		
 		p.runSchema();
-//		p.runXSL();
 		
 	}
 	
 	void runSchema () {
 
-		TransformerFactory factory;
 		
 		SchemaFactory sFactory = SchemaFactory.newInstance(XmlSchemaNsUris.SCHEMATRON_NS_URI);
 
 //		factory = TransformerFactory.newInstance();
 		
-		File inXML, inSCH, inXSL, outXSL, outXML;
+		File inXML, inSCH;
 		// init
-//		inXML = new File("src/main/resources/schematron/test_in_ab.xml");
-//		inXML = new File("src/main/resources/schematron/test_in.xml");
-//		inXML = new File("src/main/resources/dwh-eav-example.xml");
+//		inXML = new File("CDA Basismodul/basismodul-test-file.xml");
 		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
 //		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01.xml");
 
-//		inSCH = new File("src/main/resources/schematron/tstBuchSchema1.sch");
-//		inSCH = new File("src/main/resources/schematron/tstBuchSchema1.sch");
-//		inSCH =  new File("src/main/resources/schematron/testschema.sch");
 		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
 		
-		
-		outXSL = new File("src/main/resources/schematron/tmp_schematron.xsl");
-		
-		outXML = new File("src/main/resources/schematron/testOut.xml");
 		
 		
 		Source sourceSCH = new StreamSource(inSCH);
 		Source sourceXML = new StreamSource(inXML);
 		
-		StringWriter w = new StringWriter();
-		StreamResult result = new StreamResult(w);
 //		
 //		OutputStream streamXSL;
 //		Result resultXSL;
@@ -78,7 +65,7 @@ public class SchematronValidator {
 			Schema myschema = sFactory.newSchema(sourceSCH);
 			Validator validator = myschema.newValidator();
 			
-			validator.validate(sourceXML, result);
+			validator.validate(sourceXML);
 			
 //			
 //			streamXSL = new FileOutputStream(outXSL);
@@ -97,50 +84,7 @@ public class SchematronValidator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			log.info("end " +  w.toString());
-		}
-	}
-	
-	void runXSL () {
-		// init
-
-		TransformerFactory factory;
-		File inXML, inSCH, inXSL, outXSL, outXML;
-		
-		factory = TransformerFactory.newInstance();
-		
-		inXML = new File("src/main/resources/schematron/Saxon/samples/data/books.xml");
-		
-		inXSL = new File("src/main/resources/schematron/Saxon/samples/styles/books.xsl");
-		
-		outXML = new File("src/main/resources/schematron/saxon_test_out.xml");
-		
-		Source sourceXML = new StreamSource(inXML);
-		Source sourceXSL = new StreamSource(inXSL);
-		
-		StringWriter w = new StringWriter();
-		StreamResult result = new StreamResult(w);
-		
-		OutputStream streamXML;
-		Result resultXML;
-		
-		Templates t1schematron;
-		
-		try {
-			
-			streamXML = new FileOutputStream(outXML);
-			resultXML = new StreamResult(streamXML);
-			
-			t1schematron = factory.newTemplates(sourceXSL);
-			Transformer t1 = t1schematron.newTransformer();
-
-			t1.transform(sourceXML, resultXML);
-			
-			log.info("Transform successful ");
-			
-			streamXML.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("end ");
 		}
 	}
 
