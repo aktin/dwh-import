@@ -27,9 +27,6 @@ import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.http.HTTPBinding;
 
-import org.aktin.dwh.ulicor.XMLParser;
-
-
 public class Transform {
 	
 	TransformerFactory factory;
@@ -38,7 +35,7 @@ public class Transform {
 		factory = TransformerFactory.newInstance();
 	}
 	
-	private static final Logger log = Logger.getLogger(XMLParser.class.getName());
+	private static final Logger log = Logger.getLogger(Transform.class.getName());
 	
 	public static void main(String[] args) {
 		Transform p = new Transform();
@@ -111,8 +108,8 @@ public class Transform {
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			
 			
-			File CDAFile = new File ("src/main/resources/basismodul-beispiel-storyboard01_complete.xml");
-			File outFile2 = new File("src/main/resources/basismodul-TransformationResult.xml");
+			File CDAFile = new File ("CDA Basismodul/basismodul-beispiel-storyboard01_complete01.xml");
+			File outFile2 = new File("CDA Basismodul/basismodul-TransformationResult.xml");
 			
 			schemaXSLT = new StreamSource(Step3File);
 			Source CDA = new StreamSource(CDAFile);
@@ -125,7 +122,7 @@ public class Transform {
 			
 			transformer4.transform(CDA, CDAOut);
 			
-			log.info("Basismodul Transformation(4) done");
+			log.info("Basismodul Transformation (4) done");
 
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "Transformation failed",e);
