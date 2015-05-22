@@ -1,4 +1,4 @@
-package org.aktin.dwh.ulicor;
+package org.aktin.dwh.etl;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,16 +19,16 @@ import javax.xml.validation.Validator;
 import se.uglisch.XmlSchemaNsUris;
 
 
-public class XMLParser {
+public class SchematronValidator {
 	
-	public XMLParser () {
+	public SchematronValidator () {
 		
 	}
 	
-	private static final Logger log = Logger.getLogger(XMLParser.class.getName());
+	private static final Logger log = Logger.getLogger(SchematronValidator.class.getName());
 	
 	public static void main(String[] args) {
-		XMLParser p = new XMLParser();
+		SchematronValidator p = new SchematronValidator();
 		
 		p.runSchema();
 //		p.runXSL();
