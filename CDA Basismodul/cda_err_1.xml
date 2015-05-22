@@ -65,7 +65,8 @@
                         </text>
                         <statusCode code="completed"/>
                         <effectiveTime value="20150117"/>
-                        <value xsi:type="CO" value="2"/>
+                        <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                        <value xsi:type="CO" value="2" code="75859-9" codeSystem="2.16.840.1.113883.6.1"/>
                     </observation>
                 </entry>
             </component>
@@ -83,24 +84,28 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CO" value="9"/>
+                            <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                            <value xsi:type="CO" value="9" code="9269-2" codeSystem="2.16.840.1.113883.6.1"/>
                             <!--#CHANGES keine statusCodes in componant - observations (comp art decor) Beispiel in art decor fehlerhaft-->
                             <component>
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
-                                    <value xsi:type="CO" value="4"/>
+                                    <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                                    <value xsi:type="CO" value="4" code="9267-6" codeSystem="2.16.840.1.113883.6.1"/>
                                 </observation>  
                             </component>  
                             <component>
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
-                                    <value xsi:type="CO" value="3"/>
+                                    <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                                    <value xsi:type="CO" value="3" code="9270-0" codeSystem="2.16.840.1.113883.6.1"/>
                                 </observation>  
                             </component>  
                             <component>
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
-                                    <value xsi:type="CO" value="2"/>
+                                    <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                                    <value xsi:type="CO" value="2" code="9268-4" codeSystem="2.16.840.1.113883.6.1" />
                                 </observation>  
                             </component>
                         </observation>                    
@@ -119,6 +124,7 @@
                             <!-- 56840-2" Pain severity verbal numeric scale -->
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CO" value="2"/>
+                            <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                            <value xsi:type="CO" value="2" code="72514-3" codeSystem="2.16.840.1.113883.6.1"/>
                         </observation>                    
                      </entry>
