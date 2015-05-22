@@ -513,7 +513,7 @@
                                     <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
                                     <value xsi:type="CO" value="4" code="9267-6" codeSystem="2.16.840.1.113883.6.1"/>
                                 </observation>  
-                            </component typeCode="COMP" contextConductionInd="true">  
+                            </component>  
                             <component typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
