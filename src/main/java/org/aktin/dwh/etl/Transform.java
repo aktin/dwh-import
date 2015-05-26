@@ -96,8 +96,8 @@ public class Transform {
 			
 			
 //			File CDAFile = new File("CDA Basismodul/basismodul-test-file.xml");
-			File CDAFile = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
-			File outFile2 = new File("src/main/resources/basismodul-TransformationResult.xml");
+			File CDAFile = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete02.xml");
+			File outFile2 = new File("CDA Basismodul/basismodul-TransformationResult.xml");
 			
 			schemaXSLT = new StreamSource(Step3File);
 			Source CDA = new StreamSource(CDAFile);

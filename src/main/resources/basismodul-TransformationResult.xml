@@ -18,8 +18,8 @@
    <svrl:ns-prefix-in-attribute-values uri="urn:hl7-org:v3" prefix="cda"/>
    <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/2001/XMLSchema-instance" prefix="xsi"/>
    <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/XML/1998/namespace" prefix="xml"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"/>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.1015-2014-09-18T000000"
                         name="Emergency medicine Note CDA document"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']"
@@ -54,6 +54,11 @@
                     id="tmp-r-5d3073d1-9362-4e10-b867-b4f08412fdf7"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:recordTarget/hl7:patientRole/hl7:addr"
                     id="tmp-r-17f7a8dd-0645-4934-a252-1fa314c7d498"/>
+   <svrl:failed-assert test="@nullFlavor or (count(*)&gt;0 and not(text()[string-length(normalize-space())&gt;0])) or (count(*)=0 and text()[string-length(normalize-space())&gt;0])"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:recordTarget[namespace-uri()='urn:hl7-org:v3'][1]/*:patientRole[namespace-uri()='urn:hl7-org:v3'][1]/*:addr[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-AD: address shall be null or text only or element only (no mixed content)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:recordTarget/hl7:patientRole/hl7:telecom"
                     id="tmp-r-916839af-d067-492b-a67c-3d6df3a4b600"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:recordTarget/hl7:patientRole/hl7:telecom"
@@ -112,6 +117,11 @@
                     id="tmp-r-8d3408bb-b3da-4a7e-bfda-f9b574d3a9c5"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:author/hl7:assignedAuthor/hl7:representedOrganization/hl7:addr"
                     id="tmp-r-aa674eab-541e-4a40-9d59-8302a472489f"/>
+   <svrl:failed-assert test="@nullFlavor or (count(*)&gt;0 and not(text()[string-length(normalize-space())&gt;0])) or (count(*)=0 and text()[string-length(normalize-space())&gt;0])"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:author[namespace-uri()='urn:hl7-org:v3'][2]/*:assignedAuthor[namespace-uri()='urn:hl7-org:v3'][1]/*:representedOrganization[namespace-uri()='urn:hl7-org:v3'][1]/*:addr[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-AD: address shall be null or text only or element only (no mixed content)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:custodian"
                     id="tmp-r-8e33b4fa-d46f-471e-8de8-49411c7c1ec5"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:custodian/hl7:assignedCustodian"
@@ -130,6 +140,11 @@
                     id="tmp-r-de194b45-49c3-4b18-aa03-43d5d794bb9a"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:custodian/hl7:assignedCustodian/hl7:representedCustodianOrganization/hl7:addr"
                     id="tmp-r-a5a875d8-a17f-45eb-9394-cb01747eb25f"/>
+   <svrl:failed-assert test="@nullFlavor or (count(*)&gt;0 and not(text()[string-length(normalize-space())&gt;0])) or (count(*)=0 and text()[string-length(normalize-space())&gt;0])"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:custodian[namespace-uri()='urn:hl7-org:v3'][1]/*:assignedCustodian[namespace-uri()='urn:hl7-org:v3'][1]/*:representedCustodianOrganization[namespace-uri()='urn:hl7-org:v3'][1]/*:addr[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-AD: address shall be null or text only or element only (no mixed content)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:documentationOf"
                     id="tmp-r-1dc059ee-4f52-4a27-8b28-6be9c74e190f"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:documentationOf/hl7:serviceEvent"
@@ -176,8 +191,11 @@
                     id="tmp-r-1cabfd5c-8158-4565-9b15-b9c930fd1659"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:informationRecipient/hl7:intendedRecipient/hl7:receivedOrganization"
                     id="tmp-r-8b05f4ef-9a14-4ebc-b2c5-658b857aa01d"/>
-   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:informationRecipient/hl7:intendedRecipient/hl7:receivedOrganization/hl7:name"
-                    id="tmp-r-ffe91e12-a186-405f-98d2-25bc55a315d8"/>
+   <svrl:failed-assert test="count(hl7:name)&gt;=1 and not(hl7:name/@nullFlavor)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:informationRecipient[namespace-uri()='urn:hl7-org:v3'][1]/*:intendedRecipient[namespace-uri()='urn:hl7-org:v3'][1]/*:receivedOrganization[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(HeaderInformationRecipient): Element hl7:name ist mandatory [min 1x].</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:informationRecipient/hl7:intendedRecipient/hl7:receivedOrganization/hl7:telecom"
                     id="tmp-r-f369246a-c875-4677-baa8-2a12a66de428"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:informationRecipient/hl7:intendedRecipient/hl7:receivedOrganization/hl7:addr"
@@ -188,18 +206,102 @@
                     id="tmp-r-a5c2fbb6-3249-4ef6-8fbe-a1f03555e6b2"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]"/>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.3046']|self::hl7:code[(@code='11293-8' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:title|self::hl7:text|self::hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']])]"
+                    id="tmp-r-da6f0021-8bee-42fa-b00b-23cbd88548a6"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:code[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'section' ist als geschlossen definiert und dieses Element 'code' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-da6f0021-8bee-42fa-b00b-23cbd88548a6)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.4038']|self::hl7:code[(@code='3457005' and @codeSystem='2.16.840.1.113883.6.96')]|self::hl7:text|self::hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]])]"
+                    id="tmp-r-bdb34994-b9d7-402a-9b7f-f2d345bf8143"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:participant[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'act' ist als geschlossen definiert und dieses Element 'participant' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-bdb34994-b9d7-402a-9b7f-f2d345bf8143)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3053']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']]"/>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.3047']|self::hl7:code[(@code='55752-0' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:title|self::hl7:text)]"
+                    id="tmp-r-ded2e791-6f34-4504-b8c3-841ac262bea2"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'section' ist als geschlossen definiert und dieses Element 'entry' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-ded2e791-6f34-4504-b8c3-841ac262bea2)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.3047']|self::hl7:code[(@code='55752-0' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:title|self::hl7:text)]"
+                    id="tmp-r-ded2e791-6f34-4504-b8c3-841ac262bea2"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'section' ist als geschlossen definiert und dieses Element 'entry' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-ded2e791-6f34-4504-b8c3-841ac262bea2)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.3047']|self::hl7:code[(@code='55752-0' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:title|self::hl7:text)]"
+                    id="tmp-r-ded2e791-6f34-4504-b8c3-841ac262bea2"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][3]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'section' ist als geschlossen definiert und dieses Element 'entry' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-ded2e791-6f34-4504-b8c3-841ac262bea2)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]"/>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]/*[not(self::hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:value)]"
+                    id="tmp-r-cce4d6c5-f4ab-4fe2-9b8e-1c518a82283e"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:statusCode[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'observation' ist als geschlossen definiert und dieses Element 'statusCode' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-cce4d6c5-f4ab-4fe2-9b8e-1c518a82283e)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]/*[not(self::hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:value)]"
+                    id="tmp-r-2e4c6655-1e42-4be9-bfab-6f630da21136"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:statusCode[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'observation' ist als geschlossen definiert und dieses Element 'statusCode' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-2e4c6655-1e42-4be9-bfab-6f630da21136)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]/*[not(self::hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:value)]"
+                    id="tmp-r-507405fc-e95d-4f64-8e6f-dbfb13742aec"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][3]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:statusCode[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'observation' ist als geschlossen definiert und dieses Element 'statusCode' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-507405fc-e95d-4f64-8e6f-dbfb13742aec)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']]"/>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']/hl7:participant/*[not(self::hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]])]"
+                    id="tmp-r-5eadf609-7767-4050-8551-53d222706e95"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][8]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:participant[namespace-uri()='urn:hl7-org:v3'][1]/*:participantRole[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'participant' ist als geschlossen definiert und dieses Element 'participantRole' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-5eadf609-7767-4050-8551-53d222706e95)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3054']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']]"/>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']]"/>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']/hl7:entry[hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']]/hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.4068']|self::hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.54-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.54-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code)]|self::hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']])]"
+                    id="tmp-r-52638c14-a55f-49c8-957b-1e178ed62bcc"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][12]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:procedure[namespace-uri()='urn:hl7-org:v3'][1]/*:id[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'procedure' ist als geschlossen definiert und dieses Element 'id' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-52638c14-a55f-49c8-957b-1e178ed62bcc)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']/hl7:entry[hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']]/hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.4068']|self::hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.54-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.54-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code)]|self::hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']])]"
+                    id="tmp-r-52638c14-a55f-49c8-957b-1e178ed62bcc"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][12]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:procedure[namespace-uri()='urn:hl7-org:v3'][1]/*:statusCode[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'procedure' ist als geschlossen definiert und dieses Element 'statusCode' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-52638c14-a55f-49c8-957b-1e178ed62bcc)</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:fired-rule context="/hl7:ClinicalDocument[hl7:templateId/@root='1.2.276.0.76.10.1015']/hl7:component/hl7:structuredBody/hl7:component[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']/*[not(self::hl7:templateId[@root='1.2.276.0.76.10.3057']|self::hl7:code[(@code='11516-2' and @codeSystem='2.16.840.1.113883.6.1')]|self::hl7:title|self::hl7:text|self::hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']])]"
+                    id="tmp-r-990c1288-de81-400c-8398-401aa23d8a18"/>
+   <svrl:failed-assert test="not(.)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][13]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:code[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): 'section' ist als geschlossen definiert und dieses Element 'code' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-990c1288-de81-400c-8398-401aa23d8a18)</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3044-2014-09-16T000000"
                         name="Vitalparameter"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']"
@@ -222,7 +324,7 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4047']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4035']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3044']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4036']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3045-2015-01-10T000000"
                         name="Transportmittel"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']"
@@ -236,25 +338,43 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']/hl7:text"
                     id="tmp-r-4524b098-eae4-47f4-a1f8-34148bfb302d"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3045']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4037']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3046-2015-01-10T000000"
                         name="Zuweisung"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']"
                     id="tmp-r-1e1da2e9-1c47-4e51-9602-9db7e3146d88"/>
+   <svrl:failed-assert test="count(hl7:code[(@code='11293-8' and @codeSystem='2.16.840.1.113883.6.1')])&gt;=1 and not(hl7:code[(@code='11293-8' and @codeSystem='2.16.840.1.113883.6.1')]/@nullFlavor)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]/*:section[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Typeofreferralsource): Element hl7:code[(@code='11293-8' and @codeSystem='2.16.840.1.113883.6.1')] ist mandatory [min 1x].</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/hl7:templateId[@root='1.2.276.0.76.10.3046']"
                     id="tmp-r-a2e353e4-f677-4335-923a-bbe5449eeaf3"/>
-   <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/hl7:code[(@code='11293-8' and @codeSystem='2.16.840.1.113883.6.1')]"
-                    id="tmp-r-6bee4dc7-e7c4-4fc5-8777-45bab0879718"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/hl7:title"
                     id="tmp-r-83963829-3478-45b8-acc2-de3eae7ca21a"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/hl7:text"
                     id="tmp-r-fcf2ec84-fec6-4412-a888-6f8511a1eafe"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3046']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3047-2015-01-10T000000"
                         name="Klinische Basisinformationen"/>
    <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]"
                     id="tmp-r-9fa9fcaa-602f-43e5-ab39-08077bfc0a26"/>
+   <svrl:failed-assert test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4043']])&gt;=1"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]">
+      <svrl:text>(ClinicalInformation): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4043']] ist required [min 1x].</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="count(hl7:entry[hl7:substanceAdministration[hl7:templateId/@root='1.2.276.0.76.10.4044']])&gt;=1"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]">
+      <svrl:text>(ClinicalInformation): Element hl7:entry[hl7:substanceAdministration[hl7:templateId/@root='1.2.276.0.76.10.4044']] ist required [min 1x].</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4045']])&gt;=1"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]">
+      <svrl:text>(ClinicalInformation): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4045']] ist required [min 1x].</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']"
                     id="tmp-r-e22c2e60-9a51-49e1-9f8e-8f630c6b43db"/>
    <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']/hl7:templateId[@root='1.2.276.0.76.10.3047']"
@@ -265,10 +385,7 @@
                     id="tmp-r-9fbc8077-038d-4aeb-a12e-a0f699e6e201"/>
    <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3047']/hl7:text"
                     id="tmp-r-c931c12b-d0fe-411b-865b-00c8c41b5b43"/>
-   <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4043']]"/>
-   <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:entry[hl7:substanceAdministration[hl7:templateId/@root='1.2.276.0.76.10.4044']]"/>
-   <svrl:fired-rule context="*[*[hl7:templateId/@root='1.2.276.0.76.10.3047']]/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4045']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3048-2015-01-10T000000"
                         name="Beschwerden bei Vorstellung"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']"
@@ -282,7 +399,7 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']/hl7:text"
                     id="tmp-r-f6863283-3e98-4cfc-8d03-abd09fd3acbd"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3048']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3049-2015-01-10T000000"
                         name="Ersteinschätzung"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']"
@@ -296,11 +413,21 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']/hl7:text"
                     id="tmp-r-50c3baab-c350-4318-a0ef-94f5204b6a27"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3049']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="string(@typeCode)=('COMP')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][11]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Initialacuityassessment): Der Wert von @typeCode MUSS 'COMP' sein.</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3050-2015-01-10T000000"
                         name="Diagnostik"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']"
                     id="tmp-r-68c189f8-4f40-4640-9402-e718548939a8"/>
+   <svrl:failed-assert test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']])&lt;=1"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][7]/*:section[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']] kommt zu häufig vor [max 1x].</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:templateId[@root='1.2.276.0.76.10.3050']"
                     id="tmp-r-11750c0c-c1c5-407d-b23b-59ba814cf489"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')]"
@@ -309,7 +436,7 @@
                     id="tmp-r-e2992d40-ccab-48fa-84cf-b48512ebb78d"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:text"
                     id="tmp-r-45957783-4344-4f57-bc56-446c7a7142f1"/>
-   <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]"/>
+   <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]"/>
@@ -324,7 +451,7 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3051-2015-03-26T000000"
                         name="Allergien und Unverträglichkeiten"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']"
@@ -338,7 +465,7 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']/hl7:text"
                     id="tmp-r-c6319fdb-75b5-4229-8dc0-d388d2df7562"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3051']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3053-2015-01-10T000000"
                         name="Notfallanamnese"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3053']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3053']"
@@ -351,7 +478,7 @@
                     id="tmp-r-b95cfd2b-3c21-4939-8dcc-626f88134981"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3053']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3053']/hl7:text"
                     id="tmp-r-95c673ea-e6b8-4752-8c86-0e79aacbdfd0"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3054-2015-01-10T000000"
                         name="Befunde / Verlauf / durchgeführte Therapie"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3054']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3054']"
@@ -364,7 +491,7 @@
                     id="tmp-r-a6eb64bf-07d4-46f9-a075-43940734626c"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3054']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3054']/hl7:text"
                     id="tmp-r-5a68eb88-8b04-4650-872b-5e8aef54c5c1"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3055-2015-01-10T000000"
                         name="Abschlussdiagnosen"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']"
@@ -378,7 +505,7 @@
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']/hl7:text"
                     id="tmp-r-7aca47b0-27be-48c4-b000-cb7cabbdb567"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3055']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3056-2015-01-10T000000"
                         name="Weiteres Procedere / Therapieempfehlung / Weiterbehandler"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']"
@@ -393,21 +520,29 @@
                     id="tmp-r-392f8896-a5ca-4ce1-95e4-346787ca7869"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4067']]"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3056']/hl7:entry[hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.3057-2015-03-30T000000"
                         name="Zusatzmodule (weitere Dokumentation)"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']"
                     id="tmp-r-d4500fc7-6310-4b0c-aab8-4574f60a7662"/>
+   <svrl:failed-assert test="count(hl7:code[(@code='11516-2' and @codeSystem='2.16.840.1.113883.6.1')])&gt;=1 and not(hl7:code[(@code='11516-2' and @codeSystem='2.16.840.1.113883.6.1')]/@nullFlavor)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][13]/*:section[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Additionalmodulessection): Element hl7:code[(@code='11516-2' and @codeSystem='2.16.840.1.113883.6.1')] ist mandatory [min 1x].</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']/hl7:templateId[@root='1.2.276.0.76.10.3057']"
                     id="tmp-r-59e921ee-896f-4926-a498-6e3616764b62"/>
-   <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']/hl7:code[(@code='11516-2' and @codeSystem='2.16.840.1.113883.6.1')]"
-                    id="tmp-r-9ab13a1b-00f7-4d0e-b138-4b33ecb7096b"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']/hl7:title"
                     id="tmp-r-47b9fb8e-8cf5-4d9d-a14e-8d3265b3dcd9"/>
+   <svrl:failed-assert test="text()='Zusatzmodule'"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][13]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:title[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Additionalmodulessection): Der Elementinhalt von 'hl7:title' MUSS ''Zusatzmodule'' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']/hl7:text"
                     id="tmp-r-53d4f48b-85a1-4710-a39e-67f865d0403f"/>
    <svrl:fired-rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3057']/hl7:entry[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4030-2014-09-16T000000"
                         name="Atemfrequenz"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4030']]"
@@ -430,7 +565,7 @@
                     id="tmp-r-5aa38037-a88f-46fe-bc85-2bc994965d0f"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4030']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4030']/hl7:value"
                     id="tmp-r-0cc997b7-7f5f-4583-b765-e0685ba38803"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4031-2014-09-16T000000"
                         name="Sauerstoffsättigung"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4031']]"
@@ -451,7 +586,7 @@
                     id="tmp-r-7f71eaff-d192-45ba-840a-08e80b02e2af"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4031']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4031']/hl7:value"
                     id="tmp-r-38f3d73c-6aa9-4010-9606-9f5d041791ee"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4032-2014-09-16T000000"
                         name="Blutdruck systolisch"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4032']]"
@@ -472,7 +607,7 @@
                     id="tmp-r-1a784ab2-dcfb-4f72-9a0d-234a4ebd6ea5"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4032']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4032']/hl7:value"
                     id="tmp-r-4a02e2f9-df06-4faa-9d55-a57bb4725412"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4033-2014-09-16T000000"
                         name="Herzfrequenz"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4033']]"
@@ -493,7 +628,7 @@
                     id="tmp-r-4f6d6968-26df-4ce5-831f-044f84f89de8"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4033']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4033']/hl7:value"
                     id="tmp-r-12e0bdd7-b72f-44fb-bc87-d0b1f6022dca"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4034-2014-09-16T000000"
                         name="Glasgow Coma Scale"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']"
@@ -512,31 +647,81 @@
                     id="tmp-r-f5d3da32-70a1-4ca6-a8eb-b5b9a9943bff"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:value"
                     id="tmp-r-38c24d69-0e8f-4fdb-b809-376184e2fe38"/>
+   <svrl:failed-assert test="@nullFlavor or @code or (hl7:originalText and not(hl7:originalText/@nullFlavor))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-CD: null or code and/or originalText</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]]"
                     id="tmp-r-99fbb347-92f2-4e0c-b2f4-16fe954e9ffc"/>
+   <svrl:failed-assert test="string(@typeCode)=('COMP')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(GlasgowComaScale): Der Wert von @typeCode MUSS 'COMP' sein.</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="string(@contextConductionInd)=('true')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(GlasgowComaScale): Der Wert von @contextConductionInd MUSS 'true' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]"
                     id="tmp-r-83f6bace-2920-4349-8aa9-a1884bd14173"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]/hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]"
                     id="tmp-r-852d9c3d-1673-44fb-b4c3-6d404075859c"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9267-6' and @codeSystem='2.16.840.1.113883.6.1')]]/hl7:value"
                     id="tmp-r-63110f4d-9167-4f08-a56f-1cf92942201c"/>
+   <svrl:failed-assert test="@nullFlavor or @code or (hl7:originalText and not(hl7:originalText/@nullFlavor))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-CD: null or code and/or originalText</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]]"
                     id="tmp-r-e89a2abe-428f-4f2a-bd72-5ba7daf722ef"/>
+   <svrl:failed-assert test="string(@typeCode)=('COMP')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]">
+      <svrl:text>(GlasgowComaScale): Der Wert von @typeCode MUSS 'COMP' sein.</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="string(@contextConductionInd)=('true')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]">
+      <svrl:text>(GlasgowComaScale): Der Wert von @contextConductionInd MUSS 'true' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]"
                     id="tmp-r-7755cc1f-80a2-4eb3-9903-0b77a34ecebd"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]/hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]"
                     id="tmp-r-7447c754-9c81-4dc7-afe9-b8c7440bd96f"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9270-0' and @codeSystem='2.16.840.1.113883.6.1')]]/hl7:value"
                     id="tmp-r-c67b34db-76f9-4296-b5a7-43843a2d770c"/>
+   <svrl:failed-assert test="@nullFlavor or @code or (hl7:originalText and not(hl7:originalText/@nullFlavor))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-CD: null or code and/or originalText</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]]"
                     id="tmp-r-1bf9eace-1115-47fa-9c74-dc3ea361c809"/>
+   <svrl:failed-assert test="string(@typeCode)=('COMP')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][3]">
+      <svrl:text>(GlasgowComaScale): Der Wert von @typeCode MUSS 'COMP' sein.</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="string(@contextConductionInd)=('true')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][3]">
+      <svrl:text>(GlasgowComaScale): Der Wert von @contextConductionInd MUSS 'true' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]"
                     id="tmp-r-a700f749-2757-46b9-bbae-88fb845621e4"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]/hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]"
                     id="tmp-r-69d1d4d3-5b79-4743-8056-2fe41e959f6d"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4034']/hl7:component[hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]]/hl7:observation[hl7:code[(@code='9268-4' and @codeSystem='2.16.840.1.113883.6.1')]]/hl7:value"
                     id="tmp-r-c80fb6a9-d5f4-4be2-9013-c944ccefcd1e"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="@nullFlavor or @code or (hl7:originalText and not(hl7:originalText/@nullFlavor))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][3]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-CD: null or code and/or originalText</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4035-2014-09-16T000000"
                         name="Körperkerntemperatur"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4035']]"
@@ -557,7 +742,7 @@
                     id="tmp-r-b5f4dd40-9bc5-492b-8e27-7377e72580cb"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4035']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4035']/hl7:value"
                     id="tmp-r-d26f96f0-660c-4774-83b8-983f4f0dcbf4"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4036-2014-09-16T000000"
                         name="Schmerz"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4036']]"
@@ -578,7 +763,12 @@
                     id="tmp-r-d817f4af-27ac-484d-a35e-42a4f4e8e8de"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4036']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4036']/hl7:value"
                     id="tmp-r-815adeb1-a87f-4566-b324-b38d89f6eb72"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="@nullFlavor or @code or (hl7:originalText and not(hl7:originalText/@nullFlavor))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][6]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][10]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-CD: null or code and/or originalText</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4037-2015-03-03T000000"
                         name="Transportmethode"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4037']]"
@@ -601,13 +791,18 @@
                     id="tmp-r-45e269b7-042d-430b-9fd7-636f10cb0f5a"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4037']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4037']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.41-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.41-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-da592bd1-2937-4f8d-be49-d741615f0d2d"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4038-2015-03-03T000000"
                         name="Zuweisung mit Zuweiser"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]"
                     id="tmp-r-5730517b-6c2d-44e5-a183-4b485f68392c"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']"
                     id="tmp-r-53682d3b-a221-460a-90bd-71cf0fe5b98d"/>
+   <svrl:failed-assert test="count(hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]])&gt;=1 and not(hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]/@nullFlavor)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][2]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Referralfrom): Element hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]] ist mandatory [min 1x].</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/hl7:templateId[@root='1.2.276.0.76.10.4038']"
                     id="tmp-r-aa185018-a704-4243-a27b-c09abcf02d4c"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/hl7:code[(@code='3457005' and @codeSystem='2.16.840.1.113883.6.96')]"
@@ -616,13 +811,7 @@
                     id="tmp-r-63bd5c78-c422-431e-a9b3-6cb55ae2dd38"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/hl7:text/hl7:reference"
                     id="tmp-r-5697d587-7710-4eb3-8c66-ca2150165273"/>
-   <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]"
-                    id="tmp-r-01345a89-62c9-4fd6-add9-bc87284832cc"/>
-   <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]/hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]"
-                    id="tmp-r-011650cd-2769-408a-a337-7993808e18bc"/>
-   <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4038']/hl7:participant[hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]/hl7:participantRole[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]/hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.42-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
-                    id="tmp-r-fb59c485-55ed-4f0f-a8f0-741ad5349fc2"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4039-2015-03-03T000000"
                         name="Problem Concern Act (Text/CEDIS)"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']"
@@ -637,9 +826,19 @@
                     id="tmp-r-2bbe7e25-4a3f-424f-8425-b1a5f9dc1737"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']/hl7:effectiveTime"
                     id="tmp-r-14b455d2-1daf-4ad8-9b6c-2eb11bca3391"/>
+   <svrl:failed-assert test="not(hl7:low/@value = hl7:high/@value)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][4]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-6-IVL_TS: low/@value must not be equal to high/@value</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="not(hl7:low/@value and hl7:high/@value) or number(substring(concat(hl7:low/@value,'00000000000000'),1,14)) &lt; number(substring(concat(hl7:high/@value,'00000000000000'),1,14))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][4]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-7-IVL_TS: low/@value must be before high/@value</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4040']]"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4039']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4040']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4040-2015-03-03T000000"
                         name="Problem Observation (Text/CEDIS)"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4040']]"
@@ -688,7 +887,7 @@
                     id="tmp-r-5d3e2bc8-719d-497a-ac17-605f01020c5b"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4040']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4040']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.43-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.43-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-3d295197-4c16-4b1a-981d-5d19b30da7f9"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4042-2015-03-03T000000"
                         name="Triage-Einschätzung"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]"
@@ -715,7 +914,12 @@
                     id="tmp-r-d905a6e7-7254-4563-ac12-ad2bf609bdba"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:value"
                     id="tmp-r-44c2dd60-3150-4ba9-ab16-ee37d3bdea80"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="@nullFlavor or exists(doc('include/voc-1.2.276.0.76.11.44-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]]) or exists(doc('include/voc-1.2.276.0.76.11.45-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]])"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][11]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Acuityobservation): Der Elementinhalt MUSS einer von '1.2.276.0.76.11.44 Manchester-Triage-System (DYNAMIC) oder 1.2.276.0.76.11.45 Emergency Severity Index (DYNAMIC)' sein.</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4043-2015-03-03T000000"
                         name="Status Schwangerschaft"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4043']]"
@@ -736,7 +940,12 @@
                     id="tmp-r-4c451df5-aec7-4adf-ac01-503910af0cc3"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4043']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4043']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.46-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.46-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-397729c2-5f8e-4ab2-9051-610d32cc03d1"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CV' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Pregnancystatus): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CV" haben, gefunden "{urn:hl7-org:v3}:CE"</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4044-2015-03-03T000000"
                         name="Immunisierung Clostridium tetani"/>
    <svrl:fired-rule context="*[hl7:substanceAdministration[hl7:templateId/@root='1.2.276.0.76.10.4044']]"
@@ -763,7 +972,7 @@
                     id="tmp-r-ba3f4117-b133-4a7c-a36d-dd5d7710b57a"/>
    <svrl:fired-rule context="*[hl7:substanceAdministration[hl7:templateId/@root='1.2.276.0.76.10.4044']]/hl7:substanceAdministration[hl7:templateId/@root='1.2.276.0.76.10.4044']/hl7:consumable/hl7:manufacturedProduct[hl7:manufacturedMaterial[hl7:code[(@code='333621002' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:manufacturedMaterial[hl7:code[(@code='333621002' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='333621002' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-f374fee0-d2f9-44e6-9e22-2d42ce916212"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4045-2015-03-03T000000"
                         name="Modified Rankin Scale"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4045']]"
@@ -784,7 +993,12 @@
                     id="tmp-r-b97ab5c9-817d-49b5-8bd4-adbcd8164c8f"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4045']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4045']/hl7:value"
                     id="tmp-r-3acb0f4f-9f8b-45cc-9446-3ab6c6a9718a"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="@nullFlavor or @code or (hl7:originalText and not(hl7:originalText/@nullFlavor))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][5]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][3]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-1-CD: null or code and/or originalText</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4046-2015-03-03T000000"
                         name="Pupillenweite"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4046']]"
@@ -807,7 +1021,7 @@
                     id="tmp-r-c8d0a291-e7b5-4c08-ad56-52b9ae21c4eb"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4046']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4046']/hl7:targetSiteCode[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.48-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.48-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code)]"
                     id="tmp-r-016c18c1-e0d9-4f65-bb36-510fa1bd6de4"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4047-2015-03-03T000000"
                         name="Pupillenreaktion"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4047']]"
@@ -850,7 +1064,7 @@
                     id="tmp-r-4c86a701-0694-43d8-b492-e1959bc327fa"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4047']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4047']/hl7:targetSiteCode[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.48-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.48-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code)]"
                     id="tmp-r-349ffbd9-f7be-4015-8d60-61a684ecb769"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4048-2015-03-03T000000"
                         name="Problem Concern Act (Abschlussdiagnosen)"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']"
@@ -870,7 +1084,7 @@
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4048']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4049-2015-03-03T000000"
                         name="Problem Observation (Abschlussdiagnose)"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]"
@@ -913,6 +1127,16 @@
                     id="tmp-r-f2fbf37f-832f-40d2-b471-1ba2709f36d3"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime"
                     id="tmp-r-2b78f2c0-43c4-4e45-94f4-981a8f5f1e43"/>
+   <svrl:failed-assert test="not(hl7:low/@value = hl7:high/@value)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-6-IVL_TS: low/@value must not be equal to high/@value</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="not(hl7:low/@value and hl7:high/@value) or number(substring(concat(hl7:low/@value,'00000000000000'),1,14)) &lt; number(substring(concat(hl7:high/@value,'00000000000000'),1,14))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-7-IVL_TS: low/@value must be before high/@value</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:low"
                     id="tmp-r-0af8bc31-59b1-4f0d-90e4-cd0880ecb57e"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:high"
@@ -937,6 +1161,16 @@
                     id="tmp-r-f2fbf37f-832f-40d2-b471-1ba2709f36d3"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime"
                     id="tmp-r-2b78f2c0-43c4-4e45-94f4-981a8f5f1e43"/>
+   <svrl:failed-assert test="not(hl7:low/@value = hl7:high/@value)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][3]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-6-IVL_TS: low/@value must not be equal to high/@value</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="not(hl7:low/@value and hl7:high/@value) or number(substring(concat(hl7:low/@value,'00000000000000'),1,14)) &lt; number(substring(concat(hl7:high/@value,'00000000000000'),1,14))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][3]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-7-IVL_TS: low/@value must be before high/@value</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:low"
                     id="tmp-r-0af8bc31-59b1-4f0d-90e4-cd0880ecb57e"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:high"
@@ -961,6 +1195,16 @@
                     id="tmp-r-f2fbf37f-832f-40d2-b471-1ba2709f36d3"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime"
                     id="tmp-r-2b78f2c0-43c4-4e45-94f4-981a8f5f1e43"/>
+   <svrl:failed-assert test="not(hl7:low/@value = hl7:high/@value)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][4]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-6-IVL_TS: low/@value must not be equal to high/@value</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="not(hl7:low/@value and hl7:high/@value) or number(substring(concat(hl7:low/@value,'00000000000000'),1,14)) &lt; number(substring(concat(hl7:high/@value,'00000000000000'),1,14))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][4]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-7-IVL_TS: low/@value must be before high/@value</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:low"
                     id="tmp-r-0af8bc31-59b1-4f0d-90e4-cd0880ecb57e"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:high"
@@ -985,42 +1229,26 @@
                     id="tmp-r-f2fbf37f-832f-40d2-b471-1ba2709f36d3"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime"
                     id="tmp-r-2b78f2c0-43c4-4e45-94f4-981a8f5f1e43"/>
+   <svrl:failed-assert test="not(hl7:low/@value = hl7:high/@value)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-6-IVL_TS: low/@value must not be equal to high/@value</svrl:text>
+   </svrl:failed-assert>
+   <svrl:failed-assert test="not(hl7:low/@value and hl7:high/@value) or number(substring(concat(hl7:low/@value,'00000000000000'),1,14)) &lt; number(substring(concat(hl7:high/@value,'00000000000000'),1,14))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][10]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][5]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:effectiveTime[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-7-IVL_TS: low/@value must be before high/@value</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:low"
                     id="tmp-r-0af8bc31-59b1-4f0d-90e4-cd0880ecb57e"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:effectiveTime/hl7:high"
                     id="tmp-r-c1674c3e-605d-4a9d-94a7-68a26533c36d"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4049']/hl7:value"
                     id="tmp-r-79660414-3cb0-4d7b-8e13-4b703b0c9678"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4050-2015-03-27T000000"
                         name="Diagnostik Plain chest X-ray"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]"
-                    id="tmp-r-b58e0502-181a-4761-9635-40383a6f6537"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']"
-                    id="tmp-r-c11bd395-108a-4f0e-805d-57cd7f2c17ac"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:templateId[@root='1.2.276.0.76.10.4050']"
-                    id="tmp-r-1f7a019c-fe8e-4a08-be31-f28401ea13f1"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:id"
-                    id="tmp-r-e8c145ec-5139-45ca-a939-e908009f9ed3"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:code[(@code='399208008' and @codeSystem='2.16.840.1.113883.6.96')]"
-                    id="tmp-r-85c7aca9-8ea7-4d1d-b0d9-1f919b5f5dd6"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:text"
-                    id="tmp-r-c02b0b7b-e69c-4ba8-8d30-cb3192b60108"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:text/hl7:reference"
-                    id="tmp-r-0234ec06-4411-4ea7-9645-fbb408331b1d"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:statusCode[@code='completed']"
-                    id="tmp-r-f011ee60-0de4-4596-92d1-774129203ba7"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:effectiveTime"
-                    id="tmp-r-4e6512c4-a1aa-44a3-b14a-fcb44ab13816"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
-                    id="tmp-r-2035808c-b857-4894-9bd0-b4f1f0009f25"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]"
-                    id="tmp-r-38367bee-851f-411d-a094-01c7faf3ab2c"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]"
-                    id="tmp-r-618534b9-84b7-4676-8163-d6233614b5cb"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
-                    id="tmp-r-923b2ae4-b814-41d4-9f79-6d3b90c3847b"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4051-2015-03-27T000000"
                         name="Diagnostik Radiography of spine"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]"
@@ -1031,6 +1259,11 @@
                     id="tmp-r-b36159d9-3a43-49f4-9cee-dcf70a220d7b"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']/hl7:id"
                     id="tmp-r-51ce27e1-c14d-4a6a-9d27-5a13ea80a095"/>
+   <svrl:failed-assert test="not(@root) or not(matches(@root,$UUIDpattern) and matches(@root,'[a-z]'))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][7]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:id[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-13-II: When UUID is used, the hexadecimal digits A-F SHALL be in upper case</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']/hl7:code[(@code='79760008' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-6fc59c92-e393-4422-b750-44b213638450"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']/hl7:text"
@@ -1049,7 +1282,7 @@
                     id="tmp-r-aeab3558-97d6-40bb-9863-add7e10ddcd9"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-1ef2c693-b70f-4ee5-a472-349b9a2fd429"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4052-2015-03-27T000000"
                         name="Diagnostik Pelvis X-ray"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']]"
@@ -1078,7 +1311,7 @@
                     id="tmp-r-9b9c21d5-b9ad-4db2-afaa-822609f87831"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-107473aa-d3e1-45c6-bfae-c94df12c8a68"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4053-2015-03-27T000000"
                         name="Diagnostik Plain radiography limb structure"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]"
@@ -1107,7 +1340,33 @@
                     id="tmp-r-e9f59309-b3de-46d1-8a20-c98e86a23b2a"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-bface6d2-15e3-4d93-8845-73fa6c381606"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]"
+                    id="tmp-r-76e2470e-8d1e-4637-8ddb-5db8405cb09f"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']"
+                    id="tmp-r-f857ef8e-3299-4fe4-8527-a2559fca7836"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:templateId[@root='1.2.276.0.76.10.4053']"
+                    id="tmp-r-90e004b0-2562-4e79-95bb-95389ff9184e"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:id"
+                    id="tmp-r-884911b1-f4b4-4d71-a792-21abcc431e2f"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:code[(@code='168537006:363704007=66019005' and @codeSystem='2.16.840.1.113883.6.96')]"
+                    id="tmp-r-21b3b38c-428d-4e90-9cbe-5f6310232c28"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:text"
+                    id="tmp-r-261931b1-55fe-46a8-b3a3-af6717465b51"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:text/hl7:reference"
+                    id="tmp-r-ac21d346-2a7b-4af6-bb7d-52c94526bdd8"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:statusCode[@code='completed']"
+                    id="tmp-r-736c26d5-8ca6-49de-9739-9affe8ea1605"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:effectiveTime"
+                    id="tmp-r-41039e1e-2ae1-4a35-8a17-ba84247f38bb"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
+                    id="tmp-r-d9f7cf96-b29e-4404-b4e9-c2761c06bb84"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]"
+                    id="tmp-r-e5bd2a24-02a4-44f6-b33f-34a3cbf6a2e1"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]"
+                    id="tmp-r-e9f59309-b3de-46d1-8a20-c98e86a23b2a"/>
+   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
+                    id="tmp-r-bface6d2-15e3-4d93-8845-73fa6c381606"/>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4054-2015-03-27T000000"
                         name="Diagnostik Plain radiography"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4054']]"
@@ -1136,7 +1395,7 @@
                     id="tmp-r-23f41abe-688e-4282-a4cc-ac8aad3db447"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4054']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4054']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-39925608-5d94-4d68-a8ed-ee8f92087fc2"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4055-2015-03-27T000000"
                         name="Diagnostik Computed tomography of entire head"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4055']]"
@@ -1165,7 +1424,7 @@
                     id="tmp-r-353e83fb-3751-4dcc-958a-35f20fbadb7f"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4055']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4055']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-14f99280-4f16-4a60-ae76-ed2a8c8d3c7b"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4056-2015-03-27T000000"
                         name="Diagnostik Computed tomography scan - whole body"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4056']]"
@@ -1194,7 +1453,7 @@
                     id="tmp-r-6fa90818-682f-439f-9dba-40af4e9eec6b"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4056']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4056']/hl7:participant[hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]]/hl7:participantRole[hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]]/hl7:code[(@code='225728007' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-d3b6b0e2-6f26-43cc-884b-674fab327098"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4057-2015-03-27T000000"
                         name="Diagnostik Laboratory test"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4057']]"
@@ -1217,7 +1476,7 @@
                     id="tmp-r-47a307b6-8596-471c-a2b2-2cabafb6f92b"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4057']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4057']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-75ee7dca-dd8b-44e6-a7e7-30e5b7379b0d"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4058-2015-03-27T000000"
                         name="Diagnostik Magnetic resonance imaging"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4058']]"
@@ -1240,7 +1499,7 @@
                     id="tmp-r-0645b40b-65bc-442a-aeef-5d5e57dd1afd"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4058']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4058']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-5b31f4b3-b0fe-4fc0-8774-91ea35b5a73a"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4059-2015-03-27T000000"
                         name="Diagnostik Blood gas analysis"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4059']]"
@@ -1263,7 +1522,7 @@
                     id="tmp-r-dc85e469-c16e-4f4c-adb8-735a71103867"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4059']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4059']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-c77d3422-fc2b-43c8-8339-18c3d6af4da6"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4060-2015-03-27T000000"
                         name="Diagnostik Urinalysis, reagent strip without microscopy"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4060']]"
@@ -1286,7 +1545,7 @@
                     id="tmp-r-bf0cc552-b182-41e8-beb9-61d134f9cb1a"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4060']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4060']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-56c84eb0-53fe-4ac5-bc9f-77c4bebafd2f"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4061-2015-03-27T000000"
                         name="Diagnostik 12 lead electrocardiogram"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]"
@@ -1309,7 +1568,7 @@
                     id="tmp-r-d05cc489-7787-4b9a-b280-f51c977c2426"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-d15a5da0-d46a-49fb-a3b6-1c03b464718f"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4062-2015-03-27T000000"
                         name="Diagnostik Diagnostic ultrasonography"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']]"
@@ -1332,7 +1591,7 @@
                     id="tmp-r-d488377b-3455-4cfe-8ea5-47f4ec89359a"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-6079ff12-0df6-4b75-9b49-5a8c925994bd"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4063-2015-03-27T000000"
                         name="Diagnostik Computerized axial tomography"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]"
@@ -1343,6 +1602,11 @@
                     id="tmp-r-6532c373-6bb8-4dba-8382-c0257fcb5ca9"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']/hl7:id"
                     id="tmp-r-3b29e57a-de0b-437a-831c-40c6f7d8d465"/>
+   <svrl:failed-assert test="not(@root) or not(matches(@root,$UUIDpattern) and matches(@root,'[a-z]'))"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][7]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][14]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:id[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>dtr1-13-II: When UUID is used, the hexadecimal digits A-F SHALL be in upper case</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']/hl7:code[(@code='77477000' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-03c48a55-34aa-4d22-a198-5f76402a6cef"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']/hl7:text"
@@ -1355,7 +1619,7 @@
                     id="tmp-r-388556f6-b4e4-44f0-bacf-8936db727ae4"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-b2a53e31-9ed7-4665-bc53-b095052deeae"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4064-2015-03-27T000000"
                         name="Diagnostik Echocardiography"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']]"
@@ -1378,7 +1642,7 @@
                     id="tmp-r-2b873f27-09b6-4935-928a-53d6ecd7a9a4"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
                     id="tmp-r-e958942c-7b39-499f-bd61-9a16b4758a1c"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4065-2015-03-27T000000"
                         name="Allergy Concern Act"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']"
@@ -1397,7 +1661,7 @@
                     id="tmp-r-c7bb9718-4737-4ff9-bb98-8288c5a5b10d"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4065']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4066-2014-06-09T000000"
                         name="Allergy / Intolerance Observation"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']"
@@ -1434,13 +1698,12 @@
                     id="tmp-r-4b59655c-7802-4dde-845b-956f463792a8"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']/hl7:participant"
                     id="tmp-r-a1bc2326-7235-4058-9de1-cdf1f5eb3240"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']/hl7:participant/hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]"
-                    id="tmp-r-cbf69fe8-c51c-4e5e-b922-ff81a49a5e61"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']/hl7:participant/hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]/hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]"
-                    id="tmp-r-d97b02a6-2410-4167-946f-93a406ba193d"/>
-   <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4066']/hl7:participant/hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]/hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]/hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
-                    id="tmp-r-a81877b4-40b5-4634-af50-470d5595aeba"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="count(hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]])&gt;=1 and not(hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]]/@nullFlavor)"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][8]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:participant[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Allergyintoleranceobservation): Element hl7:participantRole[hl7:playingEntity[hl7:code[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.52-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]]] ist mandatory [min 1x].</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4067-2015-03-30T000000"
                         name="Weiterbehandlung Verlegung"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4067']]"
@@ -1455,7 +1718,7 @@
                     id="tmp-r-28d4c773-2d46-4e9a-ab13-68b941e17b67"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4067']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4067']/hl7:text/hl7:reference"
                     id="tmp-r-ba9b7ffd-6c00-47c9-989b-556d3ef84abb"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4068-2015-03-30T000000"
                         name="Isolation"/>
    <svrl:fired-rule context="*[hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']]"
@@ -1468,7 +1731,7 @@
                     id="tmp-r-fe228d55-3cf7-4874-be06-c285e5789c7d"/>
    <svrl:fired-rule context="*[hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']]/hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]"/>
    <svrl:fired-rule context="*[hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']]/hl7:procedure[hl7:templateId/@root='1.2.276.0.76.10.4068']/hl7:entryRelationship[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4069-2014-06-09T000000"
                         name="Isolation Indication"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']"
@@ -1477,25 +1740,50 @@
                     id="tmp-r-841afe6f-c20a-4a41-bf37-80d2d52a5d40"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:code[(@code='55607006' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-36b1d098-a6e5-4482-952a-157c984fd2a0"/>
+   <svrl:failed-assert test="@nullFlavor or (@code='55607006' and @codeSystem='2.16.840.1.113883.6.96' and @displayName='Problem')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][12]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:procedure[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][1]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:code[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Isolationindication): Der Elementinhalt MUSS einer von 'code '55607006' codeSystem '2.16.840.1.113883.6.96' displayName='Problem'' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:statusCode[@code='completed']"
                     id="tmp-r-d91a17f2-0073-47cf-84be-45358b45faf9"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:value"
                     id="tmp-r-3ae032b2-4b7c-4034-ad3e-c3423d611d31"/>
+   <svrl:failed-assert test="@nullFlavor or exists(doc('include/voc-1.2.276.0.76.11.55-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]])"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][12]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:procedure[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][1]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Isolationindication): Der Elementinhalt MUSS einer von '1.2.276.0.76.11.55 Isolation reason (DYNAMIC)' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']"
                     id="tmp-r-8a5e97bb-8b49-4980-8742-cf7e94b6dd28"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:templateId[@root='1.2.276.0.76.10.4069']"
                     id="tmp-r-841afe6f-c20a-4a41-bf37-80d2d52a5d40"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:code[(@code='55607006' and @codeSystem='2.16.840.1.113883.6.96')]"
                     id="tmp-r-36b1d098-a6e5-4482-952a-157c984fd2a0"/>
+   <svrl:failed-assert test="@nullFlavor or (@code='55607006' and @codeSystem='2.16.840.1.113883.6.96' and @displayName='Problem')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][12]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:procedure[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:code[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Isolationindication): Der Elementinhalt MUSS einer von 'code '55607006' codeSystem '2.16.840.1.113883.6.96' displayName='Problem'' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:statusCode[@code='completed']"
                     id="tmp-r-d91a17f2-0073-47cf-84be-45358b45faf9"/>
    <svrl:fired-rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4069']/hl7:value"
                     id="tmp-r-3ae032b2-4b7c-4034-ad3e-c3423d611d31"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:failed-assert test="@nullFlavor or exists(doc('include/voc-1.2.276.0.76.11.55-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]])"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][12]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][2]/*:procedure[namespace-uri()='urn:hl7-org:v3'][1]/*:entryRelationship[namespace-uri()='urn:hl7-org:v3'][2]/*:observation[namespace-uri()='urn:hl7-org:v3'][1]/*:value[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Isolationindication): Der Elementinhalt MUSS einer von '1.2.276.0.76.11.55 Isolation reason (DYNAMIC)' sein.</svrl:text>
+   </svrl:failed-assert>
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4070-2015-03-30T000000"
                         name="Zusätzliche externe Dokumentation"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']"
                     id="tmp-r-4f73ef17-d879-4084-8e18-ceebde2c7a13"/>
+   <svrl:failed-assert test="string(@moodCode)=('EVN')"
+                       role="error"
+                       location="/*:ClinicalDocument[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][1]/*:structuredBody[namespace-uri()='urn:hl7-org:v3'][1]/*:component[namespace-uri()='urn:hl7-org:v3'][13]/*:section[namespace-uri()='urn:hl7-org:v3'][1]/*:entry[namespace-uri()='urn:hl7-org:v3'][1]/*:act[namespace-uri()='urn:hl7-org:v3'][1]">
+      <svrl:text>(Additionalexternalocuments): Der Wert von @moodCode MUSS 'EVN' sein.</svrl:text>
+   </svrl:failed-assert>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']/hl7:templateId[@root='1.2.276.0.76.10.4070']"
                     id="tmp-r-a0dc6781-2b27-4321-8b1d-0045ff4d37b1"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']/hl7:id"
@@ -1506,7 +1794,7 @@
                     id="tmp-r-12b96115-70d5-4919-9941-7399d4f7d9e7"/>
    <svrl:fired-rule context="*[hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']]/hl7:act[hl7:templateId/@root='1.2.276.0.76.10.4070']/hl7:text/hl7:reference"
                     id="tmp-r-49a755db-e4a4-4809-8768-12b085720ca3"/>
-   <svrl:active-pattern document="file:/E:/Development/aktin_repo/dwh-import/CDA%20Basismodul/basismodul-test-file.xml"
+   <svrl:active-pattern document="file:/E:/GIT/aktin/dwh-import/CDA%20Basismodul/basismodul-beispiel-storyboard01_complete.xml"
                         id="template-1.2.276.0.76.10.4071-2015-03-30T000000"
                         name="External Document Reference"/>
    <svrl:fired-rule context="*[hl7:externalDocument[hl7:templateId/@root='1.2.276.0.76.10.4071']]"
