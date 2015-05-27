@@ -492,7 +492,6 @@
                             <value xsi:type="PQ" value="67" unit="/min"/>
                         </observation>               
                     </entry>
-                    <!--#ERROR IN 1.2.276.0.76.10.4034-->
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4034"/>
@@ -590,7 +589,6 @@
                             <value xsi:type="PQ" value="37.0" unit="Cel"/>
                         </observation>                    
                     </entry>  
-                    <!--#ERROR IN 1.2.276.0.76.10.4036--> 
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4036"/>
@@ -603,7 +601,7 @@
                             <!-- 56840-2" Pain severity verbal numeric scale -->
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                            <!--#CHANGES updated to newest standard-->
                             <value xsi:type="PQ" value="2" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
                         </observation>                    
                      </entry>
