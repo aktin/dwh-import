@@ -22,78 +22,78 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
 
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']"
-         id="tmp-r-68c189f8-4f40-4640-9402-e718548939a8">
+         id="tmp-r-07bbf94e-e03c-4fdb-8899-d1038731afd2">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@classCode)=('DOCSECT') or not(@classCode)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @classCode MUSS 'DOCSECT' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:templateId[@root='1.2.276.0.76.10.3050'])&gt;=1 ">(Relevantdiagnostictestsorlaboratorydata): Element hl7:templateId[@root='1.2.276.0.76.10.3050'] ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:templateId[@root='1.2.276.0.76.10.3050'])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:templateId[@root='1.2.276.0.76.10.3050'] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')])&gt;=1 and not(hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')]/@nullFlavor)">(Relevantdiagnostictestsorlaboratorydata): Element hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')] ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:title)&gt;=1 and not(hl7:title/@nullFlavor)">(Relevantdiagnostictestsorlaboratorydata): Element hl7:title ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:title)&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:title kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:text)&gt;=1 and not(hl7:text/@nullFlavor)">(Relevantdiagnostictestsorlaboratorydata): Element hl7:text ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:text)&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:text kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4054']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4054']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4055']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4055']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4056']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4056']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4057']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4057']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4058']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4058']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4059']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4059']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4060']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4060']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="count(hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']])&lt;=1">(Relevantdiagnostictestsorlaboratorydata): Element hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']] kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -103,13 +103,13 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
 
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:templateId[@root='1.2.276.0.76.10.3050']"
-         id="tmp-r-11750c0c-c1c5-407d-b23b-59ba814cf489">
+         id="tmp-r-baba4676-20da-4213-9787-84767a1a665c">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Relevantdiagnostictestsorlaboratorydata): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="II"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@root)=('1.2.276.0.76.10.3050')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @root MUSS '1.2.276.0.76.10.3050' sein.</assert>
    </rule>
    <!--
@@ -119,13 +119,13 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
 
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:code[(@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')]"
-         id="tmp-r-3c4f7e74-9c14-411d-915a-818e63397031">
+         id="tmp-r-9219b30b-02c2-4a29-843f-52bd88e5fc72">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CD' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Relevantdiagnostictestsorlaboratorydata): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CD" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CD"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="@nullFlavor or (@code='30954-2' and @codeSystem='2.16.840.1.113883.6.1')">(Relevantdiagnostictestsorlaboratorydata): Der Elementinhalt MUSS einer von 'code '30954-2' codeSystem '2.16.840.1.113883.6.1'' sein.</assert>
    </rule>
    <!--
@@ -135,13 +135,13 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
 
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:title"
-         id="tmp-r-e2992d40-ccab-48fa-84cf-b48512ebb78d">
+         id="tmp-r-eaac6fb9-67d0-4bd7-a514-329b20843232">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ST' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Relevantdiagnostictestsorlaboratorydata): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ST" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="ST"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="text()='Diagnostik'">(Relevantdiagnostictestsorlaboratorydata): Der Elementinhalt von 'hl7:title' MUSS ''Diagnostik'' sein.</assert>
    </rule>
    <!--
@@ -151,9 +151,9 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
 
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:text"
-         id="tmp-r-45957783-4344-4f57-bc56-446c7a7142f1">
+         id="tmp-r-1fd1071e-7e99-443d-8425-dc02a6996fcb">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='SD.TEXT' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Relevantdiagnostictestsorlaboratorydata): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:SD.TEXT" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="SD.TEXT"/>
    </rule>
@@ -165,16 +165,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4050']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -185,16 +185,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4051']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -205,16 +205,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4052']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -225,16 +225,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4053']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -245,16 +245,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4054']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -265,16 +265,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4055']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -285,16 +285,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4056']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -305,16 +305,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4057']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -325,16 +325,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4058']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -345,16 +345,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4059']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -365,16 +365,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4060']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -385,16 +385,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -405,16 +405,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4062']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -425,16 +425,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4063']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 
@@ -445,16 +445,16 @@ Item: (Relevantdiagnostictestsorlaboratorydata)
 -->
    <rule context="*[hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']]/hl7:section[hl7:templateId/@root='1.2.276.0.76.10.3050']/hl7:entry[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4064']]">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@typeCode)=('COMP')">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @typeCode MUSS 'COMP' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@typeCode) or (string-length(@typeCode)&gt;0 and not(matches(@typeCode,'\s')))">(Relevantdiagnostictestsorlaboratorydata): Attribute @typeCode MUSS vom Datentyp 'cs' sein</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="string(@contextConductionInd)=('true') or not(@contextConductionInd)">(Relevantdiagnostictestsorlaboratorydata): Der Wert von @contextConductionInd MUSS 'true' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150520T182313/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20150526T112104/tmp-1.2.276.0.76.10.3050-2015-01-10T000000.html"
               test="not(@contextConductionInd) or string(@contextConductionInd)=('true','false')">(Relevantdiagnostictestsorlaboratorydata): Attribute @contextConductionInd MUSS vom Datentyp 'bl' sein</assert>
    </rule>
 </pattern>
