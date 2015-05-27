@@ -1,0 +1,130 @@
+<!--dtr1-1-CD: null or code and/or originalText-->
+
+            <!--#ERROR IN 1.2.276.0.76.10.3047-->
+            <!-- &Complete Component/Section ClinicalInformation mit 3 Entries-->
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.10.3047"/>
+                    <code code="55752-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Clinical information" originalText="test"/>
+                    <title>Klinische Basisinformationen</title>
+                    <text>
+                        <list>
+                            <item>Schwanger: nein</item>
+                            <item>Tetanusschutz: ja</item>
+                            <item>Rankin Skala Score: 1</item>
+                        </list>
+                    </text>
+                </section>                
+                <!--#CHANGES moved entries out of section-->
+                <entry typeCode="COMP">
+                    <observation classCode="OBS" moodCode="EVN">
+                        <templateId root="1.2.276.0.76.10.4043"/>
+                        <!-- &Frage Wie kommt die ID zustande? -->
+                        <id root="b2e0e192-416a-4e9c-97ce-2f3e27424242"/>
+                        <code code="11449-6" codeSystem="2.16.840.1.113883.6.1" displayName="Pregnancy status"/>
+                        <text>
+                            <!-- &comment Text willkürlich gewählt -->
+                            <reference value="#Preg"/>
+                        </text>
+                        <statusCode code="completed"/>
+                        <effectiveTime value="201501171545"/>                                       
+                        <!-- &Frage Woher nimmt man den richtigen Code? Die Snomed Beispielcodes findet man so nicht im NCI Metathesaurus bzw. nicht mit dem angegebenen Code
+                        Woher nimmt man den Type Code? Der Code stammt aus dem HL7 Wiki http://wiki.hl7.de/index.php?title=1.2.276.0.76.11.46 - scheint aber nicht der richtige Snomed Code zu sein?! --> 
+                        <value xsi:type="CV" code="60001007" codeSystem="2.16.840.1.113883.6.96" displayName="Not pregnant (finding)"/>  
+                    </observation>                       
+                </entry>
+                <entry typeCode="COMP">
+                    <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false"> <!-- Tetatusschutz vorhanden (seit dem Jahr 2014) -->
+                        <templateId root="1.2.276.0.76.10.4044"/>
+                        <!-- &Frage Wie kommt die ID zustande? -->
+                        <id root="b2e0e192-416a-4e9c-97ce-2f3e27424243"/>
+                        <code code="IMMUNIZ" codeSystem="2.16.840.1.113883.5.4" displayName="Immunization"/>
+                        <text>
+                            <!-- &comment Text willkürlich gewählt -->
+                            <reference value="#immun1"/>
+                        </text>
+                        <statusCode code="completed"/>
+                        <effectiveTime value="2014"/>                                       
+                        <consumable>
+                            <manufacturedProduct classCode="MANU">
+                                <manufacturedMaterial classCode="MMAT" determinerCode="KIND">
+                                    <code code="333621002" codeSystem="2.16.840.1.113883.6.96" displayName="Tetanus vaccine (product)"/>
+                                </manufacturedMaterial>
+                            </manufacturedProduct>
+                        </consumable>
+                    </substanceAdministration>                       
+                </entry>
+                <entry typeCode="COMP">
+                    <observation classCode="OBS" moodCode="EVN">
+                        <templateId root="1.2.276.0.76.10.4045"/>
+                        <id root="10c1eb7e-dc2d-4d1f-806a-2ad65eba0396"/>
+                        <code code="75859-9" codeSystem="2.16.840.1.113883.6.1" displayName="Modified rankin scale"/>
+                        <text>
+                            <!-- &comment Text willkürlich gewählt -->
+                            <reference value="#rankin"/>
+                        </text>
+                        <statusCode code="completed"/>
+                        <effectiveTime value="20150117"/>
+                        <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                        <value xsi:type="CO" value="2" code="75859-9" codeSystem="2.16.840.1.113883.6.1"/>
+                    </observation>
+                </entry>
+            </component>
+
+
+                    <!--#ERROR IN 1.2.276.0.76.10.4034-->
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.10.4034"/>
+                            <id root="98c1eb7e-dc2d-4d1f-806a-2ad65eba0351"/>
+                            <code code="9269-2" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score total"/>
+                            <text>
+                                <!-- &comment Text willkürlich gewählt -->
+                                <reference value="#GlasgowCS"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20150117"/>
+                            <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                            <value xsi:type="CO" value="9" code="9269-2" codeSystem="2.16.840.1.113883.6.1"/>
+                            <!--#CHANGES keine statusCodes in componant - observations (comp art decor) Beispiel in art decor fehlerhaft-->
+                            <component>
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
+                                    <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                                    <value xsi:type="CO" value="4" code="9267-6" codeSystem="2.16.840.1.113883.6.1"/>
+                                </observation>  
+                            </component>  
+                            <component>
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
+                                    <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                                    <value xsi:type="CO" value="3" code="9270-0" codeSystem="2.16.840.1.113883.6.1"/>
+                                </observation>  
+                            </component>  
+                            <component>
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <code code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
+                                    <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                                    <value xsi:type="CO" value="2" code="9268-4" codeSystem="2.16.840.1.113883.6.1" />
+                                </observation>  
+                            </component>
+                        </observation>                    
+                    </entry>
+
+                    <!--#ERROR IN 1.2.276.0.76.10.4036--> 
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">                        
+                            <templateId root="1.2.276.0.76.10.4036"/>
+                            <id root="10c1eb7e-dc2d-4d1f-806a-2ad65eba0396"/>
+                            <code code="72514-3" codeSystem="2.16.840.1.113883.6.1" displayName="Pain severity - 0-10 verbal numeric rating"/>
+                            <text>
+                                <!-- &comment Text willkürlich gewählt -->
+                                <reference value="#Pain"/>
+                            </text>
+                            <!-- 56840-2" Pain severity verbal numeric scale -->
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20150117"/>
+                            <!--#CHANGES / ERROR added code and codesystem to satisfy rules-->
+                            <value xsi:type="CO" value="2" code="72514-3" codeSystem="2.16.840.1.113883.6.1"/>
+                        </observation>                    
+                     </entry>

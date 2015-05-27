@@ -43,8 +43,8 @@ public class SchematronValidator {
 		
 		File inXML, inSCH;
 		// init
-//		inXML = new File("CDA Basismodul/basismodul-test-file.xml");
-		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
+		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete_t01.xml");
+//		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
 //		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01.xml");
 
 		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
