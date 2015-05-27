@@ -38,14 +38,12 @@ public class SchematronValidator {
 
 		
 		SchemaFactory sFactory = SchemaFactory.newInstance(XmlSchemaNsUris.SCHEMATRON_NS_URI);
-
-//		factory = TransformerFactory.newInstance();
 		
 		File inXML, inSCH;
 		// init
-		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete_t01.xml");
-//		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01_complete.xml");
-//		inXML = new File("CDA Basismodul/basismodul-beispiel-storyboard01.xml");
+		inXML = new File("cda_basismodul/basismodul-beispiel-storyboard01_complete_t01.xml");
+//		inXML = new File("cda_basismodul/basismodul-beispiel-storyboard01_complete.xml");
+//		inXML = new File("cda_basismodul/basismodul-beispiel-storyboard01.xml");
 
 		inSCH =  new File("src/main/resources/schematron/aktin-basism.sch");
 		
@@ -54,12 +52,6 @@ public class SchematronValidator {
 		Source sourceSCH = new StreamSource(inSCH);
 		Source sourceXML = new StreamSource(inXML);
 		
-//		
-//		OutputStream streamXSL;
-//		Result resultXSL;
-//		
-//		Templates t1schematron;
-		
 		try {
 			
 			Schema myschema = sFactory.newSchema(sourceSCH);
@@ -67,21 +59,9 @@ public class SchematronValidator {
 			
 			validator.validate(sourceXML);
 			
-//			
-//			streamXSL = new FileOutputStream(outXSL);
-//			resultXSL = new StreamResult(streamXSL);
-//			
-//			t1schematron = factory.newTemplates(sourceXSL);
-//			Transformer t1 = t1schematron.newTransformer();
-//
-//			t1.transform(sourceSCH, resultXSL);
-//			
-//			log.info("Transform successful ");
-			
-
-//			schemaOutStream.close();
 			log.info("success! ");
 		} catch (Exception e) {
+			log.info("Error in schematron validation: ");
 			e.printStackTrace();
 		} finally {
 			log.info("end ");
