@@ -39,3 +39,6 @@ Definition für den HL7 Datentyp SD.TEXT? Kann anscheinend beliebige Texte enthal
 Datentyp wird an mehreren Stellen verwendet und es stehen im Beispiel auch teilweise "Nutzdaten" drin.
 
 In vielen Fällen wird ein ValueSet vorgegeben, das einen bestimmten Code hat, z.B. valueSet="1.2.276.0.76.11.48"; im CDA steht aber nur codeSystem="2.16.840.1.113883.6.96" (Snomed) - das ist nicht falsch, aber die Angabe des ValueSet wäre spezifischer und ist in der CDA-Definition beschrieben.
+
+
+Was ist die "Referenz-Implementierung" für eine Schematron-Transformation bzw. Validierung?
