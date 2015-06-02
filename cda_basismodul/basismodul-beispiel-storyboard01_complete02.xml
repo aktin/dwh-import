@@ -505,25 +505,28 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="9" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-                            <component typeCode="COMP" contextConductionInd="true">
+                            <value xsi:type="PQ" value="9" unit="{score}"/>
+                            <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
-                                    <value xsi:type="PQ" value="4" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="PQ" value="4" unit="{score}"/>
                                 </observation>
-                            </component>
-                            <component typeCode="COMP" contextConductionInd="true">
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
-                                    <value xsi:type="PQ" value="3" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="PQ" value="3" unit="{score}"/>
                                 </observation>
-                            </component>
-                            <component typeCode="COMP" contextConductionInd="true">
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
-                                    <value xsi:type="PQ" value="2" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="PQ" value="2" unit="{score}"/>
                                 </observation>  
-                            </component>
+                            </entryRelationship>
                         </observation>                    
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
@@ -1101,7 +1104,7 @@
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4070"/>
                             <id root="285e1c44-5027-4b2b-b21c-e987b55567ee"/>
-                            <code nullFlavor="NA"/>
+                            <code code="11516-2" codeSystem="2.16.840.1.113883.6.1"/>
                             <text>
                                 <reference value="#edoc-1"/>
                             </text>  

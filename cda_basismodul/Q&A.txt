@@ -50,3 +50,5 @@ In Template 1.2.276.0.76.10.4031 ist der LOINC Code 20564-1 angegeben. Das sollt
 LOINC Codes für die Glasgow Coma Scale Subscores sind im CDA und in der Terminologie-Tabelle unterschiedlich (mit und ohne „…at first encounter“)
 
 Konzept Code für "804 verwendetes Ersteinschätzungssystem"? Konzept-Code für MTS/Ersteinschätzung = L:11283-9? Steht in der Terminologie-Tabelle anders...
+
+Beispiel zu 1.2.276.0.76.10.4070: <reference typeCode="SPRT"> ist nicht zulässig laut Schematron => <externalDocument classCode="DOC" moodCode="EVN">
