@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><patient-visit xmlns:cda="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dwh-eav.xsd">
+<idat>
+<patid>
+<!--3	PatientenId im Basismodul-->
+<eav-item type="xsi:string" concept="Patienten-ID">1.2.276.0.76.4.8.1234567890</eav-item>
+</patid>
+<visit>xxx</visit>
+</idat>
+<last-modified>xxx</last-modified>
+<!--1	ID des Krankenhauses-->
+<eav-item type="xsi:string" concept="Krankenhaus-ID">1.2.276.0.76.4.17.9814184919</eav-item>
+<!--114 Rankin Scale-->
+<eav-item type="xsi:integer" concept="L:75859-9" unit="{score}">2</eav-item>
+<!--65 Patientengeschlecht-->
+<eav-item type="xsi:integer" concept="L:21840-4">
+                    1
+                </eav-item>
+<!--57/58 Aufnahmedatum/uhrzeit-->
+<eav-item concept="S:305056002" timestamp="201501171603"/>
+<!--5 Schwanger-->
+<eav-item type="xsi:string" concept="L:11449-6">60001007</eav-item>
+<!--6 Tetanusschutz-->
+<eav-item type="xsi:string" concept="L:11458-7">
+                    false
+                </eav-item>
+<!--9 Atemfrequenz-->
+<eav-item type="xsi:integer" concept="L:9279-1" unit="/min">17</eav-item>
+<!--10 Sauerstoffsättigung-->
+<eav-item type="xsi:integer" concept="L:59408-5" unit="%">86.0</eav-item>
+<!--11 Systolischer Blutdruck-->
+<eav-item type="xsi:integer" concept="L:8480-6" unit="mm[Hg]">129</eav-item>
+<!--12 Herzfrequenz-->
+<eav-item type="xsi:integer" concept="L:8867-4" unit="/min">67</eav-item>
+<!--13 Glasgow Coma Scale Eye Opening(-->
+<eav-item type="xsi:integer" concept="L:9267-6" unit="{score}">4</eav-item>
+<!--14 Glasgow Coma Scale Verbal Response(-->
+<eav-item type="xsi:integer" concept="L:9270-0" unit="{score}">3</eav-item>
+<!--16 Glasgow Coma Scale Motor Response(-->
+<eav-item type="xsi:integer" concept="L:9268-4" unit="{score}">2</eav-item>
+<!--17 Glasgow Coma Scale(-->
+<eav-item type="xsi:integer" concept="L:9269-2" unit="{score}">9</eav-item>
+<!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+<eav-group timestamp="xxx" concept="S:363953003">
+<value modifier="420335002"/>
+<value modifier="362503005"/>
+</eav-group>
+<!--19 Pupillenreaktion-->
+<eav-group timestamp="xxx" concept="S:271733001">
+<value modifier="301949001"/>
+<value modifier="362503005"/>
+</eav-group>
+<!--19 Pupillenreaktion-->
+<eav-group timestamp="xxx" concept="S:271733001">
+<value modifier="301949001"/>
+<value modifier="362502000"/>
+</eav-group>
+<!--20 Körperkerntemperatur-->
+<eav-item type="xsi:integer" concept="L:8329-5" unit="Cel">37.0</eav-item>
+<!--21 Schmerz bei Aufnahme-->
+<eav-item type="xsi:integer" concept="L:72514-3" unit="{score}">2</eav-item>
+<!--884 Transportmittel-->
+<eav-item type="xsi:integer" concept="L:11459-5">83887000</eav-item>
+<!--22 Zuweisung-->
+<eav-item type="xsi:integer" concept="L:11293-8">700232004</eav-item>
+<!--804 verwendetes Ersteinschätzungssystem-->
+<eav-item type="xsi:integer" concept="Ersteinschätzungssystem">1.2.276.0.76.5.438</eav-item>
+<!--23 Ersteinschätzung-->
+<eav-item type="xsi:integer" concept="L:11283-9" unit="">4</eav-item>
+</patient-visit>

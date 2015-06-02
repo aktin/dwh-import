@@ -42,3 +42,11 @@ In vielen Fällen wird ein ValueSet vorgegeben, das einen bestimmten Code hat, z.
 
 
 Was ist die "Referenz-Implementierung" für eine Schematron-Transformation bzw. Validierung?
+
+Zum Teil wird für LOINC-Codes oder Snomed Codes ein Element value mit Attribut Code verwendet und zum Teil ein Element code mit Attribut code (Bug oder Feature?)
+
+In Template 1.2.276.0.76.10.4031 ist der LOINC Code 20564-1 angegeben. Das sollte eigentlich 59408-5 sein.
+
+LOINC Codes für die Glasgow Coma Scale Subscores sind im CDA und in der Terminologie-Tabelle unterschiedlich (mit und ohne „…at first encounter“)
+
+Konzept Code für "804 verwendetes Ersteinschätzungssystem"? Konzept-Code für MTS/Ersteinschätzung = L:11283-9? Steht in der Terminologie-Tabelle anders...

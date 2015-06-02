@@ -28,6 +28,7 @@
     
 -->
 <?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-stylesheet type="text/xsl" href="dwh-eav-test-VT.xsl"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -454,7 +455,8 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4031"/>
                             <id root="769eb111-93b0-4c84-8e55-98f2098b7950"/>
-                            <code code="20564-1" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation"/>
+                            <!-- &comment Code ist falsch. Müsste 59408-5 sein -->
+                            <code code="20564-1" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation"/> 
                             <text>
                                 <!-- &comment Text willkürlich gewählt -->
                                 <reference value="#oxy"/>
@@ -531,7 +533,7 @@
                             <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
                             <text>
                                 <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#GlasgowCS"/>
+                                <reference value="#PupilLeft"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>

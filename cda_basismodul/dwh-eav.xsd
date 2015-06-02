@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:complexType name="idat-type">
+	<xs:sequence>
+		<xs:element name="patid" type="xs:string"/>
+		<xs:element name="visit" type="xs:string"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="item-type">
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="concept" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="xs:string" default="none"/>
+			<!-- if timestamp not specified, the surrounding encounter's timestamp is used -->
+			<xs:attribute name="timestamp" type="xs:dateTime" use="optional"/>
+			<!-- if end not specified, point in time is assumed (no duration)-->
+			<xs:attribute name="end" type="xs:dateTime" use="optional"/>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name="group-type">
+	<xs:sequence minOccurs="1" maxOccurs="unbounded">
+		<xs:element name="value" type="group-item"/>
+	</xs:sequence>
+	<xs:attribute name="concept" type="xs:string" use="required"/>
+	<xs:attribute name="type" type="xs:string" default="none"/>
+	<xs:attribute name="timestamp" type="xs:dateTime" use="optional"/>
+	<xs:attribute name="end" type="xs:dateTime" use="optional"/>
+</xs:complexType>
+
+<xs:complexType name="group-item">
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="modifier" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="xs:string" default="none"/>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+<xs:element name="patient-visit">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="idat" type="idat-type"/>
+			<xs:element name="last-modified" type="xs:dateTime"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="eav-item" type="item-type"/>
+				<xs:element name="eav-group" type="group-type"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+
+</xs:schema>
