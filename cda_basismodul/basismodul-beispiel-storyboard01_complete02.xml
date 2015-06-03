@@ -1063,6 +1063,9 @@
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="ba6d1bac-17d3-4195-89c4-1121bc809b5e"/>
                             <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
+                            <text>
+                                <reference value="#iso"/>
+                            </text>
                             <statusCode code="active"/>
                             <entryRelationship typeCode="RSON">
                                 <observation classCode="OBS" moodCode="EVN">
@@ -1108,22 +1111,22 @@
                             <text>
                                 <reference value="#edoc-1"/>
                             </text>  
-                            <!-- &Frage typeCode in der XML-Übersicht nicht dokumentiert, aber in der CDA.xsd erzwungen -->
-                            <reference typeCode="ELNK">
-                            	<externalDocument classCode="DOC" moodCode="EVN">
+                            <reference typeCode="SPRT">                                          	    
+                                <externalDocument classCode="DOC" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4071"/>
-                                    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
-                                </externalDocument>
+                                    <code code="53576-5" codeSystem="2.16.840.1.113883.6.1"/>
+                            	    <text>                           	            
+                                        <reference value="#edoc-1"/>                            	        
+                                    </text>
+                                </externalDocument>                              
                             </reference>  
-                            <!-- &Frage typeCode in der XML-Übersicht nicht dokumentiert, aber in der CDA.xsd erzwungen -->
-                            <reference typeCode="ELNK">
+                            <reference typeCode="SPRT">
                             	<externalDocument classCode="DOC" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4071"/>
                                     <code code="11488-4" codeSystem="2.16.840.1.113883.6.1"/>
                                 </externalDocument>
                             </reference>  
-                            <!-- &Frage typeCode in der XML-Übersicht nicht dokumentiert, aber in der CDA.xsd erzwungen -->
-                            <reference typeCode="ELNK">
+                            <reference typeCode="SPRT">
                             	<externalDocument classCode="DOC" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4071"/>
                                     <code code="74198-3" codeSystem="2.16.840.1.113883.6.1"/>

@@ -43,7 +43,7 @@ In vielen Fällen wird ein ValueSet vorgegeben, das einen bestimmten Code hat, z.
 
 Was ist die "Referenz-Implementierung" für eine Schematron-Transformation bzw. Validierung?
 
-Zum Teil wird für LOINC-Codes oder Snomed Codes ein Element value mit Attribut Code verwendet und zum Teil ein Element code mit Attribut code (Bug oder Feature?)
+Zum Teil wird für LOINC-Codes oder Snomed Codes ein Element value mit Attribut Code verwendet und zum Teil ein Element code mit Attribut code (Bug oder Feature?)  code=statische Metainformation und Value=(Item)-Wert? Dann ist das z.T. inkonsistent.
 
 In Template 1.2.276.0.76.10.4031 ist der LOINC Code 20564-1 angegeben. Das sollte eigentlich 59408-5 sein.
 
