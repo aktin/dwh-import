@@ -41,11 +41,14 @@
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4046']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4047']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4035']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4036']"/>            
+            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4036']"/>
+            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3050']"/>
+            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3055']"/>                    
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3045']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3046']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3049']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4042']"/>
+           
             
             
         </patient-visit>
@@ -89,7 +92,7 @@
     <!-- 59 Geburtsdatum -->
     <xsl:template match="cda:patient/cda:birthTime">
         <xsl:comment>59 Geburtsdatum</xsl:comment>
-        <eav-item concept="Geburtsdatum" type="xsi:integer">
+        <eav-item concept="Geburtsdatum" type="xsi:string">
             <xsl:value-of select="./@value"/>
         </eav-item>
     </xsl:template>
@@ -113,7 +116,7 @@
     -->
     <xsl:template match="cda:patient/cda:administrativeGenderCode">
         <xsl:comment>65 Patientengeschlecht</xsl:comment>
-        <eav-item concept="L:21840-4" type="xsi:integer">
+        <eav-item concept="L:21840-4" type="xsi:string">
             <xsl:choose>
                 <xsl:when test="./@code = 'M'">
                     1
@@ -138,6 +141,7 @@
     </xsl:template>
     
     <!-- 5 Schwanger L:11449-6'-->
+    <!-- Unterscheidung Unknown und Nicht ausgefüllt? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4043']">
         <xsl:comment>5 Schwanger</xsl:comment>
         <eav-item concept="L:11449-6" type="xsi:string">
@@ -231,7 +235,7 @@
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4031']">
         <xsl:comment>10 Sauerstoffsättigung</xsl:comment>
-        <eav-item concept="L:59408-5" type="xsi:integer">
+        <eav-item concept="L:59408-5" type="xsi:decimal">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -356,7 +360,7 @@
      -->  
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4035']">
         <xsl:comment>20 Körperkerntemperatur</xsl:comment>
-        <eav-item concept="L:8329-5" type="xsi:integer">
+        <eav-item concept="L:8329-5" type="xsi:decimal">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -375,6 +379,42 @@
             </xsl:attribute>
             <xsl:value-of select="../cda:value/@value"/>
         </eav-item>
+    </xsl:template>
+    
+    <!-- Diagnostik xxx @negationInd auswerten? Wie soll ja/nein abgebildet werden?-->
+    <!-- Diagnostik xxx opB >> 373573001 	Clinical finding present (situation) = opB unchecked; Clinical finding absent (situation) = opB checked-->
+    <!-- Diagnostik xxx Zeitpunkt-->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3050']">
+        <xsl:for-each select="../cda:entry/cda:observation">
+            <xsl:comment><xsl:value-of select="./cda:code/@displayName"/></xsl:comment>
+            <eav-item type="xsi:string">
+                <xsl:attribute name="concept">
+                    S:<xsl:value-of select="./cda:code/@code"/>
+                </xsl:attribute>
+                <xsl:attribute name="start">
+                    <xsl:value-of select="./cda:effectiveTime/@value"/>
+                </xsl:attribute>
+                <xsl:value-of select="./cda:value/@code"/>
+            </eav-item>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <!-- 42 Diagnosen-->
+    <!-- Reihenfolge muss bei Diagnosen beachtet/codiert werden -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3055']">
+        <xsl:comment>42 Diagnosen</xsl:comment>
+        <eav-group>
+            <xsl:attribute name="concept">
+                L:<xsl:value-of select="../cda:code/@code"/>
+            </xsl:attribute>
+            <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship">
+                <value>
+                    <xsl:attribute name="modifier">
+                        <xsl:value-of select="./cda:observation/cda:value/@code"/>
+                    </xsl:attribute>
+                </value>
+            </xsl:for-each>
+        </eav-group>     
     </xsl:template>
                 
     <!-- 22 Zuweisung -->
