@@ -42,3 +42,19 @@ In vielen Fällen wird ein ValueSet vorgegeben, das einen bestimmten Code hat, z.
 
 
 Was ist die "Referenz-Implementierung" für eine Schematron-Transformation bzw. Validierung?
+
+Zum Teil wird für LOINC-Codes oder Snomed Codes ein Element value mit Attribut Code verwendet und zum Teil ein Element code mit Attribut code (Bug oder Feature?)  code=statische Metainformation und Value=(Item)-Wert? Dann ist das z.T. inkonsistent.
+
+In Template 1.2.276.0.76.10.4031 ist der LOINC Code 20564-1 angegeben. Das sollte eigentlich 59408-5 sein.
+
+LOINC Codes für die Glasgow Coma Scale Subscores sind im CDA und in der Terminologie-Tabelle unterschiedlich (mit und ohne „…at first encounter“)
+
+Konzept Code für "804 verwendetes Ersteinschätzungssystem"? Konzept-Code für MTS/Ersteinschätzung = L:11283-9? Steht in der Terminologie-Tabelle anders...
+
+Beispiel zu 1.2.276.0.76.10.4070: <reference typeCode="SPRT"> ist nicht zulässig laut Schematron => <externalDocument classCode="DOC" moodCode="EVN">
+
+1.2.276.0.76.10.4053 => Snomed Code "168537006:363704007=66019005" ==> DWH?!
+
+Diagnostik: Auf dem Dokubogen gibt es eine dreiwertige Auswahl: Röntgen ja/nein/nicht ausgefüllt => Im CDA ist es da oder nicht da. Wie unterscheidet man "nein" und "NA"? Mit @negationInd? => Sollte dokumentiert werden. Und wie wollen wir das im DWH abbilden?
+
+Schwangerschaft: Im CDA ist folgendes zulässig: Eintrag fehlt komplett, laut http://aktin.art-decor.org/aktin-html-20150602T190802/voc-1.2.276.0.76.11.46-2015-03-03T000000.html kann man NullFlavors für das Element value angeben und es gibt 2 gültige Werte (pregnant/not pregnant). Evtl. ist es auch möglich auf höherer Ebene noch NullFlavors anzugeben. Den expliziten Wert "Schwanger unbekannt" kann man nur über ein bestimmtes NullFlavor codieren (da im ValueSet nicht vorhanden) => Es ist aber nicht dokumentiert wie man es machen soll - daher kann man es auch auf keiner Seite "richtig" implementieren...

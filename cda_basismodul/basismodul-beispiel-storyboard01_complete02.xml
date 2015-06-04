@@ -28,6 +28,7 @@
     
 -->
 <?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-stylesheet type="text/xsl" href="dwh-eav-test-VT.xsl"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -454,7 +455,8 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4031"/>
                             <id root="769eb111-93b0-4c84-8e55-98f2098b7950"/>
-                            <code code="20564-1" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation"/>
+                            <!-- &comment Code ist falsch. Müsste 59408-5 sein -->
+                            <code code="20564-1" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation"/> 
                             <text>
                                 <!-- &comment Text willkürlich gewählt -->
                                 <reference value="#oxy"/>
@@ -503,25 +505,28 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="9" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-                            <component typeCode="COMP" contextConductionInd="true">
+                            <value xsi:type="PQ" value="9" unit="{score}"/>
+                            <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
-                                    <value xsi:type="PQ" value="4" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="PQ" value="4" unit="{score}"/>
                                 </observation>
-                            </component>
-                            <component typeCode="COMP" contextConductionInd="true">
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
-                                    <value xsi:type="PQ" value="3" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="PQ" value="3" unit="{score}"/>
                                 </observation>
-                            </component>
-                            <component typeCode="COMP" contextConductionInd="true">
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
-                                    <value xsi:type="PQ" value="2" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="PQ" value="2" unit="{score}"/>
                                 </observation>  
-                            </component>
+                            </entryRelationship>
                         </observation>                    
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
@@ -531,7 +536,7 @@
                             <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
                             <text>
                                 <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#GlasgowCS"/>
+                                <reference value="#PupilLeft"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
@@ -1058,6 +1063,9 @@
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="ba6d1bac-17d3-4195-89c4-1121bc809b5e"/>
                             <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
+                            <text>
+                                <reference value="#iso"/>
+                            </text>
                             <statusCode code="active"/>
                             <entryRelationship typeCode="RSON">
                                 <observation classCode="OBS" moodCode="EVN">
@@ -1099,26 +1107,26 @@
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4070"/>
                             <id root="285e1c44-5027-4b2b-b21c-e987b55567ee"/>
-                            <code nullFlavor="NA"/>
+                            <code code="11516-2" codeSystem="2.16.840.1.113883.6.1"/>
                             <text>
                                 <reference value="#edoc-1"/>
                             </text>  
-                            <!-- &Frage typeCode in der XML-Übersicht nicht dokumentiert, aber in der CDA.xsd erzwungen -->
-                            <reference typeCode="ELNK">
-                            	<externalDocument classCode="DOC" moodCode="EVN">
+                            <reference typeCode="SPRT">                                          	    
+                                <externalDocument classCode="DOC" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4071"/>
-                                    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
-                                </externalDocument>
+                                    <code code="53576-5" codeSystem="2.16.840.1.113883.6.1"/>
+                            	    <text>                           	            
+                                        <reference value="#edoc-1"/>                            	        
+                                    </text>
+                                </externalDocument>                              
                             </reference>  
-                            <!-- &Frage typeCode in der XML-Übersicht nicht dokumentiert, aber in der CDA.xsd erzwungen -->
-                            <reference typeCode="ELNK">
+                            <reference typeCode="SPRT">
                             	<externalDocument classCode="DOC" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4071"/>
                                     <code code="11488-4" codeSystem="2.16.840.1.113883.6.1"/>
                                 </externalDocument>
                             </reference>  
-                            <!-- &Frage typeCode in der XML-Übersicht nicht dokumentiert, aber in der CDA.xsd erzwungen -->
-                            <reference typeCode="ELNK">
+                            <reference typeCode="SPRT">
                             	<externalDocument classCode="DOC" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4071"/>
                                     <code code="74198-3" codeSystem="2.16.840.1.113883.6.1"/>
