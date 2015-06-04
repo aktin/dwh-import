@@ -27,6 +27,9 @@
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4045']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
+            
+            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
+            <!--
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4043']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:substanceAdministration/cda:templateId[@root='1.2.276.0.76.10.4044']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:procedure/cda:templateId[@root='1.2.276.0.76.10.4068']"/>        
@@ -48,7 +51,7 @@
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3046']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3049']"/>
             <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4042']"/>
-           
+           -->
             
             
         </patient-visit>
@@ -112,7 +115,7 @@
     </xsl:template>
     
     <!-- 65 Patientengeschlecht
-    <eav-item concept="" type="xsi:integer">1=männlich/2=weiblich</eav-item>
+    <eav-item concept="L:21840-4" type="xsi:integer">1=männlich/2=weiblich</eav-item>
     -->
     <xsl:template match="cda:patient/cda:administrativeGenderCode">
         <xsl:comment>65 Patientengeschlecht</xsl:comment>
@@ -155,13 +158,13 @@
         <eav-item concept="L:11458-7" type="xsi:string">
             <xsl:choose>
                 <xsl:when test="../@negationInd = 'true'">
-                    true
+                    ja
                 </xsl:when>
                 <xsl:when test="../@negationInd = 'false' and not (@nullFlavor = 'NI')">
-                    false
+                    nein
                 </xsl:when>
                 <xsl:when test="../@negationInd = 'false' and  @nullFlavor = 'NI'">
-                    unkown
+                    unbekannt
                 </xsl:when>
             </xsl:choose>
         </eav-item>
@@ -175,13 +178,13 @@
         <eav-item concept="Isolation" type="xsi:string">
             <xsl:choose>
                 <xsl:when test="../@negationInd = 'true'">
-                    Isolation not necessary <!-- CODING! -->
+                    Nein / Isolation not necessary <!-- CODING! -->
                 </xsl:when>
                 <xsl:when test="../cda:code/@code = '275829005'">
-                    Isolation necessary   <!-- CODING! -->       
+                    Umkehriso / Reverse isolation   <!-- CODING! -->       
                 </xsl:when>
                 <xsl:when test="../cda:code/@code = '170497006'">
-                    Isolation necessary    <!-- CODING! -->         
+                    Isolation necessary (Werte vgl. Ioslation Reason)    <!-- CODING! -->         
                 </xsl:when>
             </xsl:choose>
         </eav-item>
@@ -221,7 +224,8 @@
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4030']">
         <xsl:comment>9 Atemfrequenz</xsl:comment>
-        <eav-item concept="L:9279-1" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -235,7 +239,8 @@
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4031']">
         <xsl:comment>10 Sauerstoffsättigung</xsl:comment>
-        <eav-item concept="L:59408-5" type="xsi:decimal">
+        <eav-item type="xsi:decimal">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -248,7 +253,8 @@
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4032']">
         <xsl:comment>11 Systolischer Blutdruck</xsl:comment>
-        <eav-item concept="L:8480-6" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -261,7 +267,8 @@
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4033']">
         <xsl:comment>12 Herzfrequenz</xsl:comment>
-        <eav-item concept="L:8867-4" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -269,10 +276,12 @@
         </eav-item>
     </xsl:template>
     
-    <!-- 13 GCS Augenöffnen -->    
+    <!-- 13 GCS Augenöffnen 
+    <eav-item type="xsi:integer" concept="L:9267-6" unit="{score}">4</eav-item> -->
     <xsl:template match="cda:code[@code='9267-6']">
         <xsl:comment>13 Glasgow Coma Scale Eye Opening(</xsl:comment>
-        <eav-item concept="L:9267-6" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -280,10 +289,12 @@
         </eav-item>
     </xsl:template>
     
-    <!-- 14 GCS verbale Antwort -->
+    <!-- 14 GCS verbale Antwort
+    <eav-item type="xsi:integer" concept="L:9270-0" unit="{score}">3</eav-item> -->
     <xsl:template match="cda:code[@code='9270-0']">
         <xsl:comment>14 Glasgow Coma Scale Verbal Response(</xsl:comment>
-        <eav-item concept="L:9270-0" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -291,10 +302,12 @@
         </eav-item>
     </xsl:template>
     
-    <!-- 16 GCS motorische Antwort -->
+    <!-- 16 GCS motorische Antwort 
+    <eav-item type="xsi:integer" concept="L:9268-4" unit="{score}">2</eav-item> -->
     <xsl:template match="cda:code[@code='9268-4']">
         <xsl:comment>16 Glasgow Coma Scale Motor Response(</xsl:comment>
-        <eav-item concept="L:9268-4" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -302,11 +315,13 @@
         </eav-item>
     </xsl:template>
     
-    <!-- 17 GCS Summe -->
+    <!-- 17 GCS Summe 
+    <eav-item type="xsi:integer" concept="L:9269-2" unit="{score}">9</eav-item> -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4034']">
         <xsl:comment>17 Glasgow Coma Scale(</xsl:comment>
-        <eav-item concept="L:9269-2" type="xsi:integer">
-            <xsl:attribute name="unit">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
+            <xsl:attribute name="unit">                
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
             <xsl:value-of select="../cda:value/@value"/>
@@ -314,16 +329,18 @@
     </xsl:template>
     
     <!-- 18 Pupillenweite bei Aufnahme in der Notaufnahme (links)
-    <eav-group concept="246095009" timestamp="xxx">   condition of pupil
-        <value modifier="8966001"/> left eye
-        <value modifier="408094002"/> no value 
+    <eav-group concept="S:363953003">   size of pupil
+        <value modifier="362503005"/> left eye
+        <value modifier="362502000"/> right eye
+        <value modifier="362508001"/> both eyes
         <value modifier="37125009"/> wide pupil
         <value modifier="420335002"/> medium sized pupil 
         <value modifier="301939004"/> small pupil 
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4046']">
         <xsl:comment>18 Pupillenweite bei Aufnahme in der Notaufnahme</xsl:comment>
-        <eav-group concept="S:363953003" timestamp="xxx">
+        <eav-group>
+            <xsl:call-template name="templateGetConceptCode"/>
             <value>
                 <xsl:attribute name="modifier">
                     <xsl:value-of select="../cda:value/@code"/>
@@ -337,10 +354,20 @@
         </eav-group>
     </xsl:template>
         
-     <!-- 19 Pupillenreaktion-->
+     <!-- 19 Pupillenreaktion
+    <eav-group concept="S:271733001">   Pupil reaction
+        <value modifier="362503005"/> left eye
+        <value modifier="362502000"/> right eye
+        <value modifier="362508001"/> both eyes
+        <value modifier="301949001"/> Brisk pupil near reaction
+        <value modifier="301948009"/> Delayed pupil near reaction
+        <value modifier="13353005"/> 	Absent pupil reaction
+     </eav-group>
+    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4047']">
         <xsl:comment>19 Pupillenreaktion</xsl:comment>
-        <eav-group concept="S:271733001" timestamp="xxx">
+        <eav-group>
+            <xsl:call-template name="templateGetConceptCode"/>
             <value>
                 <xsl:attribute name="modifier">
                     <xsl:value-of select="../cda:value/@code"/>
@@ -360,7 +387,8 @@
      -->  
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4035']">
         <xsl:comment>20 Körperkerntemperatur</xsl:comment>
-        <eav-item concept="L:8329-5" type="xsi:decimal">
+        <eav-item type="xsi:decimal">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -373,7 +401,8 @@
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4036']">
         <xsl:comment>21 Schmerz bei Aufnahme</xsl:comment>
-        <eav-item concept="L:72514-3" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -388,8 +417,7 @@
         <xsl:for-each select="../cda:entry/cda:observation">
             <xsl:comment><xsl:value-of select="./cda:code/@displayName"/></xsl:comment>
             <eav-item type="xsi:string">
-                <xsl:attribute name="concept">
-                    S:<xsl:value-of select="./cda:code/@code"/>
+                <xsl:attribute name="concept">S:<xsl:value-of select="./cda:code/@code"/>  <!-- for-each auf der falschen Ebene für Standardroutine templateGetConceptCode-->
                 </xsl:attribute>
                 <xsl:attribute name="start">
                     <xsl:value-of select="./cda:effectiveTime/@value"/>
@@ -400,13 +428,15 @@
     </xsl:template>
     
     <!-- 42 Diagnosen-->
-    <!-- Reihenfolge muss bei Diagnosen beachtet/codiert werden -->
+    <!-- Reihenfolge muss bei Diagnosen beachtet/codiert werden 
+    <eav-group concept="L:11301-9">
+    <value modifier="Xnn.n"/>  ICD-CODE
+    </eav-group>
+    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3055']">
         <xsl:comment>42 Diagnosen</xsl:comment>
         <eav-group>
-            <xsl:attribute name="concept">
-                L:<xsl:value-of select="../cda:code/@code"/>
-            </xsl:attribute>
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship">
                 <value>
                     <xsl:attribute name="modifier">
@@ -417,10 +447,13 @@
         </eav-group>     
     </xsl:template>
                 
-    <!-- 22 Zuweisung -->
+    <!-- 22 Zuweisung
+    <eav-item type="xsi:string" concept="L:11293-8">700232004</eav-item>
+    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3046']">
         <xsl:comment>22 Zuweisung</xsl:comment>
-        <eav-item concept="L:11293-8" type="xsi:string">
+        <eav-item  type="xsi:string">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@code"/>
         </eav-item>
     </xsl:template>
@@ -428,18 +461,21 @@
     <!-- 62 Zuweiser -->
     <!-- Auf dem Bogen nicht vorgesehen -->
     
-    <!-- 884 Transportmittel -->
+    <!-- 884 Transportmittel 
+    <eav-item type="xsi:string" concept="L:11459-5">83887000</eav-item>
+    -->
     <!-- LOINC Code passend? In Terminologie-Tabelle nicht aufgeführt. Valueset abweichend -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3045']">
         <xsl:comment>884 Transportmittel</xsl:comment>
-        <eav-item concept="L:11459-5" type="xsi:string">
+        <eav-item type="xsi:string">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:entry/cda:observation/cda:value/@code"/>
         </eav-item>
     </xsl:template>
     
-        
-    
-    <!-- 804 verwendetes Ersteinschätzungssystem -->
+    <!-- 804 verwendetes Ersteinschätzungssystem 
+    <eav-item type="xsi:string" concept="Ersteinschätzungssystem">1.2.276.0.76.5.438</eav-item>
+    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3049']">
         <xsl:comment>804 verwendetes Ersteinschätzungssystem</xsl:comment>
         <eav-item concept="Ersteinschätzungssystem" type="xsi:string">
@@ -448,10 +484,13 @@
     </xsl:template>
     
     <!-- 23 Ersteinschätzung -->
-    <!-- incl. 770 Zeitpunkt der Ersteinschätzung -->
+    <!-- incl. 770 Zeitpunkt der Ersteinschätzung
+    <eav-item type="xsi:integer" concept="S:273887006" start="201501171603">4</eav-item>
+    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4042']">
         <xsl:comment>23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung</xsl:comment>
-        <eav-item concept="L:11283-9" type="xsi:integer">
+        <eav-item type="xsi:integer">
+            <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="start">
                 <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
             </xsl:attribute>
@@ -476,6 +515,20 @@
     ja/nein => Umsetzung?
     Falls Eintrag "48765-2" vorhanden "JA" annehmen? Dies scheint nicht 100%ig kodiert zu sein-->
     
+    
+    <!-- Global Templates -->
+        
+    <xsl:template name="templateGetConceptCode">
+        <xsl:attribute name="concept">
+            <xsl:choose>
+                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.1'">L:</xsl:when>  
+                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.96'">S:</xsl:when>
+            </xsl:choose>
+            <xsl:value-of select="../cda:code/@code"/>
+        </xsl:attribute>
+    </xsl:template>   
+        
+        
         
     <!--  
     <xsl:template match="*">
