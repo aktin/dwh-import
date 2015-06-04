@@ -43,9 +43,9 @@ public class SchematronTransformer {
 		
 		File schemaFile = new File("src/main/resources/schematron/aktin-basism.sch");
 		File schemaXSLFile = new File("src/main/resources/schematron/aktin-basism.xsl");
-//		File cdaFile = new File("cda_basismodul/basismodul-beispiel-storyboard01_complete.xml");
+//		File cdaFile = new File("cda_basismodul/basismodul-beispiel-storyboard01_complete02.xml");
 		File cdaFile = new File("cda_basismodul/basismodul-beispiel-storyboard01_complete_t01.xml");
-		File outFile = new File("out/basismodul-TransformationResult.xml");
+		File outFile = new File("out/basismodul-TransformationResult_t.xml");
 		
 		SchematronTransformer p = new SchematronTransformer(schemaFile, schemaXSLFile, cdaFile, outFile);
 		
