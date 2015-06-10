@@ -12,49 +12,34 @@
     <xsl:strip-space elements="*"/>
     
     <xsl:template match="/">
-        <patient-visit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="dwh-eav.xsd">
-            <idat>
-                <patid>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole"/>
-                </patid>
-                <visit>xxx</visit>
-            </idat>
-            <last-modified>xxx</last-modified>
+        <dwh-eav xmlns="http://aktin.org/dwh-import/dwh-eav">
+            <meta>
+                <!-- Zeitpunkt, an dem der Export erstellt wurde bzw. Datenstand -->
+                <etl strategy="replace-visit" />
+                <source timestamp="2015-04-21T08:58:00" id="test"/>                
+                <!-- weitere metadaten n�tig? wertebereich, datentypen, ontologie, ...? -->                
+            </meta>
+            <visit>   
+                <patid><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole"/></patid>
+                <surname>xxx</surname>
+                <names>xxx</names>
+                <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
+                <sex><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/></sex>
+                <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">XXE12345</encounter>
+                <facts>
+                    
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>            
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4045']"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
             
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4045']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
+                    <!-- Alle Fact-Tenplates auf Body/Component/Section Ebene aufrufen -->
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
+
             
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
-            <!--
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4043']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:substanceAdministration/cda:templateId[@root='1.2.276.0.76.10.4044']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:procedure/cda:templateId[@root='1.2.276.0.76.10.4068']"/>        
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4030']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4031']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4032']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4033']"/>          
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:entryRelationship/cda:observation/cda:code[@code='9267-6']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:entryRelationship/cda:observation/cda:code[@code='9270-0']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:entryRelationship/cda:observation/cda:code[@code='9268-4']"/>            
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4034']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4046']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4047']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4035']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4036']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3050']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3055']"/>                    
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3045']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3046']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='1.2.276.0.76.10.3049']"/>
-            <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4042']"/>
-           -->
-            
-            
-        </patient-visit>
+                </facts>
+            </visit>     
+        </dwh-eav>
+        
     </xsl:template>
     
     <xsl:template match="text()"/>   <!-- Match plain text nodes and do nothing, i.e. mask default output for text nodes     -->
@@ -118,7 +103,9 @@
     <eav-item concept="L:21840-4" type="xsi:integer">1=männlich/2=weiblich</eav-item>
     -->
     <xsl:template match="cda:patient/cda:administrativeGenderCode">
-        <xsl:comment>65 Patientengeschlecht</xsl:comment>
+        <!--  <xsl:comment>65 Patientengeschlecht</xsl:comment>  -->
+        <xsl:value-of select="./@code"/>       
+        <!--  
         <eav-item concept="L:21840-4" type="xsi:string">
             <xsl:choose>
                 <xsl:when test="./@code = 'M'">
@@ -129,6 +116,7 @@
                 </xsl:when>
             </xsl:choose>
         </eav-item>
+        -->
     </xsl:template>
     
     <!-- 57/58 Aufnahmedatum/uhrzeit 
@@ -157,15 +145,9 @@
         <xsl:comment>6 Tetanusschutz</xsl:comment>
         <eav-item concept="L:11458-7" type="xsi:string">
             <xsl:choose>
-                <xsl:when test="../@negationInd = 'true'">
-                    ja
-                </xsl:when>
-                <xsl:when test="../@negationInd = 'false' and not (@nullFlavor = 'NI')">
-                    nein
-                </xsl:when>
-                <xsl:when test="../@negationInd = 'false' and  @nullFlavor = 'NI'">
-                    unbekannt
-                </xsl:when>
+                <xsl:when test="../@negationInd = 'true'">ja</xsl:when>
+                <xsl:when test="../@negationInd = 'false' and not (@nullFlavor = 'NI')">nein</xsl:when>
+                <xsl:when test="../@negationInd = 'false' and  @nullFlavor = 'NI'">unbekannt</xsl:when>
             </xsl:choose>
         </eav-item>
     </xsl:template>
@@ -177,15 +159,9 @@
         <xsl:comment>7 Isolation</xsl:comment>
         <eav-item concept="Isolation" type="xsi:string">
             <xsl:choose>
-                <xsl:when test="../@negationInd = 'true'">
-                    Nein / Isolation not necessary <!-- CODING! -->
-                </xsl:when>
-                <xsl:when test="../cda:code/@code = '275829005'">
-                    Umkehriso / Reverse isolation   <!-- CODING! -->       
-                </xsl:when>
-                <xsl:when test="../cda:code/@code = '170497006'">
-                    Isolation necessary (Werte vgl. Ioslation Reason)    <!-- CODING! -->         
-                </xsl:when>
+                <xsl:when test="../@negationInd = 'true'">Nein / Isolation not necessary</xsl:when> <!-- CODING! -->
+                <xsl:when test="../cda:code/@code = '275829005'">Umkehriso / Reverse isolation</xsl:when>
+                <xsl:when test="../cda:code/@code = '170497006'">Isolation necessary (Werte vgl. Ioslation Reason)</xsl:when>
             </xsl:choose>
         </eav-item>
         <xsl:if test="../cda:code/@code = '170497006'">
