@@ -28,8 +28,7 @@
                 <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">XXE12345</encounter>
                 <facts>
                     
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>            
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4045']"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>           
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
             
                     <!-- Alle Fact-Tenplates auf Body/Component/Section Ebene aufrufen -->
@@ -59,13 +58,16 @@
     -->
     
     <!-- 3	PatientenId im Basismodul 
-    <eav-item concept="L:21866-9" type="xsi:string">XX23412XXX</eav-item>
-    -->
+    <eav-item concept="L:21866-9" type="xsi:string">XX23412XXX</eav-item>   
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
         <xsl:comment>3	PatientenId im Basismodul</xsl:comment>
         <eav-item concept="Patienten-ID" type="xsi:string">
             <xsl:value-of select="./cda:id/@root"/>.<xsl:value-of select="./cda:id/@extension"/>
         </eav-item>
+    </xsl:template>
+     -->
+    <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
+            <xsl:value-of select="./cda:id/@root"/>.<xsl:value-of select="./cda:id/@extension"/>
     </xsl:template>
     
     <!-- 60 Versicherungsname -->  
@@ -77,12 +79,21 @@
     <!-- 772 Patientenadresse (PLZ) -->
     <!-- 56 Patientenadresse (Telefonnummer) -->
     
-    <!-- 59 Geburtsdatum -->
+    <!-- 59 Geburtsdatum 
+        HL7.TS =>  	YYYY[MM[DD]]
     <xsl:template match="cda:patient/cda:birthTime">
         <xsl:comment>59 Geburtsdatum</xsl:comment>
         <eav-item concept="Geburtsdatum" type="xsi:string">
             <xsl:value-of select="./@value"/>
         </eav-item>
+    </xsl:template>
+    -->
+    <xsl:template match="cda:patient/cda:birthTime">
+        <xsl:choose>
+            <xsl:when test="string-length(./@value) = 4"><xsl:value-of select="./@value"/></xsl:when>
+            <xsl:when test="string-length(./@value) = 6"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/></xsl:when>
+            <xsl:when test="string-length(./@value) = 8"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/>-<xsl:value-of select="substring(./@value,7,2)"/></xsl:when>
+        </xsl:choose>
     </xsl:template>
     
     <!-- 114 Rankin Scale (0..6) 

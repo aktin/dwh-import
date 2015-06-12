@@ -4,23 +4,15 @@
 <source id="test" timestamp="2015-04-21T08:58:00"/>
 </meta>
 <visit>
-<patid>
-<!--3	PatientenId im Basismodul-->
-<eav-item xmlns="" type="xsi:string" concept="Patienten-ID">1.2.276.0.76.4.8.1234567890</eav-item>
-</patid>
+<patid>1.2.276.0.76.4.8.1234567890</patid>
 <surname>xxx</surname>
 <names>xxx</names>
-<birthdate>
-<!--59 Geburtsdatum-->
-<eav-item xmlns="" type="xsi:string" concept="Geburtsdatum">19960531</eav-item>
-</birthdate>
+<birthdate>1996-05-31</birthdate>
 <sex>M</sex>
 <encounter end="2014-01-05T10:30:00" start="2014-01-01T10:30:00">XXE12345</encounter>
 <facts>
 <!--1	ID des Krankenhauses-->
 <eav-item xmlns="" type="xsi:string" concept="Krankenhaus-ID">1.2.276.0.76.4.17.9814184919</eav-item>
-<!--114 Rankin Scale-->
-<eav-item xmlns="" type="xsi:integer" concept="L:75859-9" unit="{score}">2</eav-item>
 <!--57/58 Aufnahmedatum/uhrzeit-->
 <eav-item xmlns="" concept="S:305056002" timestamp="201501171603"/>
 <!--884 Transportmittel-->
