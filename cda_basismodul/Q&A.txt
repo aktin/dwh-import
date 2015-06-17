@@ -66,6 +66,12 @@ informationRecipient:  Struktur "choice merkwürdig, entspricht nicht dem Beispie
 => Ist nicht so abgebildet wie in der XML-Dokumentation, aber es gibt keine entsprechende Fehlermeldung 
 => Laut CDA.xsd muss informationRecipient hinter Custodian stehen, dies ist in der XML-Doku auf Art Decor anders
 
+NEU: In Template  	1.2.276.0.76.10.2035 (Aufnahme) gibt es drei Zeitpunkte ("Start der Behandlung", Entlassung/Verlegung und erster Arztkontakt) das Template 1.2.276.0.76.10.2036 (Patientenkontakt) kennt zwei Zeitpunkte ("Patientenkontakt" und Entlassung) . Auf dem Dokumentationsbogen gibt es 4 Zeitpunkte: Aufnahme, erster Arztkontakt, Start der Behandlung und Übergabe an WB => Entlassung/Verlegung = Übergabe an WB, aber redundant abgebildet? Der "Patientenkontakt" in 2036 ist als administrativer Aufnahmezeitpunkt gemeint? Müsste dann genauer beschrieben werden?
+
+NEU: opB ist mit einem 3-wertigen Value Set
+
+NEU: Hauptdiagnose = 1. Diagnose? Ist das wichtig?
+
 
 Diskussion/Antworten von Kai Heitmann (Telko 11.06.15)
 --------------------------------------------------------

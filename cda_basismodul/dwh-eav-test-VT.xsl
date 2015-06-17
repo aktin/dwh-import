@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <!-- java -classpath C:\ProgramData\Oracle\Java\javaclasses\xalan.jar org.apache.xalan.xslt.Process -in basismodul-beispiel-storyboard01_complete02.xml -xsl dwh-eav-test-VT.xsl -out dwh-eav-TESTOUT.xml -->
-
+<!-- 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="xs"
     version="2.0"
-    xmlns:cda="urn:hl7-org:v3">
+    xmlns:cda="urn:hl7-org:v3">  -->
     
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="xs"
+    version="2.0"
+    xmlns:cda="urn:hl7-org:v3"
+    
+    xmlns="urn:hl7-org:v3"> 
+
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
     
     <xsl:template match="/">
-        <dwh-eav xmlns="http://aktin.org/dwh-import/dwh-eav">
+        <dwh-eav xmlns="http://sekmi.de/histream/dwh-eav">
             <meta>
                 <!-- Zeitpunkt, an dem der Export erstellt wurde bzw. Datenstand -->
                 <etl strategy="replace-visit" />
@@ -89,12 +98,9 @@
     </xsl:template>
     -->
     <xsl:template match="cda:patient/cda:birthTime">
-        <xsl:choose>
-            <xsl:when test="string-length(./@value) = 4"><xsl:value-of select="./@value"/></xsl:when>
-            <xsl:when test="string-length(./@value) = 6"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/></xsl:when>
-            <xsl:when test="string-length(./@value) = 8"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/>-<xsl:value-of select="substring(./@value,7,2)"/></xsl:when>
-        </xsl:choose>
+        <xsl:value-of select="cda:ConvertDateTime(./@value)"/>
     </xsl:template>
+    
     
     <!-- 114 Rankin Scale (0..6) 
     <eav-item concept="L:75859-9" type="xsi:integer">0</eav-item>
@@ -137,7 +143,7 @@
         <xsl:comment>57/58 Aufnahmedatum/uhrzeit</xsl:comment>
         <eav-item concept="S:305056002">
             <xsl:attribute name="timestamp">
-                <xsl:value-of select="./cda:low/@value"/>
+                <xsl:value-of select="cda:ConvertDateTime(./cda:low/@value)"/>
             </xsl:attribute>
         </eav-item>
     </xsl:template>
@@ -196,6 +202,7 @@
         -->
     <xsl:template name="Isolationreason">
         <eav-group concept="Isolation Reason">
+            <xsl:attribute name="value"></xsl:attribute>
                 <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4069']">
                     <value>
                         <xsl:attribute name="modifier">
@@ -327,6 +334,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4046']">
         <xsl:comment>18 Pupillenweite bei Aufnahme in der Notaufnahme</xsl:comment>
         <eav-group>
+            <xsl:attribute name="value"></xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <value>
                 <xsl:attribute name="modifier">
@@ -337,7 +345,7 @@
                 <xsl:attribute name="modifier">
                     <xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
-            </value>          
+            </value>    
         </eav-group>
     </xsl:template>
         
@@ -354,6 +362,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4047']">
         <xsl:comment>19 Pupillenreaktion</xsl:comment>
         <eav-group>
+            <xsl:attribute name="value"></xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <value>
                 <xsl:attribute name="modifier">
@@ -364,7 +373,7 @@
                 <xsl:attribute name="modifier">
                     <xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
-            </value>          
+            </value>      
         </eav-group>
     </xsl:template>
 
@@ -407,7 +416,7 @@
                 <xsl:attribute name="concept">S:<xsl:value-of select="./cda:code/@code"/>  <!-- for-each auf der falschen Ebene für Standardroutine templateGetConceptCode-->
                 </xsl:attribute>
                 <xsl:attribute name="start">
-                    <xsl:value-of select="./cda:effectiveTime/@value"/>
+                    <xsl:value-of select="cda:ConvertDateTime(./cda:effectiveTime/@value)"/>
                 </xsl:attribute>
                 <xsl:value-of select="./cda:value/@code"/>
             </eav-item>
@@ -423,6 +432,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3055']">
         <xsl:comment>42 Diagnosen</xsl:comment>
         <eav-group>
+            <xsl:attribute name="value"></xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship">
                 <value>
@@ -479,7 +489,7 @@
         <eav-item type="xsi:integer">
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:attribute name="start">
-                <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
+                <xsl:value-of select="cda:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
             </xsl:attribute>
             <xsl:value-of select="../cda:value/@code"/>
         </eav-item>
@@ -514,7 +524,49 @@
             <xsl:value-of select="../cda:code/@code"/>
         </xsl:attribute>
     </xsl:template>   
-        
+    
+    <!-- deprecated 
+    <xsl:template match="@value|node()">
+        <xsl:choose>
+            <xsl:when test="parent::cda:effectiveTime">
+                <xsl:call-template name="ConvertDateTime_Value"></xsl:call-template>
+            </xsl:when>
+            <xsl:when test="parent::cda:low">
+                <xsl:call-template name="ConvertDateTime_Value"></xsl:call-template>
+            </xsl:when>
+            <xsl:when test="parent::cda:high">
+                <xsl:call-template name="ConvertDateTime_Value"></xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+               
+            </xsl:otherwise>
+        </xsl:choose>
+        </xsl:template>
+    --> 
+    
+    <xsl:function name="cda:ConvertDateTime">
+        <xsl:param name="DateTimeString"></xsl:param>
+        <xsl:choose>
+            <xsl:when test="string-length($DateTimeString) = 4"><xsl:value-of select="$DateTimeString"/></xsl:when>
+            <xsl:when test="string-length($DateTimeString) = 6"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/></xsl:when>
+            <xsl:when test="string-length($DateTimeString) = 8"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/></xsl:when>
+            <xsl:when test="string-length($DateTimeString) = 12"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/>:<xsl:value-of select="substring($DateTimeString,11,2)"/></xsl:when>
+            <xsl:when test="string-length($DateTimeString) > 13"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/>:<xsl:value-of select="substring($DateTimeString,11,2)"/>:<xsl:value-of select="substring($DateTimeString,13,2)"/></xsl:when>
+            <xsl:otherwise>XSL-Transformation Error: Datetime Format not recognized</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+            
+    <!-- deprecated 
+    <xsl:template name="ConvertDateTime_Value">
+        <xsl:choose>
+            <xsl:when test="string-length(./@value) = 4"><xsl:value-of select="./@value"/></xsl:when>
+            <xsl:when test="string-length(./@value) = 6"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/></xsl:when>
+            <xsl:when test="string-length(./@value) = 8"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/>-<xsl:value-of select="substring(./@value,7,2)"/></xsl:when>
+            <xsl:when test="string-length(./@value) = 12"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/>-<xsl:value-of select="substring(./@value,7,2)"/>T<xsl:value-of select="substring(./@value,9,2)"/>:<xsl:value-of select="substring(./@value,11,2)"/></xsl:when>
+            <xsl:when test="string-length(./@value) > 13"><xsl:value-of select="substring(./@value,1,4)"/>-<xsl:value-of select="substring(./@value,5,2)"/>-<xsl:value-of select="substring(./@value,7,2)"/>T<xsl:value-of select="substring(./@value,9,2)"/>:<xsl:value-of select="substring(./@value,11,2)"/>:<xsl:value-of select="substring(./@value,13,2)"/></xsl:when>
+            <xsl:otherwise>XSL-Transformation Error: Datetime Format not recognized</xsl:otherwise>
+        </xsl:choose>
+    </xsl:template> --> 
         
         
     <!--  
