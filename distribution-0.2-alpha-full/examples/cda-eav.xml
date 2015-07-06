@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
+   <meta>
+      <etl strategy="replace-visit"></etl>
+      <source timestamp="2015-04-21T08:58:00" id="test"></source>
+   </meta>
+   <visit>
+      <patid>1.2.276.0.76.4.8.1234567890</patid>
+      <surname>xxx</surname>
+      <names>xxx</names>
+      <birthdate>1996-05-31</birthdate>
+      <sex>M</sex>
+      <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">XXE12345</encounter>
+      <facts><!--1	ID des Krankenhauses-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Krankenhaus-ID" type="xsi:string">1.2.276.0.76.4.17 1.2.276.0.76.4.17.9814184919 9814184920</eav-item>
+         <!--57/58 Aufnahmedatum/uhrzeit-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-01-17T16:03"></eav-item>
+         <!--884 Transportmittel-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11459-5">83887000</eav-item>
+         <!--22 Zuweisung-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11293-8">700232004</eav-item>
+         <!--5 Schwanger-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="LOINC:11449-6" type="xsi:string">60001007</eav-item>
+         <!--6 Tetanusschutz-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="LOINC:11458-7" type="xsi:string">nein</eav-item>
+         <!--114 Rankin Scale-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="LOINC:75859-9" type="xsi:integer" unit="{score}">2</eav-item>
+         <!--9 Atemfrequenz-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9279-1" unit="/min">17</eav-item>
+         <!--10 Sauerstoffsättigung-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:20564-1" unit="%">86.0</eav-item>
+         <!--11 Systolischer Blutdruck-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:8480-6" unit="mm[Hg]">129</eav-item>
+         <!--12 Herzfrequenz-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:8867-4" unit="/min">67</eav-item>
+         <!--17 Glasgow Coma Scale(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9269-2" unit="{score}">9</eav-item>
+         <!--13 Glasgow Coma Scale Eye Opening(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9267-6" unit="{score}">4</eav-item>
+         <!--14 Glasgow Coma Scale Verbal Response(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9270-0" unit="{score}">3</eav-item>
+         <!--16 Glasgow Coma Scale Motor Response(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9268-4" unit="{score}">2</eav-item>
+         <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+         <eav-group xmlns="urn:hl7-org:v3" value="" concept="S:363953003">
+            <value modifier="420335002"></value>
+            <value modifier="362503005"></value>
+         </eav-group>
+         <!--19 Pupillenreaktion-->
+         <eav-group xmlns="urn:hl7-org:v3" value="" concept="S:271733001">
+            <value modifier="301949001"></value>
+            <value modifier="362503005"></value>
+         </eav-group>
+         <!--19 Pupillenreaktion-->
+         <eav-group xmlns="urn:hl7-org:v3" value="" concept="S:271733001">
+            <value modifier="301949001"></value>
+            <value modifier="362502000"></value>
+         </eav-group>
+         <!--20 Körperkerntemperatur-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:8329-5" unit="Cel">37.0</eav-item>
+         <!--21 Schmerz bei Aufnahme-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:72514-3" unit="{score}">2</eav-item>
+         <!--Plain radiography (procedure) : Procedure site (attribute) = Limb structure (body structure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:168537006:363704007=66019005" start="2015-01-17">373572006</eav-item>
+         <!--Radiography of spine (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:79760008" start="2015-01-17">373572006</eav-item>
+         <!--Pelvis X-ray (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:268425006" start="2015-01-17">373572006</eav-item>
+         <!--Plain radiography (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:168537006" start="2015-01-17">373572006</eav-item>
+         <!--Computed tomography of entire head (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:408754009" start="2015-01-17">373572006</eav-item>
+         <!--Computed tomography scan - whole body (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:169072007" start="2015-01-17">373572006</eav-item>
+         <!--Laboratory test (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:15220000" start="2015-01-17">373572006</eav-item>
+         <!--Magnetic resonance imaging (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:113091000" start="2015-01-17">373572006</eav-item>
+         <!--Blood gas analysis (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:278297009" start="2015-01-17">373572006</eav-item>
+         <!--Urinalysis, reagent strip without microscopy (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:53853004" start="2015-01-17">373572006</eav-item>
+         <!--12 lead electrocardiogram (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:268400002" start="2015-03-26T12:34">373572006</eav-item>
+         <!--Diagnostic ultrasonography (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:16310003" start="2015-01-17">373572006</eav-item>
+         <!--Computerized axial tomography (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:77477000" start="2015-01-17">373572006</eav-item>
+         <!--Echocardiography (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:40701008" start="2015-03-26T12:34">373572006</eav-item>
+         <!--42 Diagnosen-->
+         <eav-group xmlns="urn:hl7-org:v3" value="" concept="L:11301-9">
+            <value modifier="S93.6"></value>
+            <value modifier="S80.1"></value>
+            <value modifier="F55.2"></value>
+            <value modifier="H54.9"></value>
+            <value modifier="Y34.9!"></value>
+         </eav-group>
+         <!--804 verwendetes Ersteinschätzungssystem-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Ersteinschätzungssystem" type="xsi:string">1.2.276.0.76.5.438</eav-item>
+         <!--23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="S:273887006" start="2015-01-17T16:03">4</eav-item>
+         <!--7 Isolation-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Isolation" type="xsi:string">Isolation necessary (Werte vgl. Ioslation Reason)</eav-item>
+         <eav-group xmlns="urn:hl7-org:v3" concept="Isolation Reason" value="">
+            <value modifier="372292006"></value>
+            <value modifier="7180009"></value>
+         </eav-group>
+      </facts>
+   </visit>
+</dwh-eav>

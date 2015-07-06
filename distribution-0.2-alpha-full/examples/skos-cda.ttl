@@ -1,0 +1,218 @@
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:	<http://www.w3.org/2002/07/owl#> .
+@prefix dc:	<http://purl.org/dc/elements/1.1/> .
+@prefix skos: 	<http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+@prefix dwh:	<http://sekmi.de/histream/dwh#> .
+
+@prefix : <http://aktin.org/skos-cda#> .
+
+: dc:title "HIStream concept ontology for AKTIN".
+
+:AKTIN a skos:ConceptScheme ;
+    skos:prefLabel "AKTIN Project"@en ;
+    skos:prefLabel "AKTIN Projekt"@de ;
+    
+	skos:hasTopConcept :EmergencyNote .
+
+
+
+:EmergencyNote a skos:Concept ;
+    skos:prefLabel "AKTIN EmergencyNote"@en ;
+    skos:prefLabel "AKTIN Notaufnahmeprotokoll"@de ;
+    dc:description "Top concept for EmergencyNote data" ;
+
+    skos:narrower :Basismodul ;
+    skos:narrower :Überwachung ;
+    skos:narrower :Trauma ;
+    skos:narrower :Anästhesie ;
+    skos:narrower :Konsil ;
+    skos:narrower :Neurologie .
+  
+
+
+:Traumamodul a skos:Concept ;
+    skos:prefLabel "AKTIN Traumamodul"@en .
+
+
+    
+:Basismodul a skos:Concept ;
+    skos:prefLabel "AKTIN Basismodul"@en ;
+
+    skos:narrower :administrativeGender ;
+    skos:narrower :birthTime ;
+    skos:narrower :encompassingEncounter ;
+
+    skos:narrower :Transportmethod ;
+    skos:narrower :Typeofreferralsource ;
+    skos:narrower :HistoryofPresentIllness ;
+
+    skos:narrower :Pregnancystatus ;
+    skos:narrower :Clostridiumtetaniimmunization ;
+    skos:narrower :Modifiedrankinscale ;
+
+#Vitalsigns
+    skos:narrower :RespiratoryRate ;
+    skos:narrower :OxygenSaturation ;
+    skos:narrower :Systolicbloodpressure ;
+    skos:narrower :HeartRate ;
+    skos:narrower :GlasgowComaScale ;
+    skos:narrower :Pupilsize ;
+    skos:narrower :Pupilreaction ;
+    skos:narrower :BodyTemperatureCore ;
+    skos:narrower :Painseverity .
+      
+      
+      
+:RespiratoryRate a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Respiratory rate"@en ;
+    dc:description	"Respiratory rate" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:9279-1" .
+
+
+
+:OxygenSaturation a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Oxygen Saturation"@en ;
+    dc:description	"Oxygen saturation in Blood" ;
+    
+    dwh:restriction dwh:Decimal ;
+    skos:notation	"L:20564-1" .
+  
+  
+  
+:Systolicbloodpressure a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Systolic blood pressure"@en ;
+    dc:description "Systolic blood pressure";
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:8480-6" .  
+  
+  
+  
+:HeartRate a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Heart Rate"@en ;
+    dc:description "Heart Rate";
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:8867-4" .  
+  
+  
+  
+:GlasgowComaScale a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Glasgow Coma Scale"@en ;
+    dc:description	"Glasgow Coma Scale" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:9269-2" ;
+    
+    skos:narrower :GlasgowComaScaleEyeOpening ;
+    skos:narrower :GlasgowComaScaleVerbal ;
+    skos:narrower :GlasgowComaScaleMotor .
+    
+    
+    
+:GlasgowComaScaleEyeOpening a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Glasgow Coma Scale Eye Opening"@en ;
+    dc:description	"Glasgow Coma Scale Eye Opening" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:9267-6" .
+    
+    
+    
+:GlasgowComaScaleVerbal a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Glasgow Coma Scale Verbal Response"@en ;
+    dc:description	"Glasgow Coma Scale Verbal Response" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:9270-0" .
+    
+    
+    
+:GlasgowComaScaleMotor a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Glasgow Coma Scale Motor Response"@en ;
+    dc:description	"Glasgow Coma Scale Motor Response" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:9268-4" .
+    
+    
+
+#notation  funktioniert nur mit konzepten, nicht mit modifier
+:Pupilsize a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Size of pupil"@en ;
+
+#überflüssig, wenn Konzepte auf der Ebene der "Size-Codes" gewählt werden
+    skos:notation "S:363953003" ;
+    
+    skos:narrower :dilated ;
+    skos:narrower :medium ;
+    skos:narrower :constricted .
+    
+:dilated
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Dilated pupil"@en ;
+    
+    skos:notation "37125009" .
+    
+:medium
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Medium size pupil"@en ;
+    
+    skos:notation "420335002" .
+    
+:constricted
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Constricted pupil"@en ;
+    
+    skos:notation "301939004" .
+
+
+
+# :Pupilreaction
+
+
+
+:BodyTemperatureCore a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Body temperature - Core"@en ;
+    dc:description	"Body temperature - Core" ;
+    
+    dwh:restriction dwh:Decimal ;
+    skos:notation	"L:8329-5" .
+
+
+
+:Painseverity a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Pain severity"@en ;
+    dc:description "Pain severity - 0-10 verbal numeric rating";
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:72514-3" .  
+
+
+
+
+dwh:Decimal a owl:Restriction ;
+	owl:onProperty rdf:value ;
+	owl:allValuesFrom xsd:decimal .
+
+dwh:Integer a owl:Restriction ;
+	owl:onProperty rdf:value ;
+	owl:allValuesFrom xsd:integer .
+
+# siehe auch http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/
+# und http://www.w3.org/TR/owl2-new-features/
