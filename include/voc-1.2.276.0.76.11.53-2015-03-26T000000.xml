@@ -7,6 +7,7 @@
              effectiveDate="2015-03-26T00:00:00"
              statusCode="draft">
       <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
                 <concept code="304566005:260686004=37729005"
                   codeSystem="2.16.840.1.113883.6.96"
@@ -38,6 +39,11 @@
                   displayName="Admission to ward (procedure) : Method (attribute) = Patient transfer, to another health care facility (procedure)"
                   level="0"
                   type="L"/>
+                <exception code="OTH"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Sonstiges"
+                    level="0"
+                    type="L"/>
             </conceptList>
    </valueSet>
 </valueSets>

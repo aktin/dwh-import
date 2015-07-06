@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <valueSets>
    <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             id="1.2.276.0.76.11.55"
-             name="Isolationreason"
-             displayName="Isolation reason"
-             effectiveDate="2015-03-26T00:00:00"
+             id="1.2.276.0.76.11.60"
+             name="Multiresistantorganisms"
+             displayName="Multiresistant Organisms"
+             effectiveDate="2015-06-01T00:00:00"
              statusCode="draft">
       <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <sourceCodeSystem id="1.2.276.0.76.5.441" identifierName="Signifikante Pathogene"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="372292006"
+                <concept code="115329001"
                   codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Infection due to resistant organism (disorder)"
+                  displayName="Methicillin resistant Staphylococcus aureus (organism)"
                   level="0"
                   type="L"/>
-                <concept code="25374005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Gastroenteritis (disorder)"
+                <concept code="3MRGN"
+                  codeSystem="1.2.276.0.76.5.441"
+                  displayName="gramnegative Stäbchen, bei der noch eine der Antibiotikagruppen wirksam ist"
                   level="0"
                   type="L"/>
-                <concept code="56717001"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Tuberculosis (disorder)"
+                <concept code="4MRGN"
+                  codeSystem="1.2.276.0.76.5.441"
+                  displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind"
                   level="0"
                   type="L"/>
-                <concept code="7180009"
+                <concept code="113727004"
                   codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Meningitis (disorder)"
+                  displayName="Vancomycin resistant enterococcus (organism)"
                   level="0"
                   type="L"/>
                 <exception code="OTH"

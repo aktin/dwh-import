@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="2.16.840.1.113883.2.60.3.11.1"
+             effectiveDate="2015-06-24T15:22:12"
+             statusCode="draft"
+             name="Schmerz"
+             displayName="Schmerz">
+      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <conceptList>
+                <concept code="81765008"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="no pain"
+                  level="0"
+                  type="L"/>
+                <concept code="40196000"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="mild pain"
+                  level="2"
+                  type="L"/>
+                <concept code="50415004"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="moderate pain"
+                  level="4"
+                  type="L"/>
+                <concept code="8708008"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="sharp pain"
+                  level="6"
+                  type="L"/>
+                <concept code="76948002"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="severe pain"
+                  level="8"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>
