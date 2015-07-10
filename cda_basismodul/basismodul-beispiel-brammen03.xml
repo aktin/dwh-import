@@ -2,33 +2,11 @@
 <!-- 
     AKTIN-Projekt
     
-    Beispiel Storyboard 1: Einfache Distorsionsverletzung, unfallchirurgisch
-    Storyboard aktin-1
-    2015-04-09
-    
-    Timo Kicker, geboren am 31.05.1996 in Dankbor, wohnhaft München, stellt sich am 17. Januar 2015 um 16:03 Uhr 
-    in der Notaufnahme des Krankenhauses selbst vor. Er hat beim Training des Fußballvereins mit dem linken Fuß 
-    ein Distorsionstrauma erlitten und wird von seinem Vereinskollegen humpelnd in die Notaufnahme gebracht. 
-    In der Notaufnahme wird kein Ersteinschätzungssystem eingesetzt. Als Leitsymptom wird die Verletzung der 
-    unteren Extremität mit CEDIS-Code 557 erhoben.
-    
-    Die vom Unfallchirurgen um 16:32 Uhr erhobene Anamnese ergibt keine weiteren Vorerkrankungen, keine Allergien 
-    und keine regelmäßigen Medikamenteneinnahmen. Es werden in Anbetracht der Verletzungsschwere keine Vitalparameter
-    wie Atemfrequenz, Herzfrequenz oder Blutdruck erhoben. An Diagnostik wird eine Röntgenuntersuchung des
-    Sprunggelenks durchgeführt um 16:50 Uhr durchgeführt. Nach erfolgtem Ausschluss einer Fraktur wird um
-    17:14 als Therapie eine Sprunggelenkorthese angelegt und der Patient um 17:35 in die hausärztliche Versorgung
-    entlassen. Als Entlassungsdiagnose wird die S93.6 „Distorsion unteres Sprunggelenk“ gestellt.
-    
-    ERGÄNZUNG:
-    Datensatz aufgefüllt mit unrealistischen Testdaten; vollständiger Basis-Modul-Datensatz
-    Reihenfolge z.T. gerändert, so dass die Elemente in der Reihenfolge aufreten wie sie im Template beschrieben sind
-    
-    Version 01: Initialer Entwurf
-    Version 02: Anpassung nach Templateänderung für Scorewerte und weitere Korrekturen
+    Beispiel Datensatz Brammen03: Reanimation
+    2015-07-09 DBrammen&VThiemann
     
 -->
 <?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<?xml-stylesheet type="text/xsl" href="dwh-eav-test-VT.xsl"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -40,99 +18,59 @@
     <!-- Template Id (fix) -->
     <templateId root="1.2.276.0.76.10.1015"/>
     <!-- Identifikation des Dokuments -->
-    <id root="1.2.276.0.76.4.17.9814184919" extension="14025fda-3f25-4c64-8883-4f7e6cabc0b6"/>
+    <id root="1.2.276.0.76.4.17.9814184919" extension="5cc18aa4-1372-4db1-8d1f-6519e584f88f"/>
     <!-- Fixer Dokumententype-Code -->
     <code code="34878-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Note"/>
-    <!-- &Complete CDAtitle &Frage Wozu braucht man den CDAtitle?/Was sollte drin stehen? -->
-    <title>CDATitle</title>
     <!-- Datum und Zeit der Erstellung -->
-    <effectiveTime value="20150117163300"/>
+    <effectiveTime value="20150709171900"/>
     <!-- Vertraulichkeitsstufe -->
     <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
     <!-- Sprache und Länderkennung -->
     <languageCode code="de-DE"/>
     <!-- Set-ID und Versionsnummer des Dokuments -->
-    <setId root="1.2.276.0.76.4.17.9814184919" extension="0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf"/>
+    <setId root="1.2.276.0.76.4.17.9814184919" extension="020ed858-4d71-4363-ac37-196baa2d746e"/>
     <versionNumber value="1"/>
     
     <!-- Patient -->
     <recordTarget typeCode="RCT" contextControlCode="OP">
         <patientRole classCode="PAT">
             <!-- Identifikation -->
-            <id extension="1234567890" root="1.2.276.0.76.4.8"/>
+            <id extension="8772567330" root="1.2.276.0.76.4.8"/>
             <!-- Adresse -->
-            <!-- &Complete &Frage HL7-Adressfelder können sehr unterschiedlich aussehen, dies ist ein Beispiel aus der Dokumentation -->
-           <addr use="WP">
-                <houseNumber>1050</houseNumber>
-                <direction>W</direction>
-                <streetName>Wishard Blvd</streetName>
-                <additionalLocator>RG 5th floor</additionalLocator>
-                <city>Indianapolis</city>
-                <state>IN</state>
-                <postalCode>46240</postalCode>
+            <addr>
+                <streetAddressLine>Musterstr 1</streetAddressLine>
+                <postalCode>45678</postalCode>
+                <city>Herten</city>
             </addr>
-            <!-- &Complete &Frage HL7-telecom-Felder können sehr unterschiedlich aussehen, dies ist ein Beispiel aus der Dokumentation -->
-            <telecom use="H" value="tel:+43.1.40400"/>
-            <telecom use="MC" value="tel:+43.664.1234567"/>
-            <telecom value="mailto:herberthannes.mustermann@provider.de"/>
             <patient classCode="PSN" determinerCode="INSTANCE">
                 <!-- Name -->
-                <!-- &Frage Welche Elemente kann Name noch zusätzlich haben? NAme ist "1..* REQ" - macht eigentlich keinen Sinn, da Birthtime und Gender ja einfach sind und der Datentyp Name selbst schon Unterelemente hat-->
                 <name>
-                    <given>Timo</given>
-                    <family>Kicker</family>
+                    <given>Sabine</given>
+                    <family>Süßkind</family>
                 </name>
                 <!-- Geschlecht -->
-                <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+                <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
                 <!-- Geburtsdatum -->
-                <birthTime value="19960531"/>
+                <birthTime value="19311201"/>
             </patient>
         </patientRole>
     </recordTarget>
     
     <!-- Author -->
     <author typeCode="AUT" contextControlCode="OP">
-        <time value="20150117160900"/>
+        <time value="201501180830"/>
         <assignedAuthor classCode="ASSIGNED">
-            <id root="1.2.276.0.76.3.2.123456789"/>
+            <id root="1.2.276.0.76.3.2.829584985"/>
             <assignedPerson classCode="PSN" determinerCode="INSTANCE">
                 <name>
                     <prefix>Dr. med. </prefix>
-                    <given>Martin</given>
-                    <family>Regensburger</family>
+                    <given>Luke</given>
+                    <family>Ranner</family>
                 </name>
             </assignedPerson>
             <representedOrganization classCode="ORG" determinerCode="INSTANCE">
-                <id root="1.2.276.0.76.4.17" extension="9814184919"/>
-                <name>Städtisches Klinikum München GmbH</name>
-            </representedOrganization>
-        </assignedAuthor>
-    <!-- &Complete Zweiten Autor eingefügt -->
-    </author>
-        <author typeCode="AUT" contextControlCode="OP">
-        <time value="20150131145900"/>
-        <assignedAuthor classCode="ASSIGNED">
-            <id root="1.2.276.0.76.3.2.234567891"/>
-            <assignedPerson classCode="PSN" determinerCode="INSTANCE">
-                <name>                 
-                    <given>Max</given>
-                    <family>Mustermann</family>
-                </name>
-            </assignedPerson>
-            <representedOrganization classCode="ORG" determinerCode="INSTANCE">
-                <id root="1.2.276.0.76.4.17" extension="9814184919"/>
-                <!-- &Complete Zweite ID eingefügt -->
-                <id root="1.2.276.0.76.4.17" extension="9814184920"/>
-                <name>Städtisches Klinikum München GmbH</name>
-                <!-- &Complete telecom 2x eingefügt -->
-                <telecom use="H" value="tel:+43.1.40400"/>
-                <telecom use="MC" value="tel:+43.664.1234567"/>
-                <!-- &Complete addr eingefügt -->
-                <addr use="WP">
-                    <streetName>Wishard Blvd</streetName>
-                    <city>Indianapolis</city>
-                    <postalCode>46240</postalCode>
-                </addr>
+                <id root="1.2.276.0.76.4.17" extension="4738758478"/>
+                <name>Klinikum Herten</name>
             </representedOrganization>
         </assignedAuthor>
     </author>
@@ -141,49 +79,11 @@
     <custodian>
         <assignedCustodian>
             <representedCustodianOrganization>
-                <id root="1.2.276.0.76.4.17" extension="9814184919"/>
-                <!-- &Complete Zweite ID eingefügt -->
-                <id root="1.2.276.0.76.4.17" extension="9814184920"/>
-                <name>Städtisches Klinikum München GmbH</name>
-                <!-- &Complete telecom 2x eingefügt 
-                &Frage Zweiter telecom Eintrag durch CDA.xsd zurückgewiesen-->
-                <telecom use="H" value="tel:+43.1.40400"/>
-     <!--       <telecom use="MC" value="tel:+43.664.1234567"/> -->
-                <!-- &Complete addr eingefügt -->
-                <addr use="WP">
-                    <streetName>Wishard Blvd</streetName>
-                    <city>Indianapolis</city>
-                    <postalCode>46240</postalCode>
-                </addr>
+                <id root="1.2.276.0.76.4.17" extension="4738758478"/>
+                <name>Klinikum Herten</name>
             </representedCustodianOrganization>
         </assignedCustodian>
     </custodian>
-    
-    <!-- &Frage  Struktur "choice merkwürdig, entspricht nicht dem Beispiel für informationRecipient aus dem HL7-Wiki 
-    => Ist nicht so abgebildet wie in der XML-Dokumentation, aber es gibt keine entsprechende Fehlermeldung 
-    => Laut CDA.xsd muss informationRecipient hinter Custodian stehen, dies ist in der XML-Doku auf Art Decor anders  -->
-    <informationRecipient typeCode="PRCP">
-        <intendedRecipient>
-            <id extension="4736437" root="2.16.840.1.113883.3.933"/>
-            <informationRecipient>
-                <name>
-                    <prefix>Dr.med.</prefix>
-                    <given>Kai</given>
-                    <family>Heitmann</family>
-                </name>
-            </informationRecipient>
-            <receivedOrganization>
-                <name>Heitmann CS</name>
-                <telecom use="WP" value="fax:0247365746"/>
-                <addr>
-                    <streetAddressLine>Mühlenweg 1a</streetAddressLine>
-                    <houseNumber>1a</houseNumber>
-                    <postalCode>52152</postalCode>
-                    <city>Simmerath</city> 
-                </addr>    
-            </receivedOrganization>  
-        </intendedRecipient>
-    </informationRecipient>
     
     <!-- Aufnahme -->
     <documentationOf typeCode="DOC">
@@ -191,17 +91,17 @@
             <!-- Behandlung -->
             <effectiveTime>
                 <!-- Start der Behandlung (Datum und Zeit), Zeitangabe genau bis auf die Minute -->
-                <low value="20150117160300"/>
+                <low value="20150708204500"/>
                 <!-- Verlegungs-/Entlassungszeitpunkt (Datum und Zeit), Zeitangabe genau bis auf die Minute-->
-                <high value="20150117173500"/>
+                <high value="20150708211700"/>
             </effectiveTime>
             <performer typeCode="PRF">
                 <!-- Erster Arzt, Arztkontakt Beginn und Ende -->
                 <time>
                     <!-- Begin des Arztkontaktes -->
-                    <low value="201501171632"/>
+                    <low value="20150708204500"/>
                     <!-- Ende des Arztkontaktes -->
-                    <high value="201501171714"/>
+                    <high value="20150708211700"/>
                 </time>
                 <assignedEntity classCode="ASSIGNED">
                     <id nullFlavor="NA"/>
@@ -215,12 +115,12 @@
         <encompassingEncounter classCode="ENC" moodCode="EVN">
             <effectiveTime>
                 <!-- Start Patientenkontakt -->
-                <low value="201501171603"/>
+                <low value="20150708204400"/>
                 <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
-                <high value="201501171735"/>
+                <high value="20150708211700"/>
             </effectiveTime>
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
-            <dischargeDispositionCode code="306689006" codeSystem="2.16.840.1.113883.6.96"/>
+            <dischargeDispositionCode code="371828006" codeSystem="2.16.840.1.113883.6.96"/> <!-- Patient deceased during stay (discharge status = dead) (finding) -->
         </encompassingEncounter>
     </componentOf>
     
@@ -240,25 +140,14 @@
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4037"/>
-                             <id root="45f99818-637b-4be7-bc22-a70442424242"/>
-                             <!-- &Frage Ist das die OID für den u.g. Code oder wozu dient diese ID? -->
                             <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
-                            <text>
-                                <reference value="#transp"/>
-                            </text>
-                             <!-- &Frage Aus dem HL7-Wiki "Lediglich reference in den Text der zugehörigen Section". Unklar, was damit gemeint ist--> 
                             <statusCode code="completed"/>
-                            <!-- Optional: Ankunftszeit -->
-                            <effectiveTime>
-                                <high value="201501171603"/>
-                            </effectiveTime>
                             <value xsi:type="CV" code="83887000" codeSystem="2.16.840.1.113883.6.96" displayName="Rescue vehicle, device (physical object)"/>
                         </observation>
                     </entry>
                 </section>
             </component>
             
-            <!-- &Complete Component/Section Typeofreferralsource -->
             <component typeCode="COMP" contextConductionInd="true">
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3046"/>
@@ -274,13 +163,12 @@
                             </text>
                             <participant typeCode="AUT">
                                 <participantRole classCode="AGNT">
-                                    <!-- &Frage unklar, wie das mit dem Value-Set und Code System genau funktioniert, geht aus dem HL7 Wiki und der ART-DECO-Doku nicht hervor-->
-                                    <code code="700232004"  codeSystem="2.16.840.1.113883.6.96" displayName="General medical service (qualifier value)"/>
+                                    <code code="309294001"  codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency doctor (occupation)"/>
                                 </participantRole>
                             </participant>
-                         </act>
+                        </act>
                     </entry>
-                 </section>
+                </section>
             </component>
             
             <component typeCode="COMP" contextConductionInd="true">
@@ -289,7 +177,8 @@
                     <templateId root="1.2.276.0.76.10.3053"/>
                     <code code="10164-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of present illness"/>
                     <title>Notfallanamnese</title>
-                    <text>Pat hat beim Training des Fußballvereins mit dem linken Fuß ein Distorsionstrauma erlitten und wurde von seinem Vereinskollegen humpelnd in die Notaufnahme gebracht. Als Leitsymptom wird die Verletzung der unteren Extremität mit CEDIS-Code 557 erhoben. Anamnese ergibt keine weiteren Vorerkrankungen, keine Allergien und keine regelmäßigen Medikamenteneinnahmen. Vitalparameter nicht erhoben</text>
+                    <text>ohne
+                    </text>
                 </section>
             </component>
             
@@ -299,63 +188,37 @@
                     <templateId root="1.2.276.0.76.10.3048"/>
                     <code code="46239-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Chief complaint+Reason for visit"/>
                     <title>Beschwerden bei Vorstellung</title>
-                    <text>
-                        <content ID="compl-1">Distorsionstrauma linker Fuß</content>
+                    <text>ohne
                     </text>
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4039"/>
-                            <id root="b2e0e192-416a-4e9c-97ce-2f3e279826e9"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="c7a7f896-6125-4de4-ab16-706f1d2221c1"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                             <statusCode code="active"/>
                             <effectiveTime>
-                                <low value="201501171544"/>
-                                <!-- &Complete high value-->
-                                <high value="201501171554"/>
+                                <low value="20150708"/>
                             </effectiveTime>
-
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4040"/>
-                                    <id root="1.2.276.0.76.4.17.9814184919" extension="08edb7c0-2111-43f2-a784-9a5fdfaa67f0"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="635c62f9-f99d-4d3f-ac4e-8921a7cba070"/>
                                     <code code="409586006" codeSystem="2.16.840.1.113883.6.96" displayName="Complaint"/>
                                     <text>
                                         <reference value="#compl-1"/>
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="201501171544"/>                                      
+                                        <low value="201507081959"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="557" codeSystem="1.2.276.0.76.5.439" displayName="Lower extremity injury"/>
-                                </observation>
-                            </entryRelationship>
-                                
-                            <!-- &Complete entryRelationship 2nd Entry-->
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4040"/>
-                                    <!-- &comment ID = Vetragsarzt? --> 
-                                    <id root="1.2.276.0.76.4.17.9814184919" extension="08edb7c0-2111-43f2-a784-9a5fdfaa67f0"/>
-                                    <!-- &comment Snomed Code "Chief complaint (finding)" --> 
-                                    <code code="409586006" codeSystem="2.16.840.1.113883.6.96" displayName="Complaint"/>
-                                    <text>
-                                        <reference value="#compl-2"/>
-                                    </text>
-                                    <statusCode code="completed"/>
-                                    <effectiveTime>
-                                        <low value="201501171544"/>                                       
-                                        <high value="201501171659"/>
-                                    </effectiveTime>
-                                    <!-- &comment Beispiel aus HL7 Wiki --> 
-                                    <value xsi:type="CE" code="651" codeSystem="1.2.276.0.76.5.439" displayName="Shortness of breath"/>
+                                    <value xsi:type="CE" code="001" codeSystem="1.2.276.0.76.5.439" displayName="Cardiac arrest (non-traumatic)"/>
                                 </observation>
                             </entryRelationship>
                         </act>
                     </entry>
                 </section>
             </component>
-            
-             <!-- &Complete Component/Section ClinicalInformation mit 5 Entries-->
+                       
             <component typeCode="COMP" contextConductionInd="true">
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3047"/>
@@ -364,14 +227,12 @@
                     <text>
                         <list>
                             <item>Schwanger: nein</item>
-                            <item>Tetanusschutz: ja</item>
-                            <item>Rankin Skala Score: 1</item>
+                            <item>Rankin Skala Score: 0</item>
                         </list>
                     </text>
                     <entry typeCode="COMP" contextConductionInd="true">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4043"/>
-                            <!-- &Frage Wie kommt die ID zustande? -->
                             <id root="b2e0e192-416a-4e9c-97ce-2f3e27424242"/>
                             <code code="11449-6" codeSystem="2.16.840.1.113883.6.1" displayName="Pregnancy status"/>
                             <text>
@@ -379,45 +240,23 @@
                                 <reference value="#Preg"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="201501171545"/>                                       
+                            <effectiveTime value="201507082045"/>                                       
                             <value xsi:type="CV" code="60001007" codeSystem="2.16.840.1.113883.6.96" displayName="Not pregnant (finding)"/>  
                         </observation>                       
-                    </entry>
+                    </entry>                   
                     <entry typeCode="COMP" contextConductionInd="true">
-                        <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false"> <!-- Tetanusschutz vorhanden (seit dem Jahr 2014) -->
-                            <templateId root="1.2.276.0.76.10.4044"/>
-                            <!-- &Frage Wie kommt die ID zustande? -->
-                            <id root="b2e0e192-416a-4e9c-97ce-2f3e27424243"/>
-                            <code code="IMMUNIZ" codeSystem="2.16.840.1.113883.5.4" displayName="Immunization"/>
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#immun1"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="2014"/>                                       
-                            <consumable>
-                                <manufacturedProduct classCode="MANU">
-                                    <manufacturedMaterial classCode="MMAT" determinerCode="KIND">
-                                        <code code="333621002" codeSystem="2.16.840.1.113883.6.96" displayName="Tetanus vaccine (product)"/>
-                                    </manufacturedMaterial>
-                                </manufacturedProduct>
-                            </consumable>
-                        </substanceAdministration>                       
-                    </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">
-                    	<observation classCode="OBS" moodCode="EVN">
+                        <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4045"/>
                             <id root="10c1eb7e-dc2d-4d1f-806a-2ad65eba0396"/>
                             <code code="75859-9" codeSystem="2.16.840.1.113883.6.1" displayName="Modified rankin scale"/>
                             <text>
-                                <!-- &comment Text willkürlich gewählt -->
                                 <reference value="#rankin"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="2" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="PQ" value="4" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
                         </observation>
-                     </entry>
+                    </entry>             
                     <entry typeCode="COMP" contextConductionInd="true">
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4072"/>
@@ -428,7 +267,7 @@
                                 <low value="20150304"/>
                             </effectiveTime>
                             <entryRelationship typeCode="SUBJ">
-                                 <observation classCode="OBS" moodCode="EVN">
+                                <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4073"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="3564b7c0-2111-43f2-a784-9a5fdfaa67f2"/>
                                     <code code="64572001" codeSystem="2.16.840.1.113883.6.96" displayName="Condition"/>
@@ -445,121 +284,67 @@
                                         </qualifier>
                                         <qualifier>
                                             <name code="246075003" codeSystem="2.16.840.1.113883.6.96" displayName="Causative agent (attribute)"/>
-                                            <value code="115329001" codeSystem="2.16.840.1.113883.6.96" displayName="Methicillin resistant Staphylococcus aureus (organism)"/> 
+                                            <value code="4MRGN" codeSystem="2.16.840.1.113883.6.96" displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind"/> 
                                         </qualifier>
                                     </value>
-                                 </observation>
+                                </observation>
                             </entryRelationship>
                         </act>
                     </entry>
                 </section>
             </component>
             
-            <!-- &Complete Component/Section VitalSigns mit 9 Entries-->
             <component typeCode="COMP" contextConductionInd="true">
-                <!-- VitalSigns -->
+                <!--  Vitalparameter und Scores -->
                 <section classCode="DOCSECT">
-                    <!-- &comment Beispiel im HL7 Wiki hat eine andere TemplateID -->
                     <templateId root="1.2.276.0.76.10.3044"/>
                     <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Vital signs"/>
-                    <title>Vitalparameter</title>  
-                    <text>Vital signs</text>
-                  <!-- &comment Text willkürlich gewählt -->
-                    <entry typeCode="COMP" contextConductionInd="true">
+                    <title>Vitalparameter</title>
+                    <text>
+                        <list>
+                            <item>Atemfrequenz 12/min</item>
+                        </list>
+                    </text>
+                    <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4030"/>
-                            <id root="10c1eb7e-dc2d-4d1f-806a-2ad65eba0396"/>
-                            <code code="9279-1" codeSystem="2.16.840.1.113883.6.1" displayName="Respiratory Rate">
-                                <originalText>
-                                RR 17/Min
-                                </originalText>
-                            </code>
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#resp"/>
-                            </text>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="038fe3b8-0ab4-48b4-9364-ec33a3d93c39"/>
+                            <code code="9279-1" codeSystem="2.16.840.1.113883.6.1" displayName="Respiratory Rate"/>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="17" unit="/min"/>
+                            <effectiveTime value="201507080802"/>
+                            <value xsi:type="PQ" value="12" unit="/min"/>
                         </observation>
                     </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.10.4031"/>
-                            <id root="769eb111-93b0-4c84-8e55-98f2098b7950"/>
-                            <!-- &comment Code ist falsch. Müsste 59408-5 sein -->
-                            <code code="20564-1" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation"/> 
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#oxy"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="86.0" unit="%"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.10.4032"/>
-                            <id root="adeb672e-a620-4aa4-9117-bdd8b2505a78"/>
-                            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" displayName="Systolic blood pressure"/>
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#SysBP"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="129" unit="mm[Hg]"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">                    
-                    	<observation classCode="OBS" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.10.4033"/>
-                            <id root="bbfb672e-a620-4aa4-9117-bdd8b2505aaa"/>
-                            <code code="8867-4" codeSystem="2.16.840.1.113883.6.1" displayName="Heart Rate"/>
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#HeartR"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="67" unit="/min"/>
-                        </observation>               
-                    </entry>
-                    <entry typeCode="COMP" contextConductionInd="true"> 
+                    <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4034"/>
-                            <id root="98c1eb7e-dc2d-4d1f-806a-2ad65eba0351"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="0ea0e052-7568-497a-8909-f084dd108559"/>
                             <code code="9269-2" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score total"/>
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#GlasgowCS"/>
-                            </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="9" unit="{score}"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="PQ" value="3" unit="{score}"/>
                             <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
                                     <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="4" unit="{score}"/>
+                                    <value xsi:type="PQ" value="1" unit="{score}"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
                                     <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="3" unit="{score}"/>
+                                    <value xsi:type="PQ" value="1" unit="{score}"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="COMP" contextConductionInd="true">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <code code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
                                     <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="2" unit="{score}"/>
-                                </observation>  
+                                    <value xsi:type="PQ" value="1" unit="{score}"/>
+                                </observation>
                             </entryRelationship>
-                        </observation>                    
+                        </observation>
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
@@ -567,12 +352,11 @@
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
                             <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
                             <text>
-                                <!-- &comment Text willkürlich gewählt -->
                                 <reference value="#PupilLeft"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="CV" code="37125009" codeSystem="2.16.840.1.113883.6.96" displayName="Dilated pupil (finding)"/>
                             <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96"/>                        
                         </observation>                    
                     </entry>   
@@ -582,65 +366,70 @@
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
                             <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
                             <text>
-                                <!-- &comment Text willkürlich gewählt -->
                                 <reference value="PupilLeft"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="CV" code="13353005" codeSystem="2.16.840.1.113883.6.96" displayName="Absent pupil reaction (finding)"/>
                             <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96"/>
                         </observation>                    
                     </entry> 
-                    <!-- &Ergänzung Rechtes Auge -->
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">                        
+                            <templateId root="1.2.276.0.76.10.4046"/>
+                            <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
+                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <text>
+                                <reference value="PupilRight"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="CV" code="37125009" codeSystem="2.16.840.1.113883.6.96" displayName="Dilated pupil (finding)"/>
+                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96"/>                  
+                        </observation>                    
+                    </entry> 
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
                             <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
                             <text>
-                                <!-- &comment Text willkürlich gewählt -->
                                 <reference value="PupilRight"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="CV" code="13353005" codeSystem="2.16.840.1.113883.6.96" displayName="Absent pupil reaction (finding)"/>
                             <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96"/>
                         </observation>                    
                     </entry>                                                                         
-                    <entry typeCode="COMP" contextConductionInd="true"> 
-                        <observation classCode="OBS" moodCode="EVN">                        
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4035"/>
-                            <id root="af1eb111-93b0-4c84-8e55-98f2098b7950"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="acd020f6-6b00-4357-b476-e4ed97babefd"/>
                             <code code="8329-5" codeSystem="2.16.840.1.113883.6.1" displayName="Body temperature - Core"/>
-                            <text>
-                                <!-- &comment Text willkürlich gewählt -->
-                                <reference value="#BodyTemp"/>
-                            </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="37.0" unit="Cel"/>
-                        </observation>                    
-                    </entry>   
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="PQ" value="35.7" unit="Cel"/>
+                        </observation>
+                    </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4036"/>
                             <id root="10c1eb7e-dc2d-4d1f-806a-2ad65eba0396"/>
                             <code code="72514-3" codeSystem="2.16.840.1.113883.6.1" displayName="Pain severity - 0-10 verbal numeric rating"/>
                             <text>
-                                <!-- &comment Text willkürlich gewählt -->
                                 <reference value="#Pain"/>
                             </text>
                             <!-- 56840-2" Pain severity verbal numeric scale -->
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="PQ" value="2" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                            <effectiveTime value="201507082045"/>
+                            <value xsi:type="PQ" value="0" unit="{score}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
                         </observation>                    
-                     </entry>
+                    </entry>
                 </section>
             </component>
-               
-            <!-- &Complete Component/Section Relevantdiagnostictestsorlaboratorydata mit 14 zusätzlichen Entries (3050 war schon vorhanden)-->
-             <component typeCode="COMP" contextConductionInd="true">
+            
+            <component typeCode="COMP" contextConductionInd="true">
                 <!-- Diagnostik -->
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3050"/>
@@ -651,6 +440,7 @@
                             <item ID="proc-4">Röntgenuntersuchung des Sprunggelenks: einfache Distorsionsverletzung</item>
                         </list>
                     </text>
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4050"/>
@@ -658,6 +448,26 @@
                             <code code="399208008" codeSystem="2.16.840.1.113883.6.96" displayName="Plain chest X-ray (procedure)"/>
                             <text>
                                 <reference value="#proc-1"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201507081705"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
+                            <participant typeCode="LOC">
+                                <participantRole classCode="SDLOC">
+                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                </participantRole>
+                            </participant>
+                        </observation>
+                    </entry>
+                    -->
+                    <!--
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.10.4053"/>
+                            <id root="944cd73e-4361-4fca-929b-9a404b063651"/>
+                            <code code="168537006:363704007=66019005" codeSystem="2.16.840.1.113883.6.96" displayName="Plain radiography (procedure) : Procedure site (attribute) = Limb structure (body structure)"/>
+                            <text>
+                                <reference value="#proc-4"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
@@ -669,6 +479,8 @@
                             </participant>
                         </observation>
                     </entry>
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4051"/>
@@ -687,6 +499,8 @@
                             </participant>
                         </observation>
                     </entry>
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4052"/>
@@ -705,7 +519,8 @@
                             </participant>
                         </observation>
                     </entry>    
-                    
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4054"/>
@@ -724,6 +539,8 @@
                             </participant>
                         </observation>
                     </entry>    
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4055"/>
@@ -733,8 +550,8 @@
                                 <reference value="#proc-6"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <effectiveTime value="201507080825"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
                                     <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
@@ -742,6 +559,8 @@
                             </participant>
                         </observation>
                     </entry>
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4056"/>
@@ -760,6 +579,8 @@
                             </participant>
                         </observation>                        
                     </entry>    
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4057"/>
@@ -769,10 +590,12 @@
                                 <reference value="#proc-8"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <effectiveTime value="201507080820"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
                         </observation>            
-                    </entry>       
+                    </entry>
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4058"/>
@@ -786,6 +609,7 @@
                             <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
                         </observation>
                     </entry>
+                    -->
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4059"/>
@@ -795,10 +619,11 @@
                                 <reference value="#proc-10"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <effectiveTime value="201507082057"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
                         </observation>                        
                     </entry>    
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4060"/>
@@ -808,10 +633,12 @@
                                 <reference value="#proc-11"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <effectiveTime value="201507081725"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
                         </observation>            
                     </entry>
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4061"/>
@@ -821,10 +648,12 @@
                                 <reference value="#proc-12"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="201503261234"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <effectiveTime value="201507081715"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
                         </observation>                        
                     </entry>    
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4062"/>
@@ -834,11 +663,12 @@
                                 <reference value="#proc-13"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
-                        </observation>
-            
-                    </entry>                                                          
+                            <effectiveTime value="201507080810"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
+                        </observation>   
+                    </entry>
+                    -->
+                    <!--
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4063"/>
@@ -848,10 +678,11 @@
                                 <reference value="#proc-14"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <effectiveTime value="201507080830"/>
+                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
                         </observation>                        
-                    </entry>    
+                    </entry>
+                    -->
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4064"/>
@@ -861,13 +692,12 @@
                                 <reference value="#proc-15"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="201503261234"/>
+                            <effectiveTime value="201507082055"/>
                             <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
                         </observation>            
-                    </entry>                               
+                    </entry>                            
                 </section>
             </component>
-            
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Allergien, Unverträglichkeiten -->
                 <section classCode="DOCSECT" moodCode="EVN">
@@ -876,8 +706,7 @@
                     <title>Allergien und Unverträglichkeiten</title>
                     <text>
                         <list>
-                            <item ID="alg">Allergien: nein</item>
-                            <item ID="int">Unverträglichkeiten: nein</item>
+                            <item ID="alg">Allergien: Andere</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -899,20 +728,6 @@
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
                                     <value xsi:type="CV" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN" negationInd="true">
-                                    <templateId root="1.2.276.0.76.10.4066"/>
-                                    <id root="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
-                                    <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
-                                    <statusCode code="completed"/>
-                                    <!-- &Complete effectiveTime und participant ergänzt-->
-                                    <effectiveTime>
-                                        <low value="201501171544"/>                                       
-                                        <high value="201501171659"/>
-                                    </effectiveTime>
-                                    <value xsi:type="CV" code="420134006" displayName="Propensity to adverse reactions (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
                                     <participant typeCode="CSM">
                                         <participantRole classCode="MANU">
                                             <playingEntity classCode="MMAT">                                                
@@ -921,22 +736,55 @@
                                         </participantRole>
                                     </participant>
                                 </observation>
-                            </entryRelationship>
+                            </entryRelationship>   
+                            <entryRelationship typeCode="SUBJ">
+                                <observation classCode="OBS" moodCode="EVN" negationInd="true">
+                                    <templateId root="1.2.276.0.76.10.4066"/>
+                                    <id root="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
+                                    <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                                    <statusCode code="completed"/>
+                                    <!-- N/A - author/time records when this assertion was made -->
+                                    <effectiveTime nullFlavor="NA"/>
+                                    <value xsi:type="CV" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <participant typeCode="CSM">
+                                        <participantRole classCode="MANU">
+                                            <playingEntity classCode="MMAT">                                                
+                                                <code code="250428009" codeSystem="2.16.840.1.113883.6.96" displayName="Antimicrobial substance (substance)"/>
+                                            </playingEntity>
+                                        </participantRole>
+                                    </participant>
+                                </observation>
+                            </entryRelationship>      
+                            <entryRelationship typeCode="SUBJ">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4066"/>
+                                    <id root="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
+                                    <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                                    <statusCode code="completed"/>
+                                    <!-- N/A - author/time records when this assertion was made -->
+                                    <effectiveTime nullFlavor="NA"/>
+                                    <value xsi:type="CV" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <participant typeCode="CSM">
+                                        <participantRole classCode="MANU">
+                                            <playingEntity classCode="MMAT">                                                
+                                                <code code="406455002" codeSystem="2.16.840.1.113883.6.96" displayName="Allergen class (substance)"/>
+                                            </playingEntity>
+                                        </participantRole>
+                                    </participant>
+                                </observation>
+                            </entryRelationship>      
                         </act>
                     </entry>
                 </section>
             </component>
-
-            <!-- &Complete Component/Section Patientcarenarrative-->
+           
             <component typeCode="COMP" contextConductionInd="true">
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3054"/>
                     <code code="67781-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Summarization of encounter note"/>
                     <title>Befunde / Verlauf / durchgeführte Therapie</title>
-                    <text>
-                        Timo Kicker, geboren am 31.05.1996 in Dankbor, wohnhaft München, stellt sich am 17. Januar 2015 um 16:03 Uhr in der Notaufnahme des Krankenhauses selbst vor. Er hat beim Training des Fußballvereins mit dem linken Fuß ein Distorsionstrauma erlitten und wird von seinem Vereinskollegen humpelnd in die Notaufnahme gebracht. In der Notaufnahme wird kein Ersteinschätzungssystem eingesetzt. Als Leitsymptom wird die Verletzung der unteren Extremität mit CEDIS-Code 557 erhoben.
+                    <text>kein
                     </text>
-                    <!-- &Complete Entry Isolationprocedure mit 2 Observations-->
                     <entry typeCode="COMP" contextConductionInd="true">
                         <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4068"/>
@@ -963,7 +811,7 @@
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf842"/>
                                     <code code="55607006" codeSystem="2.16.840.1.113883.6.96" displayName="Problem"/>
                                     <statusCode code="completed"/>
-                                    <value  xsi:type="CV" code="7180009" codeSystem="2.16.840.1.113883.6.96" displayName="Meningitis (disorder)"/>
+                                    <value  xsi:type="CV" code="372292006" codeSystem="2.16.840.1.113883.6.96" displayName="Infection due to resistant organism (disorder)"/>
                                 </observation>
                             </entryRelationship>
                         </procedure>
@@ -979,104 +827,53 @@
                     <title>Abschlussdiagnosen</title>
                     <text>
                         <list>
-                            <item ID="diag-1">Distorsion unteres Sprunggelenk (S96.3)</item>
+                            <item ID="diag-1"></item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4048"/>
-                            <id root="4193be05-5a9a-4e94-ad03-e35c0c5ca739"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="aaf893eb-951a-469f-b65b-f19ba9ad0734"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                             <statusCode code="active"/>
                             <effectiveTime>
-                                <low value="20150117"/>
+                                <low value="20150708"/>
                             </effectiveTime>
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="c51f49d7-ed1f-42b4-99ca-001751da1946"/>
                                     <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="20150117"/>
+                                        <low value="20150708"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="S93.6" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Verstauchung und Zerrung sonstiger und nicht näher bezeichneter Teile des Fußes"/>
+                                    <value xsi:type="CE" code="I46.9" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Herzstillstand, nicht näher bezeichnet"/>
                                 </observation>
                             </entryRelationship>
-                            <!-- &Complete 4 weitere Diagnosen ergänzt (Maximum ist 5)-->
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="c51f49d7-ed1f-42b4-99ca-001751da1946"/>
                                     <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-2"/>
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="201501171556"/>
-                                        <high value="201501171557"/>
+                                        <low value="20150708"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="S80.1" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Prellung sonstiger und nicht näher bezeichneter Teile des Unterschenkels"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4049"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
-                                    <text>
-                                        <reference value="#diag-3"/>
-                                    </text>
-                                    <statusCode code="completed"/>
-                                    <effectiveTime>
-                                        <low value="201501171556"/>
-                                        <high value="201501171557"/>
-                                    </effectiveTime>
-                                    <value xsi:type="CE" code="F55.2" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Schädlicher Gebrauch von nichtabhängigkeitserzeugenden Substanzen: Analgetika"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4049"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
-                                    <text>
-                                        <reference value="#diag-4"/>
-                                    </text>
-                                    <statusCode code="completed"/>
-                                    <effectiveTime>
-                                        <low value="201501171556"/>
-                                        <high value="201501171557"/>
-                                    </effectiveTime>
-                                    <value xsi:type="CE" code="H54.9" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Nicht näher bezeichnete Sehbeeinträchtigung (binokular)"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4049"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
-                                    <text>
-                                        <reference value="#diag-5"/>
-                                    </text>
-                                    <statusCode code="completed"/>
-                                    <effectiveTime>
-                                        <low value="201501171556"/>
-                                        <high value="201501171557"/>
-                                    </effectiveTime>
-                                    <value xsi:type="CE" code="Y34.9!" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Nicht näher bezeichnetes Ereignis, Umstände unbestimmt"/>
+                                    <value xsi:type="CE" code="I21" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Akuter Myokardinfarkt"/>
                                 </observation>
                             </entryRelationship>
                         </act>
-                    </entry>
+                    </entry>                
                 </section>
             </component>
             
-            <!-- &Complete Section Initialacuityassessment -->
             <component typeCode="COMP" contextConductionInd="true">
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3049"/>
@@ -1093,23 +890,25 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime>
-                                <low value="201501171603"/>
-                                <high value="201501171608"/>
+                                <low value= "201507082044"/>
+                                <high value="201507082055"/>
                             </effectiveTime>
-                            <value xsi:type="CE" code="4" codeSystem="1.2.276.0.76.5.438" displayName="normal - grün - 90 Minuten"/>
+                            <value xsi:type="CE" code="1" codeSystem="1.2.276.0.76.5.438"/>
                         </observation>
                     </entry>
                 </section>
             </component>
             
             <component typeCode="COMP" contextConductionInd="true">
+                <!-- Weiteres Procedere / Therapieempfehlung / Weiterbehandler -->
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3056"/>
                     <code code="67661-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="EMS disposition"/>
                     <title>Weiteres Procedere / Therapieempfehlung / Weiterbehandler</title>
                     <text>
                         <list>
-                            <item ID="refact">Weiterbehandler: Hausarzt</item>
+                            <item>Empfehlung zum WHO-Durchfalldrink:</item>
+                            <item>Weiterbehandler: keiner</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -1120,54 +919,11 @@
                                 <reference value="#refact"/>
                             </text>
                         </act>
-                    </entry>                   
+                    </entry>      
                 </section>
             </component>
             
-            <!-- &Complete Component/Section Additionalmodulessection mit 3 references-->
-            <component typeCode="COMP" contextConductionInd="true">
-                <section classCode="DOCSECT">
-                    <templateId  root="1.2.276.0.76.10.3057"/>
-                    <code code="11516-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Physician Records total Encounter"/>
-                    <title>Zusatzmodule</title>
-                    <text>
-                        <list>
-                            <item ID="refact2">Weiterbehandler: Hausarzt</item>
-                        </list>
-                    </text>
-                    <entry typeCode="COMP" contextConductionInd="true">
-                        <act classCode="ACT" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.10.4070"/>
-                            <id root="285e1c44-5027-4b2b-b21c-e987b55567ee"/>
-                            <code code="11516-2" codeSystem="2.16.840.1.113883.6.1"/>
-                            <text>
-                                <reference value="#edoc-1"/>
-                            </text>  
-                            <reference typeCode="SPRT">                                          	    
-                                <externalDocument classCode="DOC" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4071"/>
-                                    <code code="53576-5" codeSystem="2.16.840.1.113883.6.1"/>
-                            	    <text>                           	            
-                                        <reference value="#edoc-1"/>                            	        
-                                    </text>
-                                </externalDocument>                              
-                            </reference>  
-                            <reference typeCode="SPRT">
-                            	<externalDocument classCode="DOC" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4071"/>
-                                    <code code="11488-4" codeSystem="2.16.840.1.113883.6.1"/>
-                                </externalDocument>
-                            </reference>  
-                            <reference typeCode="SPRT">
-                            	<externalDocument classCode="DOC" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.10.4071"/>
-                                    <code code="74198-3" codeSystem="2.16.840.1.113883.6.1"/>
-                                </externalDocument>
-                            </reference>  
-                        </act>
-                    </entry>
-                </section>
-            </component>            
         </structuredBody>
     </component>
+    
 </ClinicalDocument>
