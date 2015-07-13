@@ -35,7 +35,7 @@
     <recordTarget typeCode="RCT" contextControlCode="OP">
         <patientRole classCode="PAT">
             <!-- Identifikation -->
-            <id extension="8772567330" root="1.2.276.0.76.4.8"/>
+            <id extension="0001110003" root="1.2.276.0.76.4.8"/>
             <!-- Adresse -->
             <addr>
                 <streetAddressLine>Musterstr 1</streetAddressLine>
@@ -794,16 +794,6 @@
                                 <reference value="#iso"/>
                             </text>
                             <statusCode code="completed"/>
-                            <entryRelationship typeCode="RSON">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <!-- Isolation Indication -->
-                                    <templateId root="1.2.276.0.76.10.4069"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf842"/>
-                                    <code code="55607006" codeSystem="2.16.840.1.113883.6.96" displayName="Problem"/>
-                                    <statusCode code="completed"/>
-                                    <value  xsi:type="CV" code="372292006" codeSystem="2.16.840.1.113883.6.96" displayName="Infection due to resistant organism (disorder)"/>
-                                </observation>
-                            </entryRelationship>
                             <entryRelationship typeCode="RSON">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <!-- Isolation Indication -->

@@ -49,7 +49,7 @@
                     <family>Mustermann</family>
                 </name>
                 <!-- Geschlecht -->
-                <administrativeGenderCode code="W" codeSystem="2.16.840.1.113883.5.1"/>
+                <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
                 <!-- Geburtsdatum -->
                 <birthTime value="19470121"/>
             </patient>
@@ -101,7 +101,7 @@
                     <!-- Begin des Arztkontaktes -->
                     <low value="20150708163500"/>
                     <!-- Ende des Arztkontaktes -->
-                    <high value="201507081731000"/>
+                    <high value="20150708173100"/>
                 </time>
                 <assignedEntity classCode="ASSIGNED">
                     <id nullFlavor="NA"/>
@@ -115,7 +115,7 @@
         <encompassingEncounter classCode="ENC" moodCode="EVN">
             <effectiveTime>
                 <!-- Start Patientenkontakt -->
-                <low value="201507081731000"/>
+                <low value="20150708173100"/>
                 <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
                 <high value="20150708184300"/>
             </effectiveTime>
@@ -140,7 +140,7 @@
                             <templateId root="1.2.276.0.76.10.4037"/>
                             <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="NA" codeSystem="2.16.840.1.113883.5.1008" displayName="Ohne"/>
+                            <value xsi:type="CV" nullFlavor="NA" codeSystem="2.16.840.1.113883.5.1008"/>
                         </observation>
                     </entry>
                 </section>
@@ -733,7 +733,7 @@
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low value="2010"/>
-                                    </effectiveTime>  <value xsi:type="CD" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+                                    </effectiveTime>  <value xsi:type="CV" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
                                     <participant typeCode="CSM">
                                         <participantRole classCode="MANU">
                                             <playingEntity classCode="MMAT">
@@ -820,7 +820,6 @@
                             <statusCode code="completed"/>
                             <effectiveTime>
                                 <low value= "20150708161000"/>
-                                <high value="20150708161000"/>
                             </effectiveTime>
                             <value xsi:type="CE" code="3" codeSystem="1.2.276.0.76.5.438" displayName="dringend - gelb - 30 Minuten"/>
                         </observation>
