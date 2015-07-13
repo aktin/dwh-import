@@ -1,15 +1,15 @@
 <?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
    <meta>
       <etl strategy="replace-visit"></etl>
-      <source timestamp="2015-07-13T12:24:39.45+02:00" id="1.2.276.0.76.4.8.8772567330"></source>
+      <source timestamp="2015-07-13T14:57:36.835+02:00" id="1.2.276.0.76.4.8.0001110004"></source>
    </meta>
    <visit>
-      <patid>1.2.276.0.76.4.8.8772567330</patid>
+      <patid>1.2.276.0.76.4.8.0001110004</patid>
       <surname>data protection</surname>
       <names>data protection</names>
       <birthdate>1947-01-21</birthdate>
       <sex>F</sex>
-      <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">1.2.276.0.76.4.8.8772567330</encounter>
+      <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">1.2.276.0.76.4.8.0001110004</encounter>
       <facts><!--1	ID des Krankenhauses-->
          <eav-item xmlns="urn:hl7-org:v3" concept="Krankenhaus-ID" type="xsi:string">1.2.276.0.76.4.17.4738758478</eav-item>
          <!--57/58 Aufnahmedatum/uhrzeit-->
