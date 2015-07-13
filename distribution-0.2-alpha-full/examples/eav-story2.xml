@@ -1,7 +1,7 @@
 <?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
    <meta>
       <etl strategy="replace-visit"></etl>
-      <source timestamp="2015-07-13T11:22:25.372+02:00" id="1.2.276.0.76.4.8.3412567890"></source>
+      <source timestamp="2015-07-13T16:19:46.497+02:00" id="1.2.276.0.76.4.8.3412567890"></source>
    </meta>
    <visit>
       <patid>1.2.276.0.76.4.8.3412567890</patid>
@@ -15,9 +15,9 @@
          <!--57/58 Aufnahmedatum/uhrzeit-->
          <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-01-16T19:16:00"></eav-item>
          <!--884 Transportmittel-->
-         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11459-5">83887000</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:83887000"></eav-item>
          <!--22 Zuweisung-->
-         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11293-8">KVNDAK</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="KVNDAK"></eav-item>
          <!--9 Atemfrequenz-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9279-1" unit="/min">22</eav-item>
          <!--10 Sauerstoffsättigung-->
@@ -39,8 +39,7 @@
             <value modifier="362508001"></value>
          </eav-group>
          <!--19 Pupillenreaktion-->
-         <eav-group xmlns="urn:hl7-org:v3" value="" concept="S:271733001">
-            <value modifier="301949001"></value>
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:301949001">
             <value modifier="362508001"></value>
          </eav-group>
          <!--20 Körperkerntemperatur-->
@@ -55,10 +54,6 @@
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:268400002" start="2015-01-16T19:42">373573001</eav-item>
          <!--31 Allergie-->
          <eav-item xmlns="urn:hl7-org:v3" concept="L:48765-2"></eav-item>
-         <!--33 Antibiotikaallergie-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="Keine Allergie"></eav-item>
-         <!--33 Antibiotikaallergie-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="Keine Allergie"></eav-item>
          <!--7 Isolation-->
          <eav-item xmlns="urn:hl7-org:v3" concept="Isolation" type="xsi:string">Nein / Isolation not necessary</eav-item>
          <eav-group xmlns="urn:hl7-org:v3" concept="Isolation Reason" value=""></eav-group>

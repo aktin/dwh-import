@@ -1,7 +1,7 @@
 <?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
    <meta>
       <etl strategy="replace-visit"></etl>
-      <source timestamp="2015-07-13T14:57:36.835+02:00" id="1.2.276.0.76.4.8.0001110004"></source>
+      <source timestamp="2015-07-13T16:19:06.059+02:00" id="1.2.276.0.76.4.8.0001110004"></source>
    </meta>
    <visit>
       <patid>1.2.276.0.76.4.8.0001110004</patid>
@@ -15,9 +15,9 @@
          <!--57/58 Aufnahmedatum/uhrzeit-->
          <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-07-08T17:31:00"></eav-item>
          <!--884 Transportmittel-->
-         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11459-5"></eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept=""></eav-item>
          <!--22 Zuweisung-->
-         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11293-8">700232004</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:700232004"></eav-item>
          <!--5 Schwanger-->
          <eav-item xmlns="urn:hl7-org:v3" concept="S:60001007"></eav-item>
          <!--114 Rankin Scale (nicht numerisch)-->
@@ -45,8 +45,7 @@
             <value modifier="362503005"></value>
          </eav-group>
          <!--19 Pupillenreaktion-->
-         <eav-group xmlns="urn:hl7-org:v3" value="" concept="S:271733001">
-            <value modifier="301949001"></value>
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:301949001">
             <value modifier="362503005"></value>
          </eav-group>
          <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
@@ -54,8 +53,7 @@
             <value modifier="362502000"></value>
          </eav-group>
          <!--19 Pupillenreaktion-->
-         <eav-group xmlns="urn:hl7-org:v3" value="" concept="S:271733001">
-            <value modifier="301949001"></value>
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:301949001">
             <value modifier="362502000"></value>
          </eav-group>
          <!--20 Körperkerntemperatur-->
@@ -72,8 +70,6 @@
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:268400002" start="2015-07-08T16:35">373573001</eav-item>
          <!--31 Allergie-->
          <eav-item xmlns="urn:hl7-org:v3" concept="L:48765-2"></eav-item>
-         <!--33 Antibiotikaallergie-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="ASSERTION"></eav-item>
          <!--42 Diagnosen-->
          <eav-item xmlns="urn:hl7-org:v3" concept="ICD10GM:J18.1"></eav-item>
          <!--804 verwendetes Ersteinschätzungssystem-->

@@ -339,6 +339,64 @@
                             </entryRelationship>
                         </observation>
                     </entry>
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">                        
+                            <templateId root="1.2.276.0.76.10.4046"/>
+                            <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
+                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <text>
+                                <reference value="#PupilLeft"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201507081651"/>
+                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
+                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96"/>                        
+                        </observation>                    
+                    </entry>   
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">                        
+                            <templateId root="1.2.276.0.76.10.4047"/>
+                            <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
+                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <text>
+                                <reference value="PupilLeft"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201507081651"/>
+                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction
+                                (finding)"/>
+                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96"/>
+                        </observation>                    
+                    </entry> 
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">                        
+                            <templateId root="1.2.276.0.76.10.4046"/>
+                            <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
+                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <text>
+                                <reference value="PupilRight"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201507081651"/>
+                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
+                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96"/>                  
+                        </observation>                    
+                    </entry> 
+                    <entry typeCode="COMP" contextConductionInd="true"> 
+                        <observation classCode="OBS" moodCode="EVN">                        
+                            <templateId root="1.2.276.0.76.10.4047"/>
+                            <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
+                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <text>
+                                <reference value="PupilRight"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201507081651"/>
+                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction
+                                (finding)"/>
+                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96"/>
+                        </observation>                    
+                    </entry> 
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4035"/>

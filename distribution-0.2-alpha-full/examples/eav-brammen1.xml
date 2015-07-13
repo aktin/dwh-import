@@ -1,7 +1,7 @@
 <?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
    <meta>
       <etl strategy="replace-visit"></etl>
-      <source timestamp="2015-07-13T12:24:20.069+02:00" id="1.2.276.0.76.4.8.0001110001"></source>
+      <source timestamp="2015-07-13T16:18:47.616+02:00" id="1.2.276.0.76.4.8.0001110001"></source>
    </meta>
    <visit>
       <patid>1.2.276.0.76.4.8.0001110001</patid>
@@ -15,9 +15,9 @@
          <!--57/58 Aufnahmedatum/uhrzeit-->
          <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-07-08T16:51"></eav-item>
          <!--884 Transportmittel-->
-         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11459-5">83887000</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:83887000"></eav-item>
          <!--22 Zuweisung-->
-         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11293-8">309294001</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:309294001"></eav-item>
          <!--5 Schwanger-->
          <eav-item xmlns="urn:hl7-org:v3" concept="S:60001007"></eav-item>
          <!--114 Rankin Scale (nicht numerisch)-->
@@ -40,6 +40,22 @@
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9270-0" unit="{score}">1</eav-item>
          <!--16 Glasgow Coma Scale Motor Response(-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9268-4" unit="{score}">1</eav-item>
+         <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:420335002">
+            <value modifier="362503005"></value>
+         </eav-group>
+         <!--19 Pupillenreaktion-->
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:301949001">
+            <value modifier="362503005"></value>
+         </eav-group>
+         <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:420335002">
+            <value modifier="362502000"></value>
+         </eav-group>
+         <!--19 Pupillenreaktion-->
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:301949001">
+            <value modifier="362502000"></value>
+         </eav-group>
          <!--20 Körperkerntemperatur-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:8329-5" unit="Cel">36.7</eav-item>
          <!--7 Isolation-->

@@ -40,16 +40,16 @@
 :Basismodul a skos:Concept ;
     skos:prefLabel "AKTIN Basismodul"@en ;
 
-    skos:narrower :administrativeGender ;
-    skos:narrower :birthTime ;
+#    skos:narrower :administrativeGender ;
+#    skos:narrower :birthTime ;
     skos:narrower :encompassingEncounter ;
 
     skos:narrower :Transportmethod ;
     skos:narrower :Typeofreferralsource ;
-    skos:narrower :HistoryofPresentIllness ;
+#    skos:narrower :HistoryofPresentIllness ;
 
     skos:narrower :Pregnancystatus ;
-    skos:narrower :Clostridiumtetaniimmunization ;
+#    skos:narrower :Clostridiumtetaniimmunization ;
     skos:narrower :Modifiedrankinscale ;
     skos:narrower :Modifiedrankinscale2 ;
 
@@ -78,15 +78,117 @@
 
 :encompassingEncounter a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Encompassing Encounter"@en .
+    skos:prefLabel "Entlassung"@en ;
+
+    skos:narrower :encEnc1 ;
+    skos:narrower :encEnc2 ;
+    skos:narrower :encEnc3 ;
+    skos:narrower :encEnc4 ;
+    skos:narrower :encEnc5.
+
+:encEnc1  a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Patient deceased during stay (discharge status = dead) (finding)"@en ;
+    skos:notation "S:371828006" .
+
+:encEnc2  a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Patient self-discharge against medical advice (procedure)"@en ;
+    skos:notation "S:225928004" .
+
+:encEnc3  a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Patient discharge, elopement (procedure)"@en ;
+    skos:notation "S:34596002" .
+
+:encEnc4  a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Discharge to home (procedure)"@en ;
+    skos:notation "S:306689006" .
+
+:encEnc5  a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Physician service (procedure) : Procedure context (attribute) = Not done (qualifier value)"@en ;
+    skos:notation "S:118661008:408730004=385660001" .
+
 
 :Transportmethod a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Transport Method"@en .
+    skos:prefLabel "Transport Method"@en ;
+
+    skos:narrower :Trans1 ;
+    skos:narrower :Trans2 ;
+    skos:narrower :Trans3 ;
+    skos:narrower :Trans4.
+
+:Trans1 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "KTW"@en ;
+    skos:notation "S:52387005:408730004=107724000" .
+
+:Trans2 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "RTW"@en ;
+    skos:notation "S:44613004" .
+
+:Trans3 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "NAW/NEF/ITW"@en ;
+    skos:notation "S:83887000" .
+
+:Trans4 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "RTH/ITH"@en ;
+    skos:notation "S:73957001" .
 
 :Typeofreferralsource a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Type of referral source"@en .
+    skos:prefLabel "Type of referral source"@en;
+
+    skos:narrower :RefSource1 ;
+    skos:narrower :RefSource2 ;
+    skos:narrower :RefSource3 ;
+    skos:narrower :RefSource4 ;
+    skos:narrower :RefSource5 ;
+    skos:narrower :RefSource6 ;
+    skos:narrower :RefSource7 .
+
+
+:RefSource1 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "General medical service (qualifier value)"@en ;
+    skos:notation "S:700232004" .
+
+:RefSource2 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "KV-Notfallpraxis am Krankenhaus"@en ;
+    skos:notation "KVNPIK" .
+
+:RefSource3 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "KV-Notdienst außerhalb des Krankenhauses"@en ;
+    skos:notation "KVNDAK" .
+
+:RefSource4 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Accident and Emergency service (qualifier value)"@en ;
+    skos:notation "S:310000008" .
+
+:RefSource5 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Accident and Emergency doctor (occupation)"@en ;
+    skos:notation "S:309294001" .
+
+:RefSource6 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Site of care (environment)"@en ;
+    skos:notation "S:43741000" .
+
+:RefSource7 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Zuweisung nicht durch Arzt"@en ;
+    skos:notation "NPHYS" .
+
 
 :HistoryofPresentIllness a skos:Concept ;
     skos:inScheme :EmergencyNote ;
@@ -94,7 +196,21 @@
 
 :Pregnancystatus a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Pregnancy Status"@en .
+    skos:prefLabel "Pregnancy Status"@en ;
+
+    skos:narrower :IsPregnant;
+    skos:narrower :IsNotPregnant.
+
+:IsPregnant a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Patient currently pregnant (finding)"@en ;
+    skos:notation "S:77386006" .
+
+:IsNotPregnant a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Not pregnant (finding)"@en ;
+    skos:notation "S:60001007" .
+
 
 :Clostridiumtetaniimmunization a skos:Concept ;
     skos:inScheme :EmergencyNote ;
@@ -242,14 +358,9 @@
     skos:notation	"L:9268-4" .
     
     
-
-#notation  funktioniert nur mit konzepten, nicht mit modifier
 :Pupilsize a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Size of pupil"@en ;
-
-#überflüssig, wenn Konzepte auf der Ebene der "Size-Codes" gewählt werden
-    skos:notation "S:363953003" ;
     
     skos:narrower :dilated ;
     skos:narrower :medium ;
@@ -277,7 +388,29 @@
 
 :Pupilreaction a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Reaction of pupil"@en .
+    skos:prefLabel "Reaction of pupil"@en ;
+    
+    skos:narrower :brisk ;
+    skos:narrower :delayed ;
+    skos:narrower :absent .
+    
+:brisk
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Brisk pupil near reaction (finding)"@en ;
+   
+    skos:notation "S:301949001" .
+    
+:delayed
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Delayed pupil near reaction (finding)"@en ;
+    
+    skos:notation "S:301948009" .
+    
+:absent
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Absent pupil reaction (finding)"@en ;
+    
+    skos:notation "S:13353005" .
 
 
 
@@ -416,7 +549,7 @@
 
 :S27.1 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Traumatischer Hämatothorax"@en ;
+    skos:prefLabel "Traumatischer Haematothorax"@en ;
     skos:notation	"ICD10GM:S27.1".
 
 :S93.4 a skos:Concept ;
