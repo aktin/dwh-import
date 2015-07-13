@@ -768,10 +768,7 @@
                         </act>
                     </entry>
                 </section>
-            </component>
-            
-            
-            
+            </component>             
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Befunde / Verlauf / durchgeführte Therapie -->
                 <section classCode="DOCSECT">
