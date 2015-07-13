@@ -1,0 +1,48 @@
+<?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
+   <meta>
+      <etl strategy="replace-visit"></etl>
+      <source timestamp="2015-07-13T11:22:20.244+02:00" id="1.2.276.0.76.4.8.8772567330"></source>
+   </meta>
+   <visit>
+      <patid>1.2.276.0.76.4.8.8772567330</patid>
+      <surname>data protection</surname>
+      <names>data protection</names>
+      <birthdate>1976-07-23</birthdate>
+      <sex>F</sex>
+      <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">1.2.276.0.76.4.8.8772567330</encounter>
+      <facts><!--1	ID des Krankenhauses-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Krankenhaus-ID" type="xsi:string">1.2.276.0.76.4.17.4738758478</eav-item>
+         <!--57/58 Aufnahmedatum/uhrzeit-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-01-18T07:01"></eav-item>
+         <!--884 Transportmittel-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11459-5"></eav-item>
+         <!--5 Schwanger-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:60001007"></eav-item>
+         <!--9 Atemfrequenz-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9279-1" unit="/min">15</eav-item>
+         <!--10 Sauerstoffsättigung-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:20564-1" unit="%">98.0</eav-item>
+         <!--11 Systolischer Blutdruck-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:8480-6" unit="mm[Hg]">120</eav-item>
+         <!--12 Herzfrequenz-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:8867-4" unit="/min">100</eav-item>
+         <!--17 Glasgow Coma Scale(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9269-2" unit="{score}">15</eav-item>
+         <!--13 Glasgow Coma Scale Eye Opening(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9267-6" unit="{score}">4</eav-item>
+         <!--14 Glasgow Coma Scale Verbal Response(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9270-0" unit="{score}">5</eav-item>
+         <!--16 Glasgow Coma Scale Motor Response(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9268-4" unit="{score}">6</eav-item>
+         <!--20 Körperkerntemperatur-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:8329-5" unit="Cel">37.5</eav-item>
+         <!--7 Isolation-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Isolation" type="xsi:string">Isolation necessary (Werte vgl. Ioslation Reason)</eav-item>
+         <eav-group xmlns="urn:hl7-org:v3" concept="Isolation Reason" value="">
+            <value modifier="25374005"></value>
+         </eav-group>
+         <!--42 Diagnosen-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="ICD10GM:A08.1"></eav-item>
+      </facts>
+   </visit>
+</dwh-eav>

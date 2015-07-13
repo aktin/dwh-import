@@ -51,6 +51,7 @@
     skos:narrower :Pregnancystatus ;
     skos:narrower :Clostridiumtetaniimmunization ;
     skos:narrower :Modifiedrankinscale ;
+    skos:narrower :Modifiedrankinscale2 ;
 
 #Vitalsigns
     skos:narrower :RespiratoryRate ;
@@ -61,9 +62,102 @@
     skos:narrower :Pupilsize ;
     skos:narrower :Pupilreaction ;
     skos:narrower :BodyTemperatureCore ;
-    skos:narrower :Painseverity .
-      
-      
+    skos:narrower :Painseverity ;
+
+
+    skos:narrower :Eddiagnosis.
+
+
+:administrativeGender a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Administrative Gender"@en .
+
+:birthTime a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Birth Time"@en .
+
+:encompassingEncounter a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Encompassing Encounter"@en .
+
+:Transportmethod a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Transport Method"@en .
+
+:Typeofreferralsource a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Type of referral source"@en .
+
+:HistoryofPresentIllness a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "History of Present Illness"@en .
+
+:Pregnancystatus a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Pregnancy Status"@en .
+
+:Clostridiumtetaniimmunization a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Clostridium Tetani Immunization"@en .
+
+
+:Modifiedrankinscale2 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Modified rankin scale (Concept)"@en ;
+    dc:description "Modified rankin scale" ;     
+
+    skos:narrower :rankin0;
+    skos:narrower :rankin1;
+    skos:narrower :rankin2;
+    skos:narrower :rankin3;
+    skos:narrower :rankin4;
+    skos:narrower :rankin5.
+
+:rankin0
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "0 - Keine Symptome"@en ;
+    
+    skos:notation "Rankin:0" .
+
+:rankin1
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "1 - Keine relevante Beeintraechtigung"@en ;
+   
+    skos:notation "Rankin:1" .
+
+:rankin2
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "2 - Leichte Beeintraechtigung"@en ;
+  
+    skos:notation "Rankin:2" .
+
+:rankin3
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "3 - Mittelschwere Beeintraechtigung"@en ;
+  
+    skos:notation "Rankin:3" .
+
+:rankin4
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "4 - Hoehergradige Beeintraechtigung"@en ;
+   
+    skos:notation "Rankin:4" .
+
+:rankin5
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "5 - Schwere Behinderung"@en ;
+
+    skos:notation "Rankin:5" .
+
+
+:Modifiedrankinscale a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Modified rankin scale (Integer)"@en ;
+    dc:description "Modified rankin scale" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"L:75859-9" .
+     
       
 :RespiratoryRate a skos:Concept ;
     skos:inScheme :EmergencyNote ;
@@ -164,24 +258,26 @@
 :dilated
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Dilated pupil"@en ;
-    
-    skos:notation "37125009" .
+   
+    skos:notation "S:37125009" .
     
 :medium
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Medium size pupil"@en ;
     
-    skos:notation "420335002" .
+    skos:notation "S:420335002" .
     
 :constricted
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Constricted pupil"@en ;
     
-    skos:notation "301939004" .
+    skos:notation "S:301939004" .
 
 
 
-# :Pupilreaction
+:Pupilreaction a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Reaction of pupil"@en .
 
 
 
@@ -202,6 +298,162 @@
     
     dwh:restriction dwh:Integer ;
     skos:notation	"L:72514-3" .  
+
+
+:Eddiagnosis a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Abschlussdiagnosen"@en ;
+
+    skos:narrower :KapI ;
+    skos:narrower :KapIX ;
+    skos:narrower :KapX ;
+    skos:narrower :KapXIV ;
+    skos:narrower :KapXVIII;
+    skos:narrower :KapXIX ;
+    skos:narrower :KapXX .
+
+:KapI a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Bestimmte infektioese und parasitaere Krankheiten"@en ;
+
+    skos:narrower :A08.1 ;
+    skos:narrower :A41.58 .
+
+
+:A08.1 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Akute Gastroenteritis durch Norovirus [Norwalk-Virus]"@en ;
+    skos:notation	"ICD10GM:A08.1". 
+
+:A41.58 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Sepsis durch sonstige gramnegative Erreger"@en ;
+    skos:notation	"ICD10GM:A41.58".
+
+  
+:KapIX a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Krankheiten des Kreislaufsystems"@en ;
+
+    skos:narrower :I21 ;
+    skos:narrower :I26.9 ;
+    skos:narrower :I46.9 ;
+    skos:narrower :I61.9 .
+
+:I21 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Akuter Myokardinfarkt"@en ;
+    skos:notation	"ICD10GM:I21".
+
+:I26.9 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Lungenembolie ohne Angabe eines akuten Cor pulmonale"@en ;
+    skos:notation	"ICD10GM:I26.9".
+
+:I46.9 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Herzstillstand, nicht naeher bezeichnet"@en ;
+    skos:notation	"ICD10GM:I46.9".
+
+:I61.9 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Intrazerebrale Blutung, nicht naeher bezeichnet"@en ;
+    skos:notation	"ICD10GM:I61.9".
+
+
+
+:KapX a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Krankheiten des Atmungssystems"@en ;
+
+    skos:notation	"ICD10GM:J18.1" . 
+
+:KapXIV a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Krankheiten des Urogenitalsystems"@en ;
+
+    skos:notation	"ICD10GM:N40" . 
+
+
+:KapXVIII a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Symptome und abnorme klinische und Laborbefunde, die anderenorts nicht klassifiziert sind"@en ;
+
+    skos:narrower :R33 ;
+    skos:narrower :R57 .
+
+:R33 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Harnverhaltung"@en ;
+    skos:notation	"ICD10GM:R33".
+
+:R57 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Schock, anderenorts nicht klassifiziert"@en ;
+    skos:notation	"ICD10GM:R57". 
+
+
+:KapXIX a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Verletzungen, Vergiftungen und bestimmte andere Folgen aeusserer Ursachen"@en ;
+
+    skos:narrower :S06.79 ;
+    skos:narrower :S22.40 ;
+    skos:narrower :S27.1 ;
+    skos:narrower :S93.4 ;
+    skos:narrower :S93.6 .
+
+
+:S06.79 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Bewusstlosigkeit bei Schaedel-Hirn-Trauma"@en ;
+    skos:notation	"ICD10GM:S06.79!".
+
+:S22.40 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Rippenserienfraktur"@en ;
+    skos:notation	"ICD10GM:S22.40". 
+
+:S27.1 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Traumatischer Hämatothorax"@en ;
+    skos:notation	"ICD10GM:S27.1".
+
+:S93.4 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Verstauchung und Zerrung des oberen Sprunggelenkes"@en ;
+    skos:notation	"ICD10GM:S93.4".
+
+:S93.6 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Folgen einer Zerquetschung oder einer traumatischen Amputation der unteren Extremitaet"@en ;
+    skos:notation	"ICD10GM:S93.6".
+
+
+
+:KapXX a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Aeussere Ursachen von Morbiditaet und Mortalitaet"@en ;
+
+    skos:notation	"ICD10GM:V.99!" .  
+
+
+
+
+:Überwachung a skos:Concept ;
+    skos:prefLabel "AKTIN Ueberwachungsmodul"@en .
+
+:Trauma a skos:Concept ;
+    skos:prefLabel "AKTIN Traumasmodul"@en .
+
+:Anästhesie a skos:Concept ;
+    skos:prefLabel "AKTIN Anaesthesiemodul"@en .
+
+:Konsil a skos:Concept ;
+    skos:prefLabel "AKTIN Konsilmodul"@en .
+
+:Neurologie a skos:Concept ;
+    skos:prefLabel "AKTIN Neurologiemodul"@en .
 
 
 

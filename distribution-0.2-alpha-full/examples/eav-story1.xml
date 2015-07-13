@@ -1,0 +1,31 @@
+<?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
+   <meta>
+      <etl strategy="replace-visit"></etl>
+      <source timestamp="2015-07-13T11:22:30.498+02:00" id="1.2.276.0.76.4.8.1234567890"></source>
+   </meta>
+   <visit>
+      <patid>1.2.276.0.76.4.8.1234567890</patid>
+      <surname>data protection</surname>
+      <names>data protection</names>
+      <birthdate>1996-05-31</birthdate>
+      <sex>M</sex>
+      <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">1.2.276.0.76.4.8.1234567890</encounter>
+      <facts><!--1	ID des Krankenhauses-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Krankenhaus-ID" type="xsi:string">1.2.276.0.76.4.17.9814184919</eav-item>
+         <!--57/58 Aufnahmedatum/uhrzeit-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-01-17T16:03"></eav-item>
+         <!--884 Transportmittel-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11459-5"></eav-item>
+         <!--Plain radiography (procedure) : Procedure site (attribute) = Limb structure (body structure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:168537006:363704007=66019005" start="2015-01-17T16:50">373572006</eav-item>
+         <!--31 Allergie-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="L:48765-2"></eav-item>
+         <!--33 Antibiotikaallergie-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Keine Allergie"></eav-item>
+         <!--33 Antibiotikaallergie-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Keine Allergie"></eav-item>
+         <!--42 Diagnosen-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="ICD10GM:S93.6"></eav-item>
+      </facts>
+   </visit>
+</dwh-eav>
