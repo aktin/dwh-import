@@ -22,6 +22,12 @@
    <svrl:active-pattern document=""
                         id="template-1.2.276.0.76.10.1015-2014-09-18T000000"
                         name="Emergency medicine Note CDA document"/>
+   <svrl:failed-assert test="not(.)"
+                       see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.1015-2014-09-18T000000.html"
+                       role="error"
+                       location="/*:dwh-eav[namespace-uri()='http://sekmi.de/histream/dwh-eav'][1]">
+      <svrl:text>(EmergencymedicineNoteCDAdocument): '' ist als geschlossen definiert und dieses Element 'dwh-eav' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-9c4eb98b-39fd-4aa0-8575-2239efcd7267)</svrl:text>
+   </svrl:failed-assert>
    <svrl:active-pattern document=""
                         id="template-1.2.276.0.76.10.3044-2014-09-16T000000"
                         name="Vitalparameter"/>
@@ -184,4 +190,10 @@
    <svrl:active-pattern document=""
                         id="template-1.2.276.0.76.10.4071-2015-03-30T000000"
                         name="External Document Reference"/>
+   <svrl:active-pattern document=""
+                        id="template-1.2.276.0.76.10.4072-2015-06-01T000000"
+                        name="Problem Concern Act (Multidrug-resistant organism)"/>
+   <svrl:active-pattern document=""
+                        id="template-1.2.276.0.76.10.4073-2015-06-01T000000"
+                        name="Problem Observation (Multidrug-resistant organism)"/>
 </svrl:schematron-output>

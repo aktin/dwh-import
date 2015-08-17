@@ -4,9 +4,9 @@
              id="1.2.276.0.76.11.43"
              name="CEDIS11"
              displayName="CEDIS Presenting Complaint List 1.1"
-             effectiveDate="2008-01-01T00:00:00"
+             effectiveDate="2015-06-01T00:00:00"
              statusCode="draft"
-             versionLabel="1.1">
+             versionLabel="1.1b">
       <desc language="en-US">CEDIS Presenting Complaint List 1.1, see also http://www.cjem-online.ca/v10/n2/p151
                 <br/>Leganda
                 <ul>
@@ -113,7 +113,7 @@
                   type="L">
                     <desc language="en-US">ICD-10: M79.89 - Other specified soft tissue disorders, unspecified</desc>
                 </concept>
-                <concept code="HN"
+                <concept code="HNE"
                   codeSystem="1.2.276.0.76.5.439"
                   displayName="ENT — Ears (051-100)"
                   level="0"
@@ -162,7 +162,7 @@
                   type="L">
                     <desc language="en-US">ICD-10: S00.4 - Superficial injury of the ear</desc>
                 </concept>
-                <concept code="HN"
+                <concept code="HNM"
                   codeSystem="1.2.276.0.76.5.439"
                   displayName="ENT — Mouth, throat, neck (101-150)"
                   level="0"
@@ -218,7 +218,7 @@
                   type="L">
                     <desc language="en-US">ICD-10: R52.0 - Acute pain</desc>
                 </concept>
-                <concept code="HN"
+                <concept code="HNN"
                   codeSystem="1.2.276.0.76.5.439"
                   displayName="ENT — Nose (151-200)"
                   level="0"
@@ -666,7 +666,7 @@
                   type="L">
                     <desc language="en-US">ICD-10: P94.8 - Other disorders of muscle tone of newborn</desc>
                 </concept>
-                <concept code="GU"
+                <concept code="OGY"
                   codeSystem="1.2.276.0.76.5.439"
                   displayName="Obstetrical-Gynecological (451-500)"
                   level="0"

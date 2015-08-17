@@ -16,22 +16,22 @@
                 <concept code="40196000"
                   codeSystem="2.16.840.1.113883.6.96"
                   displayName="mild pain"
-                  level="2"
+                  level="0"
                   type="L"/>
                 <concept code="50415004"
                   codeSystem="2.16.840.1.113883.6.96"
                   displayName="moderate pain"
-                  level="4"
+                  level="0"
                   type="L"/>
                 <concept code="8708008"
                   codeSystem="2.16.840.1.113883.6.96"
                   displayName="sharp pain"
-                  level="6"
+                  level="0"
                   type="L"/>
                 <concept code="76948002"
                   codeSystem="2.16.840.1.113883.6.96"
                   displayName="severe pain"
-                  level="8"
+                  level="0"
                   type="L"/>
             </conceptList>
    </valueSet>

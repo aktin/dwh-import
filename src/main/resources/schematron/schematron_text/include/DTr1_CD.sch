@@ -49,7 +49,10 @@
     <let name="name" value="local-name()"/>
     <let name="set_other"
         value="preceding-sibling::*[local-name()=$name] | following-sibling::*[local-name()=$name]"/>
-    <assert role="error" test="not(@nullFlavor and $set_other[not(@nullFlavor)])">dtr1-17-CD: [RIM-001] <value-of select="$name"/> SHALL NOT have nullFlavor, if there are other <value-of select="$name"/> elements which are not null</assert>
+    <!--
+    <assert role="error" test="not(@nullFlavor and $set_other[not(@nullFlavor)])"
+        >dtr1-17-CD: [RIM-001] <value-of select="$name"/> SHALL NOT have nullFlavor, if there are other <value-of select="$name"/> elements which are not null</assert>
+    -->
     
     <let name="code" value="@code"/>
     <let name="codeSystem" value="@codeSystem"/>

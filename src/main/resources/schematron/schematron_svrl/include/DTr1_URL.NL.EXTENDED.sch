@@ -105,7 +105,7 @@
 
     <!-- x-hl7-applicatie -->
     <assert role="error"
-           test="if ($urlScheme='x-hl7-applicatie') then (         matches($urlStr,'^2\.16\.840\.1\.113883\.2\.4\.6\.6\.[1-9]\d+$')         ) else (1=1)">dtr10-URL.NL.EXTENDED: URIs with URL Scheme <value-of select="$urlScheme"/> MUST start with "2.16.840.1.113883.2.4.6.6." prefixed with the numerical part</assert>
+           test="if ($urlScheme='x-hl7-applicatie') then (         matches($urlStr,'^2\.16\.840\.1\.113883\.2\.4\.6\.6\.[1-9]\d*$')         ) else (1=1)">dtr10-URL.NL.EXTENDED: URIs with URL Scheme <value-of select="$urlScheme"/> MUST start with "2.16.840.1.113883.2.4.6.6." prefixed with the numerical part</assert>
 
     <!-- mllp -->
     <!-- Note: internal hostnames not supported -->

@@ -4,7 +4,7 @@
     
     Beispiel Storyboard 1: Einfache Distorsionsverletzung, unfallchirurgisch
     Storyboard aktin-1
-    2015-04-09
+    2015-04-09 KHeitmann
     
     Timo Kicker, geboren am 31.05.1996 in Dankbor, wohnhaft München, stellt sich am 17. Januar 2015 um 16:03 Uhr 
     in der Notaufnahme des Krankenhauses selbst vor. Er hat beim Training des Fußballvereins mit dem linken Fuß 
@@ -188,7 +188,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4039"/>
-                            <id root="b2e0e192-416a-4e9c-97ce-2f3e279826e9"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="b2e0e192-416a-4e9c-97ce-2f3e279826e9"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                             <statusCode code="active"/>
                             <effectiveTime>
@@ -228,7 +228,7 @@
                     <entry typeCode="COMP" contextConductionInd="true">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4053"/>
-                            <id root="944cd73e-4361-4fca-929b-9a404b063651"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="944cd73e-4361-4fca-929b-9a404b063651"/>
                             <code code="168537006:363704007=66019005" codeSystem="2.16.840.1.113883.6.96" displayName="Plain radiography (procedure) : Procedure site (attribute) = Limb structure (body structure)"/>
                             <text>
                                 <reference value="#proc-4"/>
@@ -261,7 +261,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4065"/>
-                            <id root="15100194-6d6e-4b00-a4d8-effeb66596b4"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="15100194-6d6e-4b00-a4d8-effeb66596b4"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>
                             <statusCode code="active"/>
                             <!-- This is the time stamp for when the allergy was first documented as a concern-->
@@ -271,7 +271,7 @@
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN" negationInd="true">
                                     <templateId root="1.2.276.0.76.10.4066"/>
-                                    <id root="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
                                     <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
@@ -282,7 +282,7 @@
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN" negationInd="true">
                                     <templateId root="1.2.276.0.76.10.4066"/>
-                                    <id root="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
                                     <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
@@ -309,7 +309,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4048"/>
-                            <id root="4193be05-5a9a-4e94-ad03-e35c0c5ca739"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="4193be05-5a9a-4e94-ad03-e35c0c5ca739"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                             <statusCode code="active"/>
                             <effectiveTime>
@@ -318,7 +318,7 @@
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
-                                    <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="45f99818-637b-4be7-bc22-a7041c1cf813"/>
                                     <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>

@@ -7,6 +7,7 @@ x 3.2.2 Dokumenten-Level-Kodes für die Module
 => laut PDF (3.2.2) Basis -- 68552-9 -- Emergency medicine Emergency department Admission evaluation note
 => im Beispiel CDA 34878-9 -- Emergency medicine Note (unspezifischer)
 => Vermutung: 34878-9 ist das Hauptdokument und die BAsisdoku ist 68552-9 => Ist aber auch nicht konsistent mit dem Beispiel CDA
+=> Soll nur 1 sein. Wird geändert
 
 Auf ART-DECOR ist die Kardinalitätangabe merkwürdig. "0..1 required" kommt häufig vor 
 => HL7 Data Types

@@ -95,7 +95,6 @@ public class Transform {
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			
 			
-//			File CDAFile = new File("CDA Basismodul/basismodul-test-file.xml");
 			File CDAFile = new File("cda_basismodul/basismodul-beispiel-storyboard01_complete02.xml");
 			File outFile2 = new File("cda_basismodul/basismodul-TransformationResult.xml");
 			

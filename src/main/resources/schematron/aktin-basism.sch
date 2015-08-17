@@ -216,5 +216,9 @@
    <include href="include/1.2.276.0.76.10.4070-2015-03-30T000000.sch"/>
    <!-- ExternalDocumentReference -->
    <include href="include/1.2.276.0.76.10.4071-2015-03-30T000000.sch"/>
+   <!-- ProblemconcernactMDRO -->
+   <include href="include/1.2.276.0.76.10.4072-2015-06-01T000000.sch"/>
+   <!-- ProblemobservationMDRO -->
+   <include href="include/1.2.276.0.76.10.4073-2015-06-01T000000.sch"/>
 
 </schema>

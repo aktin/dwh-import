@@ -1,0 +1,69 @@
+<?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
+   <meta>
+      <etl strategy="replace-visit"></etl>
+      <source timestamp="2015-07-13T16:19:46.497+02:00" id="1.2.276.0.76.4.8.3412567890"></source>
+   </meta>
+   <visit>
+      <patid>1.2.276.0.76.4.8.3412567890</patid>
+      <surname>data protection</surname>
+      <names>data protection</names>
+      <birthdate>1933-09-12</birthdate>
+      <sex>F</sex>
+      <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">1.2.276.0.76.4.8.3412567890</encounter>
+      <facts><!--1	ID des Krankenhauses-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Krankenhaus-ID" type="xsi:string">1.2.276.0.76.4.17.6314124911</eav-item>
+         <!--57/58 Aufnahmedatum/uhrzeit-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:305056002" timestamp="2015-01-16T19:16:00"></eav-item>
+         <!--884 Transportmittel-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="S:83887000"></eav-item>
+         <!--22 Zuweisung-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="KVNDAK"></eav-item>
+         <!--9 Atemfrequenz-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9279-1" unit="/min">22</eav-item>
+         <!--10 Sauerstoffsättigung-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:20564-1" unit="%">91.0</eav-item>
+         <!--11 Systolischer Blutdruck-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:8480-6" unit="mm[Hg]">93</eav-item>
+         <!--12 Herzfrequenz-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:8867-4" unit="/min">111</eav-item>
+         <!--17 Glasgow Coma Scale(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9269-2" unit="{score}">12</eav-item>
+         <!--13 Glasgow Coma Scale Eye Opening(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9267-6" unit="{score}">3</eav-item>
+         <!--14 Glasgow Coma Scale Verbal Response(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9270-0" unit="{score}">4</eav-item>
+         <!--16 Glasgow Coma Scale Motor Response(-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9268-4" unit="{score}">5</eav-item>
+         <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:420335002">
+            <value modifier="362508001"></value>
+         </eav-group>
+         <!--19 Pupillenreaktion-->
+         <eav-group xmlns="urn:hl7-org:v3" concept="S:301949001">
+            <value modifier="362508001"></value>
+         </eav-group>
+         <!--20 Körperkerntemperatur-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:decimal" concept="L:8329-5" unit="Cel">39.2</eav-item>
+         <!--Blood gas analysis (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:278297009" start="2015-01-16T19:45">373572006</eav-item>
+         <!--Urinalysis, reagent strip without microscopy (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:53853004" start="2015-01-16T19:50">373573001</eav-item>
+         <!--Laboratory test (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:15220000" start="2015-01-16T19:50"></eav-item>
+         <!--12 lead electrocardiogram (procedure)-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:268400002" start="2015-01-16T19:42">373573001</eav-item>
+         <!--31 Allergie-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="L:48765-2"></eav-item>
+         <!--7 Isolation-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Isolation" type="xsi:string">Nein / Isolation not necessary</eav-item>
+         <eav-group xmlns="urn:hl7-org:v3" concept="Isolation Reason" value=""></eav-group>
+         <!--42 Diagnosen-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="ICD10GM:A41.58"></eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="ICD10GM:R57"></eav-item>
+         <!--804 verwendetes Ersteinschätzungssystem-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Ersteinschätzungssystem" type="xsi:string">1.2.276.0.76.5.438</eav-item>
+         <!--23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung-->
+         <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="S:273887006" start="2015-01-16T19:21">2</eav-item>
+      </facts>
+   </visit>
+</dwh-eav>

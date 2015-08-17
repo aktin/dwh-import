@@ -1,11 +1,5 @@
 package org.aktin.dwh.etl;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +28,7 @@ import javax.xml.ws.http.HTTPBinding;
  * Provides REST interfaces to emulate an i2b2 server.
  * @author Raphael, Volker
  * 
- * Example: curl -i -X POST http://localhost:9000/aktin/dwh?output=dwh -H "Content-Type: text/xml" --data-binary "@basismodul-beispiel-storyboard01.xml"
+ * Example: curl -X POST http://localhost:9000/aktin/dwh?output=dwh -H "Content-Type: text/xml" --data-binary "@basismodul-beispiel-storyboard01.xml"
  *
  */
 @WebServiceProvider()
@@ -45,6 +39,7 @@ public class RestServer implements Provider<Source>{
 	static final String MODE_SVRL = "svrl";
 	static final String MODE_ERROR_ONLY = "error";
 	static final String MODE_RESULT = "result";
+	static final String MODE_INVERSE = "inverse";
 	
 	
 	private static final Logger log = Logger.getLogger(RestServer.class.getName());
@@ -54,9 +49,11 @@ public class RestServer implements Provider<Source>{
     protected WebServiceContext context;
 
 	
-	public RestServer() {
+	public RestServer() { 
 
-    	factory = TransformerFactory.newInstance();
+		//System.setProperty("jaxp.debug","1");
+		System.setProperty("javax.xml.transform.TransformerFactory","net.sf.saxon.TransformerFactoryImpl");	
+		factory = TransformerFactory.newInstance();  //Achtung: Auswahl der Transformer Implementierung ist kritisch. Muss ggf. noch weiter geprueft werden.
     	// TODO Use factory.newTemplates(..) to prepare for multiple transformations
 
 	}
@@ -66,9 +63,8 @@ public class RestServer implements Provider<Source>{
 		Endpoint e = Endpoint.create(HTTPBinding.HTTP_BINDING, hs);
 		// use executor for more control over parallel executions
 		//e.setExecutor(/*...*/);
-		String address = "http://localhost:9000/aktin/dwh";   //?output=svrl || ?output=dwh
+		String address = "http://localhost:9000/aktin/dwh";   //?output=xyz 
 		e.publish(address);
-		
 	}
 
 	@Override
@@ -93,6 +89,9 @@ public class RestServer implements Provider<Source>{
         if (lower_query.equals ("output=" + MODE_RESULT)) {
         	mode = MODE_RESULT;
         }
+        if (lower_query.equals ("output=" + MODE_INVERSE)) {
+        	mode = MODE_INVERSE;
+        }
 
         log.info("method="+httpMethod+", path="+path+", query="+query+", mode="+mode);
         if( request == null ){
@@ -101,58 +100,72 @@ public class RestServer implements Provider<Source>{
         }
 
 
-		String str = runSchematron (request, mode);
+		String str = runTransformations (request, mode);
 		log.info(str);
 		
 		boolean magic = false;
-		if (magic) {     //ToDo: HTTP RESPONSE Möööööp wenn Fehler in der Schematron Validierung; Entscheidung ok/nicht ok wird vor allem auch für den Modus DWH benötigt (Abbruch, falls CDA nicht ok)!
+		if (magic) {     //ToDo: HTTP RESPONSE Moeoeoeoeoep wenn Fehler in der Schematron Validierung; Entscheidung ok/nicht ok wird vor allem auch fuer den Modus DWH benoetigt (Abbruch, falls CDA nicht ok)!
 			throw new javax.xml.ws.WebServiceException("Fehler!");  //So geht's nicht => HTTP-Response is "500 Internal Server Error"
 		}
 
         return new StreamSource(new StringReader(str));
 	}
 	
-	public String runSchematron (Source request, String mode) {
+	public String runTransformations (Source request, String mode) {
 		try {
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			// Erste Transformation (Schematron Validierung)
-			// Nicht relevant in MODE_DWH - Es wird keine Schematron-Prüfung durchgeführt --TEST-MODUS-- (später wird zuerst mit MODE_RESULT geprüft, ob das Ergebnis ok war)
+			// Nicht relevant in MODE_DWH - Es wird keine Schematron-Pruefung durchgefuehrt --TEST-MODUS-- (spaeter wird zuerst mit MODE_RESULT geprueft, ob das Ergebnis ok war)
+			// MODE_INVERSE - Step1 Transformation
 						
 			//File XSLFile = new File("src/main/resources/schematron/aktin-basism.xsl"); //Java Generated
-			File XSLFile = new File("src/main/resources/schematron/schematron_svrl/aktin-basism.xsl"); //ART Decor
-			File Step1Out = new File("src/main/resources/schematron/TransformationResult.xml");
-	
-        	Source schemaXSLT = new StreamSource(XSLFile);
+			File XSLFile= null;
+
+			if (mode.equals(MODE_INVERSE)) {
+	        	XSLFile = new File("src/main/resources/eav-cda-step1.xsl");
+	        }
+			if (mode.equals(MODE_DWH)) {
+	        	XSLFile = null;
+	        }
+			if ( (! mode.equals(MODE_DWH)) && (! mode.equals(MODE_DWH)) ) {
+				XSLFile = new File("src/main/resources/schematron/schematron_svrl/aktin-basism.xsl");
+			}
 			
+			File Step1Out = new File("src/main/resources/schematron/TransformationResult.xml");
+				
 			OutputStream TransOutStream = new FileOutputStream(Step1Out);
 			Result result = new StreamResult(TransOutStream);
-	
+			Source schemaXSLT = null;
 			Transformer transformer1;
+			
 			if (mode.equals(MODE_DWH)) {
-				 transformer1 = factory.newTransformer();  //Identity Transformer
-			} else {
-				 transformer1 = factory.newTransformer(schemaXSLT);
+				transformer1 = factory.newTransformer();  //Identity Transformer
+			}
+			else {
+	        	schemaXSLT = new StreamSource(XSLFile);
+				transformer1 = factory.newTransformer(schemaXSLT);
 			}
 						
 			transformer1.setOutputProperty(OutputKeys.INDENT, "yes");
 			
-			log.info("Schematron Validation...");
+			//log.info("Step 1 transformation...");
 			transformer1.transform(request, result);
-			log.info("...done");
+			//log.info("...done");
 			
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			// Zweite Transformation 
 			// Varianten 
-			// MODE_SVRL ~ Identity-Transformation = Vollständiger Bericht
+			// MODE_SVRL ~ Identity-Transformation = Vollstaendiger Bericht
 			// MODE_ERROR_ONLY ~ Error_Only-Transformation = Herausfiltern der Fehlermeldungen aus dem Validierungsbericht
-			// MODE_DWH ~ Transformation CDA->DWH, Rückgabe = EAV-XML-Datei
-			// MODE_RESULT ~ Transformation Fehler enthalten ja/nein? = Rückgabe nur HTTP-Status
+			// MODE_DWH ~ Transformation CDA->DWH, Rueckgabe = EAV-XML-Datei
+			// MODE_RESULT ~ Transformation Fehler enthalten ja/nein? = Rueckgabe nur HTTP-Status
+			// MODE_INVERSE ~ Transformation EAV->CDA
 			
 			File XSLFile2 = new File("src/main/resources/schematron/Show_Result_Only.xsl"); //default
 			
 
 			if (mode.equals(MODE_DWH)) {
-				XSLFile2 = new File("E:/GIT/aktin/dwh-import/cda_basismodul/dwh-eav-test-VT.xsl");
+				XSLFile2 = new File("src/main/resources/cda-eav.xsl");
 	        }
 			if (mode.equals(MODE_SVRL)) {
 	        	XSLFile2 = null;
@@ -162,6 +175,9 @@ public class RestServer implements Provider<Source>{
 	        }
 			if (mode.equals(MODE_RESULT)) {
 	        	XSLFile2 = new File("src/main/resources/schematron/Show_Result_Only.xsl");
+	        }
+			if (mode.equals(MODE_INVERSE)) {
+	        	XSLFile2 = new File("src/main/resources/eav-cda-step2.xsl");
 	        }
 	
 			if (XSLFile2 != null)
@@ -181,9 +197,10 @@ public class RestServer implements Provider<Source>{
 				
 			transformer2.setOutputProperty(OutputKeys.INDENT, "yes");
 			
-			log.info("Output Transformation...");
+			//log.info("Step2 Transformation...");
 			transformer2.transform(input, output);
-			log.info("...done");
+			//log.info("...done");
+			
 					
 			return w.toString();
 			//*/

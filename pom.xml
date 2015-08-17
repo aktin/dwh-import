@@ -61,6 +61,21 @@
 		</plugins>
 	</reporting>
 	<dependencies>
+        <!--<dependency>
+            <groupId>se.ugli</groupId>
+            <artifactId>uglisch</artifactId>
+            <version>1.0.1</version>
+        </dependency> 
+        <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.7.1</version>
+        </dependency> -->
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>9.5.1-2</version>
+        </dependency> 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -71,11 +86,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.4-1201-jdbc41</version>
-		</dependency>
-		<dependency>
-			<groupId>se.ugli</groupId>
-			<artifactId>uglisch</artifactId>
-			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
