@@ -2,16 +2,13 @@
 <?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <!-- java -classpath C:\ProgramData\Oracle\Java\javaclasses\xalan.jar org.apache.xalan.xslt.Process -in basismodul-beispiel-storyboard01_complete02.xml -xsl dwh-eav-test-VT.xsl -out dwh-eav-TESTOUT.xml -->
-<!-- 
+
+
+<!-- #Todo alle effectiveTimes zusätzlich als Attribute ergänzen um alle Zeiten rekonstruieren zu können (start wird automatisch gesetzt und kann beim Export aus I2B2 nicht mehr verwendet werden) -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="xs"
-    version="2.0"
-    xmlns="urn:hl7-org:v3">  -->
-    
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="xs xsi func cda eav"
+    exclude-result-prefixes="xs func cda eav"
     version="2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:func="http://for.func"
@@ -47,29 +44,45 @@
     <xsl:template match="/">
         <dwh-eav> 
             <meta>
-                <!-- Zeitpunkt, an dem der Export erstellt wurde bzw. Datenstand -->
                 <etl strategy="replace-visit" />
                 <source>
-                    <xsl:attribute name="timestamp"><xsl:value-of select="func:ConvertDateTime(/ClinicalDocument/cda:effectiveTime/@value)"/></xsl:attribute>
-                    <xsl:attribute name="id"><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole"/></xsl:attribute>  
-                </source>
-                <!-- weitere metadaten noetig? wertebereich, datentypen, ontologie, ...? -->                
+                    <xsl:attribute name="timestamp">
+                        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:effectiveTime/@value)"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="id">
+                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:setId"/>                        
+                    </xsl:attribute>  
+                </source>           
             </meta>
             <visit>   
                 <patid><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole"/></patid>
                 <surname>information privacy</surname>
                 <names>information privacy</names>
                 <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
+                <!-- <deathdate></deathdate> -->
                 <sex><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/></sex>
-                <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00"><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole"/></encounter>
+                <encounter>
+                    <xsl:attribute name="start">
+                        <xsl:call-template name="ZeitpunktAufnahme"/>                        
+                    </xsl:attribute>  
+                    <xsl:attribute name="end">
+                        <xsl:call-template name="ZeitpunktEntlassung"/>                        
+                    </xsl:attribute>  
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:setId"/>
+                </encounter>
+                <!-- <location></location> -->
+                <!-- <provider></provider> -->
                 <facts>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>           
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>                
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:performer/cda:time/cda:low"/>                   
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:low"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:participant/cda:associatedEntity"/>
             
                     <!-- Alle Fact-Templates auf Body/Component/Section Ebene aufrufen -->
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
-                    
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>                                
                 </facts>
             </visit>     
         </dwh-eav> 
@@ -79,77 +92,86 @@
  
 <!-- COMPONENT Templates -->    
  
+    <!-- Eindeutiger Identifier (~Fallnummer), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
+    <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // ClinicalDocument/setId shall be present to enable further updates to this ClinicalDocument. This identifier is to remain the same across all revisions   -->
+    <xsl:template match="/cda:ClinicalDocument/cda:setId">
+        <xsl:value-of select="./@root"/>.<xsl:value-of select="./@extension"/>
+    </xsl:template>
+ 
     <!-- 1	ID des Krankenhauses 
-    ???
+    Die KrankenhausID muss nicht im DWH gespeichert werden.
+    Bei der Zusammenführung ist dem Broker die Quelle bekannt und kann ggf. ergänzt werden.
+    Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar.
     -->
     <xsl:template match="cda:representedCustodianOrganization">
         <xsl:comment>1	ID des Krankenhauses</xsl:comment>
-        <eav-item>
+        <fact>
             <xsl:attribute name="concept">
                 <xsl:value-of select="./cda:id/@root"/>.<xsl:value-of select="./cda:id/@extension"/>
             </xsl:attribute>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 2	ID der Notaufnahme
-    ???
+    siehe 1 - Falls es zwei Notaufnahmen gibt, haben sie ein seperates DWH oder ein gemeinsames und werden nicht getrennt ausgewertet. In beiden Fällen ist die Frage nicht wirklich relevant.
     -->
     
-    <!-- 3	PatientenId im Basismodul 
-    <eav-item concept="L:21866-9" type="xsi:string">XX23412XXX</eav-item>   
-    <xsl:template match="/cda:ClinicalDocument/recordTarget/patientRole">
-        <xsl:comment>3	PatientenId im Basismodul</xsl:comment>
-        <eav-item concept="Patienten-ID" type="xsi:string">
-            <xsl:value-of select="./cda:id/@root"/>.<xsl:value-of select="./cda:id/@extension"/>
-        </eav-item>
-    </xsl:template>
-     -->
+    <!-- 3	PatientenId im Basismodul -->
+    <!-- <xsl:comment>3	PatientenId im Basismodul</xsl:comment> -->
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
             <xsl:value-of select="./cda:id/@root"/>.<xsl:value-of select="./cda:id/@extension"/>
     </xsl:template>
-    
+   
     <!-- 60 Versicherungsname -->  
     <!-- 771 Versicherungsträger -->
-    <!-- vgl. 808 Versicherungsnummer -->
+    <!-- 808 Versicherungsnummer -->
+    <xsl:template match="cda:participant/cda:associatedEntity">
+        <xsl:comment>60 Versicherungsname</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">  <!-- #ToDo Coding -->
+                <xsl:value-of select="./cda:scopingOrganization/cda:name"/>
+            </xsl:attribute>
+        </fact>
+
+        <xsl:comment>771 Versicherungsträger</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">  <!-- #ToDo Coding -->
+                <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.5']/@extension"/>
+            </xsl:attribute>
+        </fact>
+        
+        <xsl:comment>808 Versicherungsnummer</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">1.2.276.0.76.4.8</xsl:attribute>  <!-- #ToDo Coding -->
+            <xsl:value-of select="./id/@extension"/>
+        </fact>
+    </xsl:template>
     
     <!-- 53 Patientenname -->
     <!-- 54 Patientenadresse (Strasse) -->
     <!-- 55 Patientenadresse (Ort) -->
     <!-- 772 Patientenadresse (PLZ) -->
-    <!-- 56 Patientenadresse (Telefonnummer) -->
+    <!-- 56 Patientenadresse (Telefonnummer) -->    
+    <!-- information privacy (alles außer PLZ), ggf. an dieser Stelle schon Stellen weglassen? -->
+    <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode">
+        <xsl:comment>772 Patientenadresse (PLZ)</xsl:comment>
+        <fact>
+            <!-- #ToDo temp. ConceptCode -->
+            <xsl:attribute name="concept">PLZ</xsl:attribute>
+            <xsl:value-of select="."/>
+        </fact>
+    </xsl:template>
     
     <!-- 59 Geburtsdatum 
-        HL7.TS =>  	YYYY[MM[DD]]
-    <xsl:template match="patient/birthTime">
-        <xsl:comment>59 Geburtsdatum</xsl:comment>
-        <eav-item concept="Geburtsdatum" type="xsi:string">
-            <xsl:value-of select="./@value"/>
-        </eav-item>
-    </xsl:template>
-    -->
+        HL7.TS =>  	YYYY[MM[DD]] -->
     <xsl:template match="cda:patient/cda:birthTime">
         <xsl:value-of select="func:ConvertDateTime(./@value)"/>
     </xsl:template>
     
-    
-    <!-- 114 Rankin Scale (0..6) 
-    <eav-item concept="L:75859-9" type="xsi:integer">0</eav-item>
-    </cda:templateId root="1.2.276.0.76.10.4045"/>   
-    <xsl:template match="/cda:templateId[@root='1.2.276.0.76.10.4045']">
-        <xsl:comment>114 Rankin Scale</xsl:comment>
-        <eav-item concept="L:75859-9" type="xsi:integer">
-            <xsl:attribute name="unit">
-                <xsl:value-of select="../cda:value/@unit"/>
-            </xsl:attribute>
-            <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
-    </xsl:template>
-     -->
-    
-    <!-- 114 Rankin Scale als einzelne Konzept-->
+    <!-- 114 Rankin Scale als einzelne Konzept (0..6)-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4045']">
-        <xsl:comment>114 Rankin Scale (nicht numerisch)</xsl:comment>
-        <eav-item>
+        <xsl:comment>114 Rankin Scale (Konzeptcode)</xsl:comment>
+        <fact>
             <xsl:attribute name="concept">
         <xsl:choose>
             <xsl:when test="../cda:value/@value = '0'"><xsl:value-of select="$Rankin-Prefix"/>0</xsl:when>
@@ -161,69 +183,60 @@
             <xsl:when test="../cda:value/@value = '6'"><xsl:value-of select="$Rankin-Prefix"/>6</xsl:when>
         </xsl:choose>
             </xsl:attribute>
-        </eav-item>
-        
-        <xsl:comment>114 Rankin Scale</xsl:comment>
-        <eav-item type="xsi:integer">
+        </fact>
+      
+     <!-- 114 Rankin Scale numerisch (0..6) -->
+        <xsl:comment>114 Rankin Scale (numerisch)</xsl:comment>
+        <fact type="xsi:integer">
             <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>75859-9</xsl:attribute>
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 65 Patientengeschlecht
-    <eav-item concept="L:21840-4" type="xsi:integer">1=männlich/2=weiblich</eav-item>
+    <fact concept="L:21840-4" type="xsi:integer">1=männlich/2=weiblich</fact>
     -->
-    <xsl:template match="cda:patient/cda:administrativeGenderCode">
+    <xsl:template match="cda:patient/cda:administrativeGenderCode"> <!-- #ToDo nullFlavor bzw. ggf. Undifferenziert -->
         <!--  <xsl:comment>65 Patientengeschlecht</xsl:comment>  -->
         <xsl:value-of select="./@code"/>       
-        <!--  
-        <eav-item concept="L:21840-4" type="xsi:string">
-            <xsl:choose>
-                <xsl:when test="./@code = 'M'">
-                    1
-                </xsl:when>
-                <xsl:when test="./@code = 'F'">
-                    2
-                </xsl:when>
-            </xsl:choose>
-        </eav-item>
-        -->
     </xsl:template>
     
     <!-- 57/58 Aufnahmedatum/uhrzeit 
-    <eav-item concept="S:305056002" timestamp="2014-09-07T10:40:03"/>
+    <fact concept="S:305056002" start="2014-09-07T10:40:03"/>
     -->
-    <xsl:template match="cda:encompassingEncounter/cda:effectiveTime">
+    <xsl:template match="cda:encompassingEncounter/cda:effectiveTime/cda:low">
         <xsl:comment>57/58 Aufnahmedatum/uhrzeit</xsl:comment>
-        <eav-item>
+        <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$Snomed-Prefix"/>305056002</xsl:attribute>
-            <xsl:attribute name="timestamp">
-                <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
+            <xsl:attribute name="start">
+                <xsl:value-of select="func:ConvertDateTime(./@value)"/>
             </xsl:attribute>
-        </eav-item>
+            <xsl:attribute name="effectiveTimeLow">
+                <xsl:value-of select="./@value"/>
+            </xsl:attribute>
+        </fact>
+    </xsl:template>
+    <!-- Zusätzliches Template für visit/encounter -->
+    <xsl:template name="ZeitpunktAufnahme">
+        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:low/@value)"/>
     </xsl:template>
     
     <!-- 5 Schwanger L:11449-6'-->
     <!-- Unterscheidung Unknown und Nicht ausgefüllt? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4043']">
         <xsl:comment>5 Schwangerschaftsstatus</xsl:comment>
-<!--
-        <eav-item concept="L:11449-6" type="xsi:string">
-            <xsl:value-of select="../cda:value/@code"/>
-        </eav-item>
--->
-        <eav-item>
+        <fact>
             <xsl:call-template name="templateGetConceptValue"/>
-        </eav-item>        
+        </fact>        
     </xsl:template>
     
     <!-- 6 Tetanusschutz L:11458-7-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">
         <xsl:comment>6 Tetanusschutz</xsl:comment>
-        <eav-item> 
+        <fact> 
             <xsl:attribute name= "concept">
                 <xsl:choose>
                     <xsl:when test="../@negationInd = 'true'">11458-7:negtrue</xsl:when>
@@ -231,26 +244,26 @@
                     <xsl:when test="../@negationInd = 'false' and  @nullFlavor = 'NI'">11458-7:NI</xsl:when>
                 </xsl:choose>
             </xsl:attribute>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 7 Isolation und 8 Isolation Begründung -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4068']">
         <xsl:comment>7 Isolation / 8 Isolation Begründung</xsl:comment>
         <xsl:if test="../cda:code/@code = '275829005'"> <!-- Reverse Isolation -->
-            <eav-item> 
+            <fact> 
                 <xsl:attribute name= "concept">
                     <xsl:value-of select="$Snomed-Prefix"/>275829005
                 </xsl:attribute>
-            </eav-item>
+            </fact>
         </xsl:if>
 
         <xsl:if test="../cda:code/@code = '170497006' and ../../cda:procedure/@negationInd = 'true'"> <!-- No Isolation -->
-            <eav-item> 
+            <fact> 
                 <xsl:attribute name= "concept">
                     <xsl:value-of select="$Snomed-Prefix"/>170497006:negtrue
                 </xsl:attribute>
-            </eav-item>
+            </fact>
         </xsl:if>
 
         <xsl:if test="../cda:code/@code = '170497006' and not(../../cda:procedure/@negationInd = 'true')">
@@ -260,21 +273,21 @@
     
     <xsl:template name="Isolationreason">
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4069']">
-            <eav-item> 
+            <fact> 
                 <xsl:attribute name="xsi:type">
                     <xsl:value-of select="../cda:value/@xsi:type"/>
                 </xsl:attribute>
                 <xsl:call-template name="templateGetConceptValue"/>
-            </eav-item>
+            </fact>
         </xsl:for-each>
     </xsl:template>
    
     <!-- 9 Atemfrequenz
-    <eav-item concept="L:9279-1" type="xsi:integer">0</eav-item>
+    <fact concept="L:9279-1" type="xsi:integer">0</fact>
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4030']">
         <xsl:comment>9 Atemfrequenz</xsl:comment>
-        <eav-item type="xsi:integer">            
+        <fact type="xsi:integer">            
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -283,16 +296,16 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 10 Sauerstoffsättigung 59408-5
-    <eav-item concept="L:59408-5" type="xsi:integer">0</eav-item>
+    <fact concept="L:59408-5" type="xsi:integer">0</fact>
     LOINC Code ist im CDA anders gewählt
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4031']">
         <xsl:comment>10 Sauerstoffsättigung</xsl:comment>
-        <eav-item type="xsi:decimal">
+        <fact type="xsi:decimal">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -301,15 +314,15 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 11 Systolischer Blutdruck 8480-6
-    <eav-item concept="L:8480-6" type="xsi:integer">0</eav-item>
+    <fact concept="L:8480-6" type="xsi:integer">0</fact>
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4032']">
         <xsl:comment>11 Systolischer Blutdruck</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -318,15 +331,15 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 12 Herzfrequenz 8867-4
-    <eav-item concept="L:8867-4" type="xsi:integer">0</eav-item>
+    <fact concept="L:8867-4" type="xsi:integer">0</fact>
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4033']">
         <xsl:comment>12 Herzfrequenz</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -335,14 +348,14 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 13 GCS Augenöffnen 
-    <eav-item type="xsi:integer" concept="L:9267-6" unit="{score}">4</eav-item> -->
+    <fact type="xsi:integer" concept="L:9267-6" unit="{score}">4</fact> -->
     <xsl:template match="cda:code[@code='9267-6']">
         <xsl:comment>13 Glasgow Coma Scale Eye Opening(</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -351,14 +364,14 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 14 GCS verbale Antwort
-    <eav-item type="xsi:integer" concept="L:9270-0" unit="{score}">3</eav-item> -->
+    <fact type="xsi:integer" concept="L:9270-0" unit="{score}">3</fact> -->
     <xsl:template match="cda:code[@code='9270-0']">
         <xsl:comment>14 Glasgow Coma Scale Verbal Response(</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -367,14 +380,14 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 16 GCS motorische Antwort 
-    <eav-item type="xsi:integer" concept="L:9268-4" unit="{score}">2</eav-item> -->
+    <fact type="xsi:integer" concept="L:9268-4" unit="{score}">2</fact> -->
     <xsl:template match="cda:code[@code='9268-4']">
         <xsl:comment>16 Glasgow Coma Scale Motor Response(</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -383,14 +396,14 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 17 GCS Summe 
-    <eav-item type="xsi:integer" concept="L:9269-2" unit="{score}">9</eav-item> -->
+    <fact type="xsi:integer" concept="L:9269-2" unit="{score}">9</fact> -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4034']">
         <xsl:comment>17 Glasgow Coma Scale(</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">                
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -399,80 +412,45 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
-    <!-- 18 Pupillenweite bei Aufnahme in der Notaufnahme (links)
-    <eav-group concept="S:363953003">   size of pupil
-        <value modifier="362503005"/> left eye
-        <value modifier="362502000"/> right eye
-        <value modifier="362508001"/> both eyes
-        <value modifier="37125009"/> wide pupil
-        <value modifier="420335002"/> medium sized pupil 
-        <value modifier="301939004"/> small pupil 
-
-    <xsl:template match="/cda:templateId[@root='1.2.276.0.76.10.4046']">
-        <xsl:comment>18 Pupillenweite bei Aufnahme in der Notaufnahme</xsl:comment>
-        <eav-group>
-            <xsl:attribute name="value"></xsl:attribute>
-            <xsl:call-template name="templateGetConceptCode"/>
-            <value>
-                <xsl:attribute name="modifier">
-                    <xsl:value-of select="../cda:value/@code"/>
-                </xsl:attribute>
-            </cda:value>
-            <value>
-                <xsl:attribute name="modifier">
-                    <xsl:value-of select="../targetSiteCode/@code"/>
-                </xsl:attribute>
-            </cda:value>    
-        </eav-group>
-    </xsl:template>
-        -->
+    <!-- 18 Pupillenweite bei Aufnahme in der Notaufnahme -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4046']">
         <xsl:comment>18 Pupillenweite bei Aufnahme in der Notaufnahme</xsl:comment>
-        <eav-group>
+        <fact>
             <xsl:attribute name="concept">
                 <xsl:call-template name="templateGetConceptValue"/>
             </xsl:attribute>
             <value>
                 <xsl:attribute name="modifier">
-                    <xsl:value-of select="../cda:targetSiteCode/@code"/>
+                    <xsl:value-of select="$Snomed-Prefix"/>:<xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
             </value>    
-        </eav-group>
+        </fact>
     </xsl:template>
         
-     <!-- 19 Pupillenreaktion
-    <eav-group concept="S:271733001">   Pupil reaction
-        <value modifier="362503005"/> left eye
-        <value modifier="362502000"/> right eye
-        <value modifier="362508001"/> both eyes
-        <value modifier="301949001"/> Brisk pupil near reaction
-        <value modifier="301948009"/> Delayed pupil near reaction
-        <value modifier="13353005"/> 	Absent pupil reaction
-     </eav-group>
-    -->
+     <!-- 19 Pupillenreaktion -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4047']">
         <xsl:comment>19 Pupillenreaktion</xsl:comment>
-        <eav-group>
+        <fact>
             <xsl:attribute name="concept">
                 <xsl:call-template name="templateGetConceptValue"/>
             </xsl:attribute>
             <value>
                 <xsl:attribute name="modifier">
-                    <xsl:value-of select="../cda:targetSiteCode/@code"/>
+                    <xsl:value-of select="$Snomed-Prefix"/>:<xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
             </value>    
-        </eav-group>
+        </fact>
     </xsl:template>
                    
      <!-- 20 Körperkerntemperatur
-     <eav-item concept="S:276885007" type="xsi:decimal">40.00</eav-item>
+     <fact concept="S:276885007" type="xsi:decimal">40.00</fact>
      -->  
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4035']">
         <xsl:comment>20 Körperkerntemperatur</xsl:comment>
-        <eav-item type="xsi:decimal">
+        <fact type="xsi:decimal">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -481,15 +459,15 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
                    
     <!-- 21 Schmerz bei Aufnahme, loinc-schmerzskala 0-10 ggf. Answer list LL2335-9            
-    <eav-item concept="L:72514-3" type="xsi:integer">0</eav-item>
+    <fact concept="L:72514-3" type="xsi:integer">0</fact>
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4036']">
         <xsl:comment>21 Schmerz bei Aufnahme</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="unit">
                 <xsl:value-of select="../cda:value/@unit"/>
             </xsl:attribute>
@@ -498,15 +476,13 @@
             </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@value"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
-    <!-- 22 Zuweisung
-    <eav-item type="xsi:string" concept="L:11293-8">700232004</eav-item>
-    -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3046']">  <!-- #ToDo NullFlavor-->
+    <!-- 22 Zuweisung -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3046']">  <!-- #ToDo nullFlavor-->
         <xsl:comment>22 Zuweisung</xsl:comment>
-        <eav-item>
+        <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
                     <xsl:when test="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/>:</xsl:when>  
@@ -514,7 +490,7 @@
                 </xsl:choose>
                 <xsl:value-of select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@code"/>
             </xsl:attribute>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 62 Zuweiser -->
@@ -522,22 +498,26 @@
     
     <!-- 23 Ersteinschätzung -->
     <!-- incl. 770 Zeitpunkt der Ersteinschätzung
-    <eav-item type="xsi:integer" concept="S:273887006" start="201501171603">4</eav-item>
-    
-    
-    ToDo Abbildung "TriageSystem:Value" als Konzept-Code? momentan fixes Snomed Code für "Triage index (assessment scale)"
-    incl. 804	Verwendetes Ersteinschätzungssystem???
-    
+    <fact type="xsi:integer" concept="S:273887006" start="201501171603">4</fact>
+      
+    #ToDo Abbildung "TriageSystem:Value" als Konzept-Code? momentan fixes Snomed Code für "Triage index (assessment scale)"
+    incl. 804	Verwendetes Ersteinschätzungssystem??? 
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4042']">
         <xsl:comment>23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung</xsl:comment>
-        <eav-item type="xsi:integer">
+        <fact type="xsi:integer">
             <xsl:attribute name="start">
                 <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
             </xsl:attribute>
+            <xsl:attribute name="effectiveTimeLow">
+                <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
+            </xsl:attribute>
+            <xsl:attribute name="xsi:type">
+                <xsl:value-of select="../cda:value/@xsi:type"/>
+            </xsl:attribute>
             <xsl:call-template name="templateGetConceptCode"/>
             <xsl:value-of select="../cda:value/@code"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 24 Diagnostik  Überschrift/Freitext???-->
@@ -552,16 +532,15 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4070']">
         <xsl:comment>25-30+767 Zusatzmodule</xsl:comment>
         <xsl:for-each select="../cda:reference/cda:externalDocument">
-            <eav-item>
+            <fact>
                 <xsl:attribute name="concept">
                     <xsl:value-of select="$LOINC-Prefix"/>
                     <xsl:value-of select="./cda:code/@code"/>
                 </xsl:attribute>
-            </eav-item>     
+            </fact>     
         </xsl:for-each>
     </xsl:template>
     
-
     <!-- 31 Allergie 
     ja/nein => Umsetzung?
     Falls Eintrag "48765-2" vorhanden "JA" annehmen? Dies scheint nicht 100%ig kodiert zu sein
@@ -569,9 +548,9 @@
     -Heisst also eigentlich nur, dass irgendwas ausgefüllt ist?-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">
         <xsl:comment>31 Allergie</xsl:comment>
-        <eav-item>
+        <fact>
             <xsl:call-template name="templateGetConceptCode"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 33 Antibiotikaallergie -->
@@ -579,7 +558,7 @@
     <!-- 34 Allergie Sonstige 
     <xsl:template match="/cda:templateId[@root='1.2.276.0.76.10.4066']">
         <xsl:comment>33 Antibiotikaallergie</xsl:comment>
-        <eav-item>
+        <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
                     <xsl:when test="../@negationInd = 'true'">Keine Allergie</xsl:when>  CODING!              
@@ -588,17 +567,41 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-        </eav-item>
+        </fact>
         </xsl:template>
     -->
     
     <!-- 36 Beschwerden bei Vorstellung / Freitext-->
     
-    <!-- 212 Symptomdauer-->
+    <!-- 212 Symptomdauer  #ToDo -->
     
     <!-- 37 Zeitpunkt erster Arztkontakt-->
+    <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:performer/cda:time/cda:low">
+        <xsl:comment>37 Zeitpunkt erster Arztkontakt</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">2.16.840.1.113883.5.88</xsl:attribute> <!-- #ToDo ConceptCode "admitting physician" -->
+            <xsl:attribute name="start">
+                <xsl:value-of select="func:ConvertDateTime(./@value)"/>
+            </xsl:attribute>
+            <xsl:attribute name="timeLow">
+                <xsl:value-of select="./@value"/>
+            </xsl:attribute>
+        </fact>
+    </xsl:template>
     
-    <!-- 37 Zeitpunkt Therapiebeginn-->
+    <!-- 38 Zeitpunkt Therapiebeginn-->
+    <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:effectiveTime/cda:low">
+        <xsl:comment>38 Zeitpunkt Therapiebeginn</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">1.2.276.0.76.10.2035</xsl:attribute> <!-- #ToDo ConceptCode TemplateID -->
+            <xsl:attribute name="start">
+                <xsl:value-of select="func:ConvertDateTime(./@value)"/>
+            </xsl:attribute>
+            <xsl:attribute name="effectiveTimeLow">
+                <xsl:value-of select="./@value"/>
+            </xsl:attribute>
+        </fact>
+    </xsl:template>
     
     <!-- 40 Notfallanamnese / Freitext-->
     
@@ -609,97 +612,75 @@
     <!-- 42 Abschlussdiagnosen / Freitext-->
     
     <!-- 44 Abschlussdiagnosen-->
-    <!-- Reihenfolge muss bei Diagnosen beachtet/codiert werden 
-    <eav-group concept="L:11301-9">
-    <value modifier="Xnn.n"/>  ICD-CODE
-    </eav-group>   
-    <xsl:template match="/cda:templateId[@root='1.2.276.0.76.10.3055']">
-        <xsl:comment>42 Diagnosen</xsl:comment>
-        <eav-group>
-            <xsl:attribute name="value"></xsl:attribute>
-            <xsl:call-template name="templateGetConceptCode"/>
-            <xsl:for-each select="../entry/act/entryRelationship">
-                <value>
-                    <xsl:attribute name="modifier">
-                        <xsl:value-of select="./observation/cda:value/@code"/>
-                    </xsl:attribute>
-                </cda:value>
-            </xsl:for-each>
-        </eav-group>     
-    </xsl:template>
-    -->
-    
-    <!-- 44 Abschlussdiagnosen-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3055']">
         <xsl:comment>44 Abschlussdiagnosen</xsl:comment>
         <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship">
-            <eav-item>
+            <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="./cda:observation/cda:value/@code"/></xsl:attribute>
-            </eav-item>     
+            </fact>     
         </xsl:for-each>
     </xsl:template>
     
-    <!-- 804 verwendetes Ersteinschätzungssystem 
-    <eav-item type="xsi:string" concept="Ersteinschätzungssystem">1.2.276.0.76.5.438</eav-item>
-    -->
+    <!-- 804 verwendetes Ersteinschätzungssystem -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3049']">
         <xsl:comment>804 verwendetes Ersteinschätzungssystem</xsl:comment>
-        <eav-item concept="Ersteinschätzungssystem" type="xsi:string">
+        <fact concept="Ersteinschätzungssystem" type="xsi:string">
             <xsl:value-of select="../cda:entry/cda:observation/cda:value/@codeSystem"/>
-        </eav-item>
+        </fact>
     </xsl:template>
     
     <!-- 805 Beschwerden bei Vorstellung (CEDIS) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3048']">
         <xsl:comment>805 Beschwerden bei Vorstellung (CEDIS)</xsl:comment>
         <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship">
-            <eav-item>
+            <fact>
                 <xsl:attribute name="concept">
                     <xsl:value-of select="$CEDIS-Prefix"/>
                     <xsl:value-of select="./cda:observation/cda:value/@code"/>
                 </xsl:attribute>
-            </eav-item>     
+            </fact>     
         </xsl:for-each>
     </xsl:template>
     
-    <!-- 806 multiresistente Erreger -->
+    <!-- 806 multiresistente Erreger -->        <!-- #ToDo Codierung-->
     <!-- 807 multiresistente Erreger: Erregertyp -->
     
     <!-- 808 Versicherungsnummer -->
+    <!-- siehe oben: 60 Versicherungsname / 771 Versicherungsträger -->
     
     <!-- 882 Uhrzeit Verlegung / Entlassung -->
-    <!-- vgl. auch 596	Patient verlegt / entlassen nach -->
+    <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high">
+        <xsl:comment>882 Uhrzeit Verlegung / Entlassung</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">ZeitpunktVerlegung</xsl:attribute>  <!-- #ToDo ConceptCode -->
+            <xsl:attribute name="start">
+                <xsl:value-of select="func:ConvertDateTime(./@value)"/>
+            </xsl:attribute>
+            <xsl:attribute name="effectiveTimeHigh">
+                <xsl:value-of select="./@value"/>
+            </xsl:attribute>
+        </fact>
+    </xsl:template>
+    <!-- Zusätzliches Template für visit/encounter -->
+    <xsl:template name="ZeitpunktEntlassung">
+        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value)"/>
+    </xsl:template>
     
-    <!-- 884 Transportmittel 
-    <eav-item type="xsi:string" concept="L:11459-5">83887000</eav-item>
-    -->
-    <!-- LOINC Code passend? In Terminologie-Tabelle nicht aufgeführt. Valueset abweichend 
-    <xsl:template match="/cda:templateId[@root='1.2.276.0.76.10.3045']">
-        <xsl:comment>884 Transportmittel</xsl:comment>
-        <eav-item type="xsi:string">
-            <xsl:call-template name="templateGetConceptCode"/>
-            <xsl:value-of select="../entry/observation/cda:value/@code"/>
-        </eav-item>
-    </xsl:template>-->
+    <!-- 884 Transportmittel -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4037']">
         <xsl:comment>884 Transportmittel</xsl:comment>
-        <eav-item>
+        <fact>
             <xsl:call-template name="templateGetConceptValue"/>
-        </eav-item>
+        </fact>
     </xsl:template>
 
-    <!-- 596	Patient verlegt / entlassen nach 
-    
-    hier Zeitpunkt ergänzen?
-    
-    -->
-    <xsl:template match="cda:dischargeDispositionCode">
-        <xsl:comment>596	Patient verlegt / entlassen nach</xsl:comment>
-        <eav-item>
+    <!-- 596	Patient verlegt / entlassen nach -->
+    <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode">
+        <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
+        <fact>
             <xsl:call-template name="templateGetConcept"/>
-        </eav-item>
+        </fact>
     </xsl:template>
-
 
     <!-- Diagnostik 25ff @negationInd auswerten? Wie soll ja/nein abgebildet werden?-->
     <!-- Diagnostik 25ff opB >> 373573001 	Clinical finding present (situation) = opB unchecked; Clinical finding absent (situation) = opB checked-->
@@ -707,38 +688,21 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3050']">
         <xsl:for-each select="../cda:entry/cda:observation">
             <xsl:comment><xsl:value-of select="./cda:code/@displayName"/></xsl:comment>
-            <eav-item type="xsi:string">
+            <fact type="xsi:string">
                 <xsl:attribute name="concept">
                     <xsl:value-of select="$Snomed-Prefix"/><xsl:value-of select="./cda:code/@code"/>  <!-- for-each auf der falschen Ebene für Standardroutine templateGetConceptCode-->
                 </xsl:attribute>
                 <xsl:attribute name="start">
                     <xsl:value-of select="func:ConvertDateTime(./cda:effectiveTime/@value)"/>
                 </xsl:attribute>
+                <xsl:attribute name="effectiveTime">
+                    <xsl:value-of select="./cda:effectiveTime/@value"/>
+                </xsl:attribute>
                 <xsl:value-of select="./cda:value/@code"/>
-            </eav-item>
+            </fact>
         </xsl:for-each>
     </xsl:template>
-    <!-- #ToDo: Coding noch unklar für Diagnostik, so einfach geht es nicht.... 
-    <xsl:template name="Section.Diagnostik.Code">                                                 #ToDo Negation!!! 
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:eav-item[@concept = 'SNOMED:373573001']">
-            <xsl:attribute name="code">373573001</xsl:attribute>
-            <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
-        </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:eav-item[@concept = 'SNOMED:373572006']">
-            <xsl:attribute name="code">373572006</xsl:attribute>
-            <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
-        </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:eav-item[@concept = 'xxx:UNK']">                     #ToDo Parameter-Aufruf für Null-Prefix 
-            <xsl:attribute name="NullFlavor">UNK</xsl:attribute>
-            <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
-        </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:eav-item[@concept = 'xxx:NAV']">
-            <xsl:attribute name="NullFlavor">NAV</xsl:attribute>
-            <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
-        </xsl:if>
-    </xsl:template> -->
-    
-     
+   
      
 <!-- GLOBAL TEMPLATES -->
    
@@ -766,8 +730,8 @@
                 </xsl:attribute>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:attribute name="NullFlavor">
-                    <xsl:value-of select="../cda:code/@code"/>:<xsl:value-of select="../cda:value/@NullFlavor"/>
+                <xsl:attribute name="nullFlavor">
+                    <xsl:value-of select="../cda:code/@code"/>:<xsl:value-of select="../cda:value/@nullFlavor"/>
                 </xsl:attribute>
             </xsl:otherwise>
         </xsl:choose>

@@ -34,11 +34,11 @@
     
     
     
-<!-- Specific templates to produce enriched eav-items to facilitate step2 transformation -->
+<!-- Specific templates to produce enriched facts to facilitate step2 transformation -->
  
     <!-- TemplateID 1.2.276.0.76.10.2036
         Value Set 1.2.276.0.76.11.56 Discharge Disposition Codes -->
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:371828006']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:371828006']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.2036</xsl:attribute>
@@ -46,7 +46,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:225928004']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:225928004']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.2036</xsl:attribute>
@@ -54,7 +54,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:34596002']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:34596002']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.2036</xsl:attribute>
@@ -62,7 +62,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:306689006']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:306689006']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.2036</xsl:attribute>
@@ -70,7 +70,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:118661008:408730004=385660001']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:118661008:408730004=385660001']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.2036</xsl:attribute>
@@ -78,7 +78,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'XXX:OTH']">  <!-- #ToDo Prefix -->
+    <xsl:template match="eav:fact[@concept = 'XXX:OTH']">  <!-- #ToDo Prefix -->
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.2036</xsl:attribute>
@@ -91,7 +91,7 @@
  
     <!-- TemplateID 1.2.276.0.76.10.3045 / 1.2.276.0.76.10.4037
         Value Set 1.2.276.0.76.11.41 Transportmethode -->
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:52387005:408730004=107724000']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:52387005:408730004=107724000']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -99,7 +99,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:44613004']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:44613004']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -107,7 +107,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:83887000']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:83887000']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -115,7 +115,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:73957001']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:73957001']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -123,7 +123,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = '11459-5:UNK']">
+    <xsl:template match="eav:fact[@concept = '11459-5:UNK']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -131,7 +131,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = '11459-5:OTH']">
+    <xsl:template match="eav:fact[@concept = '11459-5:OTH']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -139,7 +139,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = '11459-5:NA']">
+    <xsl:template match="eav:fact[@concept = '11459-5:NA']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4037</xsl:attribute>
@@ -152,7 +152,7 @@
 
     <!-- TemplateID 1.2.276.0.76.10.3046 / 1.2.276.0.76.10.4038
         Value Set 1.2.276.0.76.11.42 Zuweiser -->
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:310000008']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:310000008']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -160,7 +160,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:309294001']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:309294001']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -168,7 +168,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:43741000']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:43741000']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -176,7 +176,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'KVNPIK']">
+    <xsl:template match="eav:fact[@concept = 'KVNPIK']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -184,7 +184,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'KVNDAK']">
+    <xsl:template match="eav:fact[@concept = 'KVNDAK']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -192,7 +192,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'NPHYS']">
+    <xsl:template match="eav:fact[@concept = 'NPHYS']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -200,7 +200,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = '3457005:UNK']">
+    <xsl:template match="eav:fact[@concept = '3457005:UNK']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -208,7 +208,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = '3457005:OTH']">
+    <xsl:template match="eav:fact[@concept = '3457005:OTH']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4038</xsl:attribute>
@@ -222,7 +222,7 @@
 
     <!-- TemplateID 1.2.276.0.76.10.3048 / 1.2.276.0.76.10.4039 / 1.2.276.0.76.10.4040
         Value Set 1.2.276.0.76.11.61 CEDIS Presenting Complaint List 3.0 -->
-    <xsl:template match="eav:eav-item[contains(@concept,'CEDIS:')]">
+    <xsl:template match="eav:fact[contains(@concept,'CEDIS:')]">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4040</xsl:attribute>
@@ -232,7 +232,7 @@
             <xsl:attribute name="codeSystem">1.2.276.0.76.5.439</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'CEDIS:UNK']">
+    <xsl:template match="eav:fact[@concept = 'CEDIS:UNK']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4040</xsl:attribute>
@@ -240,7 +240,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-item[@concept = 'CEDIS:OTH']">
+    <xsl:template match="eav:fact[@concept = 'CEDIS:OTH']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4040</xsl:attribute>
@@ -253,7 +253,7 @@
     
     <!-- TemplateID 1.2.276.0.76.10.3047 / 1.2.276.0.76.10.4043
         Value Set 1.2.276.0.76.11.46 Schwangerschafts-Status -->
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:77386006']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:77386006']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4043</xsl:attribute>
@@ -261,7 +261,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:60001007']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:60001007']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4043</xsl:attribute>
@@ -275,21 +275,21 @@
     
     
     <!-- TemplateID 1.2.276.0.76.10.3047 / 1.2.276.0.76.10.4044 Clostridiumtetaniimmunization -->
-    <xsl:template match="eav:eav-item[@concept = '11458-7:negtrue']">
+    <xsl:template match="eav:fact[@concept = '11458-7:negtrue']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4044</xsl:attribute>
             <xsl:attribute name="negationInd">true</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = '11458-7:negfalse']">
+    <xsl:template match="eav:fact[@concept = '11458-7:negfalse']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4044</xsl:attribute>
             <xsl:attribute name="negationInd">false</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = '11458-7:NI']">
+    <xsl:template match="eav:fact[@concept = '11458-7:NI']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4044</xsl:attribute>
@@ -302,7 +302,7 @@
     
     
     <!-- TemplateID 1.2.276.0.76.10.3047 / 1.2.276.0.76.10.4045 Modifiedrankinscale -->
-    <xsl:template match="eav:eav-item[contains(@concept,'Rankin:')]">
+    <xsl:template match="eav:fact[contains(@concept,'Rankin:')]">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4045</xsl:attribute>
@@ -322,7 +322,7 @@
         
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4030 RespiratoryRate -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:9279-1']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:9279-1']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4030</xsl:attribute>
@@ -334,7 +334,7 @@
     
        
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4031 OxygenSaturation -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:20564-1']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:20564-1']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4031</xsl:attribute>
@@ -346,7 +346,7 @@
     
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4032 Systolicbloodpressure -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:8480-6']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:8480-6']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4032</xsl:attribute>
@@ -358,7 +358,7 @@
     
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4033 HeartRate -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:8867-4']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:8867-4']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4033</xsl:attribute>
@@ -371,7 +371,7 @@
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4034 GlasgowComaScale 
         Glasgow Coma Scale Eye Opening -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:9267-6']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:9267-6']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4034_9267-6</xsl:attribute>
@@ -383,7 +383,7 @@
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4034 GlasgowComaScale 
         Glasgow Coma Scale Verbal Response -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:9270-0']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:9270-0']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4034_9270-0</xsl:attribute>
@@ -395,7 +395,7 @@
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4034 GlasgowComaScale 
         Glasgow Coma Scale Motor Response -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:9268-4']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:9268-4']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4034_9268-4</xsl:attribute>
@@ -407,7 +407,7 @@
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4034 GlasgowComaScale 
         Glasgow Coma Scale -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:9269-2']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:9269-2']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4034</xsl:attribute>
@@ -422,7 +422,7 @@
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4046 - Pupilsize 
         Value Set 1.2.276.0.76.11.49 Pupillenweite (quantitativ)
         Value Set 1.2.276.0.76.11.48 Auge links/rechts/beidseits -->
-    <xsl:template match="eav:eav-group[@concept = 'SNOMED:37125009']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:37125009']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4046</xsl:attribute>
@@ -433,7 +433,7 @@
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-group[@concept = 'SNOMED:420335002']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:420335002']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4046</xsl:attribute>
@@ -444,7 +444,7 @@
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-group[@concept = 'SNOMED:301939004']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:301939004']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4046</xsl:attribute>
@@ -460,7 +460,7 @@
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4047 - Pupilreaction 
         Value Set 1.2.276.0.76.11.50 Pupillenreaktion
         Value Set 1.2.276.0.76.11.48 Auge links/rechts/beidseits -->
-    <xsl:template match="eav:eav-group[@concept = 'SNOMED:301949001']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:301949001']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4047</xsl:attribute>
@@ -471,7 +471,7 @@
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-group[@concept = 'SNOMED:301948009']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:301948009']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4047</xsl:attribute>
@@ -482,7 +482,7 @@
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="eav:eav-group[@concept = 'SNOMED:13353005']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:13353005']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4047</xsl:attribute>
@@ -497,7 +497,7 @@
      
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4035 BodyTemperatureCore -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:8329-5']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:8329-5']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4035</xsl:attribute>
@@ -509,7 +509,7 @@
     
     
     <!-- TemplateID 1.2.276.0.76.10.3044 / 1.2.276.0.76.10.4036 Painseverity -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:72514-3']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:72514-3']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4036</xsl:attribute>
@@ -524,26 +524,130 @@
 
     <!-- TemplateID 1.2.276.0.76.10.3050 #ToDo: Coding noch unklar für Diagnostik, CDA Änderung abwarten
     <xsl:template name="Section.Diagnostik.Code">                                                  #ToDo Negation!!!
-        <xsl:if test="eav:eav-item[@concept = 'SNOMED:373573001']">
+        <xsl:if test="eav:fact[@concept = 'SNOMED:373573001']">
             <xsl:attribute name="code">373573001</xsl:attribute>
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:eav-item[@concept = 'SNOMED:373572006']">
+        <xsl:if test="eav:fact[@concept = 'SNOMED:373572006']">
             <xsl:attribute name="code">373572006</xsl:attribute>
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:eav-item[@concept = 'xxx:UNK']">               
+        <xsl:if test="eav:fact[@concept = 'xxx:UNK']">               
             <xsl:attribute name="NullFlavor">UNK</xsl:attribute>
             <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:eav-item[@concept = 'xxx:NAV']">
+        <xsl:if test="eav:fact[@concept = 'xxx:NAV']">
             <xsl:attribute name="NullFlavor">NAV</xsl:attribute>
             <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute>
         </xsl:if>
-        </xsl:template>  -->
-    
-    
-    
+        </xsl:template>  --> 
+                                              
+        <xsl:template match="eav:fact[@concept = 'SNOMED:399208008']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">399208008</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4050</xsl:attribute>
+            </xsl:copy>
+        </xsl:template> 
+        <xsl:template match="eav:fact[@concept = 'SNOMED:79760008']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">79760008</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4051</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>      
+        <xsl:template match="eav:fact[@concept = 'SNOMED:268425006']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">268425006</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4052</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>         
+        <xsl:template match="eav:fact[@concept = 'SNOMED:168537006:363704007=66019005']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">168537006:363704007=66019005</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4053</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>  
+        <xsl:template match="eav:fact[@concept = 'SNOMED:168537006']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">168537006</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4054</xsl:attribute>
+            </xsl:copy>
+        </xsl:template> 
+        <xsl:template match="eav:fact[@concept = 'SNOMED:408754009']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">408754009</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4055</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>        
+        <xsl:template match="eav:fact[@concept = 'SNOMED:169072007']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">169072007</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4056</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>    
+        <xsl:template match="eav:fact[@concept = 'SNOMED:15220000']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">15220000</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4057</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>         
+        <xsl:template match="eav:fact[@concept = 'SNOMED:113091000']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">113091000</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4058</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>        
+        <xsl:template match="eav:fact[@concept = 'SNOMED:278297009']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">278297009</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4059</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>       
+        <xsl:template match="eav:fact[@concept = 'SNOMED:53853004']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">53853004</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4060</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>         
+        <xsl:template match="eav:fact[@concept = 'SNOMED:268400002']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">268400002</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4061</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>         
+        <xsl:template match="eav:fact[@concept = 'SNOMED:16310003']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">16310003</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4062</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>        
+        <xsl:template match="eav:fact[@concept = 'SNOMED:77477000']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">77477000</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4063</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>        
+        <xsl:template match="eav:fact[@concept = 'SNOMED:40701008']">
+            <xsl:copy>          
+                <xsl:apply-templates select="@*"/>
+                <xsl:attribute name="code">40701008</xsl:attribute>
+                <xsl:attribute name="templateId">1.2.276.0.76.10.4064</xsl:attribute>
+            </xsl:copy>
+        </xsl:template>
+            
     <!-- TemplateID 1.2.276.0.76.10.3051  / 1.2.276.0.76.10.4065 / 1.2.276.0.76.10.4066
         Value Set 1.2.276.0.76.11.52 Allergy / intolerance substances
     #ToDo: Coding noch unklar, CDA Änderung abwarten  -->
@@ -558,7 +662,7 @@
     
     
     <!-- TemplateID 1.2.276.0.76.10.3055  / 1.2.276.0.76.10.4048 / 1.2.276.0.76.10.4049 Problemobservationeddiagnosis -->
-    <xsl:template match="eav:eav-item[contains(@concept,'ICD10GM:')]">
+    <xsl:template match="eav:fact[contains(@concept,'ICD10GM:')]">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4048</xsl:attribute>
@@ -572,15 +676,20 @@
     <!-- #ToDo NullFlavor nicht vorgesehen, aber theoretisch möglich -->
     
     
-    
-    <!-- TemplateID 1.2.276.0.76.10.3049 / 1.2.276.0.76.10.4042 Acuityobservation 
-    #ToDo: Coding noch unklar, muss erst in CDA->EAV abgebildet werden (Prefix?)-->
-    
+    <!-- TemplateID 1.2.276.0.76.10.3049 / 1.2.276.0.76.10.4042 Acuityobservation -->
+    <xsl:template match="eav:fact[@concept = 'SNOMED:273887006']">
+        <xsl:copy>          
+            <xsl:apply-templates select="@*"/>
+            <xsl:attribute name="templateId">1.2.276.0.76.10.4042</xsl:attribute>
+            <xsl:attribute name="code">273887006</xsl:attribute>
+            <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
+        </xsl:copy>
+    </xsl:template>   
     
     
     <!-- TemplateID 1.2.276.0.76.10.3056 / 1.2.276.0.76.10.4067 
          Value Set 1.2.276.0.76.11.53 Referral actions -->
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:304566005:260686004=37729005']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:304566005:260686004=37729005']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4067</xsl:attribute>
@@ -588,7 +697,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:304566005:260686004=19712007']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:304566005:260686004=19712007']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4067</xsl:attribute>
@@ -596,7 +705,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:76464004:260686004=37729005']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:76464004:260686004=37729005']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4067</xsl:attribute>
@@ -604,7 +713,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:76464004:260686004=19712007']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:76464004:260686004=19712007']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4067</xsl:attribute>
@@ -612,7 +721,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:305342007:260686004=37729005']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:305342007:260686004=37729005']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4067</xsl:attribute>
@@ -620,7 +729,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.96</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'SNOMED:305342007:260686004=19712007']">
+    <xsl:template match="eav:fact[@concept = 'SNOMED:305342007:260686004=19712007']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4067</xsl:attribute>
@@ -634,7 +743,7 @@
     
     <!-- TemplateID 1.2.276.0.76.10.3057 / 1.2.276.0.76.10.4070 / 1.2.276.0.76.10.4071
          Value Set 1.2.276.0.76.11.57 Modules document types -->
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:68552-9']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:68552-9']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4071</xsl:attribute>
@@ -642,7 +751,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.1</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:11488-4']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:11488-4']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4071</xsl:attribute>
@@ -650,7 +759,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.1</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:53576-5']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:53576-5']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4071</xsl:attribute>
@@ -658,7 +767,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.1</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:74198-3']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:74198-3']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4071</xsl:attribute>
@@ -666,7 +775,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.1</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:34750-0']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:34750-0']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4071</xsl:attribute>
@@ -674,7 +783,7 @@
             <xsl:attribute name="codeSystem">2.16.840.1.113883.6.1</xsl:attribute>
         </xsl:copy>
     </xsl:template>   
-    <xsl:template match="eav:eav-item[@concept = 'LOINC:34905-0']">
+    <xsl:template match="eav:fact[@concept = 'LOINC:34905-0']">
         <xsl:copy>          
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="templateId">1.2.276.0.76.10.4071</xsl:attribute>

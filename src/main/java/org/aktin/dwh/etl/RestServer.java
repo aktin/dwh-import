@@ -40,6 +40,7 @@ public class RestServer implements Provider<Source>{
 	static final String MODE_ERROR_ONLY = "error";
 	static final String MODE_RESULT = "result";
 	static final String MODE_INVERSE = "inverse";
+	static final String MODE_STEP1 = "step1";
 	
 	
 	private static final Logger log = Logger.getLogger(RestServer.class.getName());
@@ -92,6 +93,9 @@ public class RestServer implements Provider<Source>{
         if (lower_query.equals ("output=" + MODE_INVERSE)) {
         	mode = MODE_INVERSE;
         }
+        if (lower_query.equals ("output=" + MODE_STEP1)) {
+        	mode = MODE_STEP1;
+        }
 
         log.info("method="+httpMethod+", path="+path+", query="+query+", mode="+mode);
         if( request == null ){
@@ -121,13 +125,13 @@ public class RestServer implements Provider<Source>{
 			//File XSLFile = new File("src/main/resources/schematron/aktin-basism.xsl"); //Java Generated
 			File XSLFile= null;
 
-			if (mode.equals(MODE_INVERSE)) {
+			if (mode.equals(MODE_INVERSE) || mode.equals(MODE_STEP1)) {
 	        	XSLFile = new File("src/main/resources/eav-cda-step1.xsl");
 	        }
 			if (mode.equals(MODE_DWH)) {
 	        	XSLFile = null;
 	        }
-			if ( (! mode.equals(MODE_DWH)) && (! mode.equals(MODE_DWH)) ) {
+			if (mode.equals(MODE_SVRL) || mode.equals(MODE_ERROR_ONLY) || mode.equals(MODE_RESULT) ) {
 				XSLFile = new File("src/main/resources/schematron/schematron_svrl/aktin-basism.xsl");
 			}
 			
@@ -167,7 +171,7 @@ public class RestServer implements Provider<Source>{
 			if (mode.equals(MODE_DWH)) {
 				XSLFile2 = new File("src/main/resources/cda-eav.xsl");
 	        }
-			if (mode.equals(MODE_SVRL)) {
+			if (mode.equals(MODE_SVRL) || mode.equals(MODE_STEP1)) {
 	        	XSLFile2 = null;
 	        }
 			if (mode.equals( MODE_ERROR_ONLY)) {
@@ -189,7 +193,7 @@ public class RestServer implements Provider<Source>{
 			StreamResult output = new StreamResult(w);
 						
 			Transformer transformer2;
-			if (mode.equals(MODE_SVRL)) {
+			if (XSLFile2 == null) {
 				 transformer2 = factory.newTransformer();  //Identity Transformer
 			} else {
 				 transformer2 = factory.newTransformer(schemaXSLT);

@@ -217,17 +217,17 @@ public class CDA implements Comparator<Document> {
 			//log.info("Number of XPath results: " + result1.getLength());
 			if (result1.getLength() != result2.getLength()) {
 				if (result1.getLength() > 0) {
-					//log.info("XPath results number not matching for XPath: " +XPath+ " ("+result1.getLength()+"/"+result2.getLength()+ "); R1=" +result1.item(0).toString());
+					log.info("XPath results number not matching for XPath: " +XPath+ " ("+result1.getLength()+"/"+result2.getLength()+ "); R1=" +result1.item(0).toString());
 				}
 				else {
-					//log.info("XPath results number not matching for XPath: " +XPath+ " ("+result1.getLength()+"/"+result2.getLength() );
+					log.info("XPath results number not matching for XPath: " +XPath+ " ("+result1.getLength()+"/"+result2.getLength() );
 				}
 				return false;
 			}
 			for (int i = 0; i < result1.getLength(); i++) {
 				//log.info("Testing "+ result1.item(i).toString() + " vs. "+ result2.item(i).toString());
 				if (! result1.item(i).toString().equals(result2.item(i).toString())) {
-					//log.info("XPath compare - Found deviation: R1="+result1.item(i).toString()+" ; R2="+result2.item(i).toString()+" for XPath: " +XPath);
+					log.info("XPath compare - Found deviation: R1="+result1.item(i).toString()+" ; R2="+result2.item(i).toString()+" for XPath: " +XPath);
 					return false;	//quit false if anything is not equal
 				} else {
 					//log.info("XPath compare - No deviation for XPath: "+XPath+ " ; R1/R2=" +result1.item(i).toString()); //For testing only, no need to do anything here
@@ -240,7 +240,7 @@ public class CDA implements Comparator<Document> {
 		}
 		//log.info(XPath+" : "+count+"/"+count+" matching Results");
 		if (count == 0) {
-			//log.info("************************** WARNING ************************************** 0 Results => Possible XPath Error"); //Debugging only!! Incomplete Documents have empty results!
+			log.info(XPath+"************************** WARNING ************************************** 0 Results => Possible XPath Error"); //Debugging only!! Incomplete Documents have empty results!
 		}
 		return true;
 	}

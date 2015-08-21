@@ -17,7 +17,7 @@ import javax.xml.ws.http.HTTPBinding;
 
 	public class TestInverseTransformations {
 		
-		private static final Logger log = Logger.getLogger(Transform.class.getName());
+		private static final Logger log = Logger.getLogger(TestInverseTransformations.class.getName());
 		
 		private final String[] TestFiles = new String[] {
 				"src/test/resources/inverse-story4-cda.xml",
@@ -52,11 +52,11 @@ import javax.xml.ws.http.HTTPBinding;
 							fail("Error loading CDA document");	
 						}	
 						if (! base_cda.equals(inverse_cda)) {
-							log.info("CDA equals-check NOT successful for: "+file);
+							log.info("+++++++++++++++  CDA equals-check NOT SUCCESSFUL cessful for: "+file+" +++++++++++++++");
 							fail("CDA Documents not equivalent after inverse transformation");
 						}					
 						//log.info(cda_inverse_xml);
-						log.info("CDA equals-check successful for: "+file);
+						log.info("+++++++++++++++ CDA equals-check SUCCESSFUL for: "+file+" +++++++++++++++");
 	
 					}
 				}
