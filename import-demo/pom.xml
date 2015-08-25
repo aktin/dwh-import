@@ -45,15 +45,6 @@
 								<wsdlOption>
 									<wsdl>${basedir}/src/main/resources/wsdl/XDS.b_DocumentRepository.wsdl</wsdl>
 									<wsdlLocation>classpath:wsdl/XDS.b_DocumentRepository.wsdl</wsdlLocation>
-									<!--<extraargs>
-										<extraarg>-server</extraarg>
-										<extraarg>-verbose</extraarg>
-										<extraarg>-p</extraarg>
-										<extraarg>https://dwh.dzl.de=de.sekmi.ws.dwh</extraarg>
-										<extraarg>-p</extraarg>
-										<extraarg>https://idm.dzl.de=de.sekmi.ws.idm</extraarg>
-									</extraargs>
-									-->
 								</wsdlOption>
 							</wsdlOptions>
 						</configuration>

@@ -75,8 +75,8 @@ public class Server {
 	}
 	
 	public void shutdown(){
-		// wait 10 seconds to complete current exchange handlers
-		server.stop(10);
+		// wait 3 seconds to complete current exchange handlers
+		server.stop(3);
 		// stop end points
 		xdsEndpoint.stop();
 		restEndpoint.stop();
