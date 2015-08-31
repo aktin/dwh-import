@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.55"
+             name="Isolationreason"
+             displayName="Isolation reason"
+             effectiveDate="2015-03-26T00:00:00"
+             statusCode="draft">
+      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
+      <conceptList>
+                <concept code="372292006"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Infection due to resistant organism (disorder)"
+                  level="0"
+                  type="L"/>
+                <concept code="25374005"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Gastroenteritis (disorder)"
+                  level="0"
+                  type="L"/>
+                <concept code="56717001"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Tuberculosis (disorder)"
+                  level="0"
+                  type="L"/>
+                <concept code="7180009"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Meningitis (disorder)"
+                  level="0"
+                  type="L"/>
+                <exception code="OTH"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Andere"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

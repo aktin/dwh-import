@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.49"
+             name="Pupilsizequantitative"
+             displayName="Pupillenweite (quantitativ)"
+             effectiveDate="2015-03-03T00:00:00"
+             statusCode="draft">
+      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
+      <conceptList>
+                <concept code="37125009"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Dilated pupil (finding)"
+                  level="0"
+                  type="L"/>
+                <concept code="420335002"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Medium size pupil (finding)"
+                  level="0"
+                  type="L"/>
+                <concept code="301939004"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Constricted pupil (finding)"
+                  level="0"
+                  type="L"/>
+                <exception code="UNK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Unbekannt"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

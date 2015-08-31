@@ -7,7 +7,6 @@
              effectiveDate="2015-03-03T00:00:00"
              statusCode="draft">
       <sourceCodeSystem id="1.2.276.0.76.5.437" identifierName="Emergencyseverityindex"/>
-      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
                 <concept code="1"
                   codeSystem="1.2.276.0.76.5.437"
@@ -34,11 +33,6 @@
                   displayName="Nonurgent - Stable, with no resources anticipated except oral or topical medications, or prescriptions"
                   level="0"
                   type="L"/>
-                <exception code="UNK"
-                    codeSystem="2.16.840.1.113883.5.1008"
-                    displayName="Unbekannt"
-                    level="0"
-                    type="L"/>
             </conceptList>
    </valueSet>
 </valueSets>

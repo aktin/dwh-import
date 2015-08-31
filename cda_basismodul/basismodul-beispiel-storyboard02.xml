@@ -74,7 +74,7 @@
     <!-- Identifikation des Dokuments -->
     <id root="1.2.276.0.76.4.17.9814184919" extension="5cc18aa4-1372-4db1-8d1f-6519e584f88f"/>
     <!-- Fixer Dokumententype-Code -->
-    <code code="34878-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Note"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Admission evaluation note"/>
     <!-- Datum und Zeit der Erstellung -->
     <effectiveTime value="20150116220525"/>
     <!-- Vertraulichkeitsstufe -->
@@ -381,7 +381,18 @@
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161924"/>
                             <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
-                            <targetSiteCode code="362508001" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.10.4046"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
+                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201501161924"/>
+                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
+                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
@@ -392,7 +403,18 @@
                             <statusCode code="completed"/>
                             <effectiveTime value="201503041234"/>
                             <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
-                            <targetSiteCode code="362508001" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.10.4047"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
+                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="201503041234"/>
+                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
+                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
@@ -507,7 +529,7 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
@@ -518,7 +540,7 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="420134006" displayName="Propensity to adverse reactions (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
                                 </observation>
                             </entryRelationship>
                         </act>
@@ -585,7 +607,7 @@
                                     <effectiveTime>
                                         <low value="201501162104"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="A41.58" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Sonstige gramnegative Erreger"/>
+                                    <value xsi:type="CD" code="A41.58" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Sonstige gramnegative Erreger"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
@@ -600,7 +622,7 @@
                                     <effectiveTime>
                                         <low value="201501162104"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="R57" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Schock, anderenorts nicht klassifiziert"/>
+                                    <value xsi:type="CD" code="R57" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Schock, anderenorts nicht klassifiziert"/>
                                 </observation>
                             </entryRelationship>
                         </act>

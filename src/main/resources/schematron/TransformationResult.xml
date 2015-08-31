@@ -1,199 +1,305 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                        xmlns:saxon="http://saxon.sf.net/"
-                        xmlns:schold="http://www.ascc.net/xml/schematron"
-                        xmlns:iso="http://purl.oclc.org/dsdl/schematron"
-                        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-                        xmlns:hl7="urn:hl7-org:v3"
-                        xmlns:cda="urn:hl7-org:v3"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        title=" Schematron file for  - Basis-Modul "
-                        schemaVersion=""><!--   
-		   
-		   
-		 -->
-   <svrl:ns-prefix-in-attribute-values uri="urn:hl7-org:v3" prefix="hl7"/>
-   <svrl:ns-prefix-in-attribute-values uri="urn:hl7-org:v3" prefix="cda"/>
-   <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/2001/XMLSchema-instance" prefix="xsi"/>
-   <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/XML/1998/namespace" prefix="xml"/>
-   <svrl:active-pattern document=""/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.1015-2014-09-18T000000"
-                        name="Emergency medicine Note CDA document"/>
-   <svrl:failed-assert test="not(.)"
-                       see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.1015-2014-09-18T000000.html"
-                       role="error"
-                       location="/*:dwh-eav[namespace-uri()='http://sekmi.de/histream/dwh-eav'][1]">
-      <svrl:text>(EmergencymedicineNoteCDAdocument): '' ist als geschlossen definiert und dieses Element 'dwh-eav' ist nicht erlaubt oder nicht mit diesem Inhalt erlaubt. Dies kann templateId, code oder id betreffen. (rule-reference: tmp-r-9c4eb98b-39fd-4aa0-8575-2239efcd7267)</svrl:text>
-   </svrl:failed-assert>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3044-2014-09-16T000000"
-                        name="Vitalparameter"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3045-2015-01-10T000000"
-                        name="Transportmittel"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3046-2015-01-10T000000"
-                        name="Zuweisung"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3047-2015-01-10T000000"
-                        name="Klinische Basisinformationen"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3048-2015-01-10T000000"
-                        name="Beschwerden bei Vorstellung"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3049-2015-01-10T000000"
-                        name="Ersteinschätzung"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3050-2015-01-10T000000"
-                        name="Diagnostik"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3051-2015-03-26T000000"
-                        name="Allergien und Unverträglichkeiten"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3053-2015-01-10T000000"
-                        name="Notfallanamnese"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3054-2015-01-10T000000"
-                        name="Befunde / Verlauf / durchgeführte Therapie"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3055-2015-01-10T000000"
-                        name="Abschlussdiagnosen"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3056-2015-01-10T000000"
-                        name="Weiteres Procedere / Therapieempfehlung / Weiterbehandler"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.3057-2015-03-30T000000"
-                        name="Zusatzmodule (weitere Dokumentation)"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4030-2014-09-16T000000"
-                        name="Atemfrequenz"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4031-2014-09-16T000000"
-                        name="Sauerstoffsättigung"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4032-2014-09-16T000000"
-                        name="Blutdruck systolisch"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4033-2014-09-16T000000"
-                        name="Herzfrequenz"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4034-2014-09-16T000000"
-                        name="Glasgow Coma Scale"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4035-2014-09-16T000000"
-                        name="Körperkerntemperatur"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4036-2014-09-16T000000"
-                        name="Schmerz"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4037-2015-03-03T000000"
-                        name="Transportmethode"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4038-2015-03-03T000000"
-                        name="Zuweisung mit Zuweiser"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4039-2015-03-03T000000"
-                        name="Problem Concern Act (Text/CEDIS)"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4040-2015-03-03T000000"
-                        name="Problem Observation (Text/CEDIS)"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4042-2015-03-03T000000"
-                        name="Triage-Einschätzung"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4043-2015-03-03T000000"
-                        name="Status Schwangerschaft"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4044-2015-03-03T000000"
-                        name="Immunisierung Clostridium tetani"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4045-2015-03-03T000000"
-                        name="Modified Rankin Scale"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4046-2015-03-03T000000"
-                        name="Pupillenweite"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4047-2015-03-03T000000"
-                        name="Pupillenreaktion"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4048-2015-03-03T000000"
-                        name="Problem Concern Act (Abschlussdiagnosen)"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4049-2015-03-03T000000"
-                        name="Problem Observation (Abschlussdiagnose)"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4050-2015-03-27T000000"
-                        name="Diagnostik Plain chest X-ray"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4051-2015-03-27T000000"
-                        name="Diagnostik Radiography of spine"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4052-2015-03-27T000000"
-                        name="Diagnostik Pelvis X-ray"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4053-2015-03-27T000000"
-                        name="Diagnostik Plain radiography limb structure"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4054-2015-03-27T000000"
-                        name="Diagnostik Plain radiography"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4055-2015-03-27T000000"
-                        name="Diagnostik Computed tomography of entire head"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4056-2015-03-27T000000"
-                        name="Diagnostik Computed tomography scan - whole body"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4057-2015-03-27T000000"
-                        name="Diagnostik Laboratory test"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4058-2015-03-27T000000"
-                        name="Diagnostik Magnetic resonance imaging"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4059-2015-03-27T000000"
-                        name="Diagnostik Blood gas analysis"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4060-2015-03-27T000000"
-                        name="Diagnostik Urinalysis, reagent strip without microscopy"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4061-2015-03-27T000000"
-                        name="Diagnostik 12 lead electrocardiogram"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4062-2015-03-27T000000"
-                        name="Diagnostik Diagnostic ultrasonography"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4063-2015-03-27T000000"
-                        name="Diagnostik Computerized axial tomography"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4064-2015-03-27T000000"
-                        name="Diagnostik Echocardiography"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4065-2015-03-27T000000"
-                        name="Allergy Concern Act"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4066-2014-06-09T000000"
-                        name="Allergy / Intolerance Observation"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4067-2015-03-30T000000"
-                        name="Weiterbehandlung Verlegung"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4068-2015-03-30T000000"
-                        name="Isolation"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4069-2014-06-09T000000"
-                        name="Isolation Indication"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4070-2015-03-30T000000"
-                        name="Zusätzliche externe Dokumentation"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4071-2015-03-30T000000"
-                        name="External Document Reference"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4072-2015-06-01T000000"
-                        name="Problem Concern Act (Multidrug-resistant organism)"/>
-   <svrl:active-pattern document=""
-                        id="template-1.2.276.0.76.10.4073-2015-06-01T000000"
-                        name="Problem Observation (Multidrug-resistant organism)"/>
-</svrl:schematron-output>
+<?xml version="1.0" encoding="UTF-8"?>
+<dwh-eav xmlns="http://sekmi.de/histream/dwh-eav"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <meta>
+      <etl strategy="replace-visit"/>
+      <source timestamp="2015-01-17T16:33:00"
+              id="1.2.276.0.76.4.17.9814184919.0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf"/>
+   </meta>
+   <visit>
+      <patid>1.2.276.0.76.4.8.1234567890</patid>
+      <surname>information privacy</surname>
+      <names>information privacy</names>
+      <birthdate>1996-05-31</birthdate>
+      <sex>M</sex>
+      <encounter start="2015-01-17T16:03" end="2015-01-17T17:35">1.2.276.0.76.4.17.9814184919.0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf</encounter>
+      <facts><!--772 Patientenadresse (PLZ)-->
+         <fact concept="PLZ">46240</fact>
+         <!--1	ID des Krankenhauses-->
+         <fact concept="1.2.276.0.76.4.17 1.2.276.0.76.4.17.9814184919 9814184920"/>
+         <!--37 Zeitpunkt erster Arztkontakt-->
+         <fact concept="2.16.840.1.113883.5.88"
+               start="2015-01-17T16:32"
+               timeLow="201501171632"/>
+         <!--882 Uhrzeit Verlegung / Entlassung-->
+         <fact concept="ZeitpunktVerlegung"
+               start="2015-01-17T17:35"
+               effectiveTimeHigh="201501171735"/>
+         <!--57/58 Aufnahmedatum/uhrzeit-->
+         <fact concept="SNOMED:305056002"
+               start="2015-01-17T16:03"
+               effectiveTimeLow="201501171603"/>
+         <!--596 Patient verlegt / entlassen nach-->
+         <fact concept="SNOMED:306689006"
+               templateId="1.2.276.0.76.10.2036"
+               code="306689006"
+               codeSystem="2.16.840.1.113883.6.96"/>
+         <!--60 Versicherungsname-->
+         <fact concept="AOK Süd-Ostwestfalen Nord"/>
+         <!--771 Versicherungsträger-->
+         <fact concept="987654321"/>
+         <!--808 Versicherungsnummer-->
+         <fact concept="1.2.276.0.76.4.8"/>
+         <!--884 Transportmittel-->
+         <fact concept="SNOMED:83887000"
+               templateId="1.2.276.0.76.10.4037"
+               code="83887000"
+               codeSystem="2.16.840.1.113883.6.96"/>
+         <!--22 Zuweisung-->
+         <fact concept="SNOMED:700232004"/>
+         <!--805 Beschwerden bei Vorstellung (CEDIS)-->
+         <fact concept="CEDIS:557"
+               templateId="1.2.276.0.76.10.4040"
+               code="557"
+               codeSystem="1.2.276.0.76.5.439"/>
+         <fact concept="CEDIS:651"
+               templateId="1.2.276.0.76.10.4040"
+               code="651"
+               codeSystem="1.2.276.0.76.5.439"/>
+         <!--5 Schwangerschaftsstatus-->
+         <fact concept="SNOMED:60001007"
+               templateId="1.2.276.0.76.10.4043"
+               code="60001007"
+               codeSystem="2.16.840.1.113883.6.96"/>
+         <!--6 Tetanusschutz-->
+         <fact concept="11458-7:negfalse"
+               templateId="1.2.276.0.76.10.4044"
+               negationInd="false"/>
+         <!--114 Rankin Scale (Konzeptcode)-->
+         <fact concept="Rankin:2" templateId="1.2.276.0.76.10.4045" value="2"/>
+         <!--114 Rankin Scale (numerisch)-->
+         <fact type="xsi:integer" concept="LOINC:75859-9" unit="{score}">2</fact>
+         <!--9 Atemfrequenz-->
+         <fact type="xsi:integer"
+               unit="/min"
+               xsi:type="PQ"
+               concept="LOINC:9279-1"
+               templateId="1.2.276.0.76.10.4030"
+               value="17"/>
+         <!--10 Sauerstoffsättigung-->
+         <fact type="xsi:decimal"
+               unit="%"
+               xsi:type="PQ"
+               concept="LOINC:20564-1"
+               templateId="1.2.276.0.76.10.4031"
+               value="86.0"/>
+         <!--11 Systolischer Blutdruck-->
+         <fact type="xsi:integer"
+               unit="mm[Hg]"
+               xsi:type="PQ"
+               concept="LOINC:8480-6"
+               templateId="1.2.276.0.76.10.4032"
+               value="129"/>
+         <!--12 Herzfrequenz-->
+         <fact type="xsi:integer"
+               unit="/min"
+               xsi:type="PQ"
+               concept="LOINC:8867-4"
+               templateId="1.2.276.0.76.10.4033"
+               value="67"/>
+         <!--17 Glasgow Coma Scale(-->
+         <fact type="xsi:integer"
+               unit="{score}"
+               xsi:type="PQ"
+               concept="LOINC:9269-2"
+               templateId="1.2.276.0.76.10.4034"
+               value="9"/>
+         <!--13 Glasgow Coma Scale Eye Opening(-->
+         <fact type="xsi:integer"
+               unit="{score}"
+               xsi:type="PQ"
+               concept="LOINC:9267-6"
+               templateId="1.2.276.0.76.10.4034_9267-6"
+               value="4"/>
+         <!--14 Glasgow Coma Scale Verbal Response(-->
+         <fact type="xsi:integer"
+               unit="{score}"
+               xsi:type="PQ"
+               concept="LOINC:9270-0"
+               templateId="1.2.276.0.76.10.4034_9270-0"
+               value="3"/>
+         <!--16 Glasgow Coma Scale Motor Response(-->
+         <fact type="xsi:integer"
+               unit="{score}"
+               xsi:type="PQ"
+               concept="LOINC:9268-4"
+               templateId="1.2.276.0.76.10.4034_9268-4"
+               value="2"/>
+         <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+         <fact concept="SNOMED:420335002"
+               templateId="1.2.276.0.76.10.4046"
+               code="420335002"
+               codeSystem="2.16.840.1.113883.6.96"
+               targetSiteCode="SNOMED::362503005"/>
+         <!--19 Pupillenreaktion-->
+         <fact concept="SNOMED:301949001"
+               templateId="1.2.276.0.76.10.4047"
+               code="301949001"
+               codeSystem="2.16.840.1.113883.6.96"
+               targetSiteCode="SNOMED::362503005"/>
+         <!--19 Pupillenreaktion-->
+         <fact concept="SNOMED:301949001"
+               templateId="1.2.276.0.76.10.4047"
+               code="301949001"
+               codeSystem="2.16.840.1.113883.6.96"
+               targetSiteCode="SNOMED::362502000"/>
+         <!--20 Körperkerntemperatur-->
+         <fact type="xsi:decimal"
+               unit="Cel"
+               xsi:type="PQ"
+               concept="LOINC:8329-5"
+               templateId="1.2.276.0.76.10.4035"
+               value="37.0"/>
+         <!--21 Schmerz bei Aufnahme-->
+         <fact type="xsi:integer"
+               unit="{score}"
+               xsi:type="PQ"
+               concept="LOINC:72514-3"
+               templateId="1.2.276.0.76.10.4036"
+               value="2"/>
+         <!--Plain chest X-ray (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:399208008"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="399208008"
+               templateId="1.2.276.0.76.10.4050"/>
+         <!--Radiography of spine (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:79760008"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="79760008"
+               templateId="1.2.276.0.76.10.4051"/>
+         <!--Pelvis X-ray (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:268425006"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="268425006"
+               templateId="1.2.276.0.76.10.4052"/>
+         <!--Plain radiography (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:168537006"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="168537006"
+               templateId="1.2.276.0.76.10.4054"/>
+         <!--Computed tomography of entire head (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:408754009"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="408754009"
+               templateId="1.2.276.0.76.10.4055"/>
+         <!--Computed tomography scan - whole body (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:169072007"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="169072007"
+               templateId="1.2.276.0.76.10.4056"/>
+         <!--Laboratory test (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:15220000"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="15220000"
+               templateId="1.2.276.0.76.10.4057"/>
+         <!--Magnetic resonance imaging (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:113091000"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="113091000"
+               templateId="1.2.276.0.76.10.4058"/>
+         <!--Blood gas analysis (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:278297009"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="278297009"
+               templateId="1.2.276.0.76.10.4059"/>
+         <!--Urinalysis, reagent strip without microscopy (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:53853004"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="53853004"
+               templateId="1.2.276.0.76.10.4060"/>
+         <!--12 lead electrocardiogram (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:268400002"
+               start="2015-03-26T12:34"
+               effectiveTime="201503261234"
+               code="268400002"
+               templateId="1.2.276.0.76.10.4061"/>
+         <!--Diagnostic ultrasonography (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:16310003"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="16310003"
+               templateId="1.2.276.0.76.10.4062"/>
+         <!--Computerized axial tomography (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:77477000"
+               start="2015-01-17"
+               effectiveTime="20150117"
+               code="77477000"
+               templateId="1.2.276.0.76.10.4063"/>
+         <!--Echocardiography (procedure)-->
+         <fact type="xsi:string"
+               concept="SNOMED:40701008"
+               start="2015-03-26T12:34"
+               effectiveTime="201503261234"
+               code="40701008"
+               templateId="1.2.276.0.76.10.4064"/>
+         <!--31 Allergie-->
+         <fact concept="LOINC:48765-2"/>
+         <!--7 Isolation / 8 Isolation Begründung-->
+         <fact xsi:type="CV" concept="SNOMED:372292006"/>
+         <fact xsi:type="CV" concept="SNOMED:7180009"/>
+         <!--44 Abschlussdiagnosen-->
+         <fact concept="ICD10GM:S93.6"
+               templateId="1.2.276.0.76.10.4048"
+               code="S93.6"/>
+         <fact concept="ICD10GM:S80.1"
+               templateId="1.2.276.0.76.10.4048"
+               code="S80.1"/>
+         <fact concept="ICD10GM:F55.2"
+               templateId="1.2.276.0.76.10.4048"
+               code="F55.2"/>
+         <fact concept="ICD10GM:H54.9"
+               templateId="1.2.276.0.76.10.4048"
+               code="H54.9"/>
+         <fact concept="ICD10GM:Y34.9!"
+               templateId="1.2.276.0.76.10.4048"
+               code="Y34.9!"/>
+         <!--804 verwendetes Ersteinschätzungssystem-->
+         <fact concept="Ersteinschätzungssystem" type="xsi:string">1.2.276.0.76.5.438</fact>
+         <!--23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung-->
+         <fact type="xsi:integer"
+               start="2015-01-17T16:03"
+               effectiveTimeLow="201501171603"
+               xsi:type="CE"
+               concept="SNOMED:273887006"
+               templateId="1.2.276.0.76.10.4042"
+               code="273887006"
+               codeSystem="2.16.840.1.113883.6.96"/>
+         <!--25-30+767 Zusatzmodule-->
+         <fact concept="LOINC:53576-5"
+               templateId="1.2.276.0.76.10.4071"
+               code="53576-5"
+               codeSystem="2.16.840.1.113883.6.1"/>
+         <fact concept="LOINC:11488-4"
+               templateId="1.2.276.0.76.10.4071"
+               code="11488-4"
+               codeSystem="2.16.840.1.113883.6.1"/>
+         <fact concept="LOINC:74198-3"
+               templateId="1.2.276.0.76.10.4071"
+               code="74198-3"
+               codeSystem="2.16.840.1.113883.6.1"/>
+      </facts>
+   </visit>
+</dwh-eav>

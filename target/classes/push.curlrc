@@ -1,0 +1,12 @@
+-s
+-S
+# For client-authentication
+#--key /opt/alarmpi.key 
+#--cert /opt/alarmpi.crt:alarmpi.key 
+#--cacert /opt/ca.crt 
+-H "Content-Type: text/xml"
+-X POST 
+-w "%{http_code}"
+# remove for debugging
+#-o /dev/null
+

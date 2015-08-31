@@ -166,7 +166,7 @@
 
 :RefSource3 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "KV-Notdienst auﬂerhalb des Krankenhauses"@en ;
+    skos:prefLabel "KV-Notdienst ausserhalb des Krankenhauses"@en ;
     skos:notation "KVNDAK" .
 
 :RefSource4 a skos:Concept ;
