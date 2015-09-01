@@ -35,10 +35,12 @@ public class Server {
 	private Endpoint xdsEndpoint, restEndpoint;
 
 	private HttpServer server;
+	private ValidationService validator;
 	
 	public Server() throws IOException{
-		xdsService = new DocumentRepository();
-		restService = new RestService();
+		validator = new ValidationService();
+		xdsService = new DocumentRepository(validator);
+		restService = new RestService(validator);
 		server = HttpServer.create();
 	}
 

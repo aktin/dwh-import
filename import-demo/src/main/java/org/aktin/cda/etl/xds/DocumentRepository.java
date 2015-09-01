@@ -1,9 +1,16 @@
 package org.aktin.cda.etl.xds;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
+import javax.xml.transform.stream.StreamSource;
+
+import org.aktin.cda.ValidationResult;
+import org.aktin.cda.etl.demo.ValidationService;
 
 import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
@@ -24,7 +31,11 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 @WebService(endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType")
 public class DocumentRepository implements DocumentRepositoryPortType {
 	private static final Logger log = Logger.getLogger(DocumentRepository.class.getName());
-
+	private ValidationService validator;
+	
+	public DocumentRepository(ValidationService validator){
+		this.validator = validator;
+	}
 	@Override
 	public RegistryResponseType documentRepositoryProvideAndRegisterDocumentSetB(
 			ProvideAndRegisterDocumentSetRequestType body) {
@@ -39,6 +50,17 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		}
 		for( Document doc : body.getDocument() ){
 			log.info("Found document with id="+doc.getId()+" and length="+doc.getValue().length);
+			ValidationResult vr = null;
+			try {
+				vr = validator.validate(new StreamSource(new ByteArrayInputStream(doc.getValue())));
+			} catch (IOException e) {
+				log.log(Level.WARNING,"Error during validation", e);
+				// TODO set error status
+			}
+			if( vr != null ){
+				// TODO report result
+			}
+			
 		}
 		RegistryResponseType resp = new RegistryResponseType();
 		// TODO need namespace or types from ebxml?
