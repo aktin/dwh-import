@@ -4,7 +4,7 @@
              id="1.2.276.0.76.11.42"
              name="Referralfromsetting"
              displayName="Zuweiser"
-             effectiveDate="2015-03-03T00:00:00"
+             effectiveDate="2015-08-21T00:00:00"
              statusCode="draft">
       <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
       <sourceCodeSystem id="1.2.276.0.76.5.440" identifierName="Zuweiser"/>
@@ -45,11 +45,6 @@
                   displayName="Zuweisung nicht durch Arzt"
                   level="0"
                   type="L"/>
-                <exception code="UNK"
-                    codeSystem="2.16.840.1.113883.5.1008"
-                    displayName="Unbekannt"
-                    level="0"
-                    type="L"/>
                 <exception code="OTH"
                     codeSystem="2.16.840.1.113883.5.1008"
                     displayName="Andere"

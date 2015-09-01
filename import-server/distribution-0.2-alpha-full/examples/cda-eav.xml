@@ -1,12 +1,12 @@
-﻿<?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
+<?xml version="1.0" ?><dwh-eav xmlns="http://sekmi.de/histream/dwh-eav" xmlns:cda="urn:hl7-org:v3">
    <meta>
       <etl strategy="replace-visit"></etl>
       <source timestamp="2015-04-21T08:58:00" id="test"></source>
    </meta>
    <visit>
       <patid>1.2.276.0.76.4.8.1234567890</patid>
-      <surname>xxx</surname>
-      <names>xxx</names>
+      <surname>data protection</surname>
+      <names>data protection</names>
       <birthdate>1996-05-31</birthdate>
       <sex>M</sex>
       <encounter start="2014-01-01T10:30:00" end="2014-01-05T10:30:00">XXE12345</encounter>
@@ -19,11 +19,11 @@
          <!--22 Zuweisung-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="L:11293-8">700232004</eav-item>
          <!--5 Schwanger-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="LOINC:11449-6" type="xsi:string">60001007</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="L:11449-6" type="xsi:string">60001007</eav-item>
          <!--6 Tetanusschutz-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="LOINC:11458-7" type="xsi:string">nein</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="L:11458-7" type="xsi:string">nein</eav-item>
          <!--114 Rankin Scale-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="LOINC:75859-9" type="xsi:integer" unit="{score}">2</eav-item>
+         <eav-item xmlns="urn:hl7-org:v3" concept="L:75859-9" type="xsi:integer" unit="{score}">2</eav-item>
          <!--9 Atemfrequenz-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="L:9279-1" unit="/min">17</eav-item>
          <!--10 Sauerstoffsättigung-->
@@ -87,6 +87,18 @@
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:77477000" start="2015-01-17">373572006</eav-item>
          <!--Echocardiography (procedure)-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:string" concept="S:40701008" start="2015-03-26T12:34">373572006</eav-item>
+         <!--31 Allergie-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="L:48765-2"></eav-item>
+         <!--33 Antibiotikaallergie-->
+         <eav-item xmlns="urn:hl7-org:v3">Keine Allergie</eav-item>
+         <!--33 Antibiotikaallergie-->
+         <eav-item xmlns="urn:hl7-org:v3">Keine Allergie</eav-item>
+         <!--7 Isolation-->
+         <eav-item xmlns="urn:hl7-org:v3" concept="Isolation" type="xsi:string">Isolation necessary (Werte vgl. Ioslation Reason)</eav-item>
+         <eav-group xmlns="urn:hl7-org:v3" concept="Isolation Reason" value="">
+            <value modifier="372292006"></value>
+            <value modifier="7180009"></value>
+         </eav-group>
          <!--42 Diagnosen-->
          <eav-group xmlns="urn:hl7-org:v3" value="" concept="L:11301-9">
             <value modifier="S93.6"></value>
@@ -99,12 +111,6 @@
          <eav-item xmlns="urn:hl7-org:v3" concept="Ersteinschätzungssystem" type="xsi:string">1.2.276.0.76.5.438</eav-item>
          <!--23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung-->
          <eav-item xmlns="urn:hl7-org:v3" type="xsi:integer" concept="S:273887006" start="2015-01-17T16:03">4</eav-item>
-         <!--7 Isolation-->
-         <eav-item xmlns="urn:hl7-org:v3" concept="Isolation" type="xsi:string">Isolation necessary (Werte vgl. Ioslation Reason)</eav-item>
-         <eav-group xmlns="urn:hl7-org:v3" concept="Isolation Reason" value="">
-            <value modifier="372292006"></value>
-            <value modifier="7180009"></value>
-         </eav-group>
       </facts>
    </visit>
 </dwh-eav>

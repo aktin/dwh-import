@@ -48,7 +48,7 @@
     <!-- Identifikation des Dokuments -->
     <id root="1.2.276.0.76.4.17.9814184919" extension="5cc18aa4-1372-4db1-8d1f-6519e584f88f"/>
     <!-- Fixer Dokumententype-Code -->
-    <code code="34878-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Note"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Admission evaluation note"/>
     <!-- Datum und Zeit der Erstellung -->
     <effectiveTime value="20150118083500"/>
     <!-- Vertraulichkeitsstufe -->
@@ -422,7 +422,7 @@
                                     <effectiveTime>
                                         <low value="201501172300"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="A08.1" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Akute Gastroenteritis durch Norovirus [Norwalk-Virus]"/>
+                                    <value xsi:type="CD" code="A08.1" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Akute Gastroenteritis durch Norovirus [Norwalk-Virus]"/>
                                 </observation>
                             </entryRelationship>
                         </act>

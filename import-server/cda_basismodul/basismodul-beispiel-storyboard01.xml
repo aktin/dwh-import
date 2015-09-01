@@ -34,7 +34,7 @@
     <!-- Identifikation des Dokuments -->
     <id root="1.2.276.0.76.4.17.9814184919" extension="14025fda-3f25-4c64-8883-4f7e6cabc0b6"/>
     <!-- Fixer Dokumententype-Code -->
-    <code code="34878-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Note"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Admission evaluation note"/>
     <!-- Datum und Zeit der Erstellung -->
     <effectiveTime value="20150117163300"/>
     <!-- Vertraulichkeitsstufe -->
@@ -276,7 +276,7 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="419199007" displayName="Allergy to substance (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
@@ -287,7 +287,7 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="420134006" displayName="Propensity to adverse reactions (disorder)" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
                                 </observation>
                             </entryRelationship>
                         </act>
@@ -327,7 +327,7 @@
                                     <effectiveTime>
                                         <low value="20150117"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="S93.6" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Verstauchung und Zerrung sonstiger und nicht näher bezeichneter Teile des Fußes"/>
+                                    <value xsi:type="CD" code="S93.6" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Verstauchung und Zerrung sonstiger und nicht näher bezeichneter Teile des Fußes"/>
                                 </observation>
                             </entryRelationship>
                         </act>
@@ -345,15 +345,6 @@
                             <item ID="refact">Weiterbehandler: Hausarzt</item>
                         </list>
                     </text>
-                    <entry typeCode="COMP">
-                        <act classCode="ACT" moodCode="INT">
-                            <templateId root="1.2.276.0.76.10.4067"/>
-                            <code code="304566005:260686004=19712007" codeSystem="2.16.840.1.113883.6.96" displayName="Admission for treatment (procedure): Method (attribute) = Patient transfer, to another health care facility (procedure)"/>
-                            <text>
-                                <reference value="#refact"/>
-                            </text>
-                        </act>
-                    </entry>
                 </section>
             </component>
             

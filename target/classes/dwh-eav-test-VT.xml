@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patient-visit 
+	xmlns:cda="urn:hl7-org:v3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dwh-eav.xsd">
+	<idat>
+		<patid>12345</patid>
+		<visit>6789</visit>
+	</idat>
+	<last-modified>2014-09-07T10:40:03</last-modified>
+
+	<!-- 1	ID des Krankenhauses -->
+	<!-- 2	ID der Notaufnahme -->
+	<!-- 3	PatientenId im Basismodul -->
+	<eav-item concept="L:21866-9" type="xsi:string">XX23412XXX</eav-item>
+	<!-- weitere metadaten -->
+	<!-- 12 Rankin Scale (0..6) -->
+	<eav-item concept="L:75859-9" type="xsi:integer">0</eav-item>
+	<!-- 13 Gender -->
+	<eav-item concept="L:46098-0" type="xsi:integer">0</eav-item>
+	
+	
+	<!-- 14/15 Aufnahmedatum/uhrzeit -->
+	<eav-item concept="S:305056002" timestamp="2014-09-07T10:40:03"/>
+	<!-- 16 Schwanger -->
+	<!-- 17 Tetanusschutz L:11458-7-->
+	
+	<!-- 18 Isolation -->
+	<!-- 20 Atemfrequenz L:9279-1 -->
+	<!-- 21 Sauerstoffsättigung 59408-5 -->
+	<!-- 22 Systolischer Blutdruck 8480-6  -->
+	<!-- 23 Herzfrequenz 8867-4 -->
+	
+	
+	<!-- 28 Pupillenweite bei Aufnahme in der Notaufnahme -->
+	<eav-group concept="246095009" timestamp="2014-09-07T10:40:03"><!-- condition of pupil -->
+		<value modifier="8966001"/><!-- left eye -->
+		
+		<!-- einer von den folgenden -->
+		<value modifier="408094002"/><!-- no value -->
+		<value modifier="37125009"/><!-- wide pupil -->
+		<value modifier="420335002"/><!-- medium sized pupil -->
+		<value modifier="301939004"/><!-- small pupil -->
+	</eav-group>
+	<!-- Rechtes Auge analog zu oben -->
+	<eav-group concept="S:246095009" timestamp="2014-09-07T10:40:03">
+		<value modifier="S:18944008"/><!-- right eye -->
+		<value modifier="301939004"/><!-- small pupil -->
+	</eav-group>
+	<!-- 30 Körperkerntemperatur -->
+	<eav-item concept="S:276885007" type="xsi:decimal">40.00</eav-item>
+	<!-- 31 Schmerz bei Aufnahme, loinc-schmerzskala 0-10 ggf. Answer list LL2335-9-->
+	<eav-item concept="L:72514-3" type="xsi:integer">0</eav-item>
+	<!-- 31 Zuweisung -->
+
+</patient-visit>
