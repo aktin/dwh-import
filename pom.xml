@@ -13,8 +13,10 @@
 	</properties>
 	
 	<modules>
-		<module>import-server</module>
+		<module>legacy-cda</module>
+		<module>cda-validation</module>
 		<module>import-demo</module>
+		<module>import-server</module>
 	</modules>
 	<build>
 		<pluginManagement>
@@ -67,6 +69,20 @@
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.5.4</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.10</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.10</version>
+					<configuration>
+						<downloadSources>true</downloadSources>
+						<downloadJavadocs>true</downloadJavadocs>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -79,6 +95,14 @@
 				<version>4.11</version>
 				<scope>test</scope>
 			</dependency>
+			
+			<!-- XSLT and XPath processor -->
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>Saxon-HE</artifactId>
+				<version>9.6.0-7</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 </project>
