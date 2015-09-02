@@ -7,12 +7,12 @@
 	 
 	<patient-table>
         <source xsi:type="plain-file">
-            <url>file:examples/test-1-patients.txt</url>
+            <url>test-1-patients.txt</url>
             <separator>\t</separator>
         </source>
 		<idat>
 			<patient-id>patid</patient-id>
-			<firstname>vorname</firstname>
+			<given-name>vorname</given-name>
 			<surname>nachname</surname>
 			<birthdate format="d.M.u" na="">geburtsdatum</birthdate>
 			<deathdate format="d.M.u" na="">verstorben</deathdate>
@@ -24,7 +24,7 @@
 	<!-- optional -->
 	<visit-table>
         <source xsi:type="plain-file">
-            <url>file:examples/test-1-visits.txt</url>
+            <url>test-1-visits.txt</url>
             <type>text/csv</type>
 			<separator>\t</separator>
         </source>
@@ -46,7 +46,7 @@
 	
 	<wide-table>
         <source xsi:type="plain-file">
-            <url>file:examples/test-1-widetable.txt</url>
+            <url>test-1-widetable.txt</url>
 			<separator>\t</separator>
         </source>
 		<idat>

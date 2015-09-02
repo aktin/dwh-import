@@ -14,6 +14,6 @@ public class TestVisitLoader {
 	@Test
 	public void testLoad() throws IOException, ParseException, XMLStreamException{
 		VisitLoader loader = new VisitLoader();
-		loader.load(new File("examples/test-1-datasource.xml"));
+		loader.load(new File("examples/test-1-datasource.xml").toURI().toURL());
 	}
 }
