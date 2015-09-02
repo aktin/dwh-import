@@ -1,12 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>AKTIN : DWH Import</name>
 	<packaging>pom</packaging>
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>dwh-import</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
   
+	<name>AKTIN : DWH Import</name>
+	<description>AKTIN Software</description>
+	<url>https://www.aktin.org/software/</url>
+	<inceptionYear>2013</inceptionYear>
+	
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -83,6 +94,28 @@
 						<downloadJavadocs>true</downloadJavadocs>
 					</configuration>
 				</plugin>
+				<plugin>    
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.4</version>
+					<configuration>
+						<generateReports>false</generateReports>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<!-- use markdown syntax -->
+							<groupId>org.apache.maven.doxia</groupId>
+							<artifactId>doxia-module-markdown</artifactId>
+							<version>1.6</version>
+						</dependency>
+						<dependency>
+							<!-- upload via scp -->
+							<groupId>org.apache.maven.wagon</groupId>
+							<artifactId>wagon-ssh</artifactId>
+							<version>2.9</version>
+						</dependency>
+					</dependencies>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -105,4 +138,18 @@
 
 		</dependencies>
 	</dependencyManagement>
+
+	<distributionManagement>
+		<!-- publish releases to aktin.org -->
+		<repository>
+			<id>www.aktin.org</id>
+			<name>AKTIN.org</name>
+			<url>scp://aktin.org/httpdocs/software/</url>
+		</repository>
+		<!-- publish site to aktin.org -->
+		<site>
+			<id>www.aktin.org</id>
+			<url>sftp://aktin.org/httpdocs/software/</url>
+		</site>
+	</distributionManagement>
 </project>
