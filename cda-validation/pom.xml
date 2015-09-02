@@ -20,6 +20,9 @@
 	<build>
 		<resources>
 			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
 				<directory>${project.build.directory}/schematron/${schematronArchive}</directory>
 			</resource>
 			<resource>

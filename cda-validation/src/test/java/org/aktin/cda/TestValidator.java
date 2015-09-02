@@ -16,7 +16,9 @@ public class TestValidator {
 			"/CDAexample/basismodul-beispiel-storyboard01.xml",
 			"/CDAexample/basismodul-beispiel-storyboard02.xml",
 			"/CDAexample/basismodul-beispiel-storyboard04.xml",
-	};
+			"/CDAexample/basismodul-beispiel-storyboard01_complete03.xml",
+			"/CDAexample/basismodul-beispiel-storyboard01_mandatory.xml"
+			};
 	private static final String[] invalidExampleDocuments = new String[]{
 			"/CDAexample/basismodul-beispiel-storyboard01-error1.xml"
 	};
