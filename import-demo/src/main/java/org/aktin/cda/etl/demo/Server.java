@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.soap.SOAPBinding;
@@ -40,7 +41,11 @@ public class Server {
 	public Server() throws IOException{
 		validator = new ValidationService();
 		xdsService = new DocumentRepository(validator);
-		restService = new RestService(validator);
+		try {
+			restService = new RestService(validator);
+		} catch (ParserConfigurationException e) {
+			throw new RuntimeException(e);
+		}
 		server = HttpServer.create();
 	}
 

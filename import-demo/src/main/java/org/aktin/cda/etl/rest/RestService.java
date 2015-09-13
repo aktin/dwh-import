@@ -1,13 +1,16 @@
 package org.aktin.cda.etl.rest;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.Provider;
 import javax.xml.ws.Service;
 import javax.xml.ws.ServiceMode;
@@ -17,16 +20,26 @@ import javax.xml.ws.handler.MessageContext;
 
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.etl.demo.ValidationService;
+import org.aktin.cda.etl.rest.SimplifiedOperationOutcome.Severity;
 
 
+/**
+ * Implements FHIR Binary interface to receive text/xml CDA documents
+ * @author Raphael
+ *
+ */
 @WebServiceProvider()
 @ServiceMode(value = Service.Mode.MESSAGE)
 public class RestService implements Provider<Source>{
 	private static final Logger log = Logger.getLogger(RestService.class.getName());
 	private ValidationService validator;
+	private XMLOutputFactory outputFactory;
+	private DocumentBuilder documentBuilder;
 	
-	public RestService(ValidationService validator){
+	public RestService(ValidationService validator) throws ParserConfigurationException{
 		this.validator = validator;
+		outputFactory = XMLOutputFactory.newFactory();
+		documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 	}
 	
 	@Resource
@@ -44,21 +57,34 @@ public class RestService implements Provider<Source>{
 		ValidationResult vr = null;
 		int responseStatus = 200;
 		try {
+			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			vr = validator.validate(request);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.log(Level.WARNING, "Error during validation", e);
 			responseStatus = 500;
 		}
+		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
+
 		if( vr != null ){
-			// TODO check number of errors, output error messages
+			if( vr.isValid() ){
+				responseStatus = 200;
+			}else{
+				responseStatus = 422;
+				vr.forEachErrorMessage(s -> outcome.addIssue(Severity.error, s));
+			}
 		}
 		
 		// HTTP status response
 		mc.put(MessageContext.HTTP_RESPONSE_CODE, responseStatus);
 		
-		String response = "TODO implement";
-		return new StreamSource(new StringReader(response));
+		try {
+			return outcome.generateXml(outputFactory, documentBuilder);
+		} catch (XMLStreamException e) {
+			// internal error
+			mc.put(MessageContext.HTTP_RESPONSE_CODE, 500);
+			return null; // TODO check whether returning null is ok
+		}
 	}
 	
 }
