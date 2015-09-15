@@ -3,20 +3,23 @@ Schnittstellen
 
 Installation
 ------------
-Eine Installation ist nicht erforderlich. Das JAR-Paket kann mit dem Befehl java -jar <Path/import-demo-XXX.jar> gestartet werden.
+Eine Installation ist nicht erforderlich. Das JAR-Paket kann mit dem Befehl ´java -jar \<Path/import-demo-XXX.jar\>´ gestartet werden.
 
 IHE XDS.b SOAP Schnittstelle
 ----------------------------
-Die Schnittstelle wird auf einem  freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter http://localhost:<Port>/aktin/xds.b zu erreichen.
+Die Schnittstelle wird auf einem  freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter ´http://localhost:\<Port\>/aktin/xds.b´ zu erreichen.
 Informationen zum IHE Profil gibt es unter den folgenden Links:
 [link] (http://www.ihe.net/Technical_Framework/upload/IHE_ITI_TF_Supplement_XDS-2.pdf)
 [link] (http://wiki.ihe.net/index.php?title=XDS.b_Implementation)
 
 HL7 FHIR REST Schnittstelle
 ------------------
-Alternativ zur IHE XDS.b Schnittstelle gibt es auch eine einfache REST-Schnittstelle, die ebenfalls auf einem freien Port gestartet wird und unter http://localhost:<Port>/aktin/rest zu erreichen ist.
+Alternativ zur IHE XDS.b Schnittstelle gibt es auch eine einfache REST-Schnittstelle, die ebenfalls auf einem freien Port gestartet wird und unter ´http://localhost:\<Port\>/aktin/rest´ zu erreichen ist.
 Ein CDA-Dokument kann beispielsweise mit dem folgenden Befehl manuell an die Schnittstelle gesendet werden:
-curl -X POST http://localhost:<Port>/aktin/rest-H "Content-Type: text/xml" --data-binary "@<CDA.xml>"
+
+´´´
+curl -X POST http://localhost\[:Port\]/aktin/rest -H "Content-Type: text/xml" --data-binary "@\<CDA.xml\>"
+´´´
 
 Rückgabewerte und Fehlermeldungen
 ---------------------------------
