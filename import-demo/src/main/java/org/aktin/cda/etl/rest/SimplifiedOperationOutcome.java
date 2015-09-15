@@ -64,13 +64,15 @@ public class SimplifiedOperationOutcome {
 		
 		writer.writeStartDocument();
 		writer.writeStartElement(XMLConstants.DEFAULT_NS_PREFIX, "OperationOutcome", FHIR_NAMESPACE);
-		writer.setDefaultNamespace(FHIR_NAMESPACE);
-		writer.writeDefaultNamespace(FHIR_NAMESPACE);
+//		writer.setDefaultNamespace(FHIR_NAMESPACE);
+//		writer.writeDefaultNamespace(FHIR_NAMESPACE);
 		for( Issue issue : issues ){
 			writer.writeStartElement("issue");
+			
 			writer.writeStartElement("severity");
 			writer.writeAttribute("value", issue.severity.name());
 			writer.writeEndElement();
+			
 			if( issue.details != null ){
 				writer.writeStartElement("details");
 				writer.writeAttribute("value", issue.details);
