@@ -14,11 +14,11 @@ Informationen zum IHE Profil gibt es unter den folgenden Links:
 
 HL7 FHIR REST Schnittstelle
 ------------------
-Alternativ zur IHE XDS.b Schnittstelle gibt es auch eine einfache REST-Schnittstelle, die ebenfalls auf einem freien Port gestartet wird und unter ´http://localhost:\<Port\>/aktin/rest´ zu erreichen ist.
+Alternativ zur IHE XDS.b Schnittstelle gibt es auch eine einfache REST-Schnittstelle, die ebenfalls auf einem freien Port gestartet wird und unter ´http://localhost\[:Port\]/aktin/fhir/Binary zu erreichen ist.
 Ein CDA-Dokument kann beispielsweise mit dem folgenden Befehl manuell an die Schnittstelle gesendet werden:
 
 ´´´
-curl -X POST http://localhost\[:Port\]/aktin/rest -H "Content-Type: text/xml" --data-binary "@\<CDA.xml\>"
+curl -X POST http://localhost\[:Port\]/aktin/fhir/Binary -H "Content-Type: text/xml" --data-binary "@\<CDA.xml\>"
 ´´´
 
 Rückgabewerte und Fehlermeldungen
