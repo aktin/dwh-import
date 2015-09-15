@@ -1,4 +1,4 @@
-package org.aktin.cda.etl.rest;
+package org.aktin.cda.etl.fhir;
 
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.etl.demo.ValidationService;
-import org.aktin.cda.etl.rest.SimplifiedOperationOutcome.Severity;
+import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 
 
 /**

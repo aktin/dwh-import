@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
-import org.aktin.cda.etl.rest.RestService;
+import org.aktin.cda.etl.fhir.RestService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

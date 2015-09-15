@@ -10,7 +10,7 @@ import javax.xml.ws.Endpoint;
 import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.soap.SOAPBinding;
 
-import org.aktin.cda.etl.rest.RestService;
+import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
 
 import com.sun.net.httpserver.HttpServer;

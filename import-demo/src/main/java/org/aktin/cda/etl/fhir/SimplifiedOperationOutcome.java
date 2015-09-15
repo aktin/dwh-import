@@ -1,4 +1,4 @@
-package org.aktin.cda.etl.rest;
+package org.aktin.cda.etl.fhir;
 
 import java.util.ArrayList;
 import java.util.List;
