@@ -100,6 +100,7 @@
 					<version>3.4</version>
 					<configuration>
 						<generateReports>false</generateReports>
+						<chmod>false</chmod>
 					</configuration>
 					<dependencies>
 						<dependency>
@@ -149,7 +150,7 @@
 		<!-- publish site to aktin.org -->
 		<site>
 			<id>www.aktin.org</id>
-			<url>sftp://aktin.org/httpdocs/software/</url>
+			<url>sftp://aktin.org/httpdocs/software/${project.version}/</url>
 		</site>
 	</distributionManagement>
 </project>
