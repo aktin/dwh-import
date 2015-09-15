@@ -27,8 +27,8 @@ import com.sun.net.httpserver.HttpServer;
  */
 public class Server {
 	private static final Logger log = Logger.getLogger(Server.class.getName());
-	private static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
-	private static final String REST_CONTEXT_PATH = "/aktin/rest";
+	public static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
+	public static final String REST_CONTEXT_PATH = "/aktin/fhir/Binary";
 
 	private DocumentRepository xdsService;
 	private RestService restService;

@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 
 import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.etl.demo.ValidationService;
@@ -53,7 +55,7 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 			ValidationResult vr = null;
 			try {
 				vr = validator.validate(new StreamSource(new ByteArrayInputStream(doc.getValue())));
-			} catch (IOException e) {
+			} catch (XPathExpressionException | TransformerException e) {
 				log.log(Level.WARNING,"Error during validation", e);
 				// TODO set error status
 			}
