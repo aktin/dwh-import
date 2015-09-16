@@ -1,6 +1,7 @@
 package org.aktin.cda;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -46,13 +47,17 @@ public class ValidationResult {
 	 * 
 	 * @param list list which will contain error descriptions after the method returns
 	 */
-	public void getErrors(List<String> list){
+	public final void getErrors(List<String> list){
+		forEachErrorMessage(list::add);
+	}
+	
+	public void forEachErrorMessage(Consumer<String> errors){
 		for( int i=0; i<failedAsserts.getLength(); i++ ){
 			Node failedAssert = failedAsserts.item(i);
 			Node text = failedAssert.getFirstChild();
 			if( text != null && text.getLocalName().equals("text") && text.getNamespaceURI().equals(CDAConstants.SVRL_NS_URI) ){
-				list.add(text.getTextContent());
+				errors.accept(text.getTextContent());
 			}
-		}
+		}		
 	}
 }

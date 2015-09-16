@@ -5,11 +5,12 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.soap.SOAPBinding;
 
-import org.aktin.cda.etl.rest.RestService;
+import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
 
 import com.sun.net.httpserver.HttpServer;
@@ -26,8 +27,8 @@ import com.sun.net.httpserver.HttpServer;
  */
 public class Server {
 	private static final Logger log = Logger.getLogger(Server.class.getName());
-	private static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
-	private static final String REST_CONTEXT_PATH = "/aktin/rest";
+	public static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
+	public static final String REST_CONTEXT_PATH = "/aktin/fhir/Binary";
 
 	private DocumentRepository xdsService;
 	private RestService restService;
@@ -40,7 +41,11 @@ public class Server {
 	public Server() throws IOException{
 		validator = new ValidationService();
 		xdsService = new DocumentRepository(validator);
-		restService = new RestService(validator);
+		try {
+			restService = new RestService(validator);
+		} catch (ParserConfigurationException e) {
+			throw new RuntimeException(e);
+		}
 		server = HttpServer.create();
 	}
 

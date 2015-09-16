@@ -20,13 +20,9 @@ public class ValidationService {
 			throw new IOException(e);
 		}
 	}
-	public ValidationResult validate(Source source) throws IOException{
+	public ValidationResult validate(Source source) throws TransformerException, XPathExpressionException{
 		synchronized( validator ){
-			try {
-				return validator.validate(source);
-			} catch (XPathExpressionException | TransformerException e) {
-				throw new IOException(e);
-			}
+			return validator.validate(source);
 		}
 	}
 }
