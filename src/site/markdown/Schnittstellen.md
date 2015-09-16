@@ -1,5 +1,6 @@
 Schnittstellen
 ==============
+[Test](Basismdul.pdf)
 
 Installation
 ------------
@@ -9,14 +10,14 @@ IHE XDS.b SOAP Schnittstelle
 ----------------------------
 Die Schnittstelle wird auf einem  freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter http://localhost:<Port>/aktin/xds.b zu erreichen.
 Informationen zum IHE Profil gibt es unter den folgenden Links:
-[link] (http://www.ihe.net/Technical_Framework/upload/IHE_ITI_TF_Supplement_XDS-2.pdf)
-[link] (http://wiki.ihe.net/index.php?title=XDS.b_Implementation)
+http://www.ihe.net/Technical_Framework/upload/IHE_ITI_TF_Supplement_XDS-2.pdf
+http://wiki.ihe.net/index.php?title=XDS.b_Implementation
 
 HL7 FHIR REST Schnittstelle
 ------------------
 Alternativ zur IHE XDS.b Schnittstelle gibt es auch eine einfache REST-Schnittstelle, die ebenfalls auf einem freien Port gestartet wird und unter http://localhost:<Port>/aktin/rest zu erreichen ist.
 Ein CDA-Dokument kann beispielsweise mit dem folgenden Befehl manuell an die Schnittstelle gesendet werden:
-curl -X POST http://localhost:<Port>/aktin/rest-H "Content-Type: text/xml" --data-binary "@<CDA.xml>"
+curl -X POST http://localhost:<Port>/aktin/rest-H "Content-Type: text/xml" --data-binary "@CDA.xml"
 
 Rückgabewerte und Fehlermeldungen
 ---------------------------------
@@ -30,9 +31,9 @@ Die Demo-Schnittstelle ist nach außen identisch mit der späteren Data-Warehouse-
 
 Datensatz Basismodul
 --------------------
-Der Datensatz für das Basismodul ist auf der Seite http://aktin.art-decor.org im aktuellen Release (HTML) unter dem Bereich Datensatz einzusehen. Eine PDF-Repräsentation des Formulars als Vorlage für eine Implementierung als Eingabeformular im KIS liegt dem Release bei.
+Der Datensatz für das Basismodul ist auf der Seite http://aktin.art-decor.org im aktuellen Release (HTML) unter dem Bereich Datensatz einzusehen. Weitere inhaltliche Informationen zum Datensatz, sowie eine Vorlage des Formulars für eine Implementierung als Eingabeformular im KIS finden Sie unter http://notaufnahme.data-set.org/ bzw. http://www.notaufnahmeprotokoll.de/site/
 Die CDA-Spezifikation basiert auf diesem Datensatz. Das Mapping zwischen dem Datensatz und den entsprechenden Elementen im CDA ist ebenfalls über die ART-DECOR Seite des AKTIN-Projekts nachvollziehbar.
-Fragen bzgl. der medizinischen Inhalte bzw. des Hintergrunds lassen sich ggf. durch das PDF-Formular und die Erläuterungen dazu klären. Dort sind insbesondere auch einige Valuesets näher erläutert.
+Fragen bzgl. der medizinischen Inhalte bzw. des Hintergrunds lassen sich ggf. durch das PDF-Formular und die Erläuterungen dazu klären. Dort ist insbesondere auch die Abgrenzung unklarer Ausprägungen der Valuesets näher erläutert.
 Technische Fragen zur Umsetzung als CDA-Dokument sollten durch den Implementierungsleitfaden auf der ART-DECOR Seite (PDF) beantwortet werden.
 Bei weiteren Fragen hilft der IT-Support des AKTIN-Projekts gerne weiter.
 
