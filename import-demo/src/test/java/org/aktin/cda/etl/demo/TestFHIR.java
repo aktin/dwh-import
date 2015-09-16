@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.URL;
 
 import org.aktin.cda.etl.fhir.RestService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class TestFHIR {
 		server.start();
 		fhirUrl = new URL("http","localhost",server.getPort(),Server.REST_CONTEXT_PATH);
 	}
+	@After
 	public void shutdownServer(){
 		server.shutdown();
 	}
