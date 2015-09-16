@@ -1,6 +1,6 @@
 Schnittstellen
 ==============
-[Test](Basismdul.pdf)
+[Test](Basismodul.pdf)
 
 Installation
 ------------
