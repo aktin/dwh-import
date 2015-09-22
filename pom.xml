@@ -11,6 +11,24 @@
 	<url>https://www.aktin.org/software/</url>
 	<inceptionYear>2013</inceptionYear>
 	
+	<scm>
+		<developerConnection>scm:git:git@gitlab.uni-oldenburg.de:AKTIN/dwh-import.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	<distributionManagement>
+		<!-- publish releases to aktin.org -->
+		<repository>
+			<id>www.aktin.org</id>
+			<name>AKTIN.org</name>
+			<url>scp://aktin.org/httpdocs/software/repo/</url>
+		</repository>
+		<!-- publish site to aktin.org -->
+		<site>
+			<id>www.aktin.org</id>
+			<url>sftp://aktin.org/httpdocs/software/${project.version}/</url>
+		</site>
+	</distributionManagement>
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -27,6 +45,7 @@
 		<module>legacy-cda</module>
 		<module>cda-validation</module>
 		<module>demo-server</module>
+		<module>demo-distribution</module>
 		<!-- wegen fehlerhafter tests kurzzeitig entfernt
 		<module>import-server</module>
 		-->
@@ -154,18 +173,4 @@
 
 		</dependencies>
 	</dependencyManagement>
-
-	<distributionManagement>
-		<!-- publish releases to aktin.org -->
-		<repository>
-			<id>www.aktin.org</id>
-			<name>AKTIN.org</name>
-			<url>scp://aktin.org/httpdocs/software/</url>
-		</repository>
-		<!-- publish site to aktin.org -->
-		<site>
-			<id>www.aktin.org</id>
-			<url>sftp://aktin.org/httpdocs/software/${project.version}/</url>
-		</site>
-	</distributionManagement>
 </project>
