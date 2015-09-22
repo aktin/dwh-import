@@ -4,12 +4,12 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-validation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.2-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<schematronVersion>20150824T134031</schematronVersion>            
@@ -47,16 +47,10 @@
 						<configuration>
 							<target>
 								<!-- schematron files -->
-								<get src="http://aktin.art-decor.org/${schematronArchive}.zip"
-									dest="${project.build.directory}/schematron.zip"
-									verbose="false"
-									usetimestamp="true"/>
+								<get src="http://aktin.art-decor.org/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/schematron" />
 								<!-- download examples -->
-								<get src="http://aktin.art-decor.org/${examplesArchive}.zip"
-									dest="${project.build.directory}/examples.zip"
-									verbose="false"
-									usetimestamp="true"/>
+								<get src="http://aktin.art-decor.org/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples" />
 							</target>
 						</configuration>

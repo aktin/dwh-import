@@ -4,7 +4,7 @@
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>dwh-import</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
   
 	<name>AKTIN : DWH Import</name>
 	<description>AKTIN Software</description>
@@ -148,6 +148,12 @@
 					<configuration>
 						<excludePackageNames>ihe.iti.*:oasis.names.tc.*</excludePackageNames>
 					</configuration>
+				</plugin>
+				<plugin>
+					<!-- forces newer version, old 2.3.2 contains bugs -->
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.2</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
