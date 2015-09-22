@@ -26,10 +26,8 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 /**
  * Implementation of document repository.
  * @see <a href="http://wiki.ihe.net/index.php?title=XDS.b_Implementation#Example_Provide_and_Register_Document_Set-b_transaction">IHE Example</a>
- * 
- * <p>
- * Example with annotated transactions: {@link http://wiki.ihe.net/index.php?title=Annotated_ProvideAndRegister.b_Transaction}
- * @author Raphael
+ * @see <a href="http://wiki.ihe.net/index.php?title=Annotated_ProvideAndRegister.b_Transaction">Example with annotated transactions</a> 
+ * @author R.W.Majeed
  *
  */
 //this binds the SEI to the SIB

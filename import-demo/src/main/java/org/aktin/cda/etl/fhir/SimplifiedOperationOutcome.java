@@ -16,7 +16,10 @@ import javax.xml.transform.dom.DOMSource;
 import org.w3c.dom.Document;
 
 /**
- * Simplified FHIR OperationOutcome resource.
+ * Simplified FHIR OperationOutcome resource. 
+ * Including even the basic FHIR schemas would add dozens 
+ * of transitive dependencies.
+ * 
  * <p>
  * Produces the following XML representation: 
  * <pre>{@code
@@ -27,7 +30,8 @@ import org.w3c.dom.Document;
  *  </issue>
  * </OperationOutcome>
  * }</pre>
- * @author Raphael
+ * 
+ * @author R.W.Majeed
  *
  */
 @XmlRootElement(name="OperationOutcome",namespace=SimplifiedOperationOutcome.FHIR_NAMESPACE)
@@ -53,10 +57,23 @@ public class SimplifiedOperationOutcome {
 		issues = new ArrayList<>();
 	}
 	
+	/**
+	 * Add an issue to the response
+	 * @param severity issue severity
+	 * @param details detail message
+	 */
 	public void addIssue(Severity severity, String details){
 		issues.add(new Issue(severity, details));
 	}
 	
+	/**
+	 * Generate the XML representation of the response
+	 * 
+	 * @param factory XML factory
+	 * @param documentBuilder XML document builder
+	 * @return XML source
+	 * @throws XMLStreamException any XML error
+	 */
 	public Source generateXml(XMLOutputFactory factory, DocumentBuilder documentBuilder) throws XMLStreamException{
 		Document doc = documentBuilder.newDocument();
 		DOMResult res = new DOMResult(doc);

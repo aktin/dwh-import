@@ -27,12 +27,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 /**
- * Perform CDA validation according to schematron rules.
+ * Perform CDA validation according to SCHEMATRON rules.
  * <p>
  * This implementation is probably not thread-safe: A single {@link Transformer} 
  * instance is used for all calls to {@link #validate(Source)}.
  * 
- * @author marap1
+ * @author R.W.Majeed
  *
  */
 public class Validator implements URIResolver, NamespaceContext {

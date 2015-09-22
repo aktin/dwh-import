@@ -13,6 +13,12 @@ import org.junit.Test;
 
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 
+/**
+ * JUnit tests for the XDS.b interface
+ * 
+ * @author R.W.Majeed
+ *
+ */
 public class TestXDS {
 	Server server;
 	private URL soapUrl;
@@ -33,7 +39,7 @@ public class TestXDS {
 	public void expectOkForValidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml");
 
-		RegistryResponseType resp = Client.submitToXDSb(soapUrl, in);
+		RegistryResponseType resp = Client.submitToXDSb(soapUrl, in, "12345", "123", "example");
 		
 		in.close();
 		
@@ -45,7 +51,7 @@ public class TestXDS {
 	public void expectFailForInvalidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-error1.xml");
 
-		RegistryResponseType resp = Client.submitToXDSb(soapUrl, in);
+		RegistryResponseType resp = Client.submitToXDSb(soapUrl, in, "12345", "123", "example");
 		
 		in.close();
 		

@@ -26,7 +26,7 @@ import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 
 /**
  * Implements FHIR Binary interface to receive text/xml CDA documents
- * @author Raphael
+ * @author R.W.Majeed
  *
  */
 @WebServiceProvider()
@@ -65,6 +65,9 @@ public class RestService implements Provider<Source>{
 	@Resource
     private WebServiceContext context;
 
+	/**
+	 * Process RESTful/HTTP request
+	 */
 	@Override
 	public Source invoke(Source request) {
 		MessageContext mc = context.getMessageContext();

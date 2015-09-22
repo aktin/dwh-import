@@ -3,7 +3,7 @@ package org.aktin.cda.etl.xds;
 /**
  * Error codes from IHE_ITI_TF_Vol3.pdf, Table 4.2.4.1-2: Error Codes
  * 
- * @author Raphael
+ * @author R.W.Majeed
  *
  */
 public class XDSConstants {
@@ -119,4 +119,11 @@ public class XDSConstants {
 	
 	//
 	public static final String UUID_DOCUMENT_STABLE = "urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1";
+
+	// other constants
+	public static final String RIM_SUBMISSIONSET_UNIQUEID = "XDSSubmissionSet.uniqueId";
+	public static final String RIM_SUBMISSIONSET_SOURCEID = "XDSSubmissionSet.sourceId";
+	public static final String RIM_SUBMISSIONSET_PATIENTID = "XDSSubmissionSet.patientId";
+	
+	public static final String EBRIM_EXTERNAL_IDENT = "urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier";
 }

@@ -12,16 +12,14 @@ import org.w3c.dom.NodeList;
 /**
  * Result of a CDA validation operation.
  * 
- * @author marap1
+ * @author R.W.Majeed
  *
  */
 public class ValidationResult {
 	private Document result;
 	private NodeList failedAsserts;
-	//private Validator validator;
 	
 	ValidationResult(Validator validator, Document svrlSchematronOutput) throws XPathExpressionException{
-		//this.validator = validator;
 		this.result = svrlSchematronOutput;
 		failedAsserts = validator.selectFailedAsserts(result);
 	}
@@ -51,12 +49,16 @@ public class ValidationResult {
 		forEachErrorMessage(list::add);
 	}
 	
-	public void forEachErrorMessage(Consumer<String> errors){
+	/**
+	 * Process each error message.
+	 * @param action action
+	 */
+	public void forEachErrorMessage(Consumer<String> action){
 		for( int i=0; i<failedAsserts.getLength(); i++ ){
 			Node failedAssert = failedAsserts.item(i);
 			Node text = failedAssert.getFirstChild();
 			if( text != null && text.getLocalName().equals("text") && text.getNamespaceURI().equals(CDAConstants.SVRL_NS_URI) ){
-				errors.accept(text.getTextContent());
+				action.accept(text.getTextContent());
 			}
 		}		
 	}

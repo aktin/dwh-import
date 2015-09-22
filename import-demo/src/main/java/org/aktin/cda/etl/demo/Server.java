@@ -22,12 +22,14 @@ import com.sun.net.httpserver.HttpServer;
  *  <li>TODO simple REST</li>
  * </ul>
  * 
- * @author marap1
+ * @author R.W.Majeed
  *
  */
 public class Server {
 	private static final Logger log = Logger.getLogger(Server.class.getName());
+	/** Servlet context for XDS.b */
 	public static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
+	/** Servlet context for FHIR Binary */
 	public static final String REST_CONTEXT_PATH = "/aktin/fhir/Binary";
 
 	private DocumentRepository xdsService;
@@ -38,6 +40,10 @@ public class Server {
 	private HttpServer server;
 	private ValidationService validator;
 	
+	/**
+	 * Construct the local server
+	 * @throws IOException IO error
+	 */
 	public Server() throws IOException{
 		validator = new ValidationService();
 		xdsService = new DocumentRepository(validator);
@@ -49,6 +55,11 @@ public class Server {
 		server = HttpServer.create();
 	}
 
+	/**
+	 * Bind the server to the specified address / port
+	 * @param bindAddress local/external TCP address
+	 * @throws IOException IO errors
+	 */
 	public void bind(InetSocketAddress bindAddress) throws IOException{
 		// bind HTTP server
 		server.bind(bindAddress, 0);
@@ -73,14 +84,24 @@ public class Server {
 
 	}
 	
+	/**
+	 * Get the port. Useful if the port was dynamically allocated.
+	 * @return port number actually used
+	 */
 	public int getPort(){
 		return server.getAddress().getPort();
 	}
 	
+	/**
+	 * Start the server
+	 */
 	public void start(){
 		server.start();
 	}
 	
+	/**
+	 * Shuts the server down
+	 */
 	public void shutdown(){
 		// wait 3 seconds to complete current exchange handlers
 		server.stop(3);
@@ -91,6 +112,14 @@ public class Server {
 		log.info("Shutdown complete");
 	}
 	
+	/**
+	 * Runs the server. Does not need any command line arguments.
+	 * <p>
+	 * A shutdown hook is installed, press Ctrl+C to exit gracefully.
+	 * 
+	 * @param args command line arguments (unused)
+	 * @throws IOException any IO errors
+	 */
 	public static void main(String[] args) throws IOException {
 		final Server server = new Server();
 		server.bind(new InetSocketAddress(InetAddress.getByName(null), 0));
