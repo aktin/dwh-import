@@ -5,17 +5,22 @@ Datensatz Basismodul
 --------------------
 Der Datensatz für das Basismodul ist auf der Seite 
 http://aktin.art-decor.org im aktuellen Release (HTML) 
-unter dem Bereich Datensatz einzusehen. Eine PDF-Repräsentation des 
-Formulars als Vorlage für eine Implementierung als Eingabeformular 
-im KIS liegt dem Release bei.
+unter dem Bereich Datensatz einzusehen. 
+
+Weitere inhaltliche Informationen zum Datensatz, sowie eine Vorlage des 
+Formulars für eine Implementierung als Eingabeformular im KIS befinden 
+sich unter http://notaufnahme.data-set.org/ bzw. 
+http://www.notaufnahmeprotokoll.de/site/
 
 Die CDA-Spezifikation basiert auf diesem Datensatz. 
 Das Mapping zwischen dem Datensatz und den entsprechenden Elementen im 
 CDA ist ebenfalls über die ART-DECOR Seite des AKTIN-Projekts nachvollziehbar.
 
 Fragen bzgl. der medizinischen Inhalte bzw. des Hintergrunds lassen sich 
-ggf. durch das PDF-Formular und die Erläuterungen dazu klären. 
-Dort sind insbesondere auch einige Valuesets näher erläutert.
+ggf. durch das PDF-Formular und die [Erläuterungen](Basismodul.pdf) dazu klären. 
+Dort sind insbesondere auch die Abgrenzung unklarer Ausprägungen der Valuesets 
+näher erläutert.
+
 Technische Fragen zur Umsetzung als CDA-Dokument sollten durch den 
 Implementierungsleitfaden auf der ART-DECOR Seite (PDF) beantwortet werden.
 
