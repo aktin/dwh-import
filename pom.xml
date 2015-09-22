@@ -26,7 +26,7 @@
 	<modules>
 		<module>legacy-cda</module>
 		<module>cda-validation</module>
-		<module>import-demo</module>
+		<module>demo-server</module>
 		<!-- wegen fehlerhafter tests kurzzeitig entfernt
 		<module>import-server</module>
 		-->
