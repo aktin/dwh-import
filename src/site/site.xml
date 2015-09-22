@@ -6,11 +6,15 @@
 	</skin>
 	<body>
 		<menu name="Dokumentation">
+			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
 			<item href="Schnittstellen.html" name="Schnittstellen" />
+			<item href="fhir.html" name="RESTful/FHIR Schnittstelle" />
+			<item href="xds.html" name="IHE XDS.b SOAP Schnittstelle" />
+			<item href="support.html" name="Support"/>
 		</menu>
+		<menu ref="reports" inherit="top" />
 		<!--
 		<menu ref="modules" />
-		<menu ref="reports" inherit="top" />
 		<menu ref="parent" />
 		-->
 	</body>

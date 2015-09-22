@@ -1,1 +1,1 @@
-Hier findet sich Dokumentation zur Software und den Schnittstellen.
+﻿Hier findet sich Dokumentation zur Software und den Schnittstellen.
