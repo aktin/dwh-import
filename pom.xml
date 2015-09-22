@@ -141,21 +141,17 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.3</version>
+					<configuration>
+						<excludePackageNames>ihe.iti.*:oasis.names.tc.*</excludePackageNames>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
-				<configuration>
-					<excludePackageNames>ihe.iti.*:oasis.names.tc.*</excludePackageNames>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 	
 	<dependencyManagement>
 		<!-- dependency version+scope inherited by child projects -->
