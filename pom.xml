@@ -20,7 +20,7 @@
 		<repository>
 			<id>www.aktin.org</id>
 			<name>AKTIN.org</name>
-			<url>scp://aktin.org/httpdocs/software/repo/</url>
+			<url>sftp://aktin.org/httpdocs/software/repo/</url>
 		</repository>
 		<!-- publish site to aktin.org -->
 		<site>
