@@ -23,11 +23,10 @@
     Basiert auf "Complete"-Datensatz
     Entfernt wurden alle Informationen, die für den Datensatz nicht relevant sind, z.B. unnötige Zeitangaben, IDs etc. 
     
-    
 -->
-<?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <?xml-stylesheet type="text/xsl" href="cda-eav.xsl"?>
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
+<?xml-model href="../../../../../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc"  xsi:schemaLocation="urn:hl7-org:v3 ../../../../../import-server/cda_basismodul/CDA.xsd">
     <!--
         CDA Header
     -->
@@ -141,7 +140,7 @@
                 <high value="201501171735"/>
             </effectiveTime>
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
-            <dischargeDispositionCode code="306689006" codeSystem="2.16.840.1.113883.6.96"/>
+            <dischargeDispositionCode code="4" codeSystem="2.16.840.1.113883.2.60.3.5.56"/>
         </encompassingEncounter>
     </componentOf>
     
@@ -179,10 +178,10 @@
                     <entry typeCode="COMP" contextConductionInd="true">
                         <act classCode="PCPR" moodCode="RQO">
                             <templateId root="1.2.276.0.76.10.4038"/>
-                            <code code="3457005" codeSystem="2.16.840.1.113883.6.96" displayName="Patient referral (procedure)"/>
+                            <code code="11293-8" codeSystem="2.16.840.1.113883.6.1" displayName="Type of Referral source"/>
                             <participant typeCode="AUT">
                                 <participantRole classCode="AGNT">
-                                    <code code="700232004"  codeSystem="2.16.840.1.113883.6.96" displayName="General medical service (qualifier value)"/>
+                                    <code code="VAP" codeSystem="1.2.276.0.76.5.440" displayName="Vertragsarzt/Praxis"/>
                                 </participantRole>
                             </participant>
                          </act>
@@ -212,7 +211,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4040"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="08edb7c0-2111-43f2-a784-9a5fdfaa67f0"/>
-                                    <code code="409586006" codeSystem="2.16.840.1.113883.6.96" displayName="Complaint"/>
+                                    <code code="75322-8" codeSystem="2.16.840.1.113883.6.1" displayName="Complaint"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low value="201501171544"/>                                      
@@ -242,7 +241,7 @@
                             <templateId root="1.2.276.0.76.10.4043"/>
                             <code code="11449-6" codeSystem="2.16.840.1.113883.6.1" displayName="Pregnancy status"/>
                             <statusCode code="completed"/>                                    
-                            <value xsi:type="CV" code="60001007" codeSystem="2.16.840.1.113883.6.96" displayName="Not pregnant (finding)"/>  
+                            <value xsi:type="CV" code="0" codeSystem="2.16.840.1.113883.2.60.3.5.46" displayName="Patient nicht schwanger"/>
                         </observation>                       
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true">
@@ -253,7 +252,7 @@
                             <consumable>
                                 <manufacturedProduct classCode="MANU">
                                     <manufacturedMaterial classCode="MMAT" determinerCode="KIND">
-                                        <code code="333621002" codeSystem="2.16.840.1.113883.6.96" displayName="Tetanus vaccine (product)"/>
+                                        <code code="CTVACC" codeSystem="2.16.840.1.113883.2.60.3.5.3" displayName="Tetanus vaccine (product)"/>
                                     </manufacturedMaterial>
                                 </manufacturedProduct>
                             </consumable>
@@ -278,16 +277,18 @@
                                  <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4073"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="3564b7c0-2111-43f2-a784-9a5fdfaa67f2"/>
-                                    <code code="64572001" codeSystem="2.16.840.1.113883.6.96" displayName="Condition"/>
+                                     <code code="COND" codeSystem="2.16.840.1.113883.5.4" displayName="Condition"/>
                                     <statusCode code="completed"/>
-                                     <value xsi:type="CD" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)">
+                                     <value xsi:type="CD" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund">
                                          <qualifier>
-                                             <name code="246090004" codeSystem="2.16.840.1.113883.6.96" displayName="Associated finding (attribute)"/>
-                                             <value code="365691004" codeSystem="2.16.840.1.113883.6.96" displayName="Finding of presence of bacteria (finding)"/>
-                                         </qualifier>  <qualifier>
-                                             <name code="246075003" codeSystem="2.16.840.1.113883.6.96" displayName="Causative agent (attribute)"/>
-                                             <value code="115329001" codeSystem="2.16.840.1.113883.6.96" displayName="Methicillin resistant Staphylococcus aureus (organism)"/>
-                                         </qualifier></value>
+                                             <name code="IBB" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="in Bezug auf Befund"/>
+                                             <value code="BACP" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Bakterienbesiedelung"/>
+                                         </qualifier>
+                                         <qualifier>
+                                             <name code="URAG" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Auslösendes Agenz"/>
+                                             <value code="MRSA" codeSystem="1.2.276.0.76.5.441" displayName="MRSA"/>
+                                         </qualifier>
+                                     </value>
                                  </observation>
                             </entryRelationship>
                         </act>
@@ -371,30 +372,30 @@
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
-                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96"/>                        
+                            <value xsi:type="CV" code="M" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="mittel"/>
+                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>                      
                         </observation>                    
                     </entry>   
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
-                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96"/>
+                            <value xsi:type="CV" code="B" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="prompt"/>
+                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>
                         </observation>                    
                     </entry> 
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
-                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96"/>
+                            <value xsi:type="CV" code="B" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="prompt"/>
+                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>
                         </observation>                    
                     </entry>                                                                         
                     <entry typeCode="COMP" contextConductionInd="true"> 
@@ -433,13 +434,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4050"/>
                             <id root="944cd73e-4361-4fca-929b-9a404b063651"/>
-                            <code code="399208008" codeSystem="2.16.840.1.113883.6.96" displayName="Plain chest X-ray (procedure)"/>
+                            <code code="30745-4" codeSystem="2.16.840.1.113883.6.1" displayName="Chest X-ray"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>
@@ -448,13 +449,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4051"/>
                             <id root="9527DF31-B54F-4504-A511-E8BB54B2539C"/>
-                            <code code="79760008" codeSystem="2.16.840.1.113883.6.96" displayName="Radiography of spine (procedure)"/>
+                            <code code="38008-9" codeSystem="2.16.840.1.113883.6.1" displayName="Spine Cervical and Thoracic and Lumbar X-ray"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>
@@ -463,13 +464,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4052"/>
                             <id root="7152e2cb-b208-4833-a70b-7f8317e34ed6"/>
-                            <code code="268425006" codeSystem="2.16.840.1.113883.6.96" displayName="Pelvis X-ray (procedure)"/>
+                            <code code="28561-9" codeSystem="2.16.840.1.113883.6.1" displayName="Pelvis X-ray"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>
@@ -479,13 +480,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4054"/>
                             <id root="a25ec093-7459-4073-a9ef-f4de308b92d5"/>
-                            <code code="168537006" codeSystem="2.16.840.1.113883.6.96" displayName="Plain radiography (procedure)"/> 
+                            <code code="43468-8" codeSystem="2.16.840.1.113883.6.1" displayName="Unspecified body region X-ray"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>
@@ -494,13 +495,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4055"/>
                             <id root="2c2f8f44-1b89-4071-851b-45a6ccd0a1e1"/>
-                            <code code="408754009" codeSystem="2.16.840.1.113883.6.96" displayName="Computed tomography of entire head (procedure)"/>
+                            <code code="24725-4" codeSystem="2.16.840.1.113883.6.1" displayName="Head CT"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>
@@ -509,13 +510,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4056"/>
                             <id root="cde348dd-f5d2-452a-b30f-ec33a92160b3"/>
-                            <code code="169072007" codeSystem="2.16.840.1.113883.6.96" displayName="Computed tomography scan - whole body (procedure)"/>
+                            <code code="46305-9" codeSystem="2.16.840.1.113883.6.1" displayName="CT whole body"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>                        
@@ -524,60 +525,60 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4057"/>
                             <id root="6e1eb17e-e064-4996-b7f1-bcfaf55b06ac"/>
-                            <code code="15220000" codeSystem="2.16.840.1.113883.6.96" displayName="Laboratory test (procedure)"/>
+                            <code code="26436-6" codeSystem="2.16.840.1.113883.6.1" displayName="Laboratory studies"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>            
                     </entry>       
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4058"/>
                             <id root="59b54374-a939-49bf-be53-6af7d7ee3a2b"/>
-                            <code code="113091000" codeSystem="2.16.840.1.113883.6.96" displayName="Magnetic resonance imaging (procedure)"/>
+                            <code code="25056-3" codeSystem="2.16.840.1.113883.6.1" displayName="Unspecified body region MRI"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4059"/>
                             <id root="285e1c44-5027-4b2b-b21c-e987b55567ee"/>
-                            <code code="278297009" codeSystem="2.16.840.1.113883.6.96" displayName="Blood gas analysis (procedure)"/>
+                            <code code="18767-4" codeSystem="2.16.840.1.113883.6.1" displayName="Blood gas studies"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>                        
                     </entry>    
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4060"/>
                             <id root="2f851d0f-fe43-42e4-a16e-f1d5f818076f"/>
-                            <code code="53853004" codeSystem="2.16.840.1.113883.6.96" displayName="Urinalysis, reagent strip without microscopy (procedure)"/>
+                            <code code="50556-0" codeSystem="2.16.840.1.113883.6.1" displayName="Urinalysis dipstick panel"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>            
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4061"/>
                             <id root="cddb56c3-bc8e-4e61-9eb1-4074bcd70c49"/>
-                            <code code="268400002" codeSystem="2.16.840.1.113883.6.96" displayName="12 lead electrocardiogram (procedure)"/>
+                            <code code="34534-8" codeSystem="2.16.840.1.113883.6.1" displayName="EKG 12 channel panel"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201503261234"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>                        
                     </entry>    
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4062"/>
                             <id root="7cab4233-9d82-456d-81b4-c4a6c987d682"/>
-                            <code code="16310003" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnostic ultrasonography (procedure)"/>
+                            <code code="25061-3" codeSystem="2.16.840.1.113883.6.1" displayName="Unspecified body region US"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>
             
                     </entry>                                                          
@@ -585,20 +586,20 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4063"/>
                             <id root="0C3011ED-A709-4D85-A873-5150DC056934"/>
-                            <code code="77477000" codeSystem="2.16.840.1.113883.6.96" displayName="Computerized axial tomography (procedure)"/>
+                            <code code="25045-6" codeSystem="2.16.840.1.113883.6.1" displayName="Unspecified body region CT"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20150117"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>                        
                     </entry>    
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4064"/>
                             <id root="0659a2c7-035f-4245-93b2-2afadef99be1"/>
-                            <code code="40701008" codeSystem="2.16.840.1.113883.6.96" displayName="Echocardiography (procedure)"/>
+                            <code code="42148-7" codeSystem="2.16.840.1.113883.6.1" displayName="Heart US"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201503261234"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                             <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>            
                     </entry>                               
                 </section>
@@ -634,7 +635,7 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+                                    <value xsi:type="CV" code="OINT" codeSystem="2.16.840.1.113883.5.4" displayName="adverse reaction upon exposure to an agent"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
@@ -645,11 +646,11 @@
                                     <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="281647001" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <value xsi:type="CV" code="OINT" codeSystem="2.16.840.1.113883.5.4" displayName="adverse reaction upon exposure to an agent"/>
                                     <participant typeCode="CSM">
                                         <participantRole classCode="MANU">
                                             <playingEntity classCode="MMAT">                                                
-                                                <code code="406455002" codeSystem="2.16.840.1.113883.6.96" displayName="Contrast media (substance)"/>
+                                                <code code="V08" codeSystem="2.16.840.1.113883.6.73" displayName="Kontrastmittel"/>
                                             </playingEntity>
                                         </participantRole>
                                     </participant>
@@ -672,16 +673,16 @@
                         <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="ba6d1bac-17d3-4195-89c4-1121bc809b5e"/>
-                            <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
+                            <code code="ISO" codeSystem="2.16.840.1.113883.2.60.3.5.54" displayName="Isolation"/>
                             <statusCode code="completed"/>
                             <entryRelationship typeCode="RSON">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <!-- Isolation Indication -->
                                     <templateId root="1.2.276.0.76.10.4069"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf842"/>
-                                    <code code="55607006" codeSystem="2.16.840.1.113883.6.96" displayName="Problem"/>
+                                    <code code="44100-6" codeSystem="2.16.840.1.113883.6.1" displayName="Medical Problem"/>
                                     <statusCode code="completed"/>
-                                    <value  xsi:type="CV" code="372292006" codeSystem="2.16.840.1.113883.6.96" displayName="Infection due to resistant organism (disorder)"/>
+                                    <value  xsi:type="CV" code="U80" codeSystem="2.16.840.1.113883.6.3" displayName="multiresistenter Keim"/>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="RSON">
@@ -689,9 +690,9 @@
                                     <!-- Isolation Indication -->
                                     <templateId root="1.2.276.0.76.10.4069"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf842"/>
-                                    <code code="55607006" codeSystem="2.16.840.1.113883.6.96" displayName="Problem"/>
+                                    <code code="44100-6" codeSystem="2.16.840.1.113883.6.1" displayName="Medical Problem"/>
                                     <statusCode code="completed"/>
-                                    <value  xsi:type="CV" code="7180009" codeSystem="2.16.840.1.113883.6.96" displayName="Meningitis (disorder)"/>
+                                    <value  xsi:type="CV" code="G03.9" codeSystem="2.16.840.1.113883.6.3" displayName="Meningitis"/>
                                 </observation>
                             </entryRelationship>
                         </procedure>
@@ -723,7 +724,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low nullFlavor="NA"/>
@@ -735,7 +736,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low nullFlavor="NA"/>
@@ -747,7 +748,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low nullFlavor="NA"/>
@@ -759,7 +760,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low nullFlavor="NA"/>
@@ -771,7 +772,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
                                         <low nullFlavor="NA"/>
@@ -794,7 +795,7 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4042"/>
                             <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                            <code code="273887006" codeSystem="2.16.840.1.113883.6.96" displayName="Triage index (assessment scale)"/>
+                            <code code="11283-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Acuity assessment"/>
                             <statusCode code="completed"/>
                             <effectiveTime>
                                 <low nullFlavor="NA"/>
