@@ -12,6 +12,10 @@
 		<version>0.3-SNAPSHOT</version>
 	</parent>
 	<properties>
+		<!-- TODO @Volker: aktuelle Version von Schematron und Beispielen 
+		     integrieren: 20150920T212437. 
+		     ACHTUNG: Probleme mit enthaltenem Storyboard 02 
+		-->
 		<schematronVersion>20150824T134031</schematronVersion>            
 		<examplesVersion>20150824T134031</examplesVersion>            
 		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            

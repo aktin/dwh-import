@@ -31,14 +31,14 @@ public class TestValidator {
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
 				ValidationResult res = v.validate(new StreamSource(in));
-				Assert.assertTrue("Successful validation expected", res.isValid());
+				Assert.assertTrue("Successful validation expected for "+example, res.isValid());
 			}
 		}
 		for( String example : invalidExampleDocuments ){
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
 				ValidationResult res = v.validate(new StreamSource(in));
-				Assert.assertFalse("Document validation should produce errors", res.isValid());
+				Assert.assertFalse("Validation failure expected for "+example, res.isValid());
 			}
 		}
 	}
