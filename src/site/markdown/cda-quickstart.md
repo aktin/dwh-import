@@ -17,7 +17,7 @@ Das Mapping zwischen dem Datensatz und den entsprechenden Elementen im
 CDA ist ebenfalls über die ART-DECOR Seite des AKTIN-Projekts nachvollziehbar.
 
 Fragen bzgl. der medizinischen Inhalte bzw. des Hintergrunds lassen sich 
-ggf. durch das PDF-Formular und die [Erläuterungen](Basismodul.pdf) dazu klären. 
+ggf. durch das PDF-Formular, verfügbar unter http://www.notaufnahmeprotokoll.de/site/downloads/viewcategory/4-modul-basis.html und die [Erläuterungen](Basismodul.pdf) dazu klären. 
 Dort sind insbesondere auch die Abgrenzung unklarer Ausprägungen der Valuesets 
 näher erläutert.
 
@@ -38,14 +38,14 @@ nachträglich geändert werden soll.
 
 Theoretisch wäre dann das `/ClinicalDocument/versionNumber` zu erhöhen 
 – die Schnittstelle beachtet dies aber nicht, sondern überschreibt Dokumente 
-mit gleicher `setId` (s.o.) und legt ein neues Dokument ab, wenn die setId 
+mit gleicher `setId` (s. o.) und legt ein neues Dokument ab, wenn die `setId` 
 sich unterscheidet. 
 
-Das Quelldatensystem bzw. der Importer muss also sicherstellen, dass die setID 
+Das Quelldatensystem bzw. der Importer muss also sicherstellen, dass die `setId` 
 entsprechend eindeutig ist und bei inhaltlichen Änderungen eines Patientenkontakts 
 unverändert bleibt. 
 
-Die setId ist nicht unbedingt gleichzusetzen mit einer Fallnummer oder 
+Die `setId` ist nicht unbedingt gleichzusetzen mit einer Fallnummer oder 
 Abrechnungsnummer, da je nach lokaler Umsetzung im KIS mehrere 
 Notaufnahme-Formulare einem Fall zugeordnet werden könnten.
 
@@ -61,7 +61,7 @@ Eine Vorverarbeitung/Pseudonymisierung im Quell-System ist nicht notwendig,
 da beim Import die Patienten-IDs mit einem Einweg-Hash verschlüsselt werden 
 und somit keine Rück-Zuordnung zu identifizierenden Daten möglich ist. 
 
-Im AKTIN DWH werden keine direkt identifizierenden Daten gespeichert 
+Im AKTIN Data Warehouse werden keine direkt identifizierenden Daten gespeichert 
 (vgl. Datenschutzkonzept). Diese Daten können bei der CDA-Erzeugung 
 im Quell-System bereits weggelassen oder durch Dummy-Einträge ersetzt werden. 
 

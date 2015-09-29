@@ -1,7 +1,7 @@
 ﻿HL7 FHIR Schnittstelle
 ======================
 
-CDA-Dokumente werden abgeliefert per RESTfull HTTP entsprechend dem FHIR Draft.
+CDA-Dokumente werden abgeliefert per RESTful HTTP entsprechend dem FHIR Draft.
 
 
 Übermitteln von Dokumenten
@@ -23,7 +23,7 @@ wird der Status `422 Unprocessable entity` zurückgegeben.
 Zusätzlich wird die FHIR-XML-Resource `OperationOutcome` zurückgeliefert mit 
 detaillierten Fehlerbeschreibungen aus dem Schematron-Durchlauf.
 
-Nach erfolgreicher Validierung wird das Dokument verarbeitet und im Data-Warehouse
+Nach erfolgreicher Validierung wird das Dokument verarbeitet und im Data Warehouse
 gespeichert. Treten in diesem Ablauf interne Fehler auf, so wird der
 Statuskode `500 Internal Error` zurückgeliefert.
 
@@ -34,4 +34,4 @@ Validierung von Dokumenten ohne Übermittlung
 Nach HL7 FHIR lassen sich Dokumente validieren, indem eine POST-Operation
 an die Adresse `http://servernamen/aktin/fhir/Binary/_validate` durchgeführt
 wird. Es erfolgen alle Schritte wie bei der Übermittlung von Dokumenten, 
-allerdings wird das Dokument verworfen und nicht im Datawarehouse gespeichert.
+allerdings wird das Dokument verworfen und nicht im Data Warehouse gespeichert.
