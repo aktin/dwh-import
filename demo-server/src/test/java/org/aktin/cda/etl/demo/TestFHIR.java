@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
+import org.aktin.cda.etl.demo.client.FhirClient;
+import org.aktin.cda.etl.demo.client.Util;
 import org.aktin.cda.etl.fhir.RestService;
 import org.junit.After;
 import org.junit.Assert;
@@ -47,7 +49,7 @@ public class TestFHIR {
 	
 	/**
 	 * Submits a valid CDA document to the FHIR interface.
-	 * The actual document submission is done in {@link Client#submitToFHIR(URL, InputStream)}
+	 * The actual document submission is done in {@link Util#submitToFHIR(URL, InputStream)}
 	 * 
 	 * @throws IOException
 	 */
@@ -58,7 +60,7 @@ public class TestFHIR {
 
 		// submit document to URL connection
 		// see the corresponding source code how it is done
-		HttpURLConnection uc = Client.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
 
 		// close CDA input stream
 		in.close();
@@ -77,7 +79,7 @@ public class TestFHIR {
 	public void expectUnprocessableEntityForSemanticErrors() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-error1.xml");
 
-		HttpURLConnection uc = Client.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
 		
 		in.close();
 		
@@ -91,7 +93,7 @@ public class TestFHIR {
 	public void expectUnsupportedTypeForInvalidXML() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/invalid-syntax.xml");
 
-		HttpURLConnection uc = Client.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
 		
 		in.close();
 		
@@ -104,7 +106,7 @@ public class TestFHIR {
 	public void expectUnprocessableEntityForOtherXML() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/other-document.xml");
 
-		HttpURLConnection uc = Client.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
 		
 		in.close();
 		

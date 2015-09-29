@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
+import org.aktin.cda.etl.demo.client.XdsClient;
 import org.aktin.cda.etl.xds.XDSConstants;
 import org.junit.After;
 import org.junit.Assert;
@@ -39,7 +40,7 @@ public class TestXDS {
 	public void expectOkForValidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml");
 
-		RegistryResponseType resp = Client.submitToXDSb(soapUrl, in, "12345", "123", "example");
+		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "12345", "123", "example");
 		
 		in.close();
 		
@@ -51,7 +52,7 @@ public class TestXDS {
 	public void expectFailForInvalidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-error1.xml");
 
-		RegistryResponseType resp = Client.submitToXDSb(soapUrl, in, "12345", "123", "example");
+		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "12345", "123", "example");
 		
 		in.close();
 		
