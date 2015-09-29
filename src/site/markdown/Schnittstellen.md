@@ -5,6 +5,8 @@ Installation
 ------------
 Eine Installation ist nicht erforderlich. Das JAR-Paket kann mit dem Befehl `java -jar <Path/import-demo-XXX.jar>` gestartet werden.
 
+Das jeweils aktuelle Release der CDA-Spezifikation für das Notaufnahmeprotokoll und der dazugehörigen Schematron Regeln sind im JAR enthalten.
+
 HL7 FHIR REST Schnittstelle
 ------------------
 Die REST-Schnittstelle wird auf einem freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/fhir/Binary` zu erreichen.
@@ -25,8 +27,6 @@ Rückgabewerte und Fehlermeldungen
 ---------------------------------
 Die Schnittstellen liefern einen Statuscode bzw. das Ergebnis der Schematron-Validierung zurück. Wenn die Schematron-Validierung keine Fehler zurückgibt, ist das gesendete CDA-Dokument von der Schnittstelle akzeptiert und kann ins Data Warehouse geladen werden.
 Der tatsächliche Import entfällt bei der Demo-Schnittstelle.
-
-Das jeweils aktuelle Release der CDA-Spezifikation für das Notaufnahmeprotokoll und der dazugehörigen Schematron Regeln sind im JAR enthalten.
 
 Details zu Rückgabewerten und Fehlermeldungen sind in den Abschnitten zu den beiden Schnittstellen dokumentiert.
 

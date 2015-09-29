@@ -68,3 +68,26 @@ im Quell-System bereits weggelassen oder durch Dummy-Einträge ersetzt werden.
 Im Sinne eines korrekten CDA-Dokuments ist es aber auch möglich CDAs mit 
 identifizierenden Daten zu senden. Die identifizierenden Daten werden von 
 der krankenhausinternen AKTIN-Schnittstelle nicht verarbeitet oder gespeichert.
+
+Fehlende Information, Null Flavors und Dummy-Einträge
+-----------------------------------------------------
+
+Fehlende Informationen (i. e. Teile des CDA-Dokuments, die in der lokalen Notaufnahme grundsätzlich nicht dokumentiert werden oder bei einzelnen Patienten nicht vorhanden sind) sollten nach Möglichkeit entsprechend der CDA-Vorgaben weggelassen oder mit Null Flavors versehen werden.
+
+Knoten bzw. Teilbäume mit der Kardinalität `0..1` sollten weggelassen werden, wenn keine sinnvollen Werte vorhanden sind.
+
+`1..1 R` (required) Elemente können mit `@nullFlavor` Attributen belegt werden. Beispielsweise kann durch `<id nullFlavor="NA"/>` vermieden werden einen wertlosen Dummy-Wert für `<id extension="XYZ" root="1.2.3.4.5"/>` anzugeben.
+Auch Zeitpunkte, die im Quellsystem nicht vorhanden sind, können so weggelassen werden: `<effectiveTime nullFlavor="NA"/>`.
+
+Nur Elemente, die `1..1 M` (mandatory) sind, müssen ggf. mit Dummy Werten belegt werden um ein gültiges CDA-Dokument zu erzeugen. Sollten systematisch Informationen fehlen, die im CDA mandatory sind, wenden Sie sich bitte an den [IT-Support](support.html) um zu klären wie die Datenqualität in solchen Fällen möglichst erhalten werden kann.
+
+Strukturierte Einträge vs. Freitext
+-----------------------------------
+
+Die CDA Spezifikation besteht aus vielen strukturierten Elementen, definiert aber auch Freitext-Felder, in die die relevanten Informationen eingetragen werden können/sollen.
+Die Freitext-Informationen werden durch die AKTIN-Schnittstelle nicht ausgewertet, d. h. jede Information, die nur in Form von Freitexten im CDA vorkommt ist für das Data Warehouse verloren.
+Im Sinne einer hohen Datenqualität ist es deshalb notwendig die strukturierten Felder im CDA entsprechend der inhaltlichen Anforderungen des Datensatzes und konform zur CDA-Spezifikation zu füllen - Freitext-Angaben sind insofern rein optional, auch wenn sie z. T. notwendig sind um ein standardkonformes CDA-Dokument zu erzeugen. 
+
+Insbesondere bieten Freitextfelder aus Projekt-Sicht keine auswertbare Möglichkeit Informationen unterzubringen, die nicht in die strukturierten Felder passen.
+Hier gibt es einen Unterschied zwischen dem was für das AKTIN Projekt notwendig bzw. sinnvoll ist und was eigentlich im Sinne eines standardkonformen CDA-Dokuments best practice wäre.
+Bei Fragen zur Umcodierung/inhaltlichen Anpassung von nur teilweise vorhandenen oder abweichend codierten Daten wenden Sie sich bitte an den [IT-Support](support.html).
