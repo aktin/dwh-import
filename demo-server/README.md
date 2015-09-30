@@ -47,14 +47,6 @@ Antworten:
   diesem Fall wird eine OperationOutcome resource zurückgeliefert (s.o.)
 - 200 OK, falls das Dokument verarbeitet wurde.
 
-HL7 FHIR Validierung
---------------------
-HL7 FHIR spezifiziert eine [Möglichkeit zur Dokumentvalidierung](
-https://www.hl7.org/fhir/http.html#validate).
-
-Um den Validierungsdienst zu nutzen, kann das zu prüfende CDA-Dokument z.B. an die Adresse `https://demo.aktin.org/fhir/Encounter/_validate`
-gesendet werden.
-
 
 FHIR Resource
 -------------
@@ -65,10 +57,5 @@ Einstellbar mit request header Accept: text/xml oder application/json
 
 TODO
 -----
-
-Implementieren von Validate: POST [base]/[type]/_validate{/[id]}
-in unserem Fall POST /fhir/Encounter/_validate
-
-sowie Mailbox
 
 Merge von Patienten und Episoden
