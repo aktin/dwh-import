@@ -3,6 +3,7 @@ package org.aktin.cda.etl.demo;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -113,16 +114,61 @@ public class Server {
 	}
 	
 	/**
+	 * Construct a local address to bind to from command line arguments.
+	 * @param args command line arguments
+	 * @return local address or null if illegal arguments
+	 * @throws UnknownHostException should not happen
+	 */
+	private static InetSocketAddress getAddressFromCommandLine(String args[]) throws UnknownHostException{
+		InetSocketAddress addr = null;
+		if( args.length > 0 ){
+			System.out.println("Using port number from command line argument: "+args[0]);
+			int port;
+			try{
+				port = Integer.parseInt(args[0]);
+			}catch( NumberFormatException e ){
+				System.err.println("Unable to parse port number: "+args[0]+": "+e.getLocalizedMessage());
+				System.err.println("Using dynamic port!");
+				port = 0;
+			}
+			if( args.length == 2 ){
+				switch( args[1] ){
+				case "localhost":
+					addr = new InetSocketAddress(InetAddress.getByName(null), port);
+					break;
+				case "public":
+					addr = new InetSocketAddress(port);
+					break;
+				default:
+					System.out.println("No idea what you want with "+args[1]);
+					System.err.println("Either 'localhost' or 'public' accepted as second argument");
+				}
+			}else if( args.length > 2 ){
+				System.err.println("Usage: "+Server.class.getName()+" [<port> [localhost|public]]");
+			}
+		}else{
+			System.out.println("Using dynamic port."); 
+			System.out.println("You can specify a fixed port as command line argument");
+			addr = new InetSocketAddress(InetAddress.getByName(null), 0);
+		}
+		return addr;
+	}
+	
+	/**
 	 * Runs the server. Does not need any command line arguments.
 	 * <p>
 	 * A shutdown hook is installed, press Ctrl+C to exit gracefully.
 	 * 
-	 * @param args command line arguments (unused)
+	 * @param args command line arguments: optional port to bind to, optional
 	 * @throws IOException any IO errors
 	 */
 	public static void main(String[] args) throws IOException {
+		// determine bind address
+		final InetSocketAddress addr = getAddressFromCommandLine(args);
+		if( addr == null )return;
+		// initialise server
 		final Server server = new Server();
-		server.bind(new InetSocketAddress(InetAddress.getByName(null), 0));
+		server.bind(addr);
 		server.start();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(){
