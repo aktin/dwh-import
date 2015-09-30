@@ -1,10 +1,10 @@
-package org.aktin.cda.etl.demo;
+package org.aktin.cda.etl.demo.client;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,66 +25,64 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryObjectListType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryPackageType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ValueListType;
+import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryError;
+import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryErrorList;
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 
+
 /**
- * Client code to access the FHIR and XDS services
+ * XDS.b client application. 
+ * Submit CDA documents to a XDS.b provide and register document SOAP endpoint.
  * 
  * @author R.W.Majeed
  *
  */
-public class Client {
+public class XdsClient {
 
 	/**
 	 * Main method to submit documents
 	 * 
 	 * @param args command line arguments
 	 */
-	public static void main(String[] args){
-		// TODO implement
-	}
-	
-	/**
-	 * Transfers all data from input stream to output stream
-	 * 
-	 * @param inputStream source
-	 * @param outputStream destination
-	 * @throws IOException io errors
-	 */
-	public static void transfer(InputStream inputStream, OutputStream outputStream) throws IOException{
-		byte[] buffer = new byte[10*1024];
-		int count;
-		while( (count = inputStream.read(buffer)) != -1 ){
-			outputStream.write(buffer,0,count);
+	public static void main(String[] args) {
+		
+		if( args.length != 5 ){
+			// Print usage notice to stderr
+			System.err.println("Usage: "+XdsClient.class.getName()+" <service-url> <uniqueid> <patientid> <sourceid> <file-to-submit>");
+			return;
 		}
+		
+		RegistryResponseType response = null;
+		
+		try( InputStream in = new FileInputStream(args[4]) ){
+			response = submitToXDSb(new URL(args[0]), in, args[1], args[2], args[3]);
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found: "+args[1]);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("Error while reading file "+args[1]);
+		}
+		
+		if( response != null ){
+			// no exception, print errors
+			System.out.println("Status: "+response.getStatus());
+			RegistryErrorList rel = response.getRegistryErrorList();
+			if( rel != null && rel.getRegistryError().size() > 0 ){
+				System.out.println("Error list:");
+				int i=1;
+				for( RegistryError re : rel.getRegistryError() ){
+					System.out.println(i+"\tCode:"+re.getErrorCode());
+					System.out.println(i+"\tSeverity:"+re.getSeverity());
+					System.out.println(i+"\tLocation:"+re.getLocation());
+					System.out.println(i+"\tContext:"+re.getCodeContext());
+					System.out.println(i+"\tValue:"+re.getValue());
+					i++;
+				}
+			}
+		}
+
 	}
 
-	/**
-	 * Submit a CDA document to the AKTIN FHIR interface
-	 * 
-	 * @param fhirUrl URL of the AKTIN FHIR interface. E.g. http://server.name/aktin/fhir/Binary
-	 * @param document CDA document to submit
-	 * @return HTTP connection with response status and response/error stream
-	 * @throws IOException any errors during HTTP transfer
-	 */
-	public static HttpURLConnection submitToFHIR(URL fhirUrl, InputStream document) throws IOException{
-		URL url = fhirUrl;
-		HttpURLConnection uc = (HttpURLConnection)url.openConnection();
-		uc.setDoInput(true);
-		uc.setDoOutput(true);
-		uc.addRequestProperty("Accept","text/xml");
-		uc.addRequestProperty("Content-type", "text/xml");
-		// set method
-		uc.setRequestMethod("PUT");
-		uc.connect();
-
-		// write example document
-		OutputStream put = uc.getOutputStream();
-		Client.transfer(document,put);
-		put.close();
-
-		return uc;
-	}
 	
 	private static ExternalIdentifierType createExternalIdentifier(String externalId, String idScheme, String rimNameString, String submissionSet, String localSymbol){
 		ExternalIdentifierType et = new ExternalIdentifierType();
@@ -208,7 +206,7 @@ public class Client {
 		
 		// TODO possible to use stream instead of in-memory array
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
-		transfer(document, bs);
+		Util.transfer(document, bs);
 		
 		doc.setValue(bs.toByteArray());
 		arg.getDocument().add(doc);

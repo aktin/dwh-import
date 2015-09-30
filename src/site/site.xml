@@ -10,6 +10,7 @@
 			<item href="Schnittstellen.html" name="Schnittstellen" />
 			<item href="hl7-fhir.html" name="RESTful/HL7 FHIR" />
 			<item href="xds.html" name="IHE XDS.b SOAP" />
+			<item href="demo-server.html" name="Demo Server" />
 			<item href="support.html" name="Support"/>
 		</menu>
 		<menu ref="reports" inherit="top" />
