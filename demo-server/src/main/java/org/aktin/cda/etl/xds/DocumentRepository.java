@@ -86,9 +86,11 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 
 		if( vr.isValid() ){
 			resp.setStatus(XDSConstants.RESPONSE_SUCCESS);			
+			log.info("Document validation: VALID");
 		}else{
 			// failed
 			resp.setStatus(XDSConstants.RESPONSE_FAILURE);			
+			log.info("Document validation: FAILED");
 
 			RegistryError re = new RegistryError();
 			re.setSeverity(XDSConstants.SEVERITY_ERROR);

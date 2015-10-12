@@ -81,7 +81,7 @@ public class RestService implements Provider<Source>{
 			mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_BAD_METHOD);
 			return null;
 		}
-		log.info("REST request: "+httpMethod+" "+path+"?"+query);
+		log.info("REST request: "+httpMethod+" "+(path!=null?path:"")+(query!=null?"?"+query:""));
 
 		ValidationResult vr = null;
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
@@ -92,9 +92,11 @@ public class RestService implements Provider<Source>{
 			vr = validator.validate(request);
 			if( vr.isValid() ){
 				responseStatus = HttpURLConnection.HTTP_OK;
+				log.info("Document validation: VALID");
 			}else{
 				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
 				vr.forEachErrorMessage(s -> outcome.addIssue(Severity.error, s));
+				log.info("Document validation: FAILED");
 			}
 		} catch (XPathExpressionException e) {
 			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
