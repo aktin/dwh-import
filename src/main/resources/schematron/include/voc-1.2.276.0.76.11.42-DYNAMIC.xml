@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.42"
+             name="Referralfromsetting"
+             displayName="Zuweiser"
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="1.2.276.0.76.5.440" identifierName="Zuweiser"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
+      <conceptList>
+                <concept code="VAP"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="Vertragsarzt/Praxis"
+                  level="0"
+                  type="L"/>
+                <concept code="KVNPIK"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="KV-Notfallpraxis am Krankenhaus"
+                  level="0"
+                  type="L"/>
+                <concept code="KVNDAK"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="KV-Notdienst außerhalb des Krankenhauses"
+                  level="0"
+                  type="L"/>
+                <concept code="RD"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="Rettungsdienst"
+                  level="0"
+                  type="L"/>
+                <concept code="NA"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="Notarzt"
+                  level="0"
+                  type="L"/>
+                <concept code="KLINV"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="Klinik/Verlegung"
+                  level="0"
+                  type="L"/>
+                <concept code="NPHYS"
+                  codeSystem="1.2.276.0.76.5.440"
+                  displayName="Zuweisung nicht durch Arzt"
+                  level="0"
+                  type="L"/>
+                <exception code="OTH"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Andere"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

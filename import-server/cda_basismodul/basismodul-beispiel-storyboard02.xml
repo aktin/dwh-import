@@ -60,7 +60,7 @@
     R57.8 wird die Patientin um 21:04 auf der Intensivstation des Krankenhauses aufgenommen.
     
 -->
-<?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -198,7 +198,7 @@
                             <effectiveTime>
                                 <high value="20150116191600"/>
                             </effectiveTime>
-                            <value xsi:type="CV" code="83887000" codeSystem="2.16.840.1.113883.6.96"/>
+                            <value xsi:type="CV" code="3" codeSystem="2.16.840.1.113883.2.60.3.5.56"/>
                         </observation>
                     </entry>
                 </section>
@@ -214,7 +214,7 @@
                     <entry typeCode="COMP">
                         <act classCode="PCPR" moodCode="RQO">
                             <templateId root="1.2.276.0.76.10.4038"/>
-                            <code code="3457005" codeSystem="2.16.840.1.113883.6.96" displayName="Patient referral (procedure)"/>
+                            <code code="11293-8" codeSystem="2.16.840.1.113883.6.1" displayName="Zuweisung"/>
                             <participant typeCode="AUT">
                                 <participantRole classCode="AGNT">
                                     <code code="KVNDAK" codeSystem="1.2.276.0.76.5.440" displayName="KV-Notdienst außerhalb des Krankenhauses"/>
@@ -269,7 +269,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4040"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="f28e99c8-061c-4dcf-a06f-02a795c360f7"/>
-                                    <code code="409586006" codeSystem="2.16.840.1.113883.6.96" displayName="Complaint"/>
+                                    <code code="75322-8" codeSystem="2.16.840.1.113883.6.1" displayName="Complaint"/>
                                     <text>
                                         <reference value="#compl-1"/>
                                     </text>
@@ -377,44 +377,44 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
-                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161924"/>
-                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
-                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                            <value xsi:type="CV" code="M" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="mittel"/>
+                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
-                            <code code="363953003" codeSystem="2.16.840.1.113883.6.96" displayName="Size of pupil (observable entity)"/>
+                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161924"/>
-                            <value xsi:type="CV" code="420335002" codeSystem="2.16.840.1.113883.6.96" displayName="Medium size pupil (finding)"/>
-                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                            <value xsi:type="CV" code="M" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="mittel"/>
+                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
-                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201503041234"/>
-                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
-                            <targetSiteCode code="362503005" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                            <value xsi:type="CV" code="B" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="prompt"/>
+                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
-                            <code code="271733001" codeSystem="2.16.840.1.113883.6.96" displayName="Pupil reaction (observable entity)"/>
+                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201503041234"/>
-                            <value xsi:type="CV" code="301949001" codeSystem="2.16.840.1.113883.6.96" displayName="Brisk pupil near reaction (finding)"/>
-                            <targetSiteCode code="362502000" codeSystem="2.16.840.1.113883.6.96" displayName="Both eyes, entire (body structure)"/>
+                            <value xsi:type="CV" code="B" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="prompt"/>
+                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
@@ -448,33 +448,33 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4059"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="1c43ab49-5159-4f45-b5de-5530d96cd501"/>
-                            <code code="278297009" codeSystem="2.16.840.1.113883.6.96" displayName="Blood gas analysis (procedure)"/>
+                            <code code="18767-4" codeSystem="2.16.840.1.113883.6.1" displayName="Blood gas studies"/>
                             <text>
                                 <reference value="#proc-1"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161945"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4060"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="61380066-4f43-4c29-8e27-d367fd5957f0"/>
-                            <code code="53853004" codeSystem="2.16.840.1.113883.6.96" displayName="Urinalysis, reagent strip without microscopy (procedure)"/>
+                            <code code="50556-0" codeSystem="2.16.840.1.113883.6.1" displayName="Urinalysis dipstick panel"/>
                             <text>
                                 <reference value="#proc-2"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161950"/>
-                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
+                            <value xsi:type="CE" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4057"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="81387929-feff-488a-be4e-2f04da37d780"/>
-                            <code code="15220000" codeSystem="2.16.840.1.113883.6.96" displayName="Laboratory test (procedure)"/>
+                            <code code="26436-6" codeSystem="2.16.840.1.113883.6.1" displayName="Laboratory studies"/>
                             <text>
                                 <reference value="#proc-3"/>
                             </text>
@@ -487,13 +487,13 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4061"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="3361d397-04ce-47de-8a4e-6fd24f9f2621"/>
-                            <code code="268400002" codeSystem="2.16.840.1.113883.6.96" displayName="12 lead electrocardiogram (procedure)"/>
+                            <code code="34534-8" codeSystem="2.16.840.1.113883.6.1" displayName="EKG 12 channel panel"/>
                             <text>
                                 <reference value="#proc-4"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161942"/>
-                            <value xsi:type="CE" code="373573001" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding present (situation)"/>
+                            <value xsi:type="CE" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund"/>
                         </observation>
                     </entry>
                 </section>
@@ -507,8 +507,7 @@
                     <title>Allergien und Unverträglichkeiten</title>
                     <text>
                         <list>
-                            <item ID="alg">Allergien: nein</item>
-                            <item ID="int">Unverträglichkeiten: nein</item>
+                            <item ID="alg">Allergien/Unverträglichkeiten: nein</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -529,18 +528,18 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN" negationInd="true">
-                                    <templateId root="1.2.276.0.76.10.4066"/>
-                                    <id root="1.2.276.0.76.4.17.9814184919" extension="0cfceced-c905-4ac0-bd42-fc7b9f7cb173"/>
-                                    <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
-                                    <statusCode code="completed"/>
-                                    <!-- N/A - author/time records when this assertion was made -->
-                                    <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+                                    <value xsi:type="CV" code="OINT" codeSystem="2.16.840.1.113883.5.4" displayName="adverse reaction upon exposure to an agent"/>
+                                    <participant typeCode="CSM">
+                                        <participantRole classCode="MANU">
+                                            <playingEntity classCode="MMAT">
+                                                <code code="ALGN" codeSystem="2.16.840.1.113883.2.60.3.5.52" displayName="Allergen">
+                                                    <originalText>
+                                                        <reference value="#alg-4"/>
+                                                    </originalText>
+                                                </code>
+                                            </playingEntity>
+                                        </participantRole>
+                                    </participant>
                                 </observation>
                             </entryRelationship>
                         </act>
@@ -565,7 +564,7 @@
                         <procedure classCode="PROC" moodCode="EVN" negationInd="true">
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="53becae1-80bd-42e9-a38b-ffa191d71dc9"/>
-                            <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
+                            <code code="ISO" codeSystem="2.16.840.1.113883.2.60.3.5.54" displayName="Isolation"/>
                             <text>
                                 <reference value="#iso"/>
                             </text>
@@ -599,7 +598,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="3893e002-521c-4b27-8b8e-cba27ebd8e5d"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>
                                     </text>
@@ -614,7 +613,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="d1eced6c-7fff-4667-965f-9b50a29a2dd9"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-2"/>
                                     </text>
@@ -641,7 +640,7 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4042"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="d2108de5-28e1-4f2a-a560-e5c0bd2bf020"/>
-                            <code code="273887006" codeSystem="2.16.840.1.113883.6.96" displayName="Triage index (assessment scale)"/>
+                            <code code="11283-9" codeSystem="2.16.840.1.113883.6.1" displayName="Acuity assessment"/>
                             <text>
                                 <reference value="#triage"/>
                             </text>
@@ -669,7 +668,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="INT">
                             <templateId root="1.2.276.0.76.10.4067"/>
-                            <code code="304566005:260686004=37729005" codeSystem="2.16.840.1.113883.6.96" displayName="Admission for treatment (procedure) : Method (attribute) = Patient transfer, in-hospital (procedure)"/>
+                            <code code="1" codeSystem="2.16.840.1.113883.2.60.3.5.53" displayName="intern: OP / Intervention (z.B. Herzkatheter, Endoskopie, ...)"/>
                             <text>
                                 <reference value="#refact"/>
                             </text>

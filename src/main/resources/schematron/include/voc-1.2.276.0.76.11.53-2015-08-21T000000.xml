@@ -5,7 +5,7 @@
              name="Referralactions"
              displayName="Referral actions"
              effectiveDate="2015-08-21T00:00:00"
-             statusCode="draft">
+             statusCode="deprecated">
       <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
       <conceptList>
                 <concept code="304566005:260686004=37729005"

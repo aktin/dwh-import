@@ -1,0 +1,87 @@
+<?xml version="1.0" ?><eav-data xmlns="http://sekmi.de/histream/ns/eav-data" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <meta>
+      <etl-strategy>replace-visit</etl-strategy>
+      <source timestamp="2015-01-17T16:33:00" id="1.2.276.0.76.4.17.9814184919:0ff0f2d6-ddc2-4300-a5"></source>
+   </meta>
+   <patient id="1.2.276.0.76.4.8:1234567890">
+      <given-name>information privacy</given-name>
+      <surname>information privacy</surname>
+      <gender>male</gender>
+      <birthdate>1996-05-31</birthdate>
+      <encounter id="1.2.276.0.76.4.17.9814184919:0ff0f2d6-ddc2-4300-a5">
+         <start>2015-01-17T16:03</start>
+         <end>2015-01-17T17:35</end>
+         <location>1.2.276.0.76.4.17:9814184919</location>
+         <facts><!--772 Patientenadresse (PLZ)-->
+            <fact concept="AKTIN:PLZ">
+               <value xsi:type="numeric">80636</value>
+            </fact>
+            <!--37 Zeitpunkt erster Arztkontakt-->
+            <fact concept="AKTIN:ZeitpunktErsterArztkontakt" start="2015-01-17T16:32">
+               <modifier code="timeLow">
+                  <value xsi:type="string">201501171632</value>
+               </modifier>
+               <modifier code="timeHigh">
+                  <value xsi:type="string">201501171714</value>
+               </modifier>
+            </fact>
+            <!--38 Zeitpunkt Therapiebeginn-->
+            <fact concept="AKTIN:ZeitpunktTherapiebeginn" start="2015-01-17T16:03:00">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150117160300</value>
+               </modifier>
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">20150117173500</value>
+               </modifier>
+            </fact>
+            <!--882 Uhrzeit Verlegung / Entlassung-->
+            <fact concept="AKTIN:TRANSFERZeitpunktVerlegung" start="2015-01-17T17:35">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">201501171603</value>
+               </modifier>
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">201501171735</value>
+               </modifier>
+            </fact>
+            <!--57/58 Aufnahmedatum/uhrzeit-->
+            <fact concept="LOINC:52455-3" start="2015-01-17T16:03">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">201501171603</value>
+               </modifier>
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">201501171735</value>
+               </modifier>
+            </fact>
+            <!--596 Patient verlegt / entlassen nach-->
+            <fact concept="AKTIN:DISCHARGE:4"></fact>
+            <!--884 Transportmittel-->
+            <fact concept="AKTIN:TRANSPORT:NA">
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">201501171603</value>
+               </modifier>
+            </fact>
+            <!--805 Beschwerden bei Vorstellung (CEDIS)-->
+            <fact concept="CEDIS30:557">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">201501171544</value>
+               </modifier>
+            </fact>
+            <!--Extremity X-ray-->
+            <fact concept="LOINC:37637-6" start="2015-01-17T16:50">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201501171650</value>
+               </modifier>
+               <modifier code="OPB"></modifier>
+            </fact>
+            <!--31/32/33/34 Allergien-->
+            <fact concept="AKTIN:ALLERGY:ALGN:NEG"></fact>
+            <!--44 Abschlussdiagnosen-->
+            <fact concept="ICD10GM:S93.6">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150117</value>
+               </modifier>
+            </fact>
+         </facts>
+      </encounter>
+   </patient>
+</eav-data>

@@ -134,7 +134,7 @@
                 <high value="201501171735"/>
             </effectiveTime>
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
-            <dischargeDispositionCode code="306689006" codeSystem="2.16.840.1.113883.6.96"/>
+            <dischargeDispositionCode code="4" codeSystem="2.16.840.1.113883.2.60.3.5.56"/>
         </encompassingEncounter>
     </componentOf>
     
@@ -198,7 +198,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4040"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="08edb7c0-2111-43f2-a784-9a5fdfaa67f0"/>
-                                    <code code="409586006" codeSystem="2.16.840.1.113883.6.96" displayName="Complaint"/>
+                                    <code code="75322-8" codeSystem="2.16.840.1.113883.6.1" displayName="Complaint"/>
                                     <text>
                                         <reference value="#compl-1"/>
                                     </text>
@@ -229,16 +229,16 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4053"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="944cd73e-4361-4fca-929b-9a404b063651"/>
-                            <code code="168537006:363704007=66019005" codeSystem="2.16.840.1.113883.6.96" displayName="Plain radiography (procedure) : Procedure site (attribute) = Limb structure (body structure)"/>
+                            <code code="37637-6" codeSystem="2.16.840.1.113883.6.1" displayName="Extremity X-ray"/>
                             <text>
                                 <reference value="#proc-4"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501171650"/>
-                            <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
+                            <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
-                                    <code code="225728007" codeSystem="2.16.840.1.113883.6.96" displayName="Accident and Emergency department (environment)"/>
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
                                 </participantRole>
                             </participant>
                         </observation>
@@ -254,8 +254,7 @@
                     <title>Allergien und Unverträglichkeiten</title>
                     <text>
                         <list>
-                            <item ID="alg">Allergien: nein</item>
-                            <item ID="int">Unverträglichkeiten: nein</item>
+                            <item ID="alg">Allergien/Unverträglichkeiten: nein</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -276,18 +275,18 @@
                                     <statusCode code="completed"/>
                                     <!-- N/A - author/time records when this assertion was made -->
                                     <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="SUBJ">
-                                <observation classCode="OBS" moodCode="EVN" negationInd="true">
-                                    <templateId root="1.2.276.0.76.10.4066"/>
-                                    <id root="1.2.276.0.76.4.17.9814184919" extension="c9599ec1-6077-4f74-b58e-80c4148efbd8"/>
-                                    <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
-                                    <statusCode code="completed"/>
-                                    <!-- N/A - author/time records when this assertion was made -->
-                                    <effectiveTime nullFlavor="NA"/>
-                                    <value xsi:type="CV" code="281647001" displayName="Adverse reaction (disorder)" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+                                    <value xsi:type="CV" code="OINT" codeSystem="2.16.840.1.113883.5.4" displayName="adverse reaction upon exposure to an agent"/>
+                                    <participant typeCode="CSM">
+                                        <participantRole classCode="MANU">
+                                            <playingEntity classCode="MMAT">
+                                                <code code="ALGN" codeSystem="2.16.840.1.113883.2.60.3.5.52" displayName="Allergen">
+                                                    <originalText>
+                                                        <reference value="#alg-4"/>
+                                                    </originalText>
+                                                </code>
+                                            </playingEntity>
+                                        </participantRole>
+                                    </participant>
                                 </observation>
                             </entryRelationship>
                         </act>
@@ -319,7 +318,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>
                                     </text>
@@ -348,7 +347,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="INT">
                             <templateId root="1.2.276.0.76.10.4067"/>
-                            <code code="304566005:260686004=197712007" codeSystem="2.16.840.1.113883.6.96" displayName="Admission for treatment (procedure): Method (attribute) = Patient transfer, to another health care facility (procedure)"/>
+                            <code code="4" codeSystem="2.16.840.1.113883.2.60.3.5.53" displayName="extern: Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"/>
                             <text>
                                 <reference value="#refact"/>
                             </text>

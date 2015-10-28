@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.49"
+             name="Pupilsizequantitative"
+             displayName="Pupillenweite (quantitativ)"
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.49" identifierName="aktin-codesystem-49"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
+      <conceptList>
+                <concept code="D"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.49"
+                  displayName="weit"
+                  level="0"
+                  type="L"/>
+                <concept code="M"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.49"
+                  displayName="mittel"
+                  level="0"
+                  type="L"/>
+                <concept code="C"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.49"
+                  displayName="eng"
+                  level="0"
+                  type="L"/>
+                <exception code="UNK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Unbekannt"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

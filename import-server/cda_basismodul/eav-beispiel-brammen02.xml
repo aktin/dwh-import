@@ -1,0 +1,235 @@
+<?xml version="1.0" ?><eav-data xmlns="http://sekmi.de/histream/ns/eav-data" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <meta>
+      <etl-strategy>replace-visit</etl-strategy>
+      <source timestamp="2015-07-09T17:19:00" id="1.2.276.0.76.4.17.9814184919:brammen2"></source>
+   </meta>
+   <patient id="1.2.276.0.76.4.8:brammen2">
+      <given-name>information privacy</given-name>
+      <surname>information privacy</surname>
+      <gender>male</gender>
+      <birthdate>1995-08-03</birthdate>
+      <encounter id="1.2.276.0.76.4.17.9814184919:brammen2">
+         <start>2015-07-08T08:01:00</start>
+         <end>2015-07-08T09:30:00</end>
+         <location>1.2.276.0.76.4.17:4738758478</location>
+         <facts><!--772 Patientenadresse (PLZ)-->
+            <fact concept="AKTIN:PLZ">
+               <value xsi:type="numeric">45678</value>
+            </fact>
+            <!--37 Zeitpunkt erster Arztkontakt-->
+            <fact concept="AKTIN:ZeitpunktErsterArztkontakt" start="2015-07-08T08:01:00">
+               <modifier code="timeLow">
+                  <value xsi:type="string">20150708080100</value>
+               </modifier>
+            </fact>
+            <!--38 Zeitpunkt Therapiebeginn-->
+            <fact concept="AKTIN:ZeitpunktTherapiebeginn" start="2015-07-08T08:05:00">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708080500</value>
+               </modifier>
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">20150708093000</value>
+               </modifier>
+            </fact>
+            <!--882 Uhrzeit Verlegung / Entlassung-->
+            <fact concept="AKTIN:TRANSFERZeitpunktVerlegung" start="2015-07-08T09:30:00">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708080100</value>
+               </modifier>
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">20150708093000</value>
+               </modifier>
+            </fact>
+            <!--57/58 Aufnahmedatum/uhrzeit-->
+            <fact concept="LOINC:52455-3" start="2015-07-08T08:01:00">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708080100</value>
+               </modifier>
+               <modifier code="effectiveTimeHigh">
+                  <value xsi:type="string">20150708093000</value>
+               </modifier>
+            </fact>
+            <!--884 Transportmittel-->
+            <fact concept="AKTIN:TRANSPORT:4"></fact>
+            <!--22 Zuweisung-->
+            <fact concept="AKTIN:REFERRAL:NA"></fact>
+            <!--805 Beschwerden bei Vorstellung (CEDIS)-->
+            <fact concept="CEDIS30:802">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">201507080714</value>
+               </modifier>
+            </fact>
+            <!--5 Schwangerschaftsstatus-->
+            <fact concept="AKTIN:PREGNANCY:0"></fact>
+            <!--114 Rankin Scale (Konzeptcode)-->
+            <fact concept="RANKIN:0"></fact>
+            <!--114 Rankin Scale (numerisch)-->
+            <fact concept="LOINC:75859-9">
+               <value unit="{score}" xsi:type="numeric">0</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">20150708</value>
+               </modifier>
+            </fact>
+            <!--9 Atemfrequenz-->
+            <fact concept="LOINC:9279-1">
+               <value unit="/min" xsi:type="numeric">14</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+            </fact>
+            <!--10 Sauerstoffsättigung-->
+            <fact concept="LOINC:20564-1">
+               <value unit="%" xsi:type="numeric">98.0</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+            </fact>
+            <!--11 Systolischer Blutdruck-->
+            <fact concept="LOINC:8480-6">
+               <value unit="mm[Hg]" xsi:type="numeric">105</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+            </fact>
+            <!--12 Herzfrequenz-->
+            <fact concept="LOINC:8867-4">
+               <value unit="/min" xsi:type="numeric">95</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+            </fact>
+            <!--17 Glasgow Coma Scale(-->
+            <fact concept="LOINC:9269-2">
+               <value unit="{score}" xsi:type="numeric">3</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+            </fact>
+            <!--13 Glasgow Coma Scale Eye Opening(-->
+            <fact concept="LOINC:9267-6">
+               <value unit="{score}" xsi:type="numeric">1</value>
+            </fact>
+            <!--14 Glasgow Coma Scale Verbal Response(-->
+            <fact concept="LOINC:9270-0">
+               <value unit="{score}" xsi:type="numeric">1</value>
+            </fact>
+            <!--16 Glasgow Coma Scale Motor Response(-->
+            <fact concept="LOINC:9268-4">
+               <value unit="{score}" xsi:type="numeric">1</value>
+            </fact>
+            <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+            <fact concept="AKTIN:SPPL:C">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+               <modifier code="L"></modifier>
+            </fact>
+            <!--19 Pupillenreaktion-->
+            <fact concept="AKTIN:RPPL:D">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+               <modifier code="L"></modifier>
+            </fact>
+            <!--18 Pupillenweite bei Aufnahme in der Notaufnahme-->
+            <fact concept="AKTIN:SPPL:D">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+               <modifier code="R"></modifier>
+            </fact>
+            <!--19 Pupillenreaktion-->
+            <fact concept="AKTIN:RPPL:A">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+               <modifier code="R"></modifier>
+            </fact>
+            <!--20 Körperkerntemperatur-->
+            <fact concept="LOINC:8329-5">
+               <value unit="Cel" xsi:type="numeric">35.5</value>
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080802</value>
+               </modifier>
+            </fact>
+            <!--Head CT-->
+            <fact concept="LOINC:24725-4" start="2015-07-08T08:25">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080825</value>
+               </modifier>
+               <modifier code="PB"></modifier>
+            </fact>
+            <!--CT whole body-->
+            <fact concept="LOINC:46305-9" start="2015-07-08T08:30">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080830</value>
+               </modifier>
+               <modifier code="PB"></modifier>
+            </fact>
+            <!--Laboratory studies-->
+            <fact concept="LOINC:26436-6" start="2015-07-08T08:20">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080820</value>
+               </modifier>
+               <modifier code="PB"></modifier>
+            </fact>
+            <!--Blood gas studies-->
+            <fact concept="LOINC:18767-4" start="2015-07-08T08:20">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080820</value>
+               </modifier>
+               <modifier code="PB"></modifier>
+            </fact>
+            <!--Unspecified body region US-->
+            <fact concept="LOINC:25061-3" start="2015-07-08T08:10">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080810</value>
+               </modifier>
+               <modifier code="PB"></modifier>
+            </fact>
+            <!--Heart US-->
+            <fact concept="LOINC:42148-7" start="2015-07-08T08:10">
+               <modifier code="effectiveTime">
+                  <value xsi:type="string">201507080810</value>
+               </modifier>
+               <modifier code="OPB"></modifier>
+            </fact>
+            <!--31/32/33/34 Allergien-->
+            <fact concept="AKTIN:ALLERGY:ALGN"></fact>
+            <fact concept="AKTIN:ALLERGY:A07AA:NEG"></fact>
+            <fact concept="AKTIN:ALLERGY:V08:NEG"></fact>
+            <fact concept="AKTIN:ALLERGY:OTH"></fact>
+            <!--7 Isolation / 8 Isolation Begründung-->
+            <fact concept="AKTIN:ISOLATION:ISO:NEG"></fact>
+            <!--44 Abschlussdiagnosen-->
+            <fact concept="ICD10GM:S06.79!">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708</value>
+               </modifier>
+            </fact>
+            <fact concept="ICD10GM:I61.9">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708</value>
+               </modifier>
+            </fact>
+            <fact concept="ICD10GM:V99!">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708</value>
+               </modifier>
+            </fact>
+            <fact concept="ICD10GM:S22.40">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708</value>
+               </modifier>
+            </fact>
+            <fact concept="ICD10GM:S27.1">
+               <modifier code="effectiveTimeLow">
+                  <value xsi:type="string">20150708</value>
+               </modifier>
+            </fact>
+            <!--804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung-->
+            <fact concept="MTS:1"></fact>
+         </facts>
+      </encounter>
+   </patient>
+</eav-data>

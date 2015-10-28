@@ -34,7 +34,7 @@
     nach Hause entlassen.
     
 -->
-<?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -217,7 +217,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4040"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="635c62f9-f99d-4d3f-ac4e-8921a7cba070"/>
-                                    <code code="409586006" codeSystem="2.16.840.1.113883.6.96" displayName="Complaint"/>
+                                    <code code="75322-8" codeSystem="2.16.840.1.113883.6.1" displayName="Complaint"/>
                                     <text>
                                         <reference value="#compl-1"/>
                                     </text>
@@ -249,7 +249,7 @@
                             <templateId root="1.2.276.0.76.10.4043"/>
                             <code code="11449-6" codeSystem="2.16.840.1.113883.6.1" displayName="Pregnancy status"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="60001007" codeSystem="2.16.840.1.113883.6.96" displayName="Not pregnant (finding)"/>
+                            <value xsi:type="CV" code="0" codeSystem="2.16.840.1.113883.2.60.3.5.46" displayName="Patient nicht schwanger"/>
                         </observation>
                     </entry>
                 </section>
@@ -371,7 +371,7 @@
                         <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="4eae6b41-738d-4410-93db-a2f64e5c2195"/>
-                            <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
+                            <code code="ISO" codeSystem="2.16.840.1.113883.2.60.3.5.54" displayName="Isolation"/>
                             <text>
                                 <reference value="#iso"/>
                             </text>
@@ -380,9 +380,9 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4069"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="bf17356b-858e-41b0-8a6d-c58213376e4a"/>
-                                    <code code="55607006" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <code code="44100-6" codeSystem="2.16.840.1.113883.6.1" displayName="Medical Problem"/>
                                     <statusCode code="completed"/>
-                                    <value xsi:type="CV" code="25374005" codeSystem="2.16.840.1.113883.6.96"/>
+                                    <value xsi:type="CV" code="A09.9" codeSystem="2.16.840.1.113883.6.3"/>
                                 </observation>
                             </entryRelationship>
                         </procedure>
@@ -414,7 +414,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="c51f49d7-ed1f-42b4-99ca-001751da1946"/>
-                                    <code code="282291009" codeSystem="2.16.840.1.113883.6.96" displayName="Diagnosis"/>
+                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>
                                     </text>

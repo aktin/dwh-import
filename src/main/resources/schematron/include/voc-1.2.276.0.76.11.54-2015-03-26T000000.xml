@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.54"
+             name="Isolationproceduretypes"
+             displayName="Isolation procedure types"
+             effectiveDate="2015-03-26T00:00:00"
+             statusCode="deprecated">
+      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <conceptList>
+                <concept code="170497006"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Isolation because of infection (procedure)"
+                  level="0"
+                  type="L"/>
+                <concept code="275829005"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Reverse isolation (procedure)"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

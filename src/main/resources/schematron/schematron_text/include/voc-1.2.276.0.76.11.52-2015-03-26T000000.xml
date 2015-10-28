@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.52"
+             name="Allergyintolerancesubstances"
+             displayName="Allergy / intolerance substances"
+             effectiveDate="2015-03-26T00:00:00"
+             statusCode="deprecated">
+      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
+      <conceptList>
+                <concept code="250428009"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Antimicrobial substance (substance)"
+                  level="0"
+                  type="L"/>
+                <concept code="385420005"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Contrast media (substance)"
+                  level="0"
+                  type="L"/>
+                <concept code="406455002"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Allergen class (substance)"
+                  level="0"
+                  type="L"/>
+                <exception code="OTH"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Andere"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>
