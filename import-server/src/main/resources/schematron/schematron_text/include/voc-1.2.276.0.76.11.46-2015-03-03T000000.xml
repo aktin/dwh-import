@@ -5,7 +5,7 @@
              name="Pregnancystatus"
              displayName="Schwangerschafts-Status"
              effectiveDate="2015-03-03T00:00:00"
-             statusCode="draft">
+             statusCode="deprecated">
       <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>

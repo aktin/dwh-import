@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
-import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -41,6 +40,7 @@ public class RestServer implements Provider<Source>{
 	static final String MODE_RESULT = "result";
 	static final String MODE_INVERSE = "inverse";
 	static final String MODE_STEP1 = "step1";
+	static final String MODE_TRUNCATE = "truncate";
 	
 	
 	private static final Logger log = Logger.getLogger(RestServer.class.getName());
@@ -96,6 +96,9 @@ public class RestServer implements Provider<Source>{
         if (lower_query.equals ("output=" + MODE_STEP1)) {
         	mode = MODE_STEP1;
         }
+        if (lower_query.equals ("output=" + MODE_TRUNCATE)) {
+        	mode = MODE_TRUNCATE;
+        }
 
         log.info("method="+httpMethod+", path="+path+", query="+query+", mode="+mode);
         if( request == null ){
@@ -128,7 +131,7 @@ public class RestServer implements Provider<Source>{
 			if (mode.equals(MODE_INVERSE) || mode.equals(MODE_STEP1)) {
 	        	XSLFile = new File("src/main/resources/eav-cda-step1.xsl");
 	        }
-			if (mode.equals(MODE_DWH)) {
+			if (mode.equals(MODE_DWH) ||  mode.equals(MODE_TRUNCATE)) {
 	        	XSLFile = null;
 	        }
 			if (mode.equals(MODE_SVRL) || mode.equals(MODE_ERROR_ONLY) || mode.equals(MODE_RESULT) ) {
@@ -142,7 +145,7 @@ public class RestServer implements Provider<Source>{
 			Source schemaXSLT = null;
 			Transformer transformer1;
 			
-			if (mode.equals(MODE_DWH)) {
+			if (XSLFile == null) {
 				transformer1 = factory.newTransformer();  //Identity Transformer
 			}
 			else {
@@ -183,6 +186,9 @@ public class RestServer implements Provider<Source>{
 			if (mode.equals(MODE_INVERSE)) {
 	        	XSLFile2 = new File("src/main/resources/eav-cda-step2.xsl");
 	        }
+			if (mode.equals(MODE_TRUNCATE)) {
+	        	XSLFile2 = new File("src/main/resources/cda-truncate.xsl");
+	        }
 	
 			if (XSLFile2 != null)
 				schemaXSLT = new StreamSource(XSLFile2);
@@ -204,7 +210,6 @@ public class RestServer implements Provider<Source>{
 			//log.info("Step2 Transformation...");
 			transformer2.transform(input, output);
 			//log.info("...done");
-			
 					
 			return w.toString();
 			//*/

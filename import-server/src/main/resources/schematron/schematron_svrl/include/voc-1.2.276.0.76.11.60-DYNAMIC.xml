@@ -4,20 +4,19 @@
              id="1.2.276.0.76.11.60"
              name="Multiresistantorganisms"
              displayName="Multiresistant Organisms"
-             effectiveDate="2015-08-21T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
       <sourceCodeSystem id="1.2.276.0.76.5.441" identifierName="Signifikante Pathogene"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="409792002"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Antimicrobial resistant organism (organism)"
+                <concept code="AMRO"
+                  codeSystem="1.2.276.0.76.5.441"
+                  displayName="Multiresistenter Keim"
                   level="0"
                   type="L"/>
-                <concept code="115329001"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Methicillin resistant Staphylococcus aureus (organism)"
+                <concept code="MRSA"
+                  codeSystem="1.2.276.0.76.5.441"
+                  displayName="MRSA"
                   level="1"
                   type="L"/>
                 <concept code="3MRGN"
@@ -30,9 +29,9 @@
                   displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind"
                   level="1"
                   type="L"/>
-                <concept code="113727004"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Vancomycin resistant enterococcus (organism)"
+                <concept code="VRE"
+                  codeSystem="1.2.276.0.76.5.441"
+                  displayName="VRE"
                   level="1"
                   type="L"/>
                 <exception code="OTH"

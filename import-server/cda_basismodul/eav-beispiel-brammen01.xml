@@ -11,7 +11,7 @@
       <encounter id="1.2.276.0.76.4.17.9814184919:brammen1">
          <start>2015-07-08T16:51</start>
          <end>2015-07-08T20:45</end>
-         <location>1.2.276.0.76.4.17:4738758478</location>
+         <location>1.2.276.0.76.4.17:</location>
          <facts><!--772 Patientenadresse (PLZ)-->
             <fact concept="AKTIN:PLZ">
                <value xsi:type="numeric">45678</value>
@@ -32,7 +32,7 @@
                </modifier>
             </fact>
             <!--882 Uhrzeit Verlegung / Entlassung-->
-            <fact concept="AKTIN:TRANSFERZeitpunktVerlegung" start="2015-07-08T20:45">
+            <fact concept="AKTIN:TRANSFER:ZeitpunktVerlegung" start="2015-07-08T20:45">
                <modifier code="effectiveTimeLow">
                   <value xsi:type="string">201507081651</value>
                </modifier>
@@ -211,6 +211,8 @@
             </fact>
             <!--804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung-->
             <fact concept="MTS:1"></fact>
+            <!--596 Patient verlegt / entlassen nach-->
+            <fact concept="AKTIN:TRANSFER:3"></fact>
          </facts>
       </encounter>
    </patient>

@@ -32,7 +32,7 @@
                </modifier>
             </fact>
             <!--882 Uhrzeit Verlegung / Entlassung-->
-            <fact concept="AKTIN:TRANSFERZeitpunktVerlegung" start="2015-01-17T17:35">
+            <fact concept="AKTIN:TRANSFER:ZeitpunktVerlegung" start="2015-01-17T17:35">
                <modifier code="effectiveTimeLow">
                   <value xsi:type="string">201501171603</value>
                </modifier>

@@ -109,7 +109,7 @@
 
    <!-- includes -->
    <!-- VitalSignsSection -->
-   <include href="include/1.2.276.0.76.10.3044-2014-09-16T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.3044-2015-09-18T000000.sch"/>
    <!-- Transportmethod -->
    <include href="include/1.2.276.0.76.10.3045-2015-01-10T000000.sch"/>
    <!-- Typeofreferralsource -->
@@ -151,67 +151,67 @@
    <!-- Transportmethod -->
    <include href="include/1.2.276.0.76.10.4037-2015-03-03T000000.sch"/>
    <!-- Referralfrom -->
-   <include href="include/1.2.276.0.76.10.4038-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4038-2015-09-18T000000.sch"/>
    <!-- Problemconcernactcedis -->
    <include href="include/1.2.276.0.76.10.4039-2015-03-03T000000.sch"/>
    <!-- Problemobservationcedis -->
-   <include href="include/1.2.276.0.76.10.4040-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4040-2015-09-18T000000.sch"/>
    <!-- Acuityobservation -->
-   <include href="include/1.2.276.0.76.10.4042-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4042-2015-09-18T000000.sch"/>
    <!-- Pregnancystatus -->
    <include href="include/1.2.276.0.76.10.4043-2015-03-03T000000.sch"/>
    <!-- Clostridiumtetaniimmunization -->
-   <include href="include/1.2.276.0.76.10.4044-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4044-2015-09-18T000000.sch"/>
    <!-- Modifiedrankinscale -->
    <include href="include/1.2.276.0.76.10.4045-2015-03-03T000000.sch"/>
    <!-- Pupilsize -->
-   <include href="include/1.2.276.0.76.10.4046-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4046-2015-09-18T000000.sch"/>
    <!-- Pupilreaction -->
-   <include href="include/1.2.276.0.76.10.4047-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4047-2015-09-18T000000.sch"/>
    <!-- Problemconcernacteddiagnoses -->
    <include href="include/1.2.276.0.76.10.4048-2015-03-03T000000.sch"/>
    <!-- Problemobservationeddiagnosis -->
-   <include href="include/1.2.276.0.76.10.4049-2015-03-03T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4049-2015-09-18T000000.sch"/>
    <!-- Plainchestxray -->
-   <include href="include/1.2.276.0.76.10.4050-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4050-2015-09-18T000000.sch"/>
    <!-- Radiographyofspine -->
-   <include href="include/1.2.276.0.76.10.4051-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4051-2015-09-18T000000.sch"/>
    <!-- Pelvisxray -->
-   <include href="include/1.2.276.0.76.10.4052-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4052-2015-09-18T000000.sch"/>
    <!-- Plainradiographylimbstructure -->
-   <include href="include/1.2.276.0.76.10.4053-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4053-2015-09-18T000000.sch"/>
    <!-- Plainradiography -->
-   <include href="include/1.2.276.0.76.10.4054-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4054-2015-09-18T000000.sch"/>
    <!-- Computedtomographyofentirehead -->
-   <include href="include/1.2.276.0.76.10.4055-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4055-2015-09-18T000000.sch"/>
    <!-- Computedtomographyscanwholebody -->
-   <include href="include/1.2.276.0.76.10.4056-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4056-2015-09-18T000000.sch"/>
    <!-- Laboratorytest -->
-   <include href="include/1.2.276.0.76.10.4057-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4057-2015-09-18T000000.sch"/>
    <!-- Magneticresonanceimaging -->
-   <include href="include/1.2.276.0.76.10.4058-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4058-2015-09-18T000000.sch"/>
    <!-- Bloodgasanalysis -->
-   <include href="include/1.2.276.0.76.10.4059-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4059-2015-09-18T000000.sch"/>
    <!-- Urinalysisreagentstripwithoutmicroscopy -->
-   <include href="include/1.2.276.0.76.10.4060-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4060-2015-09-18T000000.sch"/>
    <!-- Twelveleadelectrocardiogram -->
-   <include href="include/1.2.276.0.76.10.4061-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4061-2015-09-18T000000.sch"/>
    <!-- Diagnosticultrasonography -->
-   <include href="include/1.2.276.0.76.10.4062-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4062-2015-09-18T000000.sch"/>
    <!-- Computerizedaxialtomography -->
-   <include href="include/1.2.276.0.76.10.4063-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4063-2015-09-18T000000.sch"/>
    <!-- Echocardiography -->
-   <include href="include/1.2.276.0.76.10.4064-2015-03-27T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4064-2015-09-18T000000.sch"/>
    <!-- Allergyconcernact -->
    <include href="include/1.2.276.0.76.10.4065-2015-03-27T000000.sch"/>
    <!-- Allergyintoleranceobservation -->
-   <include href="include/1.2.276.0.76.10.4066-2014-06-09T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4066-2015-09-18T000000.sch"/>
    <!-- Referralto -->
-   <include href="include/1.2.276.0.76.10.4067-2015-03-30T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4067-2015-09-18T000000.sch"/>
    <!-- Isolationprocedure -->
-   <include href="include/1.2.276.0.76.10.4068-2015-03-30T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4068-2015-09-18T000000.sch"/>
    <!-- Isolationindication -->
-   <include href="include/1.2.276.0.76.10.4069-2014-06-09T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4069-2015-09-19T000000.sch"/>
    <!-- Additionalexternalocuments -->
    <include href="include/1.2.276.0.76.10.4070-2015-03-30T000000.sch"/>
    <!-- ExternalDocumentReference -->
@@ -219,6 +219,6 @@
    <!-- ProblemconcernactMDRO -->
    <include href="include/1.2.276.0.76.10.4072-2015-06-01T000000.sch"/>
    <!-- ProblemobservationMDRO -->
-   <include href="include/1.2.276.0.76.10.4073-2015-06-01T000000.sch"/>
+   <include href="include/1.2.276.0.76.10.4073-2015-09-18T000000.sch"/>
 
 </schema>

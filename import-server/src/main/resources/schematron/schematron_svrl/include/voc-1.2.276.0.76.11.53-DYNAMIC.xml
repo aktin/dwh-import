@@ -4,38 +4,38 @@
              id="1.2.276.0.76.11.53"
              name="Referralactions"
              displayName="Referral actions"
-             effectiveDate="2015-08-21T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.53" identifierName="aktin-codesystem-53"/>
       <conceptList>
-                <concept code="304566005:260686004=37729005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Admission for treatment (procedure) : Method (attribute) = Patient transfer, in-hospital (procedure)"
+                <concept code="1"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.53"
+                  displayName="intern: OP / Intervention (z.B. Herzkatheter, Endoskopie, ...)"
                   level="0"
                   type="L"/>
-                <concept code="304566005:260686004=19712007"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Admission for treatment (procedure): Method (attribute) = Patient transfer, to another health care facility (procedure)"
+                <concept code="2"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.53"
+                  displayName="extern: OP / Intervention (z.B. Herzkatheter, Endoskopie, ...)"
                   level="0"
                   type="L"/>
-                <concept code="76464004:260686004=37729005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Hospital admission, for observation (procedure) : Method (attribute) = Patient transfer, in-hospital (procedure)"
+                <concept code="3"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.53"
+                  displayName="intern: Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"
                   level="0"
                   type="L"/>
-                <concept code="76464004:260686004=19712007"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Hospital admission, for observation (procedure) : Method (attribute) = Patient transfer, to another health care facility (procedure)"
+                <concept code="4"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.53"
+                  displayName="extern: Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"
                   level="0"
                   type="L"/>
-                <concept code="305342007:260686004=37729005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Admission to ward (procedure) : Method (attribute) = Patient transfer, in-hospital (procedure)"
+                <concept code="5"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.53"
+                  displayName="intern: Normalstation"
                   level="0"
                   type="L"/>
-                <concept code="305342007:260686004=19712007"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Admission to ward (procedure) : Method (attribute) = Patient transfer, to another health care facility (procedure)"
+                <concept code="6"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.53"
+                  displayName="extern: Normalstation"
                   level="0"
                   type="L"/>
             </conceptList>

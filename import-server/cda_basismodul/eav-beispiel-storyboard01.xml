@@ -11,7 +11,7 @@
       <encounter id="1.2.276.0.76.4.17.9814184919:0ff0f2d6-ddc2-4300-a5">
          <start>2015-01-17T16:03</start>
          <end>2015-01-17T17:35</end>
-         <location>1.2.276.0.76.4.17:9814184919</location>
+         <location>1.2.276.0.76.4.17:</location>
          <facts><!--772 Patientenadresse (PLZ)-->
             <fact concept="AKTIN:PLZ">
                <value xsi:type="numeric">80636</value>

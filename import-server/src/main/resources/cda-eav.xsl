@@ -54,7 +54,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
     <xsl:variable name="Isolation-Prefix">AKTIN:ISOLATION:</xsl:variable> 
     
     <!-- Concept Code Prefix for Transfer Codes -->
-    <xsl:variable name="Verlegung-Prefix">AKTIN:TRANSFER</xsl:variable>
+    <xsl:variable name="Verlegung-Prefix">AKTIN:TRANSFER:</xsl:variable>
     
     <!-- Concept Code Prefix for Discharge Codes -->
     <xsl:variable name="Entlassung-Prefix">AKTIN:DISCHARGE:</xsl:variable> 
@@ -141,7 +141,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
     <xsl:template match="cda:representedCustodianOrganization">
         <!-- <xsl:comment>1/2	ID des Krankenhauses/ der Notaufnahme</xsl:comment> -->
         <!-- <xsl:value-of select="./cda:id/@root"/>:<xsl:value-of select="./cda:id/@extension"/> -->
-        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extension))"/>  <!-- #todo multiple IDs possible -->
+        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extensiona))"/>  <!-- #todo multiple IDs possible -->
     </xsl:template>
     
     <!-- 2	ID der Notaufnahme
@@ -709,6 +709,12 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
             <xsl:call-template name="templateGetConcept"/>
         </fact>
     </xsl:template>
+    <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.10.4067']">
+        <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConcept"/>
+        </fact>
+    </xsl:template>
 
     <!-- Diagnostik 25ff @negationInd -->
     <!-- Diagnostik 25ff opB -->
@@ -794,6 +800,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                     <xsl:choose>
                         <xsl:when test="./@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>  
                         <xsl:when test="./@codeSystem='2.16.840.1.113883.2.60.3.5.56'"><xsl:value-of select="$Entlassung-Prefix"/></xsl:when> 
+                        <xsl:when test="./@codeSystem='2.16.840.1.113883.2.60.3.5.53'"><xsl:value-of select="$Verlegung-Prefix"/></xsl:when>                        
                     </xsl:choose>
                     <xsl:value-of select="./@code"/>
                 </xsl:when>

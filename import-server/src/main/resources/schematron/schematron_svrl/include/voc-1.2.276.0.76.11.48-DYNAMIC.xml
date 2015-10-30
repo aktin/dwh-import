@@ -4,19 +4,18 @@
              id="1.2.276.0.76.11.48"
              name="Eyetargetsite"
              displayName="Auge links/rechts"
-             effectiveDate="2015-08-21T00:00:00"
-             statusCode="draft">
-      <desc language="en-US">Eye targetSite code, drawn from IHE Eye Care Technical Framework</desc>
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.48" identifierName="aktin-codesystem-48"/>
       <conceptList>
-                <concept code="362503005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Entire left eye (body structure)"
+                <concept code="L"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.48"
+                  displayName="Auge links"
                   level="0"
                   type="L"/>
-                <concept code="362502000"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Entire right eye (body structure)"
+                <concept code="R"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.48"
+                  displayName="Auge rechts"
                   level="0"
                   type="L"/>
             </conceptList>

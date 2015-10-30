@@ -4,24 +4,24 @@
              id="1.2.276.0.76.11.51"
              name="Findingsituation"
              displayName="Finding situation"
-             effectiveDate="2015-05-19T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.51" identifierName="aktin-codesystem-51"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="373573001"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Clinical finding present (situation)"
+                <concept code="PB"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.51"
+                  displayName="path. Befund"
                   level="0"
                   type="L"/>
-                <concept code="373572006"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Clinical finding absent (situation)"
+                <concept code="OPB"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.51"
+                  displayName="ohne path. Befund"
                   level="0"
                   type="L"/>
-                <concept code="444433005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Suspected clinical finding (situation)"
+                <concept code="SUSP"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.51"
+                  displayName="Verdacht"
                   level="0"
                   type="L"/>
                 <exception code="UNK"

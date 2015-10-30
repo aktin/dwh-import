@@ -24,7 +24,8 @@
 
 <!-- MAIN Template -->   
     
-    <!-- #ToDo z.T. sind noch "optionale" TypeCodes in den 1..M Templates . Entweder mit abbilden oder einheitliches Vorgehen (immer weglassen oder immer hinschreiben - inhaltlich egal. Evtl. ändern sich dadurch die Dokumente -> Strip-Transformation für Vergleich?! --> 
+    <!-- #ToDo z.T. sind noch "optionale" TypeCodes in den 1..M Templates . Entweder mit abbilden oder einheitliches Vorgehen (immer weglassen oder immer hinschreiben - inhaltlich egal. Evtl. ändern sich dadurch die Dokumente -> Strip-Transformation für Vergleich?! -->
+    <!-- #ToDo Konstruktion aus @value/@code immer einheitlich? ggf. in Step1 korrigieren -->
 
     <xsl:template match="/">
         
@@ -39,7 +40,7 @@
             <id root="1.2.276.0.76.4.17.9814184919" extension="14025fda-3f25-4c64-8883-4f7e6cabc0b6"/> -->
             <xsl:call-template name="ClinicalDocument.id"/>
             <!-- Fixer Dokumententype-Code -->
-            <code code="34878-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Note"/>
+            <code code="68552-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Admission evaluation note"/>
             <!-- <title>CDATitle</title> -->
             <xsl:call-template name="ClinicalDocument.title"/>
             <!-- Datum und Zeit der Erstellung 
@@ -82,19 +83,17 @@
             <!-- Aufnahme -->
             <documentationOf typeCode="DOC">
                 <serviceEvent classCode="ACT" moodCode="EVN">
-                    <effectiveTime>
-                        <!-- Aufnahmedatum/Uhrzeit --> 
-                        <xsl:call-template name="Zeitpunkt.Aufnahme"/>
-                        <!-- Zeitpunkt Übergabe/Entlassung #ToDo ACHTUNG soll an dieser Stelle entfallen, Template wird aktuell 2x verwendet-->
-                        <xsl:call-template name="Zeitpunkt.Entlassung"/>
-                    </effectiveTime>
+                    <!-- Start der Behandlung -->
+                    <!-- Zeitpunkt Übergabe/Entlassung -->
+                    <xsl:call-template name="templateSetTimeValues">
+                        <xsl:with-param name="templateId">AKTIN:ZeitpunktTherapiebeginn</xsl:with-param>
+                    </xsl:call-template>
                     <performer typeCode="PRF">
-                        <time>
-                            <!-- Begin des Arztkontaktes -->
-                            <xsl:call-template name="Zeitpunkt.Arztkontakt"/>
-                            <!-- Ende des Arztkontaktes #ToDo Prüfen ob es entfernt wurde, ggf. NullFlavor anpassen -->
-                            <high nullFlavor="NA"/>   
-                        </time>
+                        <!-- Begin des Arztkontaktes -->
+                        <!-- Ende des Arztkontaktes -->
+                        <xsl:call-template name="templateSetTimeValues">
+                            <xsl:with-param name="templateId">AKTIN:ZeitpunktErsterArztkontakt</xsl:with-param>
+                        </xsl:call-template>
                         <assignedEntity classCode="ASSIGNED">
                             <id nullFlavor="NA"/>
                         </assignedEntity>
@@ -105,12 +104,11 @@
             <!-- Patientenkontakt -->
             <componentOf>
                 <encompassingEncounter classCode="ENC" moodCode="EVN">
-                    <effectiveTime>
                         <!-- Start Patientenkontakt -->
-                        <xsl:call-template name="Zeitpunkt.Therapiebeginn"/>
                         <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
-                        <xsl:call-template name="Zeitpunkt.Entlassung"/>
-                    </effectiveTime>
+                    <xsl:call-template name="templateSetTimeValues">
+                        <xsl:with-param name="templateId">LOINC:52455-3</xsl:with-param>
+                    </xsl:call-template>
                     <!-- Entlassung des Patienten mit Entlassungsgrund -->
                     <xsl:call-template name="dischargeDispositionCode"/>
                 </encompassingEncounter>
@@ -151,7 +149,7 @@
         <title>CDATitle</title> 
     </xsl:template>  
     
-    <!-- Datum und Zeit der Erstellung #ToDo -->
+    <!-- Datum und Zeit der Erstellung #ToDo Rückumrechnung Zeitpunkt oder fact hinzufügen-->
     <xsl:template name="ClinicalDocument.effectiveTime">
         <effectiveTime value="20150117163300"/>
     </xsl:template>  
@@ -166,9 +164,16 @@
         <languageCode code="de-DE"/>
     </xsl:template> 
     
-    <!-- Set-ID und Versionsnummer des Dokuments #ToDo  WICHTIG - Identifier "Fallnummer" -->
+    <!-- Set-ID und Versionsnummer des Dokuments #ToDo not safe vs. multiple ids-->
     <xsl:template name="ClinicalDocument.setId">
-        <setId root="1.2.276.0.76.4.17.9814184919" extension="0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf"/>
+        <setId>
+            <xsl:attribute name="root">
+                <xsl:value-of select="substring-before(/eav:eav-data/eav:patient/eav:encounter/@id,':')"></xsl:value-of>
+            </xsl:attribute>
+            <xsl:attribute name="extension">
+                <xsl:value-of select="substring-after(/eav:eav-data/eav:patient/eav:encounter/@id,':')"></xsl:value-of>
+            </xsl:attribute>
+        </setId>
         <versionNumber value="1"/>
     </xsl:template> 
 
@@ -196,9 +201,9 @@
                 <family>Kicker</family>
             </name>
             <!-- Geschlecht -->
-            <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+            <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>  <!-- #ToDo -->
             <!-- Geburtsdatum -->
-            <birthTime value="19960531"/>
+            <birthTime value="19960531"/> <!-- #ToDo -->
         </patient>
     </xsl:template> 
  
@@ -294,30 +299,10 @@
           </associatedEntity>
       </participant>
     </xsl:template> 
-    
-    <!-- Aufnahmedatum/Uhrzeit #ToDo -->   
-    <xsl:template name="Zeitpunkt.Aufnahme">
-        <low value="20150117160300"/>
-    </xsl:template> 
-    
-    <!-- Zeitpunkt Übergabe/Entlassung #ToDo -->
-    <xsl:template name="Zeitpunkt.Entlassung">
-        <high value="20150117173500"/>
-    </xsl:template> 
-
-    <!-- Begin des Arztkontaktes #ToDo -->
-    <xsl:template name="Zeitpunkt.Arztkontakt">
-        <low value="201501171632"/>
-    </xsl:template> 
-    
-    <!-- Start Therapiebeginn #ToDo -->
-    <xsl:template name="Zeitpunkt.Therapiebeginn ">
-        <low value="201501171603"/>
-    </xsl:template> 
-    
+ 
     <!-- Entlassung 0..1 R #ToDo   XXXXXXXXXXXXXX  foreach -->
     <xsl:template name="dischargeDispositionCode">
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.2036']"> 
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.2036']"> 
             <dischargeDispositionCode>
                   <xsl:call-template name="templateSetConceptValues">
                     <xsl:with-param name="templateId">1.2.276.0.76.10.2036</xsl:with-param>
@@ -341,7 +326,9 @@
                         <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
                         <!-- #TextElement --> 
                         <statusCode code="completed"/>
-                        <!-- #OptionalTime -->
+                        <xsl:call-template name="templateSetTimeValues">
+                            <xsl:with-param name="templateId">1.2.276.0.76.10.4037</xsl:with-param>
+                        </xsl:call-template>
                         <value xsi:type="CV">                         
                             <xsl:call-template name="templateSetConceptValues">
                                 <xsl:with-param name="templateId">1.2.276.0.76.10.4037</xsl:with-param>
@@ -410,11 +397,9 @@
                         <id root="b2e0e192-416a-4e9c-97ce-2f3e279826e9"/>
                         <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                         <statusCode code="active"/>
-                        <effectiveTime>
-                            <low value="201501171544"/>
-                            <!-- &Complete high value-->
-                            <high value="201501171554"/>
-                        </effectiveTime>
+                        <xsl:call-template name="templateSetTimeValues">
+                            <xsl:with-param name="templateId">1.2.276.0.76.10.4039</xsl:with-param>
+                        </xsl:call-template>
                         
                         <entryRelationship typeCode="SUBJ">
                             <observation classCode="OBS" moodCode="EVN">
@@ -425,9 +410,9 @@
                                     <reference value="#compl-1"/>
                                 </text>
                                 <statusCode code="completed"/>
-                                <effectiveTime>
-                                    <low value="201501171544"/>                                      
-                                </effectiveTime>
+                                <xsl:call-template name="templateSetTimeValues">
+                                    <xsl:with-param name="templateId">1.2.276.0.76.10.4040</xsl:with-param>
+                                </xsl:call-template>
                                 <value xsi:type="CE" code="557" codeSystem="1.2.276.0.76.5.439" displayName="Lower extremity injury"/>
                             </observation>
                         </entryRelationship>
@@ -463,7 +448,7 @@
     
     <!-- Component/Section VitalSigns mit 9 Entries-->
     <xsl:template name="Section.Vitalparameter">
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4030' or @templateId = '1.2.276.0.76.10.4031' or @templateId = '1.2.276.0.76.10.4032'or @templateId = '1.2.276.0.76.10.4033'or @templateId = '1.2.276.0.76.10.4034'or @templateId = '1.2.276.0.76.10.4035'or @templateId = '1.2.276.0.76.10.4036'] or @templateId = '1.2.276.0.76.10.4046' or @templateId = '1.2.276.0.76.10.4047'"> 
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4030' or @templateId = '1.2.276.0.76.10.4031' or @templateId = '1.2.276.0.76.10.4032'or @templateId = '1.2.276.0.76.10.4033'or @templateId = '1.2.276.0.76.10.4034'or @templateId = '1.2.276.0.76.10.4035'or @templateId = '1.2.276.0.76.10.4036'] or @templateId = '1.2.276.0.76.10.4046' or @templateId = '1.2.276.0.76.10.4047'"> 
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- VitalSigns -->
                 <section classCode="DOCSECT">
@@ -472,7 +457,7 @@
                     <!-- #TextElement MANDATORY
                     <title>Vitalparameter</title>  
                     <text>Vital signs</text> -->
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4030']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4030']">
                         <entry typeCode="COMP" contextConductionInd="true">
                             <observation classCode="OBS" moodCode="EVN">
                                 <templateId root="1.2.276.0.76.10.4030"/>
@@ -490,7 +475,7 @@
                             </observation>
                         </entry>
                     </xsl:if>
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4031']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4031']">
                         <entry typeCode="COMP" contextConductionInd="true">
                             <observation classCode="OBS" moodCode="EVN">
                                 <templateId root="1.2.276.0.76.10.4031"/>
@@ -508,7 +493,7 @@
                             </observation>
                         </entry>
                     </xsl:if>
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4032']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4032']">
                         <entry typeCode="COMP" contextConductionInd="true">
                             <observation classCode="OBS" moodCode="EVN">
                                 <templateId root="1.2.276.0.76.10.4032"/>
@@ -526,7 +511,7 @@
                             </observation>
                         </entry>
                     </xsl:if>
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4033']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4033']">
                         <entry typeCode="COMP" contextConductionInd="true">                    
                             <observation classCode="OBS" moodCode="EVN">
                                 <templateId root="1.2.276.0.76.10.4033"/>
@@ -544,7 +529,7 @@
                             </observation>               
                         </entry>
                     </xsl:if>
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4034']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4034']">
                         <entry typeCode="COMP" contextConductionInd="true"> 
                             <observation classCode="OBS" moodCode="EVN">
                                 <templateId root="1.2.276.0.76.10.4034"/>
@@ -595,7 +580,7 @@
                             </observation>                    
                         </entry>
                     </xsl:if>
-                    <xsl:for-each select="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4046']"> 
+                    <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4046']"> 
                         <entry typeCode="COMP" contextConductionInd="true"> 
                             <observation classCode="OBS" moodCode="EVN">                        
                                 <templateId root="1.2.276.0.76.10.4046"/>
@@ -618,7 +603,7 @@
                             </observation>                    
                         </entry>   
                     </xsl:for-each>
-                    <xsl:for-each select="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4047']">
+                    <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4047']">
                         <entry typeCode="COMP" contextConductionInd="true"> 
                             <observation classCode="OBS" moodCode="EVN">                        
                                 <templateId root="1.2.276.0.76.10.4047"/>
@@ -641,7 +626,7 @@
                             </observation>                    
                         </entry> 
                     </xsl:for-each>          
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4035']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4035']">
                         <entry typeCode="COMP" contextConductionInd="true"> 
                             <observation classCode="OBS" moodCode="EVN">                        
                                 <templateId root="1.2.276.0.76.10.4035"/>
@@ -659,7 +644,7 @@
                             </observation>                    
                         </entry>   
                     </xsl:if>
-                    <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4036']">
+                    <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4036']">
                         <entry typeCode="COMP" contextConductionInd="true"> 
                             <observation classCode="OBS" moodCode="EVN">                        
                                 <templateId root="1.2.276.0.76.10.4036"/>
@@ -684,50 +669,82 @@
     
  
     <!-- Section Relevantdiagnostictestsorlaboratorydata -->    
-    <xsl:template name="Section.Diagnostik">             
-        <component typeCode="COMP" contextConductionInd="true">
-            <section classCode="DOCSECT">
-                <templateId root="1.2.276.0.76.10.3050"/>
-                <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Relevant diagnostic tests &amp;or laboratory data"/>
-                <title>Diagnostik</title>
-                <!-- #TextElement MANDATORY-->
-                <entry typeCode="COMP" contextConductionInd="true">
-                    <observation classCode="OBS" moodCode="EVN">
-                        <templateId root="1.2.276.0.76.10.4050"/>
-                        <id root="944cd73e-4361-4fca-929b-9a404b063651"/>
-                        <code code="399208008" codeSystem="2.16.840.1.113883.6.96" displayName="Plain chest X-ray (procedure)"/>
-                        <!-- #TextElement MANDATORY-->
-                        <statusCode code="completed"/>
-                        <xsl:call-template name="templateSetTimeValues">
-                            <xsl:with-param name="templateId">1.2.276.0.76.10.4050</xsl:with-param>
-                        </xsl:call-template>
-                        <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/>
-                        <participant typeCode="LOC">
-                            <participantRole classCode="SDLOC">
-                                <code>
-                                    <xsl:call-template name="templateSetConceptValues">
-                                        <xsl:with-param name="templateId">1.2.276.0.76.10.4050</xsl:with-param>
-                                    </xsl:call-template>    
-                                </code>
-                            </participantRole>
-                        </participant>
-                    </observation>
-                </entry>
-            </section>
-        </component>
+    <xsl:template name="Section.Diagnostik">         
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4050' or @templateId = '1.2.276.0.76.10.4051' or @templateId = '1.2.276.0.76.10.4052'or @templateId = '1.2.276.0.76.10.4053'or @templateId = '1.2.276.0.76.10.4054'or @templateId = '1.2.276.0.76.10.4055'or @templateId = '1.2.276.0.76.10.4056'] or @templateId = '1.2.276.0.76.10.4057' or @templateId = '1.2.276.0.76.10.4058' or @templateId = '1.2.276.0.76.10.4059' or @templateId = '1.2.276.0.76.10.4060' or @templateId = '1.2.276.0.76.10.4061' or @templateId = '1.2.276.0.76.10.4062' or @templateId = '1.2.276.0.76.10.4063' or @templateId = '1.2.276.0.76.10.4064'">
+            <component typeCode="COMP" contextConductionInd="true">      
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.10.3050"/>
+                    <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Relevant diagnostic tests &amp;or laboratory data"/>
+                    <title>Diagnostik</title>
+                    <!-- #TextElement MANDATORY-->
+                    <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact">
+                        <xsl:if test=".[@templateId = '1.2.276.0.76.10.4050' or @templateId = '1.2.276.0.76.10.4051' or @templateId = '1.2.276.0.76.10.4052'or @templateId = '1.2.276.0.76.10.4053'or @templateId = '1.2.276.0.76.10.4054'or @templateId = '1.2.276.0.76.10.4055'or @templateId = '1.2.276.0.76.10.4056'] or @templateId = '1.2.276.0.76.10.4057' or @templateId = '1.2.276.0.76.10.4058' or @templateId = '1.2.276.0.76.10.4059' or @templateId = '1.2.276.0.76.10.4060' or @templateId = '1.2.276.0.76.10.4061' or @templateId = '1.2.276.0.76.10.4062' or @templateId = '1.2.276.0.76.10.4063' or @templateId = '1.2.276.0.76.10.4064'">
+                            <entry typeCode="COMP" contextConductionInd="true">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <xsl:if test="./@negationInd">
+                                        <xsl:attribute name="negationInd">true</xsl:attribute>
+                                    </xsl:if>
+                                    <templateId>
+                                        <xsl:attribute name="root">
+                                            <xsl:value-of select="./@templateId"/>
+                                        </xsl:attribute>
+                                    </templateId>
+                                    <!-- <id root="944cd73e-4361-4fca-929b-9a404b063651"/> -->
+                                    <!-- <code code="399208008" codeSystem="2.16.840.1.113883.6.96" displayName="Plain chest X-ray (procedure)"/> -->
+                                    <code codeSystem="2.16.840.1.113883.6.1">
+                                        <xsl:attribute name="code">
+                                            <xsl:value-of select="./@code"/>
+                                        </xsl:attribute>
+                                    </code>
+                                    <!-- #TextElement MANDATORY-->
+                                    <statusCode code="completed"/>
+                                    <xsl:call-template name="templateSetTimeValues">
+                                        <xsl:with-param name="templateId"><xsl:value-of select="./@templateId"/></xsl:with-param>
+                                    </xsl:call-template>
+                                    <!-- <value xsi:type="CE" code="373572006" codeSystem="2.16.840.1.113883.6.96" displayName="Clinical finding absent (situation)"/> -->
+                                    <value xsi:type="CE">
+                                        <xsl:choose>
+                                            <xsl:when test="./@nullFlavor">
+                                                <xsl:attribute name="nullFlavor">
+                                                    <xsl:value-of select="./@nullFlavor"/>
+                                                </xsl:attribute>
+                                                <!-- <xsl:attribute name="codeSystem">2.16.840.1.113883.5.1008</xsl:attribute> no codeSystem for UNK! -->
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:attribute name="code">
+                                                    <xsl:value-of select="./@findingCode"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="codeSystem">2.16.840.1.113883.2.60.3.5.51</xsl:attribute>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </value>
+                                    <xsl:if test=".[@templateId = '1.2.276.0.76.10.4050' or @templateId = '1.2.276.0.76.10.4051' or @templateId = '1.2.276.0.76.10.4052'or @templateId = '1.2.276.0.76.10.4053'or @templateId = '1.2.276.0.76.10.4054'or @templateId = '1.2.276.0.76.10.4055'or @templateId = '1.2.276.0.76.10.4056'] or @templateId = '1.2.276.0.76.10.4057'">
+                                        <participant typeCode="LOC">
+                                            <participantRole classCode="SDLOC">
+                                                <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
+                                            </participantRole>  
+                                        </participant>
+                                    </xsl:if>
+                                </observation>
+                            </entry>
+                        </xsl:if>
+                    </xsl:for-each>
+                </section>
+            </component>
+        </xsl:if>
     </xsl:template> 
     
     
     <!-- Allergien, Unverträglichkeiten -->
     <xsl:template name="Section.Allergien">
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4066']">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4066']">
             <component typeCode="COMP" contextConductionInd="true">     
                 <section classCode="DOCSECT" moodCode="EVN">
                     <templateId root="1.2.276.0.76.10.3051"/>
                     <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Allergies &amp;or adverse reactions"/>
                     <title>Allergien und Unverträglichkeiten</title>
                     <!-- #TextElement MANDATORY-->
-                        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4066']">
+                        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4066']">
                          <entry typeCode="COMP">
                              <act classCode="ACT" moodCode="EVN">
                                  <templateId root="1.2.276.0.76.10.4065"/>
@@ -735,7 +752,7 @@
                                  <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>
                                  <statusCode code="active"/>
                                  <!-- #Zeitpunkt MANDATORY -->
-                                 <xsl:for-each select="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4066']"> 
+                                 <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4066']"> 
                                      <entryRelationship typeCode="SUBJ">
                                          <observation classCode="OBS" moodCode="EVN">                                             
                                              <xsl:if test="./@negationInd = 'true'">
@@ -774,24 +791,24 @@
     
     <!-- Component/Section Patientcarenarrative-->
     <xsl:template name="Section.Befunde"> <!-- #ToDo -->
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4068']">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4068']">
          <component typeCode="COMP" contextConductionInd="true">
              <section classCode="DOCSECT">
                  <templateId root="1.2.276.0.76.10.3054"/>
                  <code code="67781-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Summarization of encounter note"/>
                  <title>Befunde / Verlauf / durchgeführte Therapie</title>
                  <!-- #TextElement MANDATORY-->
-                 <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4068']">
+                 <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4068']">
                      <entry typeCode="COMP">
                          <procedure classCode="PROC" moodCode="EVN">
-                             <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4068' and @negationInd = 'true']">
+                             <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4068' and @negationInd = 'true']">
                                  <xsl:attribute name="negationInd">true</xsl:attribute>
                              </xsl:if>
                              <templateId root="1.2.276.0.76.10.4068"/>
                              <!-- #Id -->
                              <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
                              <statusCode code="completed"/>
-                             <xsl:for-each select="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4069']"> 
+                             <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4069']">  <!-- #todo does not work, reason now modifier -->
                                  <!-- Isolation Indication -->
                                  <entryRelationship typeCode="RSON">
                                      <observation classCode="OBS" moodCode="EVN">                                         
@@ -801,7 +818,7 @@
                                          <statusCode code="completed"/>
                                          <value>
                                              <xsl:call-template name="templateSetConceptValues">
-                                                 <xsl:with-param name="templateId">1.2.276.0.76.10.4069</xsl:with-param>
+                                                 <xsl:with-param name="templateId">1.2.276.0.76.10.4069</xsl:with-param> <!-- #todo does not work, reason now modifier -->
                                              </xsl:call-template>   
                                          </value>
                                      </observation>
@@ -819,7 +836,7 @@
     </xsl:template>
     
     <xsl:template name="Section.Ersteinschaetzung"> 
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4042']">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4042']">
             <component typeCode="COMP" contextConductionInd="true">
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.10.3049"/>
@@ -832,12 +849,6 @@
                             <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/> <!-- #ToDo Mandatory ID, to be removed or put into DWH Dataset-->
                             <code code="273887006" codeSystem="2.16.840.1.113883.6.96" displayName="Triage index (assessment scale)"/>
                             <statusCode code="completed"/>
-                            <!--
-                            <effectiveTime>
-                                <low value="201501171603"/>
-                                <high value="201501171608"/>
-                            </effectiveTime>
-                            -->
                             <xsl:call-template name="templateSetTimeValues">
                                 <xsl:with-param name="templateId">1.2.276.0.76.10.4042</xsl:with-param>
                             </xsl:call-template>
@@ -864,39 +875,39 @@
     <!-- Generic SetConceptValues Template -->  
     <xsl:template name="templateSetConceptValues">
         <xsl:param name="templateId" />
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@code[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier/@code[../@templateId = $templateId]">
             <xsl:attribute name="code">
-                <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@code[../@templateId = $templateId]"/>
+                <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@code[../@templateId = $templateId]"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@codeSystem[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@codeSystem[../@templateId = $templateId]">
         <xsl:attribute name="codeSystem">
-            <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@codeSystem[../@templateId = $templateId]"/>
+            <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@codeSystem[../@templateId = $templateId]"/>
         </xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@displayName[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@displayName[../@templateId = $templateId]">
             <xsl:attribute name="displayName">
-                <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@displayName[../@templateId = $templateId]"/>
+                <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@displayName[../@templateId = $templateId]"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@NullFlavor[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@NullFlavor[../@templateId = $templateId]">
             <xsl:attribute name="NullFlavor">
-                <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@NullFlavor[../@templateId = $templateId]"/>
+                <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@NullFlavor[../@templateId = $templateId]"/>
             </xsl:attribute>
         </xsl:if>     
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@xsi:type[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@xsi:type[../@templateId = $templateId]">
             <xsl:attribute name="xsi:type">
-                <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@xsi:type[../@templateId = $templateId]"/>
+                <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@xsi:type[../@templateId = $templateId]"/>
             </xsl:attribute>
         </xsl:if>  
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@value[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@value[../@templateId = $templateId]">
             <xsl:attribute name="value">
-                <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@value[../@templateId = $templateId]"/>
+                <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@value[../@templateId = $templateId]"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@unit[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@unit[../@templateId = $templateId]">
             <xsl:attribute name="unit">
-                <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@unit[../@templateId = $templateId]"/>
+                <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/@unit[../@templateId = $templateId]"/>
             </xsl:attribute>
         </xsl:if>
         <!-- NegationInd is not part of code/value elements and is therefore not copied  -->
@@ -905,38 +916,47 @@
     <!-- Generic SetTime Template -->  
     <xsl:template name="templateSetTimeValues">
         <xsl:param name="templateId" />
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@effectiveTime[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier[@code='effectiveTime'][../@templateId = $templateId]">
             <effectiveTime>
                 <xsl:attribute name="value">
-                    <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@effectiveTime[../@templateId = $templateId]"/>
+                    <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier/eav:value/text()[../../@code='effectiveTime'][../../../@templateId = $templateId]"/>
                 </xsl:attribute>
             </effectiveTime>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@effectiveTimeLow[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier[@code='effectiveTimeLow'][../@templateId = $templateId]">
             <effectiveTime>
                 <low>
                     <xsl:attribute name="value">
-                        <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@effectiveTimeLow[../@templateId = $templateId]"/>
+                        <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier/eav:value/text()[../../@code='effectiveTimeLow'][../../../@templateId = $templateId]"/>
                     </xsl:attribute>
                 </low>
             </effectiveTime>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@effectiveTimeHigh[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier[@code='effectiveTimeHigh'][../@templateId = $templateId]">
             <effectiveTime>
                 <high>
                     <xsl:attribute name="value">
-                        <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@effectiveTimeHigh[../@templateId = $templateId]"/>
+                        <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier/eav:value/text()[../../@code='effectiveTimeHigh'][../../../@templateId = $templateId]"/>
                     </xsl:attribute>
                 </high>
             </effectiveTime>
         </xsl:if>
-        <xsl:if test="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@timeLow[../@templateId = $templateId]">
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier[@code='timeLow'][../@templateId = $templateId]">
             <time>
                 <low>
                     <xsl:attribute name="value">
-                        <xsl:value-of select="eav:dwh-eav/eav:visit/eav:facts/eav:fact/@timeLow[../@templateId = $templateId]"/>
+                        <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier/eav:value/text()[../../@code='timeLow'][../../../@templateId = $templateId]"/>
                     </xsl:attribute>
                 </low>
+            </time>
+        </xsl:if>
+        <xsl:if test="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier[@code='timeHigh'][../@templateId = $templateId]">
+            <time>
+                <high>
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact/eav:modifier/eav:value/text()[../../@code='timeHigh'][../../../@templateId = $templateId]"/>
+                    </xsl:attribute>
+                </high>
             </time>
         </xsl:if>
     </xsl:template>   

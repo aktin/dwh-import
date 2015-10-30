@@ -4,34 +4,39 @@
              id="1.2.276.0.76.11.56"
              name="Dischargedispositioncodes"
              displayName="Discharge Disposition Codes"
-             effectiveDate="2015-03-26T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.56" identifierName="aktin-codesystem-56"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="371828006"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Patient deceased during stay (discharge status = dead) (finding)"
+                <concept code="1"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.56"
+                  displayName="Tod"
                   level="0"
                   type="L"/>
-                <concept code="225928004"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Patient self-discharge against medical advice (procedure)"
+                <concept code="2"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.56"
+                  displayName="Entlassung gegen ärztlichen Rat"
                   level="0"
                   type="L"/>
-                <concept code="34596002"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Patient discharge, elopement (procedure)"
+                <concept code="3"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.56"
+                  displayName="Behandlung durch Pat. abgebrochen"
                   level="0"
                   type="L"/>
-                <concept code="306689006"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Discharge to home (procedure)"
+                <concept code="4"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.56"
+                  displayName="Entlassung nach Hause"
                   level="0"
                   type="L"/>
-                <concept code="118661008:408730004=385660001"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Physician service (procedure) : Procedure context (attribute) = Not done (qualifier value)"
+                <concept code="5"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.56"
+                  displayName="Entlassung zu weiterbehandelnden Arzt"
+                  level="0"
+                  type="L"/>
+                <concept code="6"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.56"
+                  displayName="kein Arztkontakt"
                   level="0"
                   type="L"/>
                 <exception code="OTH"

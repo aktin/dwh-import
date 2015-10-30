@@ -4,24 +4,24 @@
              id="1.2.276.0.76.11.50"
              name="Pupilreaction"
              displayName="Pupillenreaktion"
-             effectiveDate="2015-03-03T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.50" identifierName="aktin-codesystem-50"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="301949001"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Brisk pupil near reaction (finding)"
+                <concept code="B"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.50"
+                  displayName="prompt"
                   level="0"
                   type="L"/>
-                <concept code="301948009"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Delayed pupil near reaction (finding)"
+                <concept code="D"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.50"
+                  displayName="träge"
                   level="0"
                   type="L"/>
-                <concept code="13353005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Absent pupil reaction (finding)"
+                <concept code="A"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.50"
+                  displayName="keine"
                   level="0"
                   type="L"/>
                 <exception code="UNK"

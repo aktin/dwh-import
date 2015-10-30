@@ -4,29 +4,29 @@
              id="1.2.276.0.76.11.55"
              name="Isolationreason"
              displayName="Isolation reason"
-             effectiveDate="2015-03-26T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.6.3" identifierName="ICD10"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="372292006"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Infection due to resistant organism (disorder)"
+                <concept code="U80"
+                  codeSystem="2.16.840.1.113883.6.3"
+                  displayName="multiresistenter Keim"
                   level="0"
                   type="L"/>
-                <concept code="25374005"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Gastroenteritis (disorder)"
+                <concept code="A09.9"
+                  codeSystem="2.16.840.1.113883.6.3"
+                  displayName="Gastroenteritis"
                   level="0"
                   type="L"/>
-                <concept code="56717001"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Tuberculosis (disorder)"
+                <concept code="A16.9"
+                  codeSystem="2.16.840.1.113883.6.3"
+                  displayName="Tuberkulose"
                   level="0"
                   type="L"/>
-                <concept code="7180009"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Meningitis (disorder)"
+                <concept code="G03.9"
+                  codeSystem="2.16.840.1.113883.6.3"
+                  displayName="Meningitis"
                   level="0"
                   type="L"/>
                 <exception code="OTH"

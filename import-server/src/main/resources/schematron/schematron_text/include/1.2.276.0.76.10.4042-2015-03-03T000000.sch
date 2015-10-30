@@ -3,12 +3,12 @@
 Template derived pattern
 ===========================================
 ID: 1.2.276.0.76.10.4042
-Name: Triage-Einschätzung
-Description: Einschätzung
+Name: Ersteinschätzung
+Description: Ersteinschätzung
 -->
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
          id="template-1.2.276.0.76.10.4042-2015-03-03T000000">
-   <title>Triage-Einschätzung</title>
+   <title>Ersteinschätzung</title>
    <!--
 Template derived rules for ID: 1.2.276.0.76.10.4042
 Context: *[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]
@@ -16,12 +16,12 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]"
-         id="tmp-r-267cf324-c56e-4dad-b513-b091b0680bfb">
+         id="tmp-r-04547ff7-1255-407f-bafd-82efae1d0ef7">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042'])&gt;=1 ">(Acuityobservation): Element hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042'] ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042'])&lt;=1">(Acuityobservation): Element hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042'] kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -31,52 +31,52 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']"
-         id="tmp-r-c3be12f5-aa13-4506-b41c-d70696181886">
+         id="tmp-r-e23af111-e964-42a9-8559-37f92bb094eb">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="string(@classCode)=('OBS')">(Acuityobservation): Der Wert von @classCode MUSS 'OBS' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="string(@moodCode)=('EVN')">(Acuityobservation): Der Wert von @moodCode MUSS 'EVN' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:templateId[@root='1.2.276.0.76.10.4042'])&gt;=1 ">(Acuityobservation): Element hl7:templateId[@root='1.2.276.0.76.10.4042'] ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:templateId[@root='1.2.276.0.76.10.4042'])&lt;=1">(Acuityobservation): Element hl7:templateId[@root='1.2.276.0.76.10.4042'] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:id)&gt;=1 and not(hl7:id/@nullFlavor)">(Acuityobservation): Element hl7:id ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:code[(@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')])&gt;=1 and not(hl7:code[(@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')]/@nullFlavor)">(Acuityobservation): Element hl7:code[(@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')] ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:code[(@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')])&lt;=1">(Acuityobservation): Element hl7:code[(@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:text)&lt;=1">(Acuityobservation): Element hl7:text kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:statusCode[@code='completed'])&gt;=1 and not(hl7:statusCode[@code='completed']/@nullFlavor)">(Acuityobservation): Element hl7:statusCode[@code='completed'] ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:statusCode[@code='completed'])&lt;=1">(Acuityobservation): Element hl7:statusCode[@code='completed'] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:effectiveTime)&gt;=1 and not(hl7:effectiveTime/@nullFlavor)">(Acuityobservation): Element hl7:effectiveTime ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:effectiveTime)&lt;=1">(Acuityobservation): Element hl7:effectiveTime kommt zu häufig vor [max 1x].</assert>
       <let name="elmcount" value="count(hl7:value|hl7:value)"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="$elmcount&lt;=1">(Acuityobservation): Auswahl (hl7:value oder hl7:value) enthält zu viele Elemente [max 1x]</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:value)&lt;=1">(Acuityobservation): Element hl7:value kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:value)&lt;=1">(Acuityobservation): Element hl7:value kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -86,13 +86,13 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:templateId[@root='1.2.276.0.76.10.4042']"
-         id="tmp-r-a9228993-196b-4eb1-b417-59bbc5d7be62">
+         id="tmp-r-025de00a-0170-4aac-893c-5e59b9b82bf6">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="II"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="string(@root)=('1.2.276.0.76.10.4042')">(Acuityobservation): Der Wert von @root MUSS '1.2.276.0.76.10.4042' sein.</assert>
    </rule>
    <!--
@@ -102,9 +102,9 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:id"
-         id="tmp-r-a9c83926-4848-41ed-825b-1acfadb070a2">
+         id="tmp-r-23e7ba88-53bd-45fa-9217-27e708e792c3">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="II"/>
    </rule>
@@ -115,13 +115,13 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:code[(@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')]"
-         id="tmp-r-2ce66b25-127e-4dff-88e9-3df915118381">
+         id="tmp-r-adcef186-4621-49e0-8eb1-e2e1f92b72c9">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CE"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="@nullFlavor or (@code='273887006' and @codeSystem='2.16.840.1.113883.6.96')">(Acuityobservation): Der Elementinhalt MUSS einer von 'code '273887006' codeSystem '2.16.840.1.113883.6.96'' sein.</assert>
    </rule>
    <!--
@@ -131,16 +131,16 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:text"
-         id="tmp-r-a5bae778-137d-4c74-adb4-c8764bc92d3e">
+         id="tmp-r-8e051f2d-4d17-4e25-973c-072d637bfaa1">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ED' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ED" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="ED"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:reference)&gt;=1 ">(Acuityobservation): Element hl7:reference ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:reference)&lt;=1">(Acuityobservation): Element hl7:reference kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -150,9 +150,9 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:text/hl7:reference"
-         id="tmp-r-18a767a6-68b0-4d0c-9d74-439abc787df2">
+         id="tmp-r-263de936-1138-4337-9ffb-bde2b95cc0bd">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='URL' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:URL" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="URL"/>
    </rule>
@@ -163,13 +163,13 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:statusCode[@code='completed']"
-         id="tmp-r-0fe165c2-edfb-402c-9fcb-7f2f0359c504">
+         id="tmp-r-7503ec0e-2f0d-49c0-b103-6694a050683e">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CS" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CS"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="@nullFlavor or (@code='completed')">(Acuityobservation): Der Elementinhalt MUSS einer von 'code 'completed'' sein.</assert>
    </rule>
    <!--
@@ -179,19 +179,19 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:effectiveTime"
-         id="tmp-r-290a9747-0c34-4ee4-b08a-7f18f84c70b4">
+         id="tmp-r-81b600d7-2f53-49a9-9045-5a7e996c1c6f">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='IVL_TS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:IVL_TS" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="IVL_TS"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:low)&gt;=1 ">(Acuityobservation): Element hl7:low ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:low)&lt;=1">(Acuityobservation): Element hl7:low kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="count(hl7:high)&lt;=1">(Acuityobservation): Element hl7:high kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -201,9 +201,9 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:effectiveTime/hl7:low"
-         id="tmp-r-081ca207-e786-4e56-99d4-bd5cdcb2cec2">
+         id="tmp-r-cf655403-c358-4d86-9d4a-fc74ea2e32f1">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='TS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:TS" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="TS"/>
    </rule>
@@ -214,9 +214,9 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:effectiveTime/hl7:high"
-         id="tmp-r-54243e62-df1e-403a-9563-23609558e129">
+         id="tmp-r-19f03ddf-5320-444c-97bf-9aaa8bb00a2d">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='TS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:TS" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="TS"/>
    </rule>
@@ -227,22 +227,22 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:value"
-         id="tmp-r-79c6ecf3-064e-4b7f-a8e7-34f35d8c9db7">
+         id="tmp-r-9b1b72a3-ae6a-4b2f-a2c4-b6cb47ad0975">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CE"/>
       <let name="theCode" value="@code"/>
       <let name="theCodeSystem" value="@codeSystem"/>
       <let name="theCodeSystemVersion" value="@codeSystemVersion"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="@nullFlavor or exists(doc('include/voc-1.2.276.0.76.11.44-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]]) or exists(doc('include/voc-1.2.276.0.76.11.45-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]])">(Acuityobservation): Der Elementinhalt MUSS einer von '1.2.276.0.76.11.44 Manchester-Triage-System (DYNAMIC) oder 1.2.276.0.76.11.45 Emergency Severity Index (DYNAMIC)' sein.</assert>
       <let name="theNullFlavor" value="@nullFlavor"/>
       <let name="validNullFlavorsFound"
            value="exists(doc('include/voc-1.2.276.0.76.11.44-DYNAMIC.xml')/*/valueSet/conceptList/exception[@code = $theNullFlavor][@codeSystem = '2.16.840.1.113883.5.1008']) or exists(doc('include/voc-1.2.276.0.76.11.45-DYNAMIC.xml')/*/valueSet/conceptList/exception[@code = $theNullFlavor][@codeSystem = '2.16.840.1.113883.5.1008'])"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="not(@nullFlavor) or $validNullFlavorsFound">(Acuityobservation): Der fehlende Wert '<value-of select="@nullFlavor"/>' für @code MUSS gewählt werden aus dem Set gültiger null flavors für dieses Attribut oder denen assoziiert mit Value Set 1.2.276.0.76.11.44 Manchester-Triage-System (DYNAMIC) oder 1.2.276.0.76.11.45 Emergency Severity Index (DYNAMIC).</assert>
    </rule>
    <!--
@@ -252,9 +252,9 @@ Item: (Acuityobservation)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4042']/hl7:value"
-         id="tmp-r-628ea235-79aa-40d4-9c61-f3a84325d023">
+         id="tmp-r-bcd1afca-9c17-487f-9497-fbbcddaa707c">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20150730T155633/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4042-2015-03-03T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ST' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Acuityobservation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ST" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="ST"/>
    </rule>

@@ -4,24 +4,24 @@
              id="1.2.276.0.76.11.49"
              name="Pupilsizequantitative"
              displayName="Pupillenweite (quantitativ)"
-             effectiveDate="2015-03-03T00:00:00"
-             statusCode="draft">
-      <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED Clinical Terms"/>
+             statusCode="draft"
+             effectiveDate="2015-09-18T00:00:00">
+      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.49" identifierName="aktin-codesystem-49"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
-                <concept code="37125009"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Dilated pupil (finding)"
+                <concept code="D"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.49"
+                  displayName="weit"
                   level="0"
                   type="L"/>
-                <concept code="420335002"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Medium size pupil (finding)"
+                <concept code="M"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.49"
+                  displayName="mittel"
                   level="0"
                   type="L"/>
-                <concept code="301939004"
-                  codeSystem="2.16.840.1.113883.6.96"
-                  displayName="Constricted pupil (finding)"
+                <concept code="C"
+                  codeSystem="2.16.840.1.113883.2.60.3.5.49"
+                  displayName="eng"
                   level="0"
                   type="L"/>
                 <exception code="UNK"

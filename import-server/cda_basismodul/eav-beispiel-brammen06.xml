@@ -1,17 +1,17 @@
 <?xml version="1.0" ?><eav-data xmlns="http://sekmi.de/histream/ns/eav-data" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <meta>
       <etl-strategy>replace-visit</etl-strategy>
-      <source timestamp="2015-07-09T17:19:00" id="1.2.276.0.76.4.17.9814184919:020ed858-4d71-4363-ac"></source>
+      <source timestamp="2015-07-09T17:19:00" id="1.2.276.0.76.4.17.9814184919:brammen6"></source>
    </meta>
    <patient id="1.2.276.0.76.4.8:0001110006">
       <given-name>information privacy</given-name>
       <surname>information privacy</surname>
       <gender>male</gender>
       <birthdate>1943-02-08</birthdate>
-      <encounter id="1.2.276.0.76.4.17.9814184919:020ed858-4d71-4363-ac">
+      <encounter id="1.2.276.0.76.4.17.9814184919:brammen6">
          <start>2015-07-09T00:30:00</start>
          <end>2015-07-09T01:05:00</end>
-         <location>1.2.276.0.76.4.17:4738758478</location>
+         <location>1.2.276.0.76.4.17:</location>
          <facts><!--772 Patientenadresse (PLZ)-->
             <fact concept="AKTIN:PLZ">
                <value xsi:type="numeric">45678</value>
@@ -35,7 +35,7 @@
                </modifier>
             </fact>
             <!--882 Uhrzeit Verlegung / Entlassung-->
-            <fact concept="AKTIN:TRANSFERZeitpunktVerlegung" start="2015-07-09T01:05:00">
+            <fact concept="AKTIN:TRANSFER:ZeitpunktVerlegung" start="2015-07-09T01:05:00">
                <modifier code="effectiveTimeLow">
                   <value xsi:type="string">20150709003000</value>
                </modifier>
@@ -198,6 +198,8 @@
                   <value xsi:type="string">20150708235500</value>
                </modifier>
             </fact>
+            <!--596 Patient verlegt / entlassen nach-->
+            <fact concept="AKTIN:TRANSFER:5"></fact>
          </facts>
       </encounter>
    </patient>
