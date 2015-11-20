@@ -4,17 +4,18 @@
              id="1.2.276.0.76.11.48"
              name="Eyetargetsite"
              displayName="Auge links/rechts"
-             statusCode="draft"
+             statusCode="deprecated"
              effectiveDate="2015-09-18T00:00:00">
-      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.48" identifierName="aktin-codesystem-48"/>
+      <sourceCodeSystem id="2.16.840.1.113883.2.6.60.3.5.48"
+                        identifierName="aktin-codesystem-48"/>
       <conceptList>
                 <concept code="L"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.48"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.48"
                   displayName="Auge links"
                   level="0"
                   type="L"/>
                 <concept code="R"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.48"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.48"
                   displayName="Auge rechts"
                   level="0"
                   type="L"/>

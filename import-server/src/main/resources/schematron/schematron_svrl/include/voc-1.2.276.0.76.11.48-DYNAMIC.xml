@@ -5,16 +5,16 @@
              name="Eyetargetsite"
              displayName="Auge links/rechts"
              statusCode="draft"
-             effectiveDate="2015-09-18T00:00:00">
-      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.48" identifierName="aktin-codesystem-48"/>
+             effectiveDate="2015-11-17T00:00:00">
+      <sourceCodeSystem id="1.2.276.0.76.3.1.195.5.48" identifierName="divi-codesystem-48"/>
       <conceptList>
                 <concept code="L"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.48"
+                  codeSystem="1.2.276.0.76.3.1.195.5.48"
                   displayName="Auge links"
                   level="0"
                   type="L"/>
                 <concept code="R"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.48"
+                  codeSystem="1.2.276.0.76.3.1.195.5.48"
                   displayName="Auge rechts"
                   level="0"
                   type="L"/>

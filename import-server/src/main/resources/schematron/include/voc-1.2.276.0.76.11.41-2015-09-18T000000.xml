@@ -4,28 +4,29 @@
              id="1.2.276.0.76.11.41"
              name="Transportmethod"
              displayName="Transportmethode"
-             statusCode="draft"
+             statusCode="deprecated"
              effectiveDate="2015-09-18T00:00:00">
-      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.41" identifierName="aktin-codesystem-41"/>
+      <sourceCodeSystem id="2.16.840.1.113883.2.6.60.3.5.41"
+                        identifierName="aktin-codesystem-41"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
                 <concept code="1"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.41"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.41"
                   displayName="KTW"
                   level="0"
                   type="L"/>
                 <concept code="2"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.41"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.41"
                   displayName="RTW"
                   level="0"
                   type="L"/>
                 <concept code="3"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.41"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.41"
                   displayName="NAW/NEF/ITW"
                   level="0"
                   type="L"/>
                 <concept code="4"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.41"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.41"
                   displayName="RTH/ITH"
                   level="0"
                   type="L"/>

@@ -223,7 +223,7 @@
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="201501180755"/>
+                                        <width value="8" unit="h"/>
                                     </effectiveTime>
                                     <value xsi:type="CE" code="254" codeSystem="1.2.276.0.76.5.439" displayName="Diarrhea"/>
                                 </observation>
@@ -249,7 +249,7 @@
                             <templateId root="1.2.276.0.76.10.4043"/>
                             <code code="11449-6" codeSystem="2.16.840.1.113883.6.1" displayName="Pregnancy status"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="0" codeSystem="2.16.840.1.113883.2.60.3.5.46" displayName="Patient nicht schwanger"/>
+                            <value xsi:type="CV" code="0" codeSystem="1.2.276.0.76.3.1.195.5.46" displayName="Patient nicht schwanger"/>
                         </observation>
                     </entry>
                 </section>
@@ -371,7 +371,7 @@
                         <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="4eae6b41-738d-4410-93db-a2f64e5c2195"/>
-                            <code code="ISO" codeSystem="2.16.840.1.113883.2.60.3.5.54" displayName="Isolation"/>
+                            <code code="ISO" codeSystem="1.2.276.0.76.3.1.195.5.54" displayName="Isolation"/>
                             <text>
                                 <reference value="#iso"/>
                             </text>

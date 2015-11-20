@@ -118,7 +118,7 @@
                 <high value="20150708211700"/>
             </effectiveTime>
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
-            <dischargeDispositionCode code="1" codeSystem="2.16.840.1.113883.2.60.3.5.56"/> <!-- Tod -->
+            <dischargeDispositionCode code="1" codeSystem="1.2.276.0.76.3.1.195.5.56"/> <!-- Tod -->
         </encompassingEncounter>
     </componentOf>
     
@@ -140,7 +140,7 @@
                             <templateId root="1.2.276.0.76.10.4037"/>
                             <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
                             <statusCode code="completed"/>
-                            <value xsi:type="CV" code="2" codeSystem="2.16.840.1.113883.2.60.3.5.41" displayName="RTW"/>
+                            <value xsi:type="CV" code="2" codeSystem="1.2.276.0.76.3.1.195.5.41" displayName="RTW"/>
                         </observation>
                     </entry>
                 </section>
@@ -207,7 +207,7 @@
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="201507081959"/>
+                                        <width value="1" unit="h"/>
                                     </effectiveTime>
                                     <value xsi:type="CE" code="001" codeSystem="1.2.276.0.76.5.439" displayName="Cardiac arrest (non-traumatic)"/>
                                 </observation>
@@ -239,7 +239,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082045"/>                                       
-                            <value xsi:type="CV" code="0" codeSystem="2.16.840.1.113883.2.60.3.5.46" displayName="Patient nicht schwanger"/>  
+                            <value xsi:type="CV" code="0" codeSystem="1.2.276.0.76.3.1.195.5.46" displayName="Patient nicht schwanger"/>
                         </observation>                       
                     </entry>                   
                     <entry typeCode="COMP" contextConductionInd="true">
@@ -275,13 +275,13 @@
                                     <effectiveTime>
                                         <low value="20150304"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund">
+                                    <value xsi:type="CD" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund">
                                         <qualifier>
-                                            <name code="IBB" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="in Bezug auf Befund"/>
-                                            <value code="BACP" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Bakterienbesiedelung"/>
+                                            <name code="IBB" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="in Bezug auf Befund"/>
+                                            <value code="BACP" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Bakterienbesiedelung"/>
                                         </qualifier>
                                         <qualifier>
-                                            <name code="URAG" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Auslösendes Agenz"/>
+                                            <name code="URAG" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Auslösendes Agenz"/>
                                             <value code="4MRGN" codeSystem="1.2.276.0.76.5.441" displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind"/>
                                         </qualifier>
                                     </value>
@@ -348,56 +348,56 @@
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
+                            <code code="SPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenweite"/>
                             <text>
                                 <reference value="#PupilLeft"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082045"/>
-                            <value xsi:type="CV" code="D" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="weit"/>
-                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>                        
+                            <value xsi:type="CV" code="D" codeSystem="1.2.276.0.76.3.1.195.5.49" displayName="weit"/>
+                            <targetSiteCode code="L" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge links"/>                        
                         </observation>                    
                     </entry>   
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
+                            <code code="RPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenreaktion"/>
                             <text>
                                 <reference value="PupilLeft"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082045"/>
-                            <value xsi:type="CV" code="A" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="keine"/>
-                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>   
+                            <value xsi:type="CV" code="A" codeSystem="1.2.276.0.76.3.1.195.5.50" displayName="keine"/>
+                            <targetSiteCode code="L" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge links"/>   
                         </observation>                    
                     </entry> 
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
+                            <code code="SPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenweite"/>
                             <text>
                                 <reference value="PupilRight"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082045"/>
-                            <value xsi:type="CV" code="D" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="weit"/>
-                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>                 
+                            <value xsi:type="CV" code="D" codeSystem="1.2.276.0.76.3.1.195.5.49" displayName="weit"/>
+                            <targetSiteCode code="R" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge rechts"/>                 
                         </observation>                    
                     </entry> 
                     <entry typeCode="COMP" contextConductionInd="true"> 
                         <observation classCode="OBS" moodCode="EVN">                        
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="deee672e-a620-4aa4-9117-bdd8b2505aaf"/>
-                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
+                            <code code="RPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenreaktion"/>
                             <text>
                                 <reference value="PupilRight"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082045"/>
-                            <value xsi:type="CV" code="A" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="keine"/>
-                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>    
+                            <value xsi:type="CV" code="A" codeSystem="1.2.276.0.76.3.1.195.5.50" displayName="keine"/>
+                            <targetSiteCode code="R" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge rechts"/>    
                         </observation>                    
                     </entry>                                                                         
                     <entry typeCode="COMP">
@@ -434,7 +434,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082057"/>
-                            <value xsi:type="CE" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund"/>
+                            <value xsi:type="CE" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund"/>
                         </observation>                        
                     </entry>
                     <entry typeCode="COMP" contextConductionInd="true"> 
@@ -447,7 +447,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201507082055"/>
-                            <value xsi:type="CE" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund"/>
+                            <value xsi:type="CE" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund"/>
                         </observation>            
                     </entry>                    
                 </section>
@@ -486,7 +486,7 @@
                                     <participant typeCode="CSM">
                                         <participantRole classCode="MANU">
                                             <playingEntity classCode="MMAT">                                                
-                                                <code code="ALGN" codeSystem="2.16.840.1.113883.2.60.3.5.52" displayName="Allergen"/>
+                                                <code code="ALGN" codeSystem="1.2.276.0.76.3.1.195.5.52" displayName="Allergen"/>
                                             </playingEntity>
                                         </participantRole>
                                     </participant>
@@ -508,7 +508,7 @@
                         <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="ba6d1bac-17d3-4195-89c4-1121bc809b5e"/>
-                            <code code="ISO" codeSystem="2.16.840.1.113883.2.60.3.5.54" displayName="Isolation"/>
+                            <code code="ISO" codeSystem="1.2.276.0.76.3.1.195.5.54" displayName="Isolation"/>
                             <text>
                                 <reference value="#iso"/>
                             </text>

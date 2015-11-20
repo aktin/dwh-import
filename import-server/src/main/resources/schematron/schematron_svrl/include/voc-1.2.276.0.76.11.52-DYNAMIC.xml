@@ -5,14 +5,14 @@
              name="Allergyintolerancesubstances"
              displayName="Allergy / intolerance substances"
              statusCode="draft"
-             effectiveDate="2015-09-18T00:00:00">
-      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.52" identifierName="aktin-codesystem-52"/>
+             effectiveDate="2015-11-17T00:00:00">
+      <sourceCodeSystem id="1.2.276.0.76.3.1.195.5.52" identifierName="divi-codesystem-52"/>
       <sourceCodeSystem id="2.16.840.1.113883.6.73"
                         identifierName="WHO Anatomical Therapeutic Chemical classification"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
                 <concept code="ALGN"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.52"
+                  codeSystem="1.2.276.0.76.3.1.195.5.52"
                   displayName="Allergen"
                   level="0"
                   type="L"/>

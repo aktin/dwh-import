@@ -16,12 +16,12 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]"
-         id="tmp-r-b3f2f52a-754f-49ed-a0cb-015c86021369">
+         id="tmp-r-b1f5c1ec-984b-41ef-9f06-2d2ba0e2555c">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061'])&gt;=1 ">(Twelveleadelectrocardiogram): Element hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061'] ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061'])&lt;=1">(Twelveleadelectrocardiogram): Element hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061'] kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -31,48 +31,48 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']"
-         id="tmp-r-98c62d77-5aa7-48f9-9f4e-c528d5c92c9b">
+         id="tmp-r-80ec484d-acaf-47ef-8413-01b9ac57c787">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="string(@classCode)=('OBS')">(Twelveleadelectrocardiogram): Der Wert von @classCode MUSS 'OBS' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="string(@moodCode)=('EVN')">(Twelveleadelectrocardiogram): Der Wert von @moodCode MUSS 'EVN' sein.</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:templateId[@root='1.2.276.0.76.10.4061'])&gt;=1 ">(Twelveleadelectrocardiogram): Element hl7:templateId[@root='1.2.276.0.76.10.4061'] ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:templateId[@root='1.2.276.0.76.10.4061'])&lt;=1">(Twelveleadelectrocardiogram): Element hl7:templateId[@root='1.2.276.0.76.10.4061'] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:id)&gt;=1 and not(hl7:id/@nullFlavor)">(Twelveleadelectrocardiogram): Element hl7:id ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:code[(@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')])&gt;=1 and not(hl7:code[(@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')]/@nullFlavor)">(Twelveleadelectrocardiogram): Element hl7:code[(@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')] ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:code[(@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')])&lt;=1">(Twelveleadelectrocardiogram): Element hl7:code[(@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:text)&lt;=1">(Twelveleadelectrocardiogram): Element hl7:text kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:statusCode[@code='completed'])&gt;=1 and not(hl7:statusCode[@code='completed']/@nullFlavor)">(Twelveleadelectrocardiogram): Element hl7:statusCode[@code='completed'] ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:statusCode[@code='completed'])&lt;=1">(Twelveleadelectrocardiogram): Element hl7:statusCode[@code='completed'] kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:effectiveTime)&gt;=1 and not(hl7:effectiveTime/@nullFlavor)">(Twelveleadelectrocardiogram): Element hl7:effectiveTime ist mandatory [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:effectiveTime)&lt;=1">(Twelveleadelectrocardiogram): Element hl7:effectiveTime kommt zu häufig vor [max 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor])&gt;=1 ">(Twelveleadelectrocardiogram): Element hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor] ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor])&lt;=1">(Twelveleadelectrocardiogram): Element hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor] kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -82,13 +82,13 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:templateId[@root='1.2.276.0.76.10.4061']"
-         id="tmp-r-4a4fd1b8-1503-4dba-b4e9-6ffa35f50403">
+         id="tmp-r-4517b481-e769-426b-9bff-15d4344d85d6">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="II"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="string(@root)=('1.2.276.0.76.10.4061')">(Twelveleadelectrocardiogram): Der Wert von @root MUSS '1.2.276.0.76.10.4061' sein.</assert>
    </rule>
    <!--
@@ -98,9 +98,9 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:id"
-         id="tmp-r-7cc9860f-5480-4761-8150-9f8d6177ae69">
+         id="tmp-r-a0f67c08-2ded-4912-b929-99214e7ac7bb">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="II"/>
    </rule>
@@ -111,13 +111,13 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:code[(@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')]"
-         id="tmp-r-977358bc-5784-4223-9597-d09daf2d37f1">
+         id="tmp-r-7a1ba46d-7c1a-46c8-b379-5f9de48c0c67">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CE"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="@nullFlavor or (@code='268400002' and @codeSystem='2.16.840.1.113883.6.96')">(Twelveleadelectrocardiogram): Der Elementinhalt MUSS einer von 'code '268400002' codeSystem '2.16.840.1.113883.6.96'' sein.</assert>
    </rule>
    <!--
@@ -127,16 +127,16 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:text"
-         id="tmp-r-54f4651c-1de5-4840-80ff-505189444ce3">
+         id="tmp-r-6447a485-6484-4285-8d22-cba75bed0949">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ED' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ED" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="ED"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:reference)&gt;=1 ">(Twelveleadelectrocardiogram): Element hl7:reference ist required [min 1x].</assert>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="count(hl7:reference)&lt;=1">(Twelveleadelectrocardiogram): Element hl7:reference kommt zu häufig vor [max 1x].</assert>
    </rule>
    <!--
@@ -146,9 +146,9 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:text/hl7:reference"
-         id="tmp-r-7f79f8c6-a633-43d9-97c7-47965fda44f5">
+         id="tmp-r-5a1eb443-7b96-4892-b0a2-6f140dd07100">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='URL' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:URL" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="URL"/>
    </rule>
@@ -159,13 +159,13 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:statusCode[@code='completed']"
-         id="tmp-r-e1ea8b17-0ee3-4a43-bbcc-ceab02cd3e28">
+         id="tmp-r-4e2ffe9b-f573-4981-b6d3-dc724a43cd3e">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CS" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CS"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="@nullFlavor or (@code='completed')">(Twelveleadelectrocardiogram): Der Elementinhalt MUSS einer von 'code 'completed'' sein.</assert>
    </rule>
    <!--
@@ -175,9 +175,9 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:effectiveTime"
-         id="tmp-r-179304d7-f928-4667-9738-2ad002397b5f">
+         id="tmp-r-ea99c1a8-6c44-4b5f-ac44-fae686b17420">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='TS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:TS" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="TS"/>
    </rule>
@@ -188,22 +188,22 @@ Item: (Twelveleadelectrocardiogram)
 -->
 
    <rule context="*[hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']]/hl7:observation[hl7:templateId/@root='1.2.276.0.76.10.4061']/hl7:value[concat(@code,@codeSystem)=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/concept/concat(@code,@codeSystem) or (@nullFlavor=doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception/@code) or @nullFlavor]"
-         id="tmp-r-49f95b4d-e104-43f3-90a8-7474621088d0">
+         id="tmp-r-3abac70c-b40f-4cf7-9e16-a754c3e06b65">
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(Twelveleadelectrocardiogram): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben, gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
       <extends rule="CE"/>
       <let name="theCode" value="@code"/>
       <let name="theCodeSystem" value="@codeSystem"/>
       <let name="theCodeSystemVersion" value="@codeSystemVersion"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="@nullFlavor or exists(doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet[conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion] or completeCodeSystem[@codeSystem=$theCodeSystem][not(@codeSystemVersion) or @codeSystemVersion=$theCodeSystemVersion]])">(Twelveleadelectrocardiogram): Der Elementinhalt MUSS einer von '1.2.276.0.76.11.51 Finding situation (DYNAMIC)' sein.</assert>
       <let name="theNullFlavor" value="@nullFlavor"/>
       <let name="validNullFlavorsFound"
            value="exists(doc('include/voc-1.2.276.0.76.11.51-DYNAMIC.xml')/*/valueSet/conceptList/exception[@code = $theNullFlavor][@codeSystem = '2.16.840.1.113883.5.1008'])"/>
       <assert role="error"
-              see="http://aktin.art-decor.org/aktin-html-20151019T131019/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
+              see="http://aktin.art-decor.org/aktin-html-20151118T102028/tmp-1.2.276.0.76.10.4061-2015-03-27T000000.html"
               test="not(@nullFlavor) or $validNullFlavorsFound">(Twelveleadelectrocardiogram): Der fehlende Wert '<value-of select="@nullFlavor"/>' für @code MUSS gewählt werden aus dem Set gültiger null flavors für dieses Attribut oder denen assoziiert mit Value Set 1.2.276.0.76.11.51 Finding situation (DYNAMIC).</assert>
    </rule>
 </pattern>

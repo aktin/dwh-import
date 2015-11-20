@@ -4,23 +4,24 @@
              id="1.2.276.0.76.11.51"
              name="Findingsituation"
              displayName="Finding situation"
-             statusCode="draft"
+             statusCode="deprecated"
              effectiveDate="2015-09-18T00:00:00">
-      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.51" identifierName="aktin-codesystem-51"/>
+      <sourceCodeSystem id="2.16.840.1.113883.2.6.60.3.5.51"
+                        identifierName="aktin-codesystem-51"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
                 <concept code="PB"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.51"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.51"
                   displayName="path. Befund"
                   level="0"
                   type="L"/>
                 <concept code="OPB"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.51"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.51"
                   displayName="ohne path. Befund"
                   level="0"
                   type="L"/>
                 <concept code="SUSP"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.51"
+                  codeSystem="2.16.840.1.113883.2.6.60.3.5.51"
                   displayName="Verdacht"
                   level="0"
                   type="L"/>

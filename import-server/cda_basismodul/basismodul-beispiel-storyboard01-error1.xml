@@ -20,7 +20,7 @@
     entlassen. Als Entlassungsdiagnose wird die S93.6 „Distorsion unteres Sprunggelenk“ gestellt.
     
 -->
-<?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -134,7 +134,7 @@
                 <high value="201501171735"/>
             </effectiveTime>
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
-            <dischargeDispositionCode code="4" codeSystem="2.16.840.1.113883.2.60.3.5.56"/>
+            <dischargeDispositionCode code="4" codeSystem="1.2.276.0.76.3.1.195.5.56"/>
         </encompassingEncounter>
     </componentOf>
     
@@ -204,7 +204,7 @@
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="201501171544"/>
+                                        <width value="1" unit="h"/>
                                     </effectiveTime>
                                     <value xsi:type="CD" code="5572" codeSystem="1.2.276.0.76.5.439" displayName="Lower extremity injury"/>
                                 </observation>
@@ -235,7 +235,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501171650"/>
-                            <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
+                            <value xsi:type="CE" code="OPB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="ohne path. Befund"/>
                             <participant typeCode="LOC">
                                 <participantRole classCode="SDLOC">
                                     <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
@@ -254,7 +254,8 @@
                     <title>Allergien und Unverträglichkeiten</title>
                     <text>
                         <list>
-                            <item ID="alg">Allergien/Unverträglichkeiten: nein</item>
+                            <item ID="alg">Allergien: nein</item>
+                            <item ID="int">Unverträglichkeiten: nein</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -279,7 +280,7 @@
                                     <participant typeCode="CSM">
                                         <participantRole classCode="MANU">
                                             <playingEntity classCode="MMAT">
-                                                <code code="ALGN" codeSystem="2.16.840.1.113883.2.60.3.5.52" displayName="Allergen">
+                                                <code code="ALGN" codeSystem="1.2.276.0.76.3.1.195.5.52" displayName="Allergen">
                                                     <originalText>
                                                         <reference value="#alg-4"/>
                                                     </originalText>
@@ -347,7 +348,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="INT">
                             <templateId root="1.2.276.0.76.10.4067"/>
-                            <code code="4" codeSystem="2.16.840.1.113883.2.60.3.5.53" displayName="extern: Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"/>
+                            <code code="4" codeSystem="1.2.276.0.76.3.1.195.5.53" displayName="extern: Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"/>
                             <text>
                                 <reference value="#refact"/>
                             </text>

@@ -12,8 +12,8 @@
 		<version>0.4-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<schematronVersion>20150920T212437</schematronVersion>          
-		<examplesVersion>20150920T212437</examplesVersion>            
+		<schematronVersion>20151118T102028</schematronVersion>          
+		<examplesVersion>20151118T102028</examplesVersion>            
 		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            
 		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>            
 	</properties>

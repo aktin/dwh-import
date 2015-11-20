@@ -198,7 +198,7 @@
                             <effectiveTime>
                                 <high value="20150116191600"/>
                             </effectiveTime>
-                            <value xsi:type="CV" code="3" codeSystem="2.16.840.1.113883.2.60.3.5.56"/>
+                            <value xsi:type="CV" code="3" codeSystem="1.2.276.0.76.3.1.195.5.41"/>
                         </observation>
                     </entry>
                 </section>
@@ -275,7 +275,7 @@
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="201501161924"/>
+                                        <width value="1" unit="h"/>
                                     </effectiveTime>
                                     <value xsi:type="CE" code="007" codeSystem="1.2.276.0.76.5.439" displayName="General weakness"/>
                                 </observation>
@@ -377,44 +377,44 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
-                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
+                            <code code="SPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenweite"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161924"/>
-                            <value xsi:type="CV" code="M" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="mittel"/>
-                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>
+                            <value xsi:type="CV" code="M" codeSystem="1.2.276.0.76.3.1.195.5.49" displayName="mittel"/>
+                            <targetSiteCode code="L" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge links"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4046"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
-                            <code code="SPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenweite"/>
+                            <code code="SPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenweite"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161924"/>
-                            <value xsi:type="CV" code="M" codeSystem="2.16.840.1.113883.2.60.3.5.49" displayName="mittel"/>
-                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>
+                            <value xsi:type="CV" code="M" codeSystem="1.2.276.0.76.3.1.195.5.49" displayName="mittel"/>
+                            <targetSiteCode code="R" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge rechts"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
-                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
+                            <code code="RPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenreaktion"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201503041234"/>
-                            <value xsi:type="CV" code="B" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="prompt"/>
-                            <targetSiteCode code="L" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge links"/>
+                            <value xsi:type="CV" code="B" codeSystem="1.2.276.0.76.3.1.195.5.50" displayName="prompt"/>
+                            <targetSiteCode code="L" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge links"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4047"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
-                            <code code="RPPL" codeSystem="2.16.840.1.113883.2.60.3.5.1" displayName="Pupillenreaktion"/>
+                            <code code="RPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenreaktion"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="201503041234"/>
-                            <value xsi:type="CV" code="B" codeSystem="2.16.840.1.113883.2.60.3.5.50" displayName="prompt"/>
-                            <targetSiteCode code="R" codeSystem="2.16.840.1.113883.2.60.3.5.48" displayName="Auge rechts"/>
+                            <value xsi:type="CV" code="B" codeSystem="1.2.276.0.76.3.1.195.5.50" displayName="prompt"/>
+                            <targetSiteCode code="R" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge rechts"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
@@ -454,7 +454,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161945"/>
-                            <value xsi:type="CE" code="OPB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="ohne path. Befund"/>
+                            <value xsi:type="CE" code="OPB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="ohne path. Befund"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
@@ -467,7 +467,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161950"/>
-                            <value xsi:type="CE" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund"/>
+                            <value xsi:type="CE" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund"/>
                         </observation>
                     </entry>
                     <entry typeCode="COMP">
@@ -493,7 +493,7 @@
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="201501161942"/>
-                            <value xsi:type="CE" code="PB" codeSystem="2.16.840.1.113883.2.60.3.5.51" displayName="path. Befund"/>
+                            <value xsi:type="CE" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund"/>
                         </observation>
                     </entry>
                 </section>
@@ -532,7 +532,7 @@
                                     <participant typeCode="CSM">
                                         <participantRole classCode="MANU">
                                             <playingEntity classCode="MMAT">
-                                                <code code="ALGN" codeSystem="2.16.840.1.113883.2.60.3.5.52" displayName="Allergen">
+                                                <code code="ALGN" codeSystem="1.2.276.0.76.3.1.195.5.52" displayName="Allergen">
                                                     <originalText>
                                                         <reference value="#alg-4"/>
                                                     </originalText>
@@ -564,7 +564,7 @@
                         <procedure classCode="PROC" moodCode="EVN" negationInd="true">
                             <templateId root="1.2.276.0.76.10.4068"/>
                             <id root="1.2.276.0.76.4.17.9814184919" extension="53becae1-80bd-42e9-a38b-ffa191d71dc9"/>
-                            <code code="ISO" codeSystem="2.16.840.1.113883.2.60.3.5.54" displayName="Isolation"/>
+                            <code code="ISO" codeSystem="1.2.276.0.76.3.1.195.5.54" displayName="Isolation"/>
                             <text>
                                 <reference value="#iso"/>
                             </text>
@@ -668,7 +668,7 @@
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="INT">
                             <templateId root="1.2.276.0.76.10.4067"/>
-                            <code code="1" codeSystem="2.16.840.1.113883.2.60.3.5.53" displayName="intern: OP / Intervention (z.B. Herzkatheter, Endoskopie, ...)"/>
+                            <code code="1" codeSystem="1.2.276.0.76.3.1.195.5.53" displayName="intern: OP / Intervention (z.B. Herzkatheter, Endoskopie, ...)"/>
                             <text>
                                 <reference value="#refact"/>
                             </text>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="1.2.276.0.76.11.48"
+             name="Eyetargetsite"
+             displayName="Auge links/rechts"
+             statusCode="draft"
+             effectiveDate="2015-11-17T00:00:00">
+      <sourceCodeSystem id="1.2.276.0.76.3.1.195.5.48" identifierName="divi-codesystem-48"/>
+      <conceptList>
+                <concept code="L"
+                  codeSystem="1.2.276.0.76.3.1.195.5.48"
+                  displayName="Auge links"
+                  level="0"
+                  type="L"/>
+                <concept code="R"
+                  codeSystem="1.2.276.0.76.3.1.195.5.48"
+                  displayName="Auge rechts"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

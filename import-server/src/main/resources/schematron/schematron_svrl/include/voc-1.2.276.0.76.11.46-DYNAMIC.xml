@@ -5,17 +5,17 @@
              name="Pregnancystatus"
              displayName="Schwangerschafts-Status"
              statusCode="draft"
-             effectiveDate="2015-09-18T00:00:00">
-      <sourceCodeSystem id="2.16.840.1.113883.2.60.3.5.46" identifierName="aktin-codesystem-46"/>
+             effectiveDate="2015-11-17T00:00:00">
+      <sourceCodeSystem id="1.2.276.0.76.3.1.195.5.46" identifierName="divi-codesystem-46"/>
       <sourceCodeSystem id="2.16.840.1.113883.5.1008" identifierName="Null Flavor"/>
       <conceptList>
                 <concept code="1"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.46"
+                  codeSystem="1.2.276.0.76.3.1.195.5.46"
                   displayName="Patient ist schwanger"
                   level="0"
                   type="L"/>
                 <concept code="0"
-                  codeSystem="2.16.840.1.113883.2.60.3.5.46"
+                  codeSystem="1.2.276.0.76.3.1.195.5.46"
                   displayName="Patient ist nicht schwanger"
                   level="0"
                   type="L"/>
