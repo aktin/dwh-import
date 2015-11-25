@@ -22,9 +22,16 @@ Der Demo-Server kann folgendermaßen gestartet werden:
    
 2. In der Konsole den Befehl `java-server.bat` ausführen.
 
-3. Der Server zeigt in der Standardausgabe zwei URLs an,
+3. Der Server zeigt in der Standardausgabe URLs an,
    die verwendet werden können um die FHIR und XDS.b-
    Schnittstellen zu testen.
+   
+4. Der Port wird dynamisch bestimmt oder kann durch den 
+   Aufruf `java-server.bat <port>` festgelegt werden.
+
+5. Default ist, dass der Server nur lokal erreichbar ist.
+   Mit dem Aufruf `java-server.bat <port> public` ist der
+   Server öffentlich erreichbar.
    
 
 Daten an die FHIR-Schnittstelle schicken

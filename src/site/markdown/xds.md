@@ -1,4 +1,4 @@
-IHE XDS.b SOAP-Schnittstelle
+﻿IHE XDS.b SOAP-Schnittstelle
 ======================
 
 CDA-Dokumente werden per SOAP entsprechend dem IHE XDS.b Standard abgeliefert.
@@ -17,4 +17,4 @@ nach dem auch der Beispielclient entworfen wurde.
 
 Passender Quellcode befindet sich im Projekt `demo-server` unter `org.aktin.cda.etl.demo.XdsClient`.
 
-Weitere Informationen folgen sp�ter.
+Weitere Informationen folgen später.
