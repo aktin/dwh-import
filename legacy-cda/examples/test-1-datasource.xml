@@ -11,35 +11,42 @@
             <separator>\t</separator>
         </source>
 		<idat>
-			<patient-id>patid</patient-id>
-			<given-name>vorname</given-name>
-			<surname>nachname</surname>
-			<birthdate format="d.M.u" na="">geburtsdatum</birthdate>
-			<deathdate format="d.M.u" na="">verstorben</deathdate>
-			<gender>geschlecht</gender>
-			<ignore xsi:type="string">ignoriert1</ignore>
-			<ignore xsi:type="string">patfakt1</ignore>
+			<patient-id column="patid"/>
+			<given-name column="vorname"/>
+			<surname column="nachname"/>
+			<birthdate format="d.M.u" na="" column="geburtsdatum"/>
+			<deathdate format="d.M.u" na="" column="verstorben"/>
+			<gender column="geschlecht" na="">
+				<map> <!-- maps a column -->
+					<case value="W" set-value="female"/>
+					<case value="M" set-value="male"/>
+					<case value="X" set-value="indeterminate"/>
+					<otherwise set-value="" log-warning="Unexpected gender value"/>
+				</map>
+			</gender>
+			<ignore xsi:type="string" column="ignoriert1"/>
+			<ignore xsi:type="string" column="patfakt1"/>
 		</idat>		
 	</patient-table>
 	<!-- optional -->
 	<visit-table>
         <source xsi:type="plain-file">
-            <url>test-1-visits.txt</url>
-            <type>text/csv</type>
-			<separator>\t</separator>
+		<url>test-1-visits.txt</url>
+		<type>text/csv</type>
+		<separator>\t</separator>
         </source>
 		<idat>
-			<patient-id>patid</patient-id>
-			<visit-id>fallnr</visit-id>
-			<start format="d.M.u[ H[:m[:s]]]" na="" truncate-to="year">start</start>
-			<end format="d.M.u[ H[:m[:s]]]" na="">end</end>
+			<patient-id column="patid"/>
+			<visit-id column="fallnr"/>
+			<start format="d.M.u[ H[:m[:s]]]" na="" truncate-to="year" column="start"/>
+			<end format="d.M.u[ H[:m[:s]]]" na="" column="end"/>
 		</idat>
 		<mdat>
 			<!-- in/out code -->
 			<concept id="weight">
-				<value xsi:type="string">gewicht</value>
+				<value xsi:type="string" column="gewicht"/>
 				<!-- TODO: verify that na values are no allowed for concept start timestamps -->
-				<start format="d.M.u[ H[:m[:s]]]" na="">start</start>
+				<start format="d.M.u[ H[:m[:s]]]" na="" column="start"/>
 			</concept>
 		</mdat>
 	</visit-table>
@@ -50,21 +57,21 @@
 			<separator>\t</separator>
         </source>
 		<idat>
-			<patient-id>patid</patient-id>
-			<visit-id>fallnr</visit-id>
+			<patient-id column="patid"/>
+			<visit-id column="fallnr"/>
 		</idat>
 		<mdat>
 			<concept id="natrium">
-				<value xsi:type="decimal">na</value>
-				<start format="d.M.u[ H[:m[:s]]]">zeitpunkt</start>
+				<value column="na" xsi:type="decimal"/>
+				<start column="zeitpunkt" format="d.M.u[ H[:m[:s]]]"/>
 				<unit constant-value="mmol/l" />
 				<modifier id="other">
-					<value xsi:type="string" constant-value=""/>
+					<value xsi:type="string" na="" constant-value=""/>
 				</modifier>
 			</concept>
 			<concept id="kalium">
-				<value xsi:type="decimal">k</value>
-				<start format="d.M.u[ H[:m[:s]]]">zeitpunkt</start>
+				<value column="k" xsi:type="decimal"/>
+				<start column="zeitpunkt" format="d.M.u[ H[:m[:s]]]"/>
 			</concept>
 		</mdat>
 

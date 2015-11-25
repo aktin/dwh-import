@@ -4,13 +4,22 @@
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>dwh-import</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.5-SNAPSHOT</version>
   
 	<name>AKTIN : DWH Import</name>
 	<description>AKTIN Software</description>
-	<url>https://www.aktin.org/software/</url>
+	<url>https://www.aktin.org/software/${project.version}/</url>
 	<inceptionYear>2013</inceptionYear>
 	
+	<properties>
+		<!-- specifies the package and source version to which the site refers to -->
+		<latestReleaseVersion>0.4</latestReleaseVersion>
+		<releaseRepoUrl>https://www.aktin.org/software/repo</releaseRepoUrl>
+		<!-- encoding stuff -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
 	<scm>
 		<developerConnection>scm:git:git@gitlab.uni-oldenburg.de:AKTIN/dwh-import.git</developerConnection>
 		<tag>HEAD</tag>
@@ -25,7 +34,7 @@
 		<!-- publish site to aktin.org -->
 		<site>
 			<id>www.aktin.org</id>
-			<url>sftp://aktin.org/httpdocs/software/${project.version}/</url>
+			<url>scp://aktin.org/httpdocs/software/${project.version}/</url>
 		</site>
 	</distributionManagement>
 
@@ -36,10 +45,6 @@
 			<distribution>manual</distribution>
 		</license>
 	</licenses>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	</properties>
 	
 	<modules>
 		<module>legacy-cda</module>
@@ -157,6 +162,35 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<!-- link to latest site online 
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<serverId>www.aktin.org</serverId>
+					<url>scp://www.aktin.org/httpdocs/software</url>
+				</configuration>
+				<executions>
+
+					<execution>
+						<id>ssh-exec</id>
+						<phase>site-deploy</phase>
+						<goals>
+							<goal>sshexec</goal>
+						</goals>
+						<configuration>
+							<displayCommandOutputs>true</displayCommandOutputs>
+							<commands>
+								<command>rm latest</command>
+								<command>ln -s %{project.version} latest</command>
+							</commands>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>-->
 	</build>
 	
 	<dependencyManagement>
@@ -178,4 +212,20 @@
 
 		</dependencies>
 	</dependencyManagement>
+	<profiles>
+		<profile>
+			<id>release-profile</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<!-- does this work?? -->
+			<properties>
+				<latestReleaseVersion>${project.version}</latestReleaseVersion>
+			</properties>
+		</profile>
+	</profiles>
+
 </project>
