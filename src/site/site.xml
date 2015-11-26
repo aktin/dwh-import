@@ -11,6 +11,7 @@
 			<item href="hl7-fhir.html" name="RESTful/HL7 FHIR" />
 			<item href="xds.html" name="IHE XDS.b SOAP" />
 			<item href="demo-server.html" name="Demo Server" />
+			<item href="changelog.html" name="Changelog" />
 			<item href="support.html" name="Support"/>
 		</menu>
 		<menu ref="reports" inherit="top" />
