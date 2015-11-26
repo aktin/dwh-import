@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>AKTIN : DWH Import : CDA import</name>
+
+	<groupId>org.aktin</groupId>
+	<artifactId>cda-import</artifactId>
+	<version>0.5-SNAPSHOT</version>
+
+	<description>
+		The CDA import module transforms received
+		CDA documents into facts suitable for the
+		data warehouse. These facts are loaded into
+		the i2b2 data warehouse database via JDBC access.
+	</description>
+	
+	
+	<parent>
+		<groupId>org.aktin</groupId>
+		<artifactId>dwh-import</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+	<build>
+		<plugins>
+			<!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>org.aktin.cda.etl.demo.Server</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			-->
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aktin</groupId>
+			<artifactId>cda-server</artifactId>
+			<version>0.5-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>
