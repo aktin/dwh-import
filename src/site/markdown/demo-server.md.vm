@@ -38,9 +38,10 @@ Der Demo-Server kann folgendermaßen gestartet werden:
 4. Der Port wird dynamisch bestimmt oder kann durch den 
    Aufruf `java-server.bat <port>` festgelegt werden.
 
-5. Default ist, dass der Server nur lokal erreichbar ist.
+5. Default ist, dass der Server nur lokal (d.h. localhost) 
+   erreichbar ist.
    Mit dem Aufruf `java-server.bat <port> public` ist der
-   Server öffentlich erreichbar.
+   Server auch von anderen Netzwerkgeräten erreichbar.
    
 
 Daten an die FHIR-Schnittstelle schicken
