@@ -6,6 +6,12 @@
 	<artifactId>demo-server</artifactId>
 	<version>0.5-SNAPSHOT</version>
 
+	<description>
+		Demo server application. The demo server can receive
+		and validate CDA documents via REST and SOAP interfaces.
+	</description>
+	
+	
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>

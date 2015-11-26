@@ -13,7 +13,7 @@
 	
 	<properties>
 		<!-- specifies the package and source version to which the site refers to -->
-		<latestReleaseVersion>0.4</latestReleaseVersion>
+		<latestReleaseVersion>0.4.1</latestReleaseVersion>
 		<releaseRepoUrl>https://www.aktin.org/software/repo</releaseRepoUrl>
 		<!-- encoding stuff -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -49,8 +49,11 @@
 	<modules>
 		<module>legacy-cda</module>
 		<module>cda-validation</module>
+		<module>cda-server</module>
+		<module>cda-import</module>
 		<module>demo-server</module>
 		<module>demo-distribution</module>
+		
 		<!-- wegen fehlerhafter tests kurzzeitig entfernt
 		<module>import-server</module>
 		-->
