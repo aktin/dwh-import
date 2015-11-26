@@ -16,10 +16,6 @@ import org.aktin.cda.etl.xds.DocumentRepository;
 
 import com.sun.net.httpserver.HttpServer;
 
-import java.net.URL;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 /**
  * Demo server providing the following interfaces:
  * <ul>
@@ -80,13 +76,11 @@ public class Server {
 		SOAPBinding binding = (SOAPBinding)xdsEndpoint.getBinding();
 		binding.setMTOMEnabled(true);
 		log.info("WSDL published at http://"+localAddress.getHostName()+":"+localAddress.getPort()+XDS_CONTEXT_PATH+"?wsdl");
-		log.info("Public access (only works if public argument is given) at http://"+getIP()+":"+localAddress.getPort()+XDS_CONTEXT_PATH+"?wsdl");
 
 		// publish REST end point
 		restEndpoint = Endpoint.create(HTTPBinding.HTTP_BINDING, restService);
 		restEndpoint.publish(server.createContext(REST_CONTEXT_PATH));
 		log.info("REST published at http://"+localAddress.getHostName()+":"+localAddress.getPort()+REST_CONTEXT_PATH+"/");
-		log.info("Public access (only works if public argument is given) at http://"+getIP()+":"+localAddress.getPort()+REST_CONTEXT_PATH+"/");
 
 	}
 	
@@ -140,9 +134,11 @@ public class Server {
 				switch( args[1] ){
 				case "localhost":
 					addr = new InetSocketAddress(InetAddress.getByName(null), port);
+					System.out.println("Listening on localhost (loopback device) only.");
 					break;
 				case "public":
 					addr = new InetSocketAddress(port);
+					System.err.println("Listening on all network interfaces.");
 					break;
 				default:
 					System.out.println("No idea what you want with "+args[1]);
@@ -154,23 +150,12 @@ public class Server {
 		}else{
 			System.out.println("Using dynamic port."); 
 			System.out.println("You can specify a fixed port as command line argument");
+			System.out.println();
+			System.out.println("Listening on localhost (loopback device) only.");
+			System.out.println("For network access, start with command line \'<port> public\'");
 			addr = new InetSocketAddress(InetAddress.getByName(null), 0);
 		}
 		return addr;
-	}
-	
-	// whatsmypublicipadress.info
-	private static String getIP() {
-		try {
-		URL whatismyip = new URL("http://checkip.amazonaws.com");
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-		                whatismyip.openStream()));
-	
-		String ip = in.readLine(); //you get the IP as a String
-		return ip;
-		} catch (Exception e) {
-			return "IP-Error";
-		}	
 	}
 	
 	/**
