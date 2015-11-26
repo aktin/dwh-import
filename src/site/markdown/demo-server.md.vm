@@ -55,9 +55,9 @@ gibt es mit dem Softwarepaket zwei Möglichkeiten.
 
 2. Mit dem Programm `curl`. Das Programm ist in den meisten 
    Linux-Distributionen verfügbar, muss unter Windows jedoch 
-   separat installiert werden. Anschließen können die Skripte
-   `curl-statusonly.bat` und `curl-response.bat` verwendet 
-   werden.
+   [separat installiert werden](http://curl.haxx.se/download.html). 
+   Anschließen können die Skripte `curl-statusonly.bat` 
+   und `curl-response.bat` verwendet werden.
    
 Verwendung in MacOS X und Linux
 --------------------------------
