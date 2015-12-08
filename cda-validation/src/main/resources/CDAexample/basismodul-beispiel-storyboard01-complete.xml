@@ -842,7 +842,7 @@
                     <text>
                         <list>
                             <item ID="alg">Allergien: nein</item>
-                            <item ID="int">Unverträglichkeiten: nein</item>
+                            <item ID="int">Kontrastmittel: ja</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
