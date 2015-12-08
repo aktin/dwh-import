@@ -130,10 +130,15 @@ public class Server {
 				System.err.println("Using dynamic port!");
 				port = 0;
 			}
+			if( args.length == 1 ){
+				// only a port specified, use LOCALHOST
+				args = new String[]{args[0],"localhost"};
+			}
+			
 			if( args.length == 2 ){
 				switch( args[1] ){
 				case "localhost":
-					addr = new InetSocketAddress(InetAddress.getByName(null), port);
+					addr = new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
 					System.out.println("Listening on localhost (loopback device) only.");
 					break;
 				case "public":
