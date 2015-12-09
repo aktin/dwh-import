@@ -23,9 +23,9 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.aktin.cda.CDAConstants;
+import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
-import org.aktin.cda.etl.CDAProcessor;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 
 

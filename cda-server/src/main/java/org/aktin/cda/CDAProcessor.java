@@ -1,4 +1,4 @@
-package org.aktin.cda.etl;
+package org.aktin.cda;
 
 import javax.xml.transform.Source;
 

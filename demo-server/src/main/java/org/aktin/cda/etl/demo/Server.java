@@ -13,8 +13,8 @@ import javax.xml.ws.Endpoint;
 import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.soap.SOAPBinding;
 
+import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
-import org.aktin.cda.etl.CDAProcessor;
 import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
 
