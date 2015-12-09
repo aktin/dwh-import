@@ -5,12 +5,14 @@ import java.util.logging.Logger;
 
 import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
+import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.ValidationResult;
-import org.aktin.cda.etl.demo.ValidationService;
+import org.aktin.cda.Validator;
+import org.aktin.cda.etl.CDAProcessor;
 
 import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
@@ -34,9 +36,10 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 @WebService(endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType", targetNamespace="urn:ihe:iti:xds-b:2007", serviceName="DocumentRepository_Service")
 public class DocumentRepository implements DocumentRepositoryPortType {
 	private static final Logger log = Logger.getLogger(DocumentRepository.class.getName());
-	private ValidationService validator;
+	private Validator validator;
+	private CDAProcessor processor;
 	
-	public DocumentRepository(ValidationService validator){
+	public DocumentRepository(Validator validator){
 		this.validator = validator;
 	}
 	@Override
@@ -74,8 +77,11 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		Document doc = body.getDocument().get(0);
 		log.info("Found document with id="+doc.getId()+" and length="+doc.getValue().length);
 		ValidationResult vr = null;
+		Source xml = new StreamSource(new ByteArrayInputStream(doc.getValue()));
 		try {
-			vr = validator.validate(new StreamSource(new ByteArrayInputStream(doc.getValue())));
+			synchronized( validator ){
+				vr = validator.validate(xml);
+			}
 		} catch (TransformerException e) {
 			return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Error while processing document", e);
 		} catch (XPathExpressionException e) {
@@ -85,12 +91,14 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		RegistryResponseType resp = new RegistryResponseType();
 
 		if( vr.isValid() ){
-			resp.setStatus(XDSConstants.RESPONSE_SUCCESS);			
-			log.info("Document validation: VALID");
+			resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
+			// TODO extract ids, compare to IDs from XDS call
+			if( processor != null ){
+				processor.process(null, null, null, xml); // XXX
+			}
 		}else{
 			// failed
-			resp.setStatus(XDSConstants.RESPONSE_FAILURE);			
-			log.info("Document validation: FAILED");
+			resp.setStatus(XDSConstants.RESPONSE_FAILURE);
 
 			RegistryError re = new RegistryError();
 			re.setSeverity(XDSConstants.SEVERITY_ERROR);

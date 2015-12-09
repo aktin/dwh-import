@@ -1,6 +1,7 @@
 package org.aktin.cda.etl.fhir;
 
 import java.net.HttpURLConnection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -17,10 +18,14 @@ import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
+import org.aktin.cda.CDAConstants;
 import org.aktin.cda.ValidationResult;
-import org.aktin.cda.etl.demo.ValidationService;
+import org.aktin.cda.Validator;
+import org.aktin.cda.etl.CDAProcessor;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 
 
@@ -33,10 +38,11 @@ import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 @ServiceMode(value = Service.Mode.MESSAGE)
 public class RestService implements Provider<Source>{
 	private static final Logger log = Logger.getLogger(RestService.class.getName());
-	private ValidationService validator;
+	private Validator validator;
 	private XMLOutputFactory outputFactory;
 	private DocumentBuilder documentBuilder;
-	
+	private CDAProcessor processor;
+
 	/**
 	 * HTTP Error code 422, indicating that the submitted entity could not be processed due to semantical reasons, e.g. valid XML but Schematron validation failed.
 	 * Other codes can be used from {@link HttpURLConnection}.
@@ -56,10 +62,11 @@ public class RestService implements Provider<Source>{
 	public static final int HTTP_UNSUPPORTED_TYPE = HttpURLConnection.HTTP_UNSUPPORTED_TYPE;
 	
 	
-	public RestService(ValidationService validator) throws ParserConfigurationException{
+	public RestService(Validator validator, CDAProcessor processor) throws ParserConfigurationException{
 		this.validator = validator;
 		outputFactory = XMLOutputFactory.newFactory();
 		documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		this.processor = processor;
 	}
 	
 	@Resource
@@ -75,6 +82,7 @@ public class RestService implements Provider<Source>{
 		String query = (String)mc.get(MessageContext.QUERY_STRING);
 		String httpMethod = (String)mc.get(MessageContext.HTTP_REQUEST_METHOD);
 		
+		
 		// only PUT and POST supported
 		if( !httpMethod.equals("PUT") && !httpMethod.equals("POST") ){
 			// method not allowed
@@ -87,12 +95,27 @@ public class RestService implements Provider<Source>{
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
 		int responseStatus;
 
+		// extract patient id, encounter id, document id
+		String[] ids = new String[CDAConstants.ID_TREE_XPATHS.length];
+
 		try {
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
-			vr = validator.validate(request);
+			synchronized( validator ){
+				vr = validator.validate(request);
+			}
 			if( vr.isValid() ){
 				responseStatus = HttpURLConnection.HTTP_OK;
 				log.info("Document validation: VALID");
+				
+				// extract IDs
+				XPathFactory factory =  XPathFactory.newInstance();
+				XPath xpath = factory.newXPath();
+				for( int i=0; i<CDAConstants.ID_TREE_XPATHS.length; i++ ){
+					ids[i] = xpath.evaluate(CDAConstants.ID_TREE_XPATHS[i], request);
+				}
+				log.info(" - patientId="+ids[1]);
+				log.info(" - setId="+ids[1]);
+				log.info(" - vesionId="+ids[1]);
 			}else{
 				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
 				vr.forEachErrorMessage(s -> outcome.addIssue(Severity.error, s));
@@ -100,8 +123,10 @@ public class RestService implements Provider<Source>{
 			}
 		} catch (XPathExpressionException e) {
 			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
+			log.log(Level.FINE, "XPath error", e);
 		} catch (TransformerException e) {
 			responseStatus = HTTP_UNSUPPORTED_TYPE;
+			log.log(Level.FINE, "Transformation failed", e);
 		}
 		
 		if( path != null && path.equals("_validate") ){
@@ -110,6 +135,10 @@ public class RestService implements Provider<Source>{
 		}else{
 			// check arguments/valid id
 			// otherwise return HTTP_BAD_REQUEST
+			if( processor != null ){
+				// process document
+				processor.process(ids[0], ids[1], ids[2], request);
+			}
 		}
 		// HTTP status response
 		mc.put(MessageContext.HTTP_RESPONSE_CODE, responseStatus);

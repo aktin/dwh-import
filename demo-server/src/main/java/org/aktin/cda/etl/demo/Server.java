@@ -7,10 +7,14 @@ import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.soap.SOAPBinding;
 
+import org.aktin.cda.Validator;
+import org.aktin.cda.etl.CDAProcessor;
 import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
 
@@ -26,7 +30,7 @@ import com.sun.net.httpserver.HttpServer;
  * @author R.W.Majeed
  *
  */
-public class Server {
+public class Server implements CDAProcessor{
 	private static final Logger log = Logger.getLogger(Server.class.getName());
 	/** Servlet context for XDS.b */
 	public static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
@@ -39,17 +43,21 @@ public class Server {
 	private Endpoint xdsEndpoint, restEndpoint;
 
 	private HttpServer server;
-	private ValidationService validator;
+	private Validator validator;
 	
 	/**
 	 * Construct the local server
 	 * @throws IOException IO error
 	 */
 	public Server() throws IOException{
-		validator = new ValidationService();
+		try {
+			validator = new Validator();
+		} catch (TransformerConfigurationException e) {
+			throw new IOException("Unable to initialize validator", e);
+		}
 		xdsService = new DocumentRepository(validator);
 		try {
-			restService = new RestService(validator);
+			restService = new RestService(validator, this);
 		} catch (ParserConfigurationException e) {
 			throw new RuntimeException(e);
 		}
@@ -188,6 +196,12 @@ public class Server {
 			}
 		});
 		System.out.println("Press Ctrl+C to shut down");
+	}
+
+	@Override
+	public void process(String patientId, String encounterId, String documentId, Source document) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

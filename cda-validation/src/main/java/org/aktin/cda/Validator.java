@@ -94,9 +94,15 @@ public class Validator implements URIResolver, NamespaceContext {
 	 */
 	public ValidationResult validate(Source cdaSource) throws TransformerException, XPathExpressionException{
 		//Result result = new StreamResult(System.out);
-		DOMResult result = new DOMResult();
-		transformer.transform(cdaSource, result);
-		return new ValidationResult(this, (Document)result.getNode());
+		DOMResult dom = new DOMResult();
+		transformer.transform(cdaSource, dom);
+		ValidationResult result = new ValidationResult(this, (Document)dom.getNode());
+		if( result.isValid() ){
+			log.info("Document validation: VALID");
+		}else{
+			log.info("Document validation: FAILED");			
+		}
+		return result;
 	}
 
 	/**
