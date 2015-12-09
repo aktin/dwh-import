@@ -200,8 +200,7 @@ public class Server implements CDAProcessor{
 
 	@Override
 	public void process(String patientId, String encounterId, String documentId, Source document) {
-		// TODO Auto-generated method stub
-		
+		// do nothing
 	}
 	
 

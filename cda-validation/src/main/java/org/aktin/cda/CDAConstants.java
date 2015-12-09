@@ -1,5 +1,10 @@
 package org.aktin.cda;
 
+import javax.xml.transform.Source;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
 /**
  * CDA constants needed for the validation. Mainly XML namespaces.
  * 
@@ -32,5 +37,23 @@ public class CDAConstants {
 			"ClinicalDocument/setId@extension",
 			"ClinicalDocument/versionNumber/@value",
 	};
+	
+	/**
+	 * Extract IDs from a CDA document. See {@link #ID_TREE_XPATHS}
+	 * @param cda CDA document
+	 * @return hierarchical IDs
+	 * @throws XPathExpressionException for XPath errors during ID extraction
+	 * @see #ID_TREE_XPATHS
+	 */
+	public String[] extractIDs(Source cda) throws XPathExpressionException{
+		// extract IDs
+		String[] ids = new String[ID_TREE_XPATHS.length];
+		XPathFactory factory =  XPathFactory.newInstance();
+		XPath xpath = factory.newXPath();
+		for( int i=0; i<CDAConstants.ID_TREE_XPATHS.length; i++ ){
+			ids[i] = xpath.evaluate(CDAConstants.ID_TREE_XPATHS[i], cda);
+		}
+		return ids;
+	}
 
 }

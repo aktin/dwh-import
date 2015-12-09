@@ -91,11 +91,14 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		RegistryResponseType resp = new RegistryResponseType();
 
 		if( vr.isValid() ){
+			// extract patient id, encounter id, document id
+			String[] ids = CDAConstants.extractIDs(request);
+			// check arguments/valid id
+			// otherwise return HTTP_BAD_REQUEST
+			// process document (XXX catch errors)
+			processor.process(ids[0], ids[1], ids[2], request);
 			resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
 			// TODO extract ids, compare to IDs from XDS call
-			if( processor != null ){
-				processor.process(null, null, null, xml); // XXX
-			}
 		}else{
 			// failed
 			resp.setStatus(XDSConstants.RESPONSE_FAILURE);

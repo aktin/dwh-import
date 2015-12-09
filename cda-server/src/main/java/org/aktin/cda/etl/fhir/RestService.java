@@ -28,6 +28,8 @@ import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 
+import sun.util.resources.cldr.es.CalendarData_es_CO;
+
 
 /**
  * Implements FHIR Binary interface to receive text/xml CDA documents
@@ -95,9 +97,6 @@ public class RestService implements Provider<Source>{
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
 		int responseStatus;
 
-		// extract patient id, encounter id, document id
-		String[] ids = new String[CDAConstants.ID_TREE_XPATHS.length];
-
 		try {
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			synchronized( validator ){
@@ -105,21 +104,21 @@ public class RestService implements Provider<Source>{
 			}
 			if( vr.isValid() ){
 				responseStatus = HttpURLConnection.HTTP_OK;
-				log.info("Document validation: VALID");
-				
-				// extract IDs
-				XPathFactory factory =  XPathFactory.newInstance();
-				XPath xpath = factory.newXPath();
-				for( int i=0; i<CDAConstants.ID_TREE_XPATHS.length; i++ ){
-					ids[i] = xpath.evaluate(CDAConstants.ID_TREE_XPATHS[i], request);
+
+				if( path != null && path.equals("_validate") ){
+					// only validation, no submission
+					
+				}else{
+					// extract patient id, encounter id, document id
+					String[] ids = CDAConstants.extractIDs(request);
+					// check arguments/valid id
+					// otherwise return HTTP_BAD_REQUEST
+					// process document (XXX catch errors)
+					processor.process(ids[0], ids[1], ids[2], request);
 				}
-				log.info(" - patientId="+ids[1]);
-				log.info(" - setId="+ids[1]);
-				log.info(" - vesionId="+ids[1]);
 			}else{
 				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
 				vr.forEachErrorMessage(s -> outcome.addIssue(Severity.error, s));
-				log.info("Document validation: FAILED");
 			}
 		} catch (XPathExpressionException e) {
 			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
@@ -129,17 +128,6 @@ public class RestService implements Provider<Source>{
 			log.log(Level.FINE, "Transformation failed", e);
 		}
 		
-		if( path != null && path.equals("_validate") ){
-			// only validation, no submission
-			
-		}else{
-			// check arguments/valid id
-			// otherwise return HTTP_BAD_REQUEST
-			if( processor != null ){
-				// process document
-				processor.process(ids[0], ids[1], ids[2], request);
-			}
-		}
 		// HTTP status response
 		mc.put(MessageContext.HTTP_RESPONSE_CODE, responseStatus);
 		
