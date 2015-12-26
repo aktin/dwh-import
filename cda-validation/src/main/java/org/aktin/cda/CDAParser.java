@@ -17,6 +17,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 /**
@@ -137,9 +138,18 @@ public class CDAParser {
 	 * @return document node
 	 * @throws TransformerException if transformation failed
 	 */
-	public Node buildDOM(Source source) throws TransformerException{
+	public Document buildDOM(Source source) throws TransformerException{
 		DOMResult result = new DOMResult();
 		domTransform.transform(source, result);
-		return result.getNode();
+		Node node = result.getNode();
+		if( node instanceof Document ){
+			return (Document)node;
+		}else{
+			Document doc = node.getOwnerDocument();
+			if( doc == null ){
+				throw new TransformerException("DOMResult does not contain Document node");
+			}
+			return doc;
+		}
 	}
 }
