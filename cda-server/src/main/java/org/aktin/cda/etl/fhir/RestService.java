@@ -12,23 +12,20 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.ws.Provider;
 import javax.xml.ws.Service;
 import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
-import org.aktin.cda.CDAConstants;
+import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
-import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
-
-import sun.util.resources.cldr.es.CalendarData_es_CO;
+import org.w3c.dom.Node;
 
 
 /**
@@ -43,6 +40,7 @@ public class RestService implements Provider<Source>{
 	private Validator validator;
 	private XMLOutputFactory outputFactory;
 	private DocumentBuilder documentBuilder;
+	private CDAParser parser;
 	private CDAProcessor processor;
 
 	/**
@@ -69,6 +67,7 @@ public class RestService implements Provider<Source>{
 		outputFactory = XMLOutputFactory.newFactory();
 		documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		this.processor = processor;
+		parser = new CDAParser();
 	}
 	
 	@Resource
@@ -98,9 +97,10 @@ public class RestService implements Provider<Source>{
 		int responseStatus;
 
 		try {
+			Node cda = parser.buildDOM(request);
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			synchronized( validator ){
-				vr = validator.validate(request);
+				vr = validator.validate(new DOMSource(cda));
 			}
 			if( vr.isValid() ){
 				responseStatus = HttpURLConnection.HTTP_OK;
@@ -110,7 +110,7 @@ public class RestService implements Provider<Source>{
 					
 				}else{
 					// extract patient id, encounter id, document id
-					String[] ids = CDAConstants.extractIDs(request);
+					String[] ids = parser.extractIDs(cda);
 					// check arguments/valid id
 					// otherwise return HTTP_BAD_REQUEST
 					// process document (XXX catch errors)
@@ -118,7 +118,7 @@ public class RestService implements Provider<Source>{
 				}
 			}else{
 				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
-				vr.forEachErrorMessage(s -> outcome.addIssue(Severity.error, s));
+				vr.forEachErrorMessage(s -> outcome.addIssue(SimplifiedOperationOutcome.Severity.error, s));
 			}
 		} catch (XPathExpressionException e) {
 			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;

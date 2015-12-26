@@ -1,18 +1,23 @@
 package org.aktin.cda.etl.xds;
 
 import java.io.ByteArrayInputStream;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.aktin.cda.CDAConstants;
+import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
+import org.w3c.dom.Node;
 
 import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
@@ -37,10 +42,13 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 public class DocumentRepository implements DocumentRepositoryPortType {
 	private static final Logger log = Logger.getLogger(DocumentRepository.class.getName());
 	private Validator validator;
+	private CDAParser parser;
 	private CDAProcessor processor;
 	
-	public DocumentRepository(Validator validator){
+	public DocumentRepository(Validator validator, CDAProcessor processor){
 		this.validator = validator;
+		this.processor = processor;
+		this.parser = new CDAParser();
 	}
 	@Override
 	public RegistryResponseType documentRepositoryProvideAndRegisterDocumentSetB(
@@ -78,13 +86,17 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		log.info("Found document with id="+doc.getId()+" and length="+doc.getValue().length);
 		ValidationResult vr = null;
 		Source xml = new StreamSource(new ByteArrayInputStream(doc.getValue()));
+		Node cda;
 		try {
+			cda = parser.buildDOM(xml);
 			synchronized( validator ){
-				vr = validator.validate(xml);
+				vr = validator.validate(new DOMSource(cda));
 			}
 		} catch (TransformerException e) {
+			// happens if the source document is not well formed
 			return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Error while processing document", e);
 		} catch (XPathExpressionException e) {
+			log.log(Level.WARNING, "Unexpected error during validation", e);
 			return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Internal error", e);
 		}
 
@@ -92,13 +104,19 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 
 		if( vr.isValid() ){
 			// extract patient id, encounter id, document id
-			String[] ids = CDAConstants.extractIDs(request);
-			// check arguments/valid id
-			// otherwise return HTTP_BAD_REQUEST
-			// process document (XXX catch errors)
-			processor.process(ids[0], ids[1], ids[2], request);
-			resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
-			// TODO extract ids, compare to IDs from XDS call
+			String[] ids;
+			try {
+				// check arguments/valid id
+				ids = parser.extractIDs(cda);
+				// TODO compare to IDs from XDS call
+				// process document (XXX catch errors)
+				processor.process(ids[0], ids[1], ids[2], xml);
+				resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
+			} catch (XPathExpressionException e) {
+				// unable to retrieve IDs
+				log.log(Level.WARNING, "Unable to retrieve IDs from CDA document", e);
+				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Error while processing document", e);
+			}
 		}else{
 			// failed
 			resp.setStatus(XDSConstants.RESPONSE_FAILURE);

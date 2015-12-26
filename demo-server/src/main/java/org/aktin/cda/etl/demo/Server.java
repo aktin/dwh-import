@@ -55,7 +55,7 @@ public class Server implements CDAProcessor{
 		} catch (TransformerConfigurationException e) {
 			throw new IOException("Unable to initialize validator", e);
 		}
-		xdsService = new DocumentRepository(validator);
+		xdsService = new DocumentRepository(validator, this);
 		try {
 			restService = new RestService(validator, this);
 		} catch (ParserConfigurationException e) {
