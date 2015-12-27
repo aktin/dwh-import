@@ -1,18 +1,10 @@
 package org.aktin.cda.etl;
 
-import java.io.File;
-import java.net.URL;
-
-import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
-import org.aktin.cda.jaxws.PojoRest;
-import org.aktin.cda.jaxws.PojoTest;
-import org.aktin.cda.servlet.CDAImportBean;
-import org.aktin.cda.servlet.TestRest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -33,7 +25,7 @@ public class TestEEInject {
         		.addPackage(CDAProcessor.class.getPackage())
         		.addPackage(RestService.class.getPackage())
         		.addPackage(DocumentRepository.class.getPackage())
-        		.addClass(DepTest.class)
+        		.addClass(CDAImporter.class)
         		.addAsManifestResource(EmptyAsset.INSTANCE, "META-INF/beans.xml")
         		//.setWebXML(new File(WEBINF_DIR,"web.xml"))
         		//.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -50,6 +42,7 @@ public class TestEEInject {
 	public void verifyInjectedBeans(){
 		Assert.assertNotNull(restService);
 		Assert.assertNotNull(xdsService);
+		// TODO verify that CDAProcessor instanceof CDAImporter
 	}
 	@Test
 	public void assumeCorrectValidation(){

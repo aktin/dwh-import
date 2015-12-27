@@ -186,6 +186,12 @@
 			<version>2.2.10</version>
 			<scope>runtime</scope>
 		</dependency>-->
-
+		<!-- HIStream for ETL process -->
+		<dependency>
+			<groupId>de.sekmi.histream</groupId>
+			<artifactId>histream-i2b2</artifactId>
+			<version>0.6</version>
+		</dependency>
+		
 	</dependencies>
 </project>
