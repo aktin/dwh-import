@@ -25,7 +25,7 @@ import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
-import org.w3c.dom.Node;
+import org.w3c.dom.Document;
 
 
 /**
@@ -97,7 +97,7 @@ public class RestService implements Provider<Source>{
 		int responseStatus;
 
 		try {
-			Node cda = parser.buildDOM(request);
+			Document cda = parser.buildDOM(request);
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			synchronized( validator ){
 				vr = validator.validate(new DOMSource(cda));
@@ -114,7 +114,7 @@ public class RestService implements Provider<Source>{
 					// check arguments/valid id
 					// otherwise return HTTP_BAD_REQUEST
 					// process document (XXX catch errors)
-					processor.process(ids[0], ids[1], ids[2], request);
+					processor.process(ids[0], ids[1], ids[2], cda);
 				}
 			}else{
 				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity

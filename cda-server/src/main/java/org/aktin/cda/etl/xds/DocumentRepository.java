@@ -16,7 +16,6 @@ import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
-import org.w3c.dom.Node;
 
 import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
@@ -85,7 +84,7 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		log.info("Found document with id="+doc.getId()+" and length="+doc.getValue().length);
 		ValidationResult vr = null;
 		Source xml = new StreamSource(new ByteArrayInputStream(doc.getValue()));
-		Node cda;
+		org.w3c.dom.Document cda;
 		try {
 			cda = parser.buildDOM(xml);
 			synchronized( validator ){
@@ -109,7 +108,7 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 				ids = parser.extractIDs(cda);
 				// TODO compare to IDs from XDS call
 				// process document (XXX catch errors)
-				processor.process(ids[0], ids[1], ids[2], xml);
+				processor.process(ids[0], ids[1], ids[2], cda);
 				resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
 			} catch (XPathExpressionException e) {
 				// unable to retrieve IDs

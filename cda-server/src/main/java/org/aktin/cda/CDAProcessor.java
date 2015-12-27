@@ -1,8 +1,8 @@
 package org.aktin.cda;
 
-import javax.xml.transform.Source;
+import org.w3c.dom.Document;
 
 public interface CDAProcessor {
 
-	public void process(String patientId, String encounterId, String documentId, Source document);
+	public void process(String patientId, String encounterId, String documentId, Document document);
 }
