@@ -3,13 +3,13 @@
   xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
   version="2.0">
   <endpoint
-    name="PojoTest"
-    implementation="org.aktin.cda.jaxws.PojoTest"
-    url-pattern="/wsservlet/pojotest"/>
+    name="DocumentRepository"
+    implementation="org.aktin.cda.etl.xds.DocumentRepository"
+    url-pattern="/aktin/xds.b"/>
   <endpoint
-    name="PojoRest"
-    implementation="org.aktin.cda.jaxws.PojoRest"
+    name="RestService"
+    implementation="org.aktin.cda.etl.fhir.RestService"
     binding="http://www.w3.org/2004/08/wsdl/http"
-    url-pattern="/wsservlet/pojorest/*"/>
+    url-pattern="/aktin/fhir/Binary/*"/>
 <!--      implementation="org.aktin.cda.etl.xds.DocumentRepository"  -->
 </endpoints>

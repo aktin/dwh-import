@@ -11,16 +11,8 @@
 		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<servlet>
-		<servlet-name>ServletTestRest</servlet-name>
-		<servlet-class>org.aktin.cda.servlet.TestRest</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletTestRest</servlet-name>
-		<url-pattern>/servlet/testrest/*</url-pattern>
-	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>wsservlet</servlet-name>
-		<url-pattern>/wsservlet/*</url-pattern>
+		<url-pattern>/aktin/*</url-pattern>
 	</servlet-mapping>
 </web-app>
