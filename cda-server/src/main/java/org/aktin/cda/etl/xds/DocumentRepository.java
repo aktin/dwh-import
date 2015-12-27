@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.Source;
@@ -14,6 +15,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
+import org.aktin.cda.ExternalInterface;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
 
@@ -37,15 +39,13 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
  */
 //this binds the SEI to the SIB
 @WebService(endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType", targetNamespace="urn:ihe:iti:xds-b:2007", serviceName="DocumentRepository_Service")
-public class DocumentRepository implements DocumentRepositoryPortType {
+public class DocumentRepository implements DocumentRepositoryPortType, ExternalInterface {
 	private static final Logger log = Logger.getLogger(DocumentRepository.class.getName());
 	private Validator validator;
 	private CDAParser parser;
 	private CDAProcessor processor;
 	
-	public DocumentRepository(Validator validator, CDAProcessor processor){
-		this.validator = validator;
-		this.processor = processor;
+	public DocumentRepository(){
 		this.parser = new CDAParser();
 	}
 	@Override
@@ -174,5 +174,15 @@ public class DocumentRepository implements DocumentRepositoryPortType {
 		rel.getRegistryError().add(re);
 		resp.setRegistryErrorList(rel);
 		return resp;
+	}
+	@Inject
+	@Override
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+	@Inject
+	@Override
+	public void setProcessor(CDAProcessor processor) {
+		this.processor = processor;
 	}
 }

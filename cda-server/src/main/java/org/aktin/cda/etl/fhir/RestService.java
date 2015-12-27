@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,6 +24,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
+import org.aktin.cda.ExternalInterface;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
 import org.w3c.dom.Document;
@@ -35,7 +37,7 @@ import org.w3c.dom.Document;
  */
 @WebServiceProvider()
 @ServiceMode(value = Service.Mode.MESSAGE)
-public class RestService implements Provider<Source>{
+public class RestService implements Provider<Source>, ExternalInterface{
 	private static final Logger log = Logger.getLogger(RestService.class.getName());
 	private Validator validator;
 	private XMLOutputFactory outputFactory;
@@ -62,11 +64,9 @@ public class RestService implements Provider<Source>{
 	public static final int HTTP_UNSUPPORTED_TYPE = HttpURLConnection.HTTP_UNSUPPORTED_TYPE;
 	
 	
-	public RestService(Validator validator, CDAProcessor processor) throws ParserConfigurationException{
-		this.validator = validator;
+	public RestService() throws ParserConfigurationException{
 		outputFactory = XMLOutputFactory.newFactory();
 		documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		this.processor = processor;
 		parser = new CDAParser();
 	}
 	
@@ -138,5 +138,17 @@ public class RestService implements Provider<Source>{
 			mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_INTERNAL_ERROR);
 			return null; // TODO check whether returning null is ok
 		}
+	}
+
+	@Inject
+	@Override
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	@Inject
+	@Override
+	public void setProcessor(CDAProcessor processor) {
+		this.processor = processor;
 	}
 }
