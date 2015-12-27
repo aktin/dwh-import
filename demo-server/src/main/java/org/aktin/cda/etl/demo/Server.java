@@ -7,7 +7,6 @@ import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.http.HTTPBinding;
@@ -17,6 +16,7 @@ import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
 import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
+import org.w3c.dom.Document;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -55,12 +55,17 @@ public class Server implements CDAProcessor{
 		} catch (TransformerConfigurationException e) {
 			throw new IOException("Unable to initialize validator", e);
 		}
-		xdsService = new DocumentRepository(validator, this);
+		xdsService = new DocumentRepository();
+		xdsService.setValidator(validator);
+		xdsService.setProcessor(this);
 		try {
-			restService = new RestService(validator, this);
+			restService = new RestService();
 		} catch (ParserConfigurationException e) {
 			throw new RuntimeException(e);
 		}
+		restService.setValidator(validator);
+		restService.setProcessor(this);
+		
 		server = HttpServer.create();
 	}
 
@@ -199,7 +204,7 @@ public class Server implements CDAProcessor{
 	}
 
 	@Override
-	public void process(String patientId, String encounterId, String documentId, Source document) {
+	public void process(String patientId, String encounterId, String documentId, Document document) {
 		// do nothing
 	}
 	
