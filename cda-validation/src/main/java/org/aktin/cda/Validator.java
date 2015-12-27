@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+import javax.inject.Singleton;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.transform.OutputKeys;
@@ -31,10 +32,15 @@ import org.w3c.dom.NodeList;
  * <p>
  * This implementation is probably not thread-safe: A single {@link Transformer} 
  * instance is used for all calls to {@link #validate(Source)}.
+ * <p>
+ * This class can be used for dependency injection via CDI. In this case
+ * this class behaves as a singleton, so only one instance of the class
+ * is instantiated.
  * 
  * @author R.W.Majeed
  *
  */
+@Singleton
 public class Validator implements URIResolver, NamespaceContext {
 	private static final Logger log = Logger.getLogger(Validator.class.getName());
 	private TransformerFactory factory;

@@ -66,6 +66,17 @@
 			<artifactId>Saxon-HE</artifactId><!--
 			<version>9.6.0-7</version>-->
 		</dependency>
+		<!-- dependency injection is optional 
+			and provided by the CDI container.
+			We need this to specify that only
+			one instance of the validator is 
+			sufficient. -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- unit tests -->
 		<dependency>
 			<groupId>junit</groupId>
