@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints
+  xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
+  version="2.0">
+  <endpoint
+    name="PojoTest"
+    implementation="org.aktin.cda.jaxws.PojoTest"
+    url-pattern="/wsservlet/pojotest"/>
+  <endpoint
+    name="PojoRest"
+    implementation="org.aktin.cda.jaxws.PojoRest"
+    binding="http://www.w3.org/2004/08/wsdl/http"
+    url-pattern="/wsservlet/pojorest/*"/>
+<!--      implementation="org.aktin.cda.etl.xds.DocumentRepository"  -->
+</endpoints>
