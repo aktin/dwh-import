@@ -25,7 +25,7 @@ public class TestEEInject {
         		.addPackage(CDAProcessor.class.getPackage())
         		.addPackage(RestService.class.getPackage())
         		.addPackage(DocumentRepository.class.getPackage())
-        		.addClass(CDAImporter.class)
+        		.addClass(CDAImporterMockUp.class)
         		.addAsManifestResource(EmptyAsset.INSTANCE, "META-INF/beans.xml")
         		//.setWebXML(new File(WEBINF_DIR,"web.xml"))
         		//.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
