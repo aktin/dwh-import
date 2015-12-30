@@ -22,6 +22,7 @@ import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ExternalInterface;
@@ -126,6 +127,9 @@ public class RestService implements Provider<Source>, ExternalInterface{
 		} catch (TransformerException e) {
 			responseStatus = HTTP_UNSUPPORTED_TYPE;
 			log.log(Level.FINE, "Transformation failed", e);
+		} catch (CDAException e) {
+			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
+			log.log(Level.WARNING, "Unable to import CDA", e);
 		}
 		
 		// HTTP status response

@@ -13,6 +13,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ExternalInterface;
@@ -113,7 +114,10 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 			} catch (XPathExpressionException e) {
 				// unable to retrieve IDs
 				log.log(Level.WARNING, "Unable to retrieve IDs from CDA document", e);
-				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Error while processing document", e);
+				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Unable to extract IDs from document", e);
+			} catch (CDAException e) {
+				log.log(Level.WARNING, "Unable to import CDA", e);
+				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Error during import of CDA", e);
 			}
 		}else{
 			// failed
