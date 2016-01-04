@@ -1,5 +1,6 @@
 package org.aktin.cda.etl.demo.client;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,9 +32,16 @@ public class FhirClient {
 		}
 		
 		HttpURLConnection response = null;
-		
-		try( InputStream in = new FileInputStream(args[1]) ){
-			response = submitToFHIR(new URL(args[0]), in);
+		File xml = new File(args[1]);
+		try( InputStream in = new FileInputStream(xml) ){
+			String encoding = Util.findXmlEncoding(xml);
+			if( encoding == null ){
+				System.err.println("Unable to determine file encoding, using UTF-8");
+				encoding = "UTF-8";
+			}else{
+				System.err.println("Determined file encoding "+encoding);
+			}
+			response = submitToFHIR(new URL(args[0]), in, encoding);
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found: "+args[1]);
 		} catch (IOException e) {
@@ -63,16 +71,23 @@ public class FhirClient {
 	 * 
 	 * @param fhirUrl URL of the AKTIN FHIR interface. E.g. http://server.name/aktin/fhir/Binary
 	 * @param document CDA document to submit
+	 * @param encoding document encoding/charset or {@code null} to omit when sending
 	 * @return HTTP connection with response status and response/error stream
 	 * @throws IOException any errors during HTTP transfer
 	 */
-	public static HttpURLConnection submitToFHIR(URL fhirUrl, InputStream document) throws IOException{
+	public static HttpURLConnection submitToFHIR(URL fhirUrl, InputStream document, String encoding) throws IOException{
 		URL url = fhirUrl;
 		HttpURLConnection uc = (HttpURLConnection)url.openConnection();
 		uc.setDoInput(true);
 		uc.setDoOutput(true);
 		uc.addRequestProperty("Accept","text/xml");
-		uc.addRequestProperty("Content-type", "text/xml");
+		String contentType;
+		if( encoding == null ){
+			contentType = "text/xml";
+		}else{
+			contentType = "text/xml; charset="+encoding;
+		}
+		uc.addRequestProperty("Content-type", contentType);
 		// set method
 		uc.setRequestMethod("PUT");
 		uc.connect();

@@ -40,7 +40,7 @@ public class TestXDS {
 	public void expectOkForValidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml");
 
-		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "12345", "123", "example");
+		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "UTF-8", "12345", "123", "example");
 		
 		in.close();
 		
@@ -52,7 +52,7 @@ public class TestXDS {
 	public void expectFailForInvalidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-error1.xml");
 
-		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "12345", "123", "example");
+		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "UTF-8", "12345", "123", "example");
 		
 		in.close();
 		

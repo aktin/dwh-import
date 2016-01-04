@@ -1,6 +1,11 @@
 ﻿Changelog
 =========
 
+Version 0.5
+-----------
+* Demo clients (FHIR und XDS.b) übermitteln nun auch Zeichensatz (charset).
+Wenn kein Zeichensatz erkannt werden kann, wird UTF-8 übermittelt.
+
 Version 0.4.1
 -------------
 * Ausführlichere Ausgabe beim Start des Demo-Servers. 

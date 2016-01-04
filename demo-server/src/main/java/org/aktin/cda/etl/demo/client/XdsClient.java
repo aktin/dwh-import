@@ -1,6 +1,7 @@
 package org.aktin.cda.etl.demo.client;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,8 +55,16 @@ public class XdsClient {
 		
 		RegistryResponseType response = null;
 		
-		try( InputStream in = new FileInputStream(args[4]) ){
-			response = submitToXDSb(new URL(args[0]), in, args[1], args[2], args[3]);
+		File xml = new File(args[4]);
+		try( InputStream in = new FileInputStream(xml) ){
+			String encoding = Util.findXmlEncoding(xml);
+			if( encoding == null ){
+				System.err.println("Unable to determine file encoding, using UTF-8");
+				encoding = "UTF-8";
+			}else{
+				System.err.println("Determined file encoding "+encoding);
+			}
+			response = submitToXDSb(new URL(args[0]), in, encoding, args[1], args[2], args[3]);
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found: "+args[1]);
 		} catch (IOException e) {
@@ -117,7 +126,7 @@ public class XdsClient {
 	 * @return registry response
 	 * @throws IOException IO errors during transfer
 	 */
-	public static RegistryResponseType submitToXDSb(URL xdsUrl, InputStream document, String uniqueId, String patientId,String sourceId) throws IOException{
+	public static RegistryResponseType submitToXDSb(URL xdsUrl, InputStream document, String charset, String uniqueId, String patientId,String sourceId) throws IOException{
 		DocumentRepositoryService service = new DocumentRepositoryService(xdsUrl);
 		DocumentRepositoryPortType soap = service.getPort(DocumentRepositoryPortType.class);
 
@@ -171,7 +180,11 @@ public class XdsClient {
 		// The id attribute is used to connect the ExtrinsicObject to the Mime Part.
 		ExtrinsicObjectType eo = new ExtrinsicObjectType();
 		eo.setObjectType(XDSConstants.UUID_DOCUMENT_STABLE);
-		eo.setMimeType("text/xml");
+		if( charset == null ){
+			eo.setMimeType("text/xml");
+		}else{
+			eo.setMimeType("text/xml; charset="+charset);
+		}
 		final String docId = "doc01"; // local symbolic id
 		eo.setId(docId); // document id
 		eo.getSlot(); // actually requires the following ebRIM slots: creationTime, languageCode, sourcePatientId

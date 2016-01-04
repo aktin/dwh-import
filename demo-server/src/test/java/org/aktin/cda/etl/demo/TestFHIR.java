@@ -60,7 +60,7 @@ public class TestFHIR {
 
 		// submit document to URL connection
 		// see the corresponding source code how it is done
-		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in, "UTF-8");
 
 		// close CDA input stream
 		in.close();
@@ -79,7 +79,7 @@ public class TestFHIR {
 	public void expectUnprocessableEntityForSemanticErrors() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-error1.xml");
 
-		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in, "UTF-8");
 		
 		in.close();
 		
@@ -93,7 +93,7 @@ public class TestFHIR {
 	public void expectUnsupportedTypeForInvalidXML() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/invalid-syntax.xml");
 
-		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in, "UTF-8");
 		
 		in.close();
 		
@@ -106,7 +106,7 @@ public class TestFHIR {
 	public void expectUnprocessableEntityForOtherXML() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDAexample/other-document.xml");
 
-		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in);
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirUrl, in, "UTF-8");
 		
 		in.close();
 		
