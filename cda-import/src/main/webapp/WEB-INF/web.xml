@@ -3,6 +3,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
 	<display-name>CDA import web application</display-name>
+	<!-- 
 	<listener>
 		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
 	</listener>
@@ -15,4 +16,23 @@
 		<servlet-name>wsservlet</servlet-name>
 		<url-pattern>/aktin/*</url-pattern>
 	</servlet-mapping>
+ -->
+	<servlet>
+		<servlet-name>CDAImportXDS</servlet-name>
+		<servlet-class>org.aktin.cda.etl.xds.DocumentRepository</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CDAImportFHIR</servlet-name>
+		<servlet-class>org.aktin.cda.etl.fhir.RestService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CDAImportXDS</servlet-name>
+		<url-pattern>/xds.b</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CDAImportFHIR</servlet-name>
+		<url-pattern>/fhir/Binary/*</url-pattern>
+	</servlet-mapping>
+	<!--  TODO test in Wildfly 9.0.2 -->
+
 </web-app>
