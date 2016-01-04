@@ -16,8 +16,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -52,6 +52,7 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 	private PostgresVisitStore visitStore;
 	private ObservationFactory factory;
 	private Transformer cdaToDataWarehouse;
+	private XMLInputFactory inputFactory;
 	
 	/**
 	 * Construct a CDAImporter 
@@ -66,9 +67,12 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 		try( InputStream in = getClass().getResourceAsStream("/cda-eav.xsl") ){
 			cdaToDataWarehouse = tf.newTransformer(new StreamSource(in));
 		}
-
+		
 		InitialContext ctx = new InitialContext();
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
+
+		// XML input factory
+		inputFactory = XMLInputFactory.newInstance();
 
 		// TODO where to store/get the configuration for this EJB???
 		DataSource crcDS = (DataSource)ctx.lookup("java:/QueryToolDemoDS");
@@ -137,11 +141,10 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 	 * @throws CDAException error
 	 */
 	private void loadEAV(Path file) throws CDAException{
-		GroupedXMLReader suppl;
-		try( InputStream in = Files.newInputStream(file) ) {
-			suppl = new GroupedXMLReader(factory, (XMLStreamReader)null);
+		try( InputStream in = Files.newInputStream(file);
+				GroupedXMLReader suppl = new GroupedXMLReader(factory, inputFactory.createXMLStreamReader(in)) ) 
+		{
 			suppl.stream().forEach(inserter);
-			suppl.close();
 		} catch (IOException e) {
 			throw new CDAException("Unable to read EAV temp file: "+file, e);
 		} catch (JAXBException | XMLStreamException e) {
