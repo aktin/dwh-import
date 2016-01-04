@@ -14,12 +14,14 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.ws.BindingType;
 import javax.xml.ws.Provider;
 import javax.xml.ws.Service;
 import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.http.HTTPBinding;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.CDAException;
@@ -37,7 +39,8 @@ import org.w3c.dom.Document;
  *
  */
 @WebServiceProvider()
-@ServiceMode(value = Service.Mode.MESSAGE)
+@ServiceMode(Service.Mode.MESSAGE)
+@BindingType(HTTPBinding.HTTP_BINDING)
 public class RestService implements Provider<Source>, ExternalInterface{
 	private static final Logger log = Logger.getLogger(RestService.class.getName());
 	private Validator validator;
