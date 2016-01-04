@@ -192,6 +192,13 @@
 			<artifactId>histream-i2b2</artifactId>
 			<version>0.7-SNAPSHOT</version>
 		</dependency>
+		<!-- try if this helps with Wildfly 
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.2.8</version>
+			<scope>runtime</scope>
+		</dependency>-->
 		
 	</dependencies>
 </project>

@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
 public class TestEEInject {
-	private static final String WEBINF_DIR = "src/main/webapp/WEB-INF";
+	//private static final String WEBINF_DIR = "src/main/webapp/WEB-INF";
 	@Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
