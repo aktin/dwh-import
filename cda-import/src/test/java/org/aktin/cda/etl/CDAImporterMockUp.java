@@ -1,27 +1,55 @@
 package org.aktin.cda.etl;
 
+import java.io.IOException;
+import java.util.function.Consumer;
+
 import javax.annotation.PreDestroy;
 import javax.inject.Singleton;
 
-import org.aktin.cda.CDAProcessor;
-import org.w3c.dom.Document;
+import org.aktin.cda.CDAException;
+
+import de.sekmi.histream.Observation;
+import de.sekmi.histream.ObservationFactory;
+import de.sekmi.histream.impl.ObservationFactoryImpl;
+import de.sekmi.histream.impl.SimplePatientExtension;
+import de.sekmi.histream.impl.SimpleVisitExtension;
 
 @Singleton
-public class CDAImporterMockUp implements CDAProcessor, AutoCloseable{
-	public CDAImporterMockUp() {
+public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<Observation>, AutoCloseable{
+	private ObservationFactory factory;
+	private int insertCount;
+
+	public CDAImporterMockUp() throws IOException{
+		super();
 		System.out.println("CONSTRUCT CDAImporterMockUp");
-	}
-	
-	@Override
-	public void process(String patientId, String encounterId, String documentId, Document document) {
-		// TODO Auto-generated method stub
-		
+		factory = new ObservationFactoryImpl(new SimplePatientExtension(), new SimpleVisitExtension());
+		insertCount = 0;
 	}
 
 	@PreDestroy
 	@Override
 	public void close() {
-		System.out.println("CLOSE CDAImporterMockUp");
+		System.out.println("CLOSE CDAImporterMockUp (insertCount="+insertCount+")");
+	}
+
+	@Override
+	protected ObservationFactory getObservationFactory() {
+		return factory;
+	}
+
+	@Override
+	protected Consumer<Observation> getObservationInserter() {
+		return this;
+	}
+
+	@Override
+	protected void deletePreviousEAV(String encounterId) throws CDAException {
+		System.out.println("DELETE EAV encounter="+encounterId);
+	}
+
+	@Override
+	public void accept(Observation t) {
+		insertCount ++;
 	}
 
 }

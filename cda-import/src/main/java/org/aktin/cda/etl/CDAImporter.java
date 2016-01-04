@@ -1,12 +1,10 @@
 package org.aktin.cda.etl;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,28 +13,16 @@ import javax.inject.Singleton;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.CDAException;
-import org.aktin.cda.CDAProcessor;
-import org.w3c.dom.Document;
 
+import de.sekmi.histream.Observation;
 import de.sekmi.histream.ObservationFactory;
 import de.sekmi.histream.i2b2.I2b2Inserter;
 import de.sekmi.histream.i2b2.I2b2Visit;
 import de.sekmi.histream.i2b2.PostgresPatientStore;
 import de.sekmi.histream.i2b2.PostgresVisitStore;
 import de.sekmi.histream.impl.ObservationFactoryImpl;
-import de.sekmi.histream.io.GroupedXMLReader;
 
 /**
  * CDA importer pojo EJB. Processed CDA documents are loaded into
@@ -45,14 +31,12 @@ import de.sekmi.histream.io.GroupedXMLReader;
  * @author R.W.Majeed
  */
 @Singleton
-public class CDAImporter implements CDAProcessor, AutoCloseable{
+public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private static final Logger log = Logger.getLogger(CDAImporter.class.getName());
 	private I2b2Inserter inserter;
 	private PostgresPatientStore patientStore;
 	private PostgresVisitStore visitStore;
 	private ObservationFactory factory;
-	private Transformer cdaToDataWarehouse;
-	private XMLInputFactory inputFactory;
 	
 	/**
 	 * Construct a CDAImporter 
@@ -61,18 +45,10 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 	 * @throws TransformerConfigurationException failed to initialise transformation
 	 * @throws IOException unable to load CDA to ETL transformation script
 	 */
-	public CDAImporter() throws NamingException, SQLException, TransformerConfigurationException, IOException {
-		// create transformer
-		TransformerFactory tf = TransformerFactory.newInstance();
-		try( InputStream in = getClass().getResourceAsStream("/cda-eav.xsl") ){
-			cdaToDataWarehouse = tf.newTransformer(new StreamSource(in));
-		}
-		
+	public CDAImporter() throws NamingException, SQLException, IOException {
+		super();
 		InitialContext ctx = new InitialContext();
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
-
-		// XML input factory
-		inputFactory = XMLInputFactory.newInstance();
 
 		// TODO where to store/get the configuration for this EJB???
 		DataSource crcDS = (DataSource)ctx.lookup("java:/QueryToolDemoDS");
@@ -99,32 +75,13 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 	}
 
 	/**
- 	 * transform CDA document to EAV XML in temporary file
-	 * @param document CDA document
-	 * @return temporary file containing the EAV XML
-	 * @throws CDAException error
-	 */
-	private Path transformToEAV(Document document) throws CDAException{
-		Path tempEAV=null;
-		try {
-			tempEAV = Files.createTempFile("eav", null);
-			StreamResult result = new StreamResult(tempEAV.toFile());
-			cdaToDataWarehouse.transform(new DOMSource(document), result);
-		} catch (IOException e) {
-			throw new CDAException("Unable to create temp file", e);
-		} catch (TransformerException e) {
-			throw new CDAException("Unable to transform CDA to EAV", e);
-		}
-		return tempEAV;
-	}
-
-	/**
 	 * delete previous facts for this encounter
  	 * TODO for different CDA modules, use different ID or sourceId
 	 * @param encounterId encounter id
 	 * @throws CDAException error
 	 */
-	private void deletePreviousEAV(String encounterId) throws CDAException{
+	@Override
+	protected void deletePreviousEAV(String encounterId) throws CDAException{
 		I2b2Visit visit = visitStore.findVisit(encounterId);
 		if( visit != null ){
 			// visit existing, drop previous facts
@@ -133,41 +90,6 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 			} catch (SQLException e) {
 				throw new CDAException("Unable to delete previous EAV facts", e);
 			}
-		}
-	}
-	/**
-	 * parse EAV XML and insert into fact table
-	 * @param file EAV XML file
-	 * @throws CDAException error
-	 */
-	private void loadEAV(Path file) throws CDAException{
-		try( InputStream in = Files.newInputStream(file);
-				GroupedXMLReader suppl = new GroupedXMLReader(factory, inputFactory.createXMLStreamReader(in)) ) 
-		{
-			suppl.stream().forEach(inserter);
-		} catch (IOException e) {
-			throw new CDAException("Unable to read EAV temp file: "+file, e);
-		} catch (JAXBException | XMLStreamException e) {
-			throw new CDAException("Unable to parse/insert EAV facts to database", e);
-		}
-	}
-	@Override
-	public void process(String patientId, String encounterId, String documentId, Document document) throws CDAException{
-		// transform CDA document to EAV XML in temporary file
-		Path tempEAV = transformToEAV(document);
-		
-		// delete previous facts for this encounter		
-		deletePreviousEAV(encounterId);
-		
-		// parse EAV XML and insert into fact table
-		loadEAV(tempEAV);
-
-
-		// remove temporary file
-		try {
-			Files.delete(tempEAV);
-		} catch (IOException e) {
-			throw new CDAException("Unable to delete EAV temp file", e);
 		}
 	}
 
@@ -189,6 +111,16 @@ public class CDAImporter implements CDAProcessor, AutoCloseable{
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Error while closing patient store", e);
 		}
+	}
+
+	@Override
+	protected ObservationFactory getObservationFactory() {
+		return factory;
+	}
+
+	@Override
+	protected Consumer<Observation> getObservationInserter() {
+		return inserter;
 	}
 
 }
