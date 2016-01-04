@@ -1,6 +1,8 @@
 package org.aktin.cda.etl.fhir;
 
 import java.net.HttpURLConnection;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,8 +88,6 @@ public class RestService implements Provider<Source>, ExternalInterface{
 		String path = (String)mc.get(MessageContext.PATH_INFO);
 		String query = (String)mc.get(MessageContext.QUERY_STRING);
 		String httpMethod = (String)mc.get(MessageContext.HTTP_REQUEST_METHOD);
-		
-		
 		// only PUT and POST supported
 		if( !httpMethod.equals("PUT") && !httpMethod.equals("POST") ){
 			// method not allowed
@@ -95,6 +95,16 @@ public class RestService implements Provider<Source>, ExternalInterface{
 			return null;
 		}
 		log.info("REST request: "+httpMethod+" "+(path!=null?path:"")+(query!=null?"?"+query:""));
+
+		// log content type for debugging
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Map<String, List<String>> headers = (Map)mc.get(MessageContext.HTTP_REQUEST_HEADERS);
+		List<String> contentType = headers.get("Content-Type");
+		if( contentType != null && !contentType.isEmpty() ){
+			for( String type : contentType ){
+				log.info("Content-Type: "+type);
+			}
+		}
 
 		ValidationResult vr = null;
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
