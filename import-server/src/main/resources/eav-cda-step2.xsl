@@ -808,7 +808,7 @@
                              <!-- #Id -->
                              <code code="170497006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation because of infection (procedure)"/>
                              <statusCode code="completed"/>
-                             <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4069']">  <!-- #todo does not work, reason now modifier -->
+                             <xsl:for-each select="/eav:eav-data/eav:patient/eav:encounter/eav:facts/eav:fact[@templateId = '1.2.276.0.76.10.4069']">
                                  <!-- Isolation Indication -->
                                  <entryRelationship typeCode="RSON">
                                      <observation classCode="OBS" moodCode="EVN">                                         
@@ -818,7 +818,7 @@
                                          <statusCode code="completed"/>
                                          <value>
                                              <xsl:call-template name="templateSetConceptValues">
-                                                 <xsl:with-param name="templateId">1.2.276.0.76.10.4069</xsl:with-param> <!-- #todo does not work, reason now modifier -->
+                                                 <xsl:with-param name="templateId">1.2.276.0.76.10.4069</xsl:with-param> 
                                              </xsl:call-template>   
                                          </value>
                                      </observation>

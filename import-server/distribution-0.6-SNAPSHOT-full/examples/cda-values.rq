@@ -1,0 +1,16 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dwh: <http://sekmi.de/histream/dwh#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+SELECT ?concept ?notation ?label
+WHERE {
+#	?scheme a skos:ConceptScheme .
+#	?scheme skos:hasTopConcept ?concept .
+	?concept skos:prefLabel ?label .
+	?concept skos:notation ?notation .
+	OPTIONAL {?concept dc:description ?description} .
+	
+	FILTER NOT EXISTS {?concept skos:narrower ?narrower . }
+	FILTER NOT EXISTS {?concept dwh:restriction ?type . }
+	FILTER( lang(?label) = 'de' )
+}
+ORDER BY ASC(?notation)

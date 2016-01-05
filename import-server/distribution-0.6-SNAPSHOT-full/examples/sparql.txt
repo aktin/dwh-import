@@ -1,0 +1,8 @@
+path=%path%;e:\Software\apache-jena-3.0.0\bat
+set JENA_HOME=e:\Software\apache-jena-3.0.0
+cd E:\GIT\aktin\dwh-import\import-server\distribution-0.6-SNAPSHOT-full\examples
+e:
+
+arq --data=skos-aktin-cda.ttl --query=cda-items.rq --results=XML > cda-items.xml
+
+<?xml-stylesheet href="sparqlFO.xsl" type="text/xsl"?>
