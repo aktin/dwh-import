@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.aktin.cda.CDAException;
+import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
 import de.sekmi.histream.ObservationFactory;
@@ -51,7 +52,9 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
 
 		// TODO where to store/get the configuration for this EJB???
-		DataSource crcDS = (DataSource)ctx.lookup("java:/QueryToolDemoDS");
+		String dsName = "java:/QueryToolDemoDS";
+		log.info("Connecting to i2b2 database via "+dsName);
+		DataSource crcDS = (DataSource)ctx.lookup(dsName);
 		//DataSource ontDS = (DataSource)ctx.lookup("java:/OntologyDemoDS");
 		/* better approach: use i2b2 bootstrapDS to locate data source
 		 * DataSource bootstrapDS = (DataSource)ctx.lookup("java:/CRCBootStrapDS");
@@ -96,6 +99,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	@PreDestroy // needed for the EJB container to call this method
 	@Override
 	public void close() {
+		log.info("Closing connections to i2b2 database..");
 		if( inserter != null )try {
 			inserter.close();
 		} catch (IOException e) {
@@ -121,6 +125,15 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	@Override
 	protected Consumer<Observation> getObservationInserter() {
 		return inserter;
+	}
+
+	@Override
+	public void process(String patientId, String encounterId, String documentId, Document document)
+			throws CDAException {
+		super.process(patientId, encounterId, documentId, document);
+		// flush after each document
+		patientStore.flush();
+		visitStore.flush();
 	}
 
 }
