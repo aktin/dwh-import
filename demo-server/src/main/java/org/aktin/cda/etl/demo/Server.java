@@ -206,6 +206,7 @@ public class Server implements CDAProcessor{
 	@Override
 	public void process(String patientId, String encounterId, String documentId, Document document) {
 		// do nothing
+		// TODO remember patientId and encounterId, return whether document was created or replaced
 	}
 	
 
