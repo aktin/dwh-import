@@ -345,6 +345,12 @@
             <xsl:when test="./eav:modifier/@code='UNK'">
                 <xsl:attribute name="nullFlavor">UNK</xsl:attribute>
             </xsl:when>
+            <xsl:when test="./eav:modifier/@code='SUSP'"> <!-- should not be used here -->
+                <xsl:attribute name="findingCode">SUSP</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="./eav:modifier/@code='NAV'"> <!-- should not be used here -->
+                <xsl:attribute name="nullFlavor">NAV</xsl:attribute>
+            </xsl:when>
         </xsl:choose>
     </xsl:template>
     <xsl:template match="eav:fact[starts-with(@concept,'LOINC:30745-4')]">
@@ -511,16 +517,16 @@
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
     </xsl:template>
-    <!-- reason is now modifier
-    <xsl:template match="eav:fact[starts-with(@concept,'44100-6:')]">
+
+    <xsl:template match="eav:fact[starts-with(@concept,'AKTIN:ISOREASON:')]">
         <xsl:copy>          
             <xsl:attribute name="templateId">1.2.276.0.76.10.4069</xsl:attribute>
             <xsl:attribute name="code">
-                <xsl:value-of select="substring-after(./@concept,'AKTIN:ISOLATION:')"/>
+                <xsl:value-of select="substring-after(./@concept,'AKTIN:ISOREASON:')"/>
             </xsl:attribute>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
-    </xsl:template>   -->
+    </xsl:template>  
 
     <!-- TemplateID 1.2.276.0.76.10.3055  / 1.2.276.0.76.10.4048 / 1.2.276.0.76.10.4049 Problemobservationeddiagnosis -->
     <xsl:template match="eav:fact[starts-with(@concept,'ICD10GM:')]">

@@ -22,10 +22,10 @@
 :EmergencyNote a skos:Concept ;
     skos:prefLabel "AKTIN EmergencyNote"@en ;
     skos:prefLabel "AKTIN Notaufnahmeprotokoll"@de ;
-    dc:description "Top concept for EmergencyNote data" ;
+    dc:description "Top concept for EmergencyNote data (Tree)" ;
 
     skos:narrower :Basismodul ;
-    skos:narrower :ueberwachung ;
+    skos:narrower :Ueberwachung ;
     skos:narrower :Trauma ;
     skos:narrower :Anaesthesie ;
     skos:narrower :Konsil ;
@@ -33,12 +33,13 @@
 
 
 :Traumamodul a skos:Concept ;
-    skos:prefLabel "AKTIN Traumamodul"@de .
+    skos:prefLabel "AKTIN Traumamodul"@de ;
+    dc:description "AKTIN Traumamodul (Tree)" .
 
     
 :Basismodul a skos:Concept ;
     skos:prefLabel "AKTIN Basismodul"@de ;
-    
+    dc:description "AKTIN Basismodul (Tree)" ;
 
 #--Administrative Information / Aufnahme
 #    skos:narrower :PLZ ;  (nur PLZ)
@@ -50,44 +51,19 @@
     skos:narrower :Typeofreferralsource ;
 #Zeitpunkt 1. Arztkontakt / HistoryofPresentIllness
     skos:narrower :CEDIS30 ;
-#Symptomdauer
+    skos:narrower :Symptomdauer;
 
 #--Klinische Basisdaten Patient
 #--Clinical Information
     skos:narrower :Pregnancystatus ;
     skos:narrower :Clostridiumtetaniimmunization ;
     skos:narrower :Modifiedrankinscale ;
-    skos:narrower :Modifiedrankinscale2 ;
-#    skos:narrower :MultiRes ;
+#    skos:narrower :ModifiedrankinscaleCON ;
+    skos:narrower :MultiRes ;
 
 #--Vitalparameter und Scores
 #--Vitalsigns
-    skos:narrower :Vitalsigns ;
-
-#--Diagnostik    
-    skos:narrower :Diagnostic ;
-    
-    skos:narrower :Allergy ;
-#Zeitpunkt Therapiebeginn
-#    skos:narrower :Isolation ;
-    skos:narrower :Eddiagnosis ;
-    skos:narrower :MTS ;
-    skos:narrower :ESI ;
-#Zeitpunkt Ersteinschaetzung
-#Verwendetes Ersteinschaetzungssystem
-    
-#--Verlegung/Entlassung
-    skos:narrower :encompassingEncounter .
-    
-#    skos:narrower :Zusatzmodule;
-
-
-
-    
-:Vitalsigns a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Vitalsigns"@en ;
-    skos:prefLabel "Vitalparameter und Scores"@de ;
+#    skos:narrower :Vitalsigns ;
 
     skos:narrower :RespiratoryRate ;
     skos:narrower :OxygenSaturation ;
@@ -97,36 +73,66 @@
     skos:narrower :Pupilsize ;
     skos:narrower :Pupilreaction ;
     skos:narrower :BodyTemperatureCore ;
-    skos:narrower :Painseverity .
+    skos:narrower :Painseverity ;
+
+#--Diagnostik    
+    skos:narrower :Diagnostic ;
+    
+    skos:narrower :Allergy ;
+#Zeitpunkt Therapiebeginn
+    skos:narrower :Isolation ;
+    skos:narrower :Eddiagnosis ;
+    skos:narrower :MTS ;
+    skos:narrower :ESI ;
+#Zeitpunkt Ersteinschaetzung
+#Verwendetes Ersteinschaetzungssystem
+    
+#--Verlegung/Entlassung
+    skos:narrower :EncompassingEncounter .
+    
+#    skos:narrower :Zusatzmodule;
+
+
+
+    
+#:Vitalsigns a skos:Concept ;
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "Vitalsigns"@en ;
+#    skos:prefLabel "Vitalparameter und Scores"@de ;
+#    dc:description "Vitalparameter und Scores (Tree)" ;
+
+
 
 #:administrativeGender a skos:Concept ;
 #    skos:inScheme :EmergencyNote ;
 #    skos:prefLabel "Administrative Gender"@en ;
 #    skos:prefLabel "Administratives Geschlecht"@de ;
-    
-    #ToDo UN=undifferentiated(?) and NullFlavor
-    #skos:narrower :male ;
-    #skos:narrower :female .
-    #skos:narrower :UNK .
+#
+#   ToDo UN=undifferentiated(?) and NullFlavor
+#   skos:narrower :male ;
+#   skos:narrower :female .
+#   skos:narrower :UNK .
 
 #:male a skos:Concept ;
 #    skos:inScheme :EmergencyNote ;
 #    skos:prefLabel "maennlich"@de ;
 #    skos:notation "LOINC:21840-4:M" .
+
 #:female a skos:Concept ;
 #    skos:inScheme :EmergencyNote ;
 #    skos:prefLabel "weiblich"@de ;
 #    skos:notation "LOINC:21840-4:F" .
 
-:birthTime a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Geburtsdatum"@de ;
-    skos:prefLabel "Birth Time"@en .
+#:birthTime a skos:Concept ;
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "Geburtsdatum"@de ;
+#    skos:prefLabel "Birth Time"@en .
 
 
 :MTS a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Manchester Triage System"@de ;
+    dc:description "MTS: Auswahlliste" ;
 
     skos:narrower :MTS1 ;
     skos:narrower :MTS2 ;
@@ -159,6 +165,7 @@
 :ESI a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Emergency Severity Index"@de ;
+    dc:description "ESI: Auswahlliste" ;
 
     skos:narrower :ESI1;
     skos:narrower :ESI2;
@@ -192,132 +199,215 @@
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Pregnancy Status"@en ;
     skos:prefLabel "Schwangerschaftsstatus"@de ;
+    dc:description "Schwanger j/n" ;
 
-    skos:narrower :PregnantUNK;
-    skos:narrower :IsPregnant;
-    skos:narrower :IsNotPregnant.
+    skos:narrower :Pregnant_Unk;
+    skos:narrower :Pregnant_Yes;
+    skos:narrower :Pregnant_No.
     
-:PregnantUNK a skos:Concept ;
+:Pregnant_Unk a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Unbekannt"@de ;
     skos:notation "AKTIN:PREGNANCY:UNK" .
-:IsPregnant a skos:Concept ;
+:Pregnant_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Patient currently pregnant (finding)"@en ;
     skos:prefLabel "Patient ist schwanger"@de ;
     skos:notation "AKTIN:PREGNANCY:1" .
-:IsNotPregnant a skos:Concept ;
+:Pregnant_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Not pregnant (finding)"@en ;
     skos:prefLabel "Patient ist nicht schwanger"@de ;
     skos:notation "AKTIN:PREGNANCY:0" .
+    
+:Symptomdauer a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Leitsymptom Dauer"@de ;
+    dc:description "CEDIS Leitsymptom besteht bei Aufnahme seit [h]" ;
+    
+    dwh:restriction dwh:Integer ;
+    skos:notation	"AKTIN:Symptomdauer" .
     
 
 :Clostridiumtetaniimmunization a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Clostridium Tetani Immunization"@en ;
     skos:prefLabel "Tetanusschutz"@de ;
+    dc:description "Tetanusschutz j/n" ;
     
-    skos:narrower :tetani_yes ;
-    skos:narrower :tetani_no ;
-    skos:narrower :tetani_unk .
+    skos:narrower :Tetani_Yes ;
+    skos:narrower :Tetani_No ;
+    skos:narrower :Tetani_Unk .
 
-:tetani_yes a skos:Concept ;
+:Tetani_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Tetanusschutz"@de ;
     skos:notation "LOINC:11458-7" .
-:tetani_no a skos:Concept ;
+:Tetani_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Kein Tetanusschutz"@de ;
     skos:notation "LOINC:11458-7:NEG" .
-:tetani_unk a skos:Concept ;
+:Tetani_Unk a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Tetanusschutz unbekannt"@de ;
     skos:notation "LOINC:11458-7:NI" .    
 
 
-:Modifiedrankinscale2 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Modified Rankin Scale (Konzept)"@de ;
-    dc:description "Modified Rankin Scale" ;     
-
-    skos:narrower :rankin0;
-    skos:narrower :rankin1;
-    skos:narrower :rankin2;
-    skos:narrower :rankin3;
-    skos:narrower :rankin4;
-    skos:narrower :rankin5.
-
-:rankin0
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "0 - Keine Symptome"@de ;
-    
-    skos:notation "RANKIN:0" .
-
-:rankin1
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "1 - Keine relevante Beeintraechtigung"@de ;
-   
-    skos:notation "RANKIN:1" .
-
-:rankin2
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "2 - Leichte Beeintraechtigung"@de ;
-  
-    skos:notation "RANKIN:2" .
-
-:rankin3
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "3 - Mittelschwere Beeintraechtigung"@de ;
-  
-    skos:notation "RANKIN:3" .
-
-:rankin4
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "4 - Hoehergradige Beeintraechtigung"@de ;
-   
-    skos:notation "RANKIN:4" .
-
-:rankin5
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "5 - Schwere Behinderung"@de ;
-
-    skos:notation "RANKIN:5" .
+#:ModifiedrankinscaleCON a skos:Concept ;
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "Modified Rankin Scale (Konzept)"@de ;
+#    dc:description "Modified Rankin Scale" ;     
+#    skos:narrower :Rankin0;
+#    skos:narrower :Rankin1;
+#    skos:narrower :Rankin2;
+#    skos:narrower :Rankin3;
+#    skos:narrower :Rankin4;
+#    skos:narrower :Rankin5.
+#:Rankin0
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "0 - Keine Symptome"@de ;   
+#    skos:notation "RANKIN:0" .
+#:Rankin1
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "1 - Keine relevante Beeintraechtigung"@de ; 
+#    skos:notation "RANKIN:1" .
+#:Rankin2
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "2 - Leichte Beeintraechtigung"@de ;
+#    skos:notation "RANKIN:2" .
+#:Rankin3
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "3 - Mittelschwere Beeintraechtigung"@de ;
+#    skos:notation "RANKIN:3" .
+#:Rankin4
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "4 - Hoehergradige Beeintraechtigung"@de ; 
+#    skos:notation "RANKIN:4" .
+#:Rankin5
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "5 - Schwere Behinderung"@de ;
+#    skos:notation "RANKIN:5" .
 
 
 :Modifiedrankinscale a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Modified Rankin Scale (Integer)"@de ;
+    skos:prefLabel "Modified Rankin Scale"@de ;
     dc:description "Modified Rankin Scale" ;
     
     dwh:restriction dwh:Integer ;
     skos:notation	"LOINC:75859-9" .
     
     
-#:Isolation a skos:Concept ;
-#    skos:inScheme :EmergencyNote ;
-#    skos:prefLabel "Isolation"@de ;
+:Isolation a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Isolation"@de ;
+    dc:description "Isolation: Auswahlliste" ;
 
-#    skos:narrower :Iso1 ;
-#    skos:narrower :Iso2 .
-#ToDo Isolationreason ueber Modifier, ja gibt es eigentlich nicht
-#:Iso1
-#    skos:inScheme :EmergencyNote ;
-#    skos:prefLabel "keine Isolation"@de ;
-#    skos:notation "AKTIN:ISOLATION:ISO:NEG" .
-#:Iso2
+    skos:narrower :NoIso ;
+#    skos:narrower :Iso ; #nicht auf dem Bogen
+    skos:narrower :RevIso ;
+    skos:narrower :IsoR1 ;
+    skos:narrower :IsoR2 ;
+    skos:narrower :IsoR3 ;
+    skos:narrower :IsoR4 ;
+    skos:narrower :IsoR5 .
+    
+:NoIso a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "keine Isolation"@de ;
+    skos:notation "AKTIN:ISOLATION:ISO:NEG" .
+#:Iso a skos:Concept ;
 #    skos:inScheme :EmergencyNote ;
 #    skos:prefLabel "Isolation"@de ;
 #    skos:notation "AKTIN:ISOLATION:ISO" .
+:RevIso a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Reverse Isolation"@de ;
+    skos:notation "AKTIN:ISOLATION:RISO" .
+:IsoR1 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Isolation: multiresistenter Keim"@de ;
+    skos:notation "AKTIN:ISOREASON:U80" .
+:IsoR2 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Isolation: Gastroenteritis"@de ;
+    skos:notation "AKTIN:ISOREASON:A09.9" .
+:IsoR3 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Isolation: Tuberkulose"@de ;
+    skos:notation "AKTIN:ISOREASON:A16.9" .
+:IsoR4 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Isolation: Meningitis"@de ;
+    skos:notation "AKTIN:ISOREASON:G03.9" .
+:IsoR5 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Isolation: Andere"@de ;
+    skos:notation "AKTIN:ISOREASON:OTH" .
 
-#:MultiRes a skos:Concept ;
-#    skos:inScheme :EmergencyNote ;
-#    skos:prefLabel "Multiresistente Keime"@de .
 
-#    skos:narrower :Multi1 ;
-#ToDo
-     
-      
+:MultiRes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Multiresistente Keime"@de ;
+    dc:description "Multiresistente Keime: Auswahlliste" ;
+
+    skos:narrower :Multi1 ;
+    skos:narrower :Multi2 ;
+    skos:narrower :Multi2v ;
+    skos:narrower :Multi3 ;
+    skos:narrower :Multi3v ;
+    skos:narrower :Multi4 ;
+    skos:narrower :Multi4v ;
+    skos:narrower :Multi5 ;
+    skos:narrower :Multi5v ;
+    skos:narrower :Multi6 ;
+    skos:narrower :Multi6v .
+
+:Multi1 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Kein Multiresistenter Keim"@de ;
+    skos:notation "AKTIN:PATHOGENE:AMRO:OPB" .
+:Multi2 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "MRSA"@de ;
+    skos:notation "AKTIN:PATHOGENE:MRSA:PB" .
+:Multi2v a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "V.a. MRSA"@de ;
+    skos:notation "AKTIN:PATHOGENE:MRSA:SUSP" .
+:Multi3 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist"@de ;
+    skos:notation "AKTIN:PATHOGENE:3MRGN:PB" .
+:Multi3v a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "V.a. gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist"@de ;
+    skos:notation "AKTIN:PATHOGENE:3MRGN:SUSP" .
+:Multi4 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "gramnegative Staebchen, die gegen alle vier Gruppen resistent sind"@de ;
+    skos:notation "AKTIN:PATHOGENE:4MRGN:PB" .
+:Multi4v a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "V.a. gramnegative Staebchen, die gegen alle vier Gruppen resistent sind"@de ;
+    skos:notation "AKTIN:PATHOGENE:4MRGN:SUSP" .
+:Multi5 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "VRE"@de ;
+    skos:notation "AKTIN:PATHOGENE:VRE:PB" .
+:Multi5v a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "V.a. VRE"@de ;
+    skos:notation "AKTIN:PATHOGENE:VRE:SUSP" .
+:Multi6 a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Andere multiresistente Keime"@de ;
+    skos:notation "AKTIN:PATHOGENE:OTH:PB" .
+:Multi6v a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "V.a. Andere multiresistente Keime"@de ;
+    skos:notation "AKTIN:PATHOGENE:OTH:SUSP" .
+           
 :RespiratoryRate a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Respiratory rate"@en ;
@@ -412,6 +502,7 @@
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Size of pupil"@en ;
     skos:prefLabel "Pupillenweite"@de ;
+    dc:description "Pupillenweite: Auswahlliste" ;
     
     skos:narrower :dilated ;
     skos:narrower :medium ;
@@ -436,10 +527,10 @@
     skos:prefLabel "eng"@de ;
     skos:notation "AKTIN:SPPL:C" .
     
-:sppl_unk
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Unbekannt"@de ;
-    skos:notation "AKTIN:SPPL:UNK" .
+#:sppl_unk
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "Unbekannt"@de ;
+#    skos:notation "AKTIN:SPPL:UNK" .
 
 
 
@@ -447,6 +538,7 @@
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Reaction of pupil"@en ;
     skos:prefLabel "Pupillenreaktion"@de ;
+    dc:description "Pupillenreaktion: Auswahlliste" ;
     
     skos:narrower :brisk ;
     skos:narrower :delayed ;
@@ -471,10 +563,10 @@
     skos:prefLabel "keine"@de ;
     skos:notation "AKTIN:RPPL:A" .
     
-:rppl_unk
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Unbekannt"@de ;
-    skos:notation "AKTIN:RPPL:UNK" .
+#:rppl_unk
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "Unbekannt"@de ;
+#    skos:notation "AKTIN:RPPL:UNK" .
 
 
 
@@ -502,135 +594,141 @@
 :Eddiagnosis a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Abschlussdiagnosen"@de ;
+    dc:description "Abschlussdiagnosen" ;
 
-    skos:narrower :KapI ;
-    skos:narrower :KapIX ;
-    skos:narrower :KapX ;
-    skos:narrower :KapXIV ;
-    skos:narrower :KapXVIII;
-    skos:narrower :KapXIX ;
-    skos:narrower :KapXX .
+    skos:narrower :ICD_KapI ;
+    skos:narrower :ICD_KapIX ;
+    skos:narrower :ICD_KapX ;
+    skos:narrower :ICD_KapXIV ;
+    skos:narrower :ICD_KapXVIII;
+    skos:narrower :ICD_KapXIX ;
+    skos:narrower :ICD_KapXX .
 
-:KapI a skos:Concept ;
+:ICD_KapI a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Bestimmte infektioese und parasitaere Krankheiten"@de ;
-
-    skos:narrower :A08.1 ;
-    skos:narrower :A41.58 .
+    dc:description "ICD Kapitel I" ;
 
 
-:A08.1 a skos:Concept ;
+    skos:narrower :ICD_A08.1 ;
+    skos:narrower :ICD_A41.58 .
+
+
+:ICD_A08.1 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Akute Gastroenteritis durch Norovirus [Norwalk-Virus]"@de ;
     skos:notation	"ICD10GM:A08.1". 
 
-:A41.58 a skos:Concept ;
+:ICD_A41.58 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Sepsis durch sonstige gramnegative Erreger"@de ;
     skos:notation	"ICD10GM:A41.58".
 
   
-:KapIX a skos:Concept ;
+:ICD_KapIX a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Krankheiten des Kreislaufsystems"@de ;
+    dc:description "ICD Kapitel IX" ;
 
-    skos:narrower :I21 ;
-    skos:narrower :I26.9 ;
-    skos:narrower :I46.9 ;
-    skos:narrower :I61.9 .
+    skos:narrower :ICD_I21 ;
+    skos:narrower :ICD_I26.9 ;
+    skos:narrower :ICD_I46.9 ;
+    skos:narrower :ICD_I61.9 .
 
-:I21 a skos:Concept ;
+:ICD_I21 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Akuter Myokardinfarkt"@de ;
     skos:notation	"ICD10GM:I21".
 
-:I26.9 a skos:Concept ;
+:ICD_I26.9 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Lungenembolie ohne Angabe eines akuten Cor pulmonale"@de ;
-    skos:notation	"ICD10GM:I26.9".
+    skos:notation "ICD10GM:I26.9".
 
-:I46.9 a skos:Concept ;
+:ICD_I46.9 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Herzstillstand, nicht naeher bezeichnet"@de ;
-    skos:notation	"ICD10GM:I46.9".
+    skos:notation "ICD10GM:I46.9".
     
-:I61.9 a skos:Concept ;
+:ICD_I61.9 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Intrazerebrale Blutung, nicht naeher bezeichnet"@de ;
-    skos:notation	"ICD10GM:I61.9".
+    skos:notation "ICD10GM:I61.9".
 
 
 
-:KapX a skos:Concept ;
+:ICD_KapX a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Krankheiten des Atmungssystems"@de ;
 
-    skos:notation	"ICD10GM:J18.1" . 
+    skos:notation "ICD10GM:J18.1" . 
 
-:KapXIV a skos:Concept ;
+:ICD_KapXIV a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Krankheiten des Urogenitalsystems"@de ;
 
-    skos:notation	"ICD10GM:N40" . 
+    skos:notation "ICD10GM:N40" . 
 
 
-:KapXVIII a skos:Concept ;
+:ICD_KapXVIII a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Symptome und abnorme klinische und Laborbefunde, die anderenorts nicht klassifiziert sind"@de ;
+    dc:description "ICD Kapitel XVIII" ;
 
-    skos:narrower :R33 ;
-    skos:narrower :R57 .
+    skos:narrower :ICD_R33 ;
+    skos:narrower :ICD_R57 .
 
-:R33 a skos:Concept ;
+:ICD_R33 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Harnverhaltung"@de ;
-    skos:notation	"ICD10GM:R33".
+    skos:notation "ICD10GM:ICD_R33".
 
-:R57 a skos:Concept ;
+:ICD_R57 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Schock, anderenorts nicht klassifiziert"@de ;
-    skos:notation	"ICD10GM:R57". 
+    skos:notation "ICD10GM:ICD_R57". 
 
 
-:KapXIX a skos:Concept ;
+:ICD_KapXIX a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Verletzungen, Vergiftungen und bestimmte andere Folgen aeusserer Ursachen"@de ;
+    dc:description "ICD Kapitel XIX" ;
 
-    skos:narrower :S06.79 ;
-    skos:narrower :S22.40 ;
-    skos:narrower :S27.1 ;
-    skos:narrower :S93.4 ;
-    skos:narrower :S93.6 .
+    skos:narrower :ICD_S06.79 ;
+    skos:narrower :ICD_S22.40 ;
+    skos:narrower :ICD_S27.1 ;
+    skos:narrower :ICD_S93.4 ;
+    skos:narrower :ICD_S93.6 .
 
 
-:S06.79 a skos:Concept ;
+:ICD_S06.79 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Bewusstlosigkeit bei Schaedel-Hirn-Trauma"@de ;
-    skos:notation	"ICD10GM:S06.79!".
+    skos:notation "ICD10GM:S06.79!".
 
-:S22.40 a skos:Concept ;
+:ICD_S22.40 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Rippenserienfraktur"@de ;
-    skos:notation	"ICD10GM:S22.40". 
+    skos:notation "ICD10GM:S22.40". 
 
-:S27.1 a skos:Concept ;
+:ICD_S27.1 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Traumatischer Haematothorax"@de ;
-    skos:notation	"ICD10GM:S27.1".
+    skos:notation "ICD10GM:S27.1".
 
-:S93.4 a skos:Concept ;
+:ICD_S93.4 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Verstauchung und Zerrung des oberen Sprunggelenkes"@de ;
-    skos:notation	"ICD10GM:S93.4".
+    skos:notation "ICD10GM:S93.4".
 
-:S93.6 a skos:Concept ;
+:ICD_S93.6 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Folgen einer Zerquetschung oder einer traumatischen Amputation der unteren Extremitaet"@de ;
-    skos:notation	"ICD10GM:S93.6".
+    skos:notation "ICD10GM:S93.6".
 
 
 
-:KapXX a skos:Concept ;
+:ICD_KapXX a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Aeussere Ursachen von Morbiditaet und Mortalitaet"@de ;
 
@@ -639,12 +737,12 @@
 
 
 
-:ueberwachung a skos:Concept ;
+:Ueberwachung a skos:Concept ;
     skos:prefLabel "AKTIN Ueberwachungsmodul"@de ;
     skos:notation "LOINC:53576-5" .
 
 :Trauma a skos:Concept ;
-    skos:prefLabel "AKTIN Traumasmodul"@de ;
+    skos:prefLabel "AKTIN Traumamodul"@de ;
     skos:notation "LOINC:74198-3" .
 
 :Anaesthesie a skos:Concept ;
@@ -661,80 +759,81 @@
 
 
 
-:encompassingEncounter a skos:Concept ;
+:EncompassingEncounter a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Entlassung"@de ;
+    dc:description "Entlassung: Auswahlliste" ;
 
-    skos:narrower :encEnc1 ;
-    skos:narrower :encEnc2 ;
-    skos:narrower :encEnc3 ;
-    skos:narrower :encEnc4 ;
-    skos:narrower :encEnc5 ;
-    skos:narrower :encEnc6 ;
-    skos:narrower :encEnc7 ;
+    skos:narrower :EncEnc1 ;
+    skos:narrower :EncEnc2 ;
+    skos:narrower :EncEnc3 ;
+    skos:narrower :EncEnc4 ;
+    skos:narrower :EncEnc5 ;
+    skos:narrower :EncEnc6 ;
+    skos:narrower :EncEnc7 ;
     
-    skos:narrower :encEnc8 ;
-    skos:narrower :encEnc9 ;
-    skos:narrower :encEnc10 ;
-    skos:narrower :encEnc11 ;
-    skos:narrower :encEnc12 ;
-    skos:narrower :encEnc13 .
+    skos:narrower :EncEnc8 ;
+    skos:narrower :EncEnc9 ;
+    skos:narrower :EncEnc10 ;
+    skos:narrower :EncEnc11 ;
+    skos:narrower :EncEnc12 ;
+    skos:narrower :EncEnc13 .
 
-:encEnc1  a skos:Concept ;
+:EncEnc1  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Patient deceased during stay (discharge status = dead) (finding)"@en ;
     skos:prefLabel "Tod"@de ;
     skos:notation "AKTIN:DISCHARGE:1" .
-:encEnc2  a skos:Concept ;
+:EncEnc2  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Patient self-discharge against medical advice (procedure)"@en ;
     skos:prefLabel "Entlassung gegen aerztlichen Rat"@de;
     skos:notation "AKTIN:DISCHARGE:2" .
-:encEnc3  a skos:Concept ;
+:EncEnc3  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Patient discharge, elopement (procedure)"@en ;
     skos:prefLabel "Behandlung durch Pat. abgebrochen"@de ;
     skos:notation "AKTIN:DISCHARGE:3" .
-:encEnc4  a skos:Concept ;
+:EncEnc4  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Discharge to home (procedure)"@en ;
     skos:prefLabel "Entlassung nach Hause"@de ;
     skos:notation "AKTIN:DISCHARGE:4" .
-:encEnc5  a skos:Concept ;
+:EncEnc5  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Entlassung zu weiterbehandelnden Arzt"@de ;
     skos:notation "AKTIN:DISCHARGE:5" .
-:encEnc6  a skos:Concept ;
+:EncEnc6  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Physician service (procedure) : Procedure context (attribute) = Not done (qualifier value)"@en ;
     skos:prefLabel "kein Arztkontakt"@de ;
     skos:notation "AKTIN:DISCHARGE:6" .
-:encEnc7  a skos:Concept ;
+:EncEnc7  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Sonstiges"@de ;
     skos:notation "AKTIN:DISCHARGE:OTH" .
     
-:encEnc8  a skos:Concept ;
+:EncEnc8  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Intern: Funktion"@de ;
     skos:notation "AKTIN:TRANSFER:1" .
-:encEnc9  a skos:Concept ;
+:EncEnc9  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Extern: Funktion"@de ;
     skos:notation "AKTIN:TRANSFER:2" .
-:encEnc10  a skos:Concept ;
+:EncEnc10  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Intern: Ueberwachung"@de ;
     skos:notation "AKTIN:TRANSFER:3" .
-:encEnc11  a skos:Concept ;
+:EncEnc11  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Extern: Ueberwachung"@de ;
     skos:notation "AKTIN:TRANSFER:4" .
-:encEnc12  a skos:Concept ;
+:EncEnc12  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Intern: Normalstation"@de ;
     skos:notation "AKTIN:TRANSFER:5" .
-:encEnc13  a skos:Concept ;
+:EncEnc13  a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Extern: Normalstation"@de ;
     skos:notation "AKTIN:TRANSFER:6" .
@@ -744,6 +843,7 @@
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Transport Method"@en ;
     skos:prefLabel "Transportmittel"@de ;
+    dc:description "Transportmittel: Auswahlliste" ;     
 
     skos:narrower :Trans1 ;
     skos:narrower :Trans2 ;
@@ -786,6 +886,7 @@
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Type of referral source"@en;
     skos:prefLabel "Zuweisung"@de ;
+    dc:description "Zuweisung: Auswahlliste" ;     
 
     skos:narrower :RefSource1 ;
     skos:narrower :RefSource2 ;
@@ -834,8 +935,8 @@
 
 :RefSource7 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Zuweisung nicht durch Arzt"@en ;
-    skos:prefLabel "Zuweisung nicht durch Arzt"@de ;
+    skos:prefLabel "Ohne / Zuweisung nicht durch Arzt"@en ;
+    skos:prefLabel "Ohne / Zuweisung nicht durch Arzt"@de ;
     skos:notation "AKTIN:REFERRAL:NPHYS" .
     
 :RefSource8 a skos:Concept ;
@@ -848,108 +949,190 @@
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Diagnostic"@en;
     skos:prefLabel "Diagnostik"@de ;
+    dc:description "Durchgefuehrte diagnostische Tests" ;
 
-    skos:narrower :Labor ;
-    skos:narrower :BGA ;
-    skos:narrower :U-Stix ;
-    skos:narrower :EKG ;
-    skos:narrower :Sono ;
-    skos:narrower :Echo ;
-    skos:narrower :CCT ;
-    skos:narrower :CT ;
-    skos:narrower :Traumascan ;
-    skos:narrower :Ro_WS ;
-    skos:narrower :Ro_Tho ;
-    skos:narrower :Ro_Becken ;
-    skos:narrower :Ro_Ext ;
-    skos:narrower :Ro_Sonst ;
-    skos:narrower :MRT .
+    skos:narrower :Labor_Yes ;
+    skos:narrower :Labor_No ;
+    skos:narrower :BGA_Yes ;
+    skos:narrower :BGA_No ;
+    skos:narrower :U-Stix_Yes ;
+    skos:narrower :U-Stix_No ;
+    skos:narrower :EKG_Yes ;
+    skos:narrower :EKG_No ;
+    skos:narrower :Sono_Yes ;
+    skos:narrower :Sono_No ;
+    skos:narrower :Echo_Yes ;
+    skos:narrower :Echo_No ;
+    skos:narrower :CCT_Yes ;
+    skos:narrower :CCT_No ;
+    skos:narrower :CT_Yes ;
+    skos:narrower :CT_No ;
+    skos:narrower :Traumascan_Yes ;
+    skos:narrower :Traumascan_No ;
+    skos:narrower :Ro_WS_Yes ;
+    skos:narrower :Ro_WS_No ;
+    skos:narrower :Ro_Tho_Yes ;
+    skos:narrower :Ro_Tho_No ;
+    skos:narrower :Ro_Becken_Yes ;
+    skos:narrower :Ro_Becken_No ;
+    skos:narrower :Ro_Ext_Yes ;
+    skos:narrower :Ro_Ext_No ;
+    skos:narrower :Ro_Sonst_Yes ;
+    skos:narrower :Ro_Sonst_No ;
+    skos:narrower :MRT_Yes ;
+    skos:narrower :MRT_No .
 
-:Labor a skos:Concept ;
+
+:Labor_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Labor"@de;
+    skos:prefLabel "Diagnostik: Labor"@de;
     skos:notation "LOINC:26436-6" .
-:BGA a skos:Concept ;
+:Labor_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Blutgase"@de;
-    skos:notation "LOINC:18767-4" .   
-:U-Stix a skos:Concept ;
+    skos:prefLabel "Diagnostik: Kein Labor"@de;
+    skos:notation "LOINC:26436-6:NEG" .
+:BGA_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Urinstix"@de;
-    skos:notation "LOINC:50556-0" .   
-:EKG a skos:Concept ;
+    skos:prefLabel "Diagnostik: Blutgase"@de;
+    skos:notation "LOINC:18767-4" .
+:BGA_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "12-Kanal EKG"@de;
-    skos:notation "LOINC:34534-8" .   
-:Sono a skos:Concept ;
+    skos:prefLabel "Diagnostik: Keine Blutgase"@de;
+    skos:notation "LOINC:18767-4:NEG" .   
+:U-Stix_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Sonographie"@de;
-    skos:notation "LOINC:25061-3" .   
-:Echo a skos:Concept ;
+    skos:prefLabel "Diagnostik: Urinstix"@de;
+    skos:notation "LOINC:50556-0" . 
+:U-Stix_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Echokardiographie"@de;
-    skos:notation "LOINC:42148-7" .   
-:CCT a skos:Concept ;
+    skos:prefLabel "Diagnostik: Keine Urinstix"@de;
+    skos:notation "LOINC:50556-0:NEG" .   
+:EKG_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "CCT"@de;
+    skos:prefLabel "Diagnostik: 12-Kanal EKG"@de;
+    skos:notation "LOINC:34534-8" . 
+:EKG_No a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Kein 12-Kanal EKG"@de;
+    skos:notation "LOINC:34534-8:NEG" .   
+:Sono_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Sonographie"@de;
+    skos:notation "LOINC:25061-3" .
+:Sono_No a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Keine Sonographie"@de;
+    skos:notation "LOINC:25061-3:NEG" .   
+:Echo_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Echokardiographie"@de;
+    skos:notation "LOINC:42148-7" .  
+:Echo_No a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Keine Echokardiographie"@de;
+    skos:notation "LOINC:42148-7:NEG" .   
+:CCT_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: CCT"@de;
     skos:notation "LOINC:24725-4" .   
-:CT a skos:Concept ;
+:CCT_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "CT"@de;
-    skos:notation "LOINC:25045-6" .   
-:Traumascan a skos:Concept ;
+    skos:prefLabel "Diagnostik: Kein CCT"@de;
+    skos:notation "LOINC:24725-4:NEG" .   
+:CT_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Traumascan"@de;
+    skos:prefLabel "Diagnostik: CT"@de;
+    skos:notation "LOINC:25045-6" . 
+:CT_No a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Kein CT"@de;
+    skos:notation "LOINC:25045-6:NEG" .   
+:Traumascan_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Traumascan"@de;
     skos:notation "LOINC:46305-9" .   
-:Ro_WS a skos:Concept ;
+:Traumascan_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Roentgen WS"@de;
+    skos:prefLabel "Diagnostik: Kein Traumascan"@de;
+    skos:notation "LOINC:46305-9:NEG" .   
+:Ro_WS_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Roentgen WS"@de;
     skos:notation "LOINC:38008-9" .   
-:Ro_Tho a skos:Concept ;
+:Ro_WS_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Roentgen Thorax"@de;
+    skos:prefLabel "Diagnostik: Kein Roentgen WS"@de;
+    skos:notation "LOINC:38008-9:NEG" .   
+:Ro_Tho_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Roentgen Thorax"@de;
     skos:notation "LOINC:30745-4" .   
-:Ro_Becken a skos:Concept ;
+:Ro_Tho_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Roentgen Becken"@de;
+    skos:prefLabel "Diagnostik: Kein Roentgen Thorax"@de;
+    skos:notation "LOINC:30745-4:NEG" .   
+:Ro_Becken_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Roentgen Becken"@de;
     skos:notation "LOINC:28561-9" .   
-:Ro_Ext a skos:Concept ;
+:Ro_Becken_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Roentgen Extremitaeten"@de;
-    skos:notation "LOINC:37637-6" .   
-:Ro_Sonst a skos:Concept ;
+    skos:prefLabel "Diagnostik: Kein Roentgen Becken"@de;
+    skos:notation "LOINC:28561-9:NEG" .   
+:Ro_Ext_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Roentgen Sonstiges"@de;
-    skos:notation "LOINC:43468-8" .   
-:MRT a skos:Concept ;
+    skos:prefLabel "Diagnostik: Roentgen Extremitaeten"@de;
+    skos:notation "LOINC:37637-6" . 
+:Ro_Ext_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "MRT"@de;
+    skos:prefLabel "Diagnostik: Kein Roentgen Extremitaeten"@de;
+    skos:notation "LOINC:37637-6:NEG" .   
+:Ro_Sonst_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Roentgen Sonstiges"@de;
+    skos:notation "LOINC:43468-8" . 
+:Ro_Sonst_No a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Kein Roentgen Sonstiges"@de;
+    skos:notation "LOINC:43468-8:NEG" .   
+:MRT_Yes a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: MRT"@de;
     skos:notation "LOINC:25056-3" .   
+:MRT_No a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Diagnostik: Kein MRT"@de;
+    skos:notation "LOINC:25056-3:NEG" .  
 
 
 
 :Allergy a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Allergien"@de;
+    dc:description "Allergien j/n" ;
     
-    skos:narrower :AllergyYes ;
-    skos:narrower :AllergyNo ;
+    skos:narrower :Allergy_Yes ;
+    skos:narrower :Allergy_No ;
     skos:narrower :AllergyReason .
     
-:AllergyYes a skos:Concept ;
+:Allergy_Yes a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Allergien: ja"@de ;
     skos:notation "AKTIN:ALLERGY:ALGN" .
-:AllergyNo a skos:Concept ;
+:Allergy_No a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Allergien: nein"@de ;
     skos:notation "AKTIN:ALLERGY:ALGN:NEG" .
+    
 :AllergyReason a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Allergie Details"@de;
+    skos:prefLabel "Allergie Ausloeser"@de;
+    dc:description "Allergien: Auswahlliste" ;
+    
     skos:narrower :Allergy1 ;
     skos:narrower :Allergy2 ;
     skos:narrower :Allergy3 .
+    
 :Allergy1 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Antibiotika"@de ;
@@ -964,7 +1147,6 @@
     skos:notation "AKTIN:ALLERGY:OTH" .
 
 
-
 #Freitext
 :HistoryofPresentIllness a skos:Concept ;
     skos:inScheme :EmergencyNote ;
@@ -972,10 +1154,10 @@
     skos:prefLabel "History of Present Illness"@en .
 
 
-
 :CEDIS30 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "CEDIS"@de ;
+    dc:description "Presenting Complaint List (V3.0)" ;
     skos:narrower :CEDIS30_CV ;
     skos:narrower :CEDIS30_HNE ;
     skos:narrower :CEDIS30_HNM ;

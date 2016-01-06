@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<!-- #Todo alle effectiveTimes zusätzlich als Attribute ergänzen um alle Zeiten rekonstruieren zu können (start wird automatisch gesetzt und kann beim Export aus I2B2 nicht mehr verwendet werden) 
-=> Am besten noch die Aufrufe besser zusammenfassen über TemplateGetConceptCode und nicht immer einzeln
+<!-- #Todo alle effectiveTimes und sonstigen optionalen Daten zusätzlich als Attribute ergänzen um alle Zeiten rekonstruieren zu können => Es fehlt noch alles, was nicht als Konzept abgebildet ist
 Allgemein noch möglichst vieles über if/choose in die globalen Templates auslagern!
-
-#ToDo: Alle Zugriffe auf effectiveTimes@value benötigen eine Abfrage für NullFlavors
-
-#ToDo Display Name hinzufügen  / +Codesystem - Notarzt=NA :(
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -52,6 +47,9 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
     
     <!-- Concept Code Prefix for Isolation Codes -->
     <xsl:variable name="Isolation-Prefix">AKTIN:ISOLATION:</xsl:variable> 
+    
+    <!-- Concept Code Prefix for Isolation Reason Codes -->
+    <xsl:variable name="IsolationReason-Prefix">AKTIN:ISOREASON:</xsl:variable> 
     
     <!-- Concept Code Prefix for Transfer Codes -->
     <xsl:variable name="Verlegung-Prefix">AKTIN:TRANSFER:</xsl:variable>
@@ -141,7 +139,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
     <xsl:template match="cda:representedCustodianOrganization">
         <!-- <xsl:comment>1/2	ID des Krankenhauses/ der Notaufnahme</xsl:comment> -->
         <!-- <xsl:value-of select="./cda:id/@root"/>:<xsl:value-of select="./cda:id/@extension"/> -->
-        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extensiona))"/>  <!-- #todo multiple IDs possible -->
+        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extension))"/>  <!-- #todo multiple IDs possible, select first?! -->
     </xsl:template>
     
     <!-- 2	ID der Notaufnahme
@@ -206,6 +204,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
     
     <!-- 114 Rankin Scale als einzelne Konzept (0..6)-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4045']">
+        <!--
         <xsl:comment>114 Rankin Scale (Konzeptcode)</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
@@ -219,10 +218,11 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                     <xsl:when test="../cda:value/@value = '6'"><xsl:value-of select="$Rankin-Prefix"/>6</xsl:when>
                 </xsl:choose>
             </xsl:attribute>
-        </fact>
+            <xsl:call-template name="GetEffectiveTimes"/>
+        </fact> -->
       
      <!-- 114 Rankin Scale numerisch (0..6) -->
-        <xsl:comment>114 Rankin Scale (numerisch)</xsl:comment>
+        <xsl:comment>114 Rankin Scale</xsl:comment>
         <fact>     
             <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>75859-9</xsl:attribute>
             <xsl:call-template name="GetNumericValues"/>
@@ -280,6 +280,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
+            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>        
     </xsl:template>
     
@@ -298,42 +299,45 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
         </fact>
     </xsl:template>
     
-    <!-- 7 Isolation und 8 Isolation Begründung -->
+    <!-- 7 Isolation -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4068']">
-        <xsl:comment>7 Isolation / 8 Isolation Begründung</xsl:comment>
+        <xsl:comment>7 Isolation</xsl:comment>
         <xsl:if test="../cda:code/@code = 'RISO'"> <!-- Reverse Isolation -->
             <fact> 
                 <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>RISO</xsl:attribute>
+                <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
             </fact>
         </xsl:if>
         <xsl:if test="../cda:code/@code = 'ISO' and ../../cda:procedure/@negationInd = 'true'"> <!-- No Isolation -->
             <fact> 
                 <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>ISO:NEG</xsl:attribute>
+                <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
             </fact>
         </xsl:if>
         <xsl:if test="../cda:code/@code = 'ISO' and not(../../cda:procedure/@negationInd = 'true')">
             <fact> 
                 <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>ISO</xsl:attribute>
-                <xsl:call-template name="Isolationreason"/>
+                <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
             </fact>       
         </xsl:if>
     </xsl:template>
     
-    <xsl:template name="Isolationreason">
-        <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4069']">
-            <modifier> 
-                <xsl:attribute name="code">
-                    <xsl:choose>
-                        <xsl:when test="../cda:value/@code">
-                            <xsl:value-of select="../cda:code/@code"/>:<xsl:value-of select="../cda:value/@code"/>
-                        </xsl:when>
-                        <xsl:otherwise>  
-                            <xsl:value-of select="../cda:code/@code"/>:<xsl:value-of select="../cda:value/@nullFlavor"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
-            </modifier>
-        </xsl:for-each>
+    <!-- 8 Isolation Begründung -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4069']">
+        <xsl:comment>8 Isolation Begründung</xsl:comment>
+        <fact> 
+            <xsl:attribute name="concept">
+                <xsl:choose>
+                    <xsl:when test="../cda:value/@code">
+                        <xsl:value-of select="$IsolationReason-Prefix"/>:<xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+                    <xsl:otherwise>  
+                        <xsl:value-of select="$IsolationReason-Prefix"/>:<xsl:value-of select="../cda:value/@nullFlavor"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
+        </fact>
     </xsl:template>
    
     <!-- 9 Atemfrequenz
@@ -471,6 +475,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                     <xsl:value-of select="$Zuweiser-Prefix"/><xsl:value-of select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@nullFlavor"/>
                 </xsl:attribute>
             </xsl:if>
+            <xsl:call-template name="GetEffectiveTimes"/> <!-- no Times in Zuweisung -->
         </fact>
     </xsl:template>
     
@@ -622,7 +627,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
             <xsl:call-template name="templateGetConceptValue"/>
         </fact>    
         
-        <xsl:if test="../cda:effectiveTime/@width">  <!-- #ToDo Nur Width ist sinnvoll/interessant, aber die CDA-Beschreibung ist anders - Berechnung aus low und Aufnahmedatum ergänzen?!-->
+        <xsl:if test="../cda:effectiveTime/@width"> 
             <xsl:comment>212 Symptomdauer</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Symptomdauer</xsl:attribute>
@@ -631,26 +636,26 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
         </xsl:if>
     </xsl:template>
     
-    <!-- 806 multiresistente Erreger -->   <!-- #ToDo Checks für Qualifier funktionieren nicht -->
-    <!-- 807 multiresistente Erreger: Erregertyp 
+    <!-- 806 multiresistente Erreger -->
+    <!-- 807 multiresistente Erreger: Erregertyp -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4072']">
         <xsl:comment>806/807 multiresistente Erreger</xsl:comment>
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4073']">           
             <fact>
-                <xsl:if test="../cda:value/cda:qualifier[/cda:name/@code='URAG']/cda:value/@code"> 
+                <xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@code">      
                     <xsl:attribute name="concept">
-                        <xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier[/cda:name/@code='URAG']/cda:value/@code"/>:<xsl:value-of select="../cda:value/@code"/> 
+                        <xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@code"/>:<xsl:value-of select="../cda:value/@code"/> 
                     </xsl:attribute>             
                 </xsl:if>
-                <xsl:if test="../cda:value/cda:qualifier[/cda:name/@code='URAG']/cda:value/@nullFlavor"> 
+                <xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@nullFlavor"> 
                     <xsl:attribute name="concept">
-                        <xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier[/cda:name/@code='URAG']/cda:value/@nullFlavor"/>:<xsl:value-of select="../cda:value/@code"/> 
+                        <xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@nullFlavor"/>:<xsl:value-of select="../cda:value/@code"/> 
                     </xsl:attribute>             
                 </xsl:if>
                 <xsl:call-template name="GetEffectiveTimes"/>
             </fact>
         </xsl:for-each>
-    </xsl:template>-->
+    </xsl:template>
     
     <!-- 808 Versicherungsnummer -->
     <!-- siehe 60 Versicherungsname / 771 Versicherungsträger -->
@@ -673,7 +678,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
         <xsl:if test="./cda:low/@value">
             <xsl:comment>57/58 Aufnahmedatum/uhrzeit</xsl:comment>
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>52455-3</xsl:attribute>
+                <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>52455-3</xsl:attribute>  <!-- #ToDo In dieser Form als Konzept sinnvoll? Interessant ist nur der Zeitpunkt -->
                 <xsl:if test="./cda:low/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
@@ -706,13 +711,35 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
     <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode">
         <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConcept"/>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$Entlassung-Prefix"/>
+                <xsl:choose>
+                    <xsl:when test="./@code">
+                        <xsl:value-of select="./@code"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="./@nullFlavor"/>
+                    </xsl:otherwise>    
+                </xsl:choose>
+            </xsl:attribute>     
+            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
     <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.10.4067']">
         <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConcept"/>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$Verlegung-Prefix"/>
+                <xsl:choose>
+                    <xsl:when test="./@code">
+                        <xsl:value-of select="./@code"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="./@nullFlavor"/>
+                    </xsl:otherwise>    
+                </xsl:choose>
+            </xsl:attribute>   
+            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
 
@@ -790,25 +817,25 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:attribute>
+        <xsl:if test="../cda:value/@codeSystem">
+            <modifier>
+                <xsl:attribute name="code">codeSystem</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value/@codeSystem"/> <!-- mostly static/fixed -->        
+                </value>
+            </modifier>
+        </xsl:if>
+        <xsl:if test="../cda:value/@displayName">
+            <modifier>
+                <xsl:attribute name="code">displayName</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value/@displayName"/>    
+                </value>
+            </modifier>
+        </xsl:if>
         <xsl:call-template name="GetEffectiveTimes"/>
-    </xsl:template>  
-    
-    <xsl:template name="templateGetConcept">
-        <xsl:attribute name="concept">
-            <xsl:choose>
-                <xsl:when test="./@code">
-                    <xsl:choose>
-                        <xsl:when test="./@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>  
-                        <xsl:when test="./@codeSystem='2.16.840.1.113883.2.60.3.5.56'"><xsl:value-of select="$Entlassung-Prefix"/></xsl:when> 
-                        <xsl:when test="./@codeSystem='2.16.840.1.113883.2.60.3.5.53'"><xsl:value-of select="$Verlegung-Prefix"/></xsl:when>                        
-                    </xsl:choose>
-                    <xsl:value-of select="./@code"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="./@nullFlavor"/> <!-- #ToDo Bei Discharge Disposition Codes gibt es keinen Code auf den man zurückverweisen kann!-->
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:attribute>
     </xsl:template>  
     
     <xsl:template name="GetEffectiveTimes">
@@ -821,6 +848,16 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                 </value>
             </modifier>
         </xsl:if>
+        <xsl:if test="../cda:effectiveTime/@nullFlavor">
+            <modifier>
+                <xsl:attribute name="code">effectiveTime</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:effectiveTime/@nullFlavor"/>
+                </value>
+            </modifier>
+        </xsl:if>
+        
         <xsl:if test="../cda:effectiveTime/cda:low/@value">
             <modifier>
                 <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
@@ -830,6 +867,16 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                 </value>
             </modifier>
         </xsl:if>
+        <xsl:if test="../cda:effectiveTime/cda:low/@nullFlavor">
+            <modifier>
+                <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:effectiveTime/cda:low/@nullFlavor"/>
+                </value>
+            </modifier>
+        </xsl:if>
+        
         <xsl:if test="../cda:effectiveTime/cda:high/@value">
             <modifier>
                 <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
@@ -839,6 +886,16 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                 </value>
             </modifier>
         </xsl:if>
+        <xsl:if test="../cda:effectiveTime/cda:high/@nullFlavor">
+            <modifier>
+                <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:effectiveTime/cda:high/@nullFlavor"/>
+                </value>
+            </modifier>
+        </xsl:if>
+        
         <xsl:if test="../cda:time/cda:low/@value">
             <modifier>
                 <xsl:attribute name="code">timeLow</xsl:attribute>
@@ -848,12 +905,31 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                 </value>
             </modifier>
         </xsl:if>
+        <xsl:if test="../cda:time/cda:low/@nullFlavor">
+            <modifier>
+                <xsl:attribute name="code">timeLow</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:time/cda:low/@nullFlavor"/>
+                </value>
+            </modifier>
+        </xsl:if>
+        
         <xsl:if test="../cda:time/cda:high/@value">
             <modifier>
                 <xsl:attribute name="code">timeHigh</xsl:attribute>
                 <value>
                     <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="../cda:time/cda:high/@value"/>
+                </value>
+            </modifier>
+        </xsl:if>
+        <xsl:if test="../cda:time/cda:high/@nullFlavor">
+            <modifier>
+                <xsl:attribute name="code">timeHigh</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:time/cda:high/@nullFlavor"/>
                 </value>
             </modifier>
         </xsl:if>

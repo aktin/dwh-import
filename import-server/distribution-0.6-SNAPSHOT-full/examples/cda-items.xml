@@ -1,0 +1,443 @@
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="label"/>
+    <variable name="description"/>
+    <variable name="notation"/>
+    <variable name="type"/>
+  </head>
+  <results>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Glasgow Coma Scale</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Glasgow Coma Scale</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:9269-2</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Augenoeffnung</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Glasgow Coma Scale Eye Opening</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:9267-6</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Motorische Antwort</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Glasgow Coma Scale Motor Response</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:9268-4</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Verbale Antwort</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Glasgow Coma Scale Verbal Response</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:9270-0</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Herzfrequenz</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Heart Rate</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:8867-4</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Modified Rankin Scale</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Modified Rankin Scale</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:75859-9</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Schmerz</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Pain severity - 0-10 verbal numeric rating</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:72514-3</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Atemfrequenz</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Respiratory rate</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:9279-1</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Leitsymptom Dauer</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS Leitsymptom besteht bei Aufnahme seit [h]</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">AKTIN:Symptomdauer</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">RR sys</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Systolic blood pressure</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:8480-6</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Integer</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Koerpertemperatur</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Body temperature - Core</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:8329-5</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Decimal</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">SpO2</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Oxygen saturation in Blood</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">LOINC:20564-1</literal>
+      </binding>
+      <binding name="type">
+        <uri>http://sekmi.de/histream/dwh#Decimal</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Allergien</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Allergien j/n</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Allergie Ausloeser</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Allergien: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">CEDIS</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Presenting Complaint List (V3.0)</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Kardiovaskulaer</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:CV</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Augenheilkunde</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:EC</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Umweltbedingt</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:EV</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Gastrointestinal</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:GI</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Geburtshilfe / Gynaekologie</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:GU</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Urogenital</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:GU</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">HNO (Ohren)</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:HNE</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">HNO (Mund, Rachen, Hals)</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:HNM</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">HNO (Nase)</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:HNN</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Allgemeine und sonstige Beschwerden</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:MC</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">psychische Verfassung</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:MH</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Neurologisch</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:NC</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Orthopaedisch/Unfallchirurgisch</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:OC</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">respiratorisch</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:RC</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Substanzmissbrauch</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:SA</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Haut</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:SK</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Trauma</literal>
+      </binding>
+      <binding name="notation">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">CEDIS30:TR</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Tetanusschutz</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Tetanusschutz j/n</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Diagnostik</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Durchgefuehrte diagnostische Tests</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Emergency Severity Index</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">ESI: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Abschlussdiagnosen</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Abschlussdiagnosen</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Entlassung</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Entlassung: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Isolation</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Isolation: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Manchester Triage System</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">MTS: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Multiresistente Keime</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Multiresistente Keime: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Schwangerschaftsstatus</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Schwanger j/n</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Pupillenreaktion</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Pupillenreaktion: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Pupillenweite</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Pupillenweite: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Transportmittel</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Transportmittel: Auswahlliste</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="label">
+        <literal xml:lang="de" datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Zuweisung</literal>
+      </binding>
+      <binding name="description">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#string">Zuweisung: Auswahlliste</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
