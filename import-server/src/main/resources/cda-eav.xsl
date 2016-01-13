@@ -329,10 +329,10 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
             <xsl:attribute name="concept">
                 <xsl:choose>
                     <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="$IsolationReason-Prefix"/>:<xsl:value-of select="../cda:value/@code"/>
+                        <xsl:value-of select="$IsolationReason-Prefix"/><xsl:value-of select="../cda:value/@code"/>
                     </xsl:when>
                     <xsl:otherwise>  
-                        <xsl:value-of select="$IsolationReason-Prefix"/>:<xsl:value-of select="../cda:value/@nullFlavor"/>
+                        <xsl:value-of select="$IsolationReason-Prefix"/><xsl:value-of select="../cda:value/@nullFlavor"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
@@ -625,7 +625,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
         <xsl:comment>805 Beschwerden bei Vorstellung (CEDIS)</xsl:comment> 
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
-        </fact>    
+        </fact>
         
         <xsl:if test="../cda:effectiveTime/@width"> 
             <xsl:comment>212 Symptomdauer</xsl:comment>
@@ -666,7 +666,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
         <xsl:if test="./cda:high/@value">
             <xsl:comment>882 Uhrzeit Verlegung / Entlassung</xsl:comment>
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$Verlegung-Prefix"/>ZeitpunktVerlegung</xsl:attribute> 
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>ZeitpunktVerlegung</xsl:attribute> 
                 <xsl:if test="./cda:high/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(./cda:high/@value)"/>
