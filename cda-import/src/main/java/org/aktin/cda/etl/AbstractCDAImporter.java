@@ -23,6 +23,7 @@ import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
 import de.sekmi.histream.ObservationFactory;
+import de.sekmi.histream.ObservationSupplier;
 import de.sekmi.histream.io.GroupedXMLReader;
 
 /**
@@ -81,12 +82,12 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	protected abstract Consumer<Observation> getObservationInserter();
 	
 	/**
-	 * delete previous facts for this encounter
+	 * delete previous facts for this source id
  	 * TODO for different CDA modules, use different ID or sourceId
-	 * @param encounterId encounter id
+	 * @param sourceId source id
 	 * @throws CDAException error
 	 */
-	protected abstract void deletePreviousEAV(String encounterId) throws CDAException;
+	protected abstract void deleteEAV(String sourceId) throws CDAException;
 	
 	protected GroupedXMLReader readEAV(InputStream xml) throws JAXBException, XMLStreamException{
 		return new GroupedXMLReader(getObservationFactory(), inputFactory.createXMLStreamReader(xml));
@@ -96,10 +97,14 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	 * @param file EAV XML file
 	 * @throws CDAException error
 	 */
-	private void loadEAV(Path file) throws CDAException{
+	private void replaceEAV(Path file) throws CDAException{
 		try( InputStream in = Files.newInputStream(file);
 				GroupedXMLReader suppl = readEAV(in) ) 
 		{
+			String sourceId = suppl.getMeta(ObservationSupplier.META_SOURCE_ID);
+			// delete source
+			deleteEAV(sourceId);
+			// insert facts
 			suppl.stream().forEach(getObservationInserter());
 		} catch (IOException e) {
 			throw new CDAException("Unable to read EAV temp file: "+file, e);
@@ -112,11 +117,8 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 		// transform CDA document to EAV XML in temporary file
 		Path tempEAV = transformToEAV(document);
 		
-		// delete previous facts for this encounter		
-		deletePreviousEAV(encounterId);
-		
 		// parse EAV XML and insert into fact table
-		loadEAV(tempEAV);
+		replaceEAV(tempEAV);
 
 
 		// remove temporary file

@@ -3,6 +3,8 @@ package org.aktin.cda.etl;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -18,9 +20,9 @@ import org.aktin.cda.CDAException;
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
+import de.sekmi.histream.ObservationException;
 import de.sekmi.histream.ObservationFactory;
 import de.sekmi.histream.i2b2.I2b2Inserter;
-import de.sekmi.histream.i2b2.I2b2Visit;
 import de.sekmi.histream.i2b2.PostgresPatientStore;
 import de.sekmi.histream.i2b2.PostgresVisitStore;
 import de.sekmi.histream.impl.ObservationFactoryImpl;
@@ -75,24 +77,26 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		}
 		factory = new ObservationFactoryImpl(patientStore, visitStore);
 
+		//inserter.setErrorHandler(handler);
 	}
 
 	/**
-	 * delete previous facts for this encounter
- 	 * TODO for different CDA modules, use different ID or sourceId
-	 * @param encounterId encounter id
+	 * delete previous facts for this source
+ 	 * TODO does this work for different CDA modules?
+	 * @param sourceId source id
 	 * @throws CDAException error
 	 */
 	@Override
-	protected void deletePreviousEAV(String encounterId) throws CDAException{
-		I2b2Visit visit = visitStore.findVisit(encounterId);
-		if( visit != null ){
-			// visit existing, drop previous facts
-			try {
-				inserter.purgeVisit(visit.getNum());
-			} catch (SQLException e) {
-				throw new CDAException("Unable to delete previous EAV facts", e);
+	protected void deleteEAV(String sourceId) throws CDAException{
+		// drop previous facts
+		try {
+			if( true == inserter.purgeSource(sourceId) ){
+				log.info("Deleted previous facts for source="+sourceId);
+			}else{
+				log.info("No previous facts to delete for source="+sourceId);				
 			}
+		} catch (SQLException e) {
+			throw new CDAException("Unable to delete previous EAV facts", e);
 		}
 	}
 
@@ -128,9 +132,27 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	}
 
 	@Override
-	public void process(String patientId, String encounterId, String documentId, Document document)
+	public synchronized void process(String patientId, String encounterId, String documentId, Document document)
 			throws CDAException {
-		super.process(patientId, encounterId, documentId, document);
+		log.info("Using patid="+patientId+", encid="+encounterId+", docid="+documentId);
+
+		final List<ObservationException> insertErrors = new LinkedList<>();
+		inserter.setErrorHandler(insertErrors::add);
+		// process document
+		try{
+			super.process(patientId, encounterId, documentId, document);
+		}finally{			
+			inserter.setErrorHandler(null);
+			inserter.resetErrorCount();
+		}
+		if( !insertErrors.isEmpty() ){
+			CDAException e = new CDAException("Unable to insert facts", insertErrors.remove(0));
+			for( ObservationException more : insertErrors ){
+				e.addSuppressed(more);
+				// TODO maybe add only limited number of errors
+			}
+			throw e;
+		}
 		// flush after each document
 		patientStore.flush();
 		visitStore.flush();

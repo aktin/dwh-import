@@ -43,8 +43,8 @@ public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<O
 	}
 
 	@Override
-	protected void deletePreviousEAV(String encounterId) throws CDAException {
-		System.out.println("DELETE EAV encounter="+encounterId);
+	protected void deleteEAV(String sourceId) throws CDAException {
+		System.out.println("DELETE EAV source="+sourceId);
 	}
 
 	@Override

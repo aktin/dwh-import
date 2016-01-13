@@ -43,9 +43,9 @@ public class CDAParser {
 	 * document. This can also be a time stamp.
 	 */
 	public static final String[] ID_TREE_XPATHS = new String[]{
-	"/ClinicalDocument/recordTarget/patientRole/id/@extension",//		"/ClinicalDocument/recordTarget/patientRole/id/@extension",
-	"/ClinicalDocument/setId/@extension",//		"/ClinicalDocument/setId@extension",
-	"/ClinicalDocument/versionNumber/@value",//		"/ClinicalDocument/versionNumber/@value",
+	"/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension",//		"/ClinicalDocument/recordTarget/patientRole/id/@extension",
+	"/cda:ClinicalDocument/cda:setId/@extension",//		"/ClinicalDocument/setId@extension",
+	"/cda:ClinicalDocument/cda:versionNumber/@value",//		"/ClinicalDocument/versionNumber/@value",
 	};
 	
 	private XPathExpression[] idExpr;
@@ -71,7 +71,7 @@ public class CDAParser {
 		}
 	}
 	
-	private static final NamespaceContext namespaceContext = new NamespaceContext() {
+	public static final NamespaceContext namespaceContext = new NamespaceContext() {
 		@Override
 		public Iterator<?> getPrefixes(String namespaceURI) {
 			String prefix = getPrefix(namespaceURI);
@@ -145,6 +145,7 @@ public class CDAParser {
 		if( node instanceof Document ){
 			return (Document)node;
 		}else{
+			if( true )throw new IllegalArgumentException();
 			Document doc = node.getOwnerDocument();
 			if( doc == null ){
 				throw new TransformerException("DOMResult does not contain Document node");

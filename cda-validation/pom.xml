@@ -33,6 +33,13 @@
 			</resource>
 		</resources>
 		<plugins>
+			<!-- TODO don't depend on external server. build process fails if server down.
+				we should add the archives to the local repository,
+				e.g. via 
+				mvn install:install-file -Dfile=<path-to-file> 
+					-DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> 
+					-Dpackaging=<packaging>
+				 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>

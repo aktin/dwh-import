@@ -121,14 +121,16 @@ public class RestService implements Provider<Source>, ExternalInterface{
 
 				if( path != null && path.equals("_validate") ){
 					// only validation, no submission
+					log.info("No processing, requested validation only");
 					
 				}else{
 					// extract patient id, encounter id, document id
 					String[] ids = parser.extractIDs(cda);
 					// check arguments/valid id
 					// otherwise return HTTP_BAD_REQUEST
-					// process document (XXX catch errors)
+					// process document
 					processor.process(ids[0], ids[1], ids[2], cda);
+					// TODO check whether document was created or updated, return 201 or 200
 				}
 			}else{
 				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
@@ -143,6 +145,10 @@ public class RestService implements Provider<Source>, ExternalInterface{
 		} catch (CDAException e) {
 			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
 			log.log(Level.WARNING, "Unable to import CDA", e);
+			if( e.getCause() != null ){
+				outcome.addIssue(SimplifiedOperationOutcome.Severity.error, e.getCause().getMessage());
+			}
+			// might want to add suppressed exceptions, but might be many
 		}
 		
 		// HTTP status response

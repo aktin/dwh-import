@@ -11,6 +11,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.ws.soap.MTOM;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.CDAException;
@@ -39,7 +40,11 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
  *
  */
 //this binds the SEI to the SIB
-@WebService(endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType", targetNamespace="urn:ihe:iti:xds-b:2007", serviceName="DocumentRepository_Service")
+@WebService(
+		endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType", 
+		targetNamespace="urn:ihe:iti:xds-b:2007", 
+		serviceName="DocumentRepository_Service")
+@MTOM(enabled=true)
 public class DocumentRepository implements DocumentRepositoryPortType, ExternalInterface {
 	private static final Logger log = Logger.getLogger(DocumentRepository.class.getName());
 	private Validator validator;
@@ -77,9 +82,9 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 			}
 		}
 		if( body.getDocument().isEmpty() ){
-			return createErrorResponse(XDSConstants.ERR_DOC_MISSING, "Need exactly one document", null);
+			return createErrorResponse(XDSConstants.ERR_DOC_MISSING, "Need exactly one document");
 		}else if( body.getDocument().size() > 1 ){
-			return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Please submit exactly one document at a time", null);
+			return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Please submit exactly one document at a time");
 		}
 		Document doc = body.getDocument().get(0);
 		log.info("Found document with id="+doc.getId()+" and length="+doc.getValue().length);
@@ -117,7 +122,11 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Unable to extract IDs from document", e);
 			} catch (CDAException e) {
 				log.log(Level.WARNING, "Unable to import CDA", e);
-				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Error during import of CDA", e);
+				// add cause and suppressed exceptions to error response
+				// might be too many suppressed exceptions, only add the cause
+				Throwable cause = e.getCause();
+				if( null == cause )cause = e;
+				return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Error during import of CDA. See server log", cause);
 			}
 		}else{
 			// failed
@@ -164,7 +173,7 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 		return resp;
 	}
 
-	public static RegistryResponseType createErrorResponse(String code, String message, Throwable error){
+	public static RegistryResponseType createErrorResponse(String code, String message, Throwable... errors){
 		RegistryResponseType resp = new RegistryResponseType();
 		// failure
 		resp.setStatus(XDSConstants.RESPONSE_FAILURE);
@@ -176,6 +185,15 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 		re.setErrorCode(code);
 		RegistryErrorList rel = new RegistryErrorList();
 		rel.getRegistryError().add(re);
+		// additional exceptions
+		for( Throwable error : errors ){
+			re = new RegistryError();
+			re.setSeverity(XDSConstants.SEVERITY_ERROR);
+			re.setErrorCode(code); // or use XDSConstants.ERR_REPO_ERROR ?
+			re.setCodeContext(error.getMessage());
+			rel.getRegistryError().add(re);
+		}
+
 		resp.setRegistryErrorList(rel);
 		return resp;
 	}
