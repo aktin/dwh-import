@@ -11,6 +11,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.ws.soap.MTOM;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.CDAException;
@@ -39,7 +40,11 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
  *
  */
 //this binds the SEI to the SIB
-@WebService(endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType", targetNamespace="urn:ihe:iti:xds-b:2007", serviceName="DocumentRepository_Service")
+@WebService(
+		endpointInterface = "ihe.iti.xds_b._2007.DocumentRepositoryPortType", 
+		targetNamespace="urn:ihe:iti:xds-b:2007", 
+		serviceName="DocumentRepository_Service")
+@MTOM(enabled=true)
 public class DocumentRepository implements DocumentRepositoryPortType, ExternalInterface {
 	private static final Logger log = Logger.getLogger(DocumentRepository.class.getName());
 	private Validator validator;
