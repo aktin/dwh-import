@@ -2,7 +2,7 @@
 
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owLOINC:	<http://www.w3.org/2002/07/owl#> .
+@prefix owl:	<http://www.w3.org/2002/07/owl#> .
 @prefix dc:	<http://purl.org/dc/elements/1.1/> .
 @prefix skos: 	<http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
@@ -70,6 +70,9 @@
     skos:narrower :Systolicbloodpressure ;
     skos:narrower :HeartRate ;
     skos:narrower :GlasgowComaScale ;
+    skos:narrower :GlasgowComaScaleEyeOpening ;
+    skos:narrower :GlasgowComaScaleVerbal ;
+    skos:narrower :GlasgowComaScaleMotor ;
     skos:narrower :Pupilsize ;
     skos:narrower :Pupilreaction ;
     skos:narrower :BodyTemperatureCore ;
@@ -455,21 +458,18 @@
 :GlasgowComaScale a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Glasgow Coma Scale"@de ;
-    dc:description	"Glasgow Coma Scale" ;
+    dc:description	"Glasgow Coma Scale - Summe" ;
     
     dwh:restriction dwh:Integer ;
-    skos:notation	"LOINC:9269-2" ;
-    
-    skos:narrower :GlasgowComaScaleEyeOpening ;
-    skos:narrower :GlasgowComaScaleVerbal ;
-    skos:narrower :GlasgowComaScaleMotor .
+    skos:notation	"LOINC:9269-2" .
+
     
     
     
 :GlasgowComaScaleEyeOpening a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Glasgow Coma Scale Eye Opening"@en ;
-    skos:prefLabel "Augenoeffnung"@de ;
+    skos:prefLabel "Glasgow Coma Scale - Augenoeffnung"@de ;
     dc:description	"Glasgow Coma Scale Eye Opening" ;
     
     dwh:restriction dwh:Integer ;
@@ -480,7 +480,7 @@
 :GlasgowComaScaleVerbal a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Glasgow Coma Scale Verbal Response"@en ;
-    skos:prefLabel "Verbale Antwort"@de ;
+    skos:prefLabel "Glasgow Coma Scale - Verbale Antwort"@de ;
     dc:description	"Glasgow Coma Scale Verbal Response" ;
     
     dwh:restriction dwh:Integer ;
@@ -491,7 +491,7 @@
 :GlasgowComaScaleMotor a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Glasgow Coma Scale Motor Response"@en ;
-    skos:prefLabel "Motorische Antwort"@de ;
+    skos:prefLabel "Glasgow Coma Scale - Motorische Antwort"@de ;
     dc:description	"Glasgow Coma Scale Motor Response" ;
     
     dwh:restriction dwh:Integer ;
@@ -1931,13 +1931,13 @@
 
 
 
-dwh:Decimal a owLOINC:Restriction ;
-	owLOINC:onProperty rdf:value ;
-	owLOINC:allValuesFrom xsd:decimal .
+dwh:Decimal a owl:Restriction ;
+	owl:onProperty rdf:value ;
+	owl:allValuesFrom xsd:decimal .
 
-dwh:Integer a owLOINC:Restriction ;
-	owLOINC:onProperty rdf:value ;
-	owLOINC:allValuesFrom xsd:integer .
+dwh:Integer a owl:Restriction ;
+	owl:onProperty rdf:value ;
+	owl:allValuesFrom xsd:integer .
 
 # siehe auch http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/
 # und http://www.w3.org/TR/owl2-new-features/
