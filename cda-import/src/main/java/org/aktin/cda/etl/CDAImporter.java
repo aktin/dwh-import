@@ -45,7 +45,6 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	 * Construct a CDAImporter 
 	 * @throws NamingException i2b2 data sources could not be found by their names
 	 * @throws SQLException initisiation errors with the database
-	 * @throws TransformerConfigurationException failed to initialise transformation
 	 * @throws IOException unable to load CDA to ETL transformation script
 	 */
 	public CDAImporter() throws NamingException, SQLException, IOException {
