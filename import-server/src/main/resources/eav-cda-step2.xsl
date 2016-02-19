@@ -105,9 +105,12 @@
             <componentOf>
                 <encompassingEncounter classCode="ENC" moodCode="EVN">
                         <!-- Start Patientenkontakt -->
-                        <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
                     <xsl:call-template name="templateSetTimeValues">
                         <xsl:with-param name="templateId">LOINC:52455-3</xsl:with-param>
+                    </xsl:call-template>               
+                        <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
+                    <xsl:call-template name="templateSetTimeValues">
+                        <xsl:with-param name="templateId">AKTIN:ZeitpunktVerlegung</xsl:with-param>
                     </xsl:call-template>
                     <!-- Entlassung des Patienten mit Entlassungsgrund -->
                     <xsl:call-template name="dischargeDispositionCode"/>
