@@ -4,8 +4,8 @@
 Grundsätzlich sollte unsere Software mit allen Linux-Systemen 
 verwendbar sein.
 
-Für Debian 8 stellen wir Skripte für eine automatische Installation 
-und Konfiguration zur Verfügung.
+Für Debian 8 (und eingeschränkt CentOS 7) stellen wir Skripte für 
+eine automatische Installation und Konfiguration zur Verfügung.
 
 Nachfolgend ist die Installation der Pakete für ausgewählte Distributionen
 beschrieben:
