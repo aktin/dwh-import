@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>AKTIN : DWH Import : CDA Validation</name>
+
+	<groupId>org.aktin</groupId>
+	<artifactId>art-decor</artifactId>
+	<version>20151118T102028</version>
+	<description>
+	Install examples and schematron resources from aktin.art-decor.org to local repository
+	</description>
+	<parent>
+		<groupId>org.aktin</groupId>
+		<artifactId>dwh-import</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+	<properties>
+		<schematronVersion>${project.version}</schematronVersion>          
+		<examplesVersion>${project.version}</examplesVersion>            
+		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            
+		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>            
+	</properties>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/schematron/${schematronArchive}</directory>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/examples/${examplesArchive}</directory>
+				<excludes>
+					<exclude>**/.DS_Store</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- TODO don't depend on external server. build process fails if server down.
+				we should add the archives to the local repository,
+				e.g. via 
+				mvn install:install-file -Dfile=<path-to-file> 
+					-DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> 
+					-Dpackaging=<packaging>
+				 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>download-files</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- schematron files -->
+								<get src="http://aktin.art-decor.org/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/schematron" />
+								<!-- download examples -->
+								<get src="http://aktin.art-decor.org/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+	</dependencies>
+</project>
