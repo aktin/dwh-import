@@ -13,7 +13,8 @@ beschrieben:
 Debian 8
 --------
 Wir empfehlen für eine Neuinstallation ein Debian8-Minimalsystem ohne 
-Benutzeroberfläche.
+Benutzeroberfläche. Als Installationsmedium kann die [Network-Install-CD]
+(https://www.debian.org/CD/netinst/) verwendet werden.
 
 Nachfolgend Hinweise zur Installation:
 
