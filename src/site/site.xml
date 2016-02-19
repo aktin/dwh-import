@@ -5,6 +5,11 @@
 		<version>1.4</version>
 	</skin>
 	<body>
+		<menu name="Installation">
+			<item href="install-requirements.html" name="Voraussetzungen" />
+			<item href="install-script.html" name="Installationsskript" />
+			<item href="install-firewall.html" name="Firewall" />
+		</menu>
 		<menu name="Dokumentation">
 			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
 			<item href="Schnittstellen.html" name="Schnittstellen" />
