@@ -62,9 +62,8 @@ bestätigen.
 
 Anschließend started der Server neu (vorher CD entfernen).
 
-Alle weiteren Schritte können von unserem Installationsskript
-automatisch durchgeführt werden. Um es auszuführen, laden Sie
-das Paket XXXXX
+Nach der Installation kann unser [AKTIN-Installationsskript](install-script.html) 
+alle weiteren Schritte automatisch durchführen.
 
 
 [debian_disks]: screens_deb/Screenshot_8.png "Gesamten Speicherplatz in einer Partition"
@@ -79,8 +78,8 @@ Auch bei CentOS 7 genügt eine Minimalinstallation ohne Benutzeroberfläche oder
 weitere Internetdienste. Bitte beachten Sie bei der Installation die Hinweise 
 wie bei Debian 8 angegeben.
 
-Nach der Installation kann unser AKTIN-Installationsskript alle weiteren
-Schritte automatisch durchführen.
+Nach der Installation kann unser [AKTIN-Installationsskript](install-script.html) 
+alle weiteren Schritte automatisch durchführen.
 
 
 
