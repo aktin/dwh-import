@@ -119,7 +119,7 @@ public class RestService implements Provider<Source>, ExternalInterface{
 			if( vr.isValid() ){
 				responseStatus = HttpURLConnection.HTTP_OK;
 
-				if( path != null && path.equals("_validate") ){
+				if( path != null && path.equals("/_validate") ){
 					// only validation, no submission
 					log.info("No processing, requested validation only");
 					
