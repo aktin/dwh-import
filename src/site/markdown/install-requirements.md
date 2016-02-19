@@ -23,7 +23,7 @@ der Konfigurations des Tastaturlayouts Probleme ergeben, können
 Sie sich so dennoch problemlos einloggen.
 
 Anschließend muss ein weiterer Benutzer angelegt werden. Diesen 
-Benutzer können Sie nennen wie sie möchten - sollten aber auch hier
+Benutzer können Sie nennen wie Sie möchten - sollten aber auch hier
 Name und Passwort notieren. AKTIN benötigt diesen Benutzer nicht.
 
 Bei der Zuteilung des Speicherplatz bzw. Partitionierung empfehlen 
