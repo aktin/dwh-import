@@ -4,7 +4,7 @@ Schnittstelle zwischen Notaufnahme/Klinik und Datawarehouse
 
 Beispiel CDA
 ------------
-Vollständiges CDA-Dokument erstellen, in dem alle Felder verwendet werden. 
+Beispielhafte CDA-Dokumente sowie ein vollständiges CDA Dokument erstellen, in dem alle Felder ausgefühlt sind. 
 Im ersten Schritt mit unrealistischen Daten. Später dann realistische Daten.
 
 REST-Schnittstelle
@@ -12,27 +12,25 @@ REST-Schnittstelle
 XML-Datei entgegennehmen per REST-Schnittstelle.
 
 Im ersten Schritt reicht HTTP. Wenn die Schnittstelle steht, dann Umstellung
-auf SSL+TLS mit Clientauthentifizierung über selbstsigniertes Zertifikat.
-Getestet werden kann die REST+TLS-Schnittstelle dann z.B. mit curl, 
-um z.B. POST mit xml file+ ssl-zertifikat durchzuführen.
+auf FHIR, IHE und eventuell auf SSL+TLS mit Clientauthentifizierung über selbstsigniertes Zertifikat.
 
-PUT /aktin/dwh/cda oder POST /aktin/dwh/<patid>/<visit>/cda
+FHIR-Schnittstelle
+------------------
+Entspricht die Vorgaben des FHIRv1.0.2
 
-Abruf via GET /aktin/dwh/<patid>/<visit>/cda
-
+IHE
+---
+IHE XDS.b Dokument Repo
 
 Validation via Schematron 
 -------------------------
 Einarbeiten in XML-Validation mit Schematron: Transformation Schematron -> XSLT, dann Validation mit XSLT.
-Funktioniert das mit dem XSLT-Prozessor der in Java8 enthalten ist? (java.xml.transform)
+Implementierung über Saxon. 
 
 XSLT-Transformation CDA->DWH
 ----------------------------
-Idealerweise über java.xml.transform ohne externe Abhängigkeiten.
-
-Beim Import des DWH-XML sollen ggf. vorher existierende Daten zum Fall gelöscht werden. Es wird immer
-ein vollständiger Fall übertragen.
-
+Transformation nach EAV Format. Personbezogene Daten werden in diesem Schritt entfernt. 
+Transformation läuft über Java.xml.
 
 RESTful API
 -----------
@@ -69,8 +67,6 @@ Replies:
 200 OK
 40x Access denied (if this feature is not enabled)
 
-
-
 Optional (kann später implementiert werden)
 
 GET /patient/12345/43f232/cda
@@ -79,8 +75,6 @@ Auch wenn IDAT nicht gespeichert werden dürfen, kann die Funktion angeboten werd
 Replies:
 200 OK
 404 Patient not found
-
-
 
 
 Implementierung
@@ -92,10 +86,9 @@ Für jede CDA-Version gibt es zwei Transformationen (XSLT):
 Implementierung von PUT /patient/12345/cda
 1. CDA mit Schematron validieren. Fehlermeldung bei Inkonsistenz
 2. XSLT CDA -> EAV-XML
-3. EAV mit Sax2 prozessieren und transaktionssicher in Datenbank einfügen (erledigt)
+3. EAV mit Sax2 prozessieren und transaktionssicher in Datenbank einfügen
 4. Erfolg zurückmelden
-
 
 EAV-XML Schema siehe dwh-eav-example.xml
 
-TODO: Geht das mit jedem Feld des CDA? In der Kodierung aus Krefeld nachsehen! Ggf. Gruppierung verwenden.
+
