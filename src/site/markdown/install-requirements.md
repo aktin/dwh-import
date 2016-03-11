@@ -4,8 +4,8 @@
 Grundsätzlich sollte unsere Software mit allen Linux-Systemen 
 verwendbar sein.
 
-Für Debian 8 stellen wir Skripte für eine automatische Installation 
-und Konfiguration zur Verfügung.
+Für Debian 8 (und eingeschränkt CentOS 7) stellen wir Skripte für 
+eine automatische Installation und Konfiguration zur Verfügung.
 
 Nachfolgend ist die Installation der Pakete für ausgewählte Distributionen
 beschrieben:
@@ -13,7 +13,8 @@ beschrieben:
 Debian 8
 --------
 Wir empfehlen für eine Neuinstallation ein Debian8-Minimalsystem ohne 
-Benutzeroberfläche.
+Benutzeroberfläche. Als Installationsmedium kann die [Network-Install-CD]
+(https://www.debian.org/CD/netinst/) verwendet werden.
 
 Nachfolgend Hinweise zur Installation:
 
@@ -23,7 +24,7 @@ der Konfigurations des Tastaturlayouts Probleme ergeben, können
 Sie sich so dennoch problemlos einloggen.
 
 Anschließend muss ein weiterer Benutzer angelegt werden. Diesen 
-Benutzer können Sie nennen wie sie möchten - sollten aber auch hier
+Benutzer können Sie nennen wie Sie möchten - sollten aber auch hier
 Name und Passwort notieren. AKTIN benötigt diesen Benutzer nicht.
 
 Bei der Zuteilung des Speicherplatz bzw. Partitionierung empfehlen 

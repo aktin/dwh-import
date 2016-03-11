@@ -20,7 +20,7 @@
     skos:narrower :CEDIS30_GU ;
     skos:narrower :CEDIS30_MH ;
     skos:narrower :CEDIS30_NC ;
-    skos:narrower :CEDIS30_GU ;
+    skos:narrower :CEDIS30_GY ;
     skos:narrower :CEDIS30_EC ;
     skos:narrower :CEDIS30_OC ;
     skos:narrower :CEDIS30_RC ;
@@ -121,7 +121,7 @@
     skos:narrower :CEDIS30_310 .
     
 :CEDIS30_MH a skos:Concept ;
-    skos:prefLabel "psychische Verfassung"@de ;
+    skos:prefLabel "Psychische Verfassung"@de ;
     skos:notation "CEDIS30:MH" ;
     skos:narrower :CEDIS30_351 ;
     skos:narrower :CEDIS30_352 ;
@@ -148,9 +148,9 @@
     skos:narrower :CEDIS30_410 ;
     skos:narrower :CEDIS30_411 .
     
-:CEDIS30_GU a skos:Concept ;
+:CEDIS30_GY a skos:Concept ;
     skos:prefLabel "Geburtshilfe / Gynäkologie"@de ;
-    skos:notation "CEDIS30:GU" ;
+    skos:notation "CEDIS30:GY" ;
     skos:narrower :CEDIS30_451 ;
     skos:narrower :CEDIS30_452 ;
     skos:narrower :CEDIS30_453 ;
@@ -176,7 +176,7 @@
     skos:narrower :CEDIS30_511 .
     
 :CEDIS30_OC a skos:Concept ;
-    skos:prefLabel "Orthopädisch/Unfallchirurgisch"@de ;
+    skos:prefLabel "Orthopädisch/Unfall-chirurgisch"@de ;
     skos:notation "CEDIS30:OC" ;
     skos:narrower :CEDIS30_551 ;
     skos:narrower :CEDIS30_552 ;
@@ -189,7 +189,7 @@
     skos:narrower :CEDIS30_559 .  
     
 :CEDIS30_RC a skos:Concept ;
-    skos:prefLabel "respiratorisch"@de ;
+    skos:prefLabel "Respiratorisch"@de ;
     skos:notation "CEDIS30:RC" ;
     skos:narrower :CEDIS30_651 ;
     skos:narrower :CEDIS30_652 ;
@@ -210,7 +210,7 @@
     skos:narrower :CEDIS30_702 ;
     skos:narrower :CEDIS30_703 ;
     skos:narrower :CEDIS30_704 ;
-    skos:narrower :CEDIS30_704 ;
+    skos:narrower :CEDIS30_705 ;
     skos:narrower :CEDIS30_706 ;
     skos:narrower :CEDIS30_707 ;
     skos:narrower :CEDIS30_708 ;
@@ -281,7 +281,7 @@
    skos:prefLabel "Brustschmerz (nicht kardial)"@de ;
    skos:notation "CEDIS30:004" .
 :CEDIS30_005 a skos:Concept ;
-   skos:prefLabel "Palpitationen / unregelmässiger Herzschlag"@de ;
+   skos:prefLabel "Palpitationen/unregelmässiger Herzschlag"@de ;
    skos:notation "CEDIS30:005" .
 :CEDIS30_006 a skos:Concept ;
    skos:prefLabel "Hypertonie"@de ;
@@ -299,10 +299,10 @@
    skos:prefLabel "Beinschwellung/ödem"@de ;
    skos:notation "CEDIS30:010" .
 :CEDIS30_011 a skos:Concept ;
-   skos:prefLabel "kühle, pulslose Extremität"@de ;
+   skos:prefLabel "Kühle, pulslose Extremität"@de ;
    skos:notation "CEDIS30:011" .
 :CEDIS30_012 a skos:Concept ;
-   skos:prefLabel "eine Extremität gerötet, überwärmt"@de ;
+   skos:prefLabel "Eine Extremität gerötet, überwärmt"@de ;
    skos:notation "CEDIS30:012" .
 :CEDIS30_051 a skos:Concept ;
    skos:prefLabel "Ohrenschmerzen"@de ;
@@ -332,13 +332,13 @@
    skos:prefLabel "Halsschmerzen (wunder Rachen)"@de ;
    skos:notation "CEDIS30:103" .
 :CEDIS30_104 a skos:Concept ;
-   skos:prefLabel "Halsschwellung/ -schmerzen"@de ;
+   skos:prefLabel "Halsschwellung/-schmerzen"@de ;
    skos:notation "CEDIS30:104" .
 :CEDIS30_105 a skos:Concept ;
    skos:prefLabel "Trauma Hals"@de ;
    skos:notation "CEDIS30:105" .
 :CEDIS30_106 a skos:Concept ;
-   skos:prefLabel "Schluckbeschwerden / Dysphagie"@de ;
+   skos:prefLabel "Schluckbeschwerden/Dysphagie"@de ;
    skos:notation "CEDIS30:106" .
 :CEDIS30_107 a skos:Concept ;
    skos:prefLabel "Schmerzen im Gesicht (nicht traumatisch, nicht dental)"@de ;
@@ -347,7 +347,7 @@
    skos:prefLabel "Nasenbluten"@de ;
    skos:notation "CEDIS30:151" .
 :CEDIS30_152 a skos:Concept ;
-   skos:prefLabel "Verstopfte Nase / Heuschnupfen"@de ;
+   skos:prefLabel "Verstopfte Nase/Heuschnupfen"@de ;
    skos:notation "CEDIS30:152" .
 :CEDIS30_153 a skos:Concept ;
    skos:prefLabel "Fremdkörper in der Nase"@de ;
@@ -359,7 +359,7 @@
    skos:prefLabel "Trauma Nase"@de ;
    skos:notation "CEDIS30:155" .
 :CEDIS30_201 a skos:Concept ;
-   skos:prefLabel "Erfrierung / Kälteverletzung"@de ;
+   skos:prefLabel "Erfrierung/Kälteverletzung"@de ;
    skos:notation "CEDIS30:201" .
 :CEDIS30_202 a skos:Concept ;
    skos:prefLabel "schädliche Inhalation"@de ;
@@ -380,7 +380,7 @@
    skos:prefLabel "Bauchschmerzen"@de ;
    skos:notation "CEDIS30:251" .
 :CEDIS30_252 a skos:Concept ;
-   skos:prefLabel "Anorexie"@de ;
+   skos:prefLabel "Appetitlosigkeit"@de ;
    skos:notation "CEDIS30:252" .
 :CEDIS30_253 a skos:Concept ;
    skos:prefLabel "Verstopfung"@de ;
@@ -395,7 +395,7 @@
    skos:prefLabel "Leistenschmerzen/-schwellung"@de ;
    skos:notation "CEDIS30:256" .
 :CEDIS30_257 a skos:Concept ;
-   skos:prefLabel "übelkeit und/oder Erbrechen"@de ;
+   skos:prefLabel "Übelkeit und/oder Erbrechen"@de ;
    skos:notation "CEDIS30:257" .
 :CEDIS30_258 a skos:Concept ;
    skos:prefLabel "Rektale/perineale Schmerzen"@de ;
@@ -404,7 +404,7 @@
    skos:prefLabel "Bluterbrechen"@de ;
    skos:notation "CEDIS30:259" .
 :CEDIS30_260 a skos:Concept ;
-   skos:prefLabel "peranaler Blutabgang / Melaena"@de ;
+   skos:prefLabel "Peranaler Blutabgang/Teerstuhl"@de ;
    skos:notation "CEDIS30:260" .
 :CEDIS30_261 a skos:Concept ;
    skos:prefLabel "Ikterus"@de ;
@@ -413,13 +413,13 @@
    skos:prefLabel "Schluckauf"@de ;
    skos:notation "CEDIS30:262" .
 :CEDIS30_263 a skos:Concept ;
-   skos:prefLabel "Abdominelle Raumforderung / Gespanntes Abdomen"@de ;
+   skos:prefLabel "Abdominelle Raumforderung/Gespanntes Abdomen"@de ;
    skos:notation "CEDIS30:263" .
 :CEDIS30_264 a skos:Concept ;
-   skos:prefLabel "Trauma anal / rektal"@de ;
+   skos:prefLabel "Trauma anal/rektal"@de ;
    skos:notation "CEDIS30:264" .
 :CEDIS30_265 a skos:Concept ;
-   skos:prefLabel "Fremdkörper oral / ösophageal"@de ;
+   skos:prefLabel "Fremdkörper oral/ösophageal"@de ;
    skos:notation "CEDIS30:265" .
 :CEDIS30_266 a skos:Concept ;
    skos:prefLabel "Trinkstörung des Neugeborenen"@de ;
@@ -434,19 +434,19 @@
    skos:prefLabel "Hämaturie"@de ;
    skos:notation "CEDIS30:302" .
 :CEDIS30_303 a skos:Concept ;
-   skos:prefLabel "genitaler Ausfluss / Läsion"@de ;
+   skos:prefLabel "Genitaler Ausfluss/Läsion"@de ;
    skos:notation "CEDIS30:303" .
 :CEDIS30_304 a skos:Concept ;
    skos:prefLabel "Penisschwellung"@de ;
    skos:notation "CEDIS30:304" .
 :CEDIS30_305 a skos:Concept ;
-   skos:prefLabel "skrotale Schmerzen und/oder Schwellung"@de ;
+   skos:prefLabel "Skrotale Schmerzen und/oder Schwellung"@de ;
    skos:notation "CEDIS30:305" .
 :CEDIS30_306 a skos:Concept ;
    skos:prefLabel "Harnverhalt"@de ;
    skos:notation "CEDIS30:306" .
 :CEDIS30_307 a skos:Concept ;
-   skos:prefLabel "Beschwerden bei Harnwegsinfekt"@de ;
+   skos:prefLabel "Beschwerden eines Harnwegsinfektes"@de ;
    skos:notation "CEDIS30:307" .
 :CEDIS30_308 a skos:Concept ;
    skos:prefLabel "Oligurie"@de ;
@@ -458,10 +458,10 @@
    skos:prefLabel "Trauma genital"@de ;
    skos:notation "CEDIS30:310" .
 :CEDIS30_351 a skos:Concept ;
-   skos:prefLabel "Depression / Suizidalität / absichtliche Selbstschädigung"@de ;
+   skos:prefLabel "Depression/Suizidalität/absichtliche Selbstschädigung"@de ;
    skos:notation "CEDIS30:351" .
 :CEDIS30_352 a skos:Concept ;
-   skos:prefLabel "Angst / situationsbezogene Krise"@de ;
+   skos:prefLabel "Angst/situationsbezogene Krise"@de ;
    skos:notation "CEDIS30:352" .
 :CEDIS30_353 a skos:Concept ;
    skos:prefLabel "Halluzinationen/Wahnvorstellungen"@de ;
@@ -470,7 +470,7 @@
    skos:prefLabel "Schlafstörung"@de ;
    skos:notation "CEDIS30:354" .
 :CEDIS30_355 a skos:Concept ;
-   skos:prefLabel "gewalttätiges Verhalten / Fremdgefährdung"@de ;
+   skos:prefLabel "Gewalttätiges Verhalten/Fremdgefährdung"@de ;
    skos:notation "CEDIS30:355" .
 :CEDIS30_356 a skos:Concept ;
    skos:prefLabel "Soziales Problem"@de ;
@@ -500,7 +500,7 @@
    skos:prefLabel "Krampfanfall"@de ;
    skos:notation "CEDIS30:405" .
 :CEDIS30_406 a skos:Concept ;
-   skos:prefLabel "Gangstörung / Ataxie"@de ;
+   skos:prefLabel "Gangstörung/Ataxie"@de ;
    skos:notation "CEDIS30:406" .
 :CEDIS30_407 a skos:Concept ;
    skos:prefLabel "Kopfverletzung"@de ;
@@ -509,10 +509,10 @@
    skos:prefLabel "Zittern"@de ;
    skos:notation "CEDIS30:408" .
 :CEDIS30_409 a skos:Concept ;
-   skos:prefLabel "Schwäche in den Extremitäten / Symptome eines Schlaganfalls oder TIA"@de ;
+   skos:prefLabel "Schwäche in den Extremitäten/Symptome eines Schlaganfalls oder TIA"@de ;
    skos:notation "CEDIS30:409" .
 :CEDIS30_410 a skos:Concept ;
-   skos:prefLabel "Sensibilitätsstörung / Parästhesie"@de ;
+   skos:prefLabel "Sensibilitätsstörung/Parästhesie"@de ;
    skos:notation "CEDIS30:410" .
 :CEDIS30_411 a skos:Concept ;
    skos:prefLabel "Schlaffes Kind"@de ;
@@ -527,7 +527,7 @@
    skos:prefLabel "vaginaler Ausfluss"@de ;
    skos:notation "CEDIS30:453" .
 :CEDIS30_454 a skos:Concept ;
-   skos:prefLabel "sexueller übergriff"@de ;
+   skos:prefLabel "Sexueller übergriff"@de ;
    skos:notation "CEDIS30:454" .
 :CEDIS30_455 a skos:Concept ;
    skos:prefLabel "Vaginale Blutung"@de ;
@@ -536,13 +536,13 @@
    skos:prefLabel "Schamlippenschwellung"@de ;
    skos:notation "CEDIS30:456" .
 :CEDIS30_457 a skos:Concept ;
-   skos:prefLabel "Schwangerschaftsprobleme <= 20. SSW"@de ;
+   skos:prefLabel "Schwangerschaftsprobleme ≤ 20. SSW"@de ;
    skos:notation "CEDIS30:457" .
 :CEDIS30_458 a skos:Concept ;
    skos:prefLabel "Schwangerschaftsprobleme > 20. SSW"@de ;
    skos:notation "CEDIS30:458" .
 :CEDIS30_460 a skos:Concept ;
-   skos:prefLabel "vaginale Schmerzen / Schmerzen beim Geschlechtsverkehr"@de ;
+   skos:prefLabel "vaginale Schmerzen/Schmerzen beim Geschlechtsverkehr"@de ;
    skos:notation "CEDIS30:460" .
 :CEDIS30_502 a skos:Concept ;
    skos:prefLabel "Exposition des Auges gegenüber Chemikalien"@de ;
@@ -557,7 +557,7 @@
    skos:prefLabel "Augenschmerzen"@de ;
    skos:notation "CEDIS30:505" .
 :CEDIS30_506 a skos:Concept ;
-   skos:prefLabel "rote Augen, Ausfluss aus dem Auge"@de ;
+   skos:prefLabel "Rote Augen, Ausfluss aus dem Auge"@de ;
    skos:notation "CEDIS30:506" .
 :CEDIS30_507 a skos:Concept ;
    skos:prefLabel "Lichtscheu"@de ;
@@ -566,7 +566,7 @@
    skos:prefLabel "Doppelbilder"@de ;
    skos:notation "CEDIS30:508" .
 :CEDIS30_509 a skos:Concept ;
-   skos:prefLabel "periorbitale Schwellung"@de ;
+   skos:prefLabel "Periorbitale Schwellung"@de ;
    skos:notation "CEDIS30:509" .
 :CEDIS30_510 a skos:Concept ;
    skos:prefLabel "Trauma Auge"@de ;
@@ -578,7 +578,7 @@
    skos:prefLabel "Rückenschmerzen"@de ;
    skos:notation "CEDIS30:551" .
 :CEDIS30_552 a skos:Concept ;
-   skos:prefLabel "traumatische Rücken-/ Wirbelsäulenverletzung"@de ;
+   skos:prefLabel "Traumatische Rücken-/Wirbelsäulenverletzung"@de ;
    skos:notation "CEDIS30:552" .
 :CEDIS30_553 a skos:Concept ;
    skos:prefLabel "Amputation"@de ;
@@ -599,7 +599,7 @@
    skos:prefLabel "Gelenkschwellung"@de ;
    skos:notation "CEDIS30:558" .
 :CEDIS30_559 a skos:Concept ;
-   skos:prefLabel "kindliche Gangstörung/ Schmerzen beim Gehen"@de ;
+   skos:prefLabel "Kindliche Gangstörung/Schmerzen beim Gehen"@de ;
    skos:notation "CEDIS30:559" .
 :CEDIS30_651 a skos:Concept ;
    skos:prefLabel "Luftnot"@de ;
@@ -608,7 +608,7 @@
    skos:prefLabel "Atemstillstand"@de ;
    skos:notation "CEDIS30:652" .
 :CEDIS30_653 a skos:Concept ;
-   skos:prefLabel "Husten / Verschleimung"@de ;
+   skos:prefLabel "Husten/Verschleimung"@de ;
    skos:notation "CEDIS30:653" .
 :CEDIS30_654 a skos:Concept ;
    skos:prefLabel "Hyperventilation"@de ;
@@ -632,7 +632,7 @@
    skos:prefLabel "Apnoeanfälle bei Säuglingen"@de ;
    skos:notation "CEDIS30:660" .
 :CEDIS30_661 a skos:Concept ;
-   skos:prefLabel "grippeähnliche Erkrankung"@de ;
+   skos:prefLabel "Grippeähnliche Erkrankung"@de ;
    skos:notation "CEDIS30:661" .
 :CEDIS30_701 a skos:Concept ;
    skos:prefLabel "Biss"@de ;
@@ -644,13 +644,13 @@
    skos:prefLabel "Abschürfung"@de ;
    skos:notation "CEDIS30:703" .
 :CEDIS30_704 a skos:Concept ;
-   skos:prefLabel "Riss- / Quetsch-/ Stichwunde"@de ;
+   skos:prefLabel "Riss-/ Quetsch-/Schnitt-/Stichwunde"@de ;
    skos:notation "CEDIS30:704" .
-:CEDIS30_704 a skos:Concept ;
+:CEDIS30_705 a skos:Concept ;
    skos:prefLabel "Verbrennung"@de ;
-   skos:notation "CEDIS30:704" .
+   skos:notation "CEDIS30:705" .
 :CEDIS30_706 a skos:Concept ;
-   skos:prefLabel "Exposition gegenüber Blut und Körperflüssigkeiten"@de ;
+   skos:prefLabel "Kontakt mit Blut oder Körperflüssigkeiten"@de ;
    skos:notation "CEDIS30:706" .
 :CEDIS30_707 a skos:Concept ;
    skos:prefLabel "Juckreiz"@de ;
@@ -659,7 +659,7 @@
    skos:prefLabel "Hautausschlag"@de ;
    skos:notation "CEDIS30:708" .
 :CEDIS30_709 a skos:Concept ;
-   skos:prefLabel "lokalisierte Schwellung / Rötung"@de ;
+   skos:prefLabel "lokalisierte Schwellung/Rötung"@de ;
    skos:notation "CEDIS30:709" .
 :CEDIS30_710 a skos:Concept ;
    skos:prefLabel "Wundkontrolle"@de ;
@@ -668,10 +668,10 @@
    skos:prefLabel "sonstige Hautprobleme"@de ;
    skos:notation "CEDIS30:711" .
 :CEDIS30_712 a skos:Concept ;
-   skos:prefLabel "Schwellung / Beule / Schwiele"@de ;
+   skos:prefLabel "Schwellung/Beule/Schwiele"@de ;
    skos:notation "CEDIS30:712" .
 :CEDIS30_713 a skos:Concept ;
-   skos:prefLabel "Rötung / Spannungsgefühl in der Brust"@de ;
+   skos:prefLabel "Rötung/Spannungsgefühl in der Brust"@de ;
    skos:notation "CEDIS30:713" .
 :CEDIS30_714 a skos:Concept ;
    skos:prefLabel "Ausschluss eines Parasitenbefalls"@de ;
@@ -689,7 +689,7 @@
    skos:prefLabel "Nagelprobleme"@de ;
    skos:notation "CEDIS30:718" .
 :CEDIS30_751 a skos:Concept ;
-   skos:prefLabel "Substanzmissbrauch/ Intoxikation"@de ;
+   skos:prefLabel "Substanzmissbrauch/Intoxikation"@de ;
    skos:notation "CEDIS30:751" .
 :CEDIS30_752 a skos:Concept ;
    skos:prefLabel "Einnahme einer überdosierung"@de ;
@@ -698,22 +698,22 @@
    skos:prefLabel "Substanzentzug"@de ;
    skos:notation "CEDIS30:753" .
 :CEDIS30_801 a skos:Concept ;
-   skos:prefLabel "schweres  Trauma - penetrierend"@de ;
+   skos:prefLabel "Schweres  Trauma - penetrierend"@de ;
    skos:notation "CEDIS30:801" .
 :CEDIS30_802 a skos:Concept ;
-   skos:prefLabel "schweres Trauma - stumpf"@de ;
+   skos:prefLabel "Schweres Trauma - stumpf"@de ;
    skos:notation "CEDIS30:802" .
 :CEDIS30_803 a skos:Concept ;
-   skos:prefLabel "isoliertes Thoraxtrauma - penetrierend"@de ;
+   skos:prefLabel "Isoliertes Thoraxtrauma - penetrierend"@de ;
    skos:notation "CEDIS30:803" .
 :CEDIS30_804 a skos:Concept ;
-   skos:prefLabel "isoliertes Thoraxtrauma - stumpf"@de ;
+   skos:prefLabel "Isoliertes Thoraxtrauma - stumpf"@de ;
    skos:notation "CEDIS30:804" .
 :CEDIS30_805 a skos:Concept ;
-   skos:prefLabel "isoliertes Abdominaltrauma - penetrierend"@de ;
+   skos:prefLabel "Isoliertes Abdominaltrauma - penetrierend"@de ;
    skos:notation "CEDIS30:805" .
 :CEDIS30_806 a skos:Concept ;
-   skos:prefLabel "isoliertes Abdominaltrauma -stumpf"@de ;
+   skos:prefLabel "Isoliertes Abdominaltrauma - stumpf"@de ;
    skos:notation "CEDIS30:806" .
 :CEDIS30_851 a skos:Concept ;
    skos:prefLabel "Exposition gegenüber einer übertragbaren Krankheit"@de ;
@@ -728,52 +728,52 @@
    skos:prefLabel "Hypoglykämie"@de ;
    skos:notation "CEDIS30:854" .
 :CEDIS30_855 a skos:Concept ;
-   skos:prefLabel "direkte überweisung / Weiterleitung"@de ;
+   skos:prefLabel "Direkte überweisung/Weiterleitung"@de ;
    skos:notation "CEDIS30:855" .
 :CEDIS30_856 a skos:Concept ;
    skos:prefLabel "Verbandswechsel"@de ;
    skos:notation "CEDIS30:856" .
 :CEDIS30_857 a skos:Concept ;
-   skos:prefLabel "Entfernung von Klammern / Nähten"@de ;
+   skos:prefLabel "Entfernung von Klammern/Nähten"@de ;
    skos:notation "CEDIS30:857" .
 :CEDIS30_858 a skos:Concept ;
    skos:prefLabel "Gipskontrolle"@de ;
    skos:notation "CEDIS30:858" .
 :CEDIS30_859 a skos:Concept ;
-   skos:prefLabel "Bildgebung / Blutuntersuchung"@de ;
+   skos:prefLabel "Bildgebung/Blutuntersuchung"@de ;
    skos:notation "CEDIS30:859" .
 :CEDIS30_860 a skos:Concept ;
-   skos:prefLabel "Problem mit einem medizinischen Gerät"@de ;
+   skos:prefLabel "Problem mit Medizinprodukt"@de ;
    skos:notation "CEDIS30:860" .
 :CEDIS30_861 a skos:Concept ;
-   skos:prefLabel "Verschreibung / Bedarf an Medikamenten"@de ;
+   skos:prefLabel "Verschreibung/Bedarf an Medikamenten"@de ;
    skos:notation "CEDIS30:861" .
 :CEDIS30_862 a skos:Concept ;
    skos:prefLabel "Entfernung Ring"@de ;
    skos:notation "CEDIS30:862" .
 :CEDIS30_863 a skos:Concept ;
-   skos:prefLabel "Auffällige Ergebnisse Labor / Bildgebung"@de ;
+   skos:prefLabel "Auffällige Ergebnisse Labor/Bildgebung"@de ;
    skos:notation "CEDIS30:863" .
 :CEDIS30_864 a skos:Concept ;
-   skos:prefLabel "Blässe / Anämie"@de ;
+   skos:prefLabel "Blässe/Anämie"@de ;
    skos:notation "CEDIS30:864" .
 :CEDIS30_865 a skos:Concept ;
-   skos:prefLabel "postoperative Komplikationen"@de ;
+   skos:prefLabel "Postoperative Komplikationen"@de ;
    skos:notation "CEDIS30:865" .
 :CEDIS30_866 a skos:Concept ;
-   skos:prefLabel "geringfügige unspezifische Beschwerden"@de ;
+   skos:prefLabel "Geringfügige unspezifische Beschwerden"@de ;
    skos:notation "CEDIS30:866" .
 :CEDIS30_867 a skos:Concept ;
    skos:prefLabel "Unstillbares Schreien"@de ;
    skos:notation "CEDIS30:867" .
 :CEDIS30_868 a skos:Concept ;
-   skos:prefLabel "angeborene Probleme bei Kindern"@de ;
+   skos:prefLabel "Angeborene Probleme bei Kindern"@de ;
    skos:notation "CEDIS30:868" .
 :CEDIS30_869 a skos:Concept ;
    skos:prefLabel "Neugeborenes"@de ;
    skos:notation "CEDIS30:869" .
 :CEDIS30_870 a skos:Concept ;
-   skos:prefLabel "intravenöse Therapie"@de ;
+   skos:prefLabel "Intravenöse Therapie"@de ;
    skos:notation "CEDIS30:870" .
 :CEDIS30_998 a skos:Concept ;
    skos:prefLabel "Patient aufgenommen und vor Ersteinschätzung wieder gegangen"@de ;

@@ -4,7 +4,7 @@
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>dwh-import</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.6-SNAPSHOT</version>
   
 	<name>AKTIN : DWH Import</name>
 	<description>AKTIN Software</description>
@@ -13,7 +13,7 @@
 	
 	<properties>
 		<!-- specifies the package and source version to which the site refers to -->
-		<latestReleaseVersion>0.4.1</latestReleaseVersion>
+		<latestReleaseVersion>0.5</latestReleaseVersion>
 		<releaseRepoUrl>https://www.aktin.org/software/repo</releaseRepoUrl>
 		<!-- encoding stuff -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
