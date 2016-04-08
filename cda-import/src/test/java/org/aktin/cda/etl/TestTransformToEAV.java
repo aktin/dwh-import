@@ -1,6 +1,7 @@
 package org.aktin.cda.etl;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -48,10 +49,21 @@ public class TestTransformToEAV {
 		t.close();
 	}
 	
+	/**
+	 * Transform a CDA file to a EAV which is output on stdout.
+	 * Call with {@code java -classpath "cda-import/target/test-classes;cda-import/target/classes;cda-server/target/classes;cda-validation/target/classes;histream-core/target/classes" org.aktin.cda.etl.TestTransformToEAV filename}
+	 * @param args file name argument
+	 * @throws Exception error
+	 */
 	public static void main(String args[]) throws Exception{
+		// TODO use file name from commmand line
+		if( args.length != 1 ){
+			System.err.println("Please specify exactly one CDA file path");
+			return;
+		}
 		CDAImporterMockUp t = new CDAImporterMockUp();
 		CDAParser parser = new CDAParser();
-		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
+		try( InputStream in = new FileInputStream(args[0])){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			
 			Path temp = t.transformToEAV(dom);
