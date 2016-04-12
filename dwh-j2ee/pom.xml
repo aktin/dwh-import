@@ -37,7 +37,7 @@
 						<webModule>
 							<groupId>org.aktin</groupId>
 							<artifactId>cda-import</artifactId>
-							<contextRoot>/aktin/cda</contextRoot>
+							<contextRoot>/aktin</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>

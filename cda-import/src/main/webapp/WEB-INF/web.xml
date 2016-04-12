@@ -27,11 +27,11 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CDAImportXDS</servlet-name>
-		<url-pattern>/xds.b</url-pattern>
+		<url-pattern>/cda/xds.b</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CDAImportFHIR</servlet-name>
-		<url-pattern>/fhir/Binary/*</url-pattern>
+		<url-pattern>/cda/fhir/Binary/*</url-pattern>
 	</servlet-mapping>
 	<!--  TODO test in Wildfly 9.0.2 -->
 
