@@ -120,6 +120,7 @@ public class XdsClient {
 	 *   
 	 * @param xdsUrl URL of the AKTIN XDS.b interface. E.g. http://server.name/aktin/xds.b?wsdl
 	 * @param document CDA document to submit
+	 * @param charset document charset
 	 * @param uniqueId unique id for XDS metadata
 	 * @param patientId patient id for XDS metadata
 	 * @param sourceId source id for XDS metadata

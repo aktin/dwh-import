@@ -26,7 +26,7 @@ public class TestFHIR {
 	
 	/**
 	 * Prepare server for CDA validation
-	 * @throws IOException
+	 * @throws IOException io error
 	 */
 	@Before
 	public void startServer() throws IOException{
@@ -49,9 +49,9 @@ public class TestFHIR {
 	
 	/**
 	 * Submits a valid CDA document to the FHIR interface.
-	 * The actual document submission is done in {@link Util#submitToFHIR(URL, InputStream)}
+	 * The actual document submission is done in {@link FhirClient#submitToFHIR(URL, InputStream, String)}
 	 * 
-	 * @throws IOException
+	 * @throws IOException error during loading/transfer
 	 */
 	@Test
 	public void expectOkForValidCDA() throws IOException{

@@ -156,23 +156,27 @@
     <xsl:template match="cda:participant/cda:associatedEntity">
         <xsl:comment>60 Versicherungsname</xsl:comment>
         <fact>
-            <xsl:attribute name="concept">  <!-- #ToDo Coding -->
-                <xsl:value-of select="./cda:scopingOrganization/cda:name"/>
-            </xsl:attribute>
+            <xsl:attribute name="concept">KKNAME</xsl:attribute>  <!-- Name der Krankenkasse als Freitext -->
+            <xsl:value-of select="./cda:scopingOrganization/cda:name"/>
         </fact>
 
         <xsl:comment>771 Versicherungsträger</xsl:comment>
+        <!-- kann die ID (IKNR) in scopingOrganisation auch weggelassen werden? -->
         <fact>
-            <xsl:attribute name="concept">  <!-- #ToDo Coding -->
-                <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.5']/@extension"/>
-            </xsl:attribute>
+            <xsl:attribute name="concept">IKNR</xsl:attribute>
+            <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.5']/@extension"/>
         </fact>
-        
+        <!-- VK-Nummer, wenn vorhanden -->
+        <xsl:if test="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']">
+		<fact>
+		    <xsl:attribute name="concept">VKNR</xsl:attribute>
+		    <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']/@extension"/>
+		</fact>
+	</xsl:if>
+        <!-- Versicherungsnummer, eGK Nummer nicht speichern,
+		beides identifiziert den Patienten -->
         <xsl:comment>808 Versicherungsnummer</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept">xxx</xsl:attribute>  <!-- #ToDo Coding -->
-            <xsl:value-of select="./id/@extension"/>
-        </fact>
+
     </xsl:template>
     
     <!-- 53 Patientenname -->

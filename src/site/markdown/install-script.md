@@ -1,9 +1,19 @@
-﻿Automatische Konfiguration mit dem AKTIN-Installationsskript
+﻿Automatische Konfiguration des AKTIN-Applikations-Server mit dem Installationsskript
 ===============================================
 
 Unser Installationsskript wurde getestet mit Debian 8 und CentOS 7.
 Wenn sie ein anderes System verwenden, müssen Sie die Skripte evtl. 
 anpassen oder die enthaltenen Schritte manuell durchführen.
+
+Mit dem Befehl 
+```
+uname -a
+```
+können Sie die Distribution des Linux-Systems herausfinden. 
+In der Konsole sehen Sie dann ähnlich dem Folgenden: 
+```
+Linux debian-8 3.16.0-4-amd64 #1 SMP Debian 3.16.7-ckt20-1+deb8u1 (2015-12-14) x86_64 GNU/Linux
+```
 
 Um das Skript zu starten, brauchen Sie einen Konsolenzugang zum Server.
 Wechseln Sie zunächst zum Benutzer `root` (z.B. via `su -`). Anschließend
@@ -19,7 +29,7 @@ z.B. mit
 (evtl. mit Option `--no-check-certificate` bei Zertifikatfehlern).
 
 Wenn das Paket heruntergeladen ist, kann es entpackt werden mit 
-`tar -xvfz aktin.tar.gz`. Die Dateien werden dann automatisch in 
+`tar xvfz aktin.tar.gz`. Die Dateien werden dann automatisch in 
 den Ordner `aktin-dwh-snapshot` entpackt.
 
 Die Installation benötigt Zugriff auf das Internet - speziell die jeweiligen 

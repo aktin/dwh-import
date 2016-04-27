@@ -1,4 +1,4 @@
-﻿Voraussetzungen für eine manuelle Installation des AKTIN Servers
+﻿Voraussetzungen für eine manuelle Installation des Betriebssystems für den AKTIN-Applikations-Server
 ================================================================
 
 Grundsätzlich sollte unsere Software mit allen Linux-Systemen 
