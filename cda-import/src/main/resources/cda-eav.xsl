@@ -86,7 +86,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                 <surname>information privacy</surname>
                 <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
                 <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
-                <!-- <deathdate></deathdate> -->
+                <!-- <deceased></deceased> -->
                 <encounter>
                     <xsl:attribute name="id">
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:setId"/>                      

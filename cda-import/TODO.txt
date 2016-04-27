@@ -1,0 +1,1 @@
+implement 'deceased' element in resulting eav to reflect deceased patients
