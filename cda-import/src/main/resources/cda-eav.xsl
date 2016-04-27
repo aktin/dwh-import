@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="../../aktin-runtime-develop/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<!-- #Todo alle effectiveTimes und sonstigen optionalen Daten zusätzlich als Attribute ergänzen um alle Zeiten rekonstruieren zu können => Es fehlt noch alles, was nicht als Konzept abgebildet ist
-Allgemein noch möglichst vieles über if/choose in die globalen Templates auslagern!
--->
-
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="xs func cda eav"
@@ -105,6 +101,7 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
                     <facts>
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode"/>
+                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:city"/>
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:performer/cda:time"/>  
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:effectiveTime"/>   
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
@@ -195,6 +192,18 @@ Allgemein noch möglichst vieles über if/choose in die globalen Templates ausla
             <value>
                 <!-- <xsl:attribute name="unit"></xsl:attribute> -->
                 <xsl:attribute name="xsi:type">numeric</xsl:attribute>
+                <xsl:value-of select="."/>
+            </value>
+        </fact>
+    </xsl:template>
+    
+    <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode">
+        <xsl:comment>Patientenadresse (Ort)</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Ort</xsl:attribute>
+            <value>
+                <!-- <xsl:attribute name="unit"></xsl:attribute> -->
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="."/>
             </value>
         </fact>
