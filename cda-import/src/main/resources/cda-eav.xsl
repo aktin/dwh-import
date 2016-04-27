@@ -82,7 +82,9 @@
                 <surname>information privacy</surname>
                 <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
                 <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
-                <!-- <deceased></deceased> -->
+                <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode/@code='1'">
+                    <deceased><xsl:value-of select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value"/></deceased>
+                </xsl:if>
                 <encounter>
                     <xsl:attribute name="id">
                         <xsl:apply-templates select="/cda:ClinicalDocument/cda:setId"/>                      
@@ -93,9 +95,7 @@
                     <end>
                         <xsl:call-template name="ZeitpunktEntlassung"/>                        
                     </end>  
-                    <location>
-                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization"/>  <!-- #ToDo: Es können mehrere IDs angegeben werden, Ausgabe dann doppelt -->
-                    </location>
+                    <!-- <location></location> -->
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
                     <facts>
@@ -132,12 +132,11 @@
     Die KrankenhausID muss nicht im DWH gespeichert werden.
     Bei der Zusammenführung ist dem Broker die Quelle bekannt und kann ggf. ergänzt werden.
     Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar.
-    -->
+   
     <xsl:template match="cda:representedCustodianOrganization">
-        <!-- <xsl:comment>1/2	ID des Krankenhauses/ der Notaufnahme</xsl:comment> -->
-        <!-- <xsl:value-of select="./cda:id/@root"/>:<xsl:value-of select="./cda:id/@extension"/> -->
-        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extension))"/>  <!-- #todo multiple IDs possible, select first?! -->
+        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extension))"/> 
     </xsl:template>
+     -->
     
     <!-- 2	ID der Notaufnahme
     siehe 1 - Falls es zwei Notaufnahmen gibt, haben sie ein seperates DWH oder ein gemeinsames und werden nicht getrennt ausgewertet. In beiden Fällen ist die Frage nicht wirklich relevant.
@@ -160,7 +159,6 @@
             <xsl:value-of select="./cda:scopingOrganization/cda:name"/>
         </fact>
 
-        <xsl:comment>771 Versicherungsträger</xsl:comment>
         <!-- kann die ID (IKNR) in scopingOrganisation auch weggelassen werden? -->
         <fact>
             <xsl:attribute name="concept">IKNR</xsl:attribute>
@@ -173,9 +171,6 @@
 		    <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']/@extension"/>
 		</fact>
 	</xsl:if>
-        <!-- Versicherungsnummer, eGK Nummer nicht speichern,
-		beides identifiziert den Patienten -->
-        <xsl:comment>808 Versicherungsnummer</xsl:comment>
 
     </xsl:template>
     
