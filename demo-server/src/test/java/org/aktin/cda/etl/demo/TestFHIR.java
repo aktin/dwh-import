@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.etl.demo.client.FhirClient;
@@ -13,6 +16,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * JUnit tests for the FHIR interface.
@@ -52,9 +58,17 @@ public class TestFHIR {
 	private void verifyConformanceStatement(URL url, HttpURLConnection c) throws IOException{
 		Assert.assertEquals(200, c.getResponseCode());
 		try( InputStream in = c.getInputStream() ){
-			StreamSource s = new StreamSource(in);
+			InputSource s = new InputSource(in);
 			s.setSystemId(url.toString());
 			// TODO read/verify
+			Document dom;
+			try {
+				DocumentBuilder b = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+				dom = b.parse(s);
+			} catch (ParserConfigurationException | SAXException e) {
+				throw new IOException(e);
+			}
+			Assert.assertEquals("Conformance", dom.getDocumentElement().getTagName());
 		}		
 	}
 	@Test
