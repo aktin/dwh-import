@@ -3,6 +3,8 @@ package org.aktin.cda.etl.demo;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
@@ -14,10 +16,16 @@ import javax.xml.ws.soap.SOAPBinding;
 
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
+import org.aktin.cda.etl.fhir.Binary;
+import org.aktin.cda.etl.fhir.ConformanceStatement;
 import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.w3c.dom.Document;
 
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
 /**
@@ -35,10 +43,12 @@ public class Server implements CDAProcessor{
 	/** Servlet context for XDS.b */
 	public static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
 	/** Servlet context for FHIR Binary */
-	public static final String REST_CONTEXT_PATH = "/aktin/fhir/Binary";
+	public static final String REST_CONTEXT_PATH = "/aktin/fhir";
+	public static final String FHIR_BINARY_PATH = REST_CONTEXT_PATH+"/Binary";
 
 	private DocumentRepository xdsService;
 	private RestService restService;
+	private URI jaxrsUri;
 
 	private Endpoint xdsEndpoint, restEndpoint;
 
@@ -66,7 +76,24 @@ public class Server implements CDAProcessor{
 		restService.setValidator(validator);
 		restService.setProcessor(this);
 		
-		server = HttpServer.create();
+		ResourceConfig config = new ResourceConfig();
+		// configure HK2 for our CDI injections
+		config.register(new AbstractBinder() {
+			@Override
+			protected void configure() {
+				this.bind(validator).to(Validator.class);
+				this.bind(Server.this).to(CDAProcessor.class);
+			}
+		});
+		// load JAX-RS classes for FHIR
+		config.packages("org.aktin.cda.etl.fhir");
+		try {
+			 jaxrsUri = new URI("http://localhost:0/jersey");
+		} catch (URISyntaxException e) {
+			throw new IOException(e);
+		}
+		server = JdkHttpServerFactory.createHttpServer(jaxrsUri, config, false);
+		//server = HttpServer.create();
 	}
 
 	/**
@@ -76,7 +103,7 @@ public class Server implements CDAProcessor{
 	 */
 	public void bind(InetSocketAddress bindAddress) throws IOException{
 		// bind HTTP server
-		server.bind(bindAddress, 0);
+		//server.bind(bindAddress, 0);
 		// get local address (may be dynamically allocated)
 		InetSocketAddress localAddress = server.getAddress();
 		log.info("Listening on port "+localAddress.getPort());
@@ -92,9 +119,13 @@ public class Server implements CDAProcessor{
 
 		// publish REST end point
 		restEndpoint = Endpoint.create(HTTPBinding.HTTP_BINDING, restService);
-		restEndpoint.publish(server.createContext(REST_CONTEXT_PATH));
+		HttpContext ctx = server.createContext(REST_CONTEXT_PATH);
+		restEndpoint.publish(ctx);
 		log.info("REST published at http://"+localAddress.getHostName()+":"+localAddress.getPort()+REST_CONTEXT_PATH+"/");
 
+		// info about JAX-RS
+		log.info("JAXRS published at http://"+localAddress.getHostName()+":"+localAddress.getPort()+jaxrsUri.getPath());
+		
 	}
 	
 	/**
@@ -208,6 +239,4 @@ public class Server implements CDAProcessor{
 		// do nothing
 		// TODO remember patientId and encounterId, return whether document was created or replaced
 	}
-	
-
 }

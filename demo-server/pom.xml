@@ -45,6 +45,11 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>org.glassfish.jersey.containers</groupId>
+		    <artifactId>jersey-container-jdk-http</artifactId>
+		    <version>2.22.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-validation</artifactId>
 			<version>0.6-SNAPSHOT</version>
