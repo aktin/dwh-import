@@ -69,9 +69,6 @@ public class TestFHIR {
 		verifyConformanceStatement(req, c);
 	}
 	
-	/*
-	 * XXX OPTIONS not supported by JAX-WS API
-	 * TODO use JAX-RS API and change demo-server
 	@Test
 	public void requestConformanceStatementOptions() throws IOException{
 		HttpURLConnection c = (HttpURLConnection)fhirBase.openConnection();
@@ -81,7 +78,7 @@ public class TestFHIR {
 		c.setRequestMethod("OPTIONS");
 		c.connect();
 		verifyConformanceStatement(new URL(fhirBase,"metadata"), c);
-	}*/
+	}
 	
 	/**
 	 * Submits a valid CDA document to the FHIR interface.
