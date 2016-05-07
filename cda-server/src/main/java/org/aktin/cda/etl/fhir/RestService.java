@@ -16,6 +16,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.BindingType;
 import javax.xml.ws.Provider;
 import javax.xml.ws.Service;
@@ -88,81 +89,116 @@ public class RestService implements Provider<Source>, ExternalInterface{
 		String path = (String)mc.get(MessageContext.PATH_INFO);
 		String query = (String)mc.get(MessageContext.QUERY_STRING);
 		String httpMethod = (String)mc.get(MessageContext.HTTP_REQUEST_METHOD);
-		// only PUT and POST supported
-		if( !httpMethod.equals("PUT") && !httpMethod.equals("POST") ){
-			// method not allowed
-			mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_BAD_METHOD);
-			return null;
-		}
+
 		log.info("REST request: "+httpMethod+" "+(path!=null?path:"")+(query!=null?"?"+query:""));
-
-		// log content type for debugging
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		Map<String, List<String>> headers = (Map)mc.get(MessageContext.HTTP_REQUEST_HEADERS);
-		List<String> contentType = headers.get("Content-Type");
-		if( contentType != null && !contentType.isEmpty() ){
-			for( String type : contentType ){
-				log.info("Content-Type: "+type);
-			}
-		}
-
-		ValidationResult vr = null;
-		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
-		int responseStatus;
-
-		try {
-			Document cda = parser.buildDOM(request);
-			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
-			synchronized( validator ){
-				vr = validator.validate(new DOMSource(cda));
-			}
-			if( vr.isValid() ){
-				responseStatus = HttpURLConnection.HTTP_OK;
-
-				if( path != null && path.equals("/$validate") ){
-					// only validation, no submission
-					log.info("No processing, requested validation only");
-					
-				}else{
-					// extract patient id, encounter id, document id
-					String[] ids = parser.extractIDs(cda);
-					// check arguments/valid id
-					// otherwise return HTTP_BAD_REQUEST
-					// process document
-					processor.process(ids[0], ids[1], ids[2], cda);
-					// TODO check whether document was created or updated, return 201 or 200
-				}
+		
+		if( path == null ){
+			// FHIR base url
+			// only support OPTIONS directive
+			if( httpMethod.equals("OPTIONS") ){
+				// return conformance resource
+				return readConformanceResource();
 			}else{
-				responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
-				vr.forEachErrorMessage(s -> outcome.addIssue(SimplifiedOperationOutcome.Severity.error, s));
+				mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_BAD_METHOD);
+				// TODO return OperationsOutcome
+				return null;
 			}
-		} catch (XPathExpressionException e) {
-			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
-			log.log(Level.FINE, "XPath error", e);
-		} catch (TransformerException e) {
-			responseStatus = HTTP_UNSUPPORTED_TYPE;
-			log.log(Level.FINE, "Transformation failed", e);
-		} catch (CDAException e) {
-			responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
-			log.log(Level.WARNING, "Unable to import CDA", e);
-			if( e.getCause() != null ){
-				outcome.addIssue(SimplifiedOperationOutcome.Severity.error, e.getCause().getMessage());
+		}else if( path.equals("/metadata") && httpMethod.equals("GET") ){
+			// return conformance resource
+			return readConformanceResource();
+		}else if( path.startsWith("/Binary") ){
+			// binary resource
+			// only PUT and POST supported
+			// POST for create without id
+			// PUT for update with id
+			if( httpMethod.equals("PUT")|| httpMethod.equals("POST") ){
+				return createBinary(request, mc, path);
+			}else{
+				// method not allowed
+				mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_BAD_METHOD);
+				return null;
 			}
-			// might want to add suppressed exceptions, but might be many
+		}else{
+			// on anything else, no methods are allowed
+			mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_BAD_METHOD);
+			return null;			
 		}
+
 		
-		// HTTP status response
-		mc.put(MessageContext.HTTP_RESPONSE_CODE, responseStatus);
-		
-		try {
-			return outcome.generateXml(outputFactory, documentBuilder);
-		} catch (XMLStreamException e) {
-			// internal error
-			mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_INTERNAL_ERROR);
-			return null; // TODO check whether returning null is ok
-		}
 	}
 
+	private Source readConformanceResource(){
+		return new StreamSource(getClass().getResource("/fhir/conformance.xml").toString());
+	}
+	private Source createBinary(Source request, MessageContext mc, String path){
+		// log content type for debugging
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				Map<String, List<String>> headers = (Map)mc.get(MessageContext.HTTP_REQUEST_HEADERS);
+				List<String> contentType = headers.get("Content-Type");
+				if( contentType != null && !contentType.isEmpty() ){
+					for( String type : contentType ){
+						log.info("Content-Type: "+type);
+					}
+				}
+
+				ValidationResult vr = null;
+				SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
+				int responseStatus;
+
+				try {
+					Document cda = parser.buildDOM(request);
+					// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
+					synchronized( validator ){
+						vr = validator.validate(new DOMSource(cda));
+					}
+					if( vr.isValid() ){
+						responseStatus = HttpURLConnection.HTTP_OK;
+
+						if( path != null && path.equals("/$validate") ){
+							// only validation, no submission
+							log.info("No processing, requested validation only");
+							
+						}else{
+							// extract patient id, encounter id, document id
+							String[] ids = parser.extractIDs(cda);
+							// check arguments/valid id
+							// otherwise return HTTP_BAD_REQUEST
+							// process document
+							processor.process(ids[0], ids[1], ids[2], cda);
+							// TODO check whether document was created or updated, return 201 or 200
+						}
+					}else{
+						responseStatus = HTTP_UNPROCESSABLE_ENTITY; // Unprocessable entity
+						vr.forEachErrorMessage(s -> outcome.addIssue(SimplifiedOperationOutcome.Severity.error, s));
+					}
+				} catch (XPathExpressionException e) {
+					responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
+					log.log(Level.FINE, "XPath error", e);
+				} catch (TransformerException e) {
+					responseStatus = HTTP_UNSUPPORTED_TYPE;
+					log.log(Level.FINE, "Transformation failed", e);
+				} catch (CDAException e) {
+					responseStatus = HttpURLConnection.HTTP_INTERNAL_ERROR;
+					log.log(Level.WARNING, "Unable to import CDA", e);
+					if( e.getCause() != null ){
+						outcome.addIssue(SimplifiedOperationOutcome.Severity.error, e.getCause().getMessage());
+					}
+					// might want to add suppressed exceptions, but might be many
+				}
+				
+				// HTTP status response
+				mc.put(MessageContext.HTTP_RESPONSE_CODE, responseStatus);
+				// should add a Location header with the created id and version
+				// Location: [base]/Binary/[id]/_history/[vid]
+						  
+				try {
+					return outcome.generateXml(outputFactory, documentBuilder);
+				} catch (XMLStreamException e) {
+					// internal error
+					mc.put(MessageContext.HTTP_RESPONSE_CODE, HttpURLConnection.HTTP_INTERNAL_ERROR);
+					return null; // TODO check whether returning null is ok
+				}
+	}
 	@Inject
 	@Override
 	public void setValidator(Validator validator) {

@@ -31,7 +31,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CDAImportFHIR</servlet-name>
-		<url-pattern>/cda/fhir/Binary/*</url-pattern>
+		<url-pattern>/cda/fhir/*</url-pattern>
 	</servlet-mapping>
 	<!--  TODO test in Wildfly 9.0.2 -->
 

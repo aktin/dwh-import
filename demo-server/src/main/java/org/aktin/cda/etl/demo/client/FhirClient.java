@@ -89,7 +89,7 @@ public class FhirClient {
 		}
 		uc.addRequestProperty("Content-type", contentType);
 		// set method
-		uc.setRequestMethod("PUT");
+		uc.setRequestMethod("POST");
 		uc.connect();
 
 		// write example document
