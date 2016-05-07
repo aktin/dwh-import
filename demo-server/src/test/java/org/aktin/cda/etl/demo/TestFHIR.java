@@ -3,7 +3,6 @@ package org.aktin.cda.etl.demo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
 import java.net.URL;
 
 import javax.xml.transform.stream.StreamSource;
@@ -33,8 +32,8 @@ public class TestFHIR {
 	@Before
 	public void startServer() throws IOException{
 		// run validation server
-		server = new Server();
-		server.bind(new InetSocketAddress("localhost", 0));
+		server = new Server(0);
+		server.bind();
 		server.start();
 		
 		// URL to receive POST/PUT requests (use dynamic port) 
