@@ -11,30 +11,11 @@
           <td>Mode</td>
           <td>SERVER</td>
         </tr>
-        <tr>
-          <td>Description</td>
-          <td>An empty conformance statement</td>
-        </tr>
-        <tr>
-          <td>Transaction</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>System History</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>System Search</td>
-          <td></td>
-        </tr>
       </table>
-      <table>
+      <table border="1">
         <tr>
           <th>
             <b>Resource Type</b>
-          </th>
-          <th>
-            <b>Profile</b>
           </th>
           <th>
             <b>Read</b>
@@ -59,15 +40,9 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
         </tr>
         <tr>
           <td>Binary</td>
-          <td>y</td>
-          <td></td>
-          <td></td>
           <td></td>
           <td></td>
           <td>y</td>
