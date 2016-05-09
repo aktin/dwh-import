@@ -1,108 +1,91 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
 <Conformance xmlns="http://hl7.org/fhir">
-  <id value="base2"/>
-  <text>
-    <status value="generated"/>
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <h2>Base FHIR Conformance Statement (Empty)</h2>
-      <p>This is the base conformance statement for FHIR. It represents a server that provides the none of the functionality defined by FHIR. It is provided to use as a template for system designers to build their own conformance statements from. A conformance profile has to contain something, so this contains a read of a Conformance Statement</p>
-      <table>
-        <tr>
-          <td>Mode</td>
-          <td>SERVER</td>
-        </tr>
-      </table>
-      <table border="1">
-        <tr>
-          <th>
-            <b>Resource Type</b>
-          </th>
-          <th>
-            <b>Read</b>
-          </th>
-          <th>
-            <b>Search</b>
-          </th>
-          <th>
-            <b>Update</b>
-          </th>
-          <th>
-            <b>Create</b>
-          </th>
-          <th>
-            <b>Delete</b>
-          </th>
-        </tr>
-        <tr>
-          <td>Conformance</td>
-          <td>y</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Binary</td>
-          <td></td>
-          <td></td>
-          <td>y</td>
-          <td>y</td>
-          <td>y</td>
-        </tr>
-      </table>
-    </div>
-  </text>
-  <version value="1"/>
-  <name value="FHIR Conformance of AKTIN Notaufnahmeregister"/>
-  <status value="draft"/>
-  <experimental value="true"/>
-  <date value="2016-03-31T08:01:25+11:00"/>
-  <publisher value="AKTIN.org"/>
-  <contact>
-    <telecom>
-      <system value="other"/>
-      <value value="https://aktin.org/"/>
-    </telecom>
-  </contact>
-  <description value="Conformance statement of the AKTIN emergency admission registry"/>
-  <kind value="instance"/>
-  <software>
-    <name value="AKTIN"/>
-  </software>
-  <fhirVersion value="1.4.0"/>
-  <acceptUnknown value="no"/>
-  <format value="xml"/>
-  <!-- currently no support for JSON -->
-  <!-- support reading of conformance statement -->
-  <rest>
-    <mode value="server"/>
-    <documentation value="Conformance resource"/>
-    <resource>
-      <type value="Conformance"/>
-      <interaction>
-        <code value="read"/>
-        <documentation value="Read Conformance Resource"/>
-      </interaction>
-    </resource>
-  </rest>
-  <!-- support creation of binary resources -->
-  <rest>
-    <mode value="server"/>
-    <documentation value="Binary endpoint for emergency admission CDA documents"/>
-    <resource>
-      <type value="Binary"/>
-      <interaction>
-        <code value="create"/>
-        <documentation value="Create a CDA document with server created id"/>
-      </interaction>
-      <interaction>
-        <code value="update"/>
-        <documentation value="Override a CDA document with a given id or create if it didn't exist"/>
-      </interaction>
-      <interaction>
-        <code value="delete"/>
-        <documentation value="Delete the CDA document with the given id"/>
-      </interaction>
-    </resource>
-  </rest>
+	<meta>
+		<lastUpdated value="2016-04-08T04:14:02.682+00:00" />
+	</meta>
+	<version value="1.3.0.0" />
+	<name value="AKTINonFHIR" />
+	<status value="active" />
+	<experimental value="true" />
+	<date value="2016-04-08T04:13:02+00:00" />
+	<publisher value="AKTIN" />
+	<description value="AKTIN CDA import server" />
+	<copyright value="Copyright (c) 2015 R.W.Majeed" />
+	<kind value="instance" />
+	<software>
+		<name value="AKTINonFHIR" />
+		<version value="1.3.0.0" />
+	</software>
+	<implementation>
+		<description value="__INSTALLATION_DESCRIPTION__" />
+		<url value="..." />
+	</implementation>
+	<fhirVersion value="1.3.0" />
+	<acceptUnknown value="no" />
+	<format value="xml" />
+	<rest>
+		<mode value="server" />
+		<resource>
+			<type value="Binary" />
+			<interaction>
+				<code value="create" />
+			</interaction>
+			<interaction>
+				<code value="update" />
+			</interaction>
+			<interaction>
+				<code value="delete" />
+			</interaction>
+			<interaction>
+				<code value="search-type" />
+			</interaction>
+			<versioning value="versioned" />
+			<updateCreate value="true" />
+			<!-- non-standard search parameters -->
+			<searchParam>
+				<name value="patient" />
+				<type value="string" />
+				<documentation value="Patient id" />
+			</searchParam>
+			<searchParam>
+				<name value="visit" />
+				<type value="string" />
+				<documentation
+					value="Encounter id of the patient" />
+			</searchParam>
+			<!-- standard search parameters -->
+			<searchParam>
+				<name value="_id" />
+				<type value="string" />
+				<documentation
+					value="Document id" />
+			</searchParam>
+			<searchParam>
+				<name value="_lastUpdated" />
+				<type value="date" />
+				<documentation
+					value="When the document was last updated" />
+			</searchParam>
+
+		</resource>
+		<resource>
+			<type value="Conformance" />
+			<interaction>
+				<code value="read" />
+			</interaction>
+		</resource><!--
+		<operation>
+			<name value="Resource Meta" />
+			<definition>
+				<reference value="OperationDefinition/Resource-meta" />
+				<display value="Resource Meta" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="Validate Resource" />
+			<definition>
+				<reference value="OperationDefinition/Resource-validate" />
+				<display value="Validate Resource" />
+			</definition>
+		</operation>-->
+	</rest>
 </Conformance>
