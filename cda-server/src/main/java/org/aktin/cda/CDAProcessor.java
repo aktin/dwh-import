@@ -1,5 +1,7 @@
 package org.aktin.cda;
 
+import java.util.Iterator;
+
 import org.w3c.dom.Document;
 
 public interface CDAProcessor {
@@ -12,5 +14,18 @@ public interface CDAProcessor {
 	 * @param document CDA DOM document
 	 * @throws CDAException processing error
 	 */
-	public void process(String patientId, String encounterId, String documentId, Document document) throws CDAException;
+	public CDAStatus process(String patientId, String encounterId, String documentId, Document document) throws CDAException;
+	
+	/**
+	 * Delete a document by its document id.
+	 * 
+	 * @param documentId document id
+	 * @throws DocumentNotFoundException if there is no ID assigned to 
+	 * @throws CDAException
+	 */
+	public void delete(String documentId)throws DocumentNotFoundException, CDAException;
+	
+	public Iterator<CDASummary> search(String patientId, String encounterId);
+	
+	public CDASummary get(String documentId);
 }

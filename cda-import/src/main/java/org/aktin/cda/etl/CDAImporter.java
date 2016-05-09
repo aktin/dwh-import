@@ -3,6 +3,7 @@ package org.aktin.cda.etl;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.aktin.cda.CDAException;
+import org.aktin.cda.CDAStatus;
+import org.aktin.cda.CDASummary;
+import org.aktin.cda.DocumentNotFoundException;
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
@@ -86,13 +90,15 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	 * @throws CDAException error
 	 */
 	@Override
-	protected void deleteEAV(String sourceId) throws CDAException{
+	protected boolean deleteEAV(String sourceId) throws CDAException{
 		// drop previous facts
 		try {
 			if( true == inserter.purgeSource(sourceId) ){
 				log.info("Deleted previous facts for source="+sourceId);
+				return true;
 			}else{
-				log.info("No previous facts to delete for source="+sourceId);				
+				log.info("No previous facts to delete for source="+sourceId);
+				return false;
 			}
 		} catch (SQLException e) {
 			throw new CDAException("Unable to delete previous EAV facts", e);
@@ -131,16 +137,17 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	}
 
 	@Override
-	public synchronized void process(String patientId, String encounterId, String documentId, Document document)
+	public synchronized CDAStatus process(String patientId, String encounterId, String documentId, Document document)
 			throws CDAException {
 		log.info("Using patid="+patientId+", encid="+encounterId+", docid="+documentId);
 
 		final List<ObservationException> insertErrors = new LinkedList<>();
 		inserter.setErrorHandler(insertErrors::add);
 		// process document
+		CDAStatus status = null;
 		try{
-			super.process(patientId, encounterId, documentId, document);
-		}finally{			
+			status = super.process(patientId, encounterId, documentId, document);
+		}finally{
 			inserter.setErrorHandler(null);
 			inserter.resetErrorCount();
 		}
@@ -155,6 +162,22 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		// flush after each document
 		patientStore.flush();
 		visitStore.flush();
+		return status;
+	}
+
+	@Override
+	public void delete(String documentId) throws DocumentNotFoundException, CDAException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Iterator<CDASummary> search(String patientId, String encounterId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public CDASummary get(String documentId) {
+		throw new UnsupportedOperationException();
 	}
 
 }

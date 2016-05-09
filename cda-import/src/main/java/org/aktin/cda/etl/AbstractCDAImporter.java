@@ -19,6 +19,8 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAProcessor;
+import org.aktin.cda.CDAStatus;
+import org.aktin.cda.CDAStatus.Status;
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
@@ -85,9 +87,10 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	 * delete previous facts for this source id
  	 * TODO for different CDA modules, use different ID or sourceId
 	 * @param sourceId source id
+	 * @return true if records were deleted, false if there were no records to delete
 	 * @throws CDAException error
 	 */
-	protected abstract void deleteEAV(String sourceId) throws CDAException;
+	protected abstract boolean deleteEAV(String sourceId) throws CDAException;
 	
 	protected GroupedXMLReader readEAV(InputStream xml) throws JAXBException, XMLStreamException{
 		return new GroupedXMLReader(getObservationFactory(), inputFactory.createXMLStreamReader(xml));
@@ -97,15 +100,20 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	 * @param file EAV XML file
 	 * @throws CDAException error
 	 */
-	private void replaceEAV(Path file) throws CDAException{
+	private CDAStatus replaceEAV(Path file) throws CDAException{
 		try( InputStream in = Files.newInputStream(file);
 				GroupedXMLReader suppl = readEAV(in) ) 
 		{
 			String sourceId = suppl.getMeta(ObservationSupplier.META_SOURCE_ID);
 			// delete source
-			deleteEAV(sourceId);
+			boolean deleted = deleteEAV(sourceId);
 			// insert facts
 			suppl.stream().forEach(getObservationInserter());
+			
+			CDAStatus.Status status = deleted?Status.Updated:Status.Created;
+			Descriptor desc = new Descriptor(sourceId);
+			// TODO use/write timestamps and version
+			return new CDAStatus(desc, status);
 		} catch (IOException e) {
 			throw new CDAException("Unable to read EAV temp file: "+file, e);
 		} catch (JAXBException | XMLStreamException e) {
@@ -113,12 +121,15 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 		}
 	}
 	@Override
-	public void process(String patientId, String encounterId, String documentId, Document document) throws CDAException{
+	public CDAStatus process(String patientId, String encounterId, String documentId, Document document) throws CDAException{
+		// not using provided patientId, encounterId, documentId
+		// use IDs from EAV transformation result
+		
 		// transform CDA document to EAV XML in temporary file
 		Path tempEAV = transformToEAV(document);
-		
+
 		// parse EAV XML and insert into fact table
-		replaceEAV(tempEAV);
+		CDAStatus status = replaceEAV(tempEAV);
 
 
 		// remove temporary file
@@ -127,6 +138,8 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 		} catch (IOException e) {
 			throw new CDAException("Unable to delete EAV temp file", e);
 		}
+
+		return status;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -34,20 +33,57 @@ import org.w3c.dom.Document;
  * @author R.W.Majeed
  *
  */
-@XmlRootElement(name="OperationOutcome",namespace=SimplifiedOperationOutcome.FHIR_NAMESPACE)
 public class SimplifiedOperationOutcome {
 
 	public static final String FHIR_NAMESPACE="http://hl7.org/fhir";
 	
 	public static enum Severity{fatal, error, warning, information}
+	public static enum IssueType{
+		
+		/** Informational note **/
+		informational,
+		/** An unexpected internal error has occurred. **/
+		exception,
+		/** Content not supported **/
+		NotSupported("not-supported"),
+		/** Some information was not or may not have been 
+		 *  returned due to business rules, consent or 
+		 *  privacy rules, or access permission constraints. This information may be accessible through alternate processes. 
+		 **/
+		suppressed;
+		
+		String value;
+		IssueType(String codeValue){
+			this.value = codeValue;
+		}
+		IssueType(){
+			this.value = this.name();
+		}
+	}
 	
 	public static class Issue{
 		Severity severity;
 		String details;
-		
+		IssueType code;
+		public Issue(Severity severity, IssueType type, String details){
+			this.severity = severity;
+			this.details = details;
+			this.code = type;
+		}
 		public Issue(Severity severity, String details){
 			this.severity = severity;
 			this.details = details;
+			switch( severity ){
+			case fatal:
+			case error:
+				this.code = IssueType.exception;
+				break;
+			case warning:
+			case information:
+			default:
+				this.code = IssueType.informational;
+				break;
+			}
 		}
 	}
 	
@@ -63,6 +99,10 @@ public class SimplifiedOperationOutcome {
 	 * @param details detail message
 	 */
 	public void addIssue(Severity severity, String details){
+		issues.add(new Issue(severity, details));
+	}
+
+	public void addIssue(Severity severity, IssueType type, String details){
 		issues.add(new Issue(severity, details));
 	}
 	
@@ -102,5 +142,22 @@ public class SimplifiedOperationOutcome {
 		writer.close();
 		DOMSource result = new DOMSource(doc);
 		return result;
+	}
+	
+	public static SimplifiedOperationOutcome create(Severity severity, String message){
+		SimplifiedOperationOutcome o = new SimplifiedOperationOutcome();
+		o.addIssue(severity, message);
+		return o;
+	}
+	public static SimplifiedOperationOutcome create(Severity severity, IssueType type, String message){
+		SimplifiedOperationOutcome o = new SimplifiedOperationOutcome();
+		o.addIssue(severity, message);
+		return o;
+	}
+	public static SimplifiedOperationOutcome error(String message){
+		return create(Severity.error, message);
+	}
+	public static SimplifiedOperationOutcome info(String message){
+		return create(Severity.information, message);
 	}
 }

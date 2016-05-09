@@ -8,7 +8,6 @@ import java.net.URL;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.etl.demo.client.FhirClient;
 import org.aktin.cda.etl.fhir.RestService;
@@ -101,7 +100,7 @@ public class TestFHIR {
 	 * @throws IOException error during loading/transfer
 	 */
 	@Test
-	public void expectOkForValidCDA() throws IOException{
+	public void expectCreatedForValidCDA() throws IOException{
 		// open example CDA document
 		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml");
 
@@ -114,9 +113,10 @@ public class TestFHIR {
 
 		// read response
 		int responseCode = uc.getResponseCode();
-		// should be 200 OK
-		Assert.assertEquals(HttpURLConnection.HTTP_OK, responseCode);
-
+		// should be 201 Created
+		Assert.assertEquals(HttpURLConnection.HTTP_CREATED, responseCode);
+		String loc = uc.getHeaderField("Location");
+		Assert.assertNotNull(loc);
 		// optionally consume response stream
 		in = uc.getInputStream();
 		in.close();

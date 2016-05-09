@@ -18,7 +18,6 @@ import org.aktin.cda.etl.xds.DocumentRepository;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.w3c.dom.Document;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -32,7 +31,7 @@ import com.sun.net.httpserver.HttpServer;
  * @author R.W.Majeed
  *
  */
-public class Server implements CDAProcessor{
+public class Server{
 	private static final Logger log = Logger.getLogger(Server.class.getName());
 	/** Servlet context for XDS.b */
 	public static final String XDS_CONTEXT_PATH = "/aktin/cda/xds.b";
@@ -47,12 +46,14 @@ public class Server implements CDAProcessor{
 
 	private HttpServer server;
 	private Validator validator;
+	private CDAProcessor processor;
 	
 	/**
 	 * Construct the local server
 	 * @throws IOException IO error
 	 */
 	public Server(int port) throws IOException{
+		processor = new HashtableStore();
 		try {
 			validator = new Validator();
 		} catch (TransformerConfigurationException e) {
@@ -60,7 +61,7 @@ public class Server implements CDAProcessor{
 		}
 		xdsService = new DocumentRepository();
 		xdsService.setValidator(validator);
-		xdsService.setProcessor(this);
+		xdsService.setProcessor(processor);
 		
 		ResourceConfig config = new ResourceConfig();
 		// configure HK2 for our CDI injections
@@ -68,7 +69,7 @@ public class Server implements CDAProcessor{
 			@Override
 			protected void configure() {
 				this.bind(validator).to(Validator.class);
-				this.bind(Server.this).to(CDAProcessor.class);
+				this.bind(processor).to(CDAProcessor.class);
 			}
 		});
 		// load JAX-RS classes for FHIR
@@ -216,11 +217,5 @@ public class Server implements CDAProcessor{
 			}
 		});
 		System.out.println("Press Ctrl+C to shut down");
-	}
-
-	@Override
-	public void process(String patientId, String encounterId, String documentId, Document document) {
-		// do nothing
-		// TODO remember patientId and encounterId, return whether document was created or replaced
 	}
 }
