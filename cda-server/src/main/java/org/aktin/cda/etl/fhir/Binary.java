@@ -9,8 +9,10 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -54,12 +56,14 @@ public class Binary implements ExternalInterface{
 	
 	@POST
 	@Path("$validate")
+	@Produces(MediaType.APPLICATION_XML)
 	public Response validate(Source doc){
 		log.info("Validation requested");
 		return Response.serverError().entity("Not implemented").build();
 	}
 	
 	@POST
+	@Produces({FhirConstants.MEDIA_TYPE_XML_FHIR,MediaType.APPLICATION_XML,MediaType.TEXT_XML})
 	public Response create(Source doc){
 		ValidationResult vr = null;
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
@@ -140,6 +144,7 @@ public class Binary implements ExternalInterface{
 	}
 	
 	@GET
+	@Produces({FhirConstants.MEDIA_TYPE_XML_FHIR,MediaType.APPLICATION_XML,MediaType.TEXT_XML})
 	public Response search(@QueryParam("_id") String docId, @QueryParam("_lastUpdated") String lastUpdated, @QueryParam("_tag") String tag, @QueryParam("_count") Integer count){
 		log.info("search via GET");
 		try {
