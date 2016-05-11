@@ -39,7 +39,7 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	public AbstractCDAImporter() throws IOException {
 		// create transformer
 		TransformerFactory tf = TransformerFactory.newInstance();
-		try( InputStream in = getClass().getResourceAsStream("/cda-eav.xsl") ){
+		try( InputStream in = getClass().getResourceAsStream("/cda-eav/1.2.276.0.76.10.1015.xsl") ){
 			cdaToDataWarehouse = tf.newTransformer(new StreamSource(in));
 		} catch (TransformerConfigurationException e) {
 			throw new IOException(e);

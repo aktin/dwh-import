@@ -1,1 +1,4 @@
-implement 'deceased' element in resulting eav to reflect deceased patients
+Generate a sourceId which can be used to identify the submitted CDA data.
+Sourceid = hash(patid)+hash(visid)+module_name
+
+Assign the document_id, version, template_id

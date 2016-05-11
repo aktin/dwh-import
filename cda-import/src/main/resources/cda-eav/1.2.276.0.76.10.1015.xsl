@@ -3,19 +3,30 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="xs func cda eav"
+    exclude-result-prefixes="xs func cda eav aktin"
     version="2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:func="http://for.func"
-    xmlns:cda="urn:hl7-org:v3"
-    xmlns:eav="http://sekmi.de/histream/ns/eav-data"
-    xmlns="http://sekmi.de/histream/ns/eav-data">
+	xmlns:func="http://for.func"
+	xmlns:aktin="http://aktin.org/cda/functions"
+	xmlns:cda="urn:hl7-org:v3"
+	xmlns:eav="http://sekmi.de/histream/ns/eav-data"
+	xmlns="http://sekmi.de/histream/ns/eav-data">
     
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
     
-    
-<!-- CONSTANT Definitions -->
+	<!-- RESERVED VARIABLES -->
+	<!-- 
+		these variables are used outside of the XSLT file
+		to modify the cda-import configuration.
+		Do not remove!
+	-->
+    <!-- identify to which logical module the submitted data belongs -->
+    <!-- for the value-set, see README.md -->
+	<xsl:variable name="aktin.module.id">base</xsl:variable>
+	<xsl:variable name="aktin.module.template">1.2.276.0.76.10.1015</xsl:variable>
+
+	<!-- CONSTANT Definitions -->
               
     <!-- Concept Code Prefix for LOINC Codes -->
     <xsl:variable name="LOINC-Prefix">LOINC:</xsl:variable>
