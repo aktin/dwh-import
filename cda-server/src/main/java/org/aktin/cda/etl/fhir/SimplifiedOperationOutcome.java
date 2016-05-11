@@ -3,14 +3,13 @@ package org.aktin.cda.etl.fhir;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.DataSource;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
 
 import org.w3c.dom.Document;
 
@@ -114,7 +113,7 @@ public class SimplifiedOperationOutcome {
 	 * @return XML source
 	 * @throws XMLStreamException any XML error
 	 */
-	public Source generateXml(XMLOutputFactory factory, DocumentBuilder documentBuilder) throws XMLStreamException{
+	public DataSource generateXml(XMLOutputFactory factory, DocumentBuilder documentBuilder) throws XMLStreamException{
 		Document doc = documentBuilder.newDocument();
 		DOMResult res = new DOMResult(doc);
 		XMLStreamWriter writer = factory.createXMLStreamWriter(res);
@@ -125,9 +124,13 @@ public class SimplifiedOperationOutcome {
 //		writer.writeDefaultNamespace(FHIR_NAMESPACE);
 		for( Issue issue : issues ){
 			writer.writeStartElement("issue");
-			
+			// severity
 			writer.writeStartElement("severity");
 			writer.writeAttribute("value", issue.severity.name());
+			writer.writeEndElement();
+			// code
+			writer.writeStartElement("code");
+			writer.writeAttribute("value", issue.code.value);
 			writer.writeEndElement();
 			
 			if( issue.details != null ){
@@ -140,8 +143,7 @@ public class SimplifiedOperationOutcome {
 		writer.writeEndElement();
 		writer.writeEndDocument();
 		writer.close();
-		DOMSource result = new DOMSource(doc);
-		return result;
+		return new FhirDomSource(doc);
 	}
 	
 	public static SimplifiedOperationOutcome create(Severity severity, String message){
