@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.aktin.cda.etl.demo.client.FhirClient;
-import org.aktin.cda.etl.fhir.RestService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -131,7 +131,8 @@ public class TestFHIR {
 		in.close();
 		
 		int responseCode = uc.getResponseCode();
-		Assert.assertEquals(RestService.HTTP_UNPROCESSABLE_ENTITY, responseCode);
+		// HTTP unprocessable entity 422
+		Assert.assertEquals(422, responseCode);
 		in = uc.getErrorStream();
 		in.close();
 	}
@@ -145,7 +146,7 @@ public class TestFHIR {
 		in.close();
 		
 		int responseCode = uc.getResponseCode();
-		Assert.assertEquals(RestService.HTTP_UNSUPPORTED_TYPE, responseCode);
+		Assert.assertEquals(HttpURLConnection.HTTP_UNSUPPORTED_TYPE, responseCode);
 		in = uc.getErrorStream();
 		in.close();
 	}
@@ -158,7 +159,7 @@ public class TestFHIR {
 		in.close();
 		
 		int responseCode = uc.getResponseCode();
-		Assert.assertEquals(RestService.HTTP_UNPROCESSABLE_ENTITY, responseCode);
+		Assert.assertEquals(422, responseCode);
 		in = uc.getErrorStream();
 		in.close();
 	}

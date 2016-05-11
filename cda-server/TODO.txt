@@ -1,0 +1,4 @@
+Allow delete of complete patients via FHIR
+e.g. DELETE [base]Patient
+
+maybe also get a list of patients via GET [base]/Patient
