@@ -62,12 +62,13 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 		// join arguments
 		String composite = String.join("/", strings);
 		// logging
-		log.info("Calculating for "+getFunctionQName().getDisplayName()+": "+composite);
 		// encode to bytes
 		ByteBuffer input = Charset.forName("UTF-8").encode(composite);
 		// calculate digest and encode with base64
 		digest.update(input);
-		return Base64.getUrlEncoder().encodeToString(digest.digest());
+		String result = Base64.getUrlEncoder().encodeToString(digest.digest());
+		log.info("Hash "+getFunctionQName().getDisplayName()+": "+composite+" -> "+result);
+		return result;
 	}
 
 	/**
