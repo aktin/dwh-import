@@ -75,22 +75,24 @@
     <xsl:template match="/">
         <eav-data> 
             <meta>
-                <etl-strategy>replace-visit</etl-strategy>
+                <etl-strategy>replace-source</etl-strategy>
                 <source>
                     <xsl:attribute name="timestamp">
-                        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:effectiveTime/@value)"/>
+						<xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:effectiveTime/@value)"/>
                     </xsl:attribute>
                     <xsl:attribute name="id">
-                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:setId"/>                        
-                    </xsl:attribute>  
+						<xsl:call-template name="encounter-module-id"/>
+                    </xsl:attribute>
                 </source>           
             </meta>
             <patient>   
                 <xsl:attribute name="id">
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole"/>                        
-                </xsl:attribute>  
+                </xsl:attribute>
+                <!-- 
                 <given-name>information privacy</given-name>
                 <surname>information privacy</surname>
+                 -->
                 <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
                 <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
                 <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode/@code='1'">
@@ -134,9 +136,9 @@
  
     <!-- Eindeutiger Identifier (~Fallnummer), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
     <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // ClinicalDocument/setId shall be present to enable further updates to this ClinicalDocument. This identifier is to remain the same across all revisions   -->
+	<!-- eigentlich ist die Set-ID nicht dafür vorgesehen, im nächsten Release wird das geändert -->
     <xsl:template match="/cda:ClinicalDocument/cda:setId">
-        <!-- <xsl:value-of select="./@root"/>:<xsl:value-of select="./@extension"/> -->
-        <xsl:value-of select="func:hash(concat(./@root,':',./@extension))"/>
+        <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
     </xsl:template>
  
     <!-- 1	ID des Krankenhauses 
@@ -156,8 +158,7 @@
     <!-- 3	PatientenId im Basismodul -->
     <!-- <xsl:comment>3	PatientenId im Basismodul</xsl:comment> -->
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
-        <!-- <xsl:value-of select="./cda:id/@root"/>:<xsl:value-of select="./cda:id/@extension"/> -->
-        <xsl:value-of select="func:hash(concat(./cda:id/@root,':',./cda:id/@extension))"/>
+        <xsl:value-of select="aktin:patient-hash(./cda:id/@root, ./cda:id/@extension)"/>
     </xsl:template>
    
     <!-- 60 Versicherungsname -->  
@@ -270,6 +271,13 @@
         </fact>       
     </xsl:template> -->
     
+    <xsl:template name="encounter-module-id">
+    	<!-- generate a unique id for encounter and module  -->
+		<xsl:value-of select="aktin:module-hash(
+		/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
+		'',/cda:ClinicalDocument/cda:setId/@extension, 
+		$aktin.module.id)"/>
+    </xsl:template>
     <xsl:template name="EAV-Geschlecht">
         <xsl:choose>
             <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">female</xsl:when>  

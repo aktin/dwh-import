@@ -14,6 +14,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAParser;
+import org.aktin.cda.etl.transform.TransformationFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -26,9 +27,20 @@ import de.sekmi.histream.io.GroupedXMLReader;
 public class TestTransformToEAV {
 
 	@Test
-	public void transformExample1() throws IOException, TransformerException, CDAException, JAXBException, XMLStreamException{
-		CDAImporterMockUp t = new CDAImporterMockUp();
+	public void extractTemplateId() throws Exception{
 		CDAParser parser = new CDAParser();
+		TransformationFactory f = new TransformationFactory();
+		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
+			Document dom = parser.buildDOM(new StreamSource(in));
+			String templateId = f.extractTemplateId(dom);
+			Assert.assertNotNull(templateId);
+			Assert.assertTrue(templateId.length() > 0);
+		}
+	}
+	@Test
+	public void transformExample1() throws IOException, TransformerException, CDAException, JAXBException, XMLStreamException{
+		CDAParser parser = new CDAParser();
+		CDAImporterMockUp t = new CDAImporterMockUp();
 		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			

@@ -9,16 +9,10 @@ import java.util.function.Consumer;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAProcessor;
+import org.aktin.cda.etl.transform.TransformationFactory;
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
@@ -33,41 +27,17 @@ import de.sekmi.histream.io.GroupedXMLReader;
  *
  */
 public abstract class AbstractCDAImporter implements CDAProcessor{
-	private Transformer cdaToDataWarehouse;
+	private TransformationFactory cdaToDataWarehouse;
 	private XMLInputFactory inputFactory;
 
 	public AbstractCDAImporter() throws IOException {
 		// create transformer
-		TransformerFactory tf = TransformerFactory.newInstance();
-		try( InputStream in = getClass().getResourceAsStream("/cda-eav/1.2.276.0.76.10.1015.xsl") ){
-			cdaToDataWarehouse = tf.newTransformer(new StreamSource(in));
-		} catch (TransformerConfigurationException e) {
-			throw new IOException(e);
-		}
+		cdaToDataWarehouse = new TransformationFactory();
 		
 		// XML input factory
 		inputFactory = XMLInputFactory.newInstance();
 	}
 
-	/**
- 	 * transform CDA document to EAV XML in temporary file
-	 * @param document CDA document
-	 * @return temporary file containing the EAV XML
-	 * @throws CDAException error
-	 */
-	protected Path transformToEAV(Document document) throws CDAException{
-		Path tempEAV=null;
-		try {
-			tempEAV = Files.createTempFile("eav", null);
-			StreamResult result = new StreamResult(tempEAV.toFile());
-			cdaToDataWarehouse.transform(new DOMSource(document), result);
-		} catch (IOException e) {
-			throw new CDAException("Unable to create temp file", e);
-		} catch (TransformerException e) {
-			throw new CDAException("Unable to transform CDA to EAV", e);
-		}
-		return tempEAV;
-	}
 	
 	/**
 	 * Get the observation factory which will be used to create observations
@@ -111,6 +81,10 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 		} catch (JAXBException | XMLStreamException e) {
 			throw new CDAException("Unable to parse/insert EAV facts to database", e);
 		}
+	}
+	
+	public final Path transformToEAV(Document document) throws CDAException{
+		return cdaToDataWarehouse.transformToEAV(document);
 	}
 	@Override
 	public void process(String patientId, String encounterId, String documentId, Document document) throws CDAException{
