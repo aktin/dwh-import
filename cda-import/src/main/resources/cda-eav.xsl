@@ -192,7 +192,7 @@
         </fact>
     </xsl:template>
     
-    <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode">
+    <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:city">
         <xsl:comment>Patientenadresse (Ort)</xsl:comment>
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Ort</xsl:attribute>
