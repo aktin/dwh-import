@@ -105,9 +105,7 @@
                     <start>
                         <xsl:call-template name="ZeitpunktAufnahme"/>                        
                     </start>  
-                    <end>
-                        <xsl:call-template name="ZeitpunktEntlassung"/>                        
-                    </end>  
+                    <xsl:call-template name="ZeitpunktEntlassungOptional"/>
                     <!-- <location></location> -->
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
@@ -716,9 +714,14 @@
         </xsl:if>
     </xsl:template>
     <!-- Zusätzliches Template für visit/encounter -->
-    <xsl:template name="ZeitpunktEntlassung">
-        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value)"/>
-    </xsl:template>
+	<xsl:template name="ZeitpunktEntlassungOptional">
+		<xsl:variable name="ts" select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value"/>
+		<xsl:if test="$ts">
+			<end>
+				<xsl:value-of select="func:ConvertDateTime($ts)"/>
+			</end>
+		</xsl:if>
+	</xsl:template>
     
     <!-- Zusätzliches Template für visit/encounter -->
     <xsl:template name="ZeitpunktAufnahme">
