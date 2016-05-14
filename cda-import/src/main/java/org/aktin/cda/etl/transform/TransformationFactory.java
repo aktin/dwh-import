@@ -21,7 +21,9 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.aktin.cda.CDAConstants;
 import org.aktin.cda.CDAException;
+import org.aktin.cda.NamespaceContextImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,11 +36,6 @@ public class TransformationFactory {
 	 */
 	public static final String VARIABLE_XPATH = "/xsl:stylesheet/xsl:variable[starts-with(@name,'aktin.')]";
 
-	/**
-	 * XPath to the template id within a CDA document
-	 */
-	public static final String XPATH_CDA_TEMPLATE_ID = "/cda:ClinicalDocument/cda:templateId/@root";
-
 	private Map<String, Transformation> cache;
 	private XPath xpath;
 	private DocumentBuilderFactory builderFactory;
@@ -47,7 +44,7 @@ public class TransformationFactory {
 //		inputFactory = XMLInputFactory.newInstance();
 		// XPath configuration
 		xpath = XPathFactory.newInstance().newXPath();
-		xpath.setNamespaceContext(new TransformationContext());
+		xpath.setNamespaceContext(new NamespaceContextImpl());
 		// DOM parser
 		builderFactory = DocumentBuilderFactory.newInstance();
 		builderFactory.setNamespaceAware(true);
@@ -128,7 +125,7 @@ public class TransformationFactory {
 	 * @throws XPathExpressionException XPath error
 	 */
 	public String extractTemplateId(Document cda) throws XPathExpressionException{
-		XPathExpression xe = xpath.compile(XPATH_CDA_TEMPLATE_ID);
+		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_TEMPLATE_ID);
 		return (String)xe.evaluate(cda.getDocumentElement(), XPathConstants.STRING);
 	}
 	

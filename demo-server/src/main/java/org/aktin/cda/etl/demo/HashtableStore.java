@@ -18,16 +18,12 @@ public class HashtableStore implements CDAProcessor{
 	private Map<String, VirtualDocument> map;
 
 	private class VirtualDocument implements CDASummary{
-		String patientId;
-		String encounterId;
 		String documentId;
 		int version;
 		Date created;
 		Date lastModified;
 		
-		public VirtualDocument(String patientId, String encounterId, String docId){
-			this.patientId = patientId;
-			this.encounterId = encounterId;
+		public VirtualDocument(String docId){
 			this.documentId = docId;
 			this.created = new Date();
 			this.lastModified = this.created;
@@ -64,11 +60,11 @@ public class HashtableStore implements CDAProcessor{
 		this.map = new Hashtable<>();
 	}
 	@Override
-	public CDAStatus process(String patientId, String encounterId, String documentId, Document document)
+	public CDAStatus process(Document document, String documentId, String templateId)
 			throws CDAException {
 		VirtualDocument doc = map.get(documentId);
 		if( doc == null ){
-			doc = new VirtualDocument(patientId, encounterId, documentId);
+			doc = new VirtualDocument(documentId);
 			return CDAStatus.created(doc);
 		}else{
 			doc.updateLastModified();
@@ -88,6 +84,7 @@ public class HashtableStore implements CDAProcessor{
 	@Override
 	public Iterator<CDASummary> search(String patientId, String encounterId) {
 		List<CDASummary> results = new ArrayList<>();
+		/*
 		for( VirtualDocument doc : map.values() ){
 			if( patientId != null && !patientId.equals(doc.patientId) ){
 				// patient not matching
@@ -98,7 +95,7 @@ public class HashtableStore implements CDAProcessor{
 				continue;
 			}
 			results.add(doc);
-		}
+		}*/
 		return results.iterator();
 	}
 

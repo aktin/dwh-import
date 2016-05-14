@@ -95,7 +95,7 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 		return cdaToDataWarehouse.transformToEAV(document);
 	}
 	@Override
-	public CDAStatus process(String patientId, String encounterId, String documentId, Document document) throws CDAException{
+	public CDAStatus process(Document document, String documentId, String templateId) throws CDAException{
 		// not using provided patientId, encounterId, documentId
 		// use IDs from EAV transformation result
 		

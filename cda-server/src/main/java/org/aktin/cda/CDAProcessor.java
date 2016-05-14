@@ -8,13 +8,12 @@ public interface CDAProcessor {
 
 	/**
 	 * Process a CDA document
-	 * @param patientId patient id
-	 * @param encounterId encounter id
-	 * @param documentId document id, changes with new version of the document
 	 * @param document CDA DOM document
+	 * @param documentId document id, changes with new version of the document
+	 * @param templateId template id
 	 * @throws CDAException processing error
 	 */
-	public CDAStatus process(String patientId, String encounterId, String documentId, Document document) throws CDAException;
+	public CDAStatus process(Document document, String documentId, String templateId) throws CDAException;
 	
 	/**
 	 * Delete a document by its document id.

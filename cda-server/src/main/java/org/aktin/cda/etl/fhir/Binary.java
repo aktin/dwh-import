@@ -67,17 +67,17 @@ public class Binary implements ExternalInterface{
 		
 		try {
 			Document cda = parser.buildDOM(doc);
+			String templateId = parser.extractTemplateId(cda);
+			String documentId = parser.extractDocumentId(cda);
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			synchronized( validator ){
-				vr = validator.validate(new DOMSource(cda));
+				vr = validator.validate(new DOMSource(cda), templateId);
 			}
 			if( vr.isValid() ){
-				// extract patient id, encounter id, document id
-				String[] ids = parser.extractIDs(cda);
 				// check arguments/valid id
 				// otherwise return HTTP_BAD_REQUEST
 				// process document
-				CDAStatus stat = processor.process(ids[0], ids[1], ids[2], cda);
+				CDAStatus stat = processor.process(cda, documentId, templateId);
 				// TODO check whether document was created or updated, return 201 or 200
 
 				if( stat.getStatus() == Status.Created ){
