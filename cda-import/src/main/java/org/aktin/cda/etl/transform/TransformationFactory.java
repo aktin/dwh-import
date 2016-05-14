@@ -117,7 +117,7 @@ public class TransformationFactory {
 		}
 		return transform;
 	}
-	
+		
 	/**
 	 * Find the template id for a given CDA document
 	 * @param cda CDA document
@@ -125,13 +125,14 @@ public class TransformationFactory {
 	 * @throws XPathExpressionException XPath error
 	 */
 	public String extractTemplateId(Document cda) throws XPathExpressionException{
+		// TODO duplicate and same as in cda-validation/org.aktin.cda.CDAParser
 		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_TEMPLATE_ID);
 		return (String)xe.evaluate(cda.getDocumentElement(), XPathConstants.STRING);
 	}
-	
+
 	/**
 	 * Convenience method to transform a document.
-	 * Has the same effect as {@code getTransformation(getTemplateId(cda)).transformToEAV(cda)}
+	 * Has the same effect as {@code getTransformation(extractTemplateId(cda)).transformToEAV(cda)}
 	 * 
 	 * See also {@link Transformation#transformToEAV(Document)}.
 	 * @param cda CDA document
@@ -143,7 +144,7 @@ public class TransformationFactory {
 	 * @throws TransformerConfigurationException 
 	 */
 	public Path transformToEAV(Document cda) throws CDAException{
-		// find templateId
+		
 		try {
 			return getTransformation(extractTemplateId(cda)).transformToEAV(cda);
 		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
