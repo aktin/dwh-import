@@ -3,7 +3,6 @@ package org.aktin.cda.etl.transform;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -21,8 +20,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.aktin.cda.CDAConstants;
-import org.aktin.cda.CDAException;
 import org.aktin.cda.NamespaceContextImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -117,42 +114,5 @@ public class TransformationFactory {
 		}
 		return transform;
 	}
-		
-	/**
-	 * Find the template id for a given CDA document
-	 * @param cda CDA document
-	 * @return template id
-	 * @throws XPathExpressionException XPath error
-	 */
-	public String extractTemplateId(Document cda) throws XPathExpressionException{
-		// TODO duplicate and same as in cda-validation/org.aktin.cda.CDAParser
-		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_TEMPLATE_ID);
-		return (String)xe.evaluate(cda.getDocumentElement(), XPathConstants.STRING);
-	}
 
-	/**
-	 * Convenience method to transform a document.
-	 * Has the same effect as {@code getTransformation(extractTemplateId(cda)).transformToEAV(cda)}
-	 * 
-	 * See also {@link Transformation#transformToEAV(Document)}.
-	 * @param cda CDA document
-	 * @return
-	 * @throws TransformerFactoryConfigurationError 
-	 * @throws IOException 
-	 * @throws CDAException 
-	 * @throws XPathExpressionException 
-	 * @throws TransformerConfigurationException 
-	 */
-	public Path transformToEAV(Document cda) throws CDAException{
-		
-		try {
-			return getTransformation(extractTemplateId(cda)).transformToEAV(cda);
-		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
-			throw new CDAException("Unable to configure tranformation", e);
-		} catch (XPathExpressionException e) {
-			throw new CDAException("Unable to find CDA template id", e);
-		} catch (IOException e) {
-			throw new CDAException("Failed to write transformation result", e);
-		}
-	}
 }

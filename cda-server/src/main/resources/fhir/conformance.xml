@@ -73,6 +73,8 @@
 				<code value="read" />
 			</interaction>
 		</resource><!--
+		the references point to [base]/OperationDefinition/.. 
+		which must be implemented too
 		<operation>
 			<name value="Resource Meta" />
 			<definition>

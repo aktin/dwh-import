@@ -2,19 +2,12 @@ package org.aktin.cda.etl;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 
-import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAParser;
-import org.aktin.cda.etl.transform.TransformationFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -29,22 +22,22 @@ public class TestTransformToEAV {
 	@Test
 	public void extractTemplateId() throws Exception{
 		CDAParser parser = new CDAParser();
-		TransformationFactory f = new TransformationFactory();
 		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
-			String templateId = f.extractTemplateId(dom);
+			String templateId = parser.extractTemplateId(dom);
 			Assert.assertNotNull(templateId);
 			Assert.assertTrue(templateId.length() > 0);
 		}
 	}
 	@Test
-	public void transformExample1() throws IOException, TransformerException, CDAException, JAXBException, XMLStreamException{
+	public void transformExample1() throws Exception{
 		CDAParser parser = new CDAParser();
 		CDAImporterMockUp t = new CDAImporterMockUp();
 		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			
-			Path temp = t.transformToEAV(dom);
+			
+			Path temp = t.transform(dom, parser.extractTemplateId(dom));
 			try( InputStream eav = Files.newInputStream(temp) ){
 				GroupedXMLReader suppl = t.readEAV(eav);
 				Observation o = suppl.get();
@@ -78,10 +71,14 @@ public class TestTransformToEAV {
 		try( InputStream in = new FileInputStream(args[0])){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			
-			Path temp = t.transformToEAV(dom);
+			String templateId = parser.extractTemplateId(dom);
+			Path temp = t.transform(dom, templateId);
 			try( BufferedReader reader = Files.newBufferedReader(temp) ){
 				reader.lines().forEach(System.out::println);
+			}finally{
+				Files.delete(temp);
 			}
+			
 		}
 		
 		t.close();

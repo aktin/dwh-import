@@ -1,16 +1,21 @@
 package org.aktin.cda.etl.fhir;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.activation.DataSource;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -60,6 +65,35 @@ public class Binary implements ExternalInterface{
 	}
 	
 	@POST
+	@Path("$transform")
+	public Response transform(Source doc){
+		log.info("Transformation requested");
+		try {
+			Document cda = parser.buildDOM(doc);
+			String templateId = parser.extractTemplateId(cda);
+			//String documentId = parser.extractDocumentId(cda);
+			java.nio.file.Path file = processor.transform(cda, templateId);
+			// the following can only fail AFTER the stream has opened,
+			// therefore the file will be deleted
+			return Response.ok(Files.newInputStream(file, StandardOpenOption.DELETE_ON_CLOSE), MediaType.TEXT_XML).build();
+		} catch (IOException | TransformerException | XPathExpressionException | CDAException e) {
+			try {
+				return Response.serverError().entity(serverErrorOutcome(e)).build();
+			} catch (XMLStreamException e1) {
+				e.addSuppressed(e1);
+				log.log(Level.SEVERE, "Unable to generate XML response for error", e);
+				return Response.serverError().build();
+			}
+		}
+	}
+	
+	private DataSource outcomeToXML(SimplifiedOperationOutcome o) throws XMLStreamException{
+		return o.generateXml(outputFactory, documentBuilder);
+	}
+	private DataSource serverErrorOutcome(Throwable e) throws XMLStreamException{
+		return outcomeToXML(SimplifiedOperationOutcome.error(e));
+	}
+	@POST
 	public Response create(Source doc){
 		ValidationResult vr = null;
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
@@ -77,7 +111,7 @@ public class Binary implements ExternalInterface{
 				// check arguments/valid id
 				// otherwise return HTTP_BAD_REQUEST
 				// process document
-				CDAStatus stat = processor.process(cda, documentId, templateId);
+				CDAStatus stat = processor.createOrUpdate(cda, documentId, templateId);
 				// TODO check whether document was created or updated, return 201 or 200
 
 				if( stat.getStatus() == Status.Created ){
@@ -120,7 +154,7 @@ public class Binary implements ExternalInterface{
 		// Location: [base]/Binary/[id]/_history/[vid]
 				  
 		try {
-			return response.entity(outcome.generateXml(outputFactory, documentBuilder)).build();
+			return response.entity(outcomeToXML(outcome)).build();
 		} catch (XMLStreamException e) {
 			// internal error
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

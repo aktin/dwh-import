@@ -1,5 +1,6 @@
 package org.aktin.cda.etl.demo;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -60,7 +61,7 @@ public class HashtableStore implements CDAProcessor{
 		this.map = new Hashtable<>();
 	}
 	@Override
-	public CDAStatus process(Document document, String documentId, String templateId)
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId)
 			throws CDAException {
 		VirtualDocument doc = map.get(documentId);
 		if( doc == null ){
@@ -103,6 +104,10 @@ public class HashtableStore implements CDAProcessor{
 	public CDASummary get(String documentId) {
 		VirtualDocument doc = map.get(documentId);
 		return doc;
+	}
+	@Override
+	public Path transform(Document cda, String templateId) throws CDAException {
+		throw new UnsupportedOperationException();
 	}
 
 }

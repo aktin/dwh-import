@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.xml.transform.Result;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -13,7 +14,6 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.aktin.cda.CDAException;
 import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
 import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
 import org.aktin.cda.etl.transform.fun.CalculateSourceId;
@@ -73,29 +73,30 @@ public class Transformation {
 		return transformerTemplates.newTransformer();
 	}
 	
+	public void transformToEAV(Document cda, Result result) throws TransformerException{
+		newTransformer().transform(new DOMSource(cda), result);		
+	}
 	/**
  	 * transform CDA document to EAV XML in temporary file
 	 * @param document CDA document
 	 * @return temporary file containing the EAV XML
-	 * @throws CDAException error
+	 * @throws IOException error creating temporary file
+	 * @throws TransformerException transformation error
 	 */
-	public Path transformToEAV(Document document) throws CDAException{
-		Path tempEAV=null;
+	public Path transformToEAV(Document document) throws IOException, TransformerException{
+		Path tempEAV = Files.createTempFile("eav", null);
+
+		StreamResult result = new StreamResult(tempEAV.toFile());
 		try {
-			tempEAV = Files.createTempFile("eav", null);
-			StreamResult result = new StreamResult(tempEAV.toFile());
-			newTransformer().transform(new DOMSource(document), result);
-		} catch (IOException e) {
-			throw new CDAException("Unable to create temp file", e);
+			transformToEAV(document, result);
 		} catch (TransformerException e) {
 			// remove temporary file
-			CDAException ex = new CDAException("Unable to transform CDA to EAV", e);
 			try {
 				Files.delete(tempEAV);
 			} catch (IOException e1) {
-				ex.addSuppressed(e1);
+				e.addSuppressed(e1);
 			}
-			throw ex;
+			throw e;
 		}
 		return tempEAV;
 	}

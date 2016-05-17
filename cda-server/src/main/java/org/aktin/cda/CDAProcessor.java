@@ -1,5 +1,6 @@
 package org.aktin.cda;
 
+import java.nio.file.Path;
 import java.util.Iterator;
 
 import org.w3c.dom.Document;
@@ -13,8 +14,9 @@ public interface CDAProcessor {
 	 * @param templateId template id
 	 * @throws CDAException processing error
 	 */
-	public CDAStatus process(Document document, String documentId, String templateId) throws CDAException;
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId) throws CDAException;
 	
+	public Path transform(Document cda, String templateId) throws CDAException;
 	/**
 	 * Delete a document by its document id.
 	 * 

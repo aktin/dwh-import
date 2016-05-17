@@ -137,7 +137,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	}
 
 	@Override
-	public synchronized CDAStatus process(Document document, String documentId, String templateId)
+	public synchronized CDAStatus createOrUpdate(Document document, String documentId, String templateId)
 			throws CDAException {
 		//log.info("Using patid="+patientId+", encid="+encounterId+", docid="+documentId);
 
@@ -146,7 +146,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		// process document
 		CDAStatus status = null;
 		try{
-			status = super.process(document, documentId, templateId);
+			status = super.createOrUpdate(document, documentId, templateId);
 		}finally{
 			inserter.setErrorHandler(null);
 			inserter.resetErrorCount();

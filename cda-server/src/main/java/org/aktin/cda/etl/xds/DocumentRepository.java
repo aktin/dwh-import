@@ -116,7 +116,7 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 				//ids = parser.extractIDs(cda);
 				// TODO compare to IDs from XDS call
 				// process document (XXX catch errors)
-				processor.process(cda, documentId, templateId);
+				processor.createOrUpdate(cda, documentId, templateId);
 				resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
 			} catch (CDAException e) {
 				log.log(Level.WARNING, "Unable to import CDA", e);

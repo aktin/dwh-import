@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAProcessor;
@@ -91,28 +93,37 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 		}
 	}
 	
-	public final Path transformToEAV(Document document) throws CDAException{
-		return cdaToDataWarehouse.transformToEAV(document);
-	}
 	@Override
-	public CDAStatus process(Document document, String documentId, String templateId) throws CDAException{
+	public final Path transform(Document document, String templateId) throws CDAException{
+		try {
+			return cdaToDataWarehouse.getTransformation(templateId).transformToEAV(document);
+		} catch (TransformerException | TransformerFactoryConfigurationError | IOException e) {
+			throw new CDAException("Transformation to EAV failed", e);
+		}
+	}
+	
+	@Override
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId) throws CDAException{
 		// not using provided patientId, encounterId, documentId
 		// use IDs from EAV transformation result
 		
 		// transform CDA document to EAV XML in temporary file
-		Path tempEAV = transformToEAV(document);
+		Path tempEAV = transform(document, templateId);
 
-		// parse EAV XML and insert into fact table
-		CDAStatus status = replaceEAV(tempEAV);
+		CDAStatus status;
+		try{
+			// parse EAV XML and insert into fact table
+			status = replaceEAV(tempEAV);
 
-
-		// remove temporary file
-		try {
-			Files.delete(tempEAV);
-		} catch (IOException e) {
-			throw new CDAException("Unable to delete EAV temp file", e);
+		}finally{
+			// remove temporary file
+			try {
+				Files.delete(tempEAV);
+			} catch (IOException e) {
+				throw new CDAException("Unable to delete EAV temp file", e);
+			}
 		}
-
+		
 		return status;
 	}
 

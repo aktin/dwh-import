@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,6 +27,7 @@ import org.xml.sax.SAXException;
 public class TestFHIR {
 	Server server;
 	private URL fhirBinary;
+	private URL fhirBinaryValidate;
 	private URL fhirBase;
 	
 	/**
@@ -44,6 +44,7 @@ public class TestFHIR {
 		// URL to receive POST/PUT requests (use dynamic port) 
 		fhirBase = new URL("http","localhost",server.getPort(),Server.REST_CONTEXT_PATH);
 		fhirBinary = new URL(fhirBase+"/Binary");
+		fhirBinaryValidate = new URL(fhirBase+"/Binary$validate");
 	}
 	
 	/**
@@ -163,4 +164,6 @@ public class TestFHIR {
 		in = uc.getErrorStream();
 		in.close();
 	}
+	
+	// TODO test validate operation (not implemented yet)
 }

@@ -1,5 +1,7 @@
 package org.aktin.cda.etl.fhir;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,6 +160,12 @@ public class SimplifiedOperationOutcome {
 	}
 	public static SimplifiedOperationOutcome error(String message){
 		return create(Severity.error, message);
+	}
+	public static SimplifiedOperationOutcome error(Throwable error){
+		StringWriter w = new StringWriter();
+		PrintWriter p = new PrintWriter(w);
+		error.printStackTrace(p);
+		return error(w.toString());
 	}
 	public static SimplifiedOperationOutcome info(String message){
 		return create(Severity.information, message);
