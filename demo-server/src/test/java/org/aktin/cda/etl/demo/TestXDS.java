@@ -2,7 +2,6 @@ package org.aktin.cda.etl.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetSocketAddress;
 import java.net.URL;
 
 import org.aktin.cda.etl.demo.client.XdsClient;
@@ -26,8 +25,8 @@ public class TestXDS {
 
 	@Before
 	public void startServer() throws IOException{
-		server = new Server();
-		server.bind(new InetSocketAddress("localhost", 0));
+		server = new Server(0);
+		server.bind();
 		server.start();
 		soapUrl = new URL("http","localhost",server.getPort(),Server.XDS_CONTEXT_PATH);
 	}

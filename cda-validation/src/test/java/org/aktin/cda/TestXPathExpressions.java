@@ -19,7 +19,7 @@ public class TestXPathExpressions {
 	private static final String[] exampleDocuments = new String[]{
 			"/CDAexample/basismodul-beispiel-storyboard01.xml",
 	};
-	
+	/*
 	@Test
 	public void extractIds() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();
@@ -36,7 +36,6 @@ public class TestXPathExpressions {
 			}
 		}
 	}
-
 	@Test
 	public void verifyId() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();
@@ -49,6 +48,7 @@ public class TestXPathExpressions {
 			Assert.assertEquals("0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf", ids[1]);
 		}
 	}
+*/
 	//@Test
 	public void printTest() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();
@@ -63,8 +63,8 @@ public class TestXPathExpressions {
 			System.out.println("Result1="+s);
 			s = x.compile(CDAParser.ID_TREE_XPATHS[idx]).evaluate(cda);
 			System.out.println("Result2="+s);	
-			s = parser.extractIDs(cda)[idx];
-			System.out.println("Result3="+s);				
+			//s = parser.extractIDs(cda)[idx];
+			//System.out.println("Result3="+s);				
 		}
 	}
 }

@@ -98,7 +98,7 @@ public class Validator implements URIResolver, NamespaceContext {
 	 * @throws TransformerException if the transformation fails
 	 * @throws XPathExpressionException if the transformation result could not be processed with XPath expressions to find validation errors
 	 */
-	public ValidationResult validate(Source cdaSource) throws TransformerException, XPathExpressionException{
+	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException{
 		//Result result = new StreamResult(System.out);
 		DOMResult dom = new DOMResult();
 		transformer.transform(cdaSource, dom);

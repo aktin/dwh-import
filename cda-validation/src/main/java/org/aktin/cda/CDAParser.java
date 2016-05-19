@@ -13,6 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -50,10 +51,11 @@ public class CDAParser {
 	
 	private XPathExpression[] idExpr;
 	private Transformer domTransform;
+	private XPath xpath;
 	
 	public CDAParser(){
 		XPathFactory factory =  XPathFactory.newInstance();
-		XPath xpath = factory.newXPath();
+		xpath = factory.newXPath();
 		xpath.setNamespaceContext(namespaceContext);
 
 		idExpr = new XPathExpression[ID_TREE_XPATHS.length];
@@ -71,48 +73,8 @@ public class CDAParser {
 		}
 	}
 	
-	public static final NamespaceContext namespaceContext = new NamespaceContext() {
-		@Override
-		public Iterator<?> getPrefixes(String namespaceURI) {
-			String prefix = getPrefix(namespaceURI);
-			if( prefix == null )return Arrays.asList().iterator();
-			else if( namespaceURI.equals(CDAConstants.CDA_NS_URI) ){
-				return Arrays.asList(prefix,CDAConstants.CDA_NS_PREFIX).iterator();
-			}else return Arrays.asList(prefix).iterator();
-		}
-		
-		@Override
-		public String getPrefix(String namespaceURI) {
-			switch( namespaceURI ){
-			case CDAConstants.CDA_NS_URI:
-				return XMLConstants.DEFAULT_NS_PREFIX;
-			case XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI:
-				return "xsi";
-			case XMLConstants.XML_NS_URI:
-				return XMLConstants.XML_NS_PREFIX;
-			case XMLConstants.XMLNS_ATTRIBUTE_NS_URI:
-				return XMLConstants.XMLNS_ATTRIBUTE;
-			}
-			return null;
-		}
-		
-		@Override
-		public String getNamespaceURI(String prefix) {
-			switch( prefix ){
-			case XMLConstants.DEFAULT_NS_PREFIX:
-			case CDAConstants.CDA_NS_PREFIX:
-				return CDAConstants.CDA_NS_URI;
-			case "xsi":
-				return XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
-			case XMLConstants.XML_NS_PREFIX:
-				return XMLConstants.XML_NS_URI;
-			case XMLConstants.XMLNS_ATTRIBUTE:
-				return XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
-			}
-			return XMLConstants.NULL_NS_URI;
-		}
-	};
-
+	public static final NamespaceContext namespaceContext = new NamespaceContextImpl();
+	
 	/**
 	 * Extract IDs from a CDA document. See {@link #ID_TREE_XPATHS}
 	 * @param cda CDA document
@@ -120,7 +82,7 @@ public class CDAParser {
 	 * @throws XPathExpressionException for XPath errors during ID extraction
 	 * @see #ID_TREE_XPATHS
 	 */
-	public final String[] extractIDs(Node cda) throws XPathExpressionException{
+	private final String[] extractIDs(Node cda) throws XPathExpressionException{
 		// extract IDs
 
 		String[] ids = new String[idExpr.length];
@@ -131,6 +93,31 @@ public class CDAParser {
 		return ids;
 	}
 
+	/**
+	 * Find the template id for a given CDA document
+	 * @param cda CDA document
+	 * @return template id
+	 * @throws XPathExpressionException XPath error
+	 */
+	public String extractTemplateId(Document cda) throws XPathExpressionException{
+		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_TEMPLATE_ID);
+		return (String)xe.evaluate(cda.getDocumentElement(), XPathConstants.STRING);
+	}
+
+	/**
+	 * Find the document id for a given CDA document. The should be globally
+	 * unique for any different document.
+	 * @param cda CDA document
+	 * @return template id
+	 * @throws XPathExpressionException XPath error
+	 */
+	public String extractDocumentId(Document cda) throws XPathExpressionException{
+		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_TEMPLATE_ID);
+		return (String)xe.evaluate(cda.getDocumentElement(), XPathConstants.STRING);
+	}
+
+	// TODO add method to get templateID, remove extractIDs
+	
 	/**
 	 * Build a DOM node from the XML source.
 	 * 

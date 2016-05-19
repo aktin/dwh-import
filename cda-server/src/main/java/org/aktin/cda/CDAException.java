@@ -10,4 +10,8 @@ public class CDAException extends Exception {
 	public CDAException(String message, Throwable cause){
 		super(message,cause);
 	}
+	
+	public CDAException(String message){
+		super(message);
+	}
 }

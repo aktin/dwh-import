@@ -1,1 +1,23 @@
-implement 'deceased' element in resulting eav to reflect deceased patients
+XSL does not generate corrent fact timestamps e.g.:
+
+    <fact concept="LOINC:8480-6">
+       <value unit="mm[Hg]" xsi:type="numeric">162</value>
+       <modifier code="effectiveTime">
+          <value xsi:type="string">20160501030000</value>
+       </modifier>
+    </fact>
+
+for
+
+    <observation classCode="OBS" moodCode="EVN">
+        <templateId root="1.2.276.0.76.10.4032"/>
+        <id root="1.2.276.0.76.3.1.214.1.3" extension="2016.3"/> 
+        <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" displayName="Systolic blood pressure"/>
+        <statusCode code="completed"/>
+        <effectiveTime value="20160501030000"/>
+        <value xsi:type="PQ" value="162" unit="mm[Hg]"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+    </observation>
+
+
+
+Assign the document_id, version, template_id

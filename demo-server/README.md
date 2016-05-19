@@ -14,7 +14,7 @@ Dokumente können entweder via IHE XDS.b 'Provide and Register Document' übermitt
 IHE XDS.b
 ---------
 
-
+TODO: FIX: Output correct URLs in WSDL
 
 
 HL7 FHIR Mailbox

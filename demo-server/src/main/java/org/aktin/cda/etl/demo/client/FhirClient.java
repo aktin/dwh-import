@@ -51,6 +51,11 @@ public class FhirClient {
 		
 		if( response != null )try{
 			System.err.println("Response code: "+response.getResponseCode());
+			// output location header
+			String loc = response.getHeaderField("Location");
+			if( loc != null ){
+				System.err.println("Location: "+loc);
+			}
 			// try to use the error stream
 			InputStream in = response.getErrorStream();
 			if( in == null ){
@@ -89,7 +94,7 @@ public class FhirClient {
 		}
 		uc.addRequestProperty("Content-type", contentType);
 		// set method
-		uc.setRequestMethod("PUT");
+		uc.setRequestMethod("POST");
 		uc.connect();
 
 		// write example document
