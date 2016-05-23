@@ -3,20 +3,21 @@ package org.aktin.cda.etl.demo;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.ws.Endpoint;
-import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
-import org.aktin.cda.etl.fhir.RestService;
 import org.aktin.cda.etl.xds.DocumentRepository;
-import org.w3c.dom.Document;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -30,26 +31,29 @@ import com.sun.net.httpserver.HttpServer;
  * @author R.W.Majeed
  *
  */
-public class Server implements CDAProcessor{
+public class Server{
 	private static final Logger log = Logger.getLogger(Server.class.getName());
 	/** Servlet context for XDS.b */
-	public static final String XDS_CONTEXT_PATH = "/aktin/xds.b";
+	public static final String XDS_CONTEXT_PATH = "/aktin/cda/xds.b";
 	/** Servlet context for FHIR Binary */
-	public static final String REST_CONTEXT_PATH = "/aktin/fhir/Binary";
+	public static final String REST_CONTEXT_PATH = "/aktin/cda/fhir";
+	public static final String FHIR_BINARY_PATH = REST_CONTEXT_PATH+"/Binary";
 
 	private DocumentRepository xdsService;
-	private RestService restService;
+	private URI jaxrsUri;
 
-	private Endpoint xdsEndpoint, restEndpoint;
+	private Endpoint xdsEndpoint;
 
 	private HttpServer server;
 	private Validator validator;
+	private CDAProcessor processor;
 	
 	/**
 	 * Construct the local server
 	 * @throws IOException IO error
 	 */
-	public Server() throws IOException{
+	public Server(int port) throws IOException{
+		processor = new HashtableStore();
 		try {
 			validator = new Validator();
 		} catch (TransformerConfigurationException e) {
@@ -57,26 +61,35 @@ public class Server implements CDAProcessor{
 		}
 		xdsService = new DocumentRepository();
 		xdsService.setValidator(validator);
-		xdsService.setProcessor(this);
-		try {
-			restService = new RestService();
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-		restService.setValidator(validator);
-		restService.setProcessor(this);
+		xdsService.setProcessor(processor);
 		
-		server = HttpServer.create();
+		ResourceConfig config = new ResourceConfig();
+		// configure HK2 for our CDI injections
+		config.register(new AbstractBinder() {
+			@Override
+			protected void configure() {
+				this.bind(validator).to(Validator.class);
+				this.bind(processor).to(CDAProcessor.class);
+			}
+		});
+		// load JAX-RS classes for FHIR
+		config.packages("org.aktin.cda.etl.fhir");
+		try {
+			 jaxrsUri = new URI("http://localhost:"+port+REST_CONTEXT_PATH);
+		} catch (URISyntaxException e) {
+			throw new IOException(e);
+		}
+		server = JdkHttpServerFactory.createHttpServer(jaxrsUri, config, false);
 	}
 
 	/**
 	 * Bind the server to the specified address / port
-	 * @param bindAddress local/external TCP address
 	 * @throws IOException IO errors
 	 */
-	public void bind(InetSocketAddress bindAddress) throws IOException{
+	public void bind() throws IOException{
 		// bind HTTP server
-		server.bind(bindAddress, 0);
+		// will always listen on all interfaces
+		//server.bind(bindAddress, 0);
 		// get local address (may be dynamically allocated)
 		InetSocketAddress localAddress = server.getAddress();
 		log.info("Listening on port "+localAddress.getPort());
@@ -90,11 +103,10 @@ public class Server implements CDAProcessor{
 		binding.setMTOMEnabled(true);
 		log.info("WSDL published at http://"+localAddress.getHostName()+":"+localAddress.getPort()+XDS_CONTEXT_PATH+"?wsdl");
 
-		// publish REST end point
-		restEndpoint = Endpoint.create(HTTPBinding.HTTP_BINDING, restService);
-		restEndpoint.publish(server.createContext(REST_CONTEXT_PATH));
-		log.info("REST published at http://"+localAddress.getHostName()+":"+localAddress.getPort()+REST_CONTEXT_PATH+"/");
-
+		// info about JAX-RS
+		log.info("FHIR base available at http://"+localAddress.getHostName()+":"+localAddress.getPort()+jaxrsUri.getPath());
+		log.info(".. eg. POST to http://"+localAddress.getHostName()+":"+localAddress.getPort()+jaxrsUri.getPath()+"/Binary");
+		
 	}
 	
 	/**
@@ -120,7 +132,6 @@ public class Server implements CDAProcessor{
 		server.stop(3);
 		// stop end points
 		xdsEndpoint.stop();
-		restEndpoint.stop();
 		
 		log.info("Shutdown complete");
 	}
@@ -146,24 +157,29 @@ public class Server implements CDAProcessor{
 			if( args.length == 1 ){
 				// only a port specified, use LOCALHOST
 				args = new String[]{args[0],"localhost"};
-			}
+			//}
+			// due to a bug in jersey-container-jdk, the server
+			// will always listen on all interfaces.
 			
+			/*
 			if( args.length == 2 ){
 				switch( args[1] ){
 				case "localhost":
 					addr = new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
 					System.out.println("Listening on localhost (loopback device) only.");
 					break;
-				case "public":
+				case "public":*/
 					addr = new InetSocketAddress(port);
 					System.err.println("Listening on all network interfaces.");
+					/*
 					break;
 				default:
 					System.out.println("No idea what you want with "+args[1]);
 					System.err.println("Either 'localhost' or 'public' accepted as second argument");
-				}
-			}else if( args.length > 2 ){
-				System.err.println("Usage: "+Server.class.getName()+" [<port> [localhost|public]]");
+				} */
+			}else if( args.length > 1 ){
+				System.err.println("Usage: "+Server.class.getName()+" [<port>]");
+			//	System.err.println("Usage: "+Server.class.getName()+" [<port> [localhost|public]]");
 			}
 		}else{
 			System.out.println("Using dynamic port."); 
@@ -189,8 +205,8 @@ public class Server implements CDAProcessor{
 		final InetSocketAddress addr = getAddressFromCommandLine(args);
 		if( addr == null )return;
 		// initialise server
-		final Server server = new Server();
-		server.bind(addr);
+		final Server server = new Server(addr.getPort());
+		server.bind();
 		server.start();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(){
@@ -202,12 +218,4 @@ public class Server implements CDAProcessor{
 		});
 		System.out.println("Press Ctrl+C to shut down");
 	}
-
-	@Override
-	public void process(String patientId, String encounterId, String documentId, Document document) {
-		// do nothing
-		// TODO remember patientId and encounterId, return whether document was created or replaced
-	}
-	
-
 }

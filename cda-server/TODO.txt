@@ -1,0 +1,8 @@
+ RESTeasy doesn't output javax.xml.transform.Source,
+ check why, e.g. https://github.com/resteasy/Resteasy/blob/master/jaxrs/resteasy-jaxrs/src/main/java/org/jboss/resteasy/plugins/providers/SourceProvider.java
+ 
+
+Allow delete of complete patients via FHIR
+e.g. DELETE [base]Patient
+
+maybe also get a list of patients via GET [base]/Patient

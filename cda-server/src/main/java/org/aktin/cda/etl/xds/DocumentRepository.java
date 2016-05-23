@@ -91,10 +91,13 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 		ValidationResult vr = null;
 		Source xml = new StreamSource(new ByteArrayInputStream(doc.getValue()));
 		org.w3c.dom.Document cda;
+		String templateId, documentId;
 		try {
 			cda = parser.buildDOM(xml);
+			templateId = parser.extractTemplateId(cda);
+			documentId = parser.extractDocumentId(cda);
 			synchronized( validator ){
-				vr = validator.validate(new DOMSource(cda));
+				vr = validator.validate(new DOMSource(cda), templateId);
 			}
 		} catch (TransformerException e) {
 			// happens if the source document is not well formed
@@ -108,18 +111,13 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 
 		if( vr.isValid() ){
 			// extract patient id, encounter id, document id
-			String[] ids;
 			try {
 				// check arguments/valid id
-				ids = parser.extractIDs(cda);
+				//ids = parser.extractIDs(cda);
 				// TODO compare to IDs from XDS call
 				// process document (XXX catch errors)
-				processor.process(ids[0], ids[1], ids[2], cda);
+				processor.createOrUpdate(cda, documentId, templateId);
 				resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
-			} catch (XPathExpressionException e) {
-				// unable to retrieve IDs
-				log.log(Level.WARNING, "Unable to retrieve IDs from CDA document", e);
-				return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Unable to extract IDs from document", e);
 			} catch (CDAException e) {
 				log.log(Level.WARNING, "Unable to import CDA", e);
 				// add cause and suppressed exceptions to error response

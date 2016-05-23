@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<valueSets>
-   <valueSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             ref="2.16.840.1.113883.1.11.16926"
-             name="BasicConfidentialityKind"
-             displayName="Basic Confidentiality Kind (HL7)"
-             missing="true"/>
-</valueSets>

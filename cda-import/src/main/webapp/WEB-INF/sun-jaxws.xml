@@ -6,10 +6,5 @@
     name="DocumentRepository"
     implementation="org.aktin.cda.etl.xds.DocumentRepository"
     url-pattern="/aktin/xds.b"/>
-  <endpoint
-    name="RestService"
-    implementation="org.aktin.cda.etl.fhir.RestService"
-    binding="http://www.w3.org/2004/08/wsdl/http"
-    url-pattern="/aktin/fhir/Binary/*"/>
 <!--      implementation="org.aktin.cda.etl.xds.DocumentRepository"  -->
 </endpoints>
