@@ -8,7 +8,7 @@ CDA-Dokumente werden abgeliefert per RESTful HTTP entsprechend dem FHIR Draft.
 --------------------------
 
 Um ein Dokument zu übermitteln wird eine HTTP PUT-Operation
-an http://servernamen/aktin/fhir/Binary durchgeführt.
+an http://IHRSERVER/aktin/cda/fhir/Binary durchgeführt.
 
 Siehe auch Standard Draft https://www.hl7.org/fhir/documents.html#bundle
 (Aktuell in Bearbeitung. Deshalb teilweise fehlende Referenzen.
@@ -43,7 +43,7 @@ Siehe dazu online https://www.hl7.org/fhir/documents.html#bundle sowie
 https://www.hl7.org/fhir/operation-resource-validate.html
 
 Nach HL7 FHIR lassen sich Dokumente validieren, indem eine POST-Operation
-an die Adresse `http://servernamen/aktin/fhir/Binary/$validate` durchgeführt
+an die Adresse `http://IHRSERVER/aktin/cda/fhir/Binary/$validate` durchgeführt
 wird. Es erfolgen alle Schritte wie bei der Übermittlung von Dokumenten, 
 allerdings wird das Dokument verworfen und nicht im Data Warehouse gespeichert.
 
