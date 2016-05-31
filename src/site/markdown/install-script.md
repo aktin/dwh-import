@@ -29,7 +29,7 @@ z.B. mit
 (evtl. mit Option `--no-check-certificate` bei Zertifikatfehlern).
 
 Wenn das Paket heruntergeladen ist, kann es entpackt werden mit 
-`tar xvfz aktin.tar.gz`. Die Dateien werden dann automatisch in 
+`tar xvzf aktin.tar.gz`. Die Dateien werden dann automatisch in 
 den Ordner `aktin-dwh-snapshot` entpackt.
 
 Die Installation benötigt Zugriff auf das Internet - speziell die jeweiligen 
