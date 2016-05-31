@@ -38,6 +38,7 @@ herunterzuladen.
 
 Unter Debian 8, starten Sie nun das Skript `aktin-dwh-snapshot/install_debian.sh`.
 Die Installation kann bis zu 20 Minuten dauern. 
+Um die Konsolenausgaben umzuleiten, können Sie alternativ auch `aktin-dwh-snapshot/install_debian.sh > install-aktin-dwh.log` ausführen. Die Logausgaben finden Sie dann in der Datei `install-aktin-dwh.log`.
 
 Für CentOS 7, starten Sie das Skript `aktin-dwh-snapshot/install_centos.sh`. 
 SELinux wird in dem Prozess deaktiviert. Sollten Sie SELinux verwenden wollen 
