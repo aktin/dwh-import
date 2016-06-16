@@ -1,5 +1,6 @@
 package org.aktin.cda;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -17,6 +18,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.URIResolver;
 import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -94,6 +96,7 @@ public class Validator implements URIResolver, NamespaceContext {
 	 * Validate a CDA document
 	 * 
 	 * @param cdaSource CDA document source to validate
+	 * @param templateId template id for the validation
 	 * @return validation result
 	 * @throws TransformerException if the transformation fails
 	 * @throws XPathExpressionException if the transformation result could not be processed with XPath expressions to find validation errors
@@ -157,4 +160,43 @@ public class Validator implements URIResolver, NamespaceContext {
 		// not needed
 		throw new UnsupportedOperationException();
 	}
+	
+	/**
+	 * Validate CDA documents and print the result to STDOUT or STDERR on failure.
+	 * <p>
+	 * 	The exit code will indicate the number of failed documents (between 0 and 
+	 *  the number of command line arguments.
+	 * </p>
+	 * Call with {@code java -classpath "cda-validation/target/classes;histream-core/target/classes" org.aktin.cda.Validator filename [... more files]}
+	 * @param args file name arguments
+	 * @throws Exception error
+	 */
+	public static void main(String args[]) throws Exception{
+		// TODO use file name from commmand line
+		if( args.length != 1 ){
+			System.err.println("Please specify exactly one CDA file path");
+			return;
+		}
+		CDAParser parser = new CDAParser();
+		Validator v = new Validator();
+
+		int failure_count = 0;
+		for( String filename : args )
+		try( InputStream in = new FileInputStream(filename)){
+			Document dom = parser.buildDOM(new StreamSource(in));
+			
+			String templateId = parser.extractTemplateId(dom);
+			ValidationResult r = v.validate(new DOMSource(dom), templateId);
+			if( r.isValid() ){
+				System.out.println("Result for "+filename+": validation passed");
+			}else{
+				System.err.println("Result for "+filename+": validation failed");
+				r.forEachErrorMessage(System.err::println);
+				failure_count ++;
+			}
+		}
+
+		System.exit(failure_count);
+	}
+
 }
