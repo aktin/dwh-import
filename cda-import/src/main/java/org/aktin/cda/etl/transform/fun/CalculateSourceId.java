@@ -7,12 +7,22 @@ import net.sf.saxon.value.SequenceType;
  * Calculates a document ID which can be used
  * to identify the document at a later time.
  * 
- * The source id should be unique for each
- * combination of patient, encounter and module.
+ * <p>
+ * In other words, the primary key for an imported
+ * CDA document.
+ * </p>
  * 
+ * <p>
  * It is used to remove previous data if the
  * same module is transmitted again for the
  * same encounter.
+ * </p>
+ * 
+ * <p>
+ * This ID should be unique for any
+ * combination of patient, encounter and module.
+ * </p>
+ * 
  * 
  * @author R.W.Majeed
  *
