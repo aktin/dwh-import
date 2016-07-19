@@ -140,13 +140,8 @@
     <!-- 1	ID des Krankenhauses 
     Die KrankenhausID muss nicht im DWH gespeichert werden.
     Bei der Zusammenführung ist dem Broker die Quelle bekannt und kann ggf. ergänzt werden.
-    Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar.
+    Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar. -->
    
-    <xsl:template match="cda:representedCustodianOrganization">
-        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extension))"/> 
-    </xsl:template>
-     -->
-    
     <!-- 2	ID der Notaufnahme
     siehe 1 - Falls es zwei Notaufnahmen gibt, haben sie ein seperates DWH oder ein gemeinsames und werden nicht getrennt ausgewertet. In beiden Fällen ist die Frage nicht wirklich relevant.
     -->
@@ -283,7 +278,7 @@
     
     <xsl:template name="encounter-module-id">
     	<!-- generate a unique id for encounter and module  -->
-		<xsl:value-of select="aktin:module-hash(
+		<xsl:value-of select="aktin:import-hash(
 		/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
 		'',/cda:ClinicalDocument/cda:setId/@extension, 
 		$aktin.module.id)"/>
@@ -711,27 +706,12 @@
             <fact>
                 <xsl:choose>
                     <xsl:when test="../cda:value/@code">
-                        <xsl:choose>
-                            <xsl:when test="../cda:value/@code='SUSP'">
-                                <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value/@code"/></xsl:attribute>
-                                <xsl:if test="../cda:effectiveTime/cda:low/@value">
-                                    <xsl:attribute name="start">
-                                        <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-                                <modifier>
-                                    <xsl:attribute name="code">Verdacht</xsl:attribute>
-                                </modifier>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="../cda:value/@code"/></xsl:attribute>
-                                <xsl:if test="../cda:effectiveTime/cda:low/@value">
-                                    <xsl:attribute name="start">
-                                        <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-                            </xsl:otherwise>
-                        </xsl:choose>                      
+                        <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="../cda:value/@code"/></xsl:attribute>
+                        <xsl:if test="../cda:effectiveTime/cda:low/@value">
+                            <xsl:attribute name="start">
+                                <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
+                            </xsl:attribute>
+                        </xsl:if>            
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/>NULL<xsl:value-of select="position()"/></xsl:attribute>
@@ -742,9 +722,13 @@
                         </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="../../cda:sequenceNumber/@value='1'">
+                <xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='8'][../cda:name/@codeSystem='2.16.840.1.113883.3.7.1.0']/@code">
                     <modifier>
-                        <xsl:attribute name="code">fuehrend</xsl:attribute>
+                        <xsl:attribute name="code">reliability</xsl:attribute>
+                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>
+                            <xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='8'][../cda:name/@codeSystem='2.16.840.1.113883.3.7.1.0']/@code"/>
+                        </value>
                     </modifier>
                 </xsl:if>
                 <xsl:if test="../cda:value/cda:originalText">
@@ -754,16 +738,6 @@
                             <xsl:attribute name="xsi:type">string</xsl:attribute>
                             <xsl:value-of select="../cda:value/cda:originalText"/>
                         </value>
-                    </modifier>
-                </xsl:if>
-                <xsl:if test="../../cda:observation/@negationInd='true'">
-                    <modifier>
-                        <xsl:attribute name="code">Ausschluss</xsl:attribute>
-                    </modifier>
-                </xsl:if>
-                <xsl:if test="../cda:effectiveTime/cda:high/@value">
-                    <modifier>
-                        <xsl:attribute name="code">Zustand nach</xsl:attribute>
                     </modifier>
                 </xsl:if>
                 <xsl:call-template name="GetEffectiveTimes"/>
@@ -1155,6 +1129,7 @@
         </xsl:if>
     </xsl:function>
     
+    <!-- deprecated 
     <xsl:function name="func:age-in-months">
         <xsl:param name="date-of-birth" />
         <xsl:param name="current-date" />
@@ -1172,17 +1147,6 @@
         <xsl:param name="current" />
         <xsl:value-of select="floor(func:age-in-months($dob,$current) div 12)"/>
     </xsl:function>
-    
-    
-<!-- Hash Function, reduce ID length to 50, one-way pseudonym -->
-    <xsl:function name="func:hash"> <!-- #todo this is not a hash :) -->
-        <xsl:param name="StringValue"></xsl:param>
-        <xsl:if test="$StringValue">
-            <xsl:choose>
-                <xsl:when test="string-length($StringValue)>50"><xsl:value-of select="substring($StringValue,1,50)"/></xsl:when>
-                <xsl:otherwise><xsl:value-of select="$StringValue"/></xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
-    </xsl:function>
+    -->
 
 </xsl:stylesheet>

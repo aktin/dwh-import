@@ -22,7 +22,7 @@ public class TestTransformToEAV {
 	@Test
 	public void extractTemplateId() throws Exception{
 		CDAParser parser = new CDAParser();
-		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
+		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-1019-complete.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			String templateId = parser.extractTemplateId(dom);
 			Assert.assertNotNull(templateId);
@@ -33,7 +33,7 @@ public class TestTransformToEAV {
 	public void transformExample1() throws Exception{
 		CDAParser parser = new CDAParser();
 		CDAImporterMockUp t = new CDAImporterMockUp();
-		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml") ){
+		try( InputStream in = CDAParser.class.getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-1019-complete.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			
 			

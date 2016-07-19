@@ -18,7 +18,7 @@ import net.sf.saxon.value.SequenceType;
  *
  */
 public class CalculateSourceId extends OneWayHashFunction{
-	public static final StructuredQName QNAME = OneWayHashFunction.buildFunctionQName("module-hash");
+	public static final StructuredQName QNAME = OneWayHashFunction.buildFunctionQName("import-hash");
 	protected static final SequenceType[] FIVE_STRINGS = new SequenceType[]{SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING};
 	
 	@Override

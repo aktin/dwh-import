@@ -23,12 +23,10 @@
     Datensatz aufgefüllt mit unrealistischen Testdaten; vollständiger Basis-Modul-Datensatz
     Reihenfolge z.T. gerändert, so dass die Elemente in der Reihenfolge aufreten wie sie im Template beschrieben sind
     
-    Version 01: Initialer Entwurf
-    Version 02: Anpassung nach Templateänderung für Scorewerte und weitere Korrekturen
-    Version 03: Aktualisierung auf Release v1.11, Nicht benötigte Einträge mit NullFlavor
+    Anpassung auf Release 1.18 (Umstellung auf Template ID 1.2.276.0.76.10.1019)
     
 -->
-<?xml-model href="../../../../../src/main/resources/schematron/aktin-basism.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../../../../src/main/resources/schematron/aktin-basism20152b.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
     <!--
         CDA Header
@@ -38,7 +36,7 @@
     <!-- Type Id (fix) -->
     <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
     <!-- Template Id (fix) -->
-    <templateId root="1.2.276.0.76.10.1015"/>
+    <templateId root="1.2.276.0.76.10.1019"/>
     <!-- Identifikation des Dokuments -->
     <id root="1.2.276.0.76.4.17.9814184919" extension="14025fda-3f25-4c64-8883-4f7e6cabc0b6"/>
     <!-- Fixer Dokumententype-Code -->
@@ -176,7 +174,7 @@
         </time>
         <associatedEntity classCode="POLHOLD">
             <!-- eGK Nummer -->
-            <id extension="1234567890" root="1.2.276.0.76.4.8"/>
+            <id extension="A123456789" root="1.2.276.0.76.4.8"/>
             <!-- Versicherungsnummer -->
             <id extension="123456789" root="1.2.276.0.76.3.1.131.1.4.3.9999.9999.999955"/>
             <associatedPerson>
@@ -225,6 +223,8 @@
     <!-- Patientenkontakt -->
     <componentOf>
         <encompassingEncounter classCode="ENC" moodCode="EVN">
+            <!-- Aufnahme-Identifikator -->
+            <id root="1.2.276.0.76.3.87686" extension="657827456837"/>
             <effectiveTime>
                 <!-- Aufnahmezeitpunkt (Datum und Zeit), Zeitangabe genau bis auf die Minute -->
                 <low value="201501171603"/>
@@ -333,7 +333,9 @@
                                     <effectiveTime>
                                         <width value="1" unit="h"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="557" codeSystem="1.2.276.0.76.5.439" displayName="Lower extremity injury"/>
+                                    <value xsi:type="CE" code="557" codeSystem="1.2.276.0.76.5.439" displayName="Lower extremity injury">
+                                        <originalText>Verletzung der unteren Extremität</originalText>
+                                    </value>
                                 </observation>
                             </entryRelationship>
                         </act>
@@ -430,6 +432,30 @@
                                          </qualifier>
                                      </value>
                                  </observation>
+                            </entryRelationship>
+                            <entryRelationship typeCode="SUBJ">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4073"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="3564b7c0-2111-43f2-a784-9a5fdfaa67f2"/>
+                                    <code code="COND" codeSystem="2.16.840.1.113883.5.4" displayName="Condition"/>
+                                    <text>
+                                        <reference value="#mdro-2"/>
+                                    </text>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime>
+                                        <low value="20150304"/>
+                                    </effectiveTime>
+                                    <value xsi:type="CD" code="SUSP" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="Verdacht">
+                                        <qualifier>
+                                            <name code="IBB" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="in Bezug auf Befund"/>
+                                            <value code="BACP" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Bakterienbesiedelung"/>
+                                        </qualifier>  
+                                        <qualifier>
+                                            <name code="URAG" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Auslösendes Agenz"/>
+                                            <value code="4MRGN" codeSystem="1.2.276.0.76.5.441" displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind"/>
+                                        </qualifier>
+                                    </value>
+                                </observation>
                             </entryRelationship>
                         </act>
                     </entry>
@@ -969,7 +995,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
+                                    <code code="75324-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>
                                     </text>
@@ -981,10 +1007,11 @@
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
+                                <sequenceNumber value="1"/>
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
+                                    <code code="75324-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-2"/>
                                     </text>
@@ -997,10 +1024,11 @@
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
+                                <sequenceNumber value="2"/>
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
+                                    <code code="75324-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-3"/>
                                     </text>
@@ -1016,7 +1044,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
+                                    <code code="75324-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-4"/>
                                     </text>
@@ -1032,7 +1060,7 @@
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4049"/>
                                     <id root="45f99818-637b-4be7-bc22-a7041c1cf813"/>
-                                    <code code="DX" codeSystem="2.16.840.1.113883.5.4" displayName="Diagnosis"/>
+                                    <code code="75324-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-5"/>
                                     </text>
