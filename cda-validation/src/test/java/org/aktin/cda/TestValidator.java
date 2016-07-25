@@ -31,7 +31,10 @@ public class TestValidator {
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
 				ValidationResult res = v.validate(new StreamSource(in), templateId);
-				Assert.assertTrue("Successful validation expected for "+example, res.isValid());
+				if( !res.isValid() ){
+					res.forEachErrorMessage(System.err::println);
+					Assert.fail("Successful validation expected for "+example+", but got "+res.getErrorCount()+" errors");
+				}
 			}
 		}
 		for( String example : invalidExampleDocuments ){
