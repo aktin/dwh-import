@@ -4,20 +4,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.URIResolver;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
@@ -43,33 +41,18 @@ import org.w3c.dom.NodeList;
  *
  */
 @Singleton
-public class Validator implements URIResolver, NamespaceContext {
+public class Validator implements NamespaceContext{
 	private static final Logger log = Logger.getLogger(Validator.class.getName());
-	private TransformerFactory factory;
-	private URL svrlTransformation;
-	private static final String svrlSystemId = "urn:local:svrl";
-	private Transformer transformer;
-	
 	// XPaths to interpret the svrl result
 	private XPathFactory xfactory;
+	
 	private XPathExpression selectFailedAsserts;
+	private Map<String, SingleTemplateValidator> templateValidators;
 	
 	public Validator() throws IOException, TransformerConfigurationException{
-		factory = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
-		// resolve internal URIs
-		factory.setURIResolver(this);
 
 		log.getClass(); // prevent unused warnings
-		
-		svrlTransformation = getClass().getResource("/schematron_svrl/aktin-basism.xsl");
-		try( InputStream in = svrlTransformation.openStream() ){
-			StreamSource xsl = new StreamSource(in);
-			xsl.setSystemId(svrlSystemId);
-			transformer = factory.newTransformer(xsl);
-		}
-
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		
+		templateValidators = new HashMap<>();
 		// no need for Saxon??
 		xfactory = XPathFactory.newInstance();
 		try {
@@ -79,6 +62,14 @@ public class Validator implements URIResolver, NamespaceContext {
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
+
+		addTemplateValidator("1.2.276.0.76.10.1015", getClass().getResource("/schematron_svrl/aktin-basism.xsl"));
+		addTemplateValidator("1.2.276.0.76.10.1019", getClass().getResource("/schematron_svrl/aktin-basism20152b.xsl"));
+
+	}
+
+	private void addTemplateValidator(String templateId, URL svrlTransformation) throws TransformerConfigurationException, IOException{
+		templateValidators.put(templateId, new SingleTemplateValidator(svrlTransformation));
 	}
 	
 	/**
@@ -103,33 +94,19 @@ public class Validator implements URIResolver, NamespaceContext {
 	 */
 	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException{
 		//Result result = new StreamResult(System.out);
-		DOMResult dom = new DOMResult();
-		transformer.transform(cdaSource, dom);
-		ValidationResult result = new ValidationResult(this, (Document)dom.getNode());
+		SingleTemplateValidator validator = templateValidators.get(templateId);
+		if( templateId == null ){
+			// no validator for the specified template
+			throw new IllegalArgumentException("No validator for template id "+templateId);
+		}
+		Document svrlOut = validator.validate(cdaSource);
+		ValidationResult result = new ValidationResult(this, svrlOut);
 		if( result.isValid() ){
 			log.info("Document validation: VALID");
 		}else{
 			log.info("Document validation: FAILED");			
 		}
 		return result;
-	}
-
-	/**
-	 * Resolves included URIs during transformation
-	 */
-	@Override
-	public Source resolve(String href, String base) throws TransformerException {
-		// TODO does this still work for recursive includes? e.g. a.xml includes a/b.xml includes b/c.xml 
-		if( base.equals(svrlSystemId) ){
-			try {
-				URL url = new URL(svrlTransformation, href);
-				return new StreamSource(url.openStream(), svrlSystemId);
-			} catch (IOException e) {
-				throw new TransformerException(e);
-			}
-		}else{
-			throw new TransformerException("Unable to resolve '"+href+"' under: "+base);
-		}
 	}
 
 	/**
@@ -160,7 +137,7 @@ public class Validator implements URIResolver, NamespaceContext {
 		// not needed
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * Validate CDA documents and print the result to STDOUT or STDERR on failure.
 	 * <p>
