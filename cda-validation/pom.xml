@@ -14,8 +14,8 @@
 	<properties>
 		<!--  old version 20151118T102028 -->
 		<!--  new version 20160722T224326 -->
-		<schematronVersion>20151118T102028</schematronVersion>
-		<examplesVersion>20151118T102028</examplesVersion>
+		<schematronVersion>20160722T224326</schematronVersion>
+		<examplesVersion>20160722T224326</examplesVersion>
 		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            
 		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>            
 	</properties>

@@ -12,16 +12,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TestValidator {
-	private static final String templateId = "1.2.276.0.76.10.1015";
+	private static final String templateId = "1.2.276.0.76.10.1019";
 	private static final String[] exampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01.xml",
-			"/CDAexample/basismodul-beispiel-storyboard02.xml",
-			"/CDAexample/basismodul-beispiel-storyboard04.xml",
-			"/CDAexample/basismodul-beispiel-storyboard01-complete.xml",
-			"/CDAexample/basismodul-beispiel-storyboard01-mandatory.xml"
+		"/CDAexample/basismodul-beispiel-storyboard01-1019-complete.xml"
 			};
 	private static final String[] invalidExampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01-error1.xml"
+		"/CDAexample/basismodul-beispiel-storyboard01-error1.xml",
+		"/CDAexample/basismodul-beispiel-storyboard01.xml",				//old version, now invalid
+		"/CDAexample/basismodul-beispiel-storyboard02.xml",				//old version, now invalid
+		"/CDAexample/basismodul-beispiel-storyboard04.xml",				//old version, now invalid
+		"/CDAexample/basismodul-beispiel-storyboard01-complete.xml",	//old version, now invalid
+		"/CDAexample/basismodul-beispiel-storyboard01-mandatory.xml"	//old version, now invalid
+		
 	};
 	
 	@Test
