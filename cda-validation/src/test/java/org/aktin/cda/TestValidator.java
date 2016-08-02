@@ -22,7 +22,9 @@ public class TestValidator {
 			"/CDAexample/basismodul-v2-beispiel-storyboard04.xml",
 		};
 	private static final String[] v1ExampleDocuments = new String[]{
+			"/CDAexample/basismodul-beispiel-storyboard01-complete.xml",
 			"/CDAexample/basismodul-beispiel-storyboard01.xml",
+			"/CDAexample/basismodul-beispiel-storyboard01-mandatory.xml",
 			"/CDAexample/basismodul-beispiel-storyboard02.xml",
 			"/CDAexample/basismodul-beispiel-storyboard04.xml",
 		};
@@ -39,7 +41,7 @@ public class TestValidator {
 		};
 	
 	@Test
-	public void validateExampleDocumentsV1() throws TransformerException, IOException, XPathExpressionException{
+	public void validateExampleDocuments() throws TransformerException, IOException, XPathExpressionException{
 		Validator v = new Validator();
 		for( String example : v2ExampleDocuments ){
 			try( InputStream in = getClass().getResourceAsStream(example) ){
