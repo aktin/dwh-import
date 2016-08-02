@@ -49,7 +49,7 @@ public class TestXDS {
 	
 	@Test
 	public void expectFailForInvalidCDA() throws IOException{
-		InputStream in = getClass().getResourceAsStream("/Additional Examples/basismodul-beispiel-storyboard01-error1.xml");
+		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01-error1.xml");
 
 		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "UTF-8", "12345", "123", "example");
 		

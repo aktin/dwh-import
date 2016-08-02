@@ -125,7 +125,7 @@ public class TestFHIR {
 
 	@Test
 	public void expectUnprocessableEntityForSemanticErrors() throws IOException{
-		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml");
+		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml");
 
 		HttpURLConnection uc = FhirClient.submitToFHIR(fhirBinary, in, "UTF-8");
 		
