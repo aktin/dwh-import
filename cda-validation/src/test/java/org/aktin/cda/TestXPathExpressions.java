@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 
 public class TestXPathExpressions {
 	private static final String[] exampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml"
 	};
 	/*
 	@Test

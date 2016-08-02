@@ -103,7 +103,7 @@ public class TestFHIR {
 	@Test
 	public void expectCreatedForValidCDA() throws IOException{
 		// open example CDA document
-		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01.xml");
+		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml");
 
 		// submit document to URL connection
 		// see the corresponding source code how it is done
@@ -125,7 +125,7 @@ public class TestFHIR {
 
 	@Test
 	public void expectUnprocessableEntityForSemanticErrors() throws IOException{
-		InputStream in = getClass().getResourceAsStream("/CDAexample/basismodul-beispiel-storyboard01-error1.xml");
+		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml");
 
 		HttpURLConnection uc = FhirClient.submitToFHIR(fhirBinary, in, "UTF-8");
 		
@@ -140,7 +140,7 @@ public class TestFHIR {
 
 	@Test
 	public void expectUnsupportedTypeForInvalidXML() throws IOException{
-		InputStream in = getClass().getResourceAsStream("/CDAexample/invalid-syntax.xml");
+		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
 
 		HttpURLConnection uc = FhirClient.submitToFHIR(fhirBinary, in, "UTF-8");
 		
@@ -153,7 +153,7 @@ public class TestFHIR {
 	}
 	@Test
 	public void expectUnprocessableEntityForOtherXML() throws IOException{
-		InputStream in = getClass().getResourceAsStream("/CDAexample/other-document.xml");
+		InputStream in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
 
 		HttpURLConnection uc = FhirClient.submitToFHIR(fhirBinary, in, "UTF-8");
 		

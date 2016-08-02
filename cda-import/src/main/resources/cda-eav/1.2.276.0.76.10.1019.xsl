@@ -724,11 +724,9 @@
                 </xsl:choose>
                 <xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='8'][../cda:name/@codeSystem='2.16.840.1.113883.3.7.1.0']/@code">
                     <modifier>
-                        <xsl:attribute name="code">reliability</xsl:attribute>
-                        <value>
-                            <xsl:attribute name="xsi:type">string</xsl:attribute>
+                        <xsl:attribute name="code">
                             <xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='8'][../cda:name/@codeSystem='2.16.840.1.113883.3.7.1.0']/@code"/>
-                        </value>
+                        </xsl:attribute>
                     </modifier>
                 </xsl:if>
                 <xsl:if test="../cda:value/cda:originalText">

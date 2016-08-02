@@ -16,28 +16,27 @@ public class TestValidator {
 	private static final String v1TemplateId = "1.2.276.0.76.10.1015";
 
 	private static final String[] v2ExampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01-1019-complete.xml",
-			"/CDAexample/basismodul-v2-beispiel-storyboard01.xml",
-			"/CDAexample/basismodul-v2-beispiel-storyboard02.xml",
-			"/CDAexample/basismodul-v2-beispiel-storyboard04.xml",
-		};
+		"/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml",
+		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml",
+		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard02.xml",
+		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard04.xml",
+		"/Additional Examples/invalid-xsd.xml"  //should be in invalid, XSD not checked yet
+	};
 	private static final String[] v1ExampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01-complete.xml",
-			"/CDAexample/basismodul-beispiel-storyboard01.xml",
-			"/CDAexample/basismodul-beispiel-storyboard01-mandatory.xml",
-			"/CDAexample/basismodul-beispiel-storyboard02.xml",
-			"/CDAexample/basismodul-beispiel-storyboard04.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard02.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard04.xml"
 		};
 	private static final String[] v1InvalidExampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01-error1.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01-error1.xml",
 		};
 	private static final String[] v2InvalidExampleDocuments = new String[]{
-			"/CDAexample/basismodul-v2-beispiel-storyboard01-error1.xml",
-			"/CDAexample/basismodul-beispiel-storyboard01.xml",				//old version, now invalid
-			"/CDAexample/basismodul-beispiel-storyboard02.xml",				//old version, now invalid
-			"/CDAexample/basismodul-beispiel-storyboard04.xml",				//old version, now invalid
-			"/CDAexample/basismodul-beispiel-storyboard01-complete.xml",	//old version, now invalid
-			"/CDAexample/basismodul-beispiel-storyboard01-mandatory.xml"	//old version, now invalid
+			"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",	//old version, now invalid
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard02.xml",	//old version, now invalid
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard04.xml",	//old version, now invalid
+			"/Additional Examples/basismodul-beispiel-storyboard01-complete.xml",	//old version, now invalid
+			"/Additional Examples/basismodul-beispiel-storyboard01-mandatory.xml"	//old version, now invalid
 		};
 	
 	@Test
@@ -82,7 +81,7 @@ public class TestValidator {
 	@Test
 	public void validateErrorsForOtherDocuments() throws TransformerConfigurationException, IOException{
 		Validator v = new Validator();
-		InputStream in = getClass().getResourceAsStream("/CDAexample/invalid-syntax.xml");
+		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
 		Assert.assertTrue(in.available() > 0);
 		try {
 			v.validate(new StreamSource(in), v2TemplateId);
@@ -96,7 +95,7 @@ public class TestValidator {
 
 		// check other XML document
 		// should return result
-		in = getClass().getResourceAsStream("/CDAexample/other-document.xml");
+		in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
 		try {
 			ValidationResult res = v.validate(new StreamSource(in), v2TemplateId);
 			// should not pass validation
