@@ -16,6 +16,8 @@ import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.CDAStatus;
 import org.aktin.cda.CDAStatus.Status;
+import org.aktin.cda.UnsupportedTemplateException;
+import org.aktin.cda.etl.transform.Transformation;
 import org.aktin.cda.etl.transform.TransformationFactory;
 import org.w3c.dom.Document;
 
@@ -94,9 +96,13 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	}
 	
 	@Override
-	public final Path transform(Document document, String templateId) throws CDAException{
+	public final Path transform(Document document, String templateId) throws CDAException, UnsupportedTemplateException{
 		try {
-			return cdaToDataWarehouse.getTransformation(templateId).transformToEAV(document);
+			Transformation t = cdaToDataWarehouse.getTransformation(templateId);
+			if( t == null ){
+				throw new UnsupportedTemplateException(templateId);
+			}
+			return t.transformToEAV(document);
 		} catch (TransformerException | TransformerFactoryConfigurationError | IOException e) {
 			throw new CDAException("Transformation to EAV failed", e);
 		}

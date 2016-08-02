@@ -1,9 +1,7 @@
 package org.aktin.cda;
 
-import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
@@ -40,7 +38,7 @@ public class TestValidator {
 		};
 	
 	@Test
-	public void validateExampleDocuments() throws TransformerException, IOException, XPathExpressionException{
+	public void validateExampleDocuments() throws Exception{
 		Validator v = new Validator();
 		for( String example : v2ExampleDocuments ){
 			try( InputStream in = getClass().getResourceAsStream(example) ){
@@ -79,7 +77,7 @@ public class TestValidator {
 	}
 	
 	@Test
-	public void validateErrorsForOtherDocuments() throws TransformerConfigurationException, IOException{
+	public void validateErrorsForOtherDocuments() throws Exception{
 		Validator v = new Validator();
 		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
 		Assert.assertTrue(in.available() > 0);

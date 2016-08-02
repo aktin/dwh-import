@@ -91,13 +91,14 @@ public class Validator implements NamespaceContext{
 	 * @return validation result
 	 * @throws TransformerException if the transformation fails
 	 * @throws XPathExpressionException if the transformation result could not be processed with XPath expressions to find validation errors
+	 * @throws UnsupportedTemplateException given template id not supported
 	 */
-	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException{
+	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException, UnsupportedTemplateException{
 		//Result result = new StreamResult(System.out);
 		SingleTemplateValidator validator = templateValidators.get(templateId);
-		if( templateId == null ){
+		if( validator == null ){
 			// no validator for the specified template
-			throw new IllegalArgumentException("No validator for template id "+templateId);
+			throw new UnsupportedTemplateException(templateId);
 		}
 		Document svrlOut = validator.validate(cdaSource);
 		ValidationResult result = new ValidationResult(this, svrlOut);

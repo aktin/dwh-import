@@ -36,8 +36,10 @@ import org.aktin.cda.CDAStatus;
 import org.aktin.cda.CDAStatus.Status;
 import org.aktin.cda.CDASummary;
 import org.aktin.cda.ExternalInterface;
+import org.aktin.cda.UnsupportedTemplateException;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
+import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 import org.w3c.dom.Document;
 
 @Path("Binary")
@@ -103,6 +105,9 @@ public class Binary implements ExternalInterface{
 			Document cda = parser.buildDOM(doc);
 			String templateId = parser.extractTemplateId(cda);
 			String documentId = parser.extractDocumentId(cda);
+			// if not found, templateId or documentId contain empty string ""
+			// which will result in an UnsupportedTemplateException
+
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			synchronized( validator ){
 				vr = validator.validate(new DOMSource(cda), templateId);
@@ -140,6 +145,10 @@ public class Binary implements ExternalInterface{
 		} catch (TransformerException e) {
 			log.log(Level.FINE, "Transformation failed", e);
 			response = Response.status(Response.Status.UNSUPPORTED_MEDIA_TYPE);
+		} catch (UnsupportedTemplateException e) {
+			log.log(Level.WARNING, "Unsupported template", e);
+			response = Response.status(422);
+			outcome.addIssue(Severity.fatal, "Unsupported CDA template");
 		} catch (CDAException e) {
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
 			log.log(Level.WARNING, "Unable to import CDA", e);
@@ -157,6 +166,7 @@ public class Binary implements ExternalInterface{
 			return response.entity(outcomeToXML(outcome)).build();
 		} catch (XMLStreamException e) {
 			// internal error
+			log.log(Level.SEVERE, "Unable to produce outcome XML", e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}		
 	}

@@ -13,8 +13,9 @@ public interface CDAProcessor {
 	 * @param documentId document id, changes with new version of the document
 	 * @param templateId template id
 	 * @throws CDAException processing error
+	 * @throws UnsupportedTemplateException template not supported
 	 */
-	public CDAStatus createOrUpdate(Document document, String documentId, String templateId) throws CDAException;
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId) throws CDAException, UnsupportedTemplateException;
 	
 	public Path transform(Document cda, String templateId) throws CDAException;
 	/**
