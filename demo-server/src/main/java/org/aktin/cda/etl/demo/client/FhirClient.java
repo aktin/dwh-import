@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * FHIR client application. 
@@ -81,6 +82,7 @@ public class FhirClient {
 	 * @throws IOException any errors during HTTP transfer
 	 */
 	public static HttpURLConnection submitToFHIR(URL fhirUrl, InputStream document, String encoding) throws IOException{
+		Objects.requireNonNull(document, "null InputStream for document (e.g. resource not found)");
 		URL url = fhirUrl;
 		HttpURLConnection uc = (HttpURLConnection)url.openConnection();
 		uc.setDoInput(true);
