@@ -9,11 +9,11 @@ Das jeweils aktuelle Release der CDA-Spezifikation für das Notaufnahmeprotokoll
 
 HL7 FHIR REST Schnittstelle
 ------------------
-Die REST-Schnittstelle wird auf einem freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/fhir/Binary` zu erreichen.
+Die REST-Schnittstelle wird auf einem freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/cda/fhir/Binary` zu erreichen.
 Ein CDA-Dokument kann beispielsweise mit dem folgenden Befehl manuell an die Schnittstelle gesendet werden:
 
 ```
-curl -X POST http://localhost:<Port>/aktin/fhir/Binary -H "Content-Type: text/xml" --data-binary "@<CDA.xml>"
+curl -X POST http://localhost:<Port>/aktin/cda/fhir/Binary -H "Content-Type: text/xml" --data-binary "@<CDA.xml>"
 ```
 Weitere Informationen gibt es unter: [RESTful/HL7 FHIR](hl7-fhir.html)
 
