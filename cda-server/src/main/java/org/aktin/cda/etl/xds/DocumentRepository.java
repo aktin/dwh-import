@@ -18,6 +18,7 @@ import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ExternalInterface;
+import org.aktin.cda.UnsupportedTemplateException;
 import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
 
@@ -105,6 +106,9 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 		} catch (XPathExpressionException e) {
 			log.log(Level.WARNING, "Unexpected error during validation", e);
 			return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Internal error", e);
+		} catch( UnsupportedTemplateException e ){
+			log.log(Level.WARNING, "Unsupported template", e);
+			return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Template not supportedr", e);
 		}
 
 		RegistryResponseType resp = new RegistryResponseType();

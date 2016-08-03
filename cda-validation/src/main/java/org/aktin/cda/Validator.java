@@ -1,22 +1,22 @@
 package org.aktin.cda;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.URIResolver;
-import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -41,33 +41,18 @@ import org.w3c.dom.NodeList;
  *
  */
 @Singleton
-public class Validator implements URIResolver, NamespaceContext {
+public class Validator implements NamespaceContext{
 	private static final Logger log = Logger.getLogger(Validator.class.getName());
-	private TransformerFactory factory;
-	private URL svrlTransformation;
-	private static final String svrlSystemId = "urn:local:svrl";
-	private Transformer transformer;
-	
 	// XPaths to interpret the svrl result
 	private XPathFactory xfactory;
+	
 	private XPathExpression selectFailedAsserts;
+	private Map<String, SingleTemplateValidator> templateValidators;
 	
 	public Validator() throws IOException, TransformerConfigurationException{
-		factory = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
-		// resolve internal URIs
-		factory.setURIResolver(this);
 
 		log.getClass(); // prevent unused warnings
-		
-		svrlTransformation = getClass().getResource("/schematron_svrl/aktin-basism.xsl");
-		try( InputStream in = svrlTransformation.openStream() ){
-			StreamSource xsl = new StreamSource(in);
-			xsl.setSystemId(svrlSystemId);
-			transformer = factory.newTransformer(xsl);
-		}
-
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		
+		templateValidators = new HashMap<>();
 		// no need for Saxon??
 		xfactory = XPathFactory.newInstance();
 		try {
@@ -77,6 +62,14 @@ public class Validator implements URIResolver, NamespaceContext {
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
+
+		addTemplateValidator("1.2.276.0.76.10.1015", getClass().getResource("/schematron_svrl/aktin-basism.xsl"));
+		addTemplateValidator("1.2.276.0.76.10.1019", getClass().getResource("/schematron_svrl/aktin-basism20152b.xsl"));
+
+	}
+
+	private void addTemplateValidator(String templateId, URL svrlTransformation) throws TransformerConfigurationException, IOException{
+		templateValidators.put(templateId, new SingleTemplateValidator(svrlTransformation));
 	}
 	
 	/**
@@ -94,39 +87,27 @@ public class Validator implements URIResolver, NamespaceContext {
 	 * Validate a CDA document
 	 * 
 	 * @param cdaSource CDA document source to validate
+	 * @param templateId template id for the validation
 	 * @return validation result
 	 * @throws TransformerException if the transformation fails
 	 * @throws XPathExpressionException if the transformation result could not be processed with XPath expressions to find validation errors
+	 * @throws UnsupportedTemplateException given template id not supported
 	 */
-	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException{
+	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException, UnsupportedTemplateException{
 		//Result result = new StreamResult(System.out);
-		DOMResult dom = new DOMResult();
-		transformer.transform(cdaSource, dom);
-		ValidationResult result = new ValidationResult(this, (Document)dom.getNode());
+		SingleTemplateValidator validator = templateValidators.get(templateId);
+		if( validator == null ){
+			// no validator for the specified template
+			throw new UnsupportedTemplateException(templateId);
+		}
+		Document svrlOut = validator.validate(cdaSource);
+		ValidationResult result = new ValidationResult(this, svrlOut);
 		if( result.isValid() ){
 			log.info("Document validation: VALID");
 		}else{
 			log.info("Document validation: FAILED");			
 		}
 		return result;
-	}
-
-	/**
-	 * Resolves included URIs during transformation
-	 */
-	@Override
-	public Source resolve(String href, String base) throws TransformerException {
-		// TODO does this still work for recursive includes? e.g. a.xml includes a/b.xml includes b/c.xml 
-		if( base.equals(svrlSystemId) ){
-			try {
-				URL url = new URL(svrlTransformation, href);
-				return new StreamSource(url.openStream(), svrlSystemId);
-			} catch (IOException e) {
-				throw new TransformerException(e);
-			}
-		}else{
-			throw new TransformerException("Unable to resolve '"+href+"' under: "+base);
-		}
 	}
 
 	/**
@@ -157,4 +138,43 @@ public class Validator implements URIResolver, NamespaceContext {
 		// not needed
 		throw new UnsupportedOperationException();
 	}
+
+	/**
+	 * Validate CDA documents and print the result to STDOUT or STDERR on failure.
+	 * <p>
+	 * 	The exit code will indicate the number of failed documents (between 0 and 
+	 *  the number of command line arguments.
+	 * </p>
+	 * Call with {@code java -classpath "cda-validation/target/classes;histream-core/target/classes" org.aktin.cda.Validator filename [... more files]}
+	 * @param args file name arguments
+	 * @throws Exception error
+	 */
+	public static void main(String args[]) throws Exception{
+		// TODO use file name from commmand line
+		if( args.length != 1 ){
+			System.err.println("Please specify exactly one CDA file path");
+			return;
+		}
+		CDAParser parser = new CDAParser();
+		Validator v = new Validator();
+
+		int failure_count = 0;
+		for( String filename : args )
+		try( InputStream in = new FileInputStream(filename)){
+			Document dom = parser.buildDOM(new StreamSource(in));
+			
+			String templateId = parser.extractTemplateId(dom);
+			ValidationResult r = v.validate(new DOMSource(dom), templateId);
+			if( r.isValid() ){
+				System.out.println("Result for "+filename+": validation passed");
+			}else{
+				System.err.println("Result for "+filename+": validation failed");
+				r.forEachErrorMessage(System.err::println);
+				failure_count ++;
+			}
+		}
+
+		System.exit(failure_count);
+	}
+
 }

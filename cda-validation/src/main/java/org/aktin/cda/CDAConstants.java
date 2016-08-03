@@ -24,6 +24,12 @@ public class CDAConstants {
 	 * XPath to the template id within a CDA document
 	 */
 	public static final String XPATH_CDA_TEMPLATE_ID = "/cda:ClinicalDocument/cda:templateId/@root";
+	/**
+	 * XPath to the document id within a CDA document. 
+	 * This id should be globally unique for any two documents.
+	 * 
+	 */
+	public static final String XPATH_CDA_DOCUMENT_ID = "/cda:ClinicalDocument/cda:setId/@root";
 
 
 }

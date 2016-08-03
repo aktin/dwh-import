@@ -12,12 +12,13 @@ import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class TestXPathExpressions {
 	private static final String[] exampleDocuments = new String[]{
-			"/CDAexample/basismodul-beispiel-storyboard01.xml",
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml"
 	};
 	/*
 	@Test
@@ -59,12 +60,24 @@ public class TestXPathExpressions {
 			XPathFactory f = XPathFactory.newInstance();
 			XPath x = f.newXPath();
 			x.setNamespaceContext(CDAParser.namespaceContext);
-			String s = x.evaluate(CDAParser.ID_TREE_XPATHS[idx], cda);
-			System.out.println("Result1="+s);
-			s = x.compile(CDAParser.ID_TREE_XPATHS[idx]).evaluate(cda);
-			System.out.println("Result2="+s);	
+//			String s = x.evaluate(CDAParser.ID_TREE_XPATHS[idx], cda);
+//			System.out.println("Result1="+s);
+//			s = x.compile(CDAParser.ID_TREE_XPATHS[idx]).evaluate(cda);
+//			System.out.println("Result2="+s);	
 			//s = parser.extractIDs(cda)[idx];
 			//System.out.println("Result3="+s);				
+		}
+	}
+	@Test
+	public void extractDocumentIDs() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+		CDAParser parser = new CDAParser();
+		try( InputStream in = getClass().getResourceAsStream(exampleDocuments[0]) ){
+			Assert.assertTrue(in.available() > 0);
+			Document cda = parser.buildDOM(new StreamSource(in));
+			String docId = parser.extractDocumentId(cda);
+			String templateId = parser.extractTemplateId(cda);
+			System.out.println("TemplateId="+templateId);
+			System.out.println("DocumentId="+docId);
 		}
 	}
 }

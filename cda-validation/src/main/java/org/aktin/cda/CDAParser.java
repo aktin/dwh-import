@@ -1,9 +1,5 @@
 package org.aktin.cda;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
-import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -43,13 +39,14 @@ public class CDAParser {
 	 * Third the document version which changes with every submission of the same
 	 * document. This can also be a time stamp.
 	 */
-	public static final String[] ID_TREE_XPATHS = new String[]{
-	"/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension",//		"/ClinicalDocument/recordTarget/patientRole/id/@extension",
-	"/cda:ClinicalDocument/cda:setId/@extension",//		"/ClinicalDocument/setId@extension",
-	"/cda:ClinicalDocument/cda:versionNumber/@value",//		"/ClinicalDocument/versionNumber/@value",
-	};
-	
-	private XPathExpression[] idExpr;
+//	public static final String[] ID_TREE_XPATHS = new String[]{
+//	"/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension",//		"/ClinicalDocument/recordTarget/patientRole/id/@extension",
+//	"/cda:ClinicalDocument/cda:setId/@extension",//		"/ClinicalDocument/setId@extension",
+//	"/cda:ClinicalDocument/cda:versionNumber/@value",//		"/ClinicalDocument/versionNumber/@value",
+//	};
+//	
+//	private XPathExpression[] idExpr;
+
 	private Transformer domTransform;
 	private XPath xpath;
 	
@@ -58,14 +55,15 @@ public class CDAParser {
 		xpath = factory.newXPath();
 		xpath.setNamespaceContext(namespaceContext);
 
-		idExpr = new XPathExpression[ID_TREE_XPATHS.length];
-		try{
-			for( int i=0; i<ID_TREE_XPATHS.length; i++ ){
-				idExpr[i] = xpath.compile(ID_TREE_XPATHS[i]);
-			}
-		}catch( XPathExpressionException e ){
-			throw new RuntimeException(e);
-		}
+		
+//		idExpr = new XPathExpression[ID_TREE_XPATHS.length];
+//		try{
+//			for( int i=0; i<ID_TREE_XPATHS.length; i++ ){
+//				idExpr[i] = xpath.compile(ID_TREE_XPATHS[i]);
+//			}
+//		}catch( XPathExpressionException e ){
+//			throw new RuntimeException(e);
+//		}
 		try {
 			domTransform = TransformerFactory.newInstance().newTransformer();
 		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
@@ -74,24 +72,6 @@ public class CDAParser {
 	}
 	
 	public static final NamespaceContext namespaceContext = new NamespaceContextImpl();
-	
-	/**
-	 * Extract IDs from a CDA document. See {@link #ID_TREE_XPATHS}
-	 * @param cda CDA document
-	 * @return hierarchical IDs
-	 * @throws XPathExpressionException for XPath errors during ID extraction
-	 * @see #ID_TREE_XPATHS
-	 */
-	private final String[] extractIDs(Node cda) throws XPathExpressionException{
-		// extract IDs
-
-		String[] ids = new String[idExpr.length];
-		// TODO needs DOM or sax.InputSource. This does not work with other Source objects
-		for( int i=0; i<idExpr.length; i++ ){
-			ids[i] = idExpr[i].evaluate(cda);
-		}
-		return ids;
-	}
 
 	/**
 	 * Find the template id for a given CDA document
@@ -105,14 +85,16 @@ public class CDAParser {
 	}
 
 	/**
-	 * Find the document id for a given CDA document. The should be globally
-	 * unique for any different document.
+	 * Find the document id for a given CDA document. It should be globally
+	 * unique for any different document, but should be the same for an 
+	 * update/replacement of the same document.
+	 * 
 	 * @param cda CDA document
 	 * @return template id
 	 * @throws XPathExpressionException XPath error
 	 */
 	public String extractDocumentId(Document cda) throws XPathExpressionException{
-		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_TEMPLATE_ID);
+		XPathExpression xe = xpath.compile(CDAConstants.XPATH_CDA_DOCUMENT_ID);
 		return (String)xe.evaluate(cda.getDocumentElement(), XPathConstants.STRING);
 	}
 
