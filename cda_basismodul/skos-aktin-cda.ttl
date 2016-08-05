@@ -81,7 +81,8 @@
     skos:narrower :Allergy ;
 #Zeitpunkt Therapiebeginn
     skos:narrower :Isolation ;
-    skos:narrower :Eddiagnosis ;
+#    skos:narrower :Eddiagnosis ;
+    skos:narrower :ICD10GM;
     skos:narrower :MTS ;
     skos:narrower :ESI ;
 #Zeitpunkt Ersteinschaetzung
@@ -226,7 +227,7 @@
     dc:description "CEDIS Leitsymptom besteht bei Aufnahme seit [h]" ;
     
     dwh:restriction dwh:Integer ;
-    skos:notation	"AKTIN:Symptomdauer" .
+    skos:notation	"AKTIN:SYMPTOMDURATION" .
     
 
 :Clostridiumtetaniimmunization a skos:Concept ;
@@ -591,151 +592,10 @@
     skos:notation	"LOINC:72514-3" .  
 
 
-:Eddiagnosis a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Abschlussdiagnosen"@de ;
-    dc:description "Abschlussdiagnosen" ;
-
-    skos:narrower :ICD_KapI ;
-    skos:narrower :ICD_KapIX ;
-    skos:narrower :ICD_KapX ;
-    skos:narrower :ICD_KapXIV ;
-    skos:narrower :ICD_KapXVIII;
-    skos:narrower :ICD_KapXIX ;
-    skos:narrower :ICD_KapXX .
-
-:ICD_KapI a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Bestimmte infektioese und parasitaere Krankheiten"@de ;
-    dc:description "ICD Kapitel I" ;
-
-
-    skos:narrower :ICD_A08.1 ;
-    skos:narrower :ICD_A41.58 .
-
-
-:ICD_A08.1 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Akute Gastroenteritis durch Norovirus [Norwalk-Virus]"@de ;
-    skos:notation	"ICD10GM:A08.1". 
-
-:ICD_A41.58 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Sepsis durch sonstige gramnegative Erreger"@de ;
-    skos:notation	"ICD10GM:A41.58".
-
-  
-:ICD_KapIX a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Krankheiten des Kreislaufsystems"@de ;
-    dc:description "ICD Kapitel IX" ;
-
-    skos:narrower :ICD_I21 ;
-    skos:narrower :ICD_I26.9 ;
-    skos:narrower :ICD_I46.9 ;
-    skos:narrower :ICD_I61.9 .
-
-:ICD_I21 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Akuter Myokardinfarkt"@de ;
-    skos:notation	"ICD10GM:I21".
-
-:ICD_I26.9 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Lungenembolie ohne Angabe eines akuten Cor pulmonale"@de ;
-    skos:notation "ICD10GM:I26.9".
-
-:ICD_I46.9 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Herzstillstand, nicht naeher bezeichnet"@de ;
-    skos:notation "ICD10GM:I46.9".
-    
-:ICD_I61.9 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Intrazerebrale Blutung, nicht naeher bezeichnet"@de ;
-    skos:notation "ICD10GM:I61.9".
-
-
-
-:ICD_KapX a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Krankheiten des Atmungssystems"@de ;
-
-    skos:notation "ICD10GM:J18.1" . 
-
-:ICD_KapXIV a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Krankheiten des Urogenitalsystems"@de ;
-
-    skos:notation "ICD10GM:N40" . 
-
-
-:ICD_KapXVIII a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Symptome und abnorme klinische und Laborbefunde, die anderenorts nicht klassifiziert sind"@de ;
-    dc:description "ICD Kapitel XVIII" ;
-
-    skos:narrower :ICD_R33 ;
-    skos:narrower :ICD_R57 .
-
-:ICD_R33 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Harnverhaltung"@de ;
-    skos:notation "ICD10GM:ICD_R33".
-
-:ICD_R57 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Schock, anderenorts nicht klassifiziert"@de ;
-    skos:notation "ICD10GM:ICD_R57". 
-
-
-:ICD_KapXIX a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Verletzungen, Vergiftungen und bestimmte andere Folgen aeusserer Ursachen"@de ;
-    dc:description "ICD Kapitel XIX" ;
-
-    skos:narrower :ICD_S06.79 ;
-    skos:narrower :ICD_S22.40 ;
-    skos:narrower :ICD_S27.1 ;
-    skos:narrower :ICD_S93.4 ;
-    skos:narrower :ICD_S93.6 .
-
-
-:ICD_S06.79 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Bewusstlosigkeit bei Schaedel-Hirn-Trauma"@de ;
-    skos:notation "ICD10GM:S06.79!".
-
-:ICD_S22.40 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Rippenserienfraktur"@de ;
-    skos:notation "ICD10GM:S22.40". 
-
-:ICD_S27.1 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Traumatischer Haematothorax"@de ;
-    skos:notation "ICD10GM:S27.1".
-
-:ICD_S93.4 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Verstauchung und Zerrung des oberen Sprunggelenkes"@de ;
-    skos:notation "ICD10GM:S93.4".
-
-:ICD_S93.6 a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Folgen einer Zerquetschung oder einer traumatischen Amputation der unteren Extremitaet"@de ;
-    skos:notation "ICD10GM:S93.6".
-
-
-
-:ICD_KapXX a skos:Concept ;
-    skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Aeussere Ursachen von Morbiditaet und Mortalitaet"@de ;
-
-    skos:notation	"ICD10GM:V.99!" .  
-
-
-
+#:Eddiagnosis a skos:Concept ;
+#    skos:inScheme :EmergencyNote ;
+#    skos:prefLabel "Abschlussdiagnosen"@de ;
+#    dc:description "Abschlussdiagnosen" .
 
 :Ueberwachung a skos:Concept ;
     skos:prefLabel "AKTIN Ueberwachungsmodul"@de ;
