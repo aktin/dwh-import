@@ -1,15 +1,11 @@
 ﻿Schnittstellen
 ==============
 
-Installation
-------------
-Eine Installation ist nicht erforderlich. Das JAR-Paket kann mit dem Befehl `java -jar <Path/import-demo-XXX.jar>` gestartet werden.
-
-Das jeweils aktuelle Release der CDA-Spezifikation für das Notaufnahmeprotokoll und der dazugehörigen Schematron Regeln sind im JAR enthalten.
-
 HL7 FHIR REST Schnittstelle
 ------------------
-Die REST-Schnittstelle wird auf einem freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/cda/fhir/Binary` zu erreichen.
+Die REST-Schnittstelle des Demo-Servers wird auf einem freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/cda/fhir/Binary` zu erreichen.
+Die REST-Schnittstelle des AKTIN-DWH ist entsprechend ohne Port-Angabe unter der IP-Adresse bzw. dem Hostnamen des DWH-Servers zu erreichen.
+
 Ein CDA-Dokument kann beispielsweise mit dem folgenden Befehl manuell an die Schnittstelle gesendet werden:
 
 ```
@@ -19,20 +15,21 @@ Weitere Informationen gibt es unter: [RESTful/HL7 FHIR](hl7-fhir.html)
 
 IHE XDS.b SOAP Schnittstelle
 ----------------------------
-Die SOAP-Schnittstelle wird auf einem  freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/xds.b` zu erreichen.
+Die SOAP-Schnittstelle des Demo-Servers wird auf einem freien Port gestartet, der in der Logdatei ausgegeben wird und ist unter `http://localhost:<Port>/aktin/xds.b` zu erreichen.
+Die SOAP-Schnittstelle des AKTIN-DWH ist entsprechend ohne Port-Angabe unter der IP-Adresse bzw. dem Hostnamen des DWH-Servers zu erreichen.
 
 Weitere Informationen gibt es unter: [IHE XDS.b SOAP](xds.html)
 
 Rückgabewerte und Fehlermeldungen
 ---------------------------------
-Die Schnittstellen liefern einen Statuscode bzw. das Ergebnis der Schematron-Validierung zurück. Wenn die Schematron-Validierung keine Fehler zurückgibt, ist das gesendete CDA-Dokument von der Schnittstelle akzeptiert und kann ins Data Warehouse geladen werden.
+Die Schnittstellen liefern einen Statuscode bzw. das Ergebnis der Schematron-Validierung zurück. Wenn die Schematron-Validierung keine Fehler zurückgibt, ist das gesendete CDA-Dokument von der Schnittstelle akzeptiert und kann in das Data Warehouse geladen werden.
 Der tatsächliche Import entfällt bei der Demo-Schnittstelle.
 
 Details zu Rückgabewerten und Fehlermeldungen sind in den Abschnitten zu den beiden Schnittstellen dokumentiert.
 
-Demo-Schnittstelle
+Demo-Server Schnittstelle
 ------------------
-Die Demo-Schnittstelle ist nach außen identisch mit der späteren 
+Die Demo-Schnittstelle ist nach außen identisch mit der  
 Data Warehouse-Schnittstelle, die die CDA-Dokumente speichert. 
 Die Demo-Schnittstelle nimmt die CDA-Dokumente an, führt eine 
 Schematron-Validierung durch, gibt eine Rückmeldung und verwirft 
@@ -56,7 +53,7 @@ an das Data Warehouse zu übermitteln.
 
 Bereits übermittelte CDA-Dokumente können und sollen überschrieben 
 werden, wenn sich nachträglich Änderungen ergeben (vgl. Abschnitt 
-zur setID in der [Kurzanleitung CDA](cda-quickstart.html)). Es wird auch möglich sein über ein Webinterface importierte 
+zu den IDs in der [Kurzanleitung CDA](cda-quickstart.html)). Es wird auch möglich sein über ein Webinterface importierte 
 CDA-Dokumente zu sperren bzw. zu löschen um ein Opt-Out zu realisieren.
 
 Eine mögliche Strategie für die CDA-Erzeugung wäre es z. B. einmal 
