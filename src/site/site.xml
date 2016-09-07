@@ -5,17 +5,19 @@
 		<version>1.4</version>
 	</skin>
 	<body>
-		<menu name="Installation">
+		<menu name="AKTIN Installation">
 			<item href="install-requirements.html" name="Voraussetzungen" />
 			<item href="install-script.html" name="Installationsskript" />
 			<item href="install-firewall.html" name="Firewall" />
 		</menu>
+        <menu name="Demo Server">
+            <item href="demo-server.html" name="Demo Server" />
+		</menu>
 		<menu name="Dokumentation">
 			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
-			<item href="Schnittstellen.html" name="Schnittstellen" />
+			<item href="Schnittstellen.html" name="Import Schnittstellen" />
 			<item href="hl7-fhir.html" name="RESTful/HL7 FHIR" />
-			<item href="xds.html" name="IHE XDS.b SOAP" />
-			<item href="demo-server.html" name="Demo Server" />
+			<item href="xds.html" name="IHE XDS.b SOAP" />			
 			<item href="changelog.html" name="Changelog" />
 			<item href="support.html" name="Support"/>
 		</menu>

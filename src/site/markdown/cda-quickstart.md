@@ -3,6 +3,7 @@
 
 Datensatz Basismodul
 --------------------
+
 Der Datensatz für das Basismodul ist auf der Seite 
 http://aktin.art-decor.org im aktuellen Release (HTML) 
 unter dem Bereich Datensatz einzusehen. 
@@ -30,24 +31,27 @@ gerne weiter.
 
 CDA Verwaltungsinformationen, Constraints und Datenschutz
 ---------------------------------------------------------
+
+Im Basismodul-CDA gibt es drei IDs, die zwingend korrekt gesetzt werden müssen:
+* EncounterID
+* PatientID
+* SetID
+
 Als Identifier für eine Episode (hier definiert als ein Patientenkontakt, 
 für den ein neues Notaufnahmeprotokoll angelegt werden soll) wird das Element 
-`/ClinicalDocument/setId` verwendet. 
+`/ClinicalDocument/componentOf/encompassingEncounter/id` verwendet. 
 `@root` und `@extension` müssen also gleich bleiben, falls ein CDA-Dokument 
-nachträglich geändert werden soll. 
+nachträglich geändert werden soll. Wenn der Patient erneut die Notaufnahme aufsucht, muss eine andere ID vergeben werden. 
 
-Theoretisch wäre dann das `/ClinicalDocument/versionNumber` zu erhöhen 
-– die Schnittstelle beachtet dies aber nicht, sondern überschreibt Dokumente 
-mit gleicher `setId` (s. o.) und legt ein neues Dokument ab, wenn die `setId` 
-sich unterscheidet. 
-
-Das Quelldatensystem bzw. der Importer muss also sicherstellen, dass die `setId` 
+Das Quelldatensystem bzw. der Importer muss also sicherstellen, dass die `EncounterID` 
 entsprechend eindeutig ist und bei inhaltlichen Änderungen eines Patientenkontakts 
-unverändert bleibt. 
-
-Die `setId` ist nicht unbedingt gleichzusetzen mit einer Fallnummer oder 
+unverändert bleibt. Dies ist nicht unbedingt gleichzusetzen mit einer Fallnummer oder 
 Abrechnungsnummer, da je nach lokaler Umsetzung im KIS mehrere 
-Notaufnahme-Formulare einem Fall zugeordnet werden könnten.
+Notaufnahme-Formulare einem Fall zugeordnet werden könnten. Je nachdem wie das KIS bzw. die Prozesse strukturiert sind (auch bzgl. nachträglicher Änderungen) sind die IDs entsprechend der beschriebenen Anforderungen zu wählen oder ggf. zu generieren.
+
+Das CDA hat eine `/ClinicalDocument/setId`, die das Dokument eindeutig identifiziert. Für den Import spielt diese ID keine Rolle, aber sie sollte CDA-konform gewählt werden. Beispielsweise könnte man in der root das Basismodul-CDA referenzieren und als extension die eindeutige EncounterID verwenden. Theoretisch wäre bei einer Änderung auch `/ClinicalDocument/versionNumber` zu erhöhen 
+– die Schnittstelle beachtet dies aber nicht, sondern überschreibt Informationen 
+mit gleicher `EncounterID` (s. o.) und gleicher `PatientID`.
 
 Als Identifier für den Patienten dient im Basismodul-CDA das Element 
 `/ClinicalDocument/recordTarget/patientRole/id`. 
@@ -59,14 +63,11 @@ Vgl. dazu das AKTIN-Datenschutzkonzept.
 
 Eine Vorverarbeitung/Pseudonymisierung im Quell-System ist nicht notwendig, 
 da beim Import die Patienten-IDs mit einem Einweg-Hash verschlüsselt werden 
-und somit keine Rück-Zuordnung zu identifizierenden Daten möglich ist. 
+und somit keine Rück-Zuordnung zu identifizierenden Daten möglich ist, sondern lediglich ein anonymes Mapping zwischen Episoden des gleichen Patienten.
 
 Im AKTIN Data Warehouse werden keine direkt identifizierenden Daten gespeichert 
-(vgl. Datenschutzkonzept). Diese Daten können bei der CDA-Erzeugung 
-im Quell-System bereits weggelassen oder durch Dummy-Einträge ersetzt werden. 
-
-Im Sinne eines korrekten CDA-Dokuments ist es aber auch möglich CDAs mit 
-identifizierenden Daten zu senden. Die identifizierenden Daten werden von 
+(vgl. Datenschutzkonzept). Diese Daten könnten bei der CDA-Erzeugung 
+im Quell-System bereits weggelassen oder durch Dummy-Einträge ersetzt werden.  Im Sinne eines korrekten CDA-Dokuments ist es aber besser vollständige CDAs mit identifizierenden Daten zu senden. Die identifizierenden Daten werden von 
 der krankenhausinternen AKTIN-Schnittstelle nicht verarbeitet oder gespeichert.
 
 Fehlende Information, Null Flavors und Dummy-Einträge
