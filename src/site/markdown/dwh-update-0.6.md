@@ -1,20 +1,25 @@
 Update des lokalen DWH von 0.5 auf 0.6
 ======================================
 
+Voraussetzung für die Einrichtung des E-Mail Dienstes
+-----------------------------------------------------
+Das AKTIN-DWH verwendet keinen eigenen Mail-Server. Voraussetzung ist also ein Mail-Server, der (ggf. im Intranet) vom AKTIN-Server erreichbar ist und eine E-Mail-Adresse, die der Server verwenden kann um per SMTP Informations-Mails zu versenden. Sinnvoll wäre dazu eine dedizierte AKTIN-Service-Adresse einzurichten.
+
+
 Skriptbasiertes Update für Debian
 ---------------------------------
-Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download. Das Packet auf dem Server entpacken und mit Admin-Rechten den Skript `aktin_dwh_update_0.6.sh` ausführen. 
+Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download. Das Paket auf dem Server entpacken und mit Admin-Rechten den Skript `aktin_dwh_update_0.6.sh` ausführen. 
 ```
 sudo aktin_dwh_update_0.6.sh
 ```
-Man kann die Parameter in der Datei `local_smtp_settings.conf` vor der Ausführung des Skriptes anpassen, oder während der Ausführung die benötigte Daten angeben. Sollten keine Eingaben während der Ausführung erwünscht sein, kann dem Skript den Parameter `-y` übergeben werden. ( `sudo aktin_dwh_update_0.6.sh -y` )
+Man kann die E-Mail-Parameter in der Datei `local_smtp_settings.conf` vor der Ausführung des Skriptes anpassen, oder während der Ausführung die benötigte Daten angeben. Sollten keine Eingaben während der Ausführung erwünscht sein, kann dem Skript den Parameter `-y` übergeben werden. ( `sudo aktin_dwh_update_0.6.sh -y` )
 
 
 Manuelles Update für Debian, CentOS oder andere Betriebssysteme
 ---------------------------------------------------------------
-Als aller erstes muss die neue Softwaredatei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter (@@LINKPACKETE@@). 
+Zuerst muss die neue Softwaredatei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter (@@LINKPAKETE@@). 
 
-Dann muss die alte Version aus dem Wildfly Service entfernt werden. Diese kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`
+Dann muss die alte Version aus dem Wildfly Service entfernt werden. Dies kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`
 ```
 if [ -f "$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear" ] && [ ! -f "$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed" ]; then 
 	$WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.5-SNAPSHOT.ear"
@@ -54,4 +59,4 @@ Für das Zurücksetzen der Postgres-Datenbank kann man folgende Befehle in der p
 TRUNCATE i2b2crcdata.observation_fact, i2b2crcdata.patient_dimension, i2b2crcdata.patient_mapping, i2b2crcdata.encounter_mapping;
 ```
 
-Damit wäre der DWH bereit, neue Daten zu empfangen.
+Damit ist das DWH bereit, neue Daten zu empfangen.
