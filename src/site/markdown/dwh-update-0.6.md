@@ -48,7 +48,7 @@ smtpbind="aktin-smtp-binding"
 $WILDFLY_HOME/bin/jboss-cli.sh -c "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=$smtpbind:add(host=$smtphost, port=$smtpport)"
 $WILDFLY_HOME/bin/jboss-cli.sh -c "/subsystem=mail/mail-session=$sessionname:add(jndi-name=$jndiname)"
 $WILDFLY_HOME/bin/jboss-cli.sh -c "/subsystem=mail/mail-session=$sessionname/server=smtp:add(outbound-socket-binding-ref=$smtpbind, username=$smtpuser, password=$smtppass, ssl=$usessl)"
-$WILDFLY_HOME/bin/jboss-cli.sh -c "reload"
+$WILDFLY_HOME/bin/jboss-cli.sh -c ":reload"
 ```
 Beim Aufruf von dem letzten Befehl kann es zu einer Fehlermeldung kommen, dass der Server / Service nicht erreichbar ist. Diese Meldung ist normal, da Wildfly in diesem Moment neugestartet wird. Nach einiger Zeit sollten die Funktionen wieder wie gewohnt aufrufbar sein. 
 
