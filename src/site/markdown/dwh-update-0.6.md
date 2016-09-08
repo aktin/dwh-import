@@ -8,7 +8,7 @@ Das AKTIN-DWH verwendet keinen eigenen Mail-Server. Voraussetzung ist also ein M
 
 Skriptbasiertes Update für Debian
 ---------------------------------
-Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download. Das Paket auf dem Server entpacken und mit Admin-Rechten den Skript `aktin_dwh_update_0.6.sh` ausführen. 
+Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download). Das Paket auf dem Server entpacken und mit Admin-Rechten den Skript `aktin_dwh_update_0.6.sh` ausführen. 
 
 ```
 sudo aktin_dwh_update_0.6.sh
@@ -19,7 +19,7 @@ Man kann die E-Mail-Parameter in der Datei `local_smtp_settings.conf` vor der Au
 Manuelles Update für Debian, CentOS oder andere Betriebssysteme
 ---------------------------------------------------------------
 ### Löschen der alten Software
-Zuerst muss die neue Softwaredatei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter (@@LINKPAKETE@@). 
+Zuerst muss die neue Softwaredatei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [Neue EAR Release](https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download). 
 
 Dann muss die alte Version aus dem Wildfly Service entfernt werden. Dies kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`
 
