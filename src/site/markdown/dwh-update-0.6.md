@@ -1,20 +1,16 @@
 Update des lokalen DWH von 0.5 auf 0.6
 ======================================
 
-Voraussetzung für die Einrichtung des E-Mail Dienstes
------------------------------------------------------
-Das AKTIN-DWH verwendet keinen eigenen Mail-Server. Voraussetzung ist also ein Mail-Server, der (ggf. im Intranet) vom AKTIN-Server erreichbar ist und eine E-Mail-Adresse, die der Server verwenden kann um per SMTP Informations-Mails zu versenden. Sinnvoll wäre dazu eine dedizierte AKTIN-Service-Adresse einzurichten.
-
-
 Skriptbasiertes Update für Debian
 ---------------------------------
-Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download). Das Paket auf dem Server entpacken und mit Admin-Rechten den Skript `aktin_dwh_update_0.6.sh` ausführen. 
+Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download). Das Paket auf dem Server entpacken und mit Admin-Rechten das Skript `aktin_dwh_update_0.6.sh` ausführen. 
 
 ```
-sudo aktin_dwh_update_0.6.sh
+wget https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download -O dwh-update.zip
+unzip dwh-update.zip
+cd dwh-update
+sudo ./aktin_dwh_update_0.6.sh
 ```
-Man kann die E-Mail-Parameter in der Datei `local_smtp_settings.conf` vor der Ausführung des Skriptes anpassen, oder während der Ausführung die benötigte Daten angeben. Sollten keine Eingaben während der Ausführung erwünscht sein, kann dem Skript den Parameter `-y` übergeben werden. ( `sudo aktin_dwh_update_0.6.sh -y` )
-
 
 Manuelles Update für Debian, CentOS oder andere Betriebssysteme
 ---------------------------------------------------------------
@@ -56,6 +52,10 @@ Damit ist das DWH bereit, neue Daten zu empfangen.
 
 Als Vorbereitung für spätere Funktionen kann man bereits die SMTP EMail Funktion einrichten. Dazu benötigt man eine (in Intranetz verfügbare) Email.
 
+### Voraussetzung für die Einrichtung des E-Mail Dienstes
+
+Das AKTIN-DWH verwendet keinen eigenen Mail-Server. Voraussetzung ist also ein Mail-Server, der (ggf. im Intranet) vom AKTIN-Server erreichbar ist und eine E-Mail-Adresse, die der Server verwenden kann um per SMTP Informations-Mails zu versenden. Sinnvoll wäre dazu eine dedizierte AKTIN-Service-Adresse einzurichten.
+
 Um SMTP einzurichten, sollte man die folgenden Befehlen in der Konsole eingeben, wobei `$WILDFLY_HOME` wieder auf den Wildfly Ordner verlinkt und in den Variablen `smtphost`, `smtpport`, `smtpuser`, `smtppass` sollten die Einstellungen eingetragen werden. 
 
 ```
@@ -75,4 +75,3 @@ $WILDFLY_HOME/bin/jboss-cli.sh -c "/subsystem=mail/mail-session=$sessionname/ser
 $WILDFLY_HOME/bin/jboss-cli.sh -c ":reload"
 ```
 Mit der letzten Zeile werden alle Wildfly Dienster herunter gefahren und neugestartet. Nach einiger Zeit sind die Funktionen wieder wie gewohnt aufrufbar sein. 
-
