@@ -69,6 +69,15 @@
     
     <!-- Concept Code Prefix for Transportmethod Codes -->
     <xsl:variable name="Transport-Prefix">AKTIN:TRANSPORT:</xsl:variable> 
+    
+    <!-- Prefix for Target Site Modifiers -->
+    <xsl:variable name="TargetSite-Prefix">AKTIN:TSITE:</xsl:variable> 
+    
+    <!-- Prefix for Diagnosis Modifiers -->
+    <xsl:variable name="Diagnosis-Prefix">AKTIN:DIAG:</xsl:variable> 
+    
+    <!-- Prefix for Diagnostic Result Modifiers -->
+    <xsl:variable name="Diagnostic-Prefix">AKTIN:RESULT:</xsl:variable> 
    
 <!-- MAIN Template -->   
 
@@ -481,7 +490,7 @@
             <xsl:call-template name="templateGetConceptValue"/>                    
             <modifier>
                 <xsl:attribute name="code">
-                    <xsl:value-of select="../cda:targetSiteCode/@code"/>
+                    <xsl:value-of select="$TargetSite-Prefix"/><xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
             </modifier> 
         </fact>
@@ -494,7 +503,7 @@
             <xsl:call-template name="templateGetConceptValue"/>      
             <modifier>
                 <xsl:attribute name="code">
-                    <xsl:value-of select="../cda:targetSiteCode/@code"/>
+                    <xsl:value-of select="$TargetSite-Prefix"/><xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
             </modifier>    
         </fact>
@@ -722,11 +731,16 @@
                         </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='8'][../cda:name/@codeSystem='2.16.840.1.113883.3.7.1.0']/@code">
+                <xsl:if test="../cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code">
                     <modifier>
                         <xsl:attribute name="code">
-                            <xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='8'][../cda:name/@codeSystem='2.16.840.1.113883.3.7.1.0']/@code"/>
+                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code"/>
                         </xsl:attribute>
+                    </modifier>
+                </xsl:if>
+                <xsl:if test="../../cda:sequenceNumber/@value='1'">
+                    <modifier>
+                        <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>F</xsl:attribute>
                     </modifier>
                 </xsl:if>
                 <xsl:if test="../cda:value/cda:originalText">
@@ -771,23 +785,17 @@
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4073']">     
             <xsl:if test="../cda:value/@code">        
                 <fact>
-                    <xsl:choose>
-                        <xsl:when test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@code">      
-                            <xsl:choose>
-                                <xsl:when test="../@negationInd">
-                                    <xsl:attribute name="concept"><xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@code"/>:<xsl:value-of select="../cda:value/@code"/>:NEG</xsl:attribute>  
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:attribute name="concept"><xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@code"/>:<xsl:value-of select="../cda:value/@code"/></xsl:attribute>  
-                                </xsl:otherwise>
-                            </xsl:choose>           
-                        </xsl:when>               
-                        <xsl:when test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@nullFlavor"> 
-                            <xsl:attribute name="concept">
-                                <xsl:value-of select="$Pathogen-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='URAG']/@nullFlavor"/>:<xsl:value-of select="../cda:value/@code"/>
-                            </xsl:attribute>             
-                        </xsl:when>
-                    </xsl:choose>
+                    <xsl:attribute name="concept">
+                        <xsl:value-of select="$Pathogen-Prefix"/>
+                        <xsl:choose>
+                            <xsl:when test="../cda:value/@code">      
+                                <xsl:value-of select="../cda:value/@code"/><xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']">:<xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']/@code"/></xsl:if><xsl:if test="../@negationInd">:NEG</xsl:if>       
+                            </xsl:when>               
+                            <xsl:when test="../cda:value/@nullFlavor"> 
+                                <xsl:value-of select="../cda:value/@nullFlavor"/>:<xsl:value-of select="../cda:value/@code"/><xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']">:<xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']/@code"/></xsl:if>
+                            </xsl:when>
+                        </xsl:choose>                        
+                    </xsl:attribute>
     
                     <xsl:if test="../cda:effectiveTime/cda:low/@value">
                         <xsl:attribute name="start">
@@ -923,10 +931,10 @@
                     <xsl:attribute name="code">
                         <xsl:choose>
                             <xsl:when test="../cda:value/@code">
-                                <xsl:value-of select="../cda:value/@code"/>
+                                <xsl:value-of select="$Diagnostic-Prefix"/><xsl:value-of select="../cda:value/@code"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="../cda:value/@nullFlavor"/>
+                                <xsl:value-of select="$Diagnostic-Prefix"/><xsl:value-of select="../cda:value/@nullFlavor"/>
                             </xsl:otherwise>
                         </xsl:choose>                                
                     </xsl:attribute>

@@ -27,7 +27,7 @@
     
 -->
 <?xml-model href="../../../../../src/main/resources/schematron/aktin-basism20152b.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../../../../../cda_basismodul/CDA.xsd">
     <!--
         CDA Header
     -->
@@ -410,7 +410,7 @@
                                 <low value="20150304"/>
                             </effectiveTime>
                             <entryRelationship typeCode="SUBJ">
-                                 <observation classCode="OBS" moodCode="EVN">
+                                <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4073"/>
                                     <id root="1.2.276.0.76.4.17.9814184919" extension="3564b7c0-2111-43f2-a784-9a5fdfaa67f2"/>
                                      <code code="COND" codeSystem="2.16.840.1.113883.5.4" displayName="Condition"/>
@@ -421,17 +421,8 @@
                                     <effectiveTime>
                                         <low value="20150304"/>
                                     </effectiveTime>
-                                     <value xsi:type="CD" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund">
-                                         <qualifier>
-                                             <name code="IBB" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="in Bezug auf Befund"/>
-                                             <value code="BACP" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Bakterienbesiedelung"/>
-                                         </qualifier>
-                                         <qualifier>
-                                             <name code="URAG" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Auslösendes Agenz"/>
-                                             <value code="MRSA" codeSystem="1.2.276.0.76.5.441" displayName="MRSA"/>
-                                         </qualifier>
-                                     </value>
-                                 </observation>
+                                     <value xsi:type="CD" code="MRSA" codeSystem="1.2.276.0.76.5.441" displayName="MRSA"/>
+                                  </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN">
@@ -445,14 +436,10 @@
                                     <effectiveTime>
                                         <low value="20150304"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="SUSP" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="Verdacht">
+                                    <value xsi:type="CD" code="4MRGN" codeSystem="1.2.276.0.76.5.441" displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind">
                                         <qualifier>
-                                            <name code="IBB" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="in Bezug auf Befund"/>
-                                            <value code="BACP" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Bakterienbesiedelung"/>
-                                        </qualifier>  
-                                        <qualifier>
-                                            <name code="URAG" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Auslösendes Agenz"/>
-                                            <value code="4MRGN" codeSystem="1.2.276.0.76.5.441" displayName="gramnegative Stäbchen, die gegen alle vier Gruppen resistent sind"/>
+                                            <name code="FSTAT" codeSystem="1.2.276.0.76.3.1.195.5.72" displayName="Befundstatus"/>
+                                            <value code="SUSP" codeSystem="1.2.276.0.76.3.1.195.5.73" displayName="Verdacht"/>
                                         </qualifier>
                                     </value>
                                 </observation>
@@ -1037,7 +1024,12 @@
                                         <low value="201501171556"/>
                                         <high value="201501171557"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="F55.2" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Schädlicher Gebrauch von nichtabhängigkeitserzeugenden Substanzen: Analgetika"/>
+                                    <value xsi:type="CD" code="F55.2" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Schädlicher Gebrauch von nichtabhängigkeitserzeugenden Substanzen: Analgetika">
+                                        <qualifier>
+                                            <name code="8" codeSystem="2.16.840.1.113883.3.7.1.0"/>
+                                            <value code="A" codeSystem="1.2.276.0.76.3.1.1.5.1.21"/>
+                                        </qualifier>
+                                    </value>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
