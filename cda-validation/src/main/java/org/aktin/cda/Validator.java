@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
  * Perform CDA validation according to SCHEMATRON rules.
  * <p>
  * This implementation is probably not thread-safe: A single {@link Transformer} 
- * instance is used for all calls to {@link #validate(Source)}.
+ * instance is used for all calls to {@link #validate(Source, String)} with the same template id.
  * <p>
  * This class can be used for dependency injection via CDI. In this case
  * this class behaves as a singleton, so only one instance of the class
@@ -47,6 +47,8 @@ public class Validator implements NamespaceContext{
 	private XPathFactory xfactory;
 	
 	private XPathExpression selectFailedAsserts;
+	// TODO warnings are same as asserts with a different attribute
+	private XPathExpression selectWarnings;
 	private Map<String, SingleTemplateValidator> templateValidators;
 	
 	public Validator() throws IOException, TransformerConfigurationException{
@@ -58,7 +60,10 @@ public class Validator implements NamespaceContext{
 		try {
 			XPath xpath = xfactory.newXPath();
 			xpath.setNamespaceContext(this);
-			selectFailedAsserts = xpath.compile("/svrl:schematron-output/svrl:failed-assert");
+			// errors
+			selectFailedAsserts = xpath.compile("/svrl:schematron-output/svrl:failed-assert[@role='error']");
+			// warnings TODO scan and output warnings
+			selectWarnings = xpath.compile("/svrl:schematron-output/svrl:failed-assert[@role='warning']");
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
