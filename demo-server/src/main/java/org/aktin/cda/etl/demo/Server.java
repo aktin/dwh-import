@@ -50,6 +50,7 @@ public class Server{
 	
 	/**
 	 * Construct the local server
+	 * @param port local port to bind to
 	 * @throws IOException IO error
 	 */
 	public Server(int port) throws IOException{

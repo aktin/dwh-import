@@ -49,7 +49,7 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 	 * 
 	 * @param strings input
 	 * @return string hash
-	 * @throws DigestException 
+	 * @throws DigestException error calculating message digest 
 	 */
 	public String calculateHash(String ...strings) throws DigestException{
 		MessageDigest digest;
@@ -73,7 +73,7 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 
 	/**
 	 * Implements a call to the hash function with variable arguments.
-	 * For the algorithm, see {@link OneWayHashFunction#calculateHash(String...)
+	 * For the algorithm, see {@link OneWayHashFunction#calculateHash(String...)}
 	 *
 	 * @author R.W.Majeed
 	 *

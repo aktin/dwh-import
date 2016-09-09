@@ -36,7 +36,7 @@ public class Transformation {
 	 * @param templateId template id
 	 * @param xslt XSLT document
 	 * @throws TransformerFactoryConfigurationError if the transformer factory failed to initialize
-	 * @throws TransformerConfigurationException 
+	 * @throws TransformerConfigurationException  transformer setup error
 	 */
 	public Transformation(String moduleId, String templateId, Document xslt)throws TransformerFactoryConfigurationError, TransformerConfigurationException{
 		this.moduleId = moduleId;
