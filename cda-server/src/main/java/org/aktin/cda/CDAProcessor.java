@@ -12,6 +12,7 @@ public interface CDAProcessor {
 	 * @param document CDA DOM document
 	 * @param documentId document id, changes with new version of the document
 	 * @param templateId template id
+	 * @return status
 	 * @throws CDAException processing error
 	 * @throws UnsupportedTemplateException template not supported
 	 */
@@ -23,7 +24,7 @@ public interface CDAProcessor {
 	 * 
 	 * @param documentId document id
 	 * @throws DocumentNotFoundException if there is no ID assigned to 
-	 * @throws CDAException
+	 * @throws CDAException error
 	 */
 	public void delete(String documentId)throws DocumentNotFoundException, CDAException;
 	

@@ -41,6 +41,7 @@ public class SearchBundle {
 	 * Creates a search bundle containing a single element
 	 * @param single element
 	 * @param idToUri mapping
+	 * @return search bundle
 	 */
 	public static SearchBundle single(CDASummary single, Function<String,URI> idToUri){
 		return new SearchBundle(Collections.singleton(single), idToUri);
