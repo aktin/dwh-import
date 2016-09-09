@@ -1,8 +1,8 @@
 ﻿Java Demo Server Anwendung
 --------------------------
 
-Die Demo Server Anwendung kann verwendet werden um
-die AKTIN CDA-Schnittstellen zu testen.
+Die Demo Server Anwendung stellt nur die Import-Schnittstellen bereit und kann verwendet werden um
+die Gültigkeit von CDA-Dokumenten bei der Entwicklung zu testen oder für einen Schnittstellen-Test mit dem Notaufnahme-System.
 
 Die aktuelle Version der Softwarepakete ist ${latestReleaseVersion}.
 

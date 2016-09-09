@@ -5,13 +5,14 @@
 		<version>1.5</version>
 	</skin>
 	<body>
-		<menu name="AKTIN Installation">
+		<menu name="AKTIN (Neu-)Installation">
 			<item href="install-requirements.html" name="Voraussetzungen" />
 			<item href="install-script.html" name="Installationsskript" />
 			<item href="install-firewall.html" name="Firewall" />
 		</menu>
-        <menu name="Demo Server">
-            <item href="demo-server.html" name="Demo Server" />
+        <menu name="AKTIN Update 0.5 nach 0.6">
+            <item href="dwh-update-0.6.html" name="AKTIN Server Update" />
+            <item href="CDA-Release-v1.21.html" name="CDA Änderungen" />
 		</menu>
 		<menu name="Dokumentation">
 			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
@@ -19,7 +20,11 @@
 			<item href="hl7-fhir.html" name="RESTful/HL7 FHIR" />
 			<item href="xds.html" name="IHE XDS.b SOAP" />			
 			<item href="changelog.html" name="Changelog" />
+			<item href="roadmap.html" name="Roadmap" />
 			<item href="support.html" name="Support"/>
+		</menu>
+        <menu name="Demo Server">
+            <item href="demo-server.html" name="Demo Server" />
 		</menu>
 		<menu ref="reports" inherit="top" />
 		<!--
