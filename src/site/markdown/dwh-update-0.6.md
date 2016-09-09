@@ -1,6 +1,8 @@
 Update des lokalen DWH von 0.5 auf 0.6
 ======================================
 
+Diese Informationen richten sich an die Server-Administratoren, die für die Einrichtung bzw. Wartung der Linux-Server in den Kliniken zuständig sind, auf denen das AKTIN-Datawarehouse läuft.
+
 Skriptbasiertes Update für Debian
 ---------------------------------
 Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download). Das Paket auf dem Server entpacken und mit Admin-Rechten das Skript `aktin_dwh_update_0.6.sh` ausführen. 

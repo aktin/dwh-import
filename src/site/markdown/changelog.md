@@ -3,7 +3,7 @@
 
 Version 0.6
 -----------
-* Aktualisierung auf CDA version v1.21 (2015-08-04)
+* Aktualisierung auf CDA Version v1.21 (2015-08-04)
 * Änderungen bzgl. des Umgangs mit Episoden-IDs (vgl. Releasenotes)
 
 Version 0.5
