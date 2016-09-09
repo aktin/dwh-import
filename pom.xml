@@ -34,6 +34,7 @@
 		<module>cda-validation</module>
 		<module>cda-server</module>
 		<module>cda-import</module>
+		<module>cda-ontology</module>
 		<module>demo-server</module>
 		<module>demo-distribution</module>
 		<module>dwh-j2ee</module>
