@@ -3,17 +3,19 @@ Update des lokalen DWH von 0.5 auf 0.6
 
 Diese Informationen richten sich an die Server-Administratoren, die für die Einrichtung bzw. Wartung der Linux-Server in den Kliniken zuständig sind, auf denen das AKTIN-Datawarehouse läuft.
 
+Falls Sie einen Debian-Server nutzen, der anhand der Anleitung eingerichtet wurde, sollte das Update-Script bei Ihnen funktionieren. Bei individuell konfigurierten Servern oder anderen Linux-Distributionen führen Sie die einzelnen Schritte des Scripts bitte manuell durch und passen Sie ggf. die Pfade oder andere Besonderheiten entsprechend an.
+
 Skriptbasiertes Update für Debian
 ---------------------------------
-Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download). Das Paket auf dem Server entpacken und mit Admin-Rechten das Skript `aktin_dwh_update_0.6.sh` ausführen. 
+Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download). Step-by-Step Anleitung zur Ausführung:
 
 ```
 wget https://cloudstorage.uni-oldenburg.de/index.php/s/NJTO2c65JrPWJV8/download -O dwh-update.zip
 unzip dwh-update.zip
 cd dwh-update
+chmod +x aktin_dwh_update_0.6.sh
 sudo ./aktin_dwh_update_0.6.sh
 ```
-Eventuell muss man bei der Skriptdatei die Userrechte anpassen, z.B. mit `chmod +x aktin_dwh_update_0.6.sh`.
 
 Manuelles Update für Debian, CentOS oder andere Betriebssysteme
 ---------------------------------------------------------------
@@ -28,9 +30,9 @@ else
     echo "Undeployment und SQL Skript übersprungen, da keine alte Version gefunden oder bereits undeployed"
 fi
 ```
-Nach dem Undeploy können Sie die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear` und `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` löschen. Das Löschen hat keine Auswirkung.
+Nach dem Undeploy können Sie die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear` und `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` (in dieser Reihefolge) löschen. Das Löschen hat keine Auswirkung.
 ### Einbinden der neuen Software
-Zuerst muss die neue Softwaredatei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [Neue EAR Release](https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download). 
+Zuerst muss die neue EAR-Datei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [EAR Release 0.6](https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download). 
 
 ```
 wget https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download -O dwh-j2ee-0.6-SNAPSHOT.ear
@@ -45,20 +47,20 @@ else
     echo "Die Datei wurde nicht kopiert."
 fi
 ```
-Es ist bereits die EAR Datei im Deploymentverzeichnis vorhanden. Wenn Sie die Datei neuladen möchten, führen Sie bitte ein Undeploy durch 
+Die EAR-Datei ist bereits im Deploymentverzeichnis vorhanden. Wenn Sie die Datei neu laden möchten, führen Sie bitte ein Undeploy durch 
 
 ```
 $WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.6-SNAPSHOT.ear
 ```
-und löschen anschließend die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear` sowie `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear.undeployed`, wobei unbedingt beide Dateien gelöscht werden müssen.
+und löschen anschließend die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear` sowie `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear.undeployed`, wobei unbedingt beide Dateien (in dieser Reihefolge) gelöscht werden müssen.
 
 ```
 sudo rm $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear.undeployed
 ```
-Nach dem Löschen können Sie die erneut die `dwh-j2ee-0.6-SNAPSHOT.ear` Datei hineinkopieren.
+Nach dem Löschen können Sie erneut die `dwh-j2ee-0.6-SNAPSHOT.ear` Datei hineinkopieren.
 
 ### Datenbank-Reset
-Für das Zurücksetzen der Postgres-Datenbank kann man über die PSQL Konsole nagivieren. Dazu loggt man sich auf den User mit den benötigten Rechten um, z.B. `postgres`, und startet dann die `psql` Konsole
+Für das Zurücksetzen der Postgres-Datenbank kann man über die PSQL Konsole nagivieren. Dazu meldet man sich mit dem User an, der die benötigten Rechte hat  (z. B. `postgres`) und startet dann die `psql` Konsole.
 
 ```
 su postgres
@@ -75,7 +77,7 @@ Damit ist das DWH bereit, neue Daten zu empfangen.
 
 ## SMTP Einrichtung (Optional)
 
-Als Vorbereitung für spätere Funktionen kann man bereits die SMTP EMail Funktion einrichten. Dazu benötigt man eine (in Intranetz verfügbare) Email.
+Als Vorbereitung für spätere Funktionen kann man bereits die SMTP E-Mail Funktion einrichten. Dazu benötigt man eine (in Intranet verfügbare) E-Mail-Adresse bzw. Server.
 
 ### Voraussetzung für die Einrichtung des E-Mail Dienstes
 
@@ -84,10 +86,10 @@ Das AKTIN-DWH verwendet keinen eigenen Mail-Server. Voraussetzung ist also ein M
 Um SMTP einzurichten, sollte man die folgenden Befehlen in der Konsole eingeben, wobei `$WILDFLY_HOME` wieder auf den Wildfly Ordner verlinkt und in den Variablen `smtphost`, `smtpport`, `smtpuser`, `smtppass` sollten die Einstellungen eingetragen werden. Folgende Befehle sollten als `root` ausgeführt werden.
 
 ```
-smtphost=smtp.aktin.com
+smtphost=smtp.example.com
 smtpport=465
-smtpuser=test.user@aktin.com
-smtppass=secure3Password
+smtpuser=user@example.com
+smtppass=myPassword
 usessl=true
 
 sessionname="AktinMailSession"
@@ -99,4 +101,4 @@ $WILDFLY_HOME/bin/jboss-cli.sh -c "/subsystem=mail/mail-session=$sessionname:add
 $WILDFLY_HOME/bin/jboss-cli.sh -c "/subsystem=mail/mail-session=$sessionname/server=smtp:add(outbound-socket-binding-ref=$smtpbind, username=$smtpuser, password=$smtppass, ssl=$usessl)"
 $WILDFLY_HOME/bin/jboss-cli.sh -c ":reload"
 ```
-Mit der letzten Zeile werden alle Wildfly Dienster herunter gefahren und neugestartet. Nach einiger Zeit sind die Funktionen wieder wie gewohnt aufrufbar sein. 
+Mit der letzten Zeile werden alle Wildfly Dienste herunter gefahren und neugestartet. Nach einiger Zeit sind die Funktionen wieder wie gewohnt aufrufbar sein. 
