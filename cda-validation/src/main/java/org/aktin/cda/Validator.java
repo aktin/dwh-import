@@ -118,8 +118,9 @@ public class Validator implements NamespaceContext{
 	/**
 	 * Validate a CDA document
 	 * 
-	 * @param cdaSource CDA document source to validate
+	 * @param cdaSource CDA document to validate
 	 * @param templateId template id for the validation
+	 * @param handler error handler to receive the validation errors and warnings
 	 * @return validation result
 	 * @throws TransformerException if the transformation fails
 	 * @throws XPathExpressionException if the transformation result could not be processed with XPath expressions to find validation errors
