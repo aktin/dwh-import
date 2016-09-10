@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 public class TestFHIR {
 	Server server;
 	private URL fhirBinary;
-	private URL fhirBinaryValidate;
+//	private URL fhirBinaryValidate;
 	private URL fhirBase;
 	
 	/**
@@ -44,7 +44,7 @@ public class TestFHIR {
 		// URL to receive POST/PUT requests (use dynamic port) 
 		fhirBase = new URL("http","localhost",server.getPort(),Server.REST_CONTEXT_PATH);
 		fhirBinary = new URL(fhirBase+"/Binary");
-		fhirBinaryValidate = new URL(fhirBase+"/Binary$validate");
+//		fhirBinaryValidate = new URL(fhirBase+"/Binary$validate");
 	}
 	
 	/**

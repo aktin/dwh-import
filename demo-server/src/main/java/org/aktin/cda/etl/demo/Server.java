@@ -18,6 +18,7 @@ import org.aktin.cda.etl.xds.DocumentRepository;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.xml.sax.SAXException;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -57,7 +58,7 @@ public class Server{
 		processor = new HashtableStore();
 		try {
 			validator = new Validator();
-		} catch (TransformerConfigurationException e) {
+		} catch (TransformerConfigurationException | SAXException e) {
 			throw new IOException("Unable to initialize validator", e);
 		}
 		xdsService = new DocumentRepository();

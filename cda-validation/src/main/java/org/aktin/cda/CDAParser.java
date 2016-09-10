@@ -114,12 +114,12 @@ public class CDAParser {
 		if( node instanceof Document ){
 			return (Document)node;
 		}else{
-			if( true )throw new IllegalArgumentException();
-			Document doc = node.getOwnerDocument();
-			if( doc == null ){
+//			if( true )throw new IllegalArgumentException();
+//			Document doc = node.getOwnerDocument();
+//			if( doc == null ){
 				throw new TransformerException("DOMResult does not contain Document node");
-			}
-			return doc;
+//			}
+//			return doc;
 		}
 	}
 }

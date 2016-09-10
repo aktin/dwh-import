@@ -6,14 +6,11 @@ import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class TestXPathExpressions {
@@ -50,24 +47,7 @@ public class TestXPathExpressions {
 		}
 	}
 */
-	//@Test
-	public void printTest() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		CDAParser parser = new CDAParser();
-		int idx = 0;
-		try( InputStream in = getClass().getResourceAsStream(exampleDocuments[0]) ){
-			Assert.assertTrue(in.available() > 0);
-			Node cda = parser.buildDOM(new StreamSource(in));
-			XPathFactory f = XPathFactory.newInstance();
-			XPath x = f.newXPath();
-			x.setNamespaceContext(CDAParser.namespaceContext);
-//			String s = x.evaluate(CDAParser.ID_TREE_XPATHS[idx], cda);
-//			System.out.println("Result1="+s);
-//			s = x.compile(CDAParser.ID_TREE_XPATHS[idx]).evaluate(cda);
-//			System.out.println("Result2="+s);	
-			//s = parser.extractIDs(cda)[idx];
-			//System.out.println("Result3="+s);				
-		}
-	}
+
 	@Test
 	public void extractDocumentIDs() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();

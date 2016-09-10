@@ -9,7 +9,6 @@ import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.MTOM;
 import javax.xml.xpath.XPathExpressionException;
@@ -19,7 +18,6 @@ import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.ExternalInterface;
 import org.aktin.cda.UnsupportedTemplateException;
-import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
 
 import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
@@ -89,7 +87,8 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 		}
 		Document doc = body.getDocument().get(0);
 		log.info("Found document with id="+doc.getId()+" and length="+doc.getValue().length);
-		ValidationResult vr = null;
+		RegistryErrorList errorList = new RegistryErrorList();
+		boolean isValid;
 		Source xml = new StreamSource(new ByteArrayInputStream(doc.getValue()));
 		org.w3c.dom.Document cda;
 		String templateId, documentId;
@@ -98,7 +97,7 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 			templateId = parser.extractTemplateId(cda);
 			documentId = parser.extractDocumentId(cda);
 			synchronized( validator ){
-				vr = validator.validate(new DOMSource(cda), templateId);
+				isValid = validator.validate(cda, templateId, new ValidationErrorsToRegistryError(errorList));
 			}
 		} catch (TransformerException e) {
 			// happens if the source document is not well formed
@@ -113,7 +112,7 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 
 		RegistryResponseType resp = new RegistryResponseType();
 
-		if( vr.isValid() ){
+		if( isValid ){
 			// extract patient id, encounter id, document id
 			try {
 				// check arguments/valid id
@@ -134,25 +133,14 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 			// failed
 			resp.setStatus(XDSConstants.RESPONSE_FAILURE);
 
-			RegistryError re = new RegistryError();
-			re.setSeverity(XDSConstants.SEVERITY_ERROR);
-			re.setCodeContext("Validation failed"); // free error message
-			re.setErrorCode(XDSConstants.ERR_DOC_INVALID_CONTENT);
+//			RegistryError re = new RegistryError();
+//			re.setSeverity(XDSConstants.SEVERITY_ERROR);
+//			re.setCodeContext("Validation failed"); // free error message
+//			re.setErrorCode(XDSConstants.ERR_DOC_INVALID_CONTENT);
 
 			// errorCode is a text code taken from Table 4.1-11 Error Codes in Technical Framework volume 3
-			// add error list
-			RegistryErrorList rel = new RegistryErrorList();
-			rel.getRegistryError().add(re);
-			rel.setHighestSeverity(XDSConstants.SEVERITY_ERROR);
-
-			vr.forEachErrorMessage(msg -> {
-				RegistryError e = new RegistryError();
-				e.setSeverity(XDSConstants.SEVERITY_ERROR);
-				e.setCodeContext(msg); // free error message
-				e.setErrorCode(XDSConstants.ERR_DOC_INVALID_CONTENT);
-				rel.getRegistryError().add(e);
-			});
-			resp.setRegistryErrorList(rel);			
+			errorList.setHighestSeverity(XDSConstants.SEVERITY_ERROR);
+			resp.setRegistryErrorList(errorList);			
 		}
 
 		return resp;

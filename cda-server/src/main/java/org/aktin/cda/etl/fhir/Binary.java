@@ -26,7 +26,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.aktin.cda.CDAException;
@@ -37,7 +36,6 @@ import org.aktin.cda.CDAStatus.Status;
 import org.aktin.cda.CDASummary;
 import org.aktin.cda.ExternalInterface;
 import org.aktin.cda.UnsupportedTemplateException;
-import org.aktin.cda.ValidationResult;
 import org.aktin.cda.Validator;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 import org.w3c.dom.Document;
@@ -97,10 +95,10 @@ public class Binary implements ExternalInterface{
 	}
 	@POST
 	public Response create(Source doc){
-		ValidationResult vr = null;
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
 		ResponseBuilder response;
-		
+
+		boolean isValid;
 		try {
 			Document cda = parser.buildDOM(doc);
 			String templateId = parser.extractTemplateId(cda);
@@ -110,9 +108,9 @@ public class Binary implements ExternalInterface{
 
 			// TODO differentiate between internal errors and validation problems (e.g. xml syntax)
 			synchronized( validator ){
-				vr = validator.validate(new DOMSource(cda), templateId);
+				isValid = validator.validate(cda, templateId, new ValidationErrorsToOperationOutcome(outcome));
 			}
-			if( vr.isValid() ){
+			if( isValid ){
 				// check arguments/valid id
 				// otherwise return HTTP_BAD_REQUEST
 				// process document
@@ -137,7 +135,6 @@ public class Binary implements ExternalInterface{
 
 			}else{
 				response = Response.status(422); // Unprocessable entity
-				vr.forEachErrorMessage(s -> outcome.addIssue(SimplifiedOperationOutcome.Severity.error, s));
 			}
 		} catch (XPathExpressionException e) {
 			response = Response.serverError();
