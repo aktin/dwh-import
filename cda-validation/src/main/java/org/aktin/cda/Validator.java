@@ -25,7 +25,10 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Perform CDA validation according to SCHEMATRON rules.
@@ -48,12 +51,14 @@ public class Validator implements NamespaceContext{
 	
 	private XPathExpression selectFailedAsserts;
 	// TODO warnings are same as asserts with a different attribute
-	private XPathExpression selectWarnings;
 	private Map<String, SingleTemplateValidator> templateValidators;
+	private SchemaValidator schemaValidator;
 	
-	public Validator() throws IOException, TransformerConfigurationException{
+	public Validator() throws IOException, TransformerConfigurationException, SAXException{
+		// create XSD-schema validator
+		schemaValidator = new SchemaValidator();
 
-		log.getClass(); // prevent unused warnings
+		// initialise schematron validator
 		templateValidators = new HashMap<>();
 		// no need for Saxon??
 		xfactory = XPathFactory.newInstance();
@@ -61,13 +66,10 @@ public class Validator implements NamespaceContext{
 			XPath xpath = xfactory.newXPath();
 			xpath.setNamespaceContext(this);
 			// errors
-			selectFailedAsserts = xpath.compile("/svrl:schematron-output/svrl:failed-assert[@role='error']");
-			// warnings TODO scan and output warnings
-			selectWarnings = xpath.compile("/svrl:schematron-output/svrl:failed-assert[@role='warning']");
+			selectFailedAsserts = xpath.compile("/svrl:schematron-output/svrl:failed-assert");
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
-
 		addTemplateValidator("1.2.276.0.76.10.1015", getClass().getResource("/schematron_svrl/aktin-basism.xsl"));
 		addTemplateValidator("1.2.276.0.76.10.1019", getClass().getResource("/schematron_svrl/aktin-basism20152b.xsl"));
 
@@ -83,9 +85,34 @@ public class Validator implements NamespaceContext{
 	 * @return node list of failed-assertation elements
 	 * @throws XPathExpressionException failure
 	 */
-	NodeList selectFailedAsserts(Document svrlDoc) throws XPathExpressionException{
+	int reportFailedAsserts(Document svrlDoc, ValidationErrorHandler handler) throws XPathExpressionException{
 		NodeList ret = (NodeList) selectFailedAsserts.evaluate(svrlDoc, XPathConstants.NODESET);
-		return ret;
+		int errorCount = 0;
+		for( int i=0; i<ret.getLength(); i++ ){
+			Element e = (Element)ret.item(i);
+			String role = e.getAttribute("role");
+			Node text = e.getFirstChild();
+			String messageText;
+			if( text != null && text.getLocalName().equals("text") && text.getNamespaceURI().equals(CDAConstants.SVRL_NS_URI) ){
+				messageText = text.getTextContent();
+			}else{
+				// fall back to use the whole content of the failed-assert
+				messageText = e.getTextContent();
+			}
+
+			switch( role ){
+			case "error":
+				errorCount ++;
+				handler.error(messageText, null);
+				break;
+			default:
+				log.warning("Unexpected failed-assert/@role="+role);
+				// fall through to warning
+			case "warning":
+				handler.error(messageText, null);
+			}
+		}
+		return errorCount;
 	}
 
 	/**
@@ -98,21 +125,36 @@ public class Validator implements NamespaceContext{
 	 * @throws XPathExpressionException if the transformation result could not be processed with XPath expressions to find validation errors
 	 * @throws UnsupportedTemplateException given template id not supported
 	 */
-	public ValidationResult validate(Source cdaSource, String templateId) throws TransformerException, XPathExpressionException, UnsupportedTemplateException{
+	public boolean validate(Node cdaSource, String templateId, ValidationErrorHandler handler) throws TransformerException, XPathExpressionException, UnsupportedTemplateException{
+		// perform schema validation first
+		boolean isValid = schemaValidator.validate(new DOMSource(cdaSource), handler);
 		//Result result = new StreamResult(System.out);
 		SingleTemplateValidator validator = templateValidators.get(templateId);
 		if( validator == null ){
 			// no validator for the specified template
 			throw new UnsupportedTemplateException(templateId);
 		}
-		Document svrlOut = validator.validate(cdaSource);
-		ValidationResult result = new ValidationResult(this, svrlOut);
-		if( result.isValid() ){
+		Document svrlOut = validator.validate(new DOMSource(cdaSource));
+		int errorCount = reportFailedAsserts(svrlOut, handler);
+		if( isValid && errorCount == 0 ){
 			log.info("Document validation: VALID");
+			return true;
 		}else{
-			log.info("Document validation: FAILED");			
+			StringBuilder info = new StringBuilder();
+			info.append("Document validation: FAILED (");
+			if( isValid == false ){
+				info.append("xsd error");
+			}
+			if( errorCount != 0 ){
+				if( isValid == false ){
+					info.append(" + ");
+				}
+				info.append(errorCount + " schematron errors");
+			}
+			info.append(')');
+			log.info(info.toString());
+			return false;
 		}
-		return result;
 	}
 
 	/**
@@ -162,19 +204,18 @@ public class Validator implements NamespaceContext{
 		}
 		CDAParser parser = new CDAParser();
 		Validator v = new Validator();
-
+		ValidationErrorPrinter e = new ValidationErrorPrinter();
 		int failure_count = 0;
 		for( String filename : args )
 		try( InputStream in = new FileInputStream(filename)){
 			Document dom = parser.buildDOM(new StreamSource(in));
-			
+			e.setSystemId(filename);
 			String templateId = parser.extractTemplateId(dom);
-			ValidationResult r = v.validate(new DOMSource(dom), templateId);
-			if( r.isValid() ){
+			boolean isValid = v.validate(dom, templateId, e);
+			if( isValid ){
 				System.out.println("Result for "+filename+": validation passed");
 			}else{
 				System.err.println("Result for "+filename+": validation failed");
-				r.forEachErrorMessage(System.err::println);
 				failure_count ++;
 			}
 		}

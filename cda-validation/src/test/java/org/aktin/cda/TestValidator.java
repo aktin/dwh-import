@@ -42,37 +42,42 @@ public class TestValidator {
 	@Test
 	public void validateExampleDocuments() throws Exception{
 		Validator v = new Validator();
+		ValidationErrorPrinter p = new ValidationErrorPrinter();
+		CDAParser parser = new CDAParser();
+		
 		for( String example : v2ExampleDocuments ){
+			p.setSystemId(example);
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
-				ValidationResult res = v.validate(new StreamSource(in), v2TemplateId);
-				if( !res.isValid() ){
-					res.forEachErrorMessage(System.err::println);
-					Assert.fail("Successful validation expected for "+example+", but got "+res.getErrorCount()+" errors");
+				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, p);
+				if( !isValid ){
+					Assert.fail("Successful validation expected for "+example);
 				}
 			}
 		}
 		for( String example : v2InvalidExampleDocuments ){
+			p.setSystemId(example);
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
-				ValidationResult res = v.validate(new StreamSource(in), v2TemplateId);
-				Assert.assertFalse("Validation failure expected for "+example, res.isValid());
+				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+				Assert.assertFalse("Validation failure expected for "+example, isValid);
 			}
 		}
 		for( String example : v1InvalidExampleDocuments ){
+			p.setSystemId(example);
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
-				ValidationResult res = v.validate(new StreamSource(in), v1TemplateId);
-				Assert.assertFalse("Validation failure expected for "+example, res.isValid());
+				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, SuppressValidationErrors.staticInstance);
+				Assert.assertFalse("Validation failure expected for "+example, isValid);
 			}
 		}
 		for( String example : v1ExampleDocuments ){
+			p.setSystemId(example);
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
-				ValidationResult res = v.validate(new StreamSource(in), v1TemplateId);
-				if( !res.isValid() ){
-					res.forEachErrorMessage(System.err::println);
-					Assert.fail("Successful validation expected for "+example+", but got "+res.getErrorCount()+" errors");
+				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, p);
+				if( !isValid ){
+					Assert.fail("Successful validation expected for "+example);
 				}
 			}
 		}
@@ -81,10 +86,11 @@ public class TestValidator {
 	@Test
 	public void validateErrorsForOtherDocuments() throws Exception{
 		Validator v = new Validator();
+		CDAParser parser = new CDAParser();
 		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
 		Assert.assertTrue(in.available() > 0);
 		try {
-			v.validate(new StreamSource(in), v2TemplateId);
+			v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 			Assert.fail();
 		} catch (XPathExpressionException e) {
 			Assert.fail();
@@ -97,9 +103,9 @@ public class TestValidator {
 		// should return result
 		in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
 		try {
-			ValidationResult res = v.validate(new StreamSource(in), v2TemplateId);
+			boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 			// should not pass validation
-			Assert.assertFalse(res.isValid());
+			Assert.assertFalse(isValid);
 		} catch (XPathExpressionException | TransformerException e) {
 			Assert.fail();
 		}

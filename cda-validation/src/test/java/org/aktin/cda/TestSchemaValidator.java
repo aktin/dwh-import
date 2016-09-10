@@ -11,41 +11,12 @@ import org.xml.sax.SAXException;
 
 public class TestSchemaValidator {
 	private SchemaValidator validator;
-	private PrintValidationErrors errorPrinter;
+	private ValidationErrorPrinter errorPrinter;
 
 	@Before
 	public void initialiseValidator() throws SAXException{
 		validator = new SchemaValidator();
-		errorPrinter = new PrintValidationErrors();
-	}
-	private static class PrintValidationErrors implements ValidationErrorHandler{
-		private String systemId;
-		@Override
-		public void warning(String message, Throwable cause) {
-			System.err.println("Validation warning for "+systemId);
-			if( cause != null ){
-				cause.printStackTrace();
-			}
-		}
-
-		@Override
-		public void error(String message, Throwable cause) {
-			System.err.println("Validation ERROR for "+systemId);
-			if( cause != null ){
-				cause.printStackTrace();
-			}
-		}
-		public void setSystemId(String systemId){
-			this.systemId = systemId;
-		}
-	}
-	private static class SuppressValidationErrors implements ValidationErrorHandler{
-		@Override
-		public void warning(String message, Throwable cause) {
-		}
-		@Override
-		public void error(String message, Throwable cause) {
-		}
+		errorPrinter = new ValidationErrorPrinter();
 	}
 	@Test
 	public void assumeValidSchemaForExampleDocuments() throws Exception{
@@ -67,12 +38,11 @@ public class TestSchemaValidator {
 	}
 	@Test
 	public void expectSchemaErrorForSchemaErrorExample() throws Exception{
-		ValidationErrorHandler h = new SuppressValidationErrors();
 		for( String example : TestValidator.invalidSchemaDocuments ){
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
 				// all documents should produce schema validation errors
-				Assert.assertFalse(validator.validate(new StreamSource(in), h));
+				Assert.assertFalse(validator.validate(new StreamSource(in), SuppressValidationErrors.staticInstance));
 			}
 		}
 	}
