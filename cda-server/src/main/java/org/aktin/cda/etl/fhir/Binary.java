@@ -37,6 +37,7 @@ import org.aktin.cda.CDASummary;
 import org.aktin.cda.ExternalInterface;
 import org.aktin.cda.UnsupportedTemplateException;
 import org.aktin.cda.Validator;
+import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.IssueType;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 import org.w3c.dom.Document;
 
@@ -61,7 +62,27 @@ public class Binary implements ExternalInterface{
 	@Path("$validate")
 	public Response validate(Source doc){
 		log.info("Validation requested");
-		return Response.serverError().entity("Not implemented").build();
+		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
+		try{
+			Document cda = parser.buildDOM(doc);
+			String templateId = parser.extractTemplateId(cda);
+//			String documentId = parser.extractDocumentId(cda);
+			boolean isValid;
+			synchronized( validator ){
+				isValid = validator.validate(cda, templateId, new ValidationErrorsToOperationOutcome(outcome));
+			}
+			if( false == isValid ){
+				outcome.addIssue(Severity.error, "Validation result: FAILED");
+			}
+		}catch( TransformerException | XPathExpressionException | UnsupportedTemplateException e ){
+			outcome.addIssue(Severity.error, IssueType.exception, e.toString());
+		}
+		try {
+			return Response.ok().entity(outcomeToXML(outcome)).build();
+		} catch (XMLStreamException e) {
+			log.log(Level.SEVERE, "Unable to produce response XML", e);
+			return Response.serverError().entity("Unable to produce response XML: "+e.toString()).build();
+		}
 	}
 	
 	@POST
