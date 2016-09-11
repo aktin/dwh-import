@@ -12,7 +12,7 @@
 		</menu>
         <menu name="AKTIN Update 0.5 nach 0.6">
             <item href="dwh-update-0.6.html" name="AKTIN Server Update" />
-            <item href="CDA-Release-v1.21.html" name="CDA Änderungen" />
+            <item href="cda-release-v1.21.html" name="CDA Änderungen" />
 		</menu>
 		<menu name="Dokumentation">
 			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
