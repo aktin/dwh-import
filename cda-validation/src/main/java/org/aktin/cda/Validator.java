@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
  * Perform CDA validation according to SCHEMATRON rules.
  * <p>
  * This implementation is probably not thread-safe: A single {@link Transformer} 
- * instance is used for all calls to {@link #validate(Source, String)} with the same template id.
+ * instance is used for all calls to {@link #validate(Node, String, ValidationErrorHandler)} with the same template id.
  * <p>
  * This class can be used for dependency injection via CDI. In this case
  * this class behaves as a singleton, so only one instance of the class
@@ -82,10 +82,11 @@ public class Validator implements NamespaceContext{
 	/**
 	 * Find failed assertations
 	 * @param svrlDoc svrl result
+	 * @param handler error handler
 	 * @return node list of failed-assertation elements
 	 * @throws XPathExpressionException failure
 	 */
-	int reportFailedAsserts(Document svrlDoc, ValidationErrorHandler handler) throws XPathExpressionException{
+	int reportFailedAsserts(Document svrlDoc, ValidationErrorHandler handler) throws XPathExpressionException {
 		NodeList ret = (NodeList) selectFailedAsserts.evaluate(svrlDoc, XPathConstants.NODESET);
 		int errorCount = 0;
 		for( int i=0; i<ret.getLength(); i++ ){
