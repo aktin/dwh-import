@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>de.sekmi.histream</groupId>
 			<artifactId>histream-import</artifactId>
-			<version>0.6</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
