@@ -23,12 +23,13 @@ Diagnose Zusatzcodes
 --------------------
 http://aktin.art-decor.org/aktin-html-20160804T182136/tmp-1.2.276.0.76.10.4049-2016-06-22T000000.html
 In der gleichen section kann man jetzt Diagnose Zusatzcodes (Verdacht, gesichert, z.N. und Ausschluss) codieren. Wir verwenden in AKTIN die qualifier aus dem CodeSystem 1.2.276.0.76.3.1.1.5.1.21 – diese müssen also dort angegeben werden, falls verfügbar– z. B.
+
 ```
 <qualifier>
     <name code="8" codeSystem="2.16.840.1.113883.3.7.1.0"/>
     <value code="V" codeSystem="1.2.276.0.76.3.1.1.5.1.21"/>
 </qualifier>
-´´´
+```
 Zusätzlich ist in den Beispielen beschrieben, wie die Information standardkonform (Negation, EffectiveTime High,...) codiert werden soll. Dies sollte umgesetzt werden, ist aber für den AKTIN-Import nicht relevant.
 
 Diagnostik effectiveTime
@@ -47,17 +48,19 @@ Multiresistenten Keime
 ----------------------
 http://aktin.art-decor.org/aktin-html-20160804T182136/tmp-1.2.276.0.76.10.4073-2016-08-02T000000.html
 Die Abbildung der multiresistenten Keime wurde vereinfacht. MRSA wird jetzt nur noch mit
+
 ```
 <value xsi:type="CD" code="MRSA" codeSystem="1.2.276.0.76.5.441" displayName="MRSA"/>
-´´´
-codiert und ein Verdacht so:
 ```
+codiert und ein Verdacht so:
+
+```xml
 <value xsi:type="CD" code="MRSA" codeSystem="1.2.276.0.76.5.441" displayName="MRSA">
     <qualifier>
         <name code="FSTAT" codeSystem="1.2.276.0.76.3.1.195.5.72" displayName="Befundstatus"/>
         <value code="SUSP" codeSystem="1.2.276.0.76.3.1.195.5.73" displayName="Verdacht"/>
     </qualifier>
 </value>
-´´´
+```
 
 Bei Fragen zur Umsetzung der CDA-Änderungen wenden Sie sich gerne an it-support@aktin.org

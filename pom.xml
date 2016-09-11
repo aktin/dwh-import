@@ -17,7 +17,7 @@
 	
 	<properties>
 		<!-- specifies the package and source version to which the site refers to -->
-		<latestReleaseVersion>0.5</latestReleaseVersion>
+		<latestReleaseVersion>0.6</latestReleaseVersion>
 		<releaseRepoUrl>https://www.aktin.org/software/repo</releaseRepoUrl>
 		<!-- encoding stuff -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

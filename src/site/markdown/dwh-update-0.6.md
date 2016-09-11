@@ -23,39 +23,36 @@ Manuelles Update für Debian, CentOS oder andere Betriebssysteme
 Die alte Version muss aus dem Wildfly Service entfernt werden. Dies kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`
 
 ```
-if [ -f "$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear" ] && [ ! -f "$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed" ]; then 
-	sudo $WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.5-SNAPSHOT.ear"
-    echo "Undeployment durchgeführt."
-else 
-    echo "Undeployment und SQL Skript übersprungen, da keine alte Version gefunden oder bereits undeployed"
-fi
+sudo $WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.5-SNAPSHOT.ear"
 ```
+Der Befehl war erfolgreich, wenn keine Fehlermeldung angezeigt wird und anschließend eine Datei `dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` im gleichen Ordner erstellt wurde.
 Nach dem Undeploy können Sie die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear` und `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` (in dieser Reihefolge) löschen. Das Löschen hat keine Auswirkung.
+
 ### Einbinden der neuen Software
-Zuerst muss die neue EAR-Datei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [EAR Release 0.6](https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download). 
+Zuerst muss die neue EAR-Datei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [EAR Release 0.6](https://www.aktin.org/software/repo/org/aktin/dwh-j2ee/0.6/dwh-j2ee-0.6.ear). 
 
 ```
-wget https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download -O dwh-j2ee-0.6-SNAPSHOT.ear
+wget https://cloudstorage.uni-oldenburg.de/index.php/s/OmnbLd7iB4VXLEM/download -O dwh-j2ee-0.6.ear
 ```
 Danach kann man die neue EAR-Datei in das Deploymentverzeichnis unter `$WILDFLY_HOME/standalone/deployments` laden. `$install_root` ist hier der Pfad zu der heruntergeladenen Datei, z.B. die aktuelle Verzeichnis: `install_root=.`
 
 ```
 if [ ! -f "$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear" ]; then 
-	sudo cp $install_root/dwh-j2ee-0.6-SNAPSHOT.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear   
-    echo "Kopieren der Datei $install_root/dwh-j2ee-0.6-SNAPSHOT.ear nach $WILDFLY_HOME/standalone/deployments/ erfolgreich."
+	sudo cp $install_root/dwh-j2ee-0.6.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6.ear   
+    echo "Kopieren der Datei $install_root/dwh-j2ee-0.6.ear nach $WILDFLY_HOME/standalone/deployments/ erfolgreich."
 else 
-    echo "Die Datei wurde nicht kopiert."
+    echo "Die Datei wurde nicht kopiert, da bereits vorhanden"
 fi
 ```
 Die EAR-Datei ist bereits im Deploymentverzeichnis vorhanden. Wenn Sie die Datei neu laden möchten, führen Sie bitte ein Undeploy durch 
 
 ```
-$WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.6-SNAPSHOT.ear
+$WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.6.ear"
 ```
 und löschen anschließend die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear` sowie `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear.undeployed`, wobei unbedingt beide Dateien (in dieser Reihefolge) gelöscht werden müssen.
 
 ```
-sudo rm $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear.undeployed
+sudo rm $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6.ear.undeployed
 ```
 Nach dem Löschen können Sie erneut die `dwh-j2ee-0.6-SNAPSHOT.ear` Datei hineinkopieren.
 
