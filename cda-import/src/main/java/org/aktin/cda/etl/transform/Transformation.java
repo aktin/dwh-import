@@ -22,6 +22,11 @@ import org.w3c.dom.Document;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.TransformerFactoryImpl;
 
+/**
+ * Transform a CDA DOM trees to EAV representation
+ * @author R.W.Majeed
+ *
+ */
 public class Transformation {
 	private String moduleId;
 	private String templateId;
@@ -43,7 +48,9 @@ public class Transformation {
 		this.templateId = templateId;
 		
 		// create transformer
-		transformerFactory = TransformerFactory.newInstance();
+		// ususally a transformer is created via TransformerFactory.newInstance(),
+		// but this may return a non-saxon parser
+		transformerFactory = TransformerFactoryImpl.newInstance();
 		// enable custom XPath functions
 		injectCustomFunction(transformerFactory, moduleId);
 
