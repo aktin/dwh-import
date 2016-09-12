@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,6 +29,7 @@ import org.xml.sax.SAXException;
 
 
 public class TransformationFactory {
+	private static final Logger log = Logger.getLogger(TransformationFactory.class.getName());
 	/**
 	 * XPath for configuration variables within the XSLT
 	 */
@@ -81,6 +83,7 @@ public class TransformationFactory {
 			// transformation not found
 			return null;
 		}
+		log.info("Loading template "+url);
 		Document doc = loadDocument(url);
 		Map<String, String> vars;
 		try {
@@ -91,12 +94,12 @@ public class TransformationFactory {
 		String moduleId = vars.get("aktin.module.id");
 		String declaredTemplate = vars.get("aktin.module.template");
 		// confirm template id
-		Objects.requireNonNull(declaredTemplate);
+		Objects.requireNonNull(declaredTemplate, "No aktin.module.template declared in template "+templateId);
 		if( !declaredTemplate.equals(templateId) ){
 			// declared template does not match template name
 			// there is an error in the template, 
 			// this should be reported to the developers
-
+			log.warning("Mismatch between template name="+templateId+" and declared template="+declaredTemplate);
 		}
 		return new Transformation(moduleId, templateId, doc);
 	}
