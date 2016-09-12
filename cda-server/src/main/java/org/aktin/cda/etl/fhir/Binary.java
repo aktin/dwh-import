@@ -156,13 +156,16 @@ public class Binary implements ExternalInterface{
 
 			}else{
 				response = Response.status(422); // Unprocessable entity
+				outcome.addIssue(Severity.fatal, "XML validation not passed");
 			}
 		} catch (XPathExpressionException e) {
 			response = Response.serverError();
 			log.log(Level.FINE, "XPath error", e);
+			outcome.addIssue(Severity.fatal, "XPath error during transformation: "+e);
 		} catch (TransformerException e) {
 			log.log(Level.FINE, "Transformation failed", e);
 			response = Response.status(Response.Status.UNSUPPORTED_MEDIA_TYPE);
+			outcome.addIssue(Severity.fatal, "XML transformation error: "+e);
 		} catch (UnsupportedTemplateException e) {
 			log.log(Level.WARNING, "Unsupported template", e);
 			response = Response.status(422);
