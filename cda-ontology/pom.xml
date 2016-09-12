@@ -41,7 +41,7 @@
 								<meta.sourcesystem_cd>aktin</meta.sourcesystem_cd>
 								<meta.table>i2b2metadata.i2b2</meta.table>
 								<meta.access>i2b2metadata.table_access</meta.access>
-								<data.concept.table>i2b2demodata.concept_dimension</data.concept.table>
+								<data.concept.table>i2b2crcdata.concept_dimension</data.concept.table>
 								<ont.language>de</ont.language>
 							</properties>
 						</configuration>
