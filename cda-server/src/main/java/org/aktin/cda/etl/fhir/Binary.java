@@ -118,11 +118,11 @@ public class Binary implements ExternalInterface{
 	public Response create(Source doc){
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
 		ResponseBuilder response;
-
+		String templateId = null;
 		boolean isValid;
 		try {
 			Document cda = parser.buildDOM(doc);
-			String templateId = parser.extractTemplateId(cda);
+			templateId = parser.extractTemplateId(cda);
 			String documentId = parser.extractDocumentId(cda);
 			// if not found, templateId or documentId contain empty string ""
 			// which will result in an UnsupportedTemplateException
@@ -167,9 +167,9 @@ public class Binary implements ExternalInterface{
 			response = Response.status(Response.Status.UNSUPPORTED_MEDIA_TYPE);
 			outcome.addIssue(Severity.fatal, "XML transformation error: "+e);
 		} catch (UnsupportedTemplateException e) {
-			log.log(Level.WARNING, "Unsupported template", e);
+			log.log(Level.WARNING, "Unsupported template: "+templateId);
 			response = Response.status(422);
-			outcome.addIssue(Severity.fatal, "Unsupported CDA template");
+			outcome.addIssue(Severity.fatal, "Unsupported CDA template '"+templateId+"'");
 		} catch (CDAException e) {
 			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
 			log.log(Level.WARNING, "Unable to import CDA", e);

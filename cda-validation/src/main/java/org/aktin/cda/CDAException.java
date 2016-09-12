@@ -14,4 +14,7 @@ public class CDAException extends Exception {
 	public CDAException(String message){
 		super(message);
 	}
+
+	protected CDAException(){
+	}
 }
