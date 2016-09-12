@@ -140,7 +140,7 @@ public class Binary implements ExternalInterface{
 
 				if( stat.getStatus() == Status.Created ){
 					try {
-						URI location = new URI("Binary/"+stat.getDocumentId());
+						URI location = new URI("Binary/?_id="+stat.getDocumentId());
 						response = Response.created(location);
 					} catch (URISyntaxException e) {
 						log.log(Level.WARNING, "Unable to build URI for created resource", e);
@@ -175,6 +175,9 @@ public class Binary implements ExternalInterface{
 			log.log(Level.WARNING, "Unable to import CDA", e);
 			if( e.getCause() != null ){
 				outcome.addIssue(SimplifiedOperationOutcome.Severity.error, e.getCause().getMessage());
+//				log.log(Level.INFO, "Caused by "+e.getCause(), e.getCause());
+			}else{
+				outcome.addIssue(SimplifiedOperationOutcome.Severity.error, e.toString());
 			}
 			// might want to add suppressed exceptions, but might be many
 		}
