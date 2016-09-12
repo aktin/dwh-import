@@ -15,6 +15,6 @@
 		<servlet-name>javax.ws.rs.core.Application</servlet-name>
 		<url-pattern>/cda/fhir/*</url-pattern>
 	</servlet-mapping>
-	<!--  TODO test in Wildfly 9.0.2 -->
+	<!--  TODO delete the application servlet mapping and test in Wildfly 9.0.2 -->
 
 </web-app>
