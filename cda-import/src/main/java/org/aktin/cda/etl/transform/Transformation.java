@@ -9,7 +9,6 @@ import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -31,7 +30,7 @@ public class Transformation {
 	private String moduleId;
 	private String templateId;
 	
-	private TransformerFactory transformerFactory;
+	private TransformerFactoryImpl transformerFactory;
 	private Templates transformerTemplates;
 
 	/**
@@ -50,9 +49,9 @@ public class Transformation {
 		// create transformer
 		// ususally a transformer is created via TransformerFactory.newInstance(),
 		// but this may return a non-saxon parser
-		transformerFactory = TransformerFactoryImpl.newInstance();
+		transformerFactory = new TransformerFactoryImpl();
 		// enable custom XPath functions
-		injectCustomFunction(transformerFactory, moduleId);
+		injectCustomFunction(moduleId);
 
 		// compile XSLT, no need to store the XSLT DOM anymore
 		transformerTemplates = transformerFactory.newTemplates(new DOMSource(xslt));
@@ -65,11 +64,12 @@ public class Transformation {
 		return moduleId;
 	}
 
-	private void injectCustomFunction(TransformerFactory factory, String moduleId){
-		if( !(factory instanceof TransformerFactoryImpl) ){
-			throw new TransformerFactoryConfigurationError("Unable to inject functions into non-Saxon transformer");
-		}
-		Configuration config = ((TransformerFactoryImpl)factory).getConfiguration();
+	private void injectCustomFunction(String moduleId){
+//		if( !(factory instanceof TransformerFactoryImpl) ){
+//			throw new TransformerFactoryConfigurationError("Unable to inject functions into non-Saxon transformer");
+//		}
+//		Configuration config = ((TransformerFactoryImpl)factory).getConfiguration();
+		Configuration config = transformerFactory.getConfiguration();
 		config.registerExtensionFunction(new CalculatePatientHash());
 		config.registerExtensionFunction(new CalculateEncounterHash());
 		config.registerExtensionFunction(new CalculateSourceId());
