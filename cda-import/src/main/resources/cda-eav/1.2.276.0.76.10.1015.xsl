@@ -25,6 +25,7 @@
     <!-- for the value-set, see README.md -->
 	<xsl:variable name="aktin.module.id">base</xsl:variable>
 	<xsl:variable name="aktin.module.template">1.2.276.0.76.10.1015</xsl:variable>
+    <xsl:variable name="aktin.release.version">0.6-SNAPSHOT</xsl:variable>
 
 	<!-- CONSTANT Definitions -->
               
@@ -69,7 +70,19 @@
     
     <!-- Concept Code Prefix for Transportmethod Codes -->
     <xsl:variable name="Transport-Prefix">AKTIN:TRANSPORT:</xsl:variable> 
-   
+    
+    <!-- Prefix for Target Site Modifiers -->
+    <xsl:variable name="TargetSite-Prefix">AKTIN:TSITE:</xsl:variable> 
+    
+    <!-- Prefix for Diagnosis Modifiers -->
+    <xsl:variable name="Diagnosis-Prefix">AKTIN:DIAG:</xsl:variable> 
+    
+    <!-- Prefix for Diagnostic Result Modifiers -->
+    <xsl:variable name="Diagnostic-Prefix">AKTIN:RESULT:</xsl:variable> 
+       
+    <!-- Prefix for Import Transformation Version Information -->
+    <xsl:variable name="ImportVersion-Prefix">AKTIN:ITVI:</xsl:variable> 
+    
 <!-- MAIN Template -->   
 
     <xsl:template match="/">
@@ -141,11 +154,6 @@
     Die KrankenhausID muss nicht im DWH gespeichert werden.
     Bei der Zusammenführung ist dem Broker die Quelle bekannt und kann ggf. ergänzt werden.
     Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar.
-   
-    <xsl:template match="cda:representedCustodianOrganization">
-        <xsl:value-of select="func:hash(concat(./cda:id[1]/@root,':',./cda:id[1]/@extension))"/> 
-    </xsl:template>
-     -->
     
     <!-- 2	ID der Notaufnahme
     siehe 1 - Falls es zwei Notaufnahmen gibt, haben sie ein seperates DWH oder ein gemeinsames und werden nicht getrennt ausgewertet. In beiden Fällen ist die Frage nicht wirklich relevant.
@@ -281,13 +289,16 @@
         </fact>       
     </xsl:template> -->
     
-    <xsl:template name="encounter-module-id">
+        <xsl:template name="encounter-module-id">
     	<!-- generate a unique id for encounter and module  -->
-		<xsl:value-of select="aktin:module-hash(
-		/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
-		'',/cda:ClinicalDocument/cda:setId/@extension, 
+		<xsl:value-of select="aktin:import-hash(
+		concat(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
+		'',/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension),'',
+		'',concat(/cda:ClinicalDocument/cda:setId/@root,'',
+		'',/cda:ClinicalDocument/cda:setId/@extension),
 		$aktin.module.id)"/>
     </xsl:template>
+    
     <xsl:template name="EAV-Geschlecht">
         <xsl:choose>
             <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">female</xsl:when>  
@@ -296,7 +307,6 @@
             <!-- Unknown as explicit value not supported by EAV (= not answered)-->
         </xsl:choose>
     </xsl:template>   
-    
     
     <!-- 57/58 Aufnahmedatum/uhrzeit 
     vgl. 882
@@ -486,7 +496,7 @@
             <xsl:call-template name="templateGetConceptValue"/>                    
             <modifier>
                 <xsl:attribute name="code">
-                    <xsl:value-of select="../cda:targetSiteCode/@code"/>
+                    <xsl:value-of select="$TargetSite-Prefix"/><xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
             </modifier> 
         </fact>
@@ -499,9 +509,9 @@
             <xsl:call-template name="templateGetConceptValue"/>      
             <modifier>
                 <xsl:attribute name="code">
-                    <xsl:value-of select="../cda:targetSiteCode/@code"/>
+                    <xsl:value-of select="$TargetSite-Prefix"/><xsl:value-of select="../cda:targetSiteCode/@code"/>
                 </xsl:attribute>
-            </modifier>    
+            </modifier>   
         </fact>
     </xsl:template>
                    
@@ -962,6 +972,18 @@
             </fact>
         </xsl:for-each>
     </xsl:template>
+    
+    <!-- One fact per Import/CDA-Document to save the information about the Software-Release and the applied Template Script
+    We need this information to be able to transform data during updates (in case of Concept-Code Changes, Bugfixes etc.) -->
+    
+        <xsl:template match="/cda:ClinicalDocument/cda:templateId">
+            <xsl:comment>Import Transformation Version Information</xsl:comment>
+            <fact>
+                <xsl:attribute name="concept">
+                    <xsl:value-of select="$ImportVersion-Prefix"/><xsl:value-of select="$aktin.module.template"/>:<xsl:value-of select="$aktin.release.version"/>
+                </xsl:attribute>
+            </fact>
+    </xsl:template>
   
      
 <!-- GLOBAL TEMPLATES -->
@@ -1155,6 +1177,7 @@
         </xsl:if>
     </xsl:function>
     
+    <!-- deprecated 
     <xsl:function name="func:age-in-months">
         <xsl:param name="date-of-birth" />
         <xsl:param name="current-date" />
@@ -1172,17 +1195,6 @@
         <xsl:param name="current" />
         <xsl:value-of select="floor(func:age-in-months($dob,$current) div 12)"/>
     </xsl:function>
-    
-    
-<!-- Hash Function, reduce ID length to 50, one-way pseudonym -->
-    <xsl:function name="func:hash"> <!-- #todo this is not a hash :) -->
-        <xsl:param name="StringValue"></xsl:param>
-        <xsl:if test="$StringValue">
-            <xsl:choose>
-                <xsl:when test="string-length($StringValue)>50"><xsl:value-of select="substring($StringValue,1,50)"/></xsl:when>
-                <xsl:otherwise><xsl:value-of select="$StringValue"/></xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
-    </xsl:function>
+    -->
 
 </xsl:stylesheet>

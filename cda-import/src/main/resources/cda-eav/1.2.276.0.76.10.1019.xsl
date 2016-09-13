@@ -24,7 +24,8 @@
     <!-- identify to which logical module the submitted data belongs -->
     <!-- for the value-set, see README.md -->
 	<xsl:variable name="aktin.module.id">base</xsl:variable>
-	<xsl:variable name="aktin.module.template">1.2.276.0.76.10.1015</xsl:variable>
+	<xsl:variable name="aktin.module.template">1.2.276.0.76.10.1019</xsl:variable>
+	<xsl:variable name="aktin.release.version">0.6-SNAPSHOT</xsl:variable>
 
 	<!-- CONSTANT Definitions -->
               
@@ -78,6 +79,9 @@
     
     <!-- Prefix for Diagnostic Result Modifiers -->
     <xsl:variable name="Diagnostic-Prefix">AKTIN:RESULT:</xsl:variable> 
+    
+    <!-- Prefix for Import Transformation Version Information -->
+    <xsl:variable name="ImportVersion-Prefix">AKTIN:ITVI:</xsl:variable> 
    
 <!-- MAIN Template -->   
 
@@ -109,7 +113,7 @@
                 </xsl:if>
                 <encounter>
                     <xsl:attribute name="id">
-                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:setId"/>                      
+                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id"/>                      
                     </xsl:attribute>  
                     <start>
                         <xsl:call-template name="ZeitpunktAufnahme"/>                        
@@ -140,11 +144,11 @@
  
  
     <!-- Eindeutiger Identifier (~Fallnummer), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
-    <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // ClinicalDocument/setId shall be present to enable further updates to this ClinicalDocument. This identifier is to remain the same across all revisions   -->
-	<!-- eigentlich ist die Set-ID nicht dafür vorgesehen, im nächsten Release wird das geändert -->
-    <xsl:template match="/cda:ClinicalDocument/cda:setId">
+    <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // ClinicalDocument/setId shall be present to enable further updates to this ClinicalDocument. -->
+    <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id">
         <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
     </xsl:template>
+ 
  
     <!-- 1	ID des Krankenhauses 
     Die KrankenhausID muss nicht im DWH gespeichert werden.
@@ -288,10 +292,13 @@
     <xsl:template name="encounter-module-id">
     	<!-- generate a unique id for encounter and module  -->
 		<xsl:value-of select="aktin:import-hash(
-		/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
-		'',/cda:ClinicalDocument/cda:setId/@extension, 
+		concat(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
+		'',/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension),'',
+		'',concat(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id/@root,'',
+		'',/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id/@extension),
 		$aktin.module.id)"/>
     </xsl:template>
+    
     <xsl:template name="EAV-Geschlecht">
         <xsl:choose>
             <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">female</xsl:when>  
@@ -300,7 +307,6 @@
             <!-- Unknown as explicit value not supported by EAV (= not answered)-->
         </xsl:choose>
     </xsl:template>   
-    
     
     <!-- 57/58 Aufnahmedatum/uhrzeit 
     vgl. 882
@@ -941,6 +947,18 @@
                 </modifier>
             </fact>
         </xsl:for-each>
+    </xsl:template>
+    
+    <!-- One fact per Import/CDA-Document to save the information about the Software-Release and the applied Template Script
+    We need this information to be able to transform data during updates (in case of Concept-Code Changes, Bugfixes etc.) -->
+    
+        <xsl:template match="/cda:ClinicalDocument/cda:templateId">
+            <xsl:comment>Import Transformation Version Information</xsl:comment>
+            <fact>
+                <xsl:attribute name="concept">
+                    <xsl:value-of select="$ImportVersion-Prefix"/><xsl:value-of select="$aktin.module.template"/>:<xsl:value-of select="$aktin.release.version"/>
+                </xsl:attribute>
+            </fact>
     </xsl:template>
   
      
