@@ -190,7 +190,6 @@
 		<dependency>
 			<groupId>de.sekmi.histream</groupId>
 			<artifactId>histream-i2b2</artifactId>
-			<version>0.9</version>
 		</dependency>
 		<!-- try if this helps with Wildfly 
 		<dependency>

@@ -16,7 +16,7 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>src/main/resources</directory>
+				<directory>${project.basedir}/src/main/resources</directory>
 			</resource>
 			<resource>
 				<directory>${project.build.directory}/generated-resources</directory>
@@ -26,7 +26,6 @@
 			<plugin>
 				<groupId>de.sekmi.histream.maven</groupId>
 				<artifactId>histream-maven-plugin</artifactId>
-				<version>0.9</version>
 				<executions>
 					<execution>
 						<phase>generate-resources</phase>
@@ -35,10 +34,11 @@
 						</goals>
 						<configuration>
 							<source>
-								<directory>src/main/resources/rdf</directory>
+								<directory>${project.basedir}/src/main/resources/rdf</directory>
 							</source>
 							<properties>
 								<meta.sourcesystem_cd>aktin</meta.sourcesystem_cd>
+								<meta.sourcesystem_cd.delete>test</meta.sourcesystem_cd.delete>
 								<meta.table>i2b2metadata.i2b2</meta.table>
 								<meta.access>i2b2metadata.table_access</meta.access>
 								<data.concept.table>i2b2crcdata.concept_dimension</data.concept.table>
