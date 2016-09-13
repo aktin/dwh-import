@@ -25,7 +25,7 @@
     <!-- for the value-set, see README.md -->
 	<xsl:variable name="aktin.module.id">base</xsl:variable>
 	<xsl:variable name="aktin.module.template">1.2.276.0.76.10.1019</xsl:variable>
-	<xsl:variable name="aktin.release.version">0.6-SNAPSHOT</xsl:variable>
+	<xsl:variable name="aktin.release.version">${project.version}</xsl:variable>
 
 	<!-- CONSTANT Definitions -->
               
