@@ -41,6 +41,7 @@
 								<meta.sourcesystem_cd.delete>test</meta.sourcesystem_cd.delete>
 								<meta.table>i2b2metadata.i2b2</meta.table>
 								<meta.access>i2b2metadata.table_access</meta.access>
+								<meta.basepath>\i2b2\</meta.basepath>
 								<data.concept.table>i2b2crcdata.concept_dimension</data.concept.table>
 								<ont.language>de</ont.language>
 							</properties>
