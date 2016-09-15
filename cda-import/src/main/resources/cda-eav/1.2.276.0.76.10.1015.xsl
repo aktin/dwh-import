@@ -80,8 +80,11 @@
     <!-- Prefix for Diagnostic Result Modifiers -->
     <xsl:variable name="Diagnostic-Prefix">AKTIN:RESULT:</xsl:variable> 
        
-    <!-- Prefix for Import Transformation Version Information -->
-    <xsl:variable name="ImportVersion-Prefix">AKTIN:ITVI:</xsl:variable> 
+    <!-- Prefix for Import Project Version Information -->
+    <xsl:variable name="ProjectVersion-Prefix">AKTIN:IPVI:</xsl:variable> 
+    
+    <!-- Prefix for Import Transformation Template Information -->
+    <xsl:variable name="TemplateVersion-Prefix">AKTIN:ITTI:</xsl:variable> 
     
 <!-- MAIN Template -->   
 
@@ -291,12 +294,7 @@
     
         <xsl:template name="encounter-module-id">
     	<!-- generate a unique id for encounter and module  -->
-		<xsl:value-of select="aktin:import-hash(
-		concat(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,'',
-		'',/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension),'',
-		'',concat(/cda:ClinicalDocument/cda:setId/@root,'',
-		'',/cda:ClinicalDocument/cda:setId/@extension),
-		$aktin.module.id)"/>
+		<xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:setId/@root/cda:ClinicalDocument/cda:setId/@extension,$aktin.module.id)"/>
     </xsl:template>
     
     <xsl:template name="EAV-Geschlecht">
@@ -973,14 +971,19 @@
         </xsl:for-each>
     </xsl:template>
     
-    <!-- One fact per Import/CDA-Document to save the information about the Software-Release and the applied Template Script
+    <!-- Two facts per Import/CDA-Document to save the information about the Software-Release and the applied Template Script
     We need this information to be able to transform data during updates (in case of Concept-Code Changes, Bugfixes etc.) -->
     
         <xsl:template match="/cda:ClinicalDocument/cda:templateId">
-            <xsl:comment>Import Transformation Version Information</xsl:comment>
+            <xsl:comment>Import Transformation/Version Information</xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:value-of select="$ImportVersion-Prefix"/><xsl:value-of select="$aktin.module.template"/>:<xsl:value-of select="$aktin.release.version"/>
+                    <xsl:value-of select="$ProjectVersion-Prefix"/><xsl:value-of select="$aktin.release.version"/>
+                </xsl:attribute>
+            </fact>
+            <fact>
+                <xsl:attribute name="concept">
+                    <xsl:value-of select="$TemplateVersion-Prefix"/><xsl:value-of select="$aktin.module.template"/>
                 </xsl:attribute>
             </fact>
     </xsl:template>
