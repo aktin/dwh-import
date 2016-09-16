@@ -3,7 +3,7 @@
 
 Diese Informationen richten sich an die Entwickler der CDA-Dokumente, die das Mapping zwischen dem Notaufnahme-System und dem Basismodul-CDA herstellen bzw. das CDA generieren.
 
-Die hier genannten (projektrelevanten) Änderungen beziehen sich auf die Umstellung von v1.17 (also das zuvor gültige AKTIn Release 0.5) auf CDA Release v1.21 (das im aktuell gültigen AKTIn Release 0.6 verwendet wird).
+Die hier genannten (projektrelevanten) Änderungen beziehen sich auf die Umstellung von v1.17 (also das zuvor gültige AKTIN Release 0.5) auf CDA Release v1.21 (das im aktuell gültigen AKTIn Release 0.6 verwendet wird).
 
 Weitere allgemeine Informationen zur CDA-Implementierung finden Sie auch unter dem Menüpunkt [Kurzanleitung CDA](cda-quickstart.html)
 
@@ -40,10 +40,6 @@ CEDIS code (value 705)
 ----------------------
 Es gab einen Fehler  mit einem CEDIS code (value 705). Der Fehler ist behoben, falls Sie dafür einen Workaround implementiert haben, sollte dieser entfernt werden.
 
-ClinicalDocument templateId
----------------------------
-Die 'ClinicalDocument/templateId' ist geändert auf '<templateId root="1.2.276.0.76.10.1019"/>' Das neue CDA-Release enthält beide Versionen “v1” mit '<templateId root="1.2.276.0.76.10.1015"/>' und „v2“ mit der neuen TemplateID. Um auf "v2" umzustellen, muss nur die TemplateID geändert werden, dann wird automatisch gegen v2-Schematron geprüft. Natürlich müssen Sie außerdem die restlichen genannten Änderungen umsetzen, sonst treten Validierungsfehler auf.
-
 Multiresistenten Keime
 ----------------------
 http://aktin.art-decor.org/aktin-html-20160804T182136/tmp-1.2.276.0.76.10.4073-2016-08-02T000000.html
@@ -62,5 +58,9 @@ codiert und ein Verdacht so:
     </qualifier>
 </value>
 ```
+
+ClinicalDocument templateId
+---------------------------
+Die 'ClinicalDocument/templateId' ist geändert auf 'templateId root=1.2.276.0.76.10.1019' Das neue CDA-Release enthält beide Versionen “v1” mit 'templateId root="1.2.276.0.76.10.1015' und 'v2' mit der neuen TemplateID. Um auf 'v2' umzustellen, muss nur die TemplateID geändert werden, dann wird automatisch gegen v2-Schematron geprüft. Natürlich müssen Sie außerdem die zuvor genannten Änderungen umsetzen, sonst treten Validierungsfehler auf. Wir empfehlen dringend die Nutzung des V2-Templates, da im V1-Template das Notaufnahmeprotokoll noch nicht vollständig abgebildet ist.
 
 Bei Fragen zur Umsetzung der CDA-Änderungen wenden Sie sich gerne an it-support@aktin.org

@@ -772,11 +772,17 @@
             <xsl:call-template name="templateGetConceptValue"/>
         </fact>
         
-        <xsl:if test="../cda:effectiveTime/@width"> 
+        <xsl:if test="../cda:effectiveTime/cda:width/@value"> 
             <xsl:comment>212 Symptomdauer</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>SYMPTOMDURATION</xsl:attribute>
-                <xsl:value-of select="../cda:effectiveTime/@width"/>
+                <value>
+                    <xsl:attribute name="unit">
+                        <xsl:value-of select="../cda:effectiveTime/cda:width/@unit"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="xsi:type">numeric</xsl:attribute>   
+                    <xsl:value-of select="../cda:effectiveTime/cda:width/@value"/>
+                </value>            
             </fact>   
         </xsl:if>
     </xsl:template> 

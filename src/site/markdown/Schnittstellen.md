@@ -9,7 +9,7 @@ Die REST-Schnittstelle des AKTIN-DWH ist entsprechend ohne Port-Angabe unter der
 Ein CDA-Dokument kann beispielsweise mit dem folgenden Befehl manuell an die Schnittstelle gesendet werden:
 
 ```
-curl -X POST http://localhost:<Port>/aktin/cda/fhir/Binary -H "Content-Type: text/xml" --data-binary "@<CDA.xml>"
+curl -X POST http://localhost/aktin/cda/fhir/Binary -H "Content-Type: text/xml" --data-binary "@<CDA.xml>"
 ```
 Weitere Informationen gibt es unter: [RESTful/HL7 FHIR](hl7-fhir.html)
 

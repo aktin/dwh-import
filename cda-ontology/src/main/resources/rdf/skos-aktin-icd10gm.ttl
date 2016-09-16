@@ -14,28 +14,310 @@
             dc:description "Internationale statistische Klassifikation der Krankheiten und verwandter Gesundheitsprobleme" ;
         
         
-            skos:narrower :ICD10GM_A00-A09;
-            skos:narrower :ICD10GM_C00-C97;
-            skos:narrower :ICD10GM_D50-D53;
-            skos:narrower :ICD10GM_E00-E07;
-            skos:narrower :ICD10GM_F00-F09;
-            skos:narrower :ICD10GM_G00-G09;
-            skos:narrower :ICD10GM_H00-H06;
-            skos:narrower :ICD10GM_H60-H62;
-            skos:narrower :ICD10GM_I00-I02;
-            skos:narrower :ICD10GM_J00-J06;
-            skos:narrower :ICD10GM_K00-K14;
-            skos:narrower :ICD10GM_L00-L08;
-            skos:narrower :ICD10GM_M00-M25;
-            skos:narrower :ICD10GM_N00-N08;
-            skos:narrower :ICD10GM_O00-O08;
-            skos:narrower :ICD10GM_P00-P04;
-            skos:narrower :ICD10GM_Q00-Q07;
-            skos:narrower :ICD10GM_R00-R09;
-            skos:narrower :ICD10GM_S00-S09;
-            skos:narrower :ICD10GM_V01-X59;
-            skos:narrower :ICD10GM_Z00-Z13;
-            skos:narrower :ICD10GM_U00-U49.
+            skos:narrower :ICD10GM_I;
+            skos:narrower :ICD10GM_II;
+            skos:narrower :ICD10GM_III;
+            skos:narrower :ICD10GM_IV;
+            skos:narrower :ICD10GM_V;
+            skos:narrower :ICD10GM_VI;
+            skos:narrower :ICD10GM_VII;
+            skos:narrower :ICD10GM_VIII;
+            skos:narrower :ICD10GM_IX;
+            skos:narrower :ICD10GM_X;
+            skos:narrower :ICD10GM_XI;
+            skos:narrower :ICD10GM_XII;
+            skos:narrower :ICD10GM_XIII;
+            skos:narrower :ICD10GM_XIV;
+            skos:narrower :ICD10GM_XV;
+            skos:narrower :ICD10GM_XVI;
+            skos:narrower :ICD10GM_XVII;
+            skos:narrower :ICD10GM_XVIII;
+            skos:narrower :ICD10GM_XIX;
+            skos:narrower :ICD10GM_XX;
+            skos:narrower :ICD10GM_XXI;
+            skos:narrower :ICD10GM_XXII.
+            :ICD10GM_I a skos:Concept ;
+            skos:prefLabel "I - Bestimmte infektiöse und parasitäre Krankheiten"@de ;
+            
+                skos:narrower :ICD10GM_A00-A09;
+                skos:narrower :ICD10GM_A15-A19;
+                skos:narrower :ICD10GM_A20-A28;
+                skos:narrower :ICD10GM_A30-A49;
+                skos:narrower :ICD10GM_A50-A64;
+                skos:narrower :ICD10GM_A65-A69;
+                skos:narrower :ICD10GM_A70-A74;
+                skos:narrower :ICD10GM_A75-A79;
+                skos:narrower :ICD10GM_A80-A89;
+                skos:narrower :ICD10GM_A90-A99;
+                skos:narrower :ICD10GM_B00-B09;
+                skos:narrower :ICD10GM_B15-B19;
+                skos:narrower :ICD10GM_B20-B24;
+                skos:narrower :ICD10GM_B25-B34;
+                skos:narrower :ICD10GM_B35-B49;
+                skos:narrower :ICD10GM_B50-B64;
+                skos:narrower :ICD10GM_B65-B83;
+                skos:narrower :ICD10GM_B85-B89;
+                skos:narrower :ICD10GM_B90-B94;
+                skos:narrower :ICD10GM_B95-B98;
+                skos:narrower :ICD10GM_B99-B99.
+            :ICD10GM_II a skos:Concept ;
+            skos:prefLabel "II - Neubildungen"@de ;
+            
+                skos:narrower :ICD10GM_C00-C97;
+                skos:narrower :ICD10GM_D00-D09;
+                skos:narrower :ICD10GM_D10-D36;
+                skos:narrower :ICD10GM_D37-D48.
+            :ICD10GM_III a skos:Concept ;
+            skos:prefLabel "III - Krankheiten des Blutes und der blutbildenden Organe sowie bestimmte Störungen mit Beteiligung des Immunsystems"@de ;
+            
+                skos:narrower :ICD10GM_D50-D53;
+                skos:narrower :ICD10GM_D55-D59;
+                skos:narrower :ICD10GM_D60-D64;
+                skos:narrower :ICD10GM_D65-D69;
+                skos:narrower :ICD10GM_D70-D77;
+                skos:narrower :ICD10GM_D80-D90.
+            :ICD10GM_IV a skos:Concept ;
+            skos:prefLabel "IV - Endokrine, Ernährungs- und Stoffwechselkrankheiten"@de ;
+            
+                skos:narrower :ICD10GM_E00-E07;
+                skos:narrower :ICD10GM_E10-E14;
+                skos:narrower :ICD10GM_E15-E16;
+                skos:narrower :ICD10GM_E20-E35;
+                skos:narrower :ICD10GM_E40-E46;
+                skos:narrower :ICD10GM_E50-E64;
+                skos:narrower :ICD10GM_E65-E68;
+                skos:narrower :ICD10GM_E70-E90.
+            :ICD10GM_V a skos:Concept ;
+            skos:prefLabel "V - Psychische und Verhaltensstörungen"@de ;
+            
+                skos:narrower :ICD10GM_F00-F09;
+                skos:narrower :ICD10GM_F10-F19;
+                skos:narrower :ICD10GM_F20-F29;
+                skos:narrower :ICD10GM_F30-F39;
+                skos:narrower :ICD10GM_F40-F48;
+                skos:narrower :ICD10GM_F50-F59;
+                skos:narrower :ICD10GM_F60-F69;
+                skos:narrower :ICD10GM_F70-F79;
+                skos:narrower :ICD10GM_F80-F89;
+                skos:narrower :ICD10GM_F90-F98;
+                skos:narrower :ICD10GM_F99-F99.
+            :ICD10GM_VI a skos:Concept ;
+            skos:prefLabel "VI - Krankheiten des Nervensystems"@de ;
+            
+                skos:narrower :ICD10GM_G00-G09;
+                skos:narrower :ICD10GM_G10-G14;
+                skos:narrower :ICD10GM_G20-G26;
+                skos:narrower :ICD10GM_G30-G32;
+                skos:narrower :ICD10GM_G35-G37;
+                skos:narrower :ICD10GM_G40-G47;
+                skos:narrower :ICD10GM_G50-G59;
+                skos:narrower :ICD10GM_G60-G64;
+                skos:narrower :ICD10GM_G70-G73;
+                skos:narrower :ICD10GM_G80-G83;
+                skos:narrower :ICD10GM_G90-G99.
+            :ICD10GM_VII a skos:Concept ;
+            skos:prefLabel "VII - Krankheiten des Auges und der Augenanhangsgebilde"@de ;
+            
+                skos:narrower :ICD10GM_H00-H06;
+                skos:narrower :ICD10GM_H10-H13;
+                skos:narrower :ICD10GM_H15-H22;
+                skos:narrower :ICD10GM_H25-H28;
+                skos:narrower :ICD10GM_H30-H36;
+                skos:narrower :ICD10GM_H40-H42;
+                skos:narrower :ICD10GM_H43-H45;
+                skos:narrower :ICD10GM_H46-H48;
+                skos:narrower :ICD10GM_H49-H52;
+                skos:narrower :ICD10GM_H53-H54;
+                skos:narrower :ICD10GM_H55-H59.
+            :ICD10GM_VIII a skos:Concept ;
+            skos:prefLabel "VIII - Krankheiten des Ohres und des Warzenfortsatzes"@de ;
+            
+                skos:narrower :ICD10GM_H60-H62;
+                skos:narrower :ICD10GM_H65-H75;
+                skos:narrower :ICD10GM_H80-H83;
+                skos:narrower :ICD10GM_H90-H95.
+            :ICD10GM_IX a skos:Concept ;
+            skos:prefLabel "IX - Krankheiten des Kreislaufsystems"@de ;
+            
+                skos:narrower :ICD10GM_I00-I02;
+                skos:narrower :ICD10GM_I05-I09;
+                skos:narrower :ICD10GM_I10-I15;
+                skos:narrower :ICD10GM_I20-I25;
+                skos:narrower :ICD10GM_I26-I28;
+                skos:narrower :ICD10GM_I30-I52;
+                skos:narrower :ICD10GM_I60-I69;
+                skos:narrower :ICD10GM_I70-I79;
+                skos:narrower :ICD10GM_I80-I89;
+                skos:narrower :ICD10GM_I95-I99.
+            :ICD10GM_X a skos:Concept ;
+            skos:prefLabel "X - Krankheiten des Atmungssystems"@de ;
+            
+                skos:narrower :ICD10GM_J00-J06;
+                skos:narrower :ICD10GM_J09-J18;
+                skos:narrower :ICD10GM_J20-J22;
+                skos:narrower :ICD10GM_J30-J39;
+                skos:narrower :ICD10GM_J40-J47;
+                skos:narrower :ICD10GM_J60-J70;
+                skos:narrower :ICD10GM_J80-J84;
+                skos:narrower :ICD10GM_J85-J86;
+                skos:narrower :ICD10GM_J90-J94;
+                skos:narrower :ICD10GM_J95-J99.
+            :ICD10GM_XI a skos:Concept ;
+            skos:prefLabel "XI - Krankheiten des Verdauungssystems"@de ;
+            
+                skos:narrower :ICD10GM_K00-K14;
+                skos:narrower :ICD10GM_K20-K31;
+                skos:narrower :ICD10GM_K35-K38;
+                skos:narrower :ICD10GM_K40-K46;
+                skos:narrower :ICD10GM_K50-K52;
+                skos:narrower :ICD10GM_K55-K64;
+                skos:narrower :ICD10GM_K65-K67;
+                skos:narrower :ICD10GM_K70-K77;
+                skos:narrower :ICD10GM_K80-K87;
+                skos:narrower :ICD10GM_K90-K93.
+            :ICD10GM_XII a skos:Concept ;
+            skos:prefLabel "XII - Krankheiten der Haut und der Unterhaut"@de ;
+            
+                skos:narrower :ICD10GM_L00-L08;
+                skos:narrower :ICD10GM_L10-L14;
+                skos:narrower :ICD10GM_L20-L30;
+                skos:narrower :ICD10GM_L40-L45;
+                skos:narrower :ICD10GM_L50-L54;
+                skos:narrower :ICD10GM_L55-L59;
+                skos:narrower :ICD10GM_L60-L75;
+                skos:narrower :ICD10GM_L80-L99.
+            :ICD10GM_XIII a skos:Concept ;
+            skos:prefLabel "XIII - Krankheiten des Muskel-Skelett-Systems und des Bindegewebes"@de ;
+            
+                skos:narrower :ICD10GM_M00-M25;
+                skos:narrower :ICD10GM_M30-M36;
+                skos:narrower :ICD10GM_M40-M54;
+                skos:narrower :ICD10GM_M60-M79;
+                skos:narrower :ICD10GM_M80-M94;
+                skos:narrower :ICD10GM_M95-M99.
+            :ICD10GM_XIV a skos:Concept ;
+            skos:prefLabel "XIV - Krankheiten des Urogenitalsystems"@de ;
+            
+                skos:narrower :ICD10GM_N00-N08;
+                skos:narrower :ICD10GM_N10-N16;
+                skos:narrower :ICD10GM_N17-N19;
+                skos:narrower :ICD10GM_N20-N23;
+                skos:narrower :ICD10GM_N25-N29;
+                skos:narrower :ICD10GM_N30-N39;
+                skos:narrower :ICD10GM_N40-N51;
+                skos:narrower :ICD10GM_N60-N64;
+                skos:narrower :ICD10GM_N70-N77;
+                skos:narrower :ICD10GM_N80-N98;
+                skos:narrower :ICD10GM_N99-N99.
+            :ICD10GM_XV a skos:Concept ;
+            skos:prefLabel "XV - Schwangerschaft, Geburt und Wochenbett"@de ;
+            
+                skos:narrower :ICD10GM_O00-O08;
+                skos:narrower :ICD10GM_O09-O09;
+                skos:narrower :ICD10GM_O10-O16;
+                skos:narrower :ICD10GM_O20-O29;
+                skos:narrower :ICD10GM_O30-O48;
+                skos:narrower :ICD10GM_O60-O75;
+                skos:narrower :ICD10GM_O80-O82;
+                skos:narrower :ICD10GM_O85-O92;
+                skos:narrower :ICD10GM_O94-O99.
+            :ICD10GM_XVI a skos:Concept ;
+            skos:prefLabel "XVI - Bestimmte Zustände, die ihren Ursprung in der Perinatalperiode haben"@de ;
+            
+                skos:narrower :ICD10GM_P00-P04;
+                skos:narrower :ICD10GM_P05-P08;
+                skos:narrower :ICD10GM_P10-P15;
+                skos:narrower :ICD10GM_P20-P29;
+                skos:narrower :ICD10GM_P35-P39;
+                skos:narrower :ICD10GM_P50-P61;
+                skos:narrower :ICD10GM_P70-P74;
+                skos:narrower :ICD10GM_P75-P78;
+                skos:narrower :ICD10GM_P80-P83;
+                skos:narrower :ICD10GM_P90-P96.
+            :ICD10GM_XVII a skos:Concept ;
+            skos:prefLabel "XVII - Angeborene Fehlbildungen, Deformitäten und Chromosomenanomalien"@de ;
+            
+                skos:narrower :ICD10GM_Q00-Q07;
+                skos:narrower :ICD10GM_Q10-Q18;
+                skos:narrower :ICD10GM_Q20-Q28;
+                skos:narrower :ICD10GM_Q30-Q34;
+                skos:narrower :ICD10GM_Q35-Q37;
+                skos:narrower :ICD10GM_Q38-Q45;
+                skos:narrower :ICD10GM_Q50-Q56;
+                skos:narrower :ICD10GM_Q60-Q64;
+                skos:narrower :ICD10GM_Q65-Q79;
+                skos:narrower :ICD10GM_Q80-Q89;
+                skos:narrower :ICD10GM_Q90-Q99.
+            :ICD10GM_XVIII a skos:Concept ;
+            skos:prefLabel "XVIII - Symptome und abnorme klinische und Laborbefunde, die anderenorts nicht klassifiziert sind"@de ;
+            
+                skos:narrower :ICD10GM_R00-R09;
+                skos:narrower :ICD10GM_R10-R19;
+                skos:narrower :ICD10GM_R20-R23;
+                skos:narrower :ICD10GM_R25-R29;
+                skos:narrower :ICD10GM_R30-R39;
+                skos:narrower :ICD10GM_R40-R46;
+                skos:narrower :ICD10GM_R47-R49;
+                skos:narrower :ICD10GM_R50-R69;
+                skos:narrower :ICD10GM_R70-R79;
+                skos:narrower :ICD10GM_R80-R82;
+                skos:narrower :ICD10GM_R83-R89;
+                skos:narrower :ICD10GM_R90-R94;
+                skos:narrower :ICD10GM_R95-R99.
+            :ICD10GM_XIX a skos:Concept ;
+            skos:prefLabel "XIX - Verletzungen, Vergiftungen und bestimmte andere Folgen äußerer Ursachen"@de ;
+            
+                skos:narrower :ICD10GM_S00-S09;
+                skos:narrower :ICD10GM_S10-S19;
+                skos:narrower :ICD10GM_S20-S29;
+                skos:narrower :ICD10GM_S30-S39;
+                skos:narrower :ICD10GM_S40-S49;
+                skos:narrower :ICD10GM_S50-S59;
+                skos:narrower :ICD10GM_S60-S69;
+                skos:narrower :ICD10GM_S70-S79;
+                skos:narrower :ICD10GM_S80-S89;
+                skos:narrower :ICD10GM_S90-S99;
+                skos:narrower :ICD10GM_T00-T07;
+                skos:narrower :ICD10GM_T08-T14;
+                skos:narrower :ICD10GM_T15-T19;
+                skos:narrower :ICD10GM_T20-T32;
+                skos:narrower :ICD10GM_T33-T35;
+                skos:narrower :ICD10GM_T36-T50;
+                skos:narrower :ICD10GM_T51-T65;
+                skos:narrower :ICD10GM_T66-T78;
+                skos:narrower :ICD10GM_T79-T79;
+                skos:narrower :ICD10GM_T80-T88;
+                skos:narrower :ICD10GM_T89-T89;
+                skos:narrower :ICD10GM_T90-T98.
+            :ICD10GM_XX a skos:Concept ;
+            skos:prefLabel "XX - Äußere Ursachen von Morbidität und Mortalität"@de ;
+            
+                skos:narrower :ICD10GM_V01-X59;
+                skos:narrower :ICD10GM_X60-X84;
+                skos:narrower :ICD10GM_X85-Y09;
+                skos:narrower :ICD10GM_Y10-Y34;
+                skos:narrower :ICD10GM_Y35-Y36;
+                skos:narrower :ICD10GM_Y40-Y84.
+            :ICD10GM_XXI a skos:Concept ;
+            skos:prefLabel "XXI - Faktoren, die den Gesundheitszustand beeinflussen und zur Inanspruchnahme des Gesundheitswesens führen"@de ;
+            
+                skos:narrower :ICD10GM_Z00-Z13;
+                skos:narrower :ICD10GM_Z20-Z29;
+                skos:narrower :ICD10GM_Z30-Z39;
+                skos:narrower :ICD10GM_Z40-Z54;
+                skos:narrower :ICD10GM_Z55-Z65;
+                skos:narrower :ICD10GM_Z70-Z76;
+                skos:narrower :ICD10GM_Z80-Z99.
+            :ICD10GM_XXII a skos:Concept ;
+            skos:prefLabel "XXII - Schlüsselnummern für besondere Zwecke"@de ;
+            
+                skos:narrower :ICD10GM_U00-U49;
+                skos:narrower :ICD10GM_U50-U52;
+                skos:narrower :ICD10GM_U55-U55;
+                skos:narrower :ICD10GM_U60-U61;
+                skos:narrower :ICD10GM_U69-U69;
+                skos:narrower :ICD10GM_U80-U85;
+                skos:narrower :ICD10GM_U99-U99.
             :ICD10GM_A00-A09 a skos:Concept ;
             skos:prefLabel "Infektiöse Darmkrankheiten"@de ;
             

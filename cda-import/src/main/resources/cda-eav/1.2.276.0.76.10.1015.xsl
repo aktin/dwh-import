@@ -156,7 +156,7 @@
     <!-- 1	ID des Krankenhauses 
     Die KrankenhausID muss nicht im DWH gespeichert werden.
     Bei der Zusammenführung ist dem Broker die Quelle bekannt und kann ggf. ergänzt werden.
-    Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar.
+    Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar. -->
     
     <!-- 2	ID der Notaufnahme
     siehe 1 - Falls es zwei Notaufnahmen gibt, haben sie ein seperates DWH oder ein gemeinsames und werden nicht getrennt ausgewertet. In beiden Fällen ist die Frage nicht wirklich relevant.
@@ -294,7 +294,7 @@
     
         <xsl:template name="encounter-module-id">
     	<!-- generate a unique id for encounter and module  -->
-		<xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:setId/@root/cda:ClinicalDocument/cda:setId/@extension,$aktin.module.id)"/>
+		<xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:setId/@root,/cda:ClinicalDocument/cda:setId/@extension,$aktin.module.id)"/>
     </xsl:template>
     
     <xsl:template name="EAV-Geschlecht">
@@ -790,11 +790,17 @@
             <xsl:call-template name="templateGetConceptValue"/>
         </fact>
         
-        <xsl:if test="../cda:effectiveTime/@width"> 
+        <xsl:if test="../cda:effectiveTime/cda:width/@value"> 
             <xsl:comment>212 Symptomdauer</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>SYMPTOMDURATION</xsl:attribute>
-                <xsl:value-of select="../cda:effectiveTime/@width"/>
+                <value>
+                    <xsl:attribute name="unit">
+                        <xsl:value-of select="../cda:effectiveTime/cda:width/@unit"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="xsi:type">numeric</xsl:attribute>   
+                    <xsl:value-of select="../cda:effectiveTime/cda:width/@value"/>
+                </value>            
             </fact>   
         </xsl:if>
     </xsl:template> 
