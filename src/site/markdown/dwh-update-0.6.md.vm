@@ -12,12 +12,14 @@ ${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.
 
 ```
 su
-wget ${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.6.tar.gz -O dwh-update-0.5-0.6.tar.gz
-tar -xvf dwh-update-0.5-0.6.tar.gz
+wget ${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.6.tar.gz
+tar -xvzf dwh-update-0.5-0.6.tar.gz
 cd dwh-update-0.6
 chmod +x aktin_dwh_update_0.6.sh
 ./aktin_dwh_update_0.6.sh
 ```
+
+Das das Update erfolgreich durchgeführt wurde, erkennen Sie daran TODO XXX
 
 Ab diesem Zeitpunkt akzeptiert die AKTIN-Schnittstelle CDA Dokumente nach dem Release-Stand v1.21, nach V1 (Template-ID 1.2.276.0.76.10.1015) und V2 (Template-ID 1.2.276.0.76.10.1019)
 
@@ -62,7 +64,7 @@ In der `psql` kann man dann folgende Befehle zum Leeren der vier Tabellen ausfü
 
 ```
 \connect i2b2
-TRUNCATE i2b2crcdata.observation_fact, i2b2crcdata.patient_dimension, i2b2crcdata.patient_mapping, i2b2crcdata.encounter_mapping;
+TRUNCATE i2b2crcdata.observation_fact, i2b2crcdata.patient_dimension, i2b2crcdata.visit_dimension, i2b2crcdata.patient_mapping, i2b2crcdata.encounter_mapping;
 ```
 Damit ist das DWH bereit, neue Daten zu empfangen.
 
@@ -81,6 +83,7 @@ delete from i2b2crcdata.patient_mapping pm  where not exists(select null from i2
 
 
 delete from i2b2crcdata.patient_dimension where update_date < '2016-10-01 0:00';
+delete from i2b2crcdata.visit_dimension where import_date < '2016-10-01 0:00';
 \q
 ```
 
