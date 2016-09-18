@@ -41,7 +41,9 @@
 		</plugins>
 	</build>
 	<modules>
+		<!--
 		<module>legacy-cda</module>
+		-->
 		<module>cda-validation</module>
 		<module>cda-server</module>
 		<module>cda-import</module>
@@ -49,55 +51,6 @@
 		<module>demo-server</module>
 		<module>demo-distribution</module>
 		<module>dwh-j2ee</module>
-		
-		<!-- wegen fehlerhafter tests kurzzeitig entfernt
-		<module>import-server</module>
-		-->
 	</modules>
-		<!-- link to latest site online 
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>wagon-maven-plugin</artifactId>
-				<version>1.0</version>
-				<configuration>
-					<serverId>www.aktin.org</serverId>
-					<url>scp://www.aktin.org/httpdocs/software</url>
-				</configuration>
-				<executions>
 
-					<execution>
-						<id>ssh-exec</id>
-						<phase>site-deploy</phase>
-						<goals>
-							<goal>sshexec</goal>
-						</goals>
-						<configuration>
-							<displayCommandOutputs>true</displayCommandOutputs>
-							<commands>
-								<command>rm latest</command>
-								<command>ln -s %{project.version} latest</command>
-							</commands>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		
-	<profiles>
-		<profile>
-			<id>release-profile</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			// does this work?? 
-			<properties>
-				<latestReleaseVersion>${project.version}</latestReleaseVersion>
-			</properties>
-		</profile>
-	</profiles>
--->
 </project>
