@@ -29,6 +29,17 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<autoversionsubmodules>true</autoversionsubmodules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<modules>
 		<module>legacy-cda</module>
 		<module>cda-validation</module>
@@ -43,7 +54,6 @@
 		<module>import-server</module>
 		-->
 	</modules>
-
 		<!-- link to latest site online 
 		<plugins>
 			<plugin>
