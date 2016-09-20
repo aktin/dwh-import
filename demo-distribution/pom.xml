@@ -34,6 +34,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
 							<descriptors>
 								<descriptor>src/assembly/package.xml</descriptor>
 							</descriptors>
