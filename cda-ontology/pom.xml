@@ -4,14 +4,14 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-ontology</artifactId>
-	<version>0.6-SNAPSHOT</version>
+	<version>0.6beta</version>
 	<description>
 	CDA Ontology definitions
 	</description>
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.6-SNAPSHOT</version>
+		<version>0.6beta</version>
 	</parent>
 	<build>
 		<resources>
