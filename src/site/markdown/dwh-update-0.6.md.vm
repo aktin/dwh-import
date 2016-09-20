@@ -14,9 +14,10 @@ ${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.
 su
 wget ${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.6.tar.gz
 tar xvzf dwh-update-0.5-0.6.tar.gz
-cd dwh-update-0.6
-chmod +x aktin_dwh_update_0.6.sh
-./aktin_dwh_update_0.6.sh
+cd dwh-update
+dos2unix aktin_dwh_update.sh
+chmod +x aktin_dwh_update.sh
+./aktin_dwh_update.sh
 ```
 
 Das das Update erfolgreich durchgeführt wurde, erkennen Sie daran TODO XXX
@@ -33,8 +34,17 @@ Die alte Version muss aus dem Wildfly Service entfernt werden. Dies kann man z.B
 sudo $WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.5-SNAPSHOT.ear"
 ```
 Der Befehl war erfolgreich, wenn keine Fehlermeldung angezeigt wird und anschließend eine Datei `dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` im gleichen Ordner erstellt wurde.
+
+```
+ls $WILDFLY_HOME/standalone/deployments/ | grep .ear.undeployed
+#dwh-j2ee-0.5-SNAPSHOT.ear.deployed
+```
+
 Nach dem Undeploy können Sie die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear` und `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` (in dieser Reihefolge) löschen. Das Löschen hat keine Auswirkung.
 
+```
+rm $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear*
+```
 ### Einbinden der neuen Software
 Zuerst muss die neue EAR-Datei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [EAR Release 0.6](
 ${releaseRepoUrl}/org/aktin/dwh-j2ee/${latestReleaseVersion}/dwh-j2ee-${latestReleaseVersion}.ear). 
@@ -43,14 +53,21 @@ ${releaseRepoUrl}/org/aktin/dwh-j2ee/${latestReleaseVersion}/dwh-j2ee-${latestRe
 wget ${releaseRepoUrl}/org/aktin/dwh-j2ee/${latestReleaseVersion}/dwh-j2ee-${latestReleaseVersion}.ear -O dwh-j2ee-${latestReleaseVersion}.ear
 ```
 Danach kann man die neue EAR-Datei in das Deploymentverzeichnis unter `$WILDFLY_HOME/standalone/deployments` laden. `$install_root` ist hier der Pfad zu der heruntergeladenen Datei, z.B. das aktuelle Verzeichnis: `install_root=.`
+Dabei sollte man sicher stellen, dass die betreffende Datei nicht bereits in dem Verzeichnis vorhanden ist. (`ls $WILDFLY_HOME/standalone/deployments | grep dwh-j2ee-0.6-SNAPSHOT.ear` ergibt leeres Ergebnis) Folgendes Befehl sollte man per `sudo` oder als `root` ausführen. 
 
 ```
-if [ ! -f "$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6-SNAPSHOT.ear" ]; then 
-	sudo cp $install_root/dwh-j2ee-0.6.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6.ear   
-    echo "Kopieren der Datei $install_root/dwh-j2ee-0.6.ear nach $WILDFLY_HOME/standalone/deployments/ erfolgreich."
-else 
-    echo "Die Datei wurde nicht kopiert, da bereits vorhanden"
-fi
+cp $install_root/dwh-j2ee-0.6.ear $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.6.ear   
+```
+Nach dem kopieren erscheint dann ein `dwh-j2ee-0.6-SNAPSHOT.ear.isdeploying` und nach einiger Zeit dann, bei erfolgreicher Deployment, `dwh-j2ee-0.6-SNAPSHOT.ear.deployed`. Sollte eine Datei mit dem Namen `dwh-j2ee-0.6-SNAPSHOT.ear.failed` erscheinen, wenden Sie sich bitte an uns (it-support@aktin.org). 
+
+```
+ls $WILDFLY_HOME/standalone/deployments/ | grep dwh-j2ee-0.6-SNAPSHOT.ear
+#dwh-j2ee-0.6-SNAPSHOT.ear
+#dwh-j2ee-0.6-SNAPSHOT.ear.isdeploying
+## wird nach einiger Zeit zu
+#dwh-j2ee-0.6-SNAPSHOT.ear.deployed
+## oder im Falle eines Fehlers 
+#dwh-j2ee-0.6-SNAPSHOT.ear.failed
 ```
 
 ### Datenbank-Reset
