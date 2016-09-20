@@ -8,30 +8,65 @@ Falls Sie einen Debian-Server nutzen, der anhand der Anleitung eingerichtet wurd
 Skriptbasiertes Update für Debian
 ---------------------------------
 Für laufende DWH auf Debian Servern stellen wir eine Update-Skript bereit, zu finden unter [Debian Update Paket](
-${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.6.tar.gz). Step-by-Step Anleitung zur Ausführung:
+${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.6.tar.gz). 
+Für die Ausführung ist wichtig, dass der User als `root` angemeldet ist. 
+Dazu führt man, falls der User auf der Sudoer-Liste steht (der User `root` hat dann meist kein eigenes Passwort), Folgendes aus:
+
+```
+sudo su
+```
+oder, wenn der User nicht auf der Sudoer-Liste steht (`root` hat eigenes Passwort), Folgendes:
 
 ```
 su
+```
+Step-by-Step Anleitung zur Ausführung als `root`:
+
+```
 wget ${releaseRepoUrl}/org/aktin/dwh-update/${latestReleaseVersion}/dwh-update-0.5-0.6.tar.gz
 tar xvzf dwh-update-0.5-0.6.tar.gz
 cd dwh-update
-dos2unix aktin_dwh_update.sh
+dos2unix *.*
 chmod +x aktin_dwh_update.sh
 ./aktin_dwh_update.sh
 ```
+Zur Überprüfung, ob das Update erfolgreich war, können Sie folgende Liste durchgehen:
 
-Das das Update erfolgreich durchgeführt wurde, erkennen Sie daran TODO XXX
+* Bei der Auflistung des Verzeichnisses `/opt/wildfly-9.0.2.Final/standalone/deployments/` finden Sie nun unter Anderem die folgende Auflistung:
+
+```
+ls /opt/wildfly-9.0.2.Final/standalone/deployments/
+#dwh-j2ee-0.5-SNAPSHOT.ear
+#dwh-j2ee-0.5-SNAPSHOT.ear.undeployed
+#dwh-j2ee-0.6-SNAPSHOT.ear           
+#dwh-j2ee-0.6-SNAPSHOT.ear.deployed 
+```
+## Sollte in der Auflistung z.B. die Datei `dwh-j2ee-0.6-SNAPSHOT.ear.failed` auftauchen, bitte kontaktieren Sie uns.
+
+* In der Weboberfläche sind die Login-Felder nicht mehr vorausgefüllt. (Sie können sich weiterhin mit den gewohnten Daten einloggen, nur die fest einprogrammierten Standardlogindaten wurden entfernt.)
 
 Ab diesem Zeitpunkt akzeptiert die AKTIN-Schnittstelle CDA Dokumente nach dem Release-Stand v1.21, nach V1 (Template-ID 1.2.276.0.76.10.1015) und V2 (Template-ID 1.2.276.0.76.10.1019)
 
 
 Manuelles Update für Debian, CentOS oder andere Betriebssysteme
 ---------------------------------------------------------------
-### Löschen der alten Software
-Die alte Version muss aus dem Wildfly Service entfernt werden. Dies kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`
+### Anmelden als ROOT
+Für die Ausführung ist wichtig, dass der User als `root` angemeldet ist. 
+Dazu führt man, falls der User auf der Sudoer-Liste steht (der User `root` hat dann meist kein eigenes Passwort), Folgendes aus:
 
 ```
-sudo $WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.5-SNAPSHOT.ear"
+sudo su
+```
+oder, wenn der User nicht auf der Sudoer-Liste steht (`root` hat eigenes Passwort), Folgendes:
+
+```
+su
+```
+### Löschen der alten Software
+Die alte Version muss aus dem Wildfly Service entfernt werden. Dies kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`, dieser Befehl sollte als `root` ausgeführt werden:
+
+```
+$WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.5-SNAPSHOT.ear"
 ```
 Der Befehl war erfolgreich, wenn keine Fehlermeldung angezeigt wird und anschließend eine Datei `dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` im gleichen Ordner erstellt wurde.
 
@@ -40,11 +75,12 @@ ls $WILDFLY_HOME/standalone/deployments/ | grep .ear.undeployed
 #dwh-j2ee-0.5-SNAPSHOT.ear.deployed
 ```
 
-Nach dem Undeploy können Sie die Dateien `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear` und `$WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` (in dieser Reihefolge) löschen. Das Löschen hat keine Auswirkung.
+Nach dem Undeploy können Sie die beiden Dateien `dwh-j2ee-0.5-SNAPSHOT.ear` und `dwh-j2ee-0.5-SNAPSHOT.ear.undeployed` (in dieser Reihefolge) aus dem Verzeichnis `$WILDFLY_HOME/standalone/deployments/` löschen. (Das Löschen kann nur user mit `root` Rechten ausführen.) Das Löschen hat keine Auswirkung. 
 
 ```
 rm $WILDFLY_HOME/standalone/deployments/dwh-j2ee-0.5-SNAPSHOT.ear*
 ```
+
 ### Einbinden der neuen Software
 Zuerst muss die neue EAR-Datei auf den Server geladen werden. Die benötigte EAR-Datei finden Sie unter [EAR Release 0.6](
 ${releaseRepoUrl}/org/aktin/dwh-j2ee/${latestReleaseVersion}/dwh-j2ee-${latestReleaseVersion}.ear). 
@@ -64,9 +100,9 @@ Nach dem kopieren erscheint dann ein `dwh-j2ee-0.6-SNAPSHOT.ear.isdeploying` und
 ls $WILDFLY_HOME/standalone/deployments/ | grep dwh-j2ee-0.6-SNAPSHOT.ear
 #dwh-j2ee-0.6-SNAPSHOT.ear
 #dwh-j2ee-0.6-SNAPSHOT.ear.isdeploying
-## wird nach einiger Zeit zu
+# wird nach einiger Zeit zu
 #dwh-j2ee-0.6-SNAPSHOT.ear.deployed
-## oder im Falle eines Fehlers 
+# oder im Falle eines Fehlers 
 #dwh-j2ee-0.6-SNAPSHOT.ear.failed
 ```
 
@@ -85,6 +121,19 @@ TRUNCATE i2b2crcdata.observation_fact, i2b2crcdata.patient_dimension, i2b2crcdat
 ```
 Damit ist das DWH bereit, neue Daten zu empfangen.
 
+### (Optional, empfohlen) Löschen des vorausgefüllten Loginforms in der Weboberfläche
+Da der `demo` User des i2b2 Interfaces gelöscht oder geändert werden sollten, sollten auch die Standardlogindaten aus dem Loginformular entfernt werden. Hierbei ist `i2b2_WEBDIR` die i2b2 Webclient Verzeichnis, z.B. `i2b2_WEBDIR=/var/www/html/webclient`. Jenach Distribution und Installation kann dies auch `/var/www/webclient` oder eine individuell konfigurierte Verzeichnis sein.
+
+Hierzu wird empfohlen, dass ein Backup der betroffene Datei erstellt wird, sofern diese nicht bereits vorhanden ist. 
+
+```
+cp $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js.orig
+```
+Dann kann man per `sed`-Befehl die betreffende Zeilen in der Datei austauschen. 
+
+```
+sed -i "s/name=\"uname\" id=\"loginusr\" value=\"demo\"/name=\"uname\" id=\"loginusr\" value=\"\"/g; s/name=\"pword\" id=\"loginpass\" value=\"demouser\"/name=\"pword\" id=\"loginpass\" value=\"\"/g" $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js
+```
 
 ### (Optional) Zeitpunkt des Produktivstarts manuell festlegen
 Wenn der Import aus dem Notaufnahmesystem während des Updates schon läuft, bringt das zwei Nachteile mit sich: Erstens wird die (dringend angeratene) Umstellung auf Version 2 des CDA-Tremplates erst nach dem DWH-Update durchgeführt und somit in der Zwischenzeit weitere Version 1 CDAs importiert. Dies ist technisch kein Problem, aber ggf. unschön für eine Auswertung. Zweitens ist der Produktiv-Start (also Beginn der Datensammlung) dann der Zeitpunkt, zu dem das Script ausgeführt wurde. Auch hier möchte man ggf. einen definierten Startzeitpunkt (z.B. Montag 0:00 Uhr) wählen. Dies lässt sich am einfachsten realisieren, indem man nachträglich alle Daten löscht, die vor dem selbst gewählten Startdatum liegen. Dazu sind folgende manuellen Schritte in der Server-Konsole auszuführen (das Datum kann frei gewählt werden, sollte aber nicht in der Zukunft liegen, da sonst natürlich wieder der Ausführungs-Zeitpunkt und nicht der angegebene der effektive Produktiv-Start wird):
