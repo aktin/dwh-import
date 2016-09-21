@@ -26,8 +26,8 @@ Step-by-Step Anleitung zur Ausführung als `root`:
 wget ${releaseRepoUrl}/org/aktin/dwh-update/${dwhServerVersion}/dwh-update-${dwhServerVersion}.tar.gz
 tar xvzf dwh-update-${dwhServerVersion}.tar.gz
 cd dwh-update
-dos2unix *.*
-chmod +x aktin_dwh_update.sh
+## dos2unix *.*
+## chmod +x aktin_dwh_update.sh
 ./aktin_dwh_update.sh
 ```
 
