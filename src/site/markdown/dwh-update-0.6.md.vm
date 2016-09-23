@@ -26,8 +26,6 @@ Step-by-Step Anleitung zur Ausführung als `root`:
 wget ${releaseRepoUrl}/org/aktin/dwh-update/${dwhServerVersion}/dwh-update-${dwhServerVersion}.tar.gz
 tar xvzf dwh-update-${dwhServerVersion}.tar.gz
 cd dwh-update
-## dos2unix *.*
-## chmod +x aktin_dwh_update.sh
 ./aktin_dwh_update.sh
 ```
 
@@ -43,7 +41,7 @@ ls /opt/wildfly-9.0.2.Final/standalone/deployments/
 #dwh-j2ee-${dwhImportVersion}.ear.deployed 
 ```
 
-* In der Weboberfläche sind die Login-Felder nicht mehr vorausgefüllt. (Sie können sich weiterhin mit den gewohnten Daten einloggen, nur die fest einprogrammierten Standardlogindaten wurden entfernt.)
+* In der i2b2-Weboberfläche sind die Login-Felder nicht mehr vorausgefüllt. Sie können sich weiterhin mit den gewohnten Daten einloggen, nur die Formular-Vorbelegung mit den Standard-Benutzerdaten wurden entfernt. Falls Sie noch keinen eigenen Benutzer angelegt haben bzw. noch die Standard-Passwörter verwenden, sollten sie diese ändern. Gehen Sie dazu auf die Seite <i2b2-ServerURL>/admin (bzw. ersetzen Sie "webclient" mit "admin" wenn Sie die i2b2-Anmeldemaske sehen). Die Standard-Zugangsdaten lauten hier i2b2/demouser - sie sollten das Passwort unbedingt ändern. Die Verwaltung der Benutzer unter dem Menüpunkt "Manage users" sollte selbsterklärend sein.
 
 Ab diesem Zeitpunkt akzeptiert die AKTIN-Schnittstelle CDA Dokumente nach dem Release-Stand v1.21, nach V1 (Template-ID 1.2.276.0.76.10.1015) und V2 (Template-ID 1.2.276.0.76.10.1019)
 
@@ -138,6 +136,19 @@ In der `psql` kann man dann folgende Befehle zum Leeren der vier Tabellen ausfü
 \connect i2b2
 TRUNCATE i2b2crcdata.observation_fact, i2b2crcdata.patient_dimension, i2b2crcdata.visit_dimension, i2b2crcdata.patient_mapping, i2b2crcdata.encounter_mapping;
 ```
+
+Mit folgenden Befehlen wird die `psql` Konsole geschlossen und der User `postgres` abgemeldet.
+
+```
+\q
+exit
+```
+Nun sollte der Wildfly Service neugestartet werden.
+
+``` 
+service wildfly restart
+```
+
 Damit ist das DWH bereit, neue Daten zu empfangen.
 
 (Optional, empfohlen) Keine vorausgefüllten Benutzerdaten in i2b2
@@ -151,13 +162,20 @@ Je nach Distribution und Installation kann dies auch `/var/www/webclient` oder e
 
 Ändern Sie nun die Datei `$i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js` mit einem Editor Ihrer Wahl (ggf. vorher ein Backup erstellen).
 
-In Zeile XXX bei loginusr das Feld `value="demo"` ändern in `value=""`.
-Außerdem in Zeile XXX bei loginpass das Feld `value="demouser"` ändern in `value=""`.
+### ```
+### cp $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js.orig
+### 
+### sed -i "s/id=\"loginusr\" value=\"demo\"/id=\"loginusr\" value=\"\"/g" $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js
+### sed -i "s/id=\"loginpass\" value=\"demouser\"/id=\"loginpass\" value=\"\"/g" $i2b2_WEBDIR/js-i2b2/cells/PM/PM_misc.js
+### ```
+
+In Zeile 123 bei loginusr das Feld `value="demo"` ändern in `value=""`.
+Außerdem in Zeile 125 bei loginpass das Feld `value="demouser"` ändern in `value=""`.
 
 (Optional) Zeitpunkt des Produktivstarts manuell festlegen
 ----------------------------------------------------------
 
-Wenn der Import aus dem Notaufnahmesystem während des Updates schon läuft, bringt das zwei Nachteile mit sich: Erstens wird die (dringend angeratene) Umstellung auf Version 2 des CDA-Tremplates erst nach dem DWH-Update durchgeführt und somit in der Zwischenzeit weitere Version 1 CDAs importiert. Dies ist technisch kein Problem, aber ggf. unschön für eine Auswertung. Zweitens ist der Produktiv-Start (also Beginn der Datensammlung) dann der Zeitpunkt, zu dem das Script ausgeführt wurde. Auch hier möchte man ggf. einen definierten Startzeitpunkt (z.B. Montag 0:00 Uhr) wählen. Dies lässt sich am einfachsten realisieren, indem man nachträglich alle Daten löscht, die vor dem selbst gewählten Startdatum liegen. Dazu sind folgende manuellen Schritte in der Server-Konsole auszuführen (das Datum kann frei gewählt werden, sollte aber nicht in der Zukunft liegen, da sonst natürlich wieder der Ausführungs-Zeitpunkt und nicht der angegebene der effektive Produktiv-Start wird):
+Wenn der Import aus dem Notaufnahmesystem während des Updates schon läuft, bringt das zwei Nachteile mit sich: Erstens wird die (dringend angeratene) Umstellung auf Version 2 des CDA-Tremplates erst nach dem DWH-Update durchgeführt und somit in der Zwischenzeit weitere Version 1 CDAs importiert. Dies ist technisch kein Problem, aber ggf. unschön für eine Auswertung. Zweitens ist der Produktiv-Start (also Beginn der Datensammlung) dann der Zeitpunkt, zu dem das Script ausgeführt wurde. Auch hier möchte man ggf. einen definierten Startzeitpunkt (z.B. Montag 0:00 Uhr) wählen. Dies lässt sich am einfachsten realisieren, indem man nachträglich alle Daten löscht, die vor dem selbst gewählten Startdatum liegen. Dazu sind folgende manuellen Schritte in der Server-Konsole auszuführen (das Datum kann frei gewählt werden, sollte aber nicht in der Zukunft liegen, da sonst natürlich wieder der Ausführungs-Zeitpunkt und nicht der angegebene der effektive Produktiv-Start wird). Dazu sollte man sich als `root` angemeldet sein.
 
 ```
 su postgres
@@ -172,6 +190,9 @@ delete from i2b2crcdata.patient_mapping pm  where not exists(select null from i2
 delete from i2b2crcdata.patient_dimension where update_date < '2016-10-01 0:00';
 delete from i2b2crcdata.visit_dimension where import_date < '2016-10-01 0:00';
 \q
+exit
+service wildfly restart
+
 ```
 
 (Optional) SMTP Einrichtung
