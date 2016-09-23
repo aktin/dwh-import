@@ -19,7 +19,7 @@
 		<!-- specifies the package and source version to which the site refers to -->
 		<dwhImportVersion>0.6beta</dwhImportVersion>
 		<dwhServerVersion>0.2rc2</dwhServerVersion>
-		<releaseRepoUrl>https://www.aktin.org/software/repo</releaseRepoUrl>
+		<releaseRepoUrl>http://www.aktin.org/software/repo</releaseRepoUrl>
 		<!-- encoding stuff -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
