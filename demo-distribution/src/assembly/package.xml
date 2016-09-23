@@ -27,9 +27,10 @@
 	<fileSets>
 		<fileSet>
 			<outputDirectory>examples</outputDirectory>
-			<directory>target/classes/CDAexample</directory>
+			<directory>target/classes</directory>
 			<includes>
-				<include>*.xml</include>
+				<include>Additional Examples/*</include>
+				<include>CDA Beispiele*/*</include>
 			</includes>
 		</fileSet>
 	</fileSets>
