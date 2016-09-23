@@ -3,6 +3,7 @@ package org.aktin.cda;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -17,31 +18,41 @@ import javax.xml.transform.stream.StreamSource;
 import org.w3c.dom.Document;
 
 public class SingleTemplateValidator implements URIResolver{
+	private static final Logger log = Logger.getLogger(SingleTemplateValidator.class.getName());
 	private static final String svrlSystemId = "urn:local:svrl";
 	private URL svrlTransformation;
-	private TransformerFactory factory;
 	private Transformer transformer;
 
 	public SingleTemplateValidator(URL svrlTransformation) throws IOException, TransformerConfigurationException{
 		this.svrlTransformation = svrlTransformation;
-		factory = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
+	}
+
+	private void loadTransformer() throws TransformerConfigurationException{
+		log.info("Loading schematron transformation: "+svrlTransformation.toString()+" ...");
+		TransformerFactory factory = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
 		// resolve internal URIs
 		factory.setURIResolver(this);
 		try( InputStream in = svrlTransformation.openStream() ){
 			StreamSource xsl = new StreamSource(in);
 			xsl.setSystemId(svrlSystemId);
 			transformer = factory.newTransformer(xsl);
+		} catch (IOException e) {
+			throw new TransformerConfigurationException("Unable to read xslt: "+svrlTransformation.toString(), e);
 		}
 
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		
-
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");		
 	}
-
 	public Document validate(Source cdaSource) throws TransformerException{
-		//Result result = new StreamResult(System.out);
 		DOMResult dom = new DOMResult();
-		transformer.transform(cdaSource, dom);
+		// make sure that multiple parallel calls block here
+		// and the loading is done by only one thread
+		synchronized( this ){
+			if( transformer == null ){
+				loadTransformer();
+			}
+			// schematron evaluation
+			transformer.transform(cdaSource, dom);
+		}
 		return (Document)dom.getNode();
 	}
 
