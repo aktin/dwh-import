@@ -156,7 +156,7 @@ Man sollte das Paket in einer temporären Verzeichnis entpacken und die enthalte
 
 ```
 CDATMPDIR=/var/tmp/cda-ontology
-unzip packages/cda-ontology-${project.dependencies[1].version}.jar -d $CDATMPDIR
+unzip packages/cda-ontology-${dwhImportVersion}.jar -d $CDATMPDIR
 chmod 777 -R $CDATMPDIR
 
 su - postgres bash -c "psql -d i2b2 -f $CDATMPDIR/sql/meta.sql" 2>&1 >> update_sql.log
