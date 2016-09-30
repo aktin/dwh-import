@@ -4,7 +4,7 @@
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>dwh-import</artifactId>
-	<version>0.6</version>
+	<version>0.6.1-SNAPSHOT</version>
   
 	<name>AKTIN : DWH Import</name>
 	<description>AKTIN Software</description>
@@ -17,7 +17,7 @@
 	
 	<properties>
 		<!-- specifies the package and source version to which the site refers to -->
-		<dwhImportVersion>0.6</dwhImportVersion>
+		<dwhImportVersion>0.6.1</dwhImportVersion>
 		<dwhServerVersion>0.2</dwhServerVersion>
 		<releaseRepoUrl>http://www.aktin.org/software/repo</releaseRepoUrl>
 		<!-- encoding stuff -->
@@ -27,19 +27,22 @@
 
 	<scm>
 		<developerConnection>scm:git:git@gitlab.uni-oldenburg.de:AKTIN/dwh-import.git</developerConnection>
-		<tag>dwh-import-0.6</tag>
 	</scm>
 
 	<modules>
 		<!--
 		<module>legacy-cda</module>
 		-->
+		<!--
 		<module>cda-validation</module>
 		<module>cda-server</module>
+		-->
 		<module>cda-import</module>
+		<!--
 		<module>cda-ontology</module>
 		<module>demo-server</module>
 		<module>demo-distribution</module>
+		-->
 		<module>dwh-j2ee</module>
 	</modules>
 
