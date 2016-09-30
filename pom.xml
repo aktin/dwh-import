@@ -40,7 +40,6 @@
 		<module>cda-ontology</module>
 		<module>demo-server</module>
 		<module>demo-distribution</module>
-		<module>dwh-j2ee</module>
 	</modules>
 
 </project>
