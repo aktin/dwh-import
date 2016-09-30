@@ -111,8 +111,13 @@
                  -->
                 <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
                 <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
+                <!-- Discharge Disposition Code = 'Tod' ; then EncounterEnd=Death Date; If no Discharge Date = empty deceased-Element is sufficient for I2B2 -->
                 <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode/@code='1'">
-                    <deceased><xsl:value-of select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value"/></deceased>
+                    <deceased>
+                        <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value">
+                            <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value)"/>
+                        </xsl:if>
+                    </deceased>
                 </xsl:if>
                 <encounter>
                     <xsl:attribute name="id">
@@ -1181,7 +1186,9 @@
                 <xsl:when test="string-length($DateTimeString) = 8"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/></xsl:when>
                 <xsl:when test="string-length($DateTimeString) = 12"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/>:<xsl:value-of select="substring($DateTimeString,11,2)"/></xsl:when>
                 <xsl:when test="string-length($DateTimeString) > 13"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/>:<xsl:value-of select="substring($DateTimeString,11,2)"/>:<xsl:value-of select="substring($DateTimeString,13,2)"/></xsl:when>
-                <xsl:otherwise>XSL-Transformation Error: Datetime Format not recognized</xsl:otherwise>
+                <xsl:otherwise>
+                    <xsl:message terminate="yes">XSL-Transformation Error: Datetime Format not recognized</xsl:message>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
     </xsl:function>
