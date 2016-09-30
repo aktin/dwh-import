@@ -228,11 +228,11 @@
             <effectiveTime>
                 <!-- Aufnahmezeitpunkt (Datum und Zeit), Zeitangabe genau bis auf die Minute -->
                 <low value="201501171603"/>
-                <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
+                <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung, hier auch als Deceased-Date wg, Disposition-Code=1 -->
                 <high value="201501171735"/>
             </effectiveTime>
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
-            <dischargeDispositionCode code="4" codeSystem="1.2.276.0.76.3.1.195.5.56"/>
+            <dischargeDispositionCode code="1" codeSystem="1.2.276.0.76.3.1.195.5.56"/>
         </encompassingEncounter>
     </componentOf>
     
