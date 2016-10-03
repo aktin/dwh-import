@@ -107,55 +107,10 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-server</artifactId>
-			<version>0.6</version>
+			<version>0.6.2-SNAPSHOT</version>
 		</dependency>
 
-<!-- 
-       <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-arquillian-container-managed</artifactId>
-            <version>7.1.1.Final</version>
-            <scope>test</scope>
-        </dependency>
-       <dependency>
-            <groupId>org.jboss.arquillian.protocol</groupId>
-            <artifactId>arquillian-protocol-servlet</artifactId>
-            <scope>test</scope>
-        </dependency>
-             <dependency> 
-                     <groupId>org.jboss.spec</groupId> 
-                     <artifactId>jboss-javaee-web-6.0</artifactId> 
-                     <type>pom</type> 
-                 </dependency> 
--->
 
-<!-- 
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-            <version>1.0.0.CR4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.main.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <version>3.1.2.2</version>
-            <scope>test</scope>
-        </dependency>
- -->
-<!-- 
-		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-arquillian-container-managed</artifactId>
-			<version>8.2.1.Final</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-embedded</artifactId>
-			<version>8.2.0.Final</version>
-		</dependency>
- -->
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
