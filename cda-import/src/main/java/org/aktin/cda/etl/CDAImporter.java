@@ -56,7 +56,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		InitialContext ctx = new InitialContext();
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
 
-		// TODO where to store/get the configuration for this EJB???
+		// TODO read/inject preferences via dwh-api
 		String dsName = "java:/QueryToolDemoDS";
 		log.info("Connecting to i2b2 database via "+dsName);
 		DataSource crcDS = (DataSource)ctx.lookup(dsName);
@@ -70,6 +70,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			// configuration with 'project' property
 			config.put("project", "AKTIN");
 			inserter = new I2b2Inserter(crcDS, config);
+			// TODO convert patient store and visit store to EJB singletons and inject here
 			patientStore = new PostgresPatientStore(crcDS, config);
 			visitStore = new PostgresVisitStore(crcDS, config);
 		}catch( SQLException e ){
