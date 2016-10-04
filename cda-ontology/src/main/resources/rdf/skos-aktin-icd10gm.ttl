@@ -43801,11 +43801,6 @@
             :ICD10GM_Y36 a skos:Concept ;
             skos:prefLabel "Verletzungen durch Kriegshandlungen"@de ;
             skos:notation "ICD10GM:Y36";
-                skos:narrower :ICD10GM_Y36.0;
-                skos:narrower :ICD10GM_Y36.5;
-                skos:narrower :ICD10GM_Y36.6;
-                skos:narrower :ICD10GM_Y36.7;
-                skos:narrower :ICD10GM_Y36.8;
                 skos:narrower :ICD10GM_Y36.9.
             :ICD10GM_Y36.9 a skos:Concept ;
             skos:prefLabel "Verletzungen durch Kriegshandlungen"@de ;
@@ -43813,15 +43808,6 @@
             :ICD10GM_Y57 a skos:Concept ;
             skos:prefLabel "Unerwünschte Nebenwirkungen bei therapeutischer Anwendung von Arzneimitteln und Drogen"@de ;
             skos:notation "ICD10GM:Y57";
-                skos:narrower :ICD10GM_Y57.0;
-                skos:narrower :ICD10GM_Y57.1;
-                skos:narrower :ICD10GM_Y57.2;
-                skos:narrower :ICD10GM_Y57.3;
-                skos:narrower :ICD10GM_Y57.4;
-                skos:narrower :ICD10GM_Y57.5;
-                skos:narrower :ICD10GM_Y57.6;
-                skos:narrower :ICD10GM_Y57.7;
-                skos:narrower :ICD10GM_Y57.8;
                 skos:narrower :ICD10GM_Y57.9.
             :ICD10GM_Y57.9 a skos:Concept ;
             skos:prefLabel "Komplikationen durch Arzneimittel oder Drogen"@de ;
@@ -43846,15 +43832,6 @@
             :ICD10GM_Y84 a skos:Concept ;
             skos:prefLabel "Chirurgische und sonstige medizinische Maßnahmen als Ursache einer abnormen Reaktion eines Patienten oder einer späteren Komplikation, ohne Angabe eines Zwischenfalls zum Zeitpunkt der Durchführung der Maßnahme"@de ;
             skos:notation "ICD10GM:Y84";
-                skos:narrower :ICD10GM_Y84.0;
-                skos:narrower :ICD10GM_Y84.1;
-                skos:narrower :ICD10GM_Y84.2;
-                skos:narrower :ICD10GM_Y84.3;
-                skos:narrower :ICD10GM_Y84.4;
-                skos:narrower :ICD10GM_Y84.5;
-                skos:narrower :ICD10GM_Y84.6;
-                skos:narrower :ICD10GM_Y84.7;
-                skos:narrower :ICD10GM_Y84.8;
                 skos:narrower :ICD10GM_Y84.9.
             :ICD10GM_Y84.9 a skos:Concept ;
             skos:prefLabel "Zwischenfälle durch medizinische Maßnahmen, nicht näher bezeichnet"@de ;
