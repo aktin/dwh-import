@@ -3,7 +3,7 @@
 
 Diese Informationen richten sich an die Entwickler der CDA-Dokumente, die das Mapping zwischen dem Notaufnahme-System und dem Basismodul-CDA herstellen bzw. das CDA generieren.
 
-Die hier genannten (projektrelevanten) Änderungen beziehen sich auf die Umstellung von v1.17 (also das zuvor gültige AKTIN Release 0.5) auf CDA Release v1.21 (das im aktuell gültigen AKTIn Release 0.6 verwendet wird).
+Die hier genannten (projektrelevanten) Änderungen beziehen sich auf die Umstellung von CDA Release v1.17 (also das im zuvor gültige AKTIN Release 0.5 verwendete) auf CDA Release v1.21 (das im aktuell gültigen AKTIN Release 0.6 verwendet wird).
 
 Weitere allgemeine Informationen zur CDA-Implementierung finden Sie auch unter dem Menüpunkt [Kurzanleitung CDA](cda-quickstart.html)
 
