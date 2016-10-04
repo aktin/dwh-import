@@ -5,7 +5,7 @@ Version 0.6.3
 -------------
 * Installer zur direkten Neuinstallation auf Version 0.6.3
 
-Version 0.6.2
+Version 0.6.1
 -------------
 * Korrektur eines Fehlers beim Import von CDAs mit Todes-Zeitpunkt (Discharge-Code = 1) _Fehler neu eingeführt in Version 0.6_
 
