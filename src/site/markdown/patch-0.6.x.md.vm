@@ -24,7 +24,7 @@ Löschen der alten Software
 Die alte Version muss aus dem Wildfly Service entfernt werden. Dies kann man z.B. mit den folgenden Befehlen erreichen, wobei `$WILDFLY_HOME` auf den Ordner verlinkt, wo beim ersten Installation Wildfly eingerichtet wurde, z.B. `WILDFLY_HOME=/opt/wildfly-9.0.2.Final`, dieser Befehl sollte als `root` ausgeführt werden:
 
 ```
-$WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.6-SNAPSHOT.ear"
+$WILDFLY_HOME/bin/jboss-cli.sh -c --command="undeploy --name=dwh-j2ee-0.6*.ear"
 ```
 Der Befehl war erfolgreich, wenn keine Fehlermeldung angezeigt wird und anschließend eine Datei `dwh-j2ee-0.6-SNAPSHOT.ear.undeployed` im gleichen Ordner erstellt wurde.
 

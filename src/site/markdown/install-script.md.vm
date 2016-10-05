@@ -43,7 +43,7 @@ Um die Konsolenausgaben umzuleiten, können Sie alternativ auch `akin-dwh-instal
 Für CentOS 7, starten Sie das Skript `akin-dwh-install/install_centos.sh`. 
 SELinux wird in dem Prozess deaktiviert. Sollten Sie SELinux verwenden wollen 
 müssen Sie es entsprechend manuell konfigurieren - oder die Skriptinhalte 
-selektiv manuell ausführen.
+selektiv manuell ausführen. Nachdem Installieren können Sie noch über die gewohnten Einstellungen die Prozesse `apache2`, `postgres` sowie `wildfly` in Autostart verlinken (z.B. über `ctl`).
 
 
 Bevor die Funktionalität des Servers im Anschluss an das Installationsskript 
