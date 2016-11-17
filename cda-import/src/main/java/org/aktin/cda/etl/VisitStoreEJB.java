@@ -14,21 +14,21 @@ import javax.sql.DataSource;
 import org.aktin.Preferences;
 import org.aktin.dwh.PreferenceKey;
 
-import de.sekmi.histream.i2b2.PostgresPatientStore;
+import de.sekmi.histream.i2b2.PostgresVisitStore;
 
 
 @Singleton
-public class PatientStoreEJB extends PostgresPatientStore{
+public class VisitStoreEJB extends PostgresVisitStore{
 
 	@Inject
-	public PatientStoreEJB(Preferences prefs) throws SQLException, NamingException {
+	public VisitStoreEJB(Preferences prefs) throws SQLException, NamingException {
 		// locate data source
 		InitialContext ctx = new InitialContext();
 		DataSource ds = (DataSource)ctx.lookup(prefs.get(PreferenceKey.i2b2DatasourceCRC));
 		this.open(ds.getConnection(), prefs.get(PreferenceKey.i2b2Project));
 	}
 
-	public PatientStoreEJB(DataSource ds, String projectId) throws SQLException{
+	public VisitStoreEJB(DataSource ds, String projectId) throws SQLException{
 		open(ds.getConnection(), projectId);
 	}
 	

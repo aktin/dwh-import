@@ -2,16 +2,15 @@ package org.aktin.cda.etl;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -26,10 +25,8 @@ import org.w3c.dom.Document;
 import de.sekmi.histream.Observation;
 import de.sekmi.histream.ObservationException;
 import de.sekmi.histream.ObservationFactory;
+import de.sekmi.histream.i2b2.DataDialect;
 import de.sekmi.histream.i2b2.I2b2Inserter;
-import de.sekmi.histream.i2b2.PostgresPatientStore;
-import de.sekmi.histream.i2b2.PostgresVisitStore;
-import de.sekmi.histream.impl.ObservationFactoryImpl;
 
 /**
  * CDA importer pojo EJB. Processed CDA documents are loaded into
@@ -41,9 +38,7 @@ import de.sekmi.histream.impl.ObservationFactoryImpl;
 public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private static final Logger log = Logger.getLogger(CDAImporter.class.getName());
 	private I2b2Inserter inserter;
-	private PostgresPatientStore patientStore;
-	private PostgresVisitStore visitStore;
-	private ObservationFactory factory;
+	private ObservationFactoryEJB factory;
 	
 	/**
 	 * Construct a CDAImporter 
@@ -51,8 +46,10 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	 * @throws SQLException initisiation errors with the database
 	 * @throws IOException unable to load CDA to ETL transformation script
 	 */
-	public CDAImporter() throws NamingException, SQLException, IOException {
+	@Inject
+	public CDAImporter(ObservationFactoryEJB factory) throws NamingException, SQLException, IOException {
 		super();
+		this.factory = factory;
 		InitialContext ctx = new InitialContext();
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
 
@@ -66,20 +63,14 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		 * SELECT c_db_fullschema, c_db_datasource FROM i2b2hive.crc_db_lookup WHERE 
 		 */
 		try{
-			Map<String, String> config = new HashMap<>();
-			// configuration with 'project' property
-			config.put("project", "AKTIN");
-			inserter = new I2b2Inserter(crcDS, config);
-			// TODO convert patient store and visit store to EJB singletons and inject here
-			patientStore = new PostgresPatientStore(crcDS, config);
-			visitStore = new PostgresVisitStore(crcDS, config);
+			inserter = new I2b2Inserter();
+			inserter.open(crcDS.getConnection(), new DataDialect());
 		}catch( SQLException e ){
 			// disconnect inserter and other resources 
 			// if one the previous constructors fails
 			close();
 			throw e;
 		}
-		factory = new ObservationFactoryImpl(patientStore, visitStore);
 
 		//inserter.setErrorHandler(handler);
 	}
@@ -114,16 +105,6 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			inserter.close();
 		} catch (IOException e) {
 			log.log(Level.WARNING, "Error while closing inserter", e);
-		}
-		if( visitStore != null )try {
-			visitStore.close();
-		} catch (IOException e) {
-			log.log(Level.SEVERE, "Error while closing visit store", e);
-		}
-		if( patientStore != null )try {
-			patientStore.close();
-		} catch (IOException e) {
-			log.log(Level.SEVERE, "Error while closing patient store", e);
 		}
 	}
 
@@ -161,8 +142,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			throw e;
 		}
 		// flush after each document
-		patientStore.flush();
-		visitStore.flush();
+		factory.flush();
 		return status;
 	}
 
