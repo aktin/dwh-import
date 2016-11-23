@@ -5,6 +5,6 @@
   <endpoint
     name="DocumentRepository"
     implementation="org.aktin.cda.etl.xds.DocumentRepository"
-    url-pattern="/aktin/xds.b"/>
+    url-pattern="/aktin/cda/xds.b"/>
 <!--      implementation="org.aktin.cda.etl.xds.DocumentRepository"  -->
 </endpoints>

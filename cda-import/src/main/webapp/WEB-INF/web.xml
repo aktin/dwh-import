@@ -9,11 +9,11 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CDAImportXDS</servlet-name>
-		<url-pattern>/cda/xds.b</url-pattern>
+		<url-pattern>/xds.b</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>javax.ws.rs.core.Application</servlet-name>
-		<url-pattern>/cda/fhir/*</url-pattern>
+		<url-pattern>/fhir/*</url-pattern>
 	</servlet-mapping>
 	<!--  TODO delete the application servlet mapping and test in Wildfly 9.0.2 -->
 
