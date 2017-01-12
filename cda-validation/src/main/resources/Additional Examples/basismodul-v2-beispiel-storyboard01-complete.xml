@@ -1007,7 +1007,17 @@
                                         <low value="201501171556"/>
                                         <high value="201501171557"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="S80.1" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Prellung sonstiger und nicht näher bezeichneter Teile des Unterschenkels"/>
+                                    <value xsi:type="CD" code="S80.1" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Prellung sonstiger und nicht näher bezeichneter Teile des Unterschenkels">
+                                        <originalText>Prellung</originalText>
+                                        <qualifier>
+                                            <name code="8" codeSystem="2.16.840.1.113883.3.7.1.0"/>
+                                            <value code="G" codeSystem="1.2.276.0.76.3.1.1.5.1.21"/>
+                                        </qualifier>    
+                                        <qualifier>
+                                            <name code="FSTAT" codeSystem="1.2.276.0.76.3.1.195.5.72" displayName="Befundstatus"/>
+                                            <value code="CONF" codeSystem="1.2.276.0.76.3.1.195.5.73" displayName="Gesichert"/>
+                                        </qualifier>
+                                    </value>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
@@ -1061,7 +1071,12 @@
                                         <low value="201501171556"/>
                                         <high value="201501171557"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="Y34.9!" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Nicht näher bezeichnetes Ereignis, Umstände unbestimmt"/>
+                                    <value xsi:type="CD" code="Y34.9!" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Nicht näher bezeichnetes Ereignis, Umstände unbestimmt">
+                                        <qualifier>
+                                            <name code="8" codeSystem="2.16.840.1.113883.3.7.1.0"/>
+                                            <value code="Z" codeSystem="1.2.276.0.76.3.1.1.5.1.21"/>
+                                        </qualifier>
+                                    </value>
                                 </observation>
                             </entryRelationship>
                         </act>
