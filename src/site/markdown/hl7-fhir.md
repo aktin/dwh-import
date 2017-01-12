@@ -49,3 +49,11 @@ allerdings wird das Dokument verworfen und nicht im Data Warehouse gespeichert.
 
 Die Antwort bei einer Validierungsoperation ist analog zur Übermittlung
 eine [OperationOutcome](https://www.hl7.org/fhir/operationoutcome.html) Ressource.
+
+
+Weitere Fehlermeldungen
+-----------------------
+Wird ein HTTP-Fehlercode 405 (Methode nicht erlaubt) zurückgegeben, so
+liegt dies an einem falschen HTTP-Aufruf. Es wird nur die Methode POST unterstützt.
+Prüfen Sie Ihre Übermittlungsschnittstelle bzw. verwenden Sie die aktuelle Version
+unserer Software für die Übermittlung von Testdokumenten.
