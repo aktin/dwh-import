@@ -1,5 +1,6 @@
 package org.aktin.cda.etl;
 
+import java.io.Flushable;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -38,7 +39,7 @@ import de.sekmi.histream.i2b2.I2b2Inserter;
 public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private static final Logger log = Logger.getLogger(CDAImporter.class.getName());
 	private I2b2Inserter inserter;
-	private ObservationFactoryEJB factory;
+	private ObservationFactory factory;
 	
 	/**
 	 * Construct a CDAImporter 
@@ -46,8 +47,8 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	 * @throws SQLException initisiation errors with the database
 	 * @throws IOException unable to load CDA to ETL transformation script
 	 */
-	@Inject
-	public CDAImporter(ObservationFactoryEJB factory) throws NamingException, SQLException, IOException {
+	@Inject // TODO change to ObservationFactory and see if this works
+	public CDAImporter(ObservationFactory factory) throws NamingException, SQLException, IOException {
 		super();
 		this.factory = factory;
 		InitialContext ctx = new InitialContext();
@@ -142,7 +143,11 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			throw e;
 		}
 		// flush after each document
-		factory.flush();
+		try {
+			((Flushable)factory).flush();
+		} catch (IOException e) {
+			log.log(Level.SEVERE, "Unable to flush observation factory", e);
+		}
 		return status;
 	}
 
