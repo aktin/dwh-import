@@ -26,11 +26,9 @@
 
 	<!-- override timestamp values -->
 	<xsl:template match="cda:effectiveTime/cda:low/@value">
-		<xsl:attribute name="value">
-			<xsl:call-template name="GetShiftedTime">
-				<xsl:with-param name="OriginalTime" select="."/>
-			</xsl:call-template>
-		</xsl:attribute>
+	   <xsl:call-template name="GetShiftedTime">
+	      <xsl:with-param name="OriginalTime" select="."/>
+	   </xsl:call-template>
 	</xsl:template>
 	<xsl:template match="cda:effectiveTime/cda:high/@value">
 		<xsl:call-template name="GetShiftedTime">
@@ -76,23 +74,34 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<xsl:variable name="rawresult">
-			<xsl:call-template name="ConvertFromDateTime">
-				<xsl:with-param name="DateTimeString">
-					<xsl:call-template name="date:add">
-						<xsl:with-param name="date-time">
-							<xsl:call-template name="ConvertToDateTime">
-								<xsl:with-param name="DateTimeString"  select="$newtime"/>
-							</xsl:call-template>
-						</xsl:with-param>
-						<xsl:with-param name="duration">			
-							<xsl:value-of select="$timediff"/>
-						</xsl:with-param>
-					</xsl:call-template>	
-				</xsl:with-param>
-			</xsl:call-template>	
+		   <xsl:choose>
+		      <xsl:when test="normalize-space($timediff)='' or $timediff=''">
+		         <xsl:value-of select="$newtime"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+		         <xsl:call-template name="ConvertFromDateTime">
+		            <xsl:with-param name="DateTimeString">
+		               <xsl:call-template name="date:add">
+		                  <xsl:with-param name="date-time">
+		                     <xsl:call-template name="ConvertToDateTime">
+		                        <xsl:with-param name="DateTimeString"  select="$newtime"/>
+		                     </xsl:call-template>
+		                  </xsl:with-param>
+		                  <xsl:with-param name="duration">	
+		                     <xsl:value-of select="$timediff"/>
+		                  </xsl:with-param>
+		               </xsl:call-template>	
+		            </xsl:with-param>
+		         </xsl:call-template>	
+		      </xsl:otherwise>
+		   </xsl:choose>
 		</xsl:variable>	
-		<!-- reduce result to previous length -->
-		<xsl:value-of select="substring($rawresult,1,string-length($OriginalTime))"/>
+		
+	   <!-- reduce result to previous length -->   
+	   <xsl:attribute name="value">
+	      <xsl:value-of select="substring($rawresult,1,string-length($OriginalTime))"/>
+	   </xsl:attribute> 
+	   <xsl:comment><xsl:value-of select="$timediff"/></xsl:comment>
 	</xsl:template>
 	
 	<!-- Convert CDA Timestamp to xs:dateTime, xs:date etc. -->
