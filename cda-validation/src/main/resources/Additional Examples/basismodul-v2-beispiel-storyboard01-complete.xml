@@ -223,8 +223,10 @@
     <!-- Patientenkontakt -->
     <componentOf>
         <encompassingEncounter classCode="ENC" moodCode="EVN">
-            <!-- Aufnahme-Identifikator -->
+            <!-- Encounter-ID (Patientenkontakt in der Notaufnahme) -->
             <id root="1.2.276.0.76.3.87686" extension="657827456837"/>
+            <!-- Krankenhausinternes Fallkennzeichen (optional) -->
+            <id root="1.2.276.0.76.3.87686.1.45" extension="21197154"/>
             <effectiveTime>
                 <!-- Aufnahmezeitpunkt (Datum und Zeit), Zeitangabe genau bis auf die Minute -->
                 <low value="201501171603"/>

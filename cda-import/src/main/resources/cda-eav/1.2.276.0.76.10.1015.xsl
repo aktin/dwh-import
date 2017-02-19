@@ -97,7 +97,7 @@
 						<xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:effectiveTime/@value)"/>
                     </xsl:attribute>
                     <xsl:attribute name="id">
-						<xsl:call-template name="encounter-module-id"/>
+                        <xsl:call-template name="import-id"/>
                     </xsl:attribute>
                 </source>           
             </meta>
@@ -139,7 +139,8 @@
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:participant/cda:associatedEntity"/>   
                     <!-- Alle Fact-Templates auf Body/Component/Section Ebene aufrufen -->
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>                                                    
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>     
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]"/> 
                 </encounter>
             </patient>     
         </eav-data> 
@@ -156,6 +157,17 @@
 	<!-- eigentlich ist die Set-ID nicht dafür vorgesehen, im nächsten Release wird das geändert -->
     <xsl:template match="/cda:ClinicalDocument/cda:setId">
         <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
+    </xsl:template>
+ 
+    <!-- Internes Fallkennzeichen // optionale Angabe zwecks Mapping von Entlassdaten, wird nicht ausgewertet -->
+    <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]">
+        <fact>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Fallkennzeichen</xsl:attribute> 
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
+            </value>
+        </fact>
     </xsl:template>
  
     <!-- 1	ID des Krankenhauses 
@@ -297,7 +309,7 @@
         </fact>       
     </xsl:template> -->
     
-        <xsl:template name="encounter-module-id">
+    <xsl:template name="import-id">
     	<!-- generate a unique id for encounter and module  -->
 		<xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:setId/@root,/cda:ClinicalDocument/cda:setId/@extension,$aktin.module.id)"/>
     </xsl:template>

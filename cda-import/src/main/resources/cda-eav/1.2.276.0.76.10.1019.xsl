@@ -97,7 +97,7 @@
 						<xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:effectiveTime/@value)"/>
                     </xsl:attribute>
                     <xsl:attribute name="id">
-						<xsl:call-template name="encounter-module-id"/>
+						<xsl:call-template name="import-id"/>
                     </xsl:attribute>
                 </source>           
             </meta>
@@ -121,7 +121,7 @@
                 </xsl:if>
                 <encounter>
                     <xsl:attribute name="id">
-                        <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id"/>                      
+                        <xsl:call-template name="encounter-id"/>            
                     </xsl:attribute>  
                     <start>
                         <xsl:call-template name="ZeitpunktAufnahme"/>                        
@@ -130,6 +130,7 @@
                     <!-- <location></location> -->
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id"/>            
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:city"/>
@@ -151,12 +152,22 @@
 <!-- COMPONENT Templates -->    
  
  
-    <!-- Eindeutiger Identifier (~Fallnummer), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
-    <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // ClinicalDocument/setId shall be present to enable further updates to this ClinicalDocument. -->
-    <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id">
-        <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
+    <!-- Eindeutiger Identifier (~EpisodenID), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
+    <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // shall be present to enable further updates to this ClinicalDocument. -->
+    <xsl:template name="encounter-id">
+        <xsl:value-of select="aktin:encounter-hash(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root, /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension)"/>
     </xsl:template>
- 
+    
+    <!-- Internes Fallkennzeichen // optionale Angabe zwecks Mapping von Entlassdaten, wird nicht ausgewertet -->
+    <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]">
+        <fact>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Fallkennzeichen</xsl:attribute> 
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
+            </value>
+        </fact>
+    </xsl:template>
  
     <!-- 1	ID des Krankenhauses 
     Die KrankenhausID muss nicht im DWH gespeichert werden.
@@ -297,9 +308,9 @@
         </fact>       
     </xsl:template> -->
     
-    <xsl:template name="encounter-module-id">
+    <xsl:template name="import-id">
     	<!-- generate a unique id for encounter and module  -->
-		<xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id/@root,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id/@extension,$aktin.module.id)"/>
+        <xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension,$aktin.module.id)"/>
     </xsl:template>
     
     <xsl:template name="EAV-Geschlecht">
