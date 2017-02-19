@@ -14,6 +14,7 @@ import javax.xml.ws.soap.SOAPBinding;
 
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
+import org.aktin.cda.etl.fhir.ImportSummary;
 import org.aktin.cda.etl.xds.DocumentRepository;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
@@ -72,6 +73,7 @@ public class Server{
 			protected void configure() {
 				this.bind(validator).to(Validator.class);
 				this.bind(processor).to(CDAProcessor.class);
+				this.bind(new ImportSummary()).to(ImportSummary.class);
 			}
 		});
 		// load JAX-RS classes for FHIR
