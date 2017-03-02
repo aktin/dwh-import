@@ -69,8 +69,8 @@ public class Validator implements NamespaceContext{
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
-		addTemplateValidator("1.2.276.0.76.10.1015", getClass().getResource("/schematron_svrl/aktin-basism.xsl"));
-		addTemplateValidator("1.2.276.0.76.10.1019", getClass().getResource("/schematron_svrl/aktin-basism20152b.xsl"));
+		addTemplateValidator("1.2.276.0.76.10.1015", getClass().getResource("/aktin-basism_svrl.xsl"));
+		addTemplateValidator("1.2.276.0.76.10.1019", getClass().getResource("/aktin-basism20152b_svrl.xsl"));
 
 	}
 
