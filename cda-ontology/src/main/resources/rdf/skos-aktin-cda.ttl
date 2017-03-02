@@ -353,61 +353,142 @@
     dc:description "Multiresistente Keime: Auswahlliste" ;
 
     skos:narrower :Multi1 ;
+    skos:narrower :Multi1g ;
+    skos:narrower :Multi1v ;
+    skos:narrower :Multi1n ;
     skos:narrower :Multi2 ;
+    skos:narrower :Multi2g ;
     skos:narrower :Multi2v ;
+    skos:narrower :Multi2n ;
     skos:narrower :Multi3 ;
+    skos:narrower :Multi3g ;
     skos:narrower :Multi3v ;
+    skos:narrower :Multi3n ;
     skos:narrower :Multi4 ;
+    skos:narrower :Multi4g ;
     skos:narrower :Multi4v ;
+    skos:narrower :Multi4n ;
     skos:narrower :Multi5 ;
+    skos:narrower :Multi5g ;
     skos:narrower :Multi5v ;
+    skos:narrower :Multi5n ;
     skos:narrower :Multi6 ;
+    skos:narrower :Multi6g ;
     skos:narrower :Multi6v .
+    skos:narrower :Multi6n .
 
 :Multi1 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "Kein Multiresistenter Keim"@de ;
+    skos:prefLabel "Multiresistenter Keim"@de ;
+    skos:notation "AKTIN:PATHOGENE:AMRO" .
+:Multi1g a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Multiresistenter Keim (gesichert)"@de ;
+    skos:notation "AKTIN:PATHOGENE:AMRO:CONF" .
+:Multi1v a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Multiresistenter Keim (Verdacht)"@de ;
+    skos:notation "AKTIN:PATHOGENE:AMRO:SUSP" .
+:Multi1n a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Keine Multiresistenter Keime"@de ;
+    skos:notation "AKTIN:PATHOGENE:AMRO:NEG" ;
     skos:notation "AKTIN:PATHOGENE:AMRO:OPB" .
 :Multi2 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "MRSA"@de ;
+    skos:notation "AKTIN:PATHOGENE:MRSA" ;
     skos:notation "AKTIN:PATHOGENE:MRSA:PB" .
+:Multi2g a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "MRSA (gesichert)"@de ;
+    skos:notation "AKTIN:PATHOGENE:MRSA:CONF" .
 :Multi2v a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "V.a. MRSA"@de ;
+    skos:prefLabel "MRSA (Verdacht)"@de ;
     skos:notation "AKTIN:PATHOGENE:MRSA:SUSP" .
+:Multi2n a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Keine MRSA"@de ;
+    skos:notation "AKTIN:PATHOGENE:MRSA:NEG" .
 :Multi3 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist"@de ;
+    dc:description "gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist";
+    skos:prefLabel "3MRGN"@de ;
+    skos:notation "AKTIN:PATHOGENE:3MRGN" ;
     skos:notation "AKTIN:PATHOGENE:3MRGN:PB" .
+:Multi3g a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    dc:description "gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist";
+    skos:prefLabel "3MRGN (gesichert)"@de ;
+    skos:notation "AKTIN:PATHOGENE:3MRGN:CONF" .
 :Multi3v a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "V.a. gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist"@de ;
+    dc:description "gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist";
+    skos:prefLabel "3MRGN (Verdacht)"@de ;
     skos:notation "AKTIN:PATHOGENE:3MRGN:SUSP" .
+:Multi3n a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    dc:description "gramnegative Staebchen, bei der noch eine der Antibiotikagruppen wirksam ist";
+    skos:prefLabel "Keine 3MRGN"@de ;
+    skos:notation "AKTIN:PATHOGENE:3MRGN:NEG" .
 :Multi4 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "gramnegative Staebchen, die gegen alle vier Gruppen resistent sind"@de ;
+    dc:description "gramnegative Staebchen, die gegen alle vier Gruppen resistent sind";
+    skos:prefLabel "4MRGN"@de ;
+    skos:notation "AKTIN:PATHOGENE:4MRGN" ;
     skos:notation "AKTIN:PATHOGENE:4MRGN:PB" .
+:Multi4g a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    dc:description "gramnegative Staebchen, die gegen alle vier Gruppen resistent sind";
+    skos:prefLabel "4MRGN (gesichert)"@de ;
+    skos:notation "AKTIN:PATHOGENE:4MRGN:CONF" .
 :Multi4v a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "V.a. gramnegative Staebchen, die gegen alle vier Gruppen resistent sind"@de ;
+    dc:description "gramnegative Staebchen, die gegen alle vier Gruppen resistent sind";
+    skos:prefLabel "4MRGN (Verdacht)"@de ;
     skos:notation "AKTIN:PATHOGENE:4MRGN:SUSP" .
+:Multi4n a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    dc:description "gramnegative Staebchen, die gegen alle vier Gruppen resistent sind";
+    skos:prefLabel "Keine 4MRGN"@de ;
+    skos:notation "AKTIN:PATHOGENE:4MRGN:NEG" .
 :Multi5 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "VRE"@de ;
+    skos:notation "AKTIN:PATHOGENE:VRE" ;
     skos:notation "AKTIN:PATHOGENE:VRE:PB" .
+:Multi5g a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "VRE (Gesichert)"@de ;
+    skos:notation "AKTIN:PATHOGENE:VRE:CONF" .
 :Multi5v a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "V.a. VRE"@de ;
+    skos:prefLabel "VRE (Verdacht)"@de ;
     skos:notation "AKTIN:PATHOGENE:VRE:SUSP" .
+:Multi5n a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Keine VRE"@de ;
+    skos:notation "AKTIN:PATHOGENE:VRE:NEG" .
 :Multi6 a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Andere multiresistente Keime"@de ;
+    skos:notation "AKTIN:PATHOGENE:OTH" ;
     skos:notation "AKTIN:PATHOGENE:OTH:PB" .
+:Multi6g a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Andere multiresistente Keime (gesichert)"@de ;
+    skos:notation "AKTIN:PATHOGENE:OTH:CONF" .
 :Multi6v a skos:Concept ;
     skos:inScheme :EmergencyNote ;
-    skos:prefLabel "V.a. Andere multiresistente Keime"@de ;
+    skos:prefLabel "Andere multiresistente Keime (Verdacht)"@de ;
     skos:notation "AKTIN:PATHOGENE:OTH:SUSP" .
+:Multi6n a skos:Concept ;
+    skos:inScheme :EmergencyNote ;
+    skos:prefLabel "Keine anderen multiresistenten Keime"@de ;
+    skos:notation "AKTIN:PATHOGENE:OTH:NEG" .
+           
+           
            
 :RespiratoryRate a skos:Concept ;
     skos:inScheme :EmergencyNote ;
