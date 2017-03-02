@@ -2,20 +2,4 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
-    <!-- 
-	<display-name>CDA import web application</display-name>
-	<servlet>
-		<servlet-name>CDAImportXDS</servlet-name>
-		<servlet-class>org.aktin.cda.etl.xds.DocumentRepository</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CDAImportXDS</servlet-name>
-		<url-pattern>/xds.b</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>javax.ws.rs.core.Application</servlet-name>
-		<url-pattern>/fhir/*</url-pattern>
-	</servlet-mapping>
- -->	<!--  TODO delete the application servlet mapping and test in Wildfly 9.0.2 -->
-
 </web-app>

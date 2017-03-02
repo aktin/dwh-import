@@ -39,7 +39,7 @@ import org.aktin.cda.UnsupportedTemplateException;
 import org.aktin.cda.Validator;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.IssueType;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
-import org.aktin.dwh.ImportStatistics;
+import org.aktin.dwh.ImportSummary;
 import org.w3c.dom.Document;
 
 @Path("Binary")
@@ -53,7 +53,7 @@ public class Binary implements ExternalInterface{
 	@Context 
 	private UriInfo uriInfo;
 	@Inject
-	private ImportStatistics stats;
+	private ImportSummary hallihallo2;
 	
 	public Binary() throws ParserConfigurationException{
 		outputFactory = XMLOutputFactory.newFactory();
@@ -150,13 +150,16 @@ public class Binary implements ExternalInterface{
 						log.log(Level.WARNING, "Unable to build URI for created resource", e);
 						response = Response.ok();
 					}
+					hallihallo2.addCreated();
+					importSuccessful = true;
 				}else if( stat.getStatus() == Status.Updated ){
 					response = Response.ok();
+					hallihallo2.addUpdated();
+					importSuccessful = true;
 				}else{
 					throw new UnsupportedOperationException("Unexpected CDA status "+stat.getStatus());
 				}
 				
-				importSuccessful = true;
 				response.lastModified(stat.getLastModified());
 				response.tag(stat.getSummary().getVersion());
 
@@ -192,10 +195,8 @@ public class Binary implements ExternalInterface{
 		// HTTP status response
 		// should add a Location header with the created id and version
 		// Location: [base]/Binary/[id]/_history/[vid]
-		if( importSuccessful ){
-			stats.addSuccess();
-		}else{
-			stats.addError(isValid, outcome.toString());
+		if( false == importSuccessful ){
+			hallihallo2.addRejected(isValid, outcome.toString());
 		}
 		try {
 			return response.entity(outcomeToXML(outcome)).build();

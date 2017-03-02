@@ -12,11 +12,11 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.soap.SOAPBinding;
 
+import org.aktin.Preferences;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
-import org.aktin.cda.etl.fhir.ImportSummary;
 import org.aktin.cda.etl.xds.DocumentRepository;
-import org.aktin.dwh.ImportStatistics;
+import org.aktin.dwh.ImportSummary;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -74,7 +74,8 @@ public class Server{
 			protected void configure() {
 				this.bind(validator).to(Validator.class);
 				this.bind(processor).to(CDAProcessor.class);
-				this.bind(new ImportSummary()).to(ImportStatistics.class);
+				this.bind(new NoOpStatistics()).to(ImportSummary.class);
+				this.bind(new EmptyPreferences()).to(Preferences.class);
 			}
 		});
 		// load JAX-RS classes for FHIR
