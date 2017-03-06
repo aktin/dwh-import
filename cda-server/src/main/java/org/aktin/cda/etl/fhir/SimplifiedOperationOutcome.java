@@ -147,7 +147,18 @@ public class SimplifiedOperationOutcome {
 		writer.close();
 		return new FhirDomSource(doc);
 	}
-	
+
+	public String toString(){
+		StringBuilder b = new StringBuilder();
+		for( Issue issue : issues ){
+			if( b.length() != 0 ){
+				b.append('\n');
+			}
+			b.append(issue.severity.name()).append(": ");
+			b.append(issue.details);
+		}
+		return b.toString();
+	}
 	public static SimplifiedOperationOutcome create(Severity severity, String message){
 		SimplifiedOperationOutcome o = new SimplifiedOperationOutcome();
 		o.addIssue(severity, message);

@@ -74,6 +74,11 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.aktin</groupId>
+			<artifactId>dwh-api</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
 
 		<!-- dependency injection -->
 		<dependency>

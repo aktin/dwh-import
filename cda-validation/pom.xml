@@ -12,7 +12,7 @@
 		<version>0.7-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<schematronVersion>20170105T160149</schematronVersion>
+		<schematronVersion>20170302T140447</schematronVersion>
 		<examplesVersion>20170105T160149</examplesVersion>
 		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            
 		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>            

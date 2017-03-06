@@ -39,6 +39,7 @@ import org.aktin.cda.UnsupportedTemplateException;
 import org.aktin.cda.Validator;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.IssueType;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
+import org.aktin.dwh.ImportSummary;
 import org.w3c.dom.Document;
 
 @Path("Binary")
@@ -51,6 +52,8 @@ public class Binary implements ExternalInterface{
 	private CDAProcessor processor;
 	@Context 
 	private UriInfo uriInfo;
+	@Inject
+	private ImportSummary hallihallo2;
 	
 	public Binary() throws ParserConfigurationException{
 		outputFactory = XMLOutputFactory.newFactory();
@@ -119,7 +122,8 @@ public class Binary implements ExternalInterface{
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
 		ResponseBuilder response;
 		String templateId = null;
-		boolean isValid;
+		boolean isValid = false;
+		boolean importSuccessful = false;
 		try {
 			Document cda = parser.buildDOM(doc);
 			templateId = parser.extractTemplateId(cda);
@@ -146,15 +150,21 @@ public class Binary implements ExternalInterface{
 						log.log(Level.WARNING, "Unable to build URI for created resource", e);
 						response = Response.ok();
 					}
+					hallihallo2.addCreated();
+					importSuccessful = true;
 				}else if( stat.getStatus() == Status.Updated ){
 					response = Response.ok();
+					hallihallo2.addUpdated();
+					importSuccessful = true;
 				}else{
 					throw new UnsupportedOperationException("Unexpected CDA status "+stat.getStatus());
 				}
+				
 				response.lastModified(stat.getLastModified());
 				response.tag(stat.getSummary().getVersion());
 
 			}else{
+
 				response = Response.status(422); // Unprocessable entity
 				outcome.addIssue(Severity.fatal, "XML validation not passed");
 			}
@@ -185,7 +195,9 @@ public class Binary implements ExternalInterface{
 		// HTTP status response
 		// should add a Location header with the created id and version
 		// Location: [base]/Binary/[id]/_history/[vid]
-				  
+		if( false == importSuccessful ){
+			hallihallo2.addRejected(isValid, outcome.toString());
+		}
 		try {
 			return response.entity(outcomeToXML(outcome)).build();
 		} catch (XMLStreamException e) {
