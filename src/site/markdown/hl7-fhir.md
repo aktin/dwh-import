@@ -16,7 +16,7 @@ Es ist nicht auszuschließen, dass ggf. zukünftig der Binary end-point überarb
 oder entfernt wird)
 
 Das Ergebnis der Operation wird durch den HTTP-Statuskode
-angezeigt. Im Erfolgsfall ist der Statuskode 200 und es wird kein Antwortdokument geliefert.
+angezeigt. Im Erfolgsfall ist der Statuskode `201 Created` (neuer Patientenkontakt) oder `200 OK` (Daten für bestehenden Patientenkontakt aktualisiert) und es wird kein Antwortdokument geliefert.
 
 Im Content-type-header muss immer `text/xml` stehen und ein 
 gültiges XML-Dokument muss übermittelt werden. Ist dies nicht der Fall,
@@ -36,6 +36,18 @@ Als Antwort wird die FHIR-Ressource [OperationOutcome](https://www.hl7.org/fhir/
 zurückgeliefert. Im Erfolgsfall ist diese inhaltlich leer. Im
 Fehlerfall sind dort detaillierte Fehlerbeschreibungen enthalten.
 
+Weitere Fehlermeldungen
+-----------------------
+Wird ein HTTP-Fehlercode `503 Service Unavailable` zurückgegeben, so ist zwar der Applikation-Server aktiv und erreichbar, aber die Import-Schnittstelle funktioniert nicht. 
+Wahrscheinlich liegt ein Problem mit dem Dployment der Software vor.
+Starten Sie den Applikation-Server neu und prüfen Sie die Datei /var/log/wildfly/console.log
+
+Wird ein HTTP-Fehlercode `405 Method Not Allowed` zurückgegeben, so
+liegt dies an einem falschen HTTP-Aufruf. Es wird nur die Methode POST unterstützt.
+Prüfen Sie Ihre Übermittlungsschnittstelle bzw. verwenden Sie die aktuelle Version
+unserer Software für die Übermittlung von Testdokumenten.
+
+
 Validierung von Dokumenten ohne Übermittlung
 --------------------------------------------
 
@@ -49,11 +61,3 @@ allerdings wird das Dokument verworfen und nicht im Data Warehouse gespeichert.
 
 Die Antwort bei einer Validierungsoperation ist analog zur Übermittlung
 eine [OperationOutcome](https://www.hl7.org/fhir/operationoutcome.html) Ressource.
-
-
-Weitere Fehlermeldungen
------------------------
-Wird ein HTTP-Fehlercode 405 (Methode nicht erlaubt) zurückgegeben, so
-liegt dies an einem falschen HTTP-Aufruf. Es wird nur die Methode POST unterstützt.
-Prüfen Sie Ihre Übermittlungsschnittstelle bzw. verwenden Sie die aktuelle Version
-unserer Software für die Übermittlung von Testdokumenten.
