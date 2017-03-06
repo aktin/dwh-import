@@ -805,11 +805,11 @@
     
     <!-- 806 multiresistente Erreger -->
     <!-- 807 multiresistente Erreger: Erregertyp -->
-    <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. OPB wird transformiert, sollte aber nicht verwendet werden; nullFlavor an dieser Stelle ignoriert den Eintrag; Negation ebenfalls nicht in allen Fällen inhaltlich sinnvoll -->
+    <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4072']">
         <xsl:comment>806/807 multiresistente Erreger</xsl:comment>
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4073']">     
-            <xsl:if test="../cda:value/@code">        
+            <xsl:if test="../cda:value">        
                 <fact>
                     <xsl:attribute name="concept">
                         <xsl:value-of select="$Pathogen-Prefix"/>
