@@ -22,6 +22,7 @@
         <menu name="HL7 CDA Dokument">
 		    <item href="cda-quickstart.html" name="Kurzanleitung CDA" />
 		    <item href="cda-release-v1.21.html" name="CDA Release V1.21" />
+		    <item href="cda-release-v1.26.html" name="CDA Release V1.26" />
 		</menu>
 		<menu name="Dokumentation">
 			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
