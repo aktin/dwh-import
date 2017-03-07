@@ -15,10 +15,24 @@
 	</xsl:template>
 
 	<!-- override cedis code -->
-   <xsl:template match="cda:value[../cda:templateId/@root='1.2.276.0.76.10.4040']/@code">
-		<xsl:attribute name="code">
-		   <xsl:value-of select="substring-after($cedis,'CEDIS30:')"/>
-		</xsl:attribute>
-	</xsl:template>
+	<xsl:template match="cda:value[../cda:templateId/@root='1.2.276.0.76.10.4040']">
+		<xsl:choose>
+			<xsl:when test="substring-after($cedis,'CEDIS30:')='999'">
+				<xsl:element name="value">
+					<xsl:attribute name="xsi:type">CE</xsl:attribute>
+					<xsl:attribute name="nullFlavor">OTH</xsl:attribute>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="value">
+					<xsl:attribute name="xsi:type">CE</xsl:attribute>
+					<xsl:attribute name="code">
+						<xsl:value-of select="substring-after($cedis,'CEDIS30:')"/>
+					</xsl:attribute>
+					<originalText>automatisch generiert</originalText>
+				</xsl:element>
+			</xsl:otherwise>	
+		</xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>
