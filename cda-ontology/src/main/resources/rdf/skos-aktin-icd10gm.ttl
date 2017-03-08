@@ -48,7 +48,7 @@
                 skos:narrower :ICD10GM_A70-A74;
                 skos:narrower :ICD10GM_A75-A79;
                 skos:narrower :ICD10GM_A80-A89;
-                skos:narrower :ICD10GM_A90-A99;
+                skos:narrower :ICD10GM_A92-A99;
                 skos:narrower :ICD10GM_B00-B09;
                 skos:narrower :ICD10GM_B15-B19;
                 skos:narrower :ICD10GM_B20-B24;
@@ -422,16 +422,15 @@
                 skos:narrower :ICD10GM_A87;
                 skos:narrower :ICD10GM_A88;
                 skos:narrower :ICD10GM_A89.
-            :ICD10GM_A90-A99 a skos:Concept ;
+            :ICD10GM_A92-A99 a skos:Concept ;
             skos:prefLabel "Durch Arthropoden übertragene Viruskrankheiten und virale hämorrhagische Fieber"@de ;
             
-                skos:narrower :ICD10GM_A90;
-                skos:narrower :ICD10GM_A91;
                 skos:narrower :ICD10GM_A92;
                 skos:narrower :ICD10GM_A93;
                 skos:narrower :ICD10GM_A94;
                 skos:narrower :ICD10GM_A95;
                 skos:narrower :ICD10GM_A96;
+                skos:narrower :ICD10GM_A97;
                 skos:narrower :ICD10GM_A98;
                 skos:narrower :ICD10GM_A99.
             :ICD10GM_B00-B09 a skos:Concept ;
@@ -1946,7 +1945,7 @@
                 skos:narrower :ICD10GM_O28;
                 skos:narrower :ICD10GM_O29.
             :ICD10GM_O30-O48 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter im Hinblick auf den Feten und die Amnionhöhle sowie mögliche Entbindungskomplikationen"@de ;
+            skos:prefLabel "Betreuung der Mutter im Hinblick auf den Fetus und die Amnionhöhle sowie mögliche Entbindungskomplikationen"@de ;
             
                 skos:narrower :ICD10GM_O30;
                 skos:narrower :ICD10GM_O31;
@@ -2010,7 +2009,7 @@
                 skos:narrower :ICD10GM_O98;
                 skos:narrower :ICD10GM_O99.
             :ICD10GM_P00-P04 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch mütterliche Faktoren und durch Komplikationen bei Schwangerschaft, Wehentätigkeit und Entbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch mütterliche Faktoren und durch Komplikationen bei Schwangerschaft, Wehentätigkeit und Entbindung"@de ;
             
                 skos:narrower :ICD10GM_P00;
                 skos:narrower :ICD10GM_P01;
@@ -2054,7 +2053,7 @@
                 skos:narrower :ICD10GM_P38;
                 skos:narrower :ICD10GM_P39.
             :ICD10GM_P50-P61 a skos:Concept ;
-            skos:prefLabel "Hämorrhagische und hämatologische Krankheiten beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Hämorrhagische und hämatologische Krankheiten beim Fetus und Neugeborenen"@de ;
             
                 skos:narrower :ICD10GM_P50;
                 skos:narrower :ICD10GM_P51;
@@ -2069,21 +2068,21 @@
                 skos:narrower :ICD10GM_P60;
                 skos:narrower :ICD10GM_P61.
             :ICD10GM_P70-P74 a skos:Concept ;
-            skos:prefLabel "Transitorische endokrine und Stoffwechselstörungen, die für den Feten und das Neugeborene spezifisch sind"@de ;
+            skos:prefLabel "Transitorische endokrine und Stoffwechselstörungen, die für den Fetus und das Neugeborene spezifisch sind"@de ;
             
                 skos:narrower :ICD10GM_P70;
                 skos:narrower :ICD10GM_P71;
                 skos:narrower :ICD10GM_P72;
                 skos:narrower :ICD10GM_P74.
             :ICD10GM_P75-P78 a skos:Concept ;
-            skos:prefLabel "Krankheiten des Verdauungssystems beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Krankheiten des Verdauungssystems beim Fetus und Neugeborenen"@de ;
             
                 skos:narrower :ICD10GM_P75;
                 skos:narrower :ICD10GM_P76;
                 skos:narrower :ICD10GM_P77;
                 skos:narrower :ICD10GM_P78.
             :ICD10GM_P80-P83 a skos:Concept ;
-            skos:prefLabel "Krankheitszustände mit Beteiligung der Haut und der Temperaturregulation beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Krankheitszustände mit Beteiligung der Haut und der Temperaturregulation beim Fetus und Neugeborenen"@de ;
             
                 skos:narrower :ICD10GM_P80;
                 skos:narrower :ICD10GM_P81;
@@ -2929,7 +2928,27 @@
             skos:notation "ICD10GM:A04.6".
             :ICD10GM_A04.7 a skos:Concept ;
             skos:prefLabel "Enterokolitis durch Clostridium difficile"@de ;
-            skos:notation "ICD10GM:A04.7".
+            skos:notation "ICD10GM:A04.7";
+                skos:narrower :ICD10GM_A04.70;
+                skos:narrower :ICD10GM_A04.71;
+                skos:narrower :ICD10GM_A04.72;
+                skos:narrower :ICD10GM_A04.73;
+                skos:narrower :ICD10GM_A04.79.
+            :ICD10GM_A04.70 a skos:Concept ;
+            skos:prefLabel "Enterokolitis durch Clostridium difficile ohne Megakolon, ohne sonstige Organkomplikationen"@de ;
+            skos:notation "ICD10GM:A04.70".
+            :ICD10GM_A04.71 a skos:Concept ;
+            skos:prefLabel "Enterokolitis durch Clostridium difficile ohne Megakolon, mit sonstigen Organkomplikationen"@de ;
+            skos:notation "ICD10GM:A04.71".
+            :ICD10GM_A04.72 a skos:Concept ;
+            skos:prefLabel "Enterokolitis durch Clostridium difficile mit Megakolon, ohne sonstige Organkomplikationen"@de ;
+            skos:notation "ICD10GM:A04.72".
+            :ICD10GM_A04.73 a skos:Concept ;
+            skos:prefLabel "Enterokolitis durch Clostridium difficile mit Megakolon, mit sonstigen Organkomplikationen"@de ;
+            skos:notation "ICD10GM:A04.73".
+            :ICD10GM_A04.79 a skos:Concept ;
+            skos:prefLabel "Enterokolitis durch Clostridium difficile, nicht näher bezeichnet"@de ;
+            skos:notation "ICD10GM:A04.79".
             :ICD10GM_A04.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete bakterielle Darminfektionen"@de ;
             skos:notation "ICD10GM:A04.8".
@@ -2993,10 +3012,10 @@
             skos:prefLabel "Amöbom des Darmes"@de ;
             skos:notation "ICD10GM:A06.3".
             :ICD10GM_A06.4 a skos:Concept ;
-            skos:prefLabel "Leberabszess durch Amöben"@de ;
+            skos:prefLabel "Leberabszess durch AmöbenK77.0"@de ;
             skos:notation "ICD10GM:A06.4".
             :ICD10GM_A06.5 a skos:Concept ;
-            skos:prefLabel "Lungenabszess durch Amöben J99.8 "@de ;
+            skos:prefLabel "Lungenabszess durch Amöben"@de ;
             skos:notation "ICD10GM:A06.5".
             :ICD10GM_A06.6 a skos:Concept ;
             skos:prefLabel "Hirnabszess durch Amöben G07 "@de ;
@@ -3050,7 +3069,7 @@
             skos:prefLabel "Enteritis durch Rotaviren"@de ;
             skos:notation "ICD10GM:A08.0".
             :ICD10GM_A08.1 a skos:Concept ;
-            skos:prefLabel "Akute Gastroenteritis durch Norovirus [Norwalk-Virus]"@de ;
+            skos:prefLabel "Akute Gastroenteritis durch Norovirus"@de ;
             skos:notation "ICD10GM:A08.1".
             :ICD10GM_A08.2 a skos:Concept ;
             skos:prefLabel "Enteritis durch Adenoviren"@de ;
@@ -3809,7 +3828,7 @@
             skos:prefLabel "Staphylokokkeninfektion nicht näher bezeichneter Lokalisation"@de ;
             skos:notation "ICD10GM:A49.0".
             :ICD10GM_A49.1 a skos:Concept ;
-            skos:prefLabel "Streptokokkeninfektion nicht näher bezeichneter Lokalisation"@de ;
+            skos:prefLabel "Streptokokken- und Enterokokkeninfektion nicht näher bezeichneter Lokalisation"@de ;
             skos:notation "ICD10GM:A49.1".
             :ICD10GM_A49.2 a skos:Concept ;
             skos:prefLabel "Infektion durch Haemophilus influenzae nicht näher bezeichneter Lokalisation"@de ;
@@ -4452,12 +4471,6 @@
             :ICD10GM_A89 a skos:Concept ;
             skos:prefLabel "Virusinfektion des Zentralnervensystems, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:A89".
-            :ICD10GM_A90 a skos:Concept ;
-            skos:prefLabel "Dengue-Fieber [Klassische Dengue]"@de ;
-            skos:notation "ICD10GM:A90".
-            :ICD10GM_A91 a skos:Concept ;
-            skos:prefLabel "Hämorrhagisches Dengue-Fieber"@de ;
-            skos:notation "ICD10GM:A91".
             :ICD10GM_A92 a skos:Concept ;
             skos:prefLabel "Sonstige durch Moskitos [Stechmücken] übertragene Viruskrankheiten"@de ;
             skos:notation "ICD10GM:A92";
@@ -4549,6 +4562,25 @@
             :ICD10GM_A96.9 a skos:Concept ;
             skos:prefLabel "Hämorrhagisches Fieber durch Arenaviren, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:A96.9".
+            :ICD10GM_A97 a skos:Concept ;
+            skos:prefLabel "Dengue"@de ;
+            skos:notation "ICD10GM:A97";
+                skos:narrower :ICD10GM_A97.0;
+                skos:narrower :ICD10GM_A97.1;
+                skos:narrower :ICD10GM_A97.2;
+                skos:narrower :ICD10GM_A97.9.
+            :ICD10GM_A97.0 a skos:Concept ;
+            skos:prefLabel "Dengue ohne Warnzeichen"@de ;
+            skos:notation "ICD10GM:A97.0".
+            :ICD10GM_A97.1 a skos:Concept ;
+            skos:prefLabel "Dengue mit Warnzeichen"@de ;
+            skos:notation "ICD10GM:A97.1".
+            :ICD10GM_A97.2 a skos:Concept ;
+            skos:prefLabel "Schweres Dengue"@de ;
+            skos:notation "ICD10GM:A97.2".
+            :ICD10GM_A97.9 a skos:Concept ;
+            skos:prefLabel "Dengue, nicht näher bezeichnet"@de ;
+            skos:notation "ICD10GM:A97.9".
             :ICD10GM_A98 a skos:Concept ;
             skos:prefLabel "Sonstige hämorrhagische Viruskrankheiten, anderenorts nicht klassifiziert"@de ;
             skos:notation "ICD10GM:A98";
@@ -5068,7 +5100,7 @@
             skos:prefLabel "Tinea imbricata"@de ;
             skos:notation "ICD10GM:B35.5".
             :ICD10GM_B35.6 a skos:Concept ;
-            skos:prefLabel "Tinea cruris"@de ;
+            skos:prefLabel "Tinea inguinalis [Tinea cruris]"@de ;
             skos:notation "ICD10GM:B35.6".
             :ICD10GM_B35.8 a skos:Concept ;
             skos:prefLabel "Sonstige Dermatophytosen"@de ;
@@ -5392,7 +5424,7 @@
             skos:prefLabel "Rhinozerebrale Mukormykose"@de ;
             skos:notation "ICD10GM:B46.1".
             :ICD10GM_B46.2 a skos:Concept ;
-            skos:prefLabel "Mukormykose des Magen-Darmtraktes"@de ;
+            skos:prefLabel "Mukormykose des Magen-Darm-Trakts"@de ;
             skos:notation "ICD10GM:B46.2".
             :ICD10GM_B46.3 a skos:Concept ;
             skos:prefLabel "Mukormykose der Haut"@de ;
@@ -6130,7 +6162,7 @@
             skos:prefLabel "Streptokokken, Gruppe B, als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind"@de ;
             skos:notation "ICD10GM:B95.1".
             :ICD10GM_B95.2 a skos:Concept ;
-            skos:prefLabel "Streptokokken, Gruppe D, als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind"@de ;
+            skos:prefLabel "Streptokokken, Gruppe D, und Enterokokken als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind"@de ;
             skos:notation "ICD10GM:B95.2".
             :ICD10GM_B95.3 a skos:Concept ;
             skos:prefLabel "Streptococcus pneumoniae als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind"@de ;
@@ -7913,6 +7945,8 @@
                 skos:narrower :ICD10GM_C79.82;
                 skos:narrower :ICD10GM_C79.83;
                 skos:narrower :ICD10GM_C79.84;
+                skos:narrower :ICD10GM_C79.85;
+                skos:narrower :ICD10GM_C79.86;
                 skos:narrower :ICD10GM_C79.88.
             :ICD10GM_C79.81 a skos:Concept ;
             skos:prefLabel "Sekundäre bösartige Neubildung der Brustdrüse"@de ;
@@ -7926,6 +7960,12 @@
             :ICD10GM_C79.84 a skos:Concept ;
             skos:prefLabel "Sonstige sekundäre bösartige Neubildung des Herzens"@de ;
             skos:notation "ICD10GM:C79.84".
+            :ICD10GM_C79.85 a skos:Concept ;
+            skos:prefLabel "Sekundäre bösartige Neubildung des Bindegewebes und anderer Weichteilgewebe des Halses"@de ;
+            skos:notation "ICD10GM:C79.85".
+            :ICD10GM_C79.86 a skos:Concept ;
+            skos:prefLabel "Sekundäre bösartige Neubildung des Bindegewebes und anderer Weichteilgewebe der Extremitäten"@de ;
+            skos:notation "ICD10GM:C79.86".
             :ICD10GM_C79.88 a skos:Concept ;
             skos:prefLabel "Sekundäre bösartige Neubildung sonstiger näher bezeichneter Lokalisationen"@de ;
             skos:notation "ICD10GM:C79.88".
@@ -10388,7 +10428,7 @@
             skos:prefLabel "Krankheit des Blutes und der blutbildenden Organe, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:D75.9".
             :ICD10GM_D76 a skos:Concept ;
-            skos:prefLabel "Bestimmte Krankheiten mit Beteiligung des lymphoretikulären Gewebes und des retikulohistiozytären Systems"@de ;
+            skos:prefLabel "Sonstige näher bezeichnete Krankheiten mit Beteiligung des lymphoretikulären Gewebes und des retikulohistiozytären Systems"@de ;
             skos:notation "ICD10GM:D76";
                 skos:narrower :ICD10GM_D76.1;
                 skos:narrower :ICD10GM_D76.2;
@@ -12012,7 +12052,27 @@
             skos:notation "ICD10GM:E88.1".
             :ICD10GM_E88.2 a skos:Concept ;
             skos:prefLabel "Lipomatose, anderenorts nicht klassifiziert"@de ;
-            skos:notation "ICD10GM:E88.2".
+            skos:notation "ICD10GM:E88.2";
+                skos:narrower :ICD10GM_E88.20;
+                skos:narrower :ICD10GM_E88.21;
+                skos:narrower :ICD10GM_E88.22;
+                skos:narrower :ICD10GM_E88.28;
+                skos:narrower :ICD10GM_E88.29.
+            :ICD10GM_E88.20 a skos:Concept ;
+            skos:prefLabel "Lipödem, Stadium I"@de ;
+            skos:notation "ICD10GM:E88.20".
+            :ICD10GM_E88.21 a skos:Concept ;
+            skos:prefLabel "Lipödem, Stadium II"@de ;
+            skos:notation "ICD10GM:E88.21".
+            :ICD10GM_E88.22 a skos:Concept ;
+            skos:prefLabel "Lipödem, Stadium III"@de ;
+            skos:notation "ICD10GM:E88.22".
+            :ICD10GM_E88.28 a skos:Concept ;
+            skos:prefLabel "Sonstiges oder nicht näher bezeichnetes Lipödem"@de ;
+            skos:notation "ICD10GM:E88.28".
+            :ICD10GM_E88.29 a skos:Concept ;
+            skos:prefLabel "Sonstige Lipomatose, anderenorts nicht klassifiziert"@de ;
+            skos:notation "ICD10GM:E88.29".
             :ICD10GM_E88.3 a skos:Concept ;
             skos:prefLabel "Tumorlyse-Syndrom"@de ;
             skos:notation "ICD10GM:E88.3".
@@ -12429,13 +12489,13 @@
             skos:prefLabel "Bipolare affektive Störung, gegenwärtig schwere depressive Episode ohne psychotische Symptome"@de ;
             skos:notation "ICD10GM:F31.4".
             :ICD10GM_F31.5 a skos:Concept ;
-            skos:prefLabel "Bipolare affektive Psychose, gegenwärtig schwere depressive Episode mit psychotischen Symptomen"@de ;
+            skos:prefLabel "Bipolare affektive Störung, gegenwärtig schwere depressive Episode mit psychotischen Symptomen"@de ;
             skos:notation "ICD10GM:F31.5".
             :ICD10GM_F31.6 a skos:Concept ;
-            skos:prefLabel "Bipolare affektive Psychose, gegenwärtig gemischte Episode"@de ;
+            skos:prefLabel "Bipolare affektive Störung, gegenwärtig gemischte Episode"@de ;
             skos:notation "ICD10GM:F31.6".
             :ICD10GM_F31.7 a skos:Concept ;
-            skos:prefLabel "Bipolare affektive Psychose, gegenwärtig remittiert"@de ;
+            skos:prefLabel "Bipolare affektive Störung, gegenwärtig remittiert"@de ;
             skos:notation "ICD10GM:F31.7".
             :ICD10GM_F31.8 a skos:Concept ;
             skos:prefLabel "Sonstige bipolare affektive Störungen"@de ;
@@ -12853,7 +12913,7 @@
             skos:prefLabel "Pavor nocturnus"@de ;
             skos:notation "ICD10GM:F51.4".
             :ICD10GM_F51.5 a skos:Concept ;
-            skos:prefLabel "Alpträume [Angstträume]"@de ;
+            skos:prefLabel "Albträume [Angstträume]"@de ;
             skos:notation "ICD10GM:F51.5".
             :ICD10GM_F51.8 a skos:Concept ;
             skos:prefLabel "Sonstige nichtorganische Schlafstörungen"@de ;
@@ -13773,6 +13833,7 @@
                 skos:narrower :ICD10GM_G23.0;
                 skos:narrower :ICD10GM_G23.1;
                 skos:narrower :ICD10GM_G23.2;
+                skos:narrower :ICD10GM_G23.3;
                 skos:narrower :ICD10GM_G23.8;
                 skos:narrower :ICD10GM_G23.9.
             :ICD10GM_G23.0 a skos:Concept ;
@@ -13782,8 +13843,11 @@
             skos:prefLabel "Progressive supranukleäre Ophthalmoplegie [Steele-Richardson-Olszewski-Syndrom]"@de ;
             skos:notation "ICD10GM:G23.1".
             :ICD10GM_G23.2 a skos:Concept ;
-            skos:prefLabel "Striatonigrale Degeneration"@de ;
+            skos:prefLabel "Multiple Systematrophie vom Parkinson-Typ [MSA-P]"@de ;
             skos:notation "ICD10GM:G23.2".
+            :ICD10GM_G23.3 a skos:Concept ;
+            skos:prefLabel "Multiple Systematrophie vom zerebellären Typ [MSA-C]"@de ;
+            skos:notation "ICD10GM:G23.3".
             :ICD10GM_G23.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete degenerative Krankheiten der Basalganglien"@de ;
             skos:notation "ICD10GM:G23.8".
@@ -14073,10 +14137,10 @@
             skos:prefLabel "Spezielle epileptische Syndrome"@de ;
             skos:notation "ICD10GM:G40.5".
             :ICD10GM_G40.6 a skos:Concept ;
-            skos:prefLabel "Grand-mal-Anfälle, nicht näher bezeichnet (mit oder ohne Petit mal)"@de ;
+            skos:prefLabel "Grand-Mal-Anfälle, nicht näher bezeichnet (mit oder ohne Petit-Mal)"@de ;
             skos:notation "ICD10GM:G40.6".
             :ICD10GM_G40.7 a skos:Concept ;
-            skos:prefLabel "Petit-mal-Anfälle, nicht näher bezeichnet, ohne Grand-mal-Anfälle"@de ;
+            skos:prefLabel "Petit-Mal-Anfälle, nicht näher bezeichnet, ohne Grand-Mal-Anfälle"@de ;
             skos:notation "ICD10GM:G40.7".
             :ICD10GM_G40.8 a skos:Concept ;
             skos:prefLabel "Sonstige Epilepsien"@de ;
@@ -14093,10 +14157,10 @@
                 skos:narrower :ICD10GM_G41.8;
                 skos:narrower :ICD10GM_G41.9.
             :ICD10GM_G41.0 a skos:Concept ;
-            skos:prefLabel "Grand-mal-Status"@de ;
+            skos:prefLabel "Grand-Mal-Status"@de ;
             skos:notation "ICD10GM:G41.0".
             :ICD10GM_G41.1 a skos:Concept ;
-            skos:prefLabel "Petit-mal-Status"@de ;
+            skos:prefLabel "Petit-Mal-Status"@de ;
             skos:notation "ICD10GM:G41.1".
             :ICD10GM_G41.2 a skos:Concept ;
             skos:prefLabel "Status epilepticus mit komplexfokalen Anfällen"@de ;
@@ -14887,13 +14951,13 @@
             skos:prefLabel "C6-C8"@de ;
             skos:notation "ICD10GM:G82.62".
             :ICD10GM_G82.63 a skos:Concept ;
-            skos:prefLabel "Th1-Th6"@de ;
+            skos:prefLabel "T1-T6"@de ;
             skos:notation "ICD10GM:G82.63".
             :ICD10GM_G82.64 a skos:Concept ;
-            skos:prefLabel "Th7-Th10"@de ;
+            skos:prefLabel "T7-T10"@de ;
             skos:notation "ICD10GM:G82.64".
             :ICD10GM_G82.65 a skos:Concept ;
-            skos:prefLabel "Th11-L1"@de ;
+            skos:prefLabel "T11-L1"@de ;
             skos:notation "ICD10GM:G82.65".
             :ICD10GM_G82.66 a skos:Concept ;
             skos:prefLabel "L2-S1"@de ;
@@ -14912,6 +14976,7 @@
                 skos:narrower :ICD10GM_G83.2;
                 skos:narrower :ICD10GM_G83.3;
                 skos:narrower :ICD10GM_G83.4;
+                skos:narrower :ICD10GM_G83.5;
                 skos:narrower :ICD10GM_G83.8;
                 skos:narrower :ICD10GM_G83.9.
             :ICD10GM_G83.0 a skos:Concept ;
@@ -14941,17 +15006,12 @@
             :ICD10GM_G83.49 a skos:Concept ;
             skos:prefLabel "Cauda- (equina-) Syndrom, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:G83.49".
+            :ICD10GM_G83.5 a skos:Concept ;
+            skos:prefLabel "Locked-in-Syndrom"@de ;
+            skos:notation "ICD10GM:G83.5".
             :ICD10GM_G83.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Lähmungssyndrome"@de ;
-            skos:notation "ICD10GM:G83.8";
-                skos:narrower :ICD10GM_G83.80;
-                skos:narrower :ICD10GM_G83.88.
-            :ICD10GM_G83.80 a skos:Concept ;
-            skos:prefLabel "Locked-in-Syndrom"@de ;
-            skos:notation "ICD10GM:G83.80".
-            :ICD10GM_G83.88 a skos:Concept ;
-            skos:prefLabel "Sonstige näher bezeichnete Lähmungssyndrome"@de ;
-            skos:notation "ICD10GM:G83.88".
+            skos:notation "ICD10GM:G83.8".
             :ICD10GM_G83.9 a skos:Concept ;
             skos:prefLabel "Lähmungssyndrom, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:G83.9".
@@ -14961,7 +15021,6 @@
                 skos:narrower :ICD10GM_G90.0;
                 skos:narrower :ICD10GM_G90.1;
                 skos:narrower :ICD10GM_G90.2;
-                skos:narrower :ICD10GM_G90.3;
                 skos:narrower :ICD10GM_G90.4;
                 skos:narrower :ICD10GM_G90.8;
                 skos:narrower :ICD10GM_G90.9.
@@ -14986,9 +15045,6 @@
             :ICD10GM_G90.2 a skos:Concept ;
             skos:prefLabel "Horner-Syndrom"@de ;
             skos:notation "ICD10GM:G90.2".
-            :ICD10GM_G90.3 a skos:Concept ;
-            skos:prefLabel "Multisystem-Atrophie"@de ;
-            skos:notation "ICD10GM:G90.3".
             :ICD10GM_G90.4 a skos:Concept ;
             skos:prefLabel "Autonome Dysreflexie"@de ;
             skos:notation "ICD10GM:G90.4";
@@ -15079,7 +15135,7 @@
             skos:prefLabel "Benigne intrakranielle Hypertension [Pseudotumor cerebri]"@de ;
             skos:notation "ICD10GM:G93.2".
             :ICD10GM_G93.3 a skos:Concept ;
-            skos:prefLabel "Chronisches Müdigkeitssyndrom"@de ;
+            skos:prefLabel "Chronisches Müdigkeitssyndrom [Chronic fatigue syndrome]"@de ;
             skos:notation "ICD10GM:G93.3".
             :ICD10GM_G93.4 a skos:Concept ;
             skos:prefLabel "Enzephalopathie, nicht näher bezeichnet"@de ;
@@ -15139,7 +15195,15 @@
             skos:notation "ICD10GM:G95.0".
             :ICD10GM_G95.1 a skos:Concept ;
             skos:prefLabel "Vaskuläre Myelopathien"@de ;
-            skos:notation "ICD10GM:G95.1".
+            skos:notation "ICD10GM:G95.1";
+                skos:narrower :ICD10GM_G95.10;
+                skos:narrower :ICD10GM_G95.18.
+            :ICD10GM_G95.10 a skos:Concept ;
+            skos:prefLabel "Nichttraumatische spinale Blutung"@de ;
+            skos:notation "ICD10GM:G95.10".
+            :ICD10GM_G95.18 a skos:Concept ;
+            skos:prefLabel "Sonstige vaskuläre Myelopathien"@de ;
+            skos:notation "ICD10GM:G95.18".
             :ICD10GM_G95.2 a skos:Concept ;
             skos:prefLabel "Rückenmarkkompression, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:G95.2".
@@ -15218,6 +15282,9 @@
             skos:notation "ICD10GM:G97.8";
                 skos:narrower :ICD10GM_G97.80;
                 skos:narrower :ICD10GM_G97.81;
+                skos:narrower :ICD10GM_G97.82;
+                skos:narrower :ICD10GM_G97.83;
+                skos:narrower :ICD10GM_G97.84;
                 skos:narrower :ICD10GM_G97.88.
             :ICD10GM_G97.80 a skos:Concept ;
             skos:prefLabel "Postoperative Liquorfistel"@de ;
@@ -15225,6 +15292,15 @@
             :ICD10GM_G97.81 a skos:Concept ;
             skos:prefLabel "Postoperativer (zerebellärer) Mutismus"@de ;
             skos:notation "ICD10GM:G97.81".
+            :ICD10GM_G97.82 a skos:Concept ;
+            skos:prefLabel "Postoperative epidurale spinale Blutung"@de ;
+            skos:notation "ICD10GM:G97.82".
+            :ICD10GM_G97.83 a skos:Concept ;
+            skos:prefLabel "Postoperative subdurale spinale Blutung"@de ;
+            skos:notation "ICD10GM:G97.83".
+            :ICD10GM_G97.84 a skos:Concept ;
+            skos:prefLabel "Postoperative subarachnoidale spinale Blutung"@de ;
+            skos:notation "ICD10GM:G97.84".
             :ICD10GM_G97.88 a skos:Concept ;
             skos:prefLabel "Sonstige Krankheiten des Nervensystems nach medizinischen Maßnahmen"@de ;
             skos:notation "ICD10GM:G97.88".
@@ -16409,6 +16485,7 @@
             skos:notation "ICD10GM:H58";
                 skos:narrower :ICD10GM_H58.0;
                 skos:narrower :ICD10GM_H58.1;
+                skos:narrower :ICD10GM_H58.2;
                 skos:narrower :ICD10GM_H58.8.
             :ICD10GM_H58.0 a skos:Concept ;
             skos:prefLabel "Anomalien der Pupillenreaktion bei anderenorts klassifizierten Krankheiten"@de ;
@@ -16416,6 +16493,21 @@
             :ICD10GM_H58.1 a skos:Concept ;
             skos:prefLabel "Sehstörungen bei anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:H58.1".
+            :ICD10GM_H58.2 a skos:Concept ;
+            skos:prefLabel "Beteiligung des Auges und der Augenanhangsgebilde bei der chronischen Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:H58.2";
+                skos:narrower :ICD10GM_H58.21;
+                skos:narrower :ICD10GM_H58.22;
+                skos:narrower :ICD10GM_H58.23.
+            :ICD10GM_H58.21 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Augen-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:H58.21".
+            :ICD10GM_H58.22 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Augen-Graft-versus-Host-Krankheit T86.06"@de ;
+            skos:notation "ICD10GM:H58.22".
+            :ICD10GM_H58.23 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Augen-Graft-versus-Host-KrankheitT86.07 "@de ;
+            skos:notation "ICD10GM:H58.23".
             :ICD10GM_H58.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Affektionen der Augen und der Augenanhangsgebilde bei anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:H58.8".
@@ -17374,7 +17466,7 @@
             skos:prefLabel "Nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:I25.29".
             :ICD10GM_I25.3 a skos:Concept ;
-            skos:prefLabel "Herz (-Wand) -Aneurysma"@de ;
+            skos:prefLabel "Herz-(Wand-)Aneurysma"@de ;
             skos:notation "ICD10GM:I25.3".
             :ICD10GM_I25.4 a skos:Concept ;
             skos:prefLabel "Koronararterienaneurysma"@de ;
@@ -17942,13 +18034,29 @@
             skos:prefLabel "Rechtsherzinsuffizienz"@de ;
             skos:notation "ICD10GM:I50.0";
                 skos:narrower :ICD10GM_I50.00;
-                skos:narrower :ICD10GM_I50.01.
+                skos:narrower :ICD10GM_I50.01;
+                skos:narrower :ICD10GM_I50.02;
+                skos:narrower :ICD10GM_I50.03;
+                skos:narrower :ICD10GM_I50.04;
+                skos:narrower :ICD10GM_I50.05.
             :ICD10GM_I50.00 a skos:Concept ;
             skos:prefLabel "Primäre Rechtsherzinsuffizienz"@de ;
             skos:notation "ICD10GM:I50.00".
             :ICD10GM_I50.01 a skos:Concept ;
             skos:prefLabel "Sekundäre Rechtsherzinsuffizienz"@de ;
             skos:notation "ICD10GM:I50.01".
+            :ICD10GM_I50.02 a skos:Concept ;
+            skos:prefLabel "Rechtsherzinsuffizienz ohne Beschwerden"@de ;
+            skos:notation "ICD10GM:I50.02".
+            :ICD10GM_I50.03 a skos:Concept ;
+            skos:prefLabel "Rechtsherzinsuffizienz mit Beschwerden bei stärkerer Belastung"@de ;
+            skos:notation "ICD10GM:I50.03".
+            :ICD10GM_I50.04 a skos:Concept ;
+            skos:prefLabel "Rechtsherzinsuffizienz mit Beschwerden bei leichterer Belastung"@de ;
+            skos:notation "ICD10GM:I50.04".
+            :ICD10GM_I50.05 a skos:Concept ;
+            skos:prefLabel "Rechtsherzinsuffizienz mit Beschwerden in Ruhe"@de ;
+            skos:notation "ICD10GM:I50.05".
             :ICD10GM_I50.1 a skos:Concept ;
             skos:prefLabel "Linksherzinsuffizienz"@de ;
             skos:notation "ICD10GM:I50.1";
@@ -18813,7 +18921,15 @@
             skos:notation "ICD10GM:I87.1".
             :ICD10GM_I87.2 a skos:Concept ;
             skos:prefLabel "Venöse Insuffizienz (chronisch) (peripher)"@de ;
-            skos:notation "ICD10GM:I87.2".
+            skos:notation "ICD10GM:I87.2";
+                skos:narrower :ICD10GM_I87.20;
+                skos:narrower :ICD10GM_I87.21.
+            :ICD10GM_I87.20 a skos:Concept ;
+            skos:prefLabel "Venöse Insuffizienz (chronisch) (peripher) ohne Ulzeration"@de ;
+            skos:notation "ICD10GM:I87.20".
+            :ICD10GM_I87.21 a skos:Concept ;
+            skos:prefLabel "Venöse Insuffizienz (chronisch) (peripher) mit Ulzeration"@de ;
+            skos:notation "ICD10GM:I87.21".
             :ICD10GM_I87.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Venenkrankheiten"@de ;
             skos:notation "ICD10GM:I87.8".
@@ -18848,7 +18964,39 @@
                 skos:narrower :ICD10GM_I89.9.
             :ICD10GM_I89.0 a skos:Concept ;
             skos:prefLabel "Lymphödem, anderenorts nicht klassifiziert"@de ;
-            skos:notation "ICD10GM:I89.0".
+            skos:notation "ICD10GM:I89.0";
+                skos:narrower :ICD10GM_I89.00;
+                skos:narrower :ICD10GM_I89.01;
+                skos:narrower :ICD10GM_I89.02;
+                skos:narrower :ICD10GM_I89.03;
+                skos:narrower :ICD10GM_I89.04;
+                skos:narrower :ICD10GM_I89.05;
+                skos:narrower :ICD10GM_I89.08;
+                skos:narrower :ICD10GM_I89.09.
+            :ICD10GM_I89.00 a skos:Concept ;
+            skos:prefLabel "Lymphödem der oberen und unteren Extremität(en), Stadium I"@de ;
+            skos:notation "ICD10GM:I89.00".
+            :ICD10GM_I89.01 a skos:Concept ;
+            skos:prefLabel "Lymphödem der oberen und unteren Extremität(en), Stadium II"@de ;
+            skos:notation "ICD10GM:I89.01".
+            :ICD10GM_I89.02 a skos:Concept ;
+            skos:prefLabel "Lymphödem der oberen und unteren Extremität(en), Stadium III"@de ;
+            skos:notation "ICD10GM:I89.02".
+            :ICD10GM_I89.03 a skos:Concept ;
+            skos:prefLabel "Lymphödem, sonstige Lokalisation, Stadium I"@de ;
+            skos:notation "ICD10GM:I89.03".
+            :ICD10GM_I89.04 a skos:Concept ;
+            skos:prefLabel "Lymphödem, sonstige Lokalisation, Stadium II"@de ;
+            skos:notation "ICD10GM:I89.04".
+            :ICD10GM_I89.05 a skos:Concept ;
+            skos:prefLabel "Lymphödem, sonstige Lokalisation, Stadium III"@de ;
+            skos:notation "ICD10GM:I89.05".
+            :ICD10GM_I89.08 a skos:Concept ;
+            skos:prefLabel "Sonstiges Lymphödem, anderenorts nicht klassifiziert"@de ;
+            skos:notation "ICD10GM:I89.08".
+            :ICD10GM_I89.09 a skos:Concept ;
+            skos:prefLabel "Lymphödem, nicht näher bezeichnet"@de ;
+            skos:notation "ICD10GM:I89.09".
             :ICD10GM_I89.1 a skos:Concept ;
             skos:prefLabel "Lymphangitis"@de ;
             skos:notation "ICD10GM:I89.1".
@@ -18896,11 +19044,67 @@
             skos:prefLabel "Sonstige Funktionsstörungen nach kardiochirurgischem Eingriff"@de ;
             skos:notation "ICD10GM:I97.1".
             :ICD10GM_I97.2 a skos:Concept ;
-            skos:prefLabel "Lymphödem nach Mastektomie"@de ;
-            skos:notation "ICD10GM:I97.2".
+            skos:prefLabel "Lymphödem nach (partieller) Mastektomie"@de ;
+            skos:notation "ICD10GM:I97.2";
+                skos:narrower :ICD10GM_I97.20;
+                skos:narrower :ICD10GM_I97.21;
+                skos:narrower :ICD10GM_I97.22;
+                skos:narrower :ICD10GM_I97.29.
+            :ICD10GM_I97.20 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach (partieller) Mastektomie (mit Lymphadenektomie), Stadium I"@de ;
+            skos:notation "ICD10GM:I97.20".
+            :ICD10GM_I97.21 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach (partieller) Mastektomie (mit Lymphadenektomie), Stadium II"@de ;
+            skos:notation "ICD10GM:I97.21".
+            :ICD10GM_I97.22 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach (partieller) Mastektomie (mit Lymphadenektomie), Stadium III"@de ;
+            skos:notation "ICD10GM:I97.22".
+            :ICD10GM_I97.29 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach (partieller) Mastektomie, nicht näher bezeichnet"@de ;
+            skos:notation "ICD10GM:I97.29".
             :ICD10GM_I97.8 a skos:Concept ;
             skos:prefLabel "Sonstige Kreislaufkomplikationen nach medizinischen Maßnahmen, anderenorts nicht klassifiziert"@de ;
-            skos:notation "ICD10GM:I97.8".
+            skos:notation "ICD10GM:I97.8";
+                skos:narrower :ICD10GM_I97.80;
+                skos:narrower :ICD10GM_I97.81;
+                skos:narrower :ICD10GM_I97.82;
+                skos:narrower :ICD10GM_I97.83;
+                skos:narrower :ICD10GM_I97.84;
+                skos:narrower :ICD10GM_I97.85;
+                skos:narrower :ICD10GM_I97.86;
+                skos:narrower :ICD10GM_I97.87;
+                skos:narrower :ICD10GM_I97.88;
+                skos:narrower :ICD10GM_I97.89.
+            :ICD10GM_I97.80 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am zervikalen Lymphabflussgebiet, alle Stadien"@de ;
+            skos:notation "ICD10GM:I97.80".
+            :ICD10GM_I97.81 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am axillären Lymphabflussgebiet, Stadium I"@de ;
+            skos:notation "ICD10GM:I97.81".
+            :ICD10GM_I97.82 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am axillären Lymphabflussgebiet, Stadium II"@de ;
+            skos:notation "ICD10GM:I97.82".
+            :ICD10GM_I97.83 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am axillären Lymphabflussgebiet, Stadium III"@de ;
+            skos:notation "ICD10GM:I97.83".
+            :ICD10GM_I97.84 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am inguinalen Lymphabflussgebiet, Stadium I"@de ;
+            skos:notation "ICD10GM:I97.84".
+            :ICD10GM_I97.85 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am inguinalen Lymphabflussgebiet, Stadium II"@de ;
+            skos:notation "ICD10GM:I97.85".
+            :ICD10GM_I97.86 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am inguinalen Lymphabflussgebiet, Stadium III"@de ;
+            skos:notation "ICD10GM:I97.86".
+            :ICD10GM_I97.87 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen am Urogenitalsystem, alle Stadien"@de ;
+            skos:notation "ICD10GM:I97.87".
+            :ICD10GM_I97.88 a skos:Concept ;
+            skos:prefLabel "Lymphödem nach medizinischen Maßnahmen, sonstige Lokalisationen, alle Stadien"@de ;
+            skos:notation "ICD10GM:I97.88".
+            :ICD10GM_I97.89 a skos:Concept ;
+            skos:prefLabel "Sonstige Kreislaufkomplikationen nach medizinischen Maßnahmen, anderenorts nicht klassifiziert"@de ;
+            skos:notation "ICD10GM:I97.89".
             :ICD10GM_I97.9 a skos:Concept ;
             skos:prefLabel "Kreislaufkomplikation nach medizinischer Maßnahme, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:I97.9".
@@ -19036,22 +19240,22 @@
             skos:prefLabel "Akute Infektion der oberen Atemwege, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:J06.9".
             :ICD10GM_J09 a skos:Concept ;
-            skos:prefLabel "Grippe durch bestimmte nachgewiesene Influenzaviren"@de ;
+            skos:prefLabel "Grippe durch zoonotische oder pandemische nachgewiesene Influenzaviren"@de ;
             skos:notation "ICD10GM:J09".
             :ICD10GM_J10 a skos:Concept ;
-            skos:prefLabel "Grippe durch sonstige nachgewiesene Influenzaviren"@de ;
+            skos:prefLabel "Grippe durch saisonale nachgewiesene Influenzaviren"@de ;
             skos:notation "ICD10GM:J10";
                 skos:narrower :ICD10GM_J10.0;
                 skos:narrower :ICD10GM_J10.1;
                 skos:narrower :ICD10GM_J10.8.
             :ICD10GM_J10.0 a skos:Concept ;
-            skos:prefLabel "Grippe mit Pneumonie, sonstige Influenzaviren nachgewiesen"@de ;
+            skos:prefLabel "Grippe mit Pneumonie, saisonale Influenzaviren nachgewiesen"@de ;
             skos:notation "ICD10GM:J10.0".
             :ICD10GM_J10.1 a skos:Concept ;
-            skos:prefLabel "Grippe mit sonstigen Manifestationen an den Atemwegen, sonstige Influenzaviren nachgewiesen"@de ;
+            skos:prefLabel "Grippe mit sonstigen Manifestationen an den Atemwegen, saisonale Influenzaviren nachgewiesen"@de ;
             skos:notation "ICD10GM:J10.1".
             :ICD10GM_J10.8 a skos:Concept ;
-            skos:prefLabel "Grippe mit sonstigen Manifestationen, sonstige Influenzaviren nachgewiesen"@de ;
+            skos:prefLabel "Grippe mit sonstigen Manifestationen, saisonale Influenzaviren nachgewiesen"@de ;
             skos:notation "ICD10GM:J10.8".
             :ICD10GM_J11 a skos:Concept ;
             skos:prefLabel "Grippe, Viren nicht nachgewiesen"@de ;
@@ -20024,6 +20228,7 @@
             skos:notation "ICD10GM:J99";
                 skos:narrower :ICD10GM_J99.0;
                 skos:narrower :ICD10GM_J99.1;
+                skos:narrower :ICD10GM_J99.2;
                 skos:narrower :ICD10GM_J99.8.
             :ICD10GM_J99.0 a skos:Concept ;
             skos:prefLabel "Lungenkrankheit bei seropositiver chronischer Polyarthritis M05.1- "@de ;
@@ -20031,6 +20236,21 @@
             :ICD10GM_J99.1 a skos:Concept ;
             skos:prefLabel "Krankheiten der Atemwege bei sonstigen diffusen Bindegewebskrankheiten"@de ;
             skos:notation "ICD10GM:J99.1".
+            :ICD10GM_J99.2 a skos:Concept ;
+            skos:prefLabel "Beteiligung der Lunge bei der chronischen Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:J99.2";
+                skos:narrower :ICD10GM_J99.21;
+                skos:narrower :ICD10GM_J99.22;
+                skos:narrower :ICD10GM_J99.23.
+            :ICD10GM_J99.21 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Lungen-Graft-versus-Host-KrankheitT86.06 "@de ;
+            skos:notation "ICD10GM:J99.21".
+            :ICD10GM_J99.22 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Lungen-Graft-versus-Host-KrankheitT86.07 "@de ;
+            skos:notation "ICD10GM:J99.22".
+            :ICD10GM_J99.23 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Lungen-Graft-versus-Host-KrankheitT86.07 "@de ;
+            skos:notation "ICD10GM:J99.23".
             :ICD10GM_J99.8 a skos:Concept ;
             skos:prefLabel "Krankheiten der Atemwege bei sonstigen anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:J99.8".
@@ -20616,7 +20836,15 @@
             skos:notation "ICD10GM:K22.7".
             :ICD10GM_K22.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Krankheiten des Ösophagus"@de ;
-            skos:notation "ICD10GM:K22.8".
+            skos:notation "ICD10GM:K22.8";
+                skos:narrower :ICD10GM_K22.80;
+                skos:narrower :ICD10GM_K22.88.
+            :ICD10GM_K22.80 a skos:Concept ;
+            skos:prefLabel "Ösophagusfistel"@de ;
+            skos:notation "ICD10GM:K22.80".
+            :ICD10GM_K22.88 a skos:Concept ;
+            skos:prefLabel "Sonstige näher bezeichnete Krankheiten des Ösophagus"@de ;
+            skos:notation "ICD10GM:K22.88".
             :ICD10GM_K22.9 a skos:Concept ;
             skos:prefLabel "Krankheit des Ösophagus, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:K22.9".
@@ -21675,7 +21903,15 @@
             skos:notation "ICD10GM:K71.7".
             :ICD10GM_K71.8 a skos:Concept ;
             skos:prefLabel "Toxische Leberkrankheit mit sonstigen Affektionen der Leber"@de ;
-            skos:notation "ICD10GM:K71.8".
+            skos:notation "ICD10GM:K71.8";
+                skos:narrower :ICD10GM_K71.80;
+                skos:narrower :ICD10GM_K71.88.
+            :ICD10GM_K71.80 a skos:Concept ;
+            skos:prefLabel "Toxische veno-okklusive Leberkrankheit"@de ;
+            skos:notation "ICD10GM:K71.80".
+            :ICD10GM_K71.88 a skos:Concept ;
+            skos:prefLabel "Toxische Leberkrankheit mit sonstigen Affektionen der Leber"@de ;
+            skos:notation "ICD10GM:K71.88".
             :ICD10GM_K71.9 a skos:Concept ;
             skos:prefLabel "Toxische Leberkrankheit, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:K71.9".
@@ -21832,7 +22068,7 @@
             skos:prefLabel "Peliosis hepatis"@de ;
             skos:notation "ICD10GM:K76.4".
             :ICD10GM_K76.5 a skos:Concept ;
-            skos:prefLabel "Venöse okklusive Leberkrankheit [Stuart-Bras-Syndrom]"@de ;
+            skos:prefLabel "Veno-okklusive Leberkrankheit"@de ;
             skos:notation "ICD10GM:K76.5".
             :ICD10GM_K76.6 a skos:Concept ;
             skos:prefLabel "Portale Hypertonie"@de ;
@@ -21851,29 +22087,45 @@
             skos:notation "ICD10GM:K77";
                 skos:narrower :ICD10GM_K77.0;
                 skos:narrower :ICD10GM_K77.1;
+                skos:narrower :ICD10GM_K77.2;
                 skos:narrower :ICD10GM_K77.8.
             :ICD10GM_K77.0 a skos:Concept ;
             skos:prefLabel "Leberkrankheiten bei anderenorts klassifizierten infektiösen und parasitären Krankheiten"@de ;
             skos:notation "ICD10GM:K77.0".
             :ICD10GM_K77.1 a skos:Concept ;
-            skos:prefLabel "Beteiligung der Leber bei der akuten Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Beteiligung der Leber bei der akuten Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:K77.1";
                 skos:narrower :ICD10GM_K77.11;
                 skos:narrower :ICD10GM_K77.12;
                 skos:narrower :ICD10GM_K77.13;
                 skos:narrower :ICD10GM_K77.14.
             :ICD10GM_K77.11 a skos:Concept ;
-            skos:prefLabel "Stadium 1 der akuten Leber-Graft-versus-host-Krankheit T86.01 "@de ;
+            skos:prefLabel "Stadium 1 der akuten Leber-Graft-versus-Host-Krankheit T86.01 "@de ;
             skos:notation "ICD10GM:K77.11".
             :ICD10GM_K77.12 a skos:Concept ;
-            skos:prefLabel "Stadium 2 der akuten Leber-Graft-versus-host-Krankheit T86.02 "@de ;
+            skos:prefLabel "Stadium 2 der akuten Leber-Graft-versus-Host-Krankheit T86.02 "@de ;
             skos:notation "ICD10GM:K77.12".
             :ICD10GM_K77.13 a skos:Concept ;
-            skos:prefLabel "Stadium 3 der akuten Leber-Graft-versus-host-Krankheit T86.02 "@de ;
+            skos:prefLabel "Stadium 3 der akuten Leber-Graft-versus-Host-Krankheit T86.02 "@de ;
             skos:notation "ICD10GM:K77.13".
             :ICD10GM_K77.14 a skos:Concept ;
-            skos:prefLabel "Stadium 4 der akuten Leber-Graft-versus-host-Krankheit T86.02 "@de ;
+            skos:prefLabel "Stadium 4 der akuten Leber-Graft-versus-Host-Krankheit T86.02 "@de ;
             skos:notation "ICD10GM:K77.14".
+            :ICD10GM_K77.2 a skos:Concept ;
+            skos:prefLabel "Beteiligung der Leber bei der chronischen Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:K77.2";
+                skos:narrower :ICD10GM_K77.21;
+                skos:narrower :ICD10GM_K77.22;
+                skos:narrower :ICD10GM_K77.23.
+            :ICD10GM_K77.21 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Leber-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:K77.21".
+            :ICD10GM_K77.22 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Leber-Graft-versus-Host-Krankheit T86.06 "@de ;
+            skos:notation "ICD10GM:K77.22".
+            :ICD10GM_K77.23 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Leber-Graft-versus-Host-KrankheitT86.07 "@de ;
+            skos:notation "ICD10GM:K77.23".
             :ICD10GM_K77.8 a skos:Concept ;
             skos:prefLabel "Leberkrankheiten bei sonstigen anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:K77.8".
@@ -22173,6 +22425,8 @@
                 skos:narrower :ICD10GM_K93.0;
                 skos:narrower :ICD10GM_K93.1;
                 skos:narrower :ICD10GM_K93.2;
+                skos:narrower :ICD10GM_K93.3;
+                skos:narrower :ICD10GM_K93.4;
                 skos:narrower :ICD10GM_K93.8.
             :ICD10GM_K93.0 a skos:Concept ;
             skos:prefLabel "Tuberkulose des Darmes, des Peritoneums und der Mesenteriallymphknoten A18.3 "@de ;
@@ -22181,24 +22435,54 @@
             skos:prefLabel "Megakolon bei Chagas-Krankheit B57.3 "@de ;
             skos:notation "ICD10GM:K93.1".
             :ICD10GM_K93.2 a skos:Concept ;
-            skos:prefLabel "Beteiligung des Verdauungstraktes bei der akuten Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Beteiligung des Verdauungstraktes bei der akuten Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:K93.2";
                 skos:narrower :ICD10GM_K93.21;
                 skos:narrower :ICD10GM_K93.22;
                 skos:narrower :ICD10GM_K93.23;
                 skos:narrower :ICD10GM_K93.24.
             :ICD10GM_K93.21 a skos:Concept ;
-            skos:prefLabel "Stadium 1 der akuten Verdauungstrakt-Graft-versus-host-Krankheit T86.01 "@de ;
+            skos:prefLabel "Stadium 1 der akuten Verdauungstrakt-Graft-versus-Host-Krankheit T86.01 "@de ;
             skos:notation "ICD10GM:K93.21".
             :ICD10GM_K93.22 a skos:Concept ;
-            skos:prefLabel "Stadium 2 der akuten Verdauungstrakt-Graft-versus-host-Krankheit T86.02 "@de ;
+            skos:prefLabel "Stadium 2 der akuten Verdauungstrakt-Graft-versus-Host-Krankheit T86.02 "@de ;
             skos:notation "ICD10GM:K93.22".
             :ICD10GM_K93.23 a skos:Concept ;
-            skos:prefLabel "Stadium 3 der akuten Verdauungstrakt-Graft-versus-host-Krankheit T86.02 "@de ;
+            skos:prefLabel "Stadium 3 der akuten Verdauungstrakt-Graft-versus-Host-Krankheit T86.02 "@de ;
             skos:notation "ICD10GM:K93.23".
             :ICD10GM_K93.24 a skos:Concept ;
-            skos:prefLabel "Stadium 4 der akuten Verdauungstrakt-Graft-versus-host-Krankheit T86.02 "@de ;
+            skos:prefLabel "Stadium 4 der akuten Verdauungstrakt-Graft-versus-Host-Krankheit T86.02 "@de ;
             skos:notation "ICD10GM:K93.24".
+            :ICD10GM_K93.3 a skos:Concept ;
+            skos:prefLabel "Beteiligung des Verdauungstraktes bei der chronischen Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:K93.3";
+                skos:narrower :ICD10GM_K93.31;
+                skos:narrower :ICD10GM_K93.32;
+                skos:narrower :ICD10GM_K93.33.
+            :ICD10GM_K93.31 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Verdauungstrakt-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:K93.31".
+            :ICD10GM_K93.32 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Verdauungstrakt-Graft-versus-Host-Krankheit T86.06"@de ;
+            skos:notation "ICD10GM:K93.32".
+            :ICD10GM_K93.33 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Verdauungstrakt-Graft-versus-Host-Krankheit T86.07 "@de ;
+            skos:notation "ICD10GM:K93.33".
+            :ICD10GM_K93.4 a skos:Concept ;
+            skos:prefLabel "Beteiligung der Mundschleimhaut bei der chronischen Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:K93.4";
+                skos:narrower :ICD10GM_K93.41;
+                skos:narrower :ICD10GM_K93.42;
+                skos:narrower :ICD10GM_K93.43.
+            :ICD10GM_K93.41 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Mundschleimhaut-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:K93.41".
+            :ICD10GM_K93.42 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Mundschleimhaut-Graft-versus-Host-Krankheit T86.06"@de ;
+            skos:notation "ICD10GM:K93.42".
+            :ICD10GM_K93.43 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Mundschleimhaut-Graft-versus-Host-Krankheit T86.07 "@de ;
+            skos:notation "ICD10GM:K93.43".
             :ICD10GM_K93.8 a skos:Concept ;
             skos:prefLabel "Krankheiten sonstiger näher bezeichneter Verdauungsorgane bei anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:K93.8".
@@ -22746,7 +23030,7 @@
             skos:prefLabel "Psoriasis guttata"@de ;
             skos:notation "ICD10GM:L40.4".
             :ICD10GM_L40.5 a skos:Concept ;
-            skos:prefLabel "Psoriasis-Arthropathie M07.0-M07.3 M09.0- "@de ;
+            skos:prefLabel "Psoriasis-ArthropathieM07.0-M07.3M09.0-"@de ;
             skos:notation "ICD10GM:L40.5".
             :ICD10GM_L40.8 a skos:Concept ;
             skos:prefLabel "Sonstige Psoriasis"@de ;
@@ -23290,7 +23574,7 @@
             skos:prefLabel "Acne infantum"@de ;
             skos:notation "ICD10GM:L70.4".
             :ICD10GM_L70.5 a skos:Concept ;
-            skos:prefLabel "Acne excoriée"@de ;
+            skos:prefLabel "Acné excoriée"@de ;
             skos:notation "ICD10GM:L70.5".
             :ICD10GM_L70.8 a skos:Concept ;
             skos:prefLabel "Sonstige Akne"@de ;
@@ -23718,6 +24002,7 @@
                 skos:narrower :ICD10GM_L98.4;
                 skos:narrower :ICD10GM_L98.5;
                 skos:narrower :ICD10GM_L98.6;
+                skos:narrower :ICD10GM_L98.7;
                 skos:narrower :ICD10GM_L98.8;
                 skos:narrower :ICD10GM_L98.9.
             :ICD10GM_L98.0 a skos:Concept ;
@@ -23741,6 +24026,9 @@
             :ICD10GM_L98.6 a skos:Concept ;
             skos:prefLabel "Sonstige infiltrative Krankheiten der Haut und der Unterhaut"@de ;
             skos:notation "ICD10GM:L98.6".
+            :ICD10GM_L98.7 a skos:Concept ;
+            skos:prefLabel "Überschüssige und erschlaffte Haut und Unterhaut"@de ;
+            skos:notation "ICD10GM:L98.7".
             :ICD10GM_L98.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Krankheiten der Haut und der Unterhaut"@de ;
             skos:notation "ICD10GM:L98.8".
@@ -23752,29 +24040,45 @@
             skos:notation "ICD10GM:L99";
                 skos:narrower :ICD10GM_L99.0;
                 skos:narrower :ICD10GM_L99.1;
+                skos:narrower :ICD10GM_L99.2;
                 skos:narrower :ICD10GM_L99.8.
             :ICD10GM_L99.0 a skos:Concept ;
             skos:prefLabel "Kutane Amyloidose E85.- "@de ;
             skos:notation "ICD10GM:L99.0".
             :ICD10GM_L99.1 a skos:Concept ;
-            skos:prefLabel "Beteiligung der Haut bei der akuten Graft-versus-host-Krankheit T86.01 T86.02 "@de ;
+            skos:prefLabel "Beteiligung der Haut bei der akuten Graft-versus-Host-Krankheit T86.01 T86.02 "@de ;
             skos:notation "ICD10GM:L99.1";
                 skos:narrower :ICD10GM_L99.11;
                 skos:narrower :ICD10GM_L99.12;
                 skos:narrower :ICD10GM_L99.13;
                 skos:narrower :ICD10GM_L99.14.
             :ICD10GM_L99.11 a skos:Concept ;
-            skos:prefLabel "Stadium 1 der akuten Haut-Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Stadium 1 der akuten Haut-Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:L99.11".
             :ICD10GM_L99.12 a skos:Concept ;
-            skos:prefLabel "Stadium 2 der akuten Haut-Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Stadium 2 der akuten Haut-Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:L99.12".
             :ICD10GM_L99.13 a skos:Concept ;
-            skos:prefLabel "Stadium 3 der akuten Haut-Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Stadium 3 der akuten Haut-Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:L99.13".
             :ICD10GM_L99.14 a skos:Concept ;
-            skos:prefLabel "Stadium 4 der akuten Haut-Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Stadium 4 der akuten Haut-Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:L99.14".
+            :ICD10GM_L99.2 a skos:Concept ;
+            skos:prefLabel "Beteiligung der Haut bei der chronischen Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:L99.2";
+                skos:narrower :ICD10GM_L99.21;
+                skos:narrower :ICD10GM_L99.22;
+                skos:narrower :ICD10GM_L99.23.
+            :ICD10GM_L99.21 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Haut-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:L99.21".
+            :ICD10GM_L99.22 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Haut-Graft-versus-Host-Krankheit T86.06"@de ;
+            skos:notation "ICD10GM:L99.22".
+            :ICD10GM_L99.23 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Haut-Graft-versus-Host-Krankheit T86.07 "@de ;
+            skos:notation "ICD10GM:L99.23".
             :ICD10GM_L99.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Krankheiten der Haut und der Unterhaut bei anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:L99.8".
@@ -24975,6 +25279,7 @@
                 skos:narrower :ICD10GM_M36.2;
                 skos:narrower :ICD10GM_M36.3;
                 skos:narrower :ICD10GM_M36.4;
+                skos:narrower :ICD10GM_M36.5;
                 skos:narrower :ICD10GM_M36.8.
             :ICD10GM_M36.0 a skos:Concept ;
             skos:prefLabel "Dermatomyositis-Polymyositis bei NeubildungenC00-D48"@de ;
@@ -24991,6 +25296,21 @@
             :ICD10GM_M36.4 a skos:Concept ;
             skos:prefLabel "Arthropathie bei anderenorts klassifizierten Hypersensitivitätsreaktionen"@de ;
             skos:notation "ICD10GM:M36.4".
+            :ICD10GM_M36.5 a skos:Concept ;
+            skos:prefLabel "Beteiligung des Bindegewebes bei der chronischer Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:M36.5";
+                skos:narrower :ICD10GM_M36.51;
+                skos:narrower :ICD10GM_M36.52;
+                skos:narrower :ICD10GM_M36.53.
+            :ICD10GM_M36.51 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Bindegewebe-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:M36.51".
+            :ICD10GM_M36.52 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Bindegewebe-Graft-versus-Host-Krankheit T86.06"@de ;
+            skos:notation "ICD10GM:M36.52".
+            :ICD10GM_M36.53 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Bindegewebe-Graft-versus-Host-Krankheit T86.07 "@de ;
+            skos:notation "ICD10GM:M36.53".
             :ICD10GM_M36.8 a skos:Concept ;
             skos:prefLabel "Systemkrankheiten des Bindegewebes bei sonstigen anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:M36.8".
@@ -25495,7 +25815,7 @@
             skos:prefLabel "Sehnenscheidenabszess"@de ;
             skos:notation "ICD10GM:M65.0".
             :ICD10GM_M65.1 a skos:Concept ;
-            skos:prefLabel "Sonstige infektiöse (Teno-) Synovitis"@de ;
+            skos:prefLabel "Sonstige infektiöse (Teno-)Synovitis"@de ;
             skos:notation "ICD10GM:M65.1".
             :ICD10GM_M65.2 a skos:Concept ;
             skos:prefLabel "Tendinitis calcarea"@de ;
@@ -27583,6 +27903,7 @@
             skos:notation "ICD10GM:N77";
                 skos:narrower :ICD10GM_N77.0;
                 skos:narrower :ICD10GM_N77.1;
+                skos:narrower :ICD10GM_N77.2;
                 skos:narrower :ICD10GM_N77.8.
             :ICD10GM_N77.0 a skos:Concept ;
             skos:prefLabel "Ulzeration der Vulva bei anderenorts klassifizierten infektiösen und parasitären Krankheiten"@de ;
@@ -27590,6 +27911,21 @@
             :ICD10GM_N77.1 a skos:Concept ;
             skos:prefLabel "Vaginitis, Vulvitis oder Vulvovaginitis bei anderenorts klassifizierten infektiösen und parasitären Krankheiten"@de ;
             skos:notation "ICD10GM:N77.1".
+            :ICD10GM_N77.2 a skos:Concept ;
+            skos:prefLabel "Vulvovaginale Ulzerationen und Entzündungen bei der chronischer Graft-versus-Host-Krankheit"@de ;
+            skos:notation "ICD10GM:N77.2";
+                skos:narrower :ICD10GM_N77.21;
+                skos:narrower :ICD10GM_N77.22;
+                skos:narrower :ICD10GM_N77.23.
+            :ICD10GM_N77.21 a skos:Concept ;
+            skos:prefLabel "Stadium 1 der chronischen Vulvovaginal-Graft-versus-Host-Krankheit T86.05T86.06"@de ;
+            skos:notation "ICD10GM:N77.21".
+            :ICD10GM_N77.22 a skos:Concept ;
+            skos:prefLabel "Stadium 2 der chronischen Vulvovaginal-Graft-versus-Host-Krankheit T86.06"@de ;
+            skos:notation "ICD10GM:N77.22".
+            :ICD10GM_N77.23 a skos:Concept ;
+            skos:prefLabel "Stadium 3 der chronischen Vulvovaginal-Graft-versus-Host-Krankheit T86.07 "@de ;
+            skos:notation "ICD10GM:N77.23".
             :ICD10GM_N77.8 a skos:Concept ;
             skos:prefLabel "Vulvovaginale Ulzeration und Entzündung bei sonstigen anderenorts klassifizierten Krankheiten"@de ;
             skos:notation "ICD10GM:N77.8".
@@ -27954,31 +28290,7 @@
             skos:notation "ICD10GM:N90.7".
             :ICD10GM_N90.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete nichtentzündliche Krankheiten der Vulva und des Perineums"@de ;
-            skos:notation "ICD10GM:N90.8";
-                skos:narrower :ICD10GM_N90.80;
-                skos:narrower :ICD10GM_N90.81;
-                skos:narrower :ICD10GM_N90.82;
-                skos:narrower :ICD10GM_N90.83;
-                skos:narrower :ICD10GM_N90.84;
-                skos:narrower :ICD10GM_N90.88.
-            :ICD10GM_N90.80 a skos:Concept ;
-            skos:prefLabel "Weibliche Genitalverstümmelung, Typ nicht näher bezeichnet"@de ;
-            skos:notation "ICD10GM:N90.80".
-            :ICD10GM_N90.81 a skos:Concept ;
-            skos:prefLabel "Weibliche Genitalverstümmelung, Typ 1"@de ;
-            skos:notation "ICD10GM:N90.81".
-            :ICD10GM_N90.82 a skos:Concept ;
-            skos:prefLabel "Weibliche Genitalverstümmelung, Typ 2"@de ;
-            skos:notation "ICD10GM:N90.82".
-            :ICD10GM_N90.83 a skos:Concept ;
-            skos:prefLabel "Weibliche Genitalverstümmelung, Typ 3"@de ;
-            skos:notation "ICD10GM:N90.83".
-            :ICD10GM_N90.84 a skos:Concept ;
-            skos:prefLabel "Weibliche Genitalverstümmelung, Typ 4"@de ;
-            skos:notation "ICD10GM:N90.84".
-            :ICD10GM_N90.88 a skos:Concept ;
-            skos:prefLabel "Sonstige näher bezeichnete nichtentzündliche Krankheiten der Vulva und des Perineums"@de ;
-            skos:notation "ICD10GM:N90.88".
+            skos:notation "ICD10GM:N90.8".
             :ICD10GM_N90.9 a skos:Concept ;
             skos:prefLabel "Nichtentzündliche Krankheit der Vulva und des Perineums, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:N90.9".
@@ -28439,7 +28751,7 @@
             skos:prefLabel "Nicht näher bezeichnete, vorher bestehende Hypertonie, die Schwangerschaft, Geburt und Wochenbett kompliziert"@de ;
             skos:notation "ICD10GM:O10.9".
             :ICD10GM_O11 a skos:Concept ;
-            skos:prefLabel "Vorher bestehende chronische Hypertonie mit aufgepfropfter Präeklampsie, die Schwangerschaft, Geburt und Wochenbett kompliziert"@de ;
+            skos:prefLabel "Chronische Hypertonie mit aufgepfropfter Präeklampsie"@de ;
             skos:notation "ICD10GM:O11".
             :ICD10GM_O12 a skos:Concept ;
             skos:prefLabel "Gestationsödeme und Gestationsproteinurie [schwangerschaftsinduziert] ohne Hypertonie"@de ;
@@ -28667,7 +28979,15 @@
             skos:notation "ICD10GM:O26.5".
             :ICD10GM_O26.6 a skos:Concept ;
             skos:prefLabel "Leberkrankheiten während der Schwangerschaft, der Geburt und des Wochenbettes"@de ;
-            skos:notation "ICD10GM:O26.6".
+            skos:notation "ICD10GM:O26.6";
+                skos:narrower :ICD10GM_O26.60;
+                skos:narrower :ICD10GM_O26.68.
+            :ICD10GM_O26.60 a skos:Concept ;
+            skos:prefLabel "Schwangerschaftscholestase"@de ;
+            skos:notation "ICD10GM:O26.60".
+            :ICD10GM_O26.68 a skos:Concept ;
+            skos:prefLabel "Sonstige Leberkrankheiten während der Schwangerschaft, der Geburt und des Wochenbettes"@de ;
+            skos:notation "ICD10GM:O26.68".
             :ICD10GM_O26.7 a skos:Concept ;
             skos:prefLabel "Subluxation der Symphysis (pubica) während der Schwangerschaft, der Geburt und des Wochenbettes"@de ;
             skos:notation "ICD10GM:O26.7".
@@ -28810,7 +29130,7 @@
             skos:prefLabel "Sonstige Komplikationen, die für eine Mehrlingsschwangerschaft spezifisch sind"@de ;
             skos:notation "ICD10GM:O31.8".
             :ICD10GM_O32 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei festgestellter oder vermuteter Lage- und Einstellungsanomalie des Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei festgestellter oder vermuteter Lage- und Einstellungsanomalie des Fetus"@de ;
             skos:notation "ICD10GM:O32";
                 skos:narrower :ICD10GM_O32.0;
                 skos:narrower :ICD10GM_O32.1;
@@ -28843,10 +29163,10 @@
             skos:prefLabel "Betreuung der Mutter bei kombinierten Lage- und Einstellungsanomalien"@de ;
             skos:notation "ICD10GM:O32.6".
             :ICD10GM_O32.8 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei sonstigen Lage- und Einstellungsanomalien des Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei sonstigen Lage- und Einstellungsanomalien des Fetus"@de ;
             skos:notation "ICD10GM:O32.8".
             :ICD10GM_O32.9 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei Lage- und Einstellungsanomalie des Feten, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Betreuung der Mutter bei Lage- und Einstellungsanomalie des Fetus, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:O32.9".
             :ICD10GM_O33 a skos:Concept ;
             skos:prefLabel "Betreuung der Mutter bei festgestelltem oder vermutetem Missverhältnis zwischen Fetus und Becken"@de ;
@@ -28877,13 +29197,13 @@
             skos:prefLabel "Betreuung der Mutter wegen Missverhältnis bei kombinierter mütterlicher und fetaler Ursache"@de ;
             skos:notation "ICD10GM:O33.4".
             :ICD10GM_O33.5 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei Missverhältnis durch ungewöhnlich großen Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei Missverhältnis durch ungewöhnlich großen Fetus"@de ;
             skos:notation "ICD10GM:O33.5".
             :ICD10GM_O33.6 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei Missverhältnis durch Hydrozephalus des Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei Missverhältnis durch Hydrozephalus des Fetus"@de ;
             skos:notation "ICD10GM:O33.6".
             :ICD10GM_O33.7 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei Missverhältnis durch sonstige Deformitäten des Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei Missverhältnis durch sonstige Deformitäten des Fetus"@de ;
             skos:notation "ICD10GM:O33.7".
             :ICD10GM_O33.8 a skos:Concept ;
             skos:prefLabel "Betreuung der Mutter bei Missverhältnis sonstigen Ursprungs"@de ;
@@ -28951,7 +29271,7 @@
             skos:prefLabel "Betreuung der Mutter bei Anomalie der Beckenorgane, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:O34.9".
             :ICD10GM_O35 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei festgestellter oder vermuteter Anomalie oder Schädigung des Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei festgestellter oder vermuteter Anomalie oder Schädigung des Fetus"@de ;
             skos:notation "ICD10GM:O35";
                 skos:narrower :ICD10GM_O35.0;
                 skos:narrower :ICD10GM_O35.1;
@@ -28964,37 +29284,37 @@
                 skos:narrower :ICD10GM_O35.8;
                 skos:narrower :ICD10GM_O35.9.
             :ICD10GM_O35.0 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Fehlbildung des Zentralnervensystems beim Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Fehlbildung des Zentralnervensystems beim Fetus"@de ;
             skos:notation "ICD10GM:O35.0".
             :ICD10GM_O35.1 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Chromosomenanomalie beim Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Chromosomenanomalie beim Fetus"@de ;
             skos:notation "ICD10GM:O35.1".
             :ICD10GM_O35.2 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) hereditäre Krankheit beim Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) hereditäre Krankheit beim Fetus"@de ;
             skos:notation "ICD10GM:O35.2".
             :ICD10GM_O35.3 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Feten durch Viruskrankheit der Mutter"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Fetus durch Viruskrankheit der Mutter"@de ;
             skos:notation "ICD10GM:O35.3".
             :ICD10GM_O35.4 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Feten durch Alkohol"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Fetus durch Alkohol"@de ;
             skos:notation "ICD10GM:O35.4".
             :ICD10GM_O35.5 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Feten durch Arzneimittel oder Drogen"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Fetus durch Arzneimittel oder Drogen"@de ;
             skos:notation "ICD10GM:O35.5".
             :ICD10GM_O35.6 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Feten durch Strahleneinwirkung"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Fetus durch Strahleneinwirkung"@de ;
             skos:notation "ICD10GM:O35.6".
             :ICD10GM_O35.7 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Feten durch sonstige medizinische Maßnahmen"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Schädigung des Fetus durch sonstige medizinische Maßnahmen"@de ;
             skos:notation "ICD10GM:O35.7".
             :ICD10GM_O35.8 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) sonstige Anomalie oder Schädigung des Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) sonstige Anomalie oder Schädigung des Fetus"@de ;
             skos:notation "ICD10GM:O35.8".
             :ICD10GM_O35.9 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Anomalie oder Schädigung des Feten, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Betreuung der Mutter bei (Verdacht auf) Anomalie oder Schädigung des Fetus, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:O35.9".
             :ICD10GM_O36 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter wegen sonstiger festgestellter oder vermuteter Komplikationen beim Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter wegen sonstiger festgestellter oder vermuteter Komplikationen beim Fetus"@de ;
             skos:notation "ICD10GM:O36";
                 skos:narrower :ICD10GM_O36.0;
                 skos:narrower :ICD10GM_O36.1;
@@ -29028,13 +29348,13 @@
             skos:prefLabel "Betreuung der Mutter wegen fetaler Hypertrophie"@de ;
             skos:notation "ICD10GM:O36.6".
             :ICD10GM_O36.7 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter wegen eines lebensfähigen Feten bei Abdominalgravidität"@de ;
+            skos:prefLabel "Betreuung der Mutter wegen eines lebensfähigen Fetus bei Abdominalgravidität"@de ;
             skos:notation "ICD10GM:O36.7".
             :ICD10GM_O36.8 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter wegen sonstiger näher bezeichneter Komplikationen beim Feten"@de ;
+            skos:prefLabel "Betreuung der Mutter wegen sonstiger näher bezeichneter Komplikationen beim Fetus"@de ;
             skos:notation "ICD10GM:O36.8".
             :ICD10GM_O36.9 a skos:Concept ;
-            skos:prefLabel "Betreuung der Mutter wegen Komplikation beim Feten, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Betreuung der Mutter wegen Komplikation beim Fetus, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:O36.9".
             :ICD10GM_O40 a skos:Concept ;
             skos:prefLabel "Polyhydramnion"@de ;
@@ -29296,7 +29616,7 @@
             skos:prefLabel "Protrahierte Geburt, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:O63.9".
             :ICD10GM_O64 a skos:Concept ;
-            skos:prefLabel "Geburtshindernis durch Lage-, Haltungs- und Einstellungsanomalien des Feten"@de ;
+            skos:prefLabel "Geburtshindernis durch Lage-, Haltungs- und Einstellungsanomalien des Fetus"@de ;
             skos:notation "ICD10GM:O64";
                 skos:narrower :ICD10GM_O64.0;
                 skos:narrower :ICD10GM_O64.1;
@@ -29354,7 +29674,7 @@
             skos:prefLabel "Geburtshindernis durch Beckenausgangsverengung und Verengung in Beckenmitte"@de ;
             skos:notation "ICD10GM:O65.3".
             :ICD10GM_O65.4 a skos:Concept ;
-            skos:prefLabel "Geburtshindernis durch Missverhältnis zwischen Fet und Becken, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Geburtshindernis durch Missverhältnis zwischen Fetus und Becken, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:O65.4".
             :ICD10GM_O65.5 a skos:Concept ;
             skos:prefLabel "Geburtshindernis durch Anomalie der mütterlichen Beckenorgane"@de ;
@@ -29383,10 +29703,10 @@
             skos:prefLabel "Geburtshindernis durch verhakte Zwillinge"@de ;
             skos:notation "ICD10GM:O66.1".
             :ICD10GM_O66.2 a skos:Concept ;
-            skos:prefLabel "Geburtshindernis durch ungewöhnlich großen Feten"@de ;
+            skos:prefLabel "Geburtshindernis durch ungewöhnlich großen Fetus"@de ;
             skos:notation "ICD10GM:O66.2".
             :ICD10GM_O66.3 a skos:Concept ;
-            skos:prefLabel "Geburtshindernis durch sonstige Anomalien des Feten"@de ;
+            skos:prefLabel "Geburtshindernis durch sonstige Anomalien des Fetus"@de ;
             skos:notation "ICD10GM:O66.3".
             :ICD10GM_O66.4 a skos:Concept ;
             skos:prefLabel "Misslungener Versuch der Geburtsbeendigung, nicht näher bezeichnet"@de ;
@@ -29999,7 +30319,7 @@
             skos:prefLabel "Sonstige näher bezeichnete Krankheiten und Zustände, die Schwangerschaft, Geburt und Wochenbett komplizieren"@de ;
             skos:notation "ICD10GM:O99.8".
             :ICD10GM_P00 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Zustände der Mutter, die zur vorliegenden Schwangerschaft keine Beziehung haben müssen"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Zustände der Mutter, die zur vorliegenden Schwangerschaft keine Beziehung haben müssen"@de ;
             skos:notation "ICD10GM:P00";
                 skos:narrower :ICD10GM_P00.0;
                 skos:narrower :ICD10GM_P00.1;
@@ -30012,37 +30332,37 @@
                 skos:narrower :ICD10GM_P00.8;
                 skos:narrower :ICD10GM_P00.9.
             :ICD10GM_P00.0 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch hypertensive Krankheiten der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch hypertensive Krankheiten der Mutter"@de ;
             skos:notation "ICD10GM:P00.0".
             :ICD10GM_P00.1 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Nieren- und Harnwegskrankheiten der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Nieren- und Harnwegskrankheiten der Mutter"@de ;
             skos:notation "ICD10GM:P00.1".
             :ICD10GM_P00.2 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch infektiöse und parasitäre Krankheiten der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch infektiöse und parasitäre Krankheiten der Mutter"@de ;
             skos:notation "ICD10GM:P00.2".
             :ICD10GM_P00.3 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Kreislauf- und Atemwegskrankheiten der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Kreislauf- und Atemwegskrankheiten der Mutter"@de ;
             skos:notation "ICD10GM:P00.3".
             :ICD10GM_P00.4 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Ernährungsstörung der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Ernährungsstörung der Mutter"@de ;
             skos:notation "ICD10GM:P00.4".
             :ICD10GM_P00.5 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Verletzung der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Verletzung der Mutter"@de ;
             skos:notation "ICD10GM:P00.5".
             :ICD10GM_P00.6 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch chirurgischen Eingriff bei der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch chirurgischen Eingriff bei der Mutter"@de ;
             skos:notation "ICD10GM:P00.6".
             :ICD10GM_P00.7 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige medizinische Maßnahmen bei der Mutter, anderenorts nicht klassifiziert"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige medizinische Maßnahmen bei der Mutter, anderenorts nicht klassifiziert"@de ;
             skos:notation "ICD10GM:P00.7".
             :ICD10GM_P00.8 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Zustände der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Zustände der Mutter"@de ;
             skos:notation "ICD10GM:P00.8".
             :ICD10GM_P00.9 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch nicht näher bezeichneten Zustand der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch nicht näher bezeichneten Zustand der Mutter"@de ;
             skos:notation "ICD10GM:P00.9".
             :ICD10GM_P01 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch mütterliche Schwangerschaftskomplikationen"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch mütterliche Schwangerschaftskomplikationen"@de ;
             skos:notation "ICD10GM:P01";
                 skos:narrower :ICD10GM_P01.0;
                 skos:narrower :ICD10GM_P01.1;
@@ -30055,37 +30375,37 @@
                 skos:narrower :ICD10GM_P01.8;
                 skos:narrower :ICD10GM_P01.9.
             :ICD10GM_P01.0 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Zervixinsuffizienz"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Zervixinsuffizienz"@de ;
             skos:notation "ICD10GM:P01.0".
             :ICD10GM_P01.1 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch vorzeitigen Blasensprung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch vorzeitigen Blasensprung"@de ;
             skos:notation "ICD10GM:P01.1".
             :ICD10GM_P01.2 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Oligohydramnion"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Oligohydramnion"@de ;
             skos:notation "ICD10GM:P01.2".
             :ICD10GM_P01.3 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Polyhydramnion"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Polyhydramnion"@de ;
             skos:notation "ICD10GM:P01.3".
             :ICD10GM_P01.4 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen bei Extrauteringravidität"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen bei Extrauteringravidität"@de ;
             skos:notation "ICD10GM:P01.4".
             :ICD10GM_P01.5 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen bei Mehrlingsschwangerschaft"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen bei Mehrlingsschwangerschaft"@de ;
             skos:notation "ICD10GM:P01.5".
             :ICD10GM_P01.6 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Tod der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Tod der Mutter"@de ;
             skos:notation "ICD10GM:P01.6".
             :ICD10GM_P01.7 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Lageanomalie vor Wehenbeginn"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Lageanomalie vor Wehenbeginn"@de ;
             skos:notation "ICD10GM:P01.7".
             :ICD10GM_P01.8 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige mütterliche Schwangerschaftskomplikationen"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige mütterliche Schwangerschaftskomplikationen"@de ;
             skos:notation "ICD10GM:P01.8".
             :ICD10GM_P01.9 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch mütterliche Schwangerschaftskomplikation, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch mütterliche Schwangerschaftskomplikation, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P01.9".
             :ICD10GM_P02 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Komplikationen von Plazenta, Nabelschnur und Eihäuten"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Komplikationen von Plazenta, Nabelschnur und Eihäuten"@de ;
             skos:notation "ICD10GM:P02";
                 skos:narrower :ICD10GM_P02.0;
                 skos:narrower :ICD10GM_P02.1;
@@ -30098,37 +30418,37 @@
                 skos:narrower :ICD10GM_P02.8;
                 skos:narrower :ICD10GM_P02.9.
             :ICD10GM_P02.0 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Placenta praevia"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Placenta praevia"@de ;
             skos:notation "ICD10GM:P02.0".
             :ICD10GM_P02.1 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Formen der Plazentalösung und -blutung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Formen der Plazentalösung und -blutung"@de ;
             skos:notation "ICD10GM:P02.1".
             :ICD10GM_P02.2 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige und nicht näher bezeichnete morphologische und funktionelle Plazentaanomalien"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige und nicht näher bezeichnete morphologische und funktionelle Plazentaanomalien"@de ;
             skos:notation "ICD10GM:P02.2".
             :ICD10GM_P02.3 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch transplazentare Transfusionssyndrome"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch transplazentare Transfusionssyndrome"@de ;
             skos:notation "ICD10GM:P02.3".
             :ICD10GM_P02.4 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Nabelschnurvorfall"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Nabelschnurvorfall"@de ;
             skos:notation "ICD10GM:P02.4".
             :ICD10GM_P02.5 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Formen der Nabelschnurkompression"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Formen der Nabelschnurkompression"@de ;
             skos:notation "ICD10GM:P02.5".
             :ICD10GM_P02.6 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige und nicht näher bezeichnete Zustände der Nabelschnur"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige und nicht näher bezeichnete Zustände der Nabelschnur"@de ;
             skos:notation "ICD10GM:P02.6".
             :ICD10GM_P02.7 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Chorioamnionitis"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Chorioamnionitis"@de ;
             skos:notation "ICD10GM:P02.7".
             :ICD10GM_P02.8 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Anomalien der Eihäute"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Anomalien der Eihäute"@de ;
             skos:notation "ICD10GM:P02.8".
             :ICD10GM_P02.9 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Anomalie der Eihäute, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Anomalie der Eihäute, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P02.9".
             :ICD10GM_P03 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Komplikationen bei Wehen und Entbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Komplikationen bei Wehen und Entbindung"@de ;
             skos:notation "ICD10GM:P03";
                 skos:narrower :ICD10GM_P03.0;
                 skos:narrower :ICD10GM_P03.1;
@@ -30140,34 +30460,34 @@
                 skos:narrower :ICD10GM_P03.8;
                 skos:narrower :ICD10GM_P03.9.
             :ICD10GM_P03.0 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Entbindung und Extraktion aus Beckenendlage"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Entbindung und Extraktion aus Beckenendlage"@de ;
             skos:notation "ICD10GM:P03.0".
             :ICD10GM_P03.1 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Lage-, Haltungs- und Einstellungsanomalien sowie Missverhältnis während Wehen und Entbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Lage-, Haltungs- und Einstellungsanomalien sowie Missverhältnis während Wehen und Entbindung"@de ;
             skos:notation "ICD10GM:P03.1".
             :ICD10GM_P03.2 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Zangenentbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Zangenentbindung"@de ;
             skos:notation "ICD10GM:P03.2".
             :ICD10GM_P03.3 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Entbindung mittels Vakuumextraktors [Saugglocke]"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Entbindung mittels Vakuumextraktors [Saugglocke]"@de ;
             skos:notation "ICD10GM:P03.3".
             :ICD10GM_P03.4 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Schnittentbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Schnittentbindung"@de ;
             skos:notation "ICD10GM:P03.4".
             :ICD10GM_P03.5 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch überstürzte Geburt"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch überstürzte Geburt"@de ;
             skos:notation "ICD10GM:P03.5".
             :ICD10GM_P03.6 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch abnorme Uteruskontraktionen"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch abnorme Uteruskontraktionen"@de ;
             skos:notation "ICD10GM:P03.6".
             :ICD10GM_P03.8 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige näher bezeichnete Komplikationen bei Wehen und Entbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige näher bezeichnete Komplikationen bei Wehen und Entbindung"@de ;
             skos:notation "ICD10GM:P03.8".
             :ICD10GM_P03.9 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Komplikation bei Wehen und Entbindung, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Komplikation bei Wehen und Entbindung, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P03.9".
             :ICD10GM_P04 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Noxen, die transplazentar oder mit der Muttermilch übertragen werden"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Noxen, die transplazentar oder mit der Muttermilch übertragen werden"@de ;
             skos:notation "ICD10GM:P04";
                 skos:narrower :ICD10GM_P04.0;
                 skos:narrower :ICD10GM_P04.1;
@@ -30179,31 +30499,31 @@
                 skos:narrower :ICD10GM_P04.8;
                 skos:narrower :ICD10GM_P04.9.
             :ICD10GM_P04.0 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Anästhesie und Analgesie bei der Mutter während Schwangerschaft, Wehen und Entbindung"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Anästhesie und Analgesie bei der Mutter während Schwangerschaft, Wehen und Entbindung"@de ;
             skos:notation "ICD10GM:P04.0".
             :ICD10GM_P04.1 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch sonstige Medikation bei der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch sonstige Medikation bei der Mutter"@de ;
             skos:notation "ICD10GM:P04.1".
             :ICD10GM_P04.2 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Tabakkonsum der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Tabakkonsum der Mutter"@de ;
             skos:notation "ICD10GM:P04.2".
             :ICD10GM_P04.3 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Alkoholkonsum der Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Alkoholkonsum der Mutter"@de ;
             skos:notation "ICD10GM:P04.3".
             :ICD10GM_P04.4 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Einnahme von abhängigkeitserzeugenden Arzneimitteln oder Drogen durch die Mutter"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Einnahme von abhängigkeitserzeugenden Arzneimitteln oder Drogen durch die Mutter"@de ;
             skos:notation "ICD10GM:P04.4".
             :ICD10GM_P04.5 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch chemische Substanzen, die mit der Nahrung der Mutter aufgenommen wurden"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch chemische Substanzen, die mit der Nahrung der Mutter aufgenommen wurden"@de ;
             skos:notation "ICD10GM:P04.5".
             :ICD10GM_P04.6 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch Exposition der Mutter gegenüber chemischen Substanzen aus der Umwelt"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch Exposition der Mutter gegenüber chemischen Substanzen aus der Umwelt"@de ;
             skos:notation "ICD10GM:P04.6".
             :ICD10GM_P04.8 a skos:Concept ;
-            skos:prefLabel "Schädigungen des Feten und Neugeborenen durch sonstige Noxen, von der Mutter übertragen"@de ;
+            skos:prefLabel "Schädigungen des Fetus und Neugeborenen durch sonstige Noxen, von der Mutter übertragen"@de ;
             skos:notation "ICD10GM:P04.8".
             :ICD10GM_P04.9 a skos:Concept ;
-            skos:prefLabel "Schädigung des Feten und Neugeborenen durch nicht näher bezeichnete Noxen, von der Mutter übertragen"@de ;
+            skos:prefLabel "Schädigung des Fetus und Neugeborenen durch nicht näher bezeichnete Noxen, von der Mutter übertragen"@de ;
             skos:notation "ICD10GM:P04.9".
             :ICD10GM_P05 a skos:Concept ;
             skos:prefLabel "Intrauterine Mangelentwicklung und fetale Mangelernährung"@de ;
@@ -30843,7 +31163,7 @@
             skos:prefLabel "Konjunktivitis und Dakryozystitis beim Neugeborenen"@de ;
             skos:notation "ICD10GM:P39.1".
             :ICD10GM_P39.2 a skos:Concept ;
-            skos:prefLabel "Intraamniale Infektion des Feten, anderenorts nicht klassifiziert"@de ;
+            skos:prefLabel "Intraamniale Infektion des Fetus, anderenorts nicht klassifiziert"@de ;
             skos:notation "ICD10GM:P39.2".
             :ICD10GM_P39.3 a skos:Concept ;
             skos:prefLabel "Harnwegsinfektion beim Neugeborenen"@de ;
@@ -30908,7 +31228,7 @@
             skos:prefLabel "Nabelblutung beim Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P51.9".
             :ICD10GM_P52 a skos:Concept ;
-            skos:prefLabel "Intrakranielle nichttraumatische Blutung beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Intrakranielle nichttraumatische Blutung beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52";
                 skos:narrower :ICD10GM_P52.0;
                 skos:narrower :ICD10GM_P52.1;
@@ -30920,34 +31240,34 @@
                 skos:narrower :ICD10GM_P52.8;
                 skos:narrower :ICD10GM_P52.9.
             :ICD10GM_P52.0 a skos:Concept ;
-            skos:prefLabel "Intraventrikuläre (nichttraumatische) Blutung 1. Grades beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Intraventrikuläre (nichttraumatische) Blutung 1. Grades beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.0".
             :ICD10GM_P52.1 a skos:Concept ;
-            skos:prefLabel "Intraventrikuläre (nichttraumatische) Blutung 2. Grades beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Intraventrikuläre (nichttraumatische) Blutung 2. Grades beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.1".
             :ICD10GM_P52.2 a skos:Concept ;
-            skos:prefLabel "Intraventrikuläre (nichttraumatische) Blutung 3. Grades beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Intraventrikuläre (nichttraumatische) Blutung 3. Grades beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.2".
             :ICD10GM_P52.3 a skos:Concept ;
-            skos:prefLabel "Nicht näher bezeichnete intraventrikuläre (nichttraumatische) Blutung beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Nicht näher bezeichnete intraventrikuläre (nichttraumatische) Blutung beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.3".
             :ICD10GM_P52.4 a skos:Concept ;
-            skos:prefLabel "Intrazerebrale (nichttraumatische) Blutung beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Intrazerebrale (nichttraumatische) Blutung beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.4".
             :ICD10GM_P52.5 a skos:Concept ;
-            skos:prefLabel "Subarachnoidalblutung (nichttraumatisch) beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Subarachnoidalblutung (nichttraumatisch) beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.5".
             :ICD10GM_P52.6 a skos:Concept ;
-            skos:prefLabel "Kleinhirnblutung (nichttraumatisch) und Blutung in die Fossa cranii posterior beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Kleinhirnblutung (nichttraumatisch) und Blutung in die Fossa cranii posterior beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.6".
             :ICD10GM_P52.8 a skos:Concept ;
-            skos:prefLabel "Sonstige intrakranielle (nichttraumatische) Blutungen beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Sonstige intrakranielle (nichttraumatische) Blutungen beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P52.8".
             :ICD10GM_P52.9 a skos:Concept ;
-            skos:prefLabel "Intrakranielle (nichttraumatische) Blutung beim Feten und Neugeborenen, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Intrakranielle (nichttraumatische) Blutung beim Fetus und Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P52.9".
             :ICD10GM_P53 a skos:Concept ;
-            skos:prefLabel "Hämorrhagische Krankheit beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Hämorrhagische Krankheit beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P53".
             :ICD10GM_P54 a skos:Concept ;
             skos:prefLabel "Sonstige Blutungen beim Neugeborenen"@de ;
@@ -30989,23 +31309,23 @@
             skos:prefLabel "Blutung beim Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P54.9".
             :ICD10GM_P55 a skos:Concept ;
-            skos:prefLabel "Hämolytische Krankheit beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Hämolytische Krankheit beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P55";
                 skos:narrower :ICD10GM_P55.0;
                 skos:narrower :ICD10GM_P55.1;
                 skos:narrower :ICD10GM_P55.8;
                 skos:narrower :ICD10GM_P55.9.
             :ICD10GM_P55.0 a skos:Concept ;
-            skos:prefLabel "Rh-Isoimmunisierung beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Rh-Isoimmunisierung beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P55.0".
             :ICD10GM_P55.1 a skos:Concept ;
-            skos:prefLabel "AB0-Isoimmunisierung beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "AB0-Isoimmunisierung beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P55.1".
             :ICD10GM_P55.8 a skos:Concept ;
-            skos:prefLabel "Sonstige hämolytische Krankheiten beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Sonstige hämolytische Krankheiten beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P55.8".
             :ICD10GM_P55.9 a skos:Concept ;
-            skos:prefLabel "Hämolytische Krankheit beim Feten und Neugeborenen, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Hämolytische Krankheit beim Fetus und Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P55.9".
             :ICD10GM_P56 a skos:Concept ;
             skos:prefLabel "Hydrops fetalis durch hämolytische Krankheit"@de ;
@@ -31096,7 +31416,7 @@
             skos:prefLabel "Neugeborenenikterus, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P59.9".
             :ICD10GM_P60 a skos:Concept ;
-            skos:prefLabel "Disseminierte intravasale Gerinnung beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Disseminierte intravasale Gerinnung beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P60".
             :ICD10GM_P61 a skos:Concept ;
             skos:prefLabel "Sonstige hämatologische Krankheiten in der Perinatalperiode"@de ;
@@ -31138,7 +31458,7 @@
             skos:prefLabel "Hämatologische Krankheit in der Perinatalperiode, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P61.9".
             :ICD10GM_P70 a skos:Concept ;
-            skos:prefLabel "Transitorische Störungen des Kohlenhydratstoffwechsels, die für den Feten und das Neugeborene spezifisch sind"@de ;
+            skos:prefLabel "Transitorische Störungen des Kohlenhydratstoffwechsels, die für den Fetus und das Neugeborene spezifisch sind"@de ;
             skos:notation "ICD10GM:P70";
                 skos:narrower :ICD10GM_P70.0;
                 skos:narrower :ICD10GM_P70.1;
@@ -31163,10 +31483,10 @@
             skos:prefLabel "Sonstige Hypoglykämie beim Neugeborenen"@de ;
             skos:notation "ICD10GM:P70.4".
             :ICD10GM_P70.8 a skos:Concept ;
-            skos:prefLabel "Sonstige transitorische Störungen des Kohlenhydratstoffwechsels beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Sonstige transitorische Störungen des Kohlenhydratstoffwechsels beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P70.8".
             :ICD10GM_P70.9 a skos:Concept ;
-            skos:prefLabel "Transitorische Störung des Kohlenhydratstoffwechsels beim Feten und Neugeborenen, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Transitorische Störung des Kohlenhydratstoffwechsels beim Fetus und Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P70.9".
             :ICD10GM_P71 a skos:Concept ;
             skos:prefLabel "Transitorische Störungen des Kalzium- und Magnesiumstoffwechsels beim Neugeborenen"@de ;
@@ -31284,7 +31604,7 @@
             skos:prefLabel "Darmverschluss beim Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P76.9".
             :ICD10GM_P77 a skos:Concept ;
-            skos:prefLabel "Enterocolitis necroticans beim Feten und Neugeborenen"@de ;
+            skos:prefLabel "Enterocolitis necroticans beim Fetus und Neugeborenen"@de ;
             skos:notation "ICD10GM:P77".
             :ICD10GM_P78 a skos:Concept ;
             skos:prefLabel "Sonstige Krankheiten des Verdauungssystems in der Perinatalperiode"@de ;
@@ -31344,7 +31664,7 @@
             skos:prefLabel "Störung der Temperaturregulation beim Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P81.9".
             :ICD10GM_P83 a skos:Concept ;
-            skos:prefLabel "Sonstige Krankheitszustände mit Beteiligung der Haut, die für den Feten und das Neugeborene spezifisch sind"@de ;
+            skos:prefLabel "Sonstige Krankheitszustände mit Beteiligung der Haut, die für den Fetus und das Neugeborene spezifisch sind"@de ;
             skos:notation "ICD10GM:P83";
                 skos:narrower :ICD10GM_P83.0;
                 skos:narrower :ICD10GM_P83.1;
@@ -31365,7 +31685,7 @@
             skos:prefLabel "Hydrops fetalis, nicht durch hämolytische Krankheit bedingt"@de ;
             skos:notation "ICD10GM:P83.2".
             :ICD10GM_P83.3 a skos:Concept ;
-            skos:prefLabel "Sonstiges und nicht näher bezeichnetes Ödem, das für den Feten und das Neugeborene spezifisch ist"@de ;
+            skos:prefLabel "Sonstiges und nicht näher bezeichnetes Ödem, das für den Fetus und das Neugeborene spezifisch ist"@de ;
             skos:notation "ICD10GM:P83.3".
             :ICD10GM_P83.4 a skos:Concept ;
             skos:prefLabel "Brustdrüsenschwellung beim Neugeborenen"@de ;
@@ -31377,10 +31697,10 @@
             skos:prefLabel "Umbilikaler Polyp beim Neugeborenen"@de ;
             skos:notation "ICD10GM:P83.6".
             :ICD10GM_P83.8 a skos:Concept ;
-            skos:prefLabel "Sonstige näher bezeichnete Krankheitszustände der Haut, die für den Feten und das Neugeborene spezifisch sind"@de ;
+            skos:prefLabel "Sonstige näher bezeichnete Krankheitszustände der Haut, die für den Fetus und das Neugeborene spezifisch sind"@de ;
             skos:notation "ICD10GM:P83.8".
             :ICD10GM_P83.9 a skos:Concept ;
-            skos:prefLabel "Krankheitszustand der Haut, der für den Feten und das Neugeborene spezifisch ist, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Krankheitszustand der Haut, der für den Fetus und das Neugeborene spezifisch ist, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P83.9".
             :ICD10GM_P90 a skos:Concept ;
             skos:prefLabel "Krämpfe beim Neugeborenen"@de ;
@@ -31395,6 +31715,7 @@
                 skos:narrower :ICD10GM_P91.4;
                 skos:narrower :ICD10GM_P91.5;
                 skos:narrower :ICD10GM_P91.6;
+                skos:narrower :ICD10GM_P91.7;
                 skos:narrower :ICD10GM_P91.8;
                 skos:narrower :ICD10GM_P91.9.
             :ICD10GM_P91.0 a skos:Concept ;
@@ -31418,6 +31739,9 @@
             :ICD10GM_P91.6 a skos:Concept ;
             skos:prefLabel "Hypoxisch-ischämische Enzephalopathie beim Neugeborenen [HIE]"@de ;
             skos:notation "ICD10GM:P91.6".
+            :ICD10GM_P91.7 a skos:Concept ;
+            skos:prefLabel "Erworbener Hydrozephalus beim Neugeborenen"@de ;
+            skos:notation "ICD10GM:P91.7".
             :ICD10GM_P91.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete zerebrale Störungen beim Neugeborenen"@de ;
             skos:notation "ICD10GM:P91.8";
@@ -31468,7 +31792,7 @@
             skos:prefLabel "Ernährungsproblem beim Neugeborenen, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:P92.9".
             :ICD10GM_P93 a skos:Concept ;
-            skos:prefLabel "Reaktionen und Intoxikationen durch Arzneimittel oder Drogen, die dem Feten und Neugeborenen verabreicht wurden"@de ;
+            skos:prefLabel "Reaktionen und Intoxikationen durch Arzneimittel oder Drogen, die dem Fetus und Neugeborenen verabreicht wurden"@de ;
             skos:notation "ICD10GM:P93".
             :ICD10GM_P94 a skos:Concept ;
             skos:prefLabel "Störungen des Muskeltonus beim Neugeborenen"@de ;
@@ -32669,7 +32993,7 @@
             skos:prefLabel "Angeborene Ösophagusstenose und -striktur"@de ;
             skos:notation "ICD10GM:Q39.3".
             :ICD10GM_Q39.4 a skos:Concept ;
-            skos:prefLabel "Ösophagusmembran"@de ;
+            skos:prefLabel "Angeborene Ösophagusmembran"@de ;
             skos:notation "ICD10GM:Q39.4".
             :ICD10GM_Q39.5 a skos:Concept ;
             skos:prefLabel "Angeborene Dilatation des Ösophagus"@de ;
@@ -33881,7 +34205,39 @@
                 skos:narrower :ICD10GM_Q82.9.
             :ICD10GM_Q82.0 a skos:Concept ;
             skos:prefLabel "Hereditäres Lymphödem"@de ;
-            skos:notation "ICD10GM:Q82.0".
+            skos:notation "ICD10GM:Q82.0";
+                skos:narrower :ICD10GM_Q82.00;
+                skos:narrower :ICD10GM_Q82.01;
+                skos:narrower :ICD10GM_Q82.02;
+                skos:narrower :ICD10GM_Q82.03;
+                skos:narrower :ICD10GM_Q82.04;
+                skos:narrower :ICD10GM_Q82.05;
+                skos:narrower :ICD10GM_Q82.08;
+                skos:narrower :ICD10GM_Q82.09.
+            :ICD10GM_Q82.00 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem der oberen und unteren Extremität(en), Stadium I"@de ;
+            skos:notation "ICD10GM:Q82.00".
+            :ICD10GM_Q82.01 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem der oberen und unteren Extremität(en), Stadium II"@de ;
+            skos:notation "ICD10GM:Q82.01".
+            :ICD10GM_Q82.02 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem der oberen und unteren Extremität(en), Stadium III"@de ;
+            skos:notation "ICD10GM:Q82.02".
+            :ICD10GM_Q82.03 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem, sonstige Lokalisation, Stadium I"@de ;
+            skos:notation "ICD10GM:Q82.03".
+            :ICD10GM_Q82.04 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem, sonstige Lokalisation, Stadium II"@de ;
+            skos:notation "ICD10GM:Q82.04".
+            :ICD10GM_Q82.05 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem, sonstige Lokalisation, Stadium III"@de ;
+            skos:notation "ICD10GM:Q82.05".
+            :ICD10GM_Q82.08 a skos:Concept ;
+            skos:prefLabel "Sonstiges hereditäres Lymphödem"@de ;
+            skos:notation "ICD10GM:Q82.08".
+            :ICD10GM_Q82.09 a skos:Concept ;
+            skos:prefLabel "Hereditäres Lymphödem, nicht näher bezeichnet"@de ;
+            skos:notation "ICD10GM:Q82.09".
             :ICD10GM_Q82.1 a skos:Concept ;
             skos:prefLabel "Xeroderma pigmentosum"@de ;
             skos:notation "ICD10GM:Q82.1".
@@ -34067,7 +34423,19 @@
                 skos:narrower :ICD10GM_Q89.9.
             :ICD10GM_Q89.0 a skos:Concept ;
             skos:prefLabel "Angeborene Fehlbildungen der Milz"@de ;
-            skos:notation "ICD10GM:Q89.0".
+            skos:notation "ICD10GM:Q89.0";
+                skos:narrower :ICD10GM_Q89.00;
+                skos:narrower :ICD10GM_Q89.01;
+                skos:narrower :ICD10GM_Q89.08.
+            :ICD10GM_Q89.00 a skos:Concept ;
+            skos:prefLabel "Angeborene Splenomegalie"@de ;
+            skos:notation "ICD10GM:Q89.00".
+            :ICD10GM_Q89.01 a skos:Concept ;
+            skos:prefLabel "Asplenie (angeboren)"@de ;
+            skos:notation "ICD10GM:Q89.01".
+            :ICD10GM_Q89.08 a skos:Concept ;
+            skos:prefLabel "Sonstige angeborene Fehlbildungen der Milz"@de ;
+            skos:notation "ICD10GM:Q89.08".
             :ICD10GM_Q89.1 a skos:Concept ;
             skos:prefLabel "Angeborene Fehlbildungen der Nebenniere"@de ;
             skos:notation "ICD10GM:Q89.1".
@@ -34660,7 +35028,15 @@
             skos:notation "ICD10GM:R19.6".
             :ICD10GM_R19.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Symptome, die das Verdauungssystem und das Abdomen betreffen"@de ;
-            skos:notation "ICD10GM:R19.8".
+            skos:notation "ICD10GM:R19.8";
+                skos:narrower :ICD10GM_R19.80;
+                skos:narrower :ICD10GM_R19.88.
+            :ICD10GM_R19.80 a skos:Concept ;
+            skos:prefLabel "Abdominales Kompartmentsyndrom"@de ;
+            skos:notation "ICD10GM:R19.80".
+            :ICD10GM_R19.88 a skos:Concept ;
+            skos:prefLabel "Sonstige näher bezeichnete Symptome, die das Verdauungssystem und das Abdomen betreffen"@de ;
+            skos:notation "ICD10GM:R19.88".
             :ICD10GM_R20 a skos:Concept ;
             skos:prefLabel "Sensibilitätsstörungen der Haut"@de ;
             skos:notation "ICD10GM:R20";
@@ -35284,7 +35660,7 @@
             skos:prefLabel "Abnorme Gewichtszunahme"@de ;
             skos:notation "ICD10GM:R63.5".
             :ICD10GM_R63.6 a skos:Concept ;
-            skos:prefLabel "Ungenügende Aufnahme von Nahrung und Flüssigkeit infolge Vernachlässigung der eigenen Person"@de ;
+            skos:prefLabel "Ungenügende Aufnahme von Nahrung und Flüssigkeit"@de ;
             skos:notation "ICD10GM:R63.6".
             :ICD10GM_R63.8 a skos:Concept ;
             skos:prefLabel "Sonstige Symptome, die die Nahrungs- und Flüssigkeitsaufnahme betreffen"@de ;
@@ -36605,7 +36981,23 @@
             skos:notation "ICD10GM:S15.7".
             :ICD10GM_S15.8 a skos:Concept ;
             skos:prefLabel "Verletzung sonstiger Blutgefäße in Höhe des Halses"@de ;
-            skos:notation "ICD10GM:S15.8".
+            skos:notation "ICD10GM:S15.8";
+                skos:narrower :ICD10GM_S15.80;
+                skos:narrower :ICD10GM_S15.81;
+                skos:narrower :ICD10GM_S15.82;
+                skos:narrower :ICD10GM_S15.88.
+            :ICD10GM_S15.80 a skos:Concept ;
+            skos:prefLabel "Verletzung epiduraler Blutgefäße in Höhe des Halses"@de ;
+            skos:notation "ICD10GM:S15.80".
+            :ICD10GM_S15.81 a skos:Concept ;
+            skos:prefLabel "Verletzung subduraler Blutgefäße in Höhe des Halses"@de ;
+            skos:notation "ICD10GM:S15.81".
+            :ICD10GM_S15.82 a skos:Concept ;
+            skos:prefLabel "Verletzung subarachnoidaler Blutgefäße in Höhe des Halses"@de ;
+            skos:notation "ICD10GM:S15.82".
+            :ICD10GM_S15.88 a skos:Concept ;
+            skos:prefLabel "Verletzung sonstiger Blutgefäße in Höhe des Halses"@de ;
+            skos:notation "ICD10GM:S15.88".
             :ICD10GM_S15.9 a skos:Concept ;
             skos:prefLabel "Verletzung eines nicht näher bezeichneten Blutgefäßes in Höhe des Halses"@de ;
             skos:notation "ICD10GM:S15.9".
@@ -36641,7 +37033,15 @@
             skos:notation "ICD10GM:S19.7".
             :ICD10GM_S19.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Verletzungen des Halses"@de ;
-            skos:notation "ICD10GM:S19.8".
+            skos:notation "ICD10GM:S19.8";
+                skos:narrower :ICD10GM_S19.80;
+                skos:narrower :ICD10GM_S19.88.
+            :ICD10GM_S19.80 a skos:Concept ;
+            skos:prefLabel "Verletzung zervikaler Rückenmarkhäute"@de ;
+            skos:notation "ICD10GM:S19.80".
+            :ICD10GM_S19.88 a skos:Concept ;
+            skos:prefLabel "Sonstige näher bezeichnete Verletzungen des Halses"@de ;
+            skos:notation "ICD10GM:S19.88".
             :ICD10GM_S19.9 a skos:Concept ;
             skos:prefLabel "Nicht näher bezeichnete Verletzung des Halses"@de ;
             skos:notation "ICD10GM:S19.9".
@@ -36999,7 +37399,23 @@
             skos:notation "ICD10GM:S25.7".
             :ICD10GM_S25.8 a skos:Concept ;
             skos:prefLabel "Verletzung sonstiger Blutgefäße des Thorax"@de ;
-            skos:notation "ICD10GM:S25.8".
+            skos:notation "ICD10GM:S25.8";
+                skos:narrower :ICD10GM_S25.80;
+                skos:narrower :ICD10GM_S25.81;
+                skos:narrower :ICD10GM_S25.82;
+                skos:narrower :ICD10GM_S25.88.
+            :ICD10GM_S25.80 a skos:Concept ;
+            skos:prefLabel "Verletzung epiduraler Blutgefäße in Höhe des Thorax"@de ;
+            skos:notation "ICD10GM:S25.80".
+            :ICD10GM_S25.81 a skos:Concept ;
+            skos:prefLabel "Verletzung subduraler Blutgefäße in Höhe des Thorax"@de ;
+            skos:notation "ICD10GM:S25.81".
+            :ICD10GM_S25.82 a skos:Concept ;
+            skos:prefLabel "Verletzung subarachnoidaler Blutgefäße in Höhe des Thorax"@de ;
+            skos:notation "ICD10GM:S25.82".
+            :ICD10GM_S25.88 a skos:Concept ;
+            skos:prefLabel "Verletzung sonstiger Blutgefäße des Thorax"@de ;
+            skos:notation "ICD10GM:S25.88".
             :ICD10GM_S25.9 a skos:Concept ;
             skos:prefLabel "Verletzung eines nicht näher bezeichneten Blutgefäßes des Thorax"@de ;
             skos:notation "ICD10GM:S25.9".
@@ -37107,7 +37523,7 @@
             skos:prefLabel "Sonstige näher bezeichnete intrathorakale Organe und Strukturen"@de ;
             skos:notation "ICD10GM:S27.88".
             :ICD10GM_S27.9 a skos:Concept ;
-            skos:prefLabel "Verletzung eines nicht näher bezeichneten intrathorakalen Organes"@de ;
+            skos:prefLabel "Verletzung eines nicht näher bezeichneten intrathorakalen Organs"@de ;
             skos:notation "ICD10GM:S27.9".
             :ICD10GM_S28 a skos:Concept ;
             skos:prefLabel "Zerquetschung des Thorax und traumatische Amputation von Teilen des Thorax"@de ;
@@ -37135,7 +37551,15 @@
             skos:notation "ICD10GM:S29.7".
             :ICD10GM_S29.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Verletzungen des Thorax"@de ;
-            skos:notation "ICD10GM:S29.8".
+            skos:notation "ICD10GM:S29.8";
+                skos:narrower :ICD10GM_S29.80;
+                skos:narrower :ICD10GM_S29.88.
+            :ICD10GM_S29.80 a skos:Concept ;
+            skos:prefLabel "Verletzung thorakaler Rückenmarkhäute"@de ;
+            skos:notation "ICD10GM:S29.80".
+            :ICD10GM_S29.88 a skos:Concept ;
+            skos:prefLabel "Sonstige näher bezeichnete Verletzungen des Thorax"@de ;
+            skos:notation "ICD10GM:S29.88".
             :ICD10GM_S29.9 a skos:Concept ;
             skos:prefLabel "Nicht näher bezeichnete Verletzung des Thorax"@de ;
             skos:notation "ICD10GM:S29.9".
@@ -37505,7 +37929,23 @@
             skos:notation "ICD10GM:S35.7".
             :ICD10GM_S35.8 a skos:Concept ;
             skos:prefLabel "Verletzung sonstiger Blutgefäße in Höhe des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
-            skos:notation "ICD10GM:S35.8".
+            skos:notation "ICD10GM:S35.8";
+                skos:narrower :ICD10GM_S35.80;
+                skos:narrower :ICD10GM_S35.81;
+                skos:narrower :ICD10GM_S35.82;
+                skos:narrower :ICD10GM_S35.88.
+            :ICD10GM_S35.80 a skos:Concept ;
+            skos:prefLabel "Verletzung epiduraler Blutgefäße in Höhe des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
+            skos:notation "ICD10GM:S35.80".
+            :ICD10GM_S35.81 a skos:Concept ;
+            skos:prefLabel "Verletzung subduraler Blutgefäße in Höhe des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
+            skos:notation "ICD10GM:S35.81".
+            :ICD10GM_S35.82 a skos:Concept ;
+            skos:prefLabel "Verletzung subarachnoidaler Blutgefäße in Höhe des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
+            skos:notation "ICD10GM:S35.82".
+            :ICD10GM_S35.88 a skos:Concept ;
+            skos:prefLabel "Verletzung sonstiger Blutgefäße in Höhe des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
+            skos:notation "ICD10GM:S35.88".
             :ICD10GM_S35.9 a skos:Concept ;
             skos:prefLabel "Verletzung eines nicht näher bezeichneten Blutgefäßes in Höhe des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
             skos:notation "ICD10GM:S35.9".
@@ -37682,7 +38122,7 @@
             skos:prefLabel "Sonstige intraabdominale Organe"@de ;
             skos:notation "ICD10GM:S36.88".
             :ICD10GM_S36.9 a skos:Concept ;
-            skos:prefLabel "Verletzung eines nicht näher bezeichneten intraabdominalen Organes"@de ;
+            skos:prefLabel "Verletzung eines nicht näher bezeichneten intraabdominalen Organs"@de ;
             skos:notation "ICD10GM:S36.9".
             :ICD10GM_S37 a skos:Concept ;
             skos:prefLabel "Verletzung der Harnorgane und der Beckenorgane"@de ;
@@ -37714,7 +38154,7 @@
             skos:prefLabel "Rissverletzung der Niere"@de ;
             skos:notation "ICD10GM:S37.02".
             :ICD10GM_S37.03 a skos:Concept ;
-            skos:prefLabel "Komplette Ruptur der Nierenparenchyms"@de ;
+            skos:prefLabel "Komplette Ruptur des Nierenparenchyms"@de ;
             skos:notation "ICD10GM:S37.03".
             :ICD10GM_S37.1 a skos:Concept ;
             skos:prefLabel "Verletzung des Harnleiters"@de ;
@@ -37797,7 +38237,7 @@
             skos:prefLabel "Sonstige Beckenorgane"@de ;
             skos:notation "ICD10GM:S37.88".
             :ICD10GM_S37.9 a skos:Concept ;
-            skos:prefLabel "Verletzung eines nicht näher bezeichneten Harnorganes oder Beckenorganes"@de ;
+            skos:prefLabel "Verletzung eines nicht näher bezeichneten Harnorgans oder Beckenorgans"@de ;
             skos:notation "ICD10GM:S37.9".
             :ICD10GM_S38 a skos:Concept ;
             skos:prefLabel "Zerquetschung und traumatische Amputation von Teilen des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
@@ -37839,10 +38279,14 @@
             skos:prefLabel "Sonstige näher bezeichnete Verletzungen des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
             skos:notation "ICD10GM:S39.8";
                 skos:narrower :ICD10GM_S39.80;
+                skos:narrower :ICD10GM_S39.81;
                 skos:narrower :ICD10GM_S39.88.
             :ICD10GM_S39.80 a skos:Concept ;
             skos:prefLabel "Penisfraktur"@de ;
             skos:notation "ICD10GM:S39.80".
+            :ICD10GM_S39.81 a skos:Concept ;
+            skos:prefLabel "Verletzung lumbosakraler Rückenmarkhäute"@de ;
+            skos:notation "ICD10GM:S39.81".
             :ICD10GM_S39.88 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Verletzungen des Abdomens, der Lumbosakralgegend und des Beckens"@de ;
             skos:notation "ICD10GM:S39.88".
@@ -42135,7 +42579,7 @@
             skos:prefLabel "Sonstige und nicht näher bezeichnete, primär auf das Herz-Kreislaufsystem wirkende Mittel"@de ;
             skos:notation "ICD10GM:T46.9".
             :ICD10GM_T47 a skos:Concept ;
-            skos:prefLabel "Vergiftung durch primär auf den Magen-Darmtrakt wirkende Mittel"@de ;
+            skos:prefLabel "Vergiftung durch primär auf den Magen-Darm-Trakt wirkende Mittel"@de ;
             skos:notation "ICD10GM:T47";
                 skos:narrower :ICD10GM_T47.0;
                 skos:narrower :ICD10GM_T47.1;
@@ -42172,10 +42616,10 @@
             skos:prefLabel "Emetika"@de ;
             skos:notation "ICD10GM:T47.7".
             :ICD10GM_T47.8 a skos:Concept ;
-            skos:prefLabel "Sonstige primär auf den Magen-Darmtrakt wirkende Mittel"@de ;
+            skos:prefLabel "Sonstige primär auf den Magen-Darm-Trakt wirkende Mittel"@de ;
             skos:notation "ICD10GM:T47.8".
             :ICD10GM_T47.9 a skos:Concept ;
-            skos:prefLabel "Primär auf den Magen-Darmtrakt wirkendes Arzneimittel, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Primär auf den Magen-Darm-Trakt wirkendes Arzneimittel, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:T47.9".
             :ICD10GM_T48 a skos:Concept ;
             skos:prefLabel "Vergiftung durch primär auf die glatte Muskulatur, die Skelettmuskulatur und das Atmungssystem wirkende Mittel"@de ;
@@ -42554,7 +42998,7 @@
             skos:prefLabel "Halogenierte Insektizide"@de ;
             skos:notation "ICD10GM:T60.1".
             :ICD10GM_T60.2 a skos:Concept ;
-            skos:prefLabel "Sonstige Insektizide"@de ;
+            skos:prefLabel "Sonstige und nicht näher bezeichnete Insektizide"@de ;
             skos:notation "ICD10GM:T60.2".
             :ICD10GM_T60.3 a skos:Concept ;
             skos:prefLabel "Herbizide und Fungizide"@de ;
@@ -43270,31 +43714,35 @@
                 skos:narrower :ICD10GM_T86.8;
                 skos:narrower :ICD10GM_T86.9.
             :ICD10GM_T86.0 a skos:Concept ;
-            skos:prefLabel "Versagen eines Transplantates hämatopoetischer Stammzellen und Graft-versus-host-Krankheit"@de ;
+            skos:prefLabel "Versagen eines Transplantates hämatopoetischer Stammzellen und Graft-versus-Host-Krankheit"@de ;
             skos:notation "ICD10GM:T86.0";
                 skos:narrower :ICD10GM_T86.00;
                 skos:narrower :ICD10GM_T86.01;
                 skos:narrower :ICD10GM_T86.02;
-                skos:narrower :ICD10GM_T86.03;
-                skos:narrower :ICD10GM_T86.04;
+                skos:narrower :ICD10GM_T86.05;
+                skos:narrower :ICD10GM_T86.06;
+                skos:narrower :ICD10GM_T86.07;
                 skos:narrower :ICD10GM_T86.09.
             :ICD10GM_T86.00 a skos:Concept ;
             skos:prefLabel "Versagen eines Transplantates hämatopoetischer Stammzellen"@de ;
             skos:notation "ICD10GM:T86.00".
             :ICD10GM_T86.01 a skos:Concept ;
-            skos:prefLabel "Akute Graft-versus-host-Krankheit, Grad I und II"@de ;
+            skos:prefLabel "Akute Graft-versus-Host-Krankheit, Grad I und II"@de ;
             skos:notation "ICD10GM:T86.01".
             :ICD10GM_T86.02 a skos:Concept ;
-            skos:prefLabel "Akute Graft-versus-host-Krankheit, Grad III und IV"@de ;
+            skos:prefLabel "Akute Graft-versus-Host-Krankheit, Grad III und IV"@de ;
             skos:notation "ICD10GM:T86.02".
-            :ICD10GM_T86.03 a skos:Concept ;
-            skos:prefLabel "Chronische Graft-versus-host-Krankheit, begrenzte Form"@de ;
-            skos:notation "ICD10GM:T86.03".
-            :ICD10GM_T86.04 a skos:Concept ;
-            skos:prefLabel "Chronische Graft-versus-host-Krankheit, ausgeprägte Form"@de ;
-            skos:notation "ICD10GM:T86.04".
+            :ICD10GM_T86.05 a skos:Concept ;
+            skos:prefLabel "Chronische Graft-versus-Host-Krankheit, mild"@de ;
+            skos:notation "ICD10GM:T86.05".
+            :ICD10GM_T86.06 a skos:Concept ;
+            skos:prefLabel "Chronische Graft-versus-Host-Krankheit, moderat"@de ;
+            skos:notation "ICD10GM:T86.06".
+            :ICD10GM_T86.07 a skos:Concept ;
+            skos:prefLabel "Chronische Graft-versus-Host-Krankheit, schwer"@de ;
+            skos:notation "ICD10GM:T86.07".
             :ICD10GM_T86.09 a skos:Concept ;
-            skos:prefLabel "Graft-versus-host-Krankheit, nicht näher bezeichnet"@de ;
+            skos:prefLabel "Graft-versus-Host-Krankheit, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:T86.09".
             :ICD10GM_T86.1 a skos:Concept ;
             skos:prefLabel "Funktionsstörung, Versagen und Abstoßung eines Nierentransplantates"@de ;
@@ -43375,7 +43823,7 @@
             skos:prefLabel "Sonstige transplantierte Organe und Gewebe"@de ;
             skos:notation "ICD10GM:T86.88".
             :ICD10GM_T86.9 a skos:Concept ;
-            skos:prefLabel "Versagen und Abstoßung eines nicht näher bezeichneten transplantierten Organes und Gewebes"@de ;
+            skos:prefLabel "Versagen und Abstoßung eines nicht näher bezeichneten transplantierten Organs und Gewebes"@de ;
             skos:notation "ICD10GM:T86.9".
             :ICD10GM_T87 a skos:Concept ;
             skos:prefLabel "Komplikationen, die für Replantation und Amputation bezeichnend sind"@de ;
@@ -43793,7 +44241,6 @@
             :ICD10GM_Y35 a skos:Concept ;
             skos:prefLabel "Verletzungen bei gesetzlichen Maßnahmen"@de ;
             skos:notation "ICD10GM:Y35";
-                skos:narrower :ICD10GM_Y35.6;
                 skos:narrower :ICD10GM_Y35.7.
             :ICD10GM_Y35.7 a skos:Concept ;
             skos:prefLabel "Verletzung bei gesetzlichen Maßnahmen"@de ;
@@ -44794,7 +45241,7 @@
             skos:prefLabel "Versorgen mit und Anpassen eines künstlichen Armes (komplett) (partiell)"@de ;
             skos:notation "ICD10GM:Z44.0".
             :ICD10GM_Z44.1 a skos:Concept ;
-            skos:prefLabel "Versorgen mit und Anpassen eines künstlichen Beins (komplett) (partiell)"@de ;
+            skos:prefLabel "Versorgen mit und Anpassen eines künstlichen Beines (komplett) (partiell)"@de ;
             skos:notation "ICD10GM:Z44.1".
             :ICD10GM_Z44.2 a skos:Concept ;
             skos:prefLabel "Versorgen mit und Anpassen einer Augenprothese"@de ;
@@ -44866,7 +45313,7 @@
             skos:prefLabel "Anpassung und Handhabung eines Neurostimulators"@de ;
             skos:notation "ICD10GM:Z45.80".
             :ICD10GM_Z45.81 a skos:Concept ;
-            skos:prefLabel "Überprüfung der Funktionsparameter eines Zwerchfellstimulators"@de ;
+            skos:prefLabel "Anpassung und Handhabung eines Zwerchfellschrittmachers"@de ;
             skos:notation "ICD10GM:Z45.81".
             :ICD10GM_Z45.82 a skos:Concept ;
             skos:prefLabel "Überprüfung der Funktionsparameter einer Medikamentenpumpe"@de ;
@@ -44912,7 +45359,7 @@
             skos:prefLabel "Versorgen mit und Anpassen von kieferorthopädischen Geräten"@de ;
             skos:notation "ICD10GM:Z46.4".
             :ICD10GM_Z46.5 a skos:Concept ;
-            skos:prefLabel "Versorgen mit und Anpassen eines Ileostomas oder von sonstigen Vorrichtungen im Magen-Darmtrakt"@de ;
+            skos:prefLabel "Versorgen mit und Anpassen eines Ileostomas oder von sonstigen Vorrichtungen im Magen-Darm-Trakt"@de ;
             skos:notation "ICD10GM:Z46.5".
             :ICD10GM_Z46.6 a skos:Concept ;
             skos:prefLabel "Versorgen mit und Anpassen eines Gerätes im Harntrakt"@de ;
@@ -45670,6 +46117,7 @@
             skos:notation "ICD10GM:Z91";
                 skos:narrower :ICD10GM_Z91.0;
                 skos:narrower :ICD10GM_Z91.1;
+                skos:narrower :ICD10GM_Z91.7;
                 skos:narrower :ICD10GM_Z91.8.
             :ICD10GM_Z91.0 a skos:Concept ;
             skos:prefLabel "Allergie, ausgenommen Allergie gegenüber Arzneimitteln, Drogen oder biologisch aktiven Substanzen, in der Eigenanamnese"@de ;
@@ -45677,6 +46125,29 @@
             :ICD10GM_Z91.1 a skos:Concept ;
             skos:prefLabel "Nichtbefolgung ärztlicher Anordnungen [Non-compliance] in der Eigenanamnese"@de ;
             skos:notation "ICD10GM:Z91.1".
+            :ICD10GM_Z91.7 a skos:Concept ;
+            skos:prefLabel "Weibliche Genitalverstümmelung in der Eigenanamnese"@de ;
+            skos:notation "ICD10GM:Z91.7";
+                skos:narrower :ICD10GM_Z91.70;
+                skos:narrower :ICD10GM_Z91.71;
+                skos:narrower :ICD10GM_Z91.72;
+                skos:narrower :ICD10GM_Z91.73;
+                skos:narrower :ICD10GM_Z91.74.
+            :ICD10GM_Z91.70 a skos:Concept ;
+            skos:prefLabel "Weibliche Genitalverstümmelung in der Eigenanamnese, Typ nicht näher bezeichnet"@de ;
+            skos:notation "ICD10GM:Z91.70".
+            :ICD10GM_Z91.71 a skos:Concept ;
+            skos:prefLabel "Weibliche Genitalverstümmelung in der Eigenanamnese, Typ 1"@de ;
+            skos:notation "ICD10GM:Z91.71".
+            :ICD10GM_Z91.72 a skos:Concept ;
+            skos:prefLabel "Weibliche Genitalverstümmelung in der Eigenanamnese, Typ 2"@de ;
+            skos:notation "ICD10GM:Z91.72".
+            :ICD10GM_Z91.73 a skos:Concept ;
+            skos:prefLabel "Weibliche Genitalverstümmelung in der Eigenanamnese, Typ 3"@de ;
+            skos:notation "ICD10GM:Z91.73".
+            :ICD10GM_Z91.74 a skos:Concept ;
+            skos:prefLabel "Weibliche Genitalverstümmelung in der Eigenanamnese, Typ 4"@de ;
+            skos:notation "ICD10GM:Z91.74".
             :ICD10GM_Z91.8 a skos:Concept ;
             skos:prefLabel "Sonstige näher bezeichnete Risikofaktoren in der Eigenanamnese, anderenorts nicht klassifiziert"@de ;
             skos:notation "ICD10GM:Z91.8".
@@ -45736,7 +46207,7 @@
             skos:prefLabel "Vorhandensein eines Kolostomas"@de ;
             skos:notation "ICD10GM:Z93.3".
             :ICD10GM_Z93.4 a skos:Concept ;
-            skos:prefLabel "Vorhandensein anderer künstlicher Körperöffnungen des Magen-Darmtraktes"@de ;
+            skos:prefLabel "Vorhandensein anderer künstlicher Körperöffnungen des Magen-Darm-Trakts"@de ;
             skos:notation "ICD10GM:Z93.4".
             :ICD10GM_Z93.5 a skos:Concept ;
             skos:prefLabel "Vorhandensein eines Zystostomas"@de ;
@@ -45893,7 +46364,43 @@
             skos:notation "ICD10GM:Z96.5".
             :ICD10GM_Z96.6 a skos:Concept ;
             skos:prefLabel "Vorhandensein von orthopädischen Gelenkimplantaten"@de ;
-            skos:notation "ICD10GM:Z96.6".
+            skos:notation "ICD10GM:Z96.6";
+                skos:narrower :ICD10GM_Z96.60;
+                skos:narrower :ICD10GM_Z96.61;
+                skos:narrower :ICD10GM_Z96.62;
+                skos:narrower :ICD10GM_Z96.63;
+                skos:narrower :ICD10GM_Z96.64;
+                skos:narrower :ICD10GM_Z96.65;
+                skos:narrower :ICD10GM_Z96.66;
+                skos:narrower :ICD10GM_Z96.67;
+                skos:narrower :ICD10GM_Z96.68.
+            :ICD10GM_Z96.60 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Schulterprothese"@de ;
+            skos:notation "ICD10GM:Z96.60".
+            :ICD10GM_Z96.61 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Ellenbogenprothese"@de ;
+            skos:notation "ICD10GM:Z96.61".
+            :ICD10GM_Z96.62 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Radiuskopfprothese"@de ;
+            skos:notation "ICD10GM:Z96.62".
+            :ICD10GM_Z96.63 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Handgelenkprothese"@de ;
+            skos:notation "ICD10GM:Z96.63".
+            :ICD10GM_Z96.64 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Hüftgelenkprothese"@de ;
+            skos:notation "ICD10GM:Z96.64".
+            :ICD10GM_Z96.65 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Kniegelenkprothese"@de ;
+            skos:notation "ICD10GM:Z96.65".
+            :ICD10GM_Z96.66 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Sprunggelenkprothese"@de ;
+            skos:notation "ICD10GM:Z96.66".
+            :ICD10GM_Z96.67 a skos:Concept ;
+            skos:prefLabel "Vorhandensein einer Bandscheibenprothese"@de ;
+            skos:notation "ICD10GM:Z96.67".
+            :ICD10GM_Z96.68 a skos:Concept ;
+            skos:prefLabel "Vorhandensein von sonstigen näher bezeichneten orthopädischen Gelenkimplantaten"@de ;
+            skos:notation "ICD10GM:Z96.68".
             :ICD10GM_Z96.7 a skos:Concept ;
             skos:prefLabel "Vorhandensein von anderen Knochen- und Sehnenimplantaten"@de ;
             skos:notation "ICD10GM:Z96.7".
@@ -45946,7 +46453,7 @@
             skos:prefLabel "Sonstige näher bezeichnete Zustände nach chirurgischen Eingriffen"@de ;
             skos:notation "ICD10GM:Z98.8".
             :ICD10GM_Z99 a skos:Concept ;
-            skos:prefLabel "Langzeitige Abhängigkeit von unterstützenden Apparaten, medizinischen Geräten oder Hilfsmitteln, anderenorts nicht klassifiziert"@de ;
+            skos:prefLabel "Abhängigkeit (langzeitig) von unterstützenden Apparaten, medizinischen Geräten oder Hilfsmitteln, anderenorts nicht klassifiziert"@de ;
             skos:notation "ICD10GM:Z99";
                 skos:narrower :ICD10GM_Z99.0;
                 skos:narrower :ICD10GM_Z99.1;
@@ -45956,10 +46463,10 @@
                 skos:narrower :ICD10GM_Z99.8;
                 skos:narrower :ICD10GM_Z99.9.
             :ICD10GM_Z99.0 a skos:Concept ;
-            skos:prefLabel "Langzeitige Abhängigkeit vom Aspirator"@de ;
+            skos:prefLabel "Abhängigkeit (langzeitig) vom Aspirator"@de ;
             skos:notation "ICD10GM:Z99.0".
             :ICD10GM_Z99.1 a skos:Concept ;
-            skos:prefLabel "Langzeitige Abhängigkeit vom Respirator"@de ;
+            skos:prefLabel "Abhängigkeit (langzeitig) vom Respirator"@de ;
             skos:notation "ICD10GM:Z99.1".
             :ICD10GM_Z99.2 a skos:Concept ;
             skos:prefLabel "Langzeitige Abhängigkeit von Dialyse bei Niereninsuffizienz"@de ;
@@ -45984,47 +46491,11 @@
             skos:prefLabel "Schweres akutes respiratorisches Syndrom [SARS], nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:U04.9".
             :ICD10GM_U06 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06"@de ;
+            skos:prefLabel "Zika-Viruskrankheit"@de ;
             skos:notation "ICD10GM:U06";
-                skos:narrower :ICD10GM_U06.0;
-                skos:narrower :ICD10GM_U06.1;
-                skos:narrower :ICD10GM_U06.2;
-                skos:narrower :ICD10GM_U06.3;
-                skos:narrower :ICD10GM_U06.4;
-                skos:narrower :ICD10GM_U06.5;
-                skos:narrower :ICD10GM_U06.6;
-                skos:narrower :ICD10GM_U06.7;
-                skos:narrower :ICD10GM_U06.8;
                 skos:narrower :ICD10GM_U06.9.
-            :ICD10GM_U06.0 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.0"@de ;
-            skos:notation "ICD10GM:U06.0".
-            :ICD10GM_U06.1 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.1"@de ;
-            skos:notation "ICD10GM:U06.1".
-            :ICD10GM_U06.2 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.2"@de ;
-            skos:notation "ICD10GM:U06.2".
-            :ICD10GM_U06.3 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.3"@de ;
-            skos:notation "ICD10GM:U06.3".
-            :ICD10GM_U06.4 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.4"@de ;
-            skos:notation "ICD10GM:U06.4".
-            :ICD10GM_U06.5 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.5"@de ;
-            skos:notation "ICD10GM:U06.5".
-            :ICD10GM_U06.6 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.6"@de ;
-            skos:notation "ICD10GM:U06.6".
-            :ICD10GM_U06.7 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.7"@de ;
-            skos:notation "ICD10GM:U06.7".
-            :ICD10GM_U06.8 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.8"@de ;
-            skos:notation "ICD10GM:U06.8".
             :ICD10GM_U06.9 a skos:Concept ;
-            skos:prefLabel "Nicht belegte Schlüsselnummer U06.9"@de ;
+            skos:prefLabel "Zika-Viruskrankheit, nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:U06.9".
             :ICD10GM_U07 a skos:Concept ;
             skos:prefLabel "Nicht belegte Schlüsselnummer U07"@de ;
@@ -46301,7 +46772,7 @@
             skos:prefLabel "Kategorie 3"@de ;
             skos:notation "ICD10GM:U61.3".
             :ICD10GM_U61.9 a skos:Concept ;
-            skos:prefLabel "Anzahl der (CD4+-) T-Helferzellen nicht näher bezeichnet"@de ;
+            skos:prefLabel "Anzahl der (CD4+-)T-Helferzellen nicht näher bezeichnet"@de ;
             skos:notation "ICD10GM:U61.9".
             :ICD10GM_U69 a skos:Concept ;
             skos:prefLabel "Sonstige sekundäre Schlüsselnummern für besondere Zwecke"@de ;
@@ -46309,7 +46780,8 @@
                 skos:narrower :ICD10GM_U69.0;
                 skos:narrower :ICD10GM_U69.1;
                 skos:narrower :ICD10GM_U69.2;
-                skos:narrower :ICD10GM_U69.3.
+                skos:narrower :ICD10GM_U69.3;
+                skos:narrower :ICD10GM_U69.4.
             :ICD10GM_U69.0 a skos:Concept ;
             skos:prefLabel "Sekundäre Schlüsselnummern für Zwecke der externen Qualitätssicherung"@de ;
             skos:notation "ICD10GM:U69.0";
@@ -46374,17 +46846,21 @@
             :ICD10GM_U69.36 a skos:Concept ;
             skos:prefLabel "Nichtintravenöser Konsum sonstiger Stimulanzien, außer Koffein"@de ;
             skos:notation "ICD10GM:U69.36".
+            :ICD10GM_U69.4 a skos:Concept ;
+            skos:prefLabel "Sekundäre Schlüsselnummern für die Spezifizierung von Infektionen"@de ;
+            skos:notation "ICD10GM:U69.4";
+                skos:narrower :ICD10GM_U69.40.
+            :ICD10GM_U69.40 a skos:Concept ;
+            skos:prefLabel "Rekurrente Infektion mit Clostridium difficile"@de ;
+            skos:notation "ICD10GM:U69.40".
             :ICD10GM_U80 a skos:Concept ;
-            skos:prefLabel "Erreger mit bestimmten Antibiotikaresistenzen, die besondere therapeutische oder hygienische Maßnahmen erfordern"@de ;
+            skos:prefLabel "Grampositive Erreger mit bestimmten Antibiotikaresistenzen, die besondere therapeutische oder hygienische Maßnahmen erfordern"@de ;
             skos:notation "ICD10GM:U80";
                 skos:narrower :ICD10GM_U80.0;
                 skos:narrower :ICD10GM_U80.1;
                 skos:narrower :ICD10GM_U80.2;
                 skos:narrower :ICD10GM_U80.3;
-                skos:narrower :ICD10GM_U80.4;
-                skos:narrower :ICD10GM_U80.5;
-                skos:narrower :ICD10GM_U80.6;
-                skos:narrower :ICD10GM_U80.7.
+                skos:narrower :ICD10GM_U80.8.
             :ICD10GM_U80.0 a skos:Concept ;
             skos:prefLabel "Staphylococcus aureus mit Resistenz gegen Oxacillin, Glykopeptid-Antibiotika, Chinolone, Streptogramine oder Oxazolidinone"@de ;
             skos:notation "ICD10GM:U80.0";
@@ -46429,21 +46905,176 @@
             :ICD10GM_U80.31 a skos:Concept ;
             skos:prefLabel "Enterococcus faecium mit Resistenz gegen Oxazolidinone oder Streptogramine oder mit High-Level-Aminoglykosid-Resistenz und ohne Resistenz gegen Glykopeptid-Antibiotika"@de ;
             skos:notation "ICD10GM:U80.31".
-            :ICD10GM_U80.4 a skos:Concept ;
-            skos:prefLabel "Escherichia, Klebsiella und Proteus mit Resistenz gegen Chinolone, Carbapeneme, Amikacin, oder mit nachgewiesener Resistenz gegen alle Beta-Laktam-Antibiotika [ESBL-Resistenz]"@de ;
-            skos:notation "ICD10GM:U80.4".
-            :ICD10GM_U80.5 a skos:Concept ;
-            skos:prefLabel "Enterobacter, Citrobacter und Serratia mit Resistenz gegen Carbapeneme, Chinolone oder Amikacin"@de ;
-            skos:notation "ICD10GM:U80.5".
-            :ICD10GM_U80.6 a skos:Concept ;
-            skos:prefLabel "Pseudomonas aeruginosa und andere Nonfermenter mit Resistenz gegen Carbapeneme, Chinolone, Amikacin, Ceftazidim oder Piperacillin/Tazobactam"@de ;
-            skos:notation "ICD10GM:U80.6".
-            :ICD10GM_U80.7 a skos:Concept ;
-            skos:prefLabel "Burkholderia und Stenotrophomonas mit Resistenz gegen Chinolone, Amikacin, Ceftazidim, Piperacillin/Tazobactam oder Cotrimoxazol"@de ;
-            skos:notation "ICD10GM:U80.7".
+            :ICD10GM_U80.8 a skos:Concept ;
+            skos:prefLabel "Sonstige grampositive Bakterien mit Multiresistenz gegen Antibiotika"@de ;
+            skos:notation "ICD10GM:U80.8".
             :ICD10GM_U81 a skos:Concept ;
-            skos:prefLabel "Bakterien mit Multiresistenz gegen Antibiotika"@de ;
-            skos:notation "ICD10GM:U81".
+            skos:prefLabel "Gramnegative Erreger mit bestimmten Antibiotikaresistenzen, die besondere therapeutische oder hygienische Maßnahmen erfordern"@de ;
+            skos:notation "ICD10GM:U81";
+                skos:narrower :ICD10GM_U81.0;
+                skos:narrower :ICD10GM_U81.1;
+                skos:narrower :ICD10GM_U81.2;
+                skos:narrower :ICD10GM_U81.3;
+                skos:narrower :ICD10GM_U81.4;
+                skos:narrower :ICD10GM_U81.5;
+                skos:narrower :ICD10GM_U81.6;
+                skos:narrower :ICD10GM_U81.8.
+            :ICD10GM_U81.0 a skos:Concept ;
+            skos:prefLabel "Enterobakterien mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.0";
+                skos:narrower :ICD10GM_U81.00;
+                skos:narrower :ICD10GM_U81.01;
+                skos:narrower :ICD10GM_U81.02;
+                skos:narrower :ICD10GM_U81.03;
+                skos:narrower :ICD10GM_U81.04;
+                skos:narrower :ICD10GM_U81.05;
+                skos:narrower :ICD10GM_U81.06;
+                skos:narrower :ICD10GM_U81.07;
+                skos:narrower :ICD10GM_U81.08.
+            :ICD10GM_U81.00 a skos:Concept ;
+            skos:prefLabel "Escherichia coli mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.00".
+            :ICD10GM_U81.01 a skos:Concept ;
+            skos:prefLabel "Klebsiella pneumoniae mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.01".
+            :ICD10GM_U81.02 a skos:Concept ;
+            skos:prefLabel "Klebsiella oxytoca mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.02".
+            :ICD10GM_U81.03 a skos:Concept ;
+            skos:prefLabel "Sonstige Klebsiellen mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.03".
+            :ICD10GM_U81.04 a skos:Concept ;
+            skos:prefLabel "Enterobacter-cloacae-Komplex mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.04".
+            :ICD10GM_U81.05 a skos:Concept ;
+            skos:prefLabel "Citrobacter-freundii-Komplex mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.05".
+            :ICD10GM_U81.06 a skos:Concept ;
+            skos:prefLabel "Serratia marcescens mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.06".
+            :ICD10GM_U81.07 a skos:Concept ;
+            skos:prefLabel "Proteus mirabilis mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.07".
+            :ICD10GM_U81.08 a skos:Concept ;
+            skos:prefLabel "Sonstige Enterobakterien mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.08".
+            :ICD10GM_U81.1 a skos:Concept ;
+            skos:prefLabel "Pseudomonas und Acinetobacter mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.1";
+                skos:narrower :ICD10GM_U81.10;
+                skos:narrower :ICD10GM_U81.11.
+            :ICD10GM_U81.10 a skos:Concept ;
+            skos:prefLabel "Pseudomonas aeruginosa mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.10".
+            :ICD10GM_U81.11 a skos:Concept ;
+            skos:prefLabel "Acinetobacter-baumannii-Gruppe mit Multiresistenz 2MRGN NeoPäd"@de ;
+            skos:notation "ICD10GM:U81.11".
+            :ICD10GM_U81.2 a skos:Concept ;
+            skos:prefLabel "Enterobakterien mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.2";
+                skos:narrower :ICD10GM_U81.20;
+                skos:narrower :ICD10GM_U81.21;
+                skos:narrower :ICD10GM_U81.22;
+                skos:narrower :ICD10GM_U81.23;
+                skos:narrower :ICD10GM_U81.24;
+                skos:narrower :ICD10GM_U81.25;
+                skos:narrower :ICD10GM_U81.26;
+                skos:narrower :ICD10GM_U81.27;
+                skos:narrower :ICD10GM_U81.28.
+            :ICD10GM_U81.20 a skos:Concept ;
+            skos:prefLabel "Escherichia coli mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.20".
+            :ICD10GM_U81.21 a skos:Concept ;
+            skos:prefLabel "Klebsiella pneumoniae mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.21".
+            :ICD10GM_U81.22 a skos:Concept ;
+            skos:prefLabel "Klebsiella oxytoca mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.22".
+            :ICD10GM_U81.23 a skos:Concept ;
+            skos:prefLabel "Sonstige Klebsiellen mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.23".
+            :ICD10GM_U81.24 a skos:Concept ;
+            skos:prefLabel "Enterobacter-cloacae-Komplex mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.24".
+            :ICD10GM_U81.25 a skos:Concept ;
+            skos:prefLabel "Citrobacter-freundii-Komplex mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.25".
+            :ICD10GM_U81.26 a skos:Concept ;
+            skos:prefLabel "Serratia marcescens mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.26".
+            :ICD10GM_U81.27 a skos:Concept ;
+            skos:prefLabel "Proteus mirabilis mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.27".
+            :ICD10GM_U81.28 a skos:Concept ;
+            skos:prefLabel "Sonstige Enterobakterien mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.28".
+            :ICD10GM_U81.3 a skos:Concept ;
+            skos:prefLabel "Pseudomonas und Acinetobacter mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.3";
+                skos:narrower :ICD10GM_U81.30;
+                skos:narrower :ICD10GM_U81.31.
+            :ICD10GM_U81.30 a skos:Concept ;
+            skos:prefLabel "Pseudomonas aeruginosa mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.30".
+            :ICD10GM_U81.31 a skos:Concept ;
+            skos:prefLabel "Acinetobacter-baumannii-Gruppe mit Multiresistenz 3MRGN"@de ;
+            skos:notation "ICD10GM:U81.31".
+            :ICD10GM_U81.4 a skos:Concept ;
+            skos:prefLabel "Enterobakterien mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.4";
+                skos:narrower :ICD10GM_U81.40;
+                skos:narrower :ICD10GM_U81.41;
+                skos:narrower :ICD10GM_U81.42;
+                skos:narrower :ICD10GM_U81.43;
+                skos:narrower :ICD10GM_U81.44;
+                skos:narrower :ICD10GM_U81.45;
+                skos:narrower :ICD10GM_U81.46;
+                skos:narrower :ICD10GM_U81.47;
+                skos:narrower :ICD10GM_U81.48.
+            :ICD10GM_U81.40 a skos:Concept ;
+            skos:prefLabel "Escherichia coli mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.40".
+            :ICD10GM_U81.41 a skos:Concept ;
+            skos:prefLabel "Klebsiella pneumoniae mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.41".
+            :ICD10GM_U81.42 a skos:Concept ;
+            skos:prefLabel "Klebsiella oxytoca mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.42".
+            :ICD10GM_U81.43 a skos:Concept ;
+            skos:prefLabel "Sonstige Klebsiellen mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.43".
+            :ICD10GM_U81.44 a skos:Concept ;
+            skos:prefLabel "Enterobacter-cloacae-Komplex mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.44".
+            :ICD10GM_U81.45 a skos:Concept ;
+            skos:prefLabel "Citrobacter-freundii-Komplex mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.45".
+            :ICD10GM_U81.46 a skos:Concept ;
+            skos:prefLabel "Serratia marcescens mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.46".
+            :ICD10GM_U81.47 a skos:Concept ;
+            skos:prefLabel "Proteus mirabilis mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.47".
+            :ICD10GM_U81.48 a skos:Concept ;
+            skos:prefLabel "Sonstige Enterobakterien mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.48".
+            :ICD10GM_U81.5 a skos:Concept ;
+            skos:prefLabel "Pseudomonas und Acinetobacter mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.5";
+                skos:narrower :ICD10GM_U81.50;
+                skos:narrower :ICD10GM_U81.51.
+            :ICD10GM_U81.50 a skos:Concept ;
+            skos:prefLabel "Pseudomonas aeruginosa mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.50".
+            :ICD10GM_U81.51 a skos:Concept ;
+            skos:prefLabel "Acinetobacter-baumannii-Gruppe mit Multiresistenz 4MRGN"@de ;
+            skos:notation "ICD10GM:U81.51".
+            :ICD10GM_U81.6 a skos:Concept ;
+            skos:prefLabel "Burkholderia, Stenotrophomonas und andere Nonfermenter mit Resistenz gegen Chinolone, Amikacin, Ceftazidim, Piperacillin/Tazobactam oder Cotrimoxazol"@de ;
+            skos:notation "ICD10GM:U81.6".
+            :ICD10GM_U81.8 a skos:Concept ;
+            skos:prefLabel "Sonstige gramnegative Bakterien mit Multiresistenz gegen Antibiotika"@de ;
+            skos:notation "ICD10GM:U81.8".
             :ICD10GM_U82 a skos:Concept ;
             skos:prefLabel "Mykobakterien mit Resistenz gegen Antituberkulotika (Erstrangmedikamente)"@de ;
             skos:notation "ICD10GM:U82";
