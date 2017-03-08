@@ -4,17 +4,17 @@
 Die Demo Server Anwendung stellt nur die Import-Schnittstellen bereit und kann verwendet werden um
 die Gültigkeit von CDA-Dokumenten bei der Entwicklung zu testen oder für einen Schnittstellen-Test mit dem Notaufnahme-System.
 
-Die aktuelle Version der Softwarepakete ist ${dwhImportVersion}.
+Die aktuelle Version der Softwarepakete ist ${project.version}.
 
 Das [Softwarepaket kann als ZIP-Archiv heruntergeladen
-werden](${releaseRepoUrl}/org/aktin/demo-distribution/${dwhImportVersion}/demo-distribution-${dwhImportVersion}.zip).
+werden](${releaseRepoUrl}/org/aktin/demo-distribution/${project.version}/demo-distribution-${project.version}.zip).
 Es enthält eine Serveranwendung mit HL7-FHIR und IHE-XDS-Schnittstellen, Beispieldokumente
 sowie eine Client-Anwendung um Dateien an den Validierungsserver zu senden.
 
 Zusätzlich sind die Quelltexte verfügbar:
 
-- [Quelltext Demo Server und Client](${releaseRepoUrl}/org/aktin/demo-server/${dwhImportVersion}/demo-server-${dwhImportVersion}-sources.jar)
-- [Quelltext CDA-Validierung](${releaseRepoUrl}/org/aktin/cda-validation/${dwhImportVersion}/cda-validation-${dwhImportVersion}-sources.jar)
+- [Quelltext Demo Server und Client](${releaseRepoUrl}/org/aktin/demo-server/${project.version}/demo-server-${project.version}-sources.jar)
+- [Quelltext CDA-Validierung](${releaseRepoUrl}/org/aktin/cda-validation/${project.version}/cda-validation-${project.version}-sources.jar)
 
 Vorausetzungen
 --------------
