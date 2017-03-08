@@ -70,8 +70,7 @@
 		<!-- XSLT and XPath processor -->
 		<dependency>
 			<groupId>net.sf.saxon</groupId>
-			<artifactId>Saxon-HE</artifactId><!--
-			<version>9.6.0-7</version>-->
+			<artifactId>Saxon-HE</artifactId>
 		</dependency>
 		<!-- dependency injection is optional 
 			and provided by the CDI container.
@@ -87,9 +86,7 @@
 		<!-- unit tests -->
 		<dependency>
 			<groupId>junit</groupId>
-			<artifactId>junit</artifactId><!--
-			<version>4.11</version>
-			<scope>test</scope>-->
+			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 </project>
