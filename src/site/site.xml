@@ -5,6 +5,9 @@
 		<version>1.5</version>
 	</skin>
 	<body>
+        <menu name="Installation des Servers">
+            <item href="../../0.7/server/index.html" name="Server" />
+		</menu>
         <menu name="HL7 CDA Dokument">
 		    <item href="cda-quickstart.html" name="Kurzanleitung CDA" />
 		    <item href="cda-release-v1.21.html" name="CDA Release V1.21" />
