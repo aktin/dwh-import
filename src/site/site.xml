@@ -5,15 +5,12 @@
 		<version>1.5</version>
 	</skin>
 	<body>
-        <menu name="Installation des Servers">
-            <item href="../../0.7/server/index.html" name="Server" />
+		<menu name="HL7 CDA Dokument">
+			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
+			<item href="cda-release-v1.21.html" name="CDA Release V1.21" />
+			<item href="cda-release-v1.26.html" name="CDA Release V1.26" />
 		</menu>
-        <menu name="HL7 CDA Dokument">
-		    <item href="cda-quickstart.html" name="Kurzanleitung CDA" />
-		    <item href="cda-release-v1.21.html" name="CDA Release V1.21" />
-		    <item href="cda-release-v1.26.html" name="CDA Release V1.26" />
-		</menu>
-		<menu name="Dokumentation">
+		<menu name="Importschnittstelle">
 			<item href="cda-quickstart.html" name="Kurzanleitung CDA" />
 			<item href="Schnittstellen.html" name="Import Schnittstellen" />
 			<item href="hl7-fhir.html" name="RESTful/HL7 FHIR" />
@@ -22,8 +19,11 @@
 			<item href="roadmap.html" name="Roadmap" />
 			<item href="support.html" name="Support"/>
 		</menu>
-        <menu name="Demo Server">
-            <item href="demo-server.html" name="Demo Server" />
+		<menu name="Demo Server">
+			<item href="demo-server.html" name="Demo Server" />
+		</menu>
+		<menu name="Siehe auch">
+			<item href="../../0.7/server/index.html" name="Serverinstallation und Updates" />
 		</menu>
 		<menu ref="reports" inherit="top" />
 		<!--
