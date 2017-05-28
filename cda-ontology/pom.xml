@@ -26,7 +26,7 @@
 			<plugin>
 				<groupId>de.sekmi.histream.maven</groupId>
 				<artifactId>histream-maven-plugin</artifactId>
-				<version>0.9.2</version>
+				<version>0.12.1</version>
 				<executions>
 					<execution>
 						<phase>generate-resources</phase>
@@ -44,8 +44,12 @@
 								<meta.access>i2b2metadata.table_access</meta.access>
 								<meta.basepath>\i2b2\</meta.basepath>
 								<data.concept.table>i2b2crcdata.concept_dimension</data.concept.table>
+								<data.modifier.table>i2b2crcdata.modifier_dimension</data.modifier.table>
 								<ont.language>de</ont.language>
 							</properties>
+							<prefixes>
+								<a>http://aktin.org/skos-cda#</a>
+							</prefixes>
 						</configuration>
 					</execution>
 				</executions>

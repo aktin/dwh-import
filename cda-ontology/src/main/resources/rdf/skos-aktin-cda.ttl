@@ -580,12 +580,20 @@
     skos:notation	"LOINC:9268-4" .
     
     
+:RightEye a skos:Concept ;
+    skos:prefLabel "Right eye"@en ;
+    skos:prefLabel "Rechtes Auge"@de ;
+    dwh:isPartOf :Pupilsize ;
+    skos:notation "AKTIN:XXX:RightEye" .
+
 :Pupilsize a skos:Concept ;
     skos:inScheme :EmergencyNote ;
     skos:prefLabel "Size of pupil"@en ;
     skos:prefLabel "Pupillenweite"@de ;
     dc:description "Pupillenweite: Auswahlliste" ;
     
+    dwh:hasPart	:RightEye ;
+
     skos:narrower :dilated ;
     skos:narrower :medium ;
     skos:narrower :constricted .
