@@ -93,8 +93,8 @@ Strukturierte Einträge vs. Freitext
 -----------------------------------
 
 Die CDA Spezifikation besteht aus vielen strukturierten Elementen, definiert aber auch Freitext-Felder, in die die relevanten Informationen eingetragen werden können/sollen.
-Die Freitext-Informationen werden durch die AKTIN-Schnittstelle nicht ausgewertet, d. h. jede Information, die nur in Form von Freitexten im CDA vorkommt ist für das Data Warehouse verloren.
-Im Sinne einer hohen Datenqualität ist es deshalb notwendig die strukturierten Felder im CDA entsprechend der inhaltlichen Anforderungen des Datensatzes und konform zur CDA-Spezifikation zu füllen - Freitext-Angaben sind insofern rein optional, auch wenn sie z. T. notwendig sind um ein standardkonformes CDA-Dokument zu erzeugen. 
+Die Freitext-Informationen werden bis auf wenige Ausnahmen durch die AKTIN-Schnittstelle nicht ausgewertet, d. h. jede Information, die nur in Form von Freitexten im CDA vorkommt ist für das Data Warehouse verloren.
+Im Sinne einer hohen Datenqualität ist es deshalb notwendig die strukturierten Felder im CDA entsprechend der inhaltlichen Anforderungen des Datensatzes und konform zur CDA-Spezifikation zu füllen - Freitext-Angaben sind insofern rein optional, auch wenn sie z. T. notwendig sind um ein standardkonformes CDA-Dokument zu erzeugen. Ausnahmen sind lediglich die Informationen, die als Freitexte Bestandteil des AKTIN-Datensatzes sind und deshalb auch als Freitexte erhoben und gespeichert werden.
 
 Insbesondere bieten Freitextfelder aus Projekt-Sicht keine auswertbare Möglichkeit Informationen unterzubringen, die nicht in die strukturierten Felder passen.
 Hier gibt es einen Unterschied zwischen dem was für das AKTIN Projekt notwendig bzw. sinnvoll ist und was eigentlich im Sinne eines standardkonformen CDA-Dokuments best practice wäre.
