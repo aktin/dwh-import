@@ -584,7 +584,13 @@
     skos:prefLabel "Right eye"@en ;
     skos:prefLabel "Rechtes Auge"@de ;
     dwh:isPartOf :Pupilsize ;
-    skos:notation "AKTIN:XXX:RightEye" .
+    skos:notation "AKTIN:TSITE:R" .
+    
+:LeftEye a skos:Concept ;
+    skos:prefLabel "Left eye"@en ;
+    skos:prefLabel "Linkes Auge"@de ;
+    dwh:isPartOf :Pupilsize ;
+    skos:notation "AKTIN:TSITE:L" .
 
 :Pupilsize a skos:Concept ;
     skos:inScheme :EmergencyNote ;
@@ -593,6 +599,7 @@
     dc:description "Pupillenweite: Auswahlliste" ;
     
     dwh:hasPart	:RightEye ;
+    dwh:hasPart	:LeftEye ;
 
     skos:narrower :dilated ;
     skos:narrower :medium ;
