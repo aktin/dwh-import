@@ -3,6 +3,7 @@ package org.aktin.cda.etl;
 import java.io.Flushable;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,10 +18,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.aktin.Preferences;
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAStatus;
 import org.aktin.cda.CDASummary;
 import org.aktin.cda.DocumentNotFoundException;
+import org.aktin.dwh.PreferenceKey;
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
@@ -42,20 +45,22 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private ObservationFactory factory;
 	
 	/**
-	 * Construct a CDAImporter 
+	 * Construct a CDAImporter
+	 * @param factory observation factory
+	 * @param prefs preferences
 	 * @throws NamingException i2b2 data sources could not be found by their names
 	 * @throws SQLException initisiation errors with the database
 	 * @throws IOException unable to load CDA to ETL transformation script
 	 */
 	@Inject // TODO change to ObservationFactory and see if this works
-	public CDAImporter(ObservationFactory factory) throws NamingException, SQLException, IOException {
+	public CDAImporter(ObservationFactory factory, Preferences prefs) throws NamingException, SQLException, IOException {
 		super();
 		this.factory = factory;
 		InitialContext ctx = new InitialContext();
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
 
-		// TODO read/inject preferences via dwh-api
-		String dsName = "java:/QueryToolDemoDS";
+		// read/inject preferences via dwh-api
+		String dsName = prefs.get(PreferenceKey.i2b2DatasourceCRC);//"java:/QueryToolDemoDS";
 		log.info("Connecting to i2b2 database via "+dsName);
 		DataSource crcDS = (DataSource)ctx.lookup(dsName);
 		//DataSource ontDS = (DataSource)ctx.lookup("java:/OntologyDemoDS");
@@ -63,9 +68,15 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		 * DataSource bootstrapDS = (DataSource)ctx.lookup("java:/CRCBootStrapDS");
 		 * SELECT c_db_fullschema, c_db_datasource FROM i2b2hive.crc_db_lookup WHERE 
 		 */
+		// data dialect
+		DataDialect dd = new DataDialect();
+		String tz = prefs.get("i2b2.db.tz"); // TODO use PreferenceKey enum
+		if( tz != null ){
+			dd.setTimeZone(ZoneId.of(tz));
+		}
 		try{
 			inserter = new I2b2Inserter();
-			inserter.open(crcDS.getConnection(), new DataDialect());
+			inserter.open(crcDS.getConnection(), dd);
 		}catch( SQLException e ){
 			// disconnect inserter and other resources 
 			// if one the previous constructors fails
