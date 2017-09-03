@@ -93,7 +93,10 @@ public class SimplifiedOperationOutcome {
 	public SimplifiedOperationOutcome(){
 		issues = new ArrayList<>();
 	}
-	
+
+	public int getIssueCount(){
+		return issues.size();
+	}
 	/**
 	 * Add an issue to the response
 	 * @param severity issue severity

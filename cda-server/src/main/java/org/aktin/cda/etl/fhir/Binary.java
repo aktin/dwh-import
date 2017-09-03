@@ -1,10 +1,14 @@
 package org.aktin.cda.etl.fhir;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,10 +28,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.aktin.Preferences;
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAParser;
 import org.aktin.cda.CDAProcessor;
@@ -54,6 +64,8 @@ public class Binary implements ExternalInterface{
 	private UriInfo uriInfo;
 	@Inject
 	private ImportSummary hallihallo2;
+	@Inject
+	private Preferences prefs;
 	
 	public Binary() throws ParserConfigurationException{
 		outputFactory = XMLOutputFactory.newFactory();
@@ -124,10 +136,11 @@ public class Binary implements ExternalInterface{
 		String templateId = null;
 		boolean isValid = false;
 		boolean importSuccessful = false;
+		Document cda=null;
 		try {
-			Document cda = parser.buildDOM(doc);
+			cda = parser.buildDOM(doc);
 			templateId = parser.extractTemplateId(cda);
-			String documentId = parser.extractDocumentId(cda);
+			String documentId = parser.extractDocumentId(cda); // XXX document ID not correctly extracted
 			// if not found, templateId or documentId contain empty string ""
 			// which will result in an UnsupportedTemplateException
 
@@ -140,8 +153,8 @@ public class Binary implements ExternalInterface{
 				// otherwise return HTTP_BAD_REQUEST
 				// process document
 				CDAStatus stat = processor.createOrUpdate(cda, documentId, templateId);
-				// TODO check whether document was created or updated, return 201 or 200
-
+				
+				// check whether document was created or updated, return 201 or 200
 				if( stat.getStatus() == Status.Created ){
 					try {
 						URI location = new URI("Binary/?_id="+stat.getDocumentId());
@@ -198,6 +211,9 @@ public class Binary implements ExternalInterface{
 		if( false == importSuccessful ){
 			hallihallo2.addRejected(isValid, outcome.toString());
 		}
+		if( cda != null ){
+			tryDebugProcessing(cda, outcome);
+		}
 		try {
 			return response.entity(outcomeToXML(outcome)).build();
 		} catch (XMLStreamException e) {
@@ -207,6 +223,54 @@ public class Binary implements ExternalInterface{
 		}		
 	}
 
+	private void tryDebugProcessing(Document cda, SimplifiedOperationOutcome outcome){
+		String debugDir = prefs.get("import.cda.debug.dir");
+		if( debugDir == null || debugDir.length() == 0 ){
+			return; // nothing to do
+		}
+		String debugLevel = prefs.get("import.cda.debug.level");
+		if( debugLevel != null && debugLevel.equals("error") && outcome.getIssueCount() == 0 ){
+			// dump only documents with errors
+			return; // nothing to do
+		}
+	
+		// XXX maybe extract patient id extension for name?
+		StringBuilder name = new StringBuilder();
+		String ts = Long.toHexString(System.currentTimeMillis());
+		// pad with zeros
+		for( int i=ts.length(); i<16; i++ ){
+			name.append('0');
+		}
+		name.append(ts);
+		// append error count
+		name.append('-').append(Integer.toString(outcome.getIssueCount()));
+		// append extension
+		name.append(".xml");
+		java.nio.file.Path debugDoc = Paths.get(debugDir, name.toString());
+		if( Files.exists(debugDoc) ){
+			// append random string
+			name.insert(name.length()-4, "-"+Integer.toHexString(new Random().nextInt(Integer.MAX_VALUE)));
+			debugDoc = Paths.get(debugDir, name.toString());
+		}
+		try( BufferedWriter out = Files.newBufferedWriter(debugDoc, StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW) ){
+			Source src = new DOMSource(cda);
+			Transformer copy = TransformerFactory.newInstance().newTransformer();
+			try{
+				copy.setOutputProperty(OutputKeys.INDENT, "yes");
+				copy.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			}catch( IllegalArgumentException e ){
+				log.warning("Failed to configure indent for XML debug documents: "+e.getMessage());
+			}
+			copy.transform(src, new StreamResult(out));
+			// write errors in XML comment after content
+			out.write("\n\n<!-- OperationOutcome\n");
+			out.write(outcome.toString().replaceAll("<", "&lt;"));
+			out.write("\n-->\n");
+			log.info("CDA document written to "+debugDoc.toString());
+		} catch (IOException | TransformerException e ) {
+			log.log(Level.WARNING, "Unable to write CDA debug document to "+debugDoc.toString(), e);
+		}
+	}
 	@Inject
 	@Override
 	public void setValidator(Validator validator) {
