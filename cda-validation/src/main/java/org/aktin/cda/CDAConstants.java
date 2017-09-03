@@ -27,7 +27,7 @@ public class CDAConstants {
 	/**
 	 * XPath to the document id within a CDA document. 
 	 * This id should be globally unique for any two documents.
-	 * 
+	 * XXX extension id needed
 	 */
 	public static final String XPATH_CDA_DOCUMENT_ID = "/cda:ClinicalDocument/cda:setId/@root";
 
