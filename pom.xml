@@ -4,7 +4,7 @@
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>dwh-import</artifactId>
-	<version>0.8rc2-SNAPSHOT</version>
+	<version>0.8rc2</version>
   
 	<name>AKTIN : DWH Import</name>
 	<description>AKTIN Software</description>
@@ -25,7 +25,7 @@
 
 	<scm>
 		<developerConnection>scm:git:git@gitlab.uni-oldenburg.de:AKTIN/dwh-import.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v0.8rc2</tag>
 	</scm>
 
 	<modules>
