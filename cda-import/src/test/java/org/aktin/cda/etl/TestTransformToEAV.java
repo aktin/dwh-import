@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
+
 import javax.xml.transform.stream.StreamSource;
 
 import org.aktin.cda.CDAParser;
@@ -15,6 +17,7 @@ import org.w3c.dom.Document;
 import de.sekmi.histream.DateTimeAccuracy;
 import de.sekmi.histream.Observation;
 import de.sekmi.histream.ext.Patient;
+import de.sekmi.histream.ext.Visit;
 import de.sekmi.histream.io.GroupedXMLReader;
 
 public class TestTransformToEAV {
@@ -42,9 +45,22 @@ public class TestTransformToEAV {
 				GroupedXMLReader suppl = t.readEAV(eav);
 				Observation o = suppl.get();
 				
+				// verify patient birth date
 				Patient p = o.getExtension(Patient.class);
 				Assert.assertNotNull(p);
-				Assert.assertEquals(new DateTimeAccuracy(1996, 5, 31), p.getBirthDate());
+				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("1996-05-31", t.getDefaultZoneId()), p.getBirthDate());
+				// verify visit start date
+				Visit v = o.getExtension(Visit.class);
+				Assert.assertNotNull(v);
+				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T16:03+0100"), v.getStartTime());
+				
+				// verify observation
+				// skip observations until LOINC
+				Optional<Observation> opt = suppl.stream().filter(x -> x.getConceptId().equals("ICD10GM:S80.1")).findFirst();
+				Assert.assertTrue(opt.isPresent());
+				o = opt.get();
+				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T15:56+0100"), o.getStartTime());
+				
 				suppl.close();
 			}finally{
 				Files.delete(temp);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.ZoneId;
 import java.util.function.Consumer;
 
 import javax.xml.bind.JAXBException;
@@ -58,6 +59,12 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	protected abstract Consumer<Observation> getObservationInserter();
 	
 	/**
+	 * Get the default zone id which will be used for timestamps without timezone offset
+	 * @return zone id
+	 */
+	protected abstract ZoneId getDefaultZoneId();
+
+	/**
 	 * delete previous facts for this source id
  	 * TODO for different CDA modules, use different ID or sourceId
 	 * @param sourceId source id
@@ -67,7 +74,7 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	protected abstract boolean deleteEAV(String sourceId) throws CDAException;
 	
 	protected GroupedXMLReader readEAV(InputStream xml) throws JAXBException, XMLStreamException{
-		return new GroupedXMLReader(getObservationFactory(), inputFactory.createXMLStreamReader(xml));
+		return new GroupedXMLReader(getObservationFactory(), inputFactory.createXMLStreamReader(xml), getDefaultZoneId());
 	}
 	/**
 	 * parse EAV XML and insert into fact table

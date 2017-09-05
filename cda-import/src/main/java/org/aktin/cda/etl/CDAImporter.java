@@ -43,7 +43,8 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private static final Logger log = Logger.getLogger(CDAImporter.class.getName());
 	private I2b2Inserter inserter;
 	private ObservationFactory factory;
-	
+	private ZoneId localZone;
+
 	/**
 	 * Construct a CDAImporter
 	 * @param factory observation factory
@@ -56,6 +57,8 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	public CDAImporter(ObservationFactory factory, Preferences prefs) throws NamingException, SQLException, IOException {
 		super();
 		this.factory = factory;
+		this.localZone = ZoneId.of(prefs.get(PreferenceKey.timeZoneId));
+		log.info("Default timezone for CDA documents: "+localZone);
 		InitialContext ctx = new InitialContext();
 		// also lookup SessionContext via (SessionContext)ctx.lookup("java:comp/EJBContext")
 
@@ -175,6 +178,11 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	@Override
 	public CDASummary get(String documentId) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected ZoneId getDefaultZoneId() {
+		return localZone;
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.aktin.cda.etl;
 
 import java.io.IOException;
+import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
@@ -72,6 +73,11 @@ public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<O
 	public CDASummary get(String documentId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected ZoneId getDefaultZoneId() {
+		return ZoneId.systemDefault();
 	}
 
 }
