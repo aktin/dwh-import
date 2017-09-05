@@ -24,6 +24,13 @@
 		</xsl:attribute>
 	</xsl:template>
 
+	<!-- override encounter id -->
+	<xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension">
+		<xsl:attribute name="extension">
+			<xsl:value-of select="$pid"/>
+		</xsl:attribute>
+	</xsl:template>
+
 	<!-- override timestamp values -->
 	<xsl:template match="cda:effectiveTime/cda:low/@value">
 	   <xsl:call-template name="GetShiftedTime">
