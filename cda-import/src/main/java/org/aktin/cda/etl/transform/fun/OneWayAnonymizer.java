@@ -1,7 +1,11 @@
 package org.aktin.cda.etl.transform.fun;
 
+import javax.inject.Singleton;
+
 import org.aktin.dwh.Anonymizer;
 
+// technically, singleton is not needed
+@Singleton
 public class OneWayAnonymizer implements Anonymizer {
 
 	@Override
