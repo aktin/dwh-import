@@ -73,7 +73,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		 */
 		// data dialect
 		DataDialect dd = new DataDialect();
-		String tz = prefs.get("i2b2.db.tz"); // TODO use PreferenceKey enum
+		String tz = prefs.get(PreferenceKey.i2b2DatabaseTimezone);
 		if( tz != null ){
 			dd.setTimeZone(ZoneId.of(tz));
 		}
