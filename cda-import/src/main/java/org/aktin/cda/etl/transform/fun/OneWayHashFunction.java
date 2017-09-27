@@ -6,7 +6,6 @@ import java.security.DigestException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.util.logging.Logger;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
@@ -24,7 +23,7 @@ import net.sf.saxon.value.StringValue;
  *
  */
 public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
-	private static final Logger log = Logger.getLogger(OneWayHashFunction.class.getName());
+//	private static final Logger log = Logger.getLogger(OneWayHashFunction.class.getName());
 	public static final String AKTIN_CDA_FUNCTIONS_NS = "http://aktin.org/cda/functions";
 	
 	protected static final StructuredQName buildFunctionQName(String funcName){
@@ -51,13 +50,13 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 	 * @return string hash
 	 * @throws DigestException error calculating message digest 
 	 */
-	public String calculateHash(String ...strings) throws DigestException{
+	public static String calculateHash(String ...strings) {
 		MessageDigest digest;
 		try {
 			digest = MessageDigest.getInstance("SHA-1");
 		} catch (NoSuchAlgorithmException e) {
 			// should not happen. SHA-1 is guaranteed to be included in the JRE
-			throw new DigestException(e);
+			throw new IllegalStateException("Digest algorithm not available",e);
 		}
 		// join arguments
 		String composite = String.join("/", strings);
@@ -67,7 +66,6 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 		// calculate digest and encode with base64
 		digest.update(input);
 		String result = Base64.getUrlEncoder().encodeToString(digest.digest());
-		log.info("Hash "+getFunctionQName().getDisplayName()+": "+composite+" -> "+result);
 		return result;
 	}
 
@@ -89,11 +87,7 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 			if( arguments.length == 0 ){
 				throw new XPathException("Need at least one argument for hash calculation");
 			}
-			try {
-				return new StringValue(calculateHash(strings));
-			} catch (DigestException e) {
-				throw new XPathException("Unable to calculate hash", e);
-			}
+			return new StringValue(calculateHash(strings));
 		}
 	}
 
