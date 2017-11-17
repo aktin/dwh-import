@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
 import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
 import org.aktin.cda.etl.transform.fun.CalculateSourceId;
+import org.aktin.dwh.Anonymizer;
 import org.w3c.dom.Document;
 
 import net.sf.saxon.Configuration;
@@ -32,6 +33,7 @@ public class Transformation {
 	
 	private TransformerFactoryImpl transformerFactory;
 	private Templates transformerTemplates;
+	private Anonymizer anonymizer;
 
 	/**
 	 * Construct a CDA template to EAV transformation
@@ -42,10 +44,10 @@ public class Transformation {
 	 * @throws TransformerFactoryConfigurationError if the transformer factory failed to initialize
 	 * @throws TransformerConfigurationException  transformer setup error
 	 */
-	public Transformation(String moduleId, String templateId, Document xslt)throws TransformerFactoryConfigurationError, TransformerConfigurationException{
+	public Transformation(String moduleId, String templateId, Document xslt, Anonymizer anonymizer)throws TransformerFactoryConfigurationError, TransformerConfigurationException{
 		this.moduleId = moduleId;
 		this.templateId = templateId;
-		
+		this.anonymizer = anonymizer;
 		// create transformer
 		// ususally a transformer is created via TransformerFactory.newInstance(),
 		// but this may return a non-saxon parser
@@ -70,9 +72,9 @@ public class Transformation {
 //		}
 //		Configuration config = ((TransformerFactoryImpl)factory).getConfiguration();
 		Configuration config = transformerFactory.getConfiguration();
-		config.registerExtensionFunction(new CalculatePatientHash());
-		config.registerExtensionFunction(new CalculateEncounterHash());
-		config.registerExtensionFunction(new CalculateSourceId());
+		config.registerExtensionFunction(new CalculatePatientHash(anonymizer));
+		config.registerExtensionFunction(new CalculateEncounterHash(anonymizer));
+		config.registerExtensionFunction(new CalculateSourceId(anonymizer));
 		// TODO don't need moduleId and factory?
 	}
 

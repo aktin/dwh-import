@@ -1,5 +1,7 @@
 package org.aktin.cda.etl.transform.fun;
 
+import org.aktin.dwh.Anonymizer;
+
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.value.SequenceType;
 
@@ -28,6 +30,10 @@ import net.sf.saxon.value.SequenceType;
  *
  */
 public class CalculateSourceId extends OneWayHashFunction{
+	public CalculateSourceId(Anonymizer anonymizer) {
+		super(anonymizer);
+	}
+
 	public static final StructuredQName QNAME = OneWayHashFunction.buildFunctionQName("import-hash");
 	protected static final SequenceType[] FIVE_STRINGS = new SequenceType[]{SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING,SequenceType.SINGLE_STRING};
 	
