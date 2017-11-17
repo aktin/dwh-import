@@ -6,6 +6,8 @@ import org.aktin.cda.CDASummary;
 
 public class Descriptor implements CDASummary {
 	private String docId;
+	Date lastModified;
+	Date created;
 	
 	public Descriptor(String docId){
 		this.docId = docId;
@@ -17,14 +19,12 @@ public class Descriptor implements CDASummary {
 
 	@Override
 	public Date getLastModified() {
-		// TODO Auto-generated method stub
-		return null;
+		return lastModified;
 	}
 
 	@Override
 	public Date getCreated() {
-		// TODO Auto-generated method stub
-		return null;
+		return created;
 	}
 
 	@Override
