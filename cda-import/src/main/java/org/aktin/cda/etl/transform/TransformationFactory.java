@@ -22,6 +22,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.aktin.cda.NamespaceContextImpl;
+import org.aktin.dwh.Anonymizer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,7 +39,8 @@ public class TransformationFactory {
 	private Map<String, Transformation> cache;
 	private XPath xpath;
 	private DocumentBuilderFactory builderFactory;
-	
+	private Anonymizer anonymizer;
+
 	public TransformationFactory(){
 //		inputFactory = XMLInputFactory.newInstance();
 		// XPath configuration
@@ -77,6 +79,7 @@ public class TransformationFactory {
 	}
 
 	private Transformation loadTransformation(String templateId) throws IOException, TransformerConfigurationException, TransformerFactoryConfigurationError{
+		Objects.requireNonNull(this.anonymizer, "no anonymizer configured");
 		// need to locate the transformation
 		URL url = locateTransformationByTemplate(templateId);
 		if( url == null ){
@@ -101,9 +104,12 @@ public class TransformationFactory {
 			// this should be reported to the developers
 			log.warning("Mismatch between template name="+templateId+" and declared template="+declaredTemplate);
 		}
-		return new Transformation(moduleId, templateId, doc);
+		return new Transformation(moduleId, templateId, doc, anonymizer);
 	}
 	
+	public void setAnonymizer(Anonymizer anonymizer){
+		this.anonymizer = anonymizer;
+	}
 	public Transformation getTransformation(String templateId) throws IOException, TransformerConfigurationException, TransformerFactoryConfigurationError{
 		// look in cache
 		Transformation transform = cache.get(templateId);

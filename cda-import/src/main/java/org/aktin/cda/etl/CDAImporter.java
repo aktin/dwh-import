@@ -23,6 +23,7 @@ import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAStatus;
 import org.aktin.cda.CDASummary;
 import org.aktin.cda.DocumentNotFoundException;
+import org.aktin.dwh.Anonymizer;
 import org.aktin.dwh.PreferenceKey;
 import org.w3c.dom.Document;
 
@@ -54,8 +55,8 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	 * @throws IOException unable to load CDA to ETL transformation script
 	 */
 	@Inject // TODO change to ObservationFactory and see if this works
-	public CDAImporter(ObservationFactory factory, Preferences prefs) throws NamingException, SQLException, IOException {
-		super();
+	public CDAImporter(ObservationFactory factory, Preferences prefs, Anonymizer anonymizer) throws NamingException, SQLException, IOException {
+		super(anonymizer);
 		this.factory = factory;
 		this.localZone = ZoneId.of(prefs.get(PreferenceKey.timeZoneId));
 		log.info("Default timezone for CDA documents: "+localZone);
@@ -73,10 +74,6 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		 */
 		// data dialect
 		DataDialect dd = new DataDialect();
-		String tz = prefs.get("i2b2.db.tz"); // TODO use PreferenceKey enum
-		if( tz != null ){
-			dd.setTimeZone(ZoneId.of(tz));
-		}
 		try{
 			inserter = new I2b2Inserter();
 			inserter.open(crcDS.getConnection(), dd);

@@ -10,6 +10,7 @@ public class TestTransformationLoader {
 	@Test
 	public void verifyTransformVariables() throws Exception{
 		TransformationFactory f = new TransformationFactory();
+		f.setAnonymizer(new ConcatAnonymizer());
 		//XMLStreamReader xsr = inputFactory.createXMLStreamReader(getClass().getResourceAsStream("/cda-eav.xsl"));
 //		InputSource input = new InputSource(getClass().getResourceAsStream("/cda-eav.xsl"));
 		Transformation t = f.getTransformation("1.2.276.0.76.10.1019");

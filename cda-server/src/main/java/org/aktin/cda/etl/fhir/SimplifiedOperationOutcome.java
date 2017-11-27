@@ -65,6 +65,7 @@ public class SimplifiedOperationOutcome {
 	public static class Issue{
 		Severity severity;
 		String details;
+		String diagnostics;
 		IssueType code;
 		public Issue(Severity severity, IssueType type, String details){
 			this.severity = severity;
@@ -85,6 +86,11 @@ public class SimplifiedOperationOutcome {
 				this.code = IssueType.informational;
 				break;
 			}
+		}
+		public static Issue diagnosticInfo(String message){
+			Issue i = new Issue(Severity.information, IssueType.informational, null);
+			i.diagnostics = "all ok";
+			return i;
 		}
 	}
 	
@@ -109,7 +115,25 @@ public class SimplifiedOperationOutcome {
 	public void addIssue(Severity severity, IssueType type, String details){
 		issues.add(new Issue(severity, details));
 	}
-	
+
+	private void writeIssue(XMLStreamWriter writer, Issue issue) throws XMLStreamException{
+		writer.writeStartElement("issue");
+		// severity
+		writer.writeStartElement("severity");
+		writer.writeAttribute("value", issue.severity.name());
+		writer.writeEndElement();
+		// code
+		writer.writeStartElement("code");
+		writer.writeAttribute("value", issue.code.value);
+		writer.writeEndElement();
+		
+		if( issue.details != null ){
+			writer.writeStartElement("details");
+			writer.writeAttribute("value", issue.details);
+			writer.writeEndElement();
+		}
+		writer.writeEndElement();	
+	}
 	/**
 	 * Generate the XML representation of the response
 	 * 
@@ -128,22 +152,11 @@ public class SimplifiedOperationOutcome {
 //		writer.setDefaultNamespace(FHIR_NAMESPACE);
 //		writer.writeDefaultNamespace(FHIR_NAMESPACE);
 		for( Issue issue : issues ){
-			writer.writeStartElement("issue");
-			// severity
-			writer.writeStartElement("severity");
-			writer.writeAttribute("value", issue.severity.name());
-			writer.writeEndElement();
-			// code
-			writer.writeStartElement("code");
-			writer.writeAttribute("value", issue.code.value);
-			writer.writeEndElement();
-			
-			if( issue.details != null ){
-				writer.writeStartElement("details");
-				writer.writeAttribute("value", issue.details);
-				writer.writeEndElement();
-			}
-			writer.writeEndElement();
+			writeIssue(writer, issue);
+		}
+		// prevent empty ObservationOutcome. Write success info for empty issues
+		if( issues.isEmpty() ){
+			writeIssue(writer, Issue.diagnosticInfo("all ok"));
 		}
 		writer.writeEndElement();
 		writer.writeEndDocument();

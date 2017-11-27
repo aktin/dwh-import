@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.function.Consumer;
 
 import javax.xml.bind.JAXBException;
@@ -20,6 +21,7 @@ import org.aktin.cda.CDAStatus.Status;
 import org.aktin.cda.UnsupportedTemplateException;
 import org.aktin.cda.etl.transform.Transformation;
 import org.aktin.cda.etl.transform.TransformationFactory;
+import org.aktin.dwh.Anonymizer;
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
@@ -37,14 +39,13 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	private TransformationFactory cdaToDataWarehouse;
 	private XMLInputFactory inputFactory;
 
-	public AbstractCDAImporter() throws IOException {
+	public AbstractCDAImporter(Anonymizer anonymizer) throws IOException {
 		// create transformer
 		cdaToDataWarehouse = new TransformationFactory();
-		
+		cdaToDataWarehouse.setAnonymizer(anonymizer);
 		// XML input factory
 		inputFactory = XMLInputFactory.newInstance();
 	}
-
 	
 	/**
 	 * Get the observation factory which will be used to create observations
@@ -91,9 +92,17 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 			// insert facts
 			suppl.stream().forEach(getObservationInserter());
 			
-			CDAStatus.Status status = deleted?Status.Updated:Status.Created;
+			CDAStatus.Status status;
 			Descriptor desc = new Descriptor(sourceId);
-			// TODO use/write timestamps and version
+			desc.lastModified = new Date();
+			if( deleted ){
+				status = Status.Updated;
+			}else{
+				status = Status.Created;
+				desc.created = desc.lastModified;
+			}
+			
+			// TODO use/write version
 			return new CDAStatus(desc, status);
 		} catch (IOException e) {
 			throw new CDAException("Unable to read EAV temp file: "+file, e);

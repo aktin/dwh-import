@@ -24,7 +24,7 @@ public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<O
 	private int insertCount;
 
 	public CDAImporterMockUp() throws IOException{
-		super();
+		super(new ConcatAnonymizer());
 		System.out.println("CONSTRUCT CDAImporterMockUp");
 		factory = new ObservationFactoryImpl(new SimplePatientExtension(), new SimpleVisitExtension());
 		insertCount = 0;

@@ -31,5 +31,21 @@ public class CDAConstants {
 	 */
 	public static final String XPATH_CDA_DOCUMENT_ID = "/cda:ClinicalDocument/cda:setId/@root";
 
+	/**
+	 * XPath to CDA patient id root. 
+	 */
+	public static final String XPATH_CDA_PATIENT_ID_ROOT = "/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root";
+	/**
+	 * XPath to CDA patient id extension. 
+	 */
+	public static final String XPATH_CDA_PATIENT_ID_EXT = "/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension";
 
+	/**
+	 * XPath to CDA encounter root. 
+	 */
+	public static final String XPATH_CDA_ENCOUNTER_ID_ROOT = "/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[0]/@root";
+	/**
+	 * XPath to CDA encounter id extension. 
+	 */
+	public static final String XPATH_CDA_ENCOUNTER_ID_EXT= "/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[0]/@extension";
 }

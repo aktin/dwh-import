@@ -85,6 +85,21 @@ public class CDAParser {
 	}
 
 	/**
+	 * Find the patient id for a given CDA document
+	 * @param cda CDA document
+	 * @return two part patient id: root, extension
+	 * @throws XPathExpressionException XPath error
+	 */
+	public String[] extractPatientId(Document cda) throws XPathExpressionException{
+		XPathExpression xer = xpath.compile(CDAConstants.XPATH_CDA_PATIENT_ID_ROOT);
+		XPathExpression xee = xpath.compile(CDAConstants.XPATH_CDA_PATIENT_ID_EXT);
+		return new String[]{
+				(String)xer.evaluate(cda.getDocumentElement(), XPathConstants.STRING),
+				(String)xee.evaluate(cda.getDocumentElement(), XPathConstants.STRING)
+		};
+	}
+
+	/**
 	 * Find the document id for a given CDA document. It should be globally
 	 * unique for any different document, but should be the same for an 
 	 * update/replacement of the same document.

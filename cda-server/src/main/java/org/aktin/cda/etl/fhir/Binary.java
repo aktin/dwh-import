@@ -3,7 +3,6 @@ package org.aktin.cda.etl.fhir;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -136,6 +135,7 @@ public class Binary implements ExternalInterface{
 		String templateId = null;
 		boolean isValid = false;
 		boolean importSuccessful = false;
+		URI location = null;
 		Document cda=null;
 		try {
 			cda = parser.buildDOM(doc);
@@ -153,20 +153,18 @@ public class Binary implements ExternalInterface{
 				// otherwise return HTTP_BAD_REQUEST
 				// process document
 				CDAStatus stat = processor.createOrUpdate(cda, documentId, templateId);
-				
 				// check whether document was created or updated, return 201 or 200
 				if( stat.getStatus() == Status.Created ){
-					try {
-						URI location = new URI("Binary/?_id="+stat.getDocumentId());
-						response = Response.created(location);
-					} catch (URISyntaxException e) {
-						log.log(Level.WARNING, "Unable to build URI for created resource", e);
-						response = Response.ok();
-					}
+					// create location conforming to FHIR specification
+					location = URI.create("Binary/"+stat.getDocumentId()+"/_history/0");
+					response = Response.created(location);
+					
 					hallihallo2.addCreated();
 					importSuccessful = true;
 				}else if( stat.getStatus() == Status.Updated ){
 					response = Response.ok();
+					location = URI.create("Binary/"+stat.getDocumentId());
+					// Location header not allowed for status 200
 					hallihallo2.addUpdated();
 					importSuccessful = true;
 				}else{

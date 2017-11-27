@@ -141,6 +141,7 @@
                     <!-- Alle Fact-Templates auf Body/Component/Section Ebene aufrufen -->
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>     
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]"/> 
+                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:templateId"/>
                 </encounter>
             </patient>     
         </eav-data> 
@@ -1000,6 +1001,10 @@
         <xsl:template match="/cda:ClinicalDocument/cda:templateId">
             <xsl:comment>Import Transformation/Version Information</xsl:comment>
             <fact>
+            	<!-- ACHTUNG: in anderen Modulen (z.B. Traumamodul) darf das nachfolgende fact nicht
+            	    genauso ausgegeben werden, da dann die Möglichkeit besteht dass das unique constraint
+            	    der observation_fact tabelle verletzt wird. Da die Software-Version aber gleich ist,
+            	    kann dies komplett weggelassen werden. -->
                 <xsl:attribute name="concept">
                     <xsl:value-of select="$ProjectVersion-Prefix"/><xsl:value-of select="$aktin.release.version"/>
                 </xsl:attribute>
