@@ -1167,6 +1167,9 @@
     <xsl:function name="func:ConvertDateTime">
         <xsl:param name="DateTimeString"></xsl:param>
         <xsl:if test="$DateTimeString">
+            <!-- YYYYMMDDhhmmss.SSS±ZZzz ToDo: Timezone -->
+            <!-- [0-9]{1,8} | ( [0-9]{9,14} | [0-9]{14,14}\.[0-9]+ )
+                 ([+\-][0-9]{1,4})?                                  -->
             <xsl:choose>
                 <xsl:when test="string-length($DateTimeString) = 4"><xsl:value-of select="$DateTimeString"/></xsl:when>
                 <xsl:when test="string-length($DateTimeString) = 6"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/></xsl:when>
