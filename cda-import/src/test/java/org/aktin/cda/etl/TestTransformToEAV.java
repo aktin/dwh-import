@@ -24,10 +24,11 @@ import de.sekmi.histream.io.GroupedXMLReader;
  * Test the template transformations from CDA to EAV-XML. Multiple template ids
  * and AKTIN modules are supported.
  * <p>
- * For standalone transformation testing, go to the repository folder {@code dwh-import}
- * and build all child modules with {@code mvn clean install}.<br/>
+ * For standalone transformation testing, build the {@code cda-import} module
+ * with {@code mvn clean install}. When needed, run the build command from the
+ * parent directory.<br/>
  * When the build ist complete, the transformation can be tested with
- * a command line application. E.g. from within the {@code target/} directory:
+ * a command line application. E.g. from within the {@code cda-import/target/} directory:
  *  <pre>
  * java -classpath "test-classes;classes;dependencies/*" org.aktin.cda.etl.TestTransformToEAV "../../cda-validation/src/main/resources/Additional Examples/basismodul-beispiel-storyboard01-complete.xml"
  *  </pre>
