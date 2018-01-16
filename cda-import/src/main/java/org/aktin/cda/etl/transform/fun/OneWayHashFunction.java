@@ -37,7 +37,7 @@ public abstract class OneWayHashFunction extends ExtensionFunctionDefinition {
 
 	/**
 	 * Implements a call to the hash function with variable arguments.
-	 * For the algorithm, see {@link OneWayHashFunction#calculateHash(String...)}
+	 * The algorithm is delegated to the implementation of {@link Anonymizer}
 	 *
 	 * @author R.W.Majeed
 	 *
