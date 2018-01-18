@@ -20,6 +20,22 @@ import de.sekmi.histream.ext.Patient;
 import de.sekmi.histream.ext.Visit;
 import de.sekmi.histream.io.GroupedXMLReader;
 
+/** 
+ * Test the template transformations from CDA to EAV-XML. Multiple template ids
+ * and AKTIN modules are supported.
+ * <p>
+ * For standalone transformation testing, build the {@code cda-import} module
+ * with {@code mvn clean install}. When needed, run the build command from the
+ * parent directory.<br/>
+ * When the build ist complete, the transformation can be tested with
+ * a command line application. E.g. from within the {@code cda-import/target/} directory:
+ *  <pre>
+ * java -classpath "test-classes;classes;dependencies/*" org.aktin.cda.etl.TestTransformToEAV "../../cda-validation/src/main/resources/Additional Examples/basismodul-beispiel-storyboard01-complete.xml"
+ *  </pre>
+ * </p>
+ * @author R.W.Majeed
+ *
+ */
 public class TestTransformToEAV {
 
 	@Test
@@ -32,6 +48,7 @@ public class TestTransformToEAV {
 			Assert.assertTrue(templateId.length() > 0);
 		}
 	}
+	@SuppressWarnings("deprecation")
 	@Test
 	public void transformExample1() throws Exception{
 		CDAParser parser = new CDAParser();
@@ -72,7 +89,7 @@ public class TestTransformToEAV {
 	
 	/**
 	 * Transform a CDA file to a EAV which is output on stdout.
-	 * Call with {@code java -classpath "cda-import/target/test-classes;cda-import/target/classes;cda-server/target/classes;cda-validation/target/classes;histream-core/target/classes" org.aktin.cda.etl.TestTransformToEAV filename}
+	 * Call with {@code java -classpath "test-classes;classes;dependencies/*" org.aktin.cda.etl.TestTransformToEAV filename}
 	 * @param args file name argument
 	 * @throws Exception error
 	 */

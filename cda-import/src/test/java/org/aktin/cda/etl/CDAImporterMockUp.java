@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
 import javax.inject.Singleton;
@@ -20,12 +21,13 @@ import de.sekmi.histream.impl.SimpleVisitExtension;
 
 @Singleton
 public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<Observation>, AutoCloseable{
+	private static final Logger log = Logger.getLogger(CDAImporterMockUp.class.getName());
 	private ObservationFactory factory;
 	private int insertCount;
 
 	public CDAImporterMockUp() throws IOException{
 		super(new ConcatAnonymizer());
-		System.out.println("CONSTRUCT CDAImporterMockUp");
+		log.info("CONSTRUCT CDAImporterMockUp");
 		factory = new ObservationFactoryImpl(new SimplePatientExtension(), new SimpleVisitExtension());
 		insertCount = 0;
 	}
@@ -33,7 +35,7 @@ public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<O
 	@PreDestroy
 	@Override
 	public void close() {
-		System.out.println("CLOSE CDAImporterMockUp (insertCount="+insertCount+")");
+		log.info("CLOSE CDAImporterMockUp (insertCount="+insertCount+")");
 	}
 
 	@Override

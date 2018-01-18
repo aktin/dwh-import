@@ -41,6 +41,7 @@ public class Transformation {
 	 * @param moduleId module id
 	 * @param templateId template id
 	 * @param xslt XSLT document
+	 * @param anonymizer anonzmiyer
 	 * @throws TransformerFactoryConfigurationError if the transformer factory failed to initialize
 	 * @throws TransformerConfigurationException  transformer setup error
 	 */
