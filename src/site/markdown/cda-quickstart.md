@@ -42,6 +42,8 @@ Weiterhin gibt es eine ID, die sehr wünschenswert ist, aber nicht zwingend ange
 Darüber hinaus gibt es noch eine ID, die entsprechend der CDA-Regeln gesetzt werden sollte, aber für den Import in das DWH nicht wichtig ist:
 * SetID
 
+In [dieser grafischen Übersicht](id.png) ist die Hierarchie der wichtigen IDs dargestellt.
+
 Als Identifier für eine Episode (hier definiert als ein Patientenkontakt, 
 für den ein neues Notaufnahmeprotokoll angelegt werden soll) wird das Element 
 `/ClinicalDocument/componentOf/encompassingEncounter/id[1]` verwendet. 
@@ -52,7 +54,7 @@ Das Quelldatensystem bzw. der Importer muss also sicherstellen, dass die `Encoun
 entsprechend eindeutig ist und bei inhaltlichen Änderungen eines Patientenkontakts 
 unverändert bleibt. Dies ist nicht unbedingt gleichzusetzen mit einer Fallnummer oder 
 Abrechnungsnummer, da je nach lokaler Umsetzung im KIS mehrere 
-Notaufnahme-Formulare einem Fall zugeordnet werden könnten. Je nachdem wie das KIS bzw. die Prozesse strukturiert sind (auch bzgl. nachträglicher Änderungen) sind die IDs entsprechend der beschriebenen Anforderungen zu wählen oder ggf. zu generieren.
+Notaufnahme-Formulare einem (Abrechnungs-)Fall zugeordnet werden könnten. Je nachdem wie das KIS bzw. die Prozesse strukturiert sind (auch bzgl. nachträglicher Änderungen) sind die IDs entsprechend der beschriebenen Anforderungen zu wählen oder ggf. zu generieren. Als `EncounterID` kann ggf. die FormularID der Dokumentationseinheit für den Notaufnahmekontakt(Episode) verwendet werden. Dabei sind ggf. die Besonderheiten des Notaufnahmesystems zu beachten: Falls Formulare storniert oder gelöscht werden (können), wäre es besser (falls möglich) eine übergeordnete ID zu verwenden, die den Notaufnahmekontakt(Episode) repräsentiert.
 
 Als Identifier für den Patienten dient im Basismodul-CDA das Element 
 `/ClinicalDocument/recordTarget/patientRole/id`. 
@@ -67,7 +69,7 @@ Als Identifier für den Fall (internes Fallkennzeichen) dient im Basismodul-CDA 
 
 Eine Vorverarbeitung/Pseudonymisierung im Quell-System ist nicht notwendig, 
 da beim Import die Patienten-IDs mit einem Einweg-Hash verschlüsselt werden 
-und somit keine Rück-Zuordnung zu identifizierenden Daten möglich ist, sondern lediglich ein anonymes Mapping zwischen Episoden des gleichen Patienten.
+und somit keine Rück-Zuordnung zu identifizierenden Daten möglich ist, sondern lediglich ein anonymes Mapping zwischen Episoden des gleichen Patienten. Wenn eine Pseudonymisierung zwischengeschaltet wird, kann das Probleme verursachen bei der Qualitätssicherung (Datenabgleich) und beim OptOut. Immer dann, wenn Klinik-Personal personenbezogen auf die Daten zugreifen muss, wäre der Zugriff auf die Pseudonymisierungsliste notwendig. Daher ist es empfehlenswert mit IDs zu arbeiten, die dem Nutzer im Klinik-Informationssystem bekannt sind.
 
 Im AKTIN Data Warehouse werden keine direkt identifizierenden Daten gespeichert 
 (vgl. Datenschutzkonzept). Diese Daten könnten bei der CDA-Erzeugung 
@@ -76,6 +78,25 @@ der krankenhausinternen AKTIN-Schnittstelle nicht verarbeitet oder gespeichert.
 
 Das CDA hat eine `/ClinicalDocument/setId`, die das Dokument eindeutig identifiziert. Für den Import spielt diese ID keine Rolle, aber sie sollte CDA-konform gewählt werden. Beispielsweise könnte man in der root das Basismodul-CDA referenzieren und als extension die eindeutige EncounterID verwenden. Theoretisch wäre bei einer Änderung auch `/ClinicalDocument/versionNumber` zu erhöhen 
 – die Schnittstelle beachtet dies aber nicht, sondern überschreibt Informationen  mit gleicher `EncounterID` (s. o.) und gleicher `PatientID`.
+
+Änderungen an Falldaten, PatientenID, EncounterID, Löschen/Stornieren von Epsioden/Fällen
+-----------------------------------------------------------------------------------------
+
+Die CDAs sollen zu einem möglichst frühen Zeitpunkt (mindestens 1x täglich, vorzugsweise kontinuierlich) in das Datawarehouse übermittelt werden. Es kann passieren, dass nach der Übermittlung noch Daten im Notaufnahme-System verändert werden. In jedem Fall sollten diese Änderungen auch im AKTIN-DWH aktualisiert werden. Je nach Implemetierung des Imports und der Trigger-Möglichkeiten sind dazu verschiedene Strategien denkbar. Im Idealfall können die Fälle anhand von internen Nachrichten oder Triggern erneut versendet werden, wenn sich etwas ändert. Falls ein solcher Trigger nicht verfügbar ist, können die Fälle auch einfach nach 1 Woche, 1 Monat und/oder 1 Jahr erneut gesendet werden um ggf. in der Zwischenzeit veränderte Inhalte zu übertragen. Die Werte werden dann im DWH überschrieben - d. h. wenn die Werte sich nicht geändert haben, hat das Überschreiben keine Auswirkung (außer dass der Import-Zeitpunkt neu gesetzt wird)
+
+Alle Änderungen, die die PatientenID oder EncounterID betreffen, müssen gesondert betrachtet werden:
+* Löschen von Daten aus dem AKTIN-DWH
+* Änderung der PatientenID
+* Änderung der EncounterID
+* Änderung der PatientenID und EncounterID
+
+Die Funktionen zum Löschen befinden sich noch in der Entwicklung. Damit können dann OptOut umgesetzt werden und ebenso das auomatisierte Löschen von Fällen, die IM KIS storniert oder gelöscht wurden.
+
+Änderungen an der PatientenID können auftreten, wenn Fälle zunächst unter einer falschen PatientenID angelegt werden, z.B. wenn die Identität zunächst unklar ist, wenn Dokumentationsfehler korrigiert werden, bei Massenanfall von Verletzten etc. In solchen Fällen kann das CDA mit der geänderten PatientenID erneut gesendet werden. Das AKTIN-DWH interpretiert dies als Änderung - d. h. die ursprünglichen Daten mit der alten PatientenID werden gelöscht und der Fall neu eingefügt
+
+Änderungen an der EncounterID können nicht unterschieden werden von neuen Encountern und würden also ggf. zu Dubletten führen. Daher ist unbedingt darauf zu achten, dass sich die EncounterID durch Änderungen an den Daten einer Episode niemals ändern kann. Sollte das aus irgendeinem Grund nötig sein, muss der alte Fall zuvor gelöscht werden.
+
+Gleiches gilt auch wenn sich beiden IDs ändern: Für das System ist das ein neuer Fall. Sollte das aus irgendeinem Grund nötig sein, muss der alte Fall zuvor gelöscht werden.
 
 Fehlende Information, Null Flavors und Dummy-Einträge
 -----------------------------------------------------
