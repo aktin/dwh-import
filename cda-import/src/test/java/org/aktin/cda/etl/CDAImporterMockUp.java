@@ -79,7 +79,7 @@ public class CDAImporterMockUp extends AbstractCDAImporter implements Consumer<O
 
 	@Override
 	protected ZoneId getDefaultZoneId() {
-		return ZoneId.systemDefault();
+		return ZoneId.of("Europe/Berlin");
 	}
 
 }
