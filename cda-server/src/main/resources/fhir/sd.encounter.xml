@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-	<id value="Patient" />
+	<id value="Encounter" />
 	<meta>
 		<versionId value="1" />
 		<lastUpdated value="2017-11-28T08:28:07Z" />
 	</meta>
-	<url value="@@BASEURL@@StructureDefinition/Patient" />
-	<name value="Patient" />
+	<url value="@@BASEURL@@StructureDefinition/Encounter" />
+	<name value="Encounter" />
 	<status value="draft" />
 	<date value="2017-04-27T17:09:41+10:00" />
 	<fhirVersion value="3.0.1" />
 	<kind value="resource" />
 	<abstract value="false" />
-	<type value="Patient" />
-	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+	<type value="Encounter" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Encounter" />
 	<derivation value="constraint" />
 	<differential>
-		<element id="Patient">
-			<path value="Patient" />
+		<element id="Encounter">
+			<path value="Encounter" />
 			<min value="0" />
 			<max value="*" />
 		</element>
-		<element id="Patient.id">
-			<path value="Patient.id" />
+		<element id="Encounter.id">
+			<path value="Encounter.id" />
 			<min value="0" />
 			<max value="1" />
 		</element>
-		<element id="Patient.meta">
+		<element id="Encounter.meta">
 			<path value="Patient.meta" />
 			<min value="0" />
 			<max value="0" />
