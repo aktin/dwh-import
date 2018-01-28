@@ -72,7 +72,14 @@
 			<interaction>
 				<code value="read" />
 			</interaction>
-		</resource><!--
+		</resource>
+		<resource>
+			<type value="Patient" />
+			<interaction>
+				<code value="read" />
+			</interaction>
+		</resource>
+		<!--
 		the references point to [base]/OperationDefinition/.. 
 		which must be implemented too
 		<operation>

@@ -1,0 +1,83 @@
+<CapabilityStatement xmlns="http://hl7.org/fhir">
+	<id value="FhirServer" />
+	<version value="0.1" />
+	<name value="AKTIN.fhir" />>
+	<status value="draft" /><!-- 1..1 draft | active | retired | unknown -->
+	<experimental value="true" />
+	<date value="2018-01-27" /><!-- 1..1 Date this was last changed -->
+	<publisher value="AKTIN" />
+	<kind value="capability" />
+	<software>
+		<name value="AKTIN Data Warehouse" />
+		<version value="0.9" /><!-- 0..1 Version covered by this statement -->
+		<releaseDate value="2018-01-27" />
+	</software>
+	<fhirVersion value="3.0.1" /><!-- Release 3 STU with errata -->
+	<acceptUnknown value="no" />
+	<format value="application/fhir+xml" />
+	<rest>
+		<mode value="server" />
+		<resource>
+			<type value="CapabilityStatement" />
+			<interaction>
+				<code value="read" />
+			</interaction>
+			<versioning value="no-version" />
+			<readHistory value="false" />
+			<updateCreate value="false" />
+			<conditionalCreate value="false" />
+			<conditionalRead value="not-supported" />
+			<conditionalUpdate value="false" />
+			<conditionalDelete value="not-supported" />
+		</resource>
+		<resource>
+			<type value="StructureDefinition" />
+			<interaction>
+				<code value="read" />
+			</interaction>
+			<versioning value="no-version" />
+			<readHistory value="false" />
+			<updateCreate value="false" />
+			<conditionalCreate value="false" />
+			<conditionalRead value="not-supported" />
+			<conditionalUpdate value="false" />
+			<conditionalDelete value="not-supported" />
+		</resource>
+		<resource>
+			<type value="Binary" />
+			<interaction>
+				<code value="create" /><!-- 1..1 read | vread | update | patch | 
+					delete | history-instance | history-type | create | search-type -->
+			</interaction>
+			<versioning value="no-version" />
+			<readHistory value="false" />
+			<updateCreate value="false" />
+			<conditionalCreate value="false" />
+			<conditionalRead value="not-supported" />
+			<conditionalUpdate value="false" />
+			<conditionalDelete value="not-supported" />
+		</resource>
+		<resource>
+			<type value="Patient" />
+			<profile>
+				<reference value="http://test.fhir.org/r3/StructureDefinition/capabilitystatement" />
+			</profile>			
+			<interaction>
+				<code value="create" />
+			</interaction>
+			<interaction>
+				<code value="delete" />
+			</interaction>
+			<interaction>
+				<code value="read" />
+			</interaction>
+			<versioning value="no-version" />
+			<readHistory value="false" />
+			<updateCreate value="false" />
+			<conditionalCreate value="false" />
+			<conditionalRead value="not-supported" />
+			<conditionalUpdate value="false" />
+			<conditionalDelete value="not-supported" />
+		</resource>
+	</rest>
+</CapabilityStatement>

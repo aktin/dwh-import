@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CapabilityStatement xmlns="http://hl7.org/fhir">
+	<id value="FhirServer" />
+	<url value="http://test.fhir.org/r3/metadata" />
+	<version value="3.0.1-1.0.206" />
+	<name value="Health Intersections FHIR Server Conformance Statement" />
+	<status value="active" />
+	<experimental value="false" />
+	<date value="2018-01-27T17:23:04Z" />
+	<publisher value="Health Intersections" />
+	<contact>
+		<telecom>
+			<system value="other" />
+			<value value="http://healthintersections.com.au/" />
+		</telecom>
+	</contact>
+	<description
+		value="Standard Conformance Statement for the open source Reference FHIR Server provided by Health Intersections" />
+	<instantiates value="http://hl7.org/fhir/Conformance/terminology-server" />
+	<software>
+		<name value="Reference Server" />
+		<version value="1.0.206" />
+		<releaseDate value="2018-01-27" />
+	</software>
+	<implementation>
+		<description value="FHIR Server running at http://test.fhir.org/r3" />
+		<url value="http://test.fhir.org/r3" />
+	</implementation>
+	<fhirVersion value="3.0.1" />
+	<acceptUnknown value="both" />
+	<format value="application/fhir+xml" />
+	<format value="application/fhir+json" />
+	<rest>
+		<mode value="server" />
+		<resource>
+			<type value="Binary" />
+			<interaction>
+				<code value="read" />
+			</interaction>
+			<interaction>
+				<code value="update" />
+			</interaction>
+			<interaction>
+				<code value="history-type" />
+			</interaction>
+			<interaction>
+				<code value="create" />
+			</interaction>
+			<interaction>
+				<code value="delete" />
+			</interaction>
+			<interaction>
+				<code value="history-instance" />
+			</interaction>
+
+		</resource>
+		<resource>
+			<type value="CapabilityStatement" />
+			<profile>
+				<reference
+					value="http://test.fhir.org/r3/StructureDefinition/capabilitystatement" />
+			</profile>
+			<interaction>
+				<code value="read" />
+			</interaction>
+		</resource>
+
+		<interaction>
+			<code value="transaction" />
+		</interaction>
+		<interaction>
+			<code value="search-system" />
+		</interaction>
+		<interaction>
+			<code value="history-system" />
+		</interaction>
+		<operation>
+			<name value="expand" />
+			<definition>
+				<reference value="http://hl7.org/fhir/OperationDefinition/ValueSet-expand" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="lookup" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/CodeSystem-lookup" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="validate-code" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Resource-validate" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="translate" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/ConceptMap-translate" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="closure" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/ConceptMap-closure" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="validate" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="document" />
+			<definition>
+				<reference value="OperationDefinition/fso-document" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="everything" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Patient-everything" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="everything" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Encounter-everything" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="everything" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Group-everything" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="qa-edit" />
+			<definition>
+				<reference value="OperationDefinition/fso-qa-edit" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="jwt" />
+			<definition>
+				<reference value="OperationDefinition/fso-jwt" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="codegen" />
+			<definition>
+				<reference value="OperationDefinition/fso-codegen" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="qa-post" />
+			<definition>
+				<reference value="OperationDefinition/fso-qa-post" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="questionnaire" />
+			<definition>
+				<reference value="OperationDefinition/fso-questionnaire" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="process" />
+			<definition>
+				<reference value="OperationDefinition/fso-process" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="current" />
+			<definition>
+				<reference value="OperationDefinition/fso-current" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="snapshot" />
+			<definition>
+				<reference value="OperationDefinition/fso-snapshot" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="generate-template" />
+			<definition>
+				<reference value="OperationDefinition/fso-generate-template" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="generate-narrative" />
+			<definition>
+				<reference value="OperationDefinition/fso-generate-narrative" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="suggest-keywords" />
+			<definition>
+				<reference value="OperationDefinition/fso-suggest-keywords" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="meta" />
+			<definition>
+				<reference value="http://hl7.org/fhir/OperationDefinition/Resource-meta" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="meta-add" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Resource-meta-add" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="meta-delete" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Resource-meta-add" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="diff" />
+			<definition>
+				<reference value="http://hl7.org/fhir/OperationDefinition/Resource-diff" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="convert" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Resource-Convert" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="transform" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/StructureMap-transform" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="activate" />
+			<definition>
+				<reference value="not done yet" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="subsumes" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/CodeSystem-subsumes" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="compose" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/CodeSystem-compose" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="stats" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Observation-Stats" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="lastn" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Observation-lastn" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="authorize" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Consent-authorize" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="connect" />
+			<definition>
+				<reference value="http://hl7.org/fhir/OperationDefinition/Connect" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="authorize" />
+			<definition>
+				<reference
+					value="http://hl7.org/fhir/OperationDefinition/Consent-authorize" />
+			</definition>
+		</operation>
+		<operation>
+			<name value="connect" />
+			<definition>
+				<reference value="http://hl7.org/fhir/OperationDefinition/Connect" />
+			</definition>
+		</operation>
+	</rest>
+</CapabilityStatement>
