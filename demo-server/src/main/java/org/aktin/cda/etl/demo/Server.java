@@ -15,6 +15,9 @@ import javax.xml.ws.soap.SOAPBinding;
 import org.aktin.Preferences;
 import org.aktin.cda.CDAProcessor;
 import org.aktin.cda.Validator;
+import org.aktin.cda.etl.fhir.patient.Gender;
+import org.aktin.cda.etl.fhir.patient.MinimalPatient;
+import org.aktin.cda.etl.fhir.patient.PatientStore;
 import org.aktin.cda.etl.xds.DocumentRepository;
 import org.aktin.dwh.ImportSummary;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -67,11 +70,17 @@ public class Server{
 		xdsService.setValidator(validator);
 		xdsService.setProcessor(processor);
 		
+		MemoryPatientStore patients = new MemoryPatientStore();
+		// add demo patients
+		patients.create(new MinimalPatient(Gender.female));
+		patients.create(new MinimalPatient(Gender.male));
+		
 		ResourceConfig config = new ResourceConfig();
 		// configure HK2 for our CDI injections
 		config.register(new AbstractBinder() {
 			@Override
 			protected void configure() {
+				this.bind(patients).to(PatientStore.class);
 				this.bind(validator).to(Validator.class);
 				this.bind(processor).to(CDAProcessor.class);
 				this.bind(new NoOpStatistics()).to(ImportSummary.class);

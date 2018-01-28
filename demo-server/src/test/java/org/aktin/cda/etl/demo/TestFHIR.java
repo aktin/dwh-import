@@ -68,7 +68,7 @@ public class TestFHIR {
 			} catch (ParserConfigurationException | SAXException e) {
 				throw new IOException(e);
 			}
-			Assert.assertEquals("Conformance", dom.getDocumentElement().getTagName());
+			Assert.assertEquals("CapabilityStatement", dom.getDocumentElement().getTagName());
 		}		
 	}
 	@Test

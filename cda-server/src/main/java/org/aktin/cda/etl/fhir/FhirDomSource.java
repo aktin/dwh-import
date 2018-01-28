@@ -25,7 +25,7 @@ public class FhirDomSource implements DataSource {
 	}
 	@Override
 	public String getContentType() {
-		return FhirConstants.MEDIA_TYPE_XML_FHIR;
+		return FhirConstants.MEDIA_TYPE_XML_FHIR2;
 	}
 
 	@Override

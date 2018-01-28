@@ -22,7 +22,7 @@ HL7 FHIR Mailbox
 Der neue HL7-Standard FHIR erlaubt die Übermittlung von 
 Dokumenten über RESTful-Schnittstellen. Die AKTIN-Schnittstelle
 implementiert die Mailbox, sowie die Validierung. Die Adressen der
-RESTful-Dienste entsprechen der Spezifikation mit der base `/fhir/` 
+RESTful-Dienste entsprechen der Spezifikation mit der base `/aktin/cda/fhir/` 
 
 Konkret kann ein CDA-Dokument per HTTP-POST z.B. an die Adresse 
 `http://demo.aktin.org/fhir/Binary` gesendet werden.
@@ -53,6 +53,16 @@ FHIR Resource
 http://www.hl7.org/implement/standards/fhir/comparison-cda.html
 Antwort entweder als xml oder json OperationOutcome.
 Einstellbar mit request header Accept: text/xml oder application/json
+
+FHIR Patient resources
+----------------------
+Patients will be automatically created when the CDA document was
+successfully posted.
+To create a patient manually, try the following command
+```
+curl -i -X POST --header "Content-TYpe:application/fhir+xml" -d @examples/Additional\ Examples/fhir-patient2.xml http://localhost:8080/aktin/cda/fhir/Patient
+```
+
 
 
 TODO
