@@ -1,0 +1,6 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="pat3"/> 
+  <gender value="male"/> 
+  <birthDate value="1982-01-23"/> 
+  <deceasedDateTime value="2015-02-14T13:42:00+10:00"/> 
+</Patient>
