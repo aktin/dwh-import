@@ -60,7 +60,7 @@ Patients will be automatically created when the CDA document was
 successfully posted.
 To create a patient manually, try the following command
 ```
-curl -i -X POST --header "Content-TYpe:application/fhir+xml" -d @examples/Additional\ Examples/fhir-patient2.xml http://localhost:8080/aktin/cda/fhir/Patient
+curl -i -X POST --header "Content-Type:application/fhir+xml" -d @examples/Additional\ Examples/fhir-patient2.xml http://localhost:8080/aktin/cda/fhir/Patient
 ```
 
 
