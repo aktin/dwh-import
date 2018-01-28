@@ -1,7 +1,6 @@
 package org.aktin.cda.etl.fhir;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
