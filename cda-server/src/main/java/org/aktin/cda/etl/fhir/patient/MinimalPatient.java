@@ -26,7 +26,7 @@ public class MinimalPatient {
 		Element e;
 		if( id != null ){
 			e = dom.createElementNS(FhirConstants.XMLNS_FHIR, "id");
-			e.setTextContent(id);
+			e.setAttribute("value",id);
 			p.appendChild(e);
 		}
 		// TODO identifier
