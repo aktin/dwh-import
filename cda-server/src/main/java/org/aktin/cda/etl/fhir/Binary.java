@@ -154,6 +154,7 @@ public class Binary implements ExternalInterface{
 				// process document
 				CDAStatus stat = processor.createOrUpdate(cda, documentId, templateId);
 				// check whether document was created or updated, return 201 or 200
+				outcome.setId(stat.getDocumentId());
 				if( stat.getStatus() == Status.Created ){
 					// create location conforming to FHIR specification
 					location = URI.create("Binary/"+stat.getDocumentId()+"/_history/0");

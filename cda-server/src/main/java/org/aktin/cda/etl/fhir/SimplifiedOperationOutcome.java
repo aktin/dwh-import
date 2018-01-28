@@ -94,12 +94,16 @@ public class SimplifiedOperationOutcome {
 		}
 	}
 	
+	private String id;
 	private List<Issue> issues;
 	
 	public SimplifiedOperationOutcome(){
 		issues = new ArrayList<>();
 	}
 
+	public void setId(String id){
+		this.id = id;
+	}
 	public int getIssueCount(){
 		return issues.size();
 	}
@@ -149,6 +153,12 @@ public class SimplifiedOperationOutcome {
 		
 		writer.writeStartDocument();
 		writer.writeStartElement(XMLConstants.DEFAULT_NS_PREFIX, "OperationOutcome", FHIR_NAMESPACE);
+		if( id != null ){
+			// add id
+			writer.writeStartElement("id");
+			writer.writeAttribute("value", id);
+			writer.writeEndElement();
+		}
 //		writer.setDefaultNamespace(FHIR_NAMESPACE);
 //		writer.writeDefaultNamespace(FHIR_NAMESPACE);
 		for( Issue issue : issues ){
