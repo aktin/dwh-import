@@ -1,7 +1,7 @@
 <CapabilityStatement xmlns="http://hl7.org/fhir">
 	<id value="FhirServer" />
 	<version value="0.1" />
-	<name value="AKTIN.fhir" />>
+	<name value="AKTIN.fhir" />
 	<status value="draft" /><!-- 1..1 draft | active | retired | unknown -->
 	<experimental value="true" />
 	<date value="2018-01-27" /><!-- 1..1 Date this was last changed -->
@@ -9,10 +9,9 @@
 	<kind value="capability" />
 	<software>
 		<name value="AKTIN Data Warehouse" />
-		<version value="0.9" /><!-- 0..1 Version covered by this statement -->
-		<releaseDate value="2018-01-27" />
+		<version value="0.9" />
 	</software>
-	<fhirVersion value="3.0.1" /><!-- Release 3 STU with errata -->
+	<fhirVersion value="3.0.1" />
 	<acceptUnknown value="no" />
 	<format value="application/fhir+xml" />
 	<rest>
@@ -24,11 +23,6 @@
 			</interaction>
 			<versioning value="no-version" />
 			<readHistory value="false" />
-			<updateCreate value="false" />
-			<conditionalCreate value="false" />
-			<conditionalRead value="not-supported" />
-			<conditionalUpdate value="false" />
-			<conditionalDelete value="not-supported" />
 		</resource>
 		<resource>
 			<type value="StructureDefinition" />
@@ -37,11 +31,6 @@
 			</interaction>
 			<versioning value="no-version" />
 			<readHistory value="false" />
-			<updateCreate value="false" />
-			<conditionalCreate value="false" />
-			<conditionalRead value="not-supported" />
-			<conditionalUpdate value="false" />
-			<conditionalDelete value="not-supported" />
 		</resource>
 		<resource>
 			<type value="Binary" />
@@ -60,7 +49,7 @@
 		<resource>
 			<type value="Patient" />
 			<profile>
-				<reference value="http://test.fhir.org/r3/StructureDefinition/capabilitystatement" />
+				<reference value="StructureDefinition/patient" />
 			</profile>			
 			<interaction>
 				<code value="create" />
@@ -69,11 +58,39 @@
 				<code value="delete" />
 			</interaction>
 			<interaction>
+				<code value="update" />
+			</interaction>
+			<interaction>
 				<code value="read" />
 			</interaction>
 			<versioning value="no-version" />
 			<readHistory value="false" />
-			<updateCreate value="false" />
+			<updateCreate value="true" />
+			<conditionalCreate value="false" />
+			<conditionalRead value="not-supported" />
+			<conditionalUpdate value="false" />
+			<conditionalDelete value="not-supported" />
+		</resource>
+		<resource>
+			<type value="Encounter" />
+			<profile>
+				<reference value="StructureDefinition/encounter" />
+			</profile>			
+			<interaction>
+				<code value="create" />
+			</interaction>
+			<interaction>
+				<code value="delete" />
+			</interaction>
+			<interaction>
+				<code value="update" />
+			</interaction>
+			<interaction>
+				<code value="read" />
+			</interaction>
+			<versioning value="no-version" />
+			<readHistory value="false" />
+			<updateCreate value="true" />
 			<conditionalCreate value="false" />
 			<conditionalRead value="not-supported" />
 			<conditionalUpdate value="false" />
