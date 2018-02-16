@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -52,6 +53,7 @@ import org.aktin.dwh.ImportSummary;
 import org.w3c.dom.Document;
 
 @Path("Binary")
+@Produces({FhirConstants.MEDIA_TYPE_XML_FHIR2, MediaType.APPLICATION_XML, MediaType.TEXT_XML})
 public class Binary implements ExternalInterface{
 	private static final Logger log = Logger.getLogger(Binary.class.getName());
 	private Validator validator;
