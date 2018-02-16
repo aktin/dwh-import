@@ -2,9 +2,9 @@
 	<id value="FhirServer" />
 	<version value="0.1" />
 	<name value="AKTIN.fhir" />
-	<status value="draft" /><!-- 1..1 draft | active | retired | unknown -->
+	<status value="active" />
 	<experimental value="true" />
-	<date value="2018-01-27" /><!-- 1..1 Date this was last changed -->
+	<date value="2018-01-27" />
 	<publisher value="AKTIN" />
 	<kind value="capability" />
 	<software>
@@ -71,30 +71,6 @@
 			<conditionalUpdate value="false" />
 			<conditionalDelete value="not-supported" />
 		</resource>
-		<resource>
-			<type value="Encounter" />
-			<profile>
-				<reference value="StructureDefinition/encounter" />
-			</profile>			
-			<interaction>
-				<code value="create" />
-			</interaction>
-			<interaction>
-				<code value="delete" />
-			</interaction>
-			<interaction>
-				<code value="update" />
-			</interaction>
-			<interaction>
-				<code value="read" />
-			</interaction>
-			<versioning value="no-version" />
-			<readHistory value="false" />
-			<updateCreate value="true" />
-			<conditionalCreate value="false" />
-			<conditionalRead value="not-supported" />
-			<conditionalUpdate value="false" />
-			<conditionalDelete value="not-supported" />
-		</resource>
+		<!-- TODO encounter -->
 	</rest>
 </CapabilityStatement>

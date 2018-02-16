@@ -27,87 +27,87 @@
 			<max value="1" />
 		</element>
 		<element id="Encounter.meta">
-			<path value="Patient.meta" />
+			<path value="Encounter.meta" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.implicitRules">
-			<path value="Patient.implicitRules" />
+		<element id="Encounter.implicitRules">
+			<path value="Encounter.implicitRules" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.language">
-			<path value="Patient.language" />
+		<element id="Encounter.language">
+			<path value="Encounter.language" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.identifier">
-			<path value="Patient.identifier" />
+		<element id="Encounter.identifier">
+			<path value="Encounter.identifier" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.active">
-			<path value="Patient.active" />
+		<element id="Encounter.active">
+			<path value="Encounter.active" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.name">
-			<path value="Patient.name" />
+		<element id="Encounter.name">
+			<path value="Encounter.name" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.telecom">
-			<path value="Patient.telecom" />
+		<element id="Encounter.telecom">
+			<path value="Encounter.telecom" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.address">
-			<path value="Patient.address" />
+		<element id="Encounter.address">
+			<path value="Encounter.address" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.maritalStatus">
-			<path value="Patient.maritalStatus" />
+		<element id="Encounter.maritalStatus">
+			<path value="Encounter.maritalStatus" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.multipleBirth[x]">
-			<path value="Patient.multipleBirth[x]" />
+		<element id="Encounter.multipleBirth[x]">
+			<path value="Encounter.multipleBirth[x]" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.photo">
-			<path value="Patient.photo" />
+		<element id="Encounter.photo">
+			<path value="Encounter.photo" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.animal">
-			<path value="Patient.animal" />
+		<element id="Encounter.animal">
+			<path value="Encounter.animal" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.communication">
-			<path value="Patient.communication" />
+		<element id="Encounter.communication">
+			<path value="Encounter.communication" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.communication">
-			<path value="Patient.communication" />
+		<element id="Encounter.communication">
+			<path value="Encounter.communication" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.generalPractitioner">
-			<path value="Patient.generalPractitioner" />
+		<element id="Encounter.generalPractitioner">
+			<path value="Encounter.generalPractitioner" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.managingOrganization">
-			<path value="Patient.managingOrganization" />
+		<element id="Encounter.managingOrganization">
+			<path value="Encounter.managingOrganization" />
 			<min value="0" />
 			<max value="0" />
 		</element>
-		<element id="Patient.link">
-			<path value="Patient.link" />
+		<element id="Encounter.link">
+			<path value="Encounter.link" />
 			<min value="0" />
 			<max value="0" />
 		</element>
