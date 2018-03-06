@@ -358,8 +358,8 @@
             <xsl:attribute name= "concept">
                 <xsl:choose>
                     <xsl:when test="../@negationInd = 'true'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NEG</xsl:when>
-                    <xsl:when test="../@negationInd = 'false' and not (@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>
-                    <xsl:when test="../@negationInd = 'false' and  @nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>
+                    <xsl:when test="../@negationInd = 'false' and not (../@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>
+                    <xsl:when test="../@negationInd = 'false' and  ../@nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>
                 </xsl:choose>
             </xsl:attribute>
             <xsl:if test="../cda:effectiveTime/@value">
