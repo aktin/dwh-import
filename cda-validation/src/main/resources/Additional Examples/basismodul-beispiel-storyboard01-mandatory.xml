@@ -95,7 +95,7 @@
     <participant typeCode="HLD">
         <templateId root="1.2.276.0.76.10.2022"/>        
         <associatedEntity classCode="POLHOLD">
-            <code code="SELF" codeSystem="2.16.840.1.113883.1.11.18877"/>
+            <code code="SELF" codeSystem="2.16.840.1.113883.5.111" displayName="self"/>
             <scopingOrganization>
                 <!-- IK-NR -->
                 <id extension="987654321" root="1.2.276.0.76.4.5"/>
