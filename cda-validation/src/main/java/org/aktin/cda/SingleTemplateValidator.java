@@ -3,6 +3,7 @@ package org.aktin.cda;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
@@ -25,6 +26,7 @@ public class SingleTemplateValidator implements URIResolver{
 
 	public SingleTemplateValidator(URL svrlTransformation) throws IOException, TransformerConfigurationException{
 		this.svrlTransformation = svrlTransformation;
+		Objects.requireNonNull(svrlTransformation);
 	}
 
 	private void loadTransformer() throws TransformerConfigurationException{

@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
@@ -69,9 +70,15 @@ public class Validator implements NamespaceContext{
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
-		addTemplateValidator("1.2.276.0.76.10.1015", getClass().getResource("/aktin-basism_svrl.xsl"));
-		addTemplateValidator("1.2.276.0.76.10.1019", getClass().getResource("/aktin-basism20152b_svrl.xsl"));
+		addTemplateValidator("1.2.276.0.76.10.1015", "/aktin-basism_svrl.xsl");
+		addTemplateValidator("1.2.276.0.76.10.1019", "/aktin-basism20152b_svrl.xsl");
 
+	}
+
+	private void addTemplateValidator(String templateId, String svrlTransformationResource) throws TransformerConfigurationException, IOException{
+		URL url =  getClass().getResource(svrlTransformationResource);
+		Objects.requireNonNull(url, "Template resource not found in schematron-release: "+svrlTransformationResource);
+		addTemplateValidator(templateId, url);
 	}
 
 	private void addTemplateValidator(String templateId, URL svrlTransformation) throws TransformerConfigurationException, IOException{

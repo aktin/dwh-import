@@ -2,6 +2,7 @@ package org.aktin.cda;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
@@ -9,7 +10,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.junit.Assert;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -20,7 +20,7 @@ public class SchemaValidator {
 	public SchemaValidator() throws SAXException{
 		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		URL url = getClass().getResource("/schemas/CDA.xsd");
-		Assert.assertNotNull("CDA XSD resource not found from external release", url);
+		Objects.requireNonNull(url, "CDA XSD resource not found from external release");
 		this.schema = sf.newSchema(url);
 	}
 
