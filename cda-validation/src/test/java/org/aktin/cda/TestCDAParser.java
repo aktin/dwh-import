@@ -2,6 +2,7 @@ package org.aktin.cda;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -47,11 +48,18 @@ public class TestCDAParser {
 		}
 	}
 */
+	private final InputStream openExampleDocument(String source) throws IOException {
+		URL url = getClass().getResource(source);
+		Assert.assertNotNull("CDA example document not found in external release: "+url, url);
+		System.out.println(url);
+		return url.openStream();
+	}
 
 	@Test
 	public void extractDocumentIDs() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+		
 		CDAParser parser = new CDAParser();
-		try( InputStream in = getClass().getResourceAsStream(exampleDocuments[0]) ){
+		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String docId = parser.extractDocumentId(cda);
@@ -64,7 +72,7 @@ public class TestCDAParser {
 	@Test
 	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();
-		try( InputStream in = getClass().getResourceAsStream(exampleDocuments[0]) ){
+		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String[] pat = parser.extractPatientId(cda);
