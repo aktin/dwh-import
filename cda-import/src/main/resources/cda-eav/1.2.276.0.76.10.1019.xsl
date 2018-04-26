@@ -1015,13 +1015,12 @@
     
     <xsl:template name="templateGetConceptValue">
         <xsl:attribute name="concept">
-            <xsl:choose>
-                <xsl:when test="../cda:value/@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when> <!-- not used -->
+            <xsl:choose>               
                 <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.439'"><xsl:value-of select="$CEDIS-Prefix"/></xsl:when>
+                <xsl:when test="../cda:code/@code='75322-8'"><xsl:value-of select="$CEDIS-Prefix"/></xsl:when>
                 <xsl:when test="../cda:code/@code='11459-5'"><xsl:value-of select="$Transport-Prefix"/></xsl:when> 
                 <xsl:when test="../cda:code/@code='RPPL'"><xsl:value-of select="$AKTIN-Prefix"/>RPPL:</xsl:when> 
                 <xsl:when test="../cda:code/@code='SPPL'"><xsl:value-of select="$AKTIN-Prefix"/>SPPL:</xsl:when> 
-                <xsl:when test="../cda:value/@codeSystem='2.16.840.1.113883.6.3' and ../cda:code/@code='DX'"><xsl:value-of select="$ICD10GM-Prefix"/></xsl:when> <!-- Abschlussdiagnosen --> <!-- not used --> 
                 <xsl:otherwise><xsl:value-of select="../cda:code/@code"/>:</xsl:otherwise>  <!-- Default Prefix code/code -->
             </xsl:choose>
             <xsl:choose>
