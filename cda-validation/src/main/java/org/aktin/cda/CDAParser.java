@@ -98,6 +98,20 @@ public class CDAParser {
 				(String)xee.evaluate(cda.getDocumentElement(), XPathConstants.STRING)
 		};
 	}
+	/**
+	 * Find the encounter id for a given CDA document
+	 * @param cda CDA document
+	 * @return two part encounter id: root, extension
+	 * @throws XPathExpressionException XPath error
+	 */
+	public String[] extractEncounterId(Document cda) throws XPathExpressionException{
+		XPathExpression xer = xpath.compile(CDAConstants.XPATH_CDA_ENCOUNTER_ID_ROOT);
+		XPathExpression xee = xpath.compile(CDAConstants.XPATH_CDA_ENCOUNTER_ID_EXT);
+		return new String[]{
+				(String)xer.evaluate(cda.getDocumentElement(), XPathConstants.STRING),
+				(String)xee.evaluate(cda.getDocumentElement(), XPathConstants.STRING)
+		};
+	}
 
 	/**
 	 * Find the document id for a given CDA document. It should be globally
