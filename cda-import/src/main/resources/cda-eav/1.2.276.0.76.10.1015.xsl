@@ -91,7 +91,7 @@
     <xsl:template match="/">
         <eav-data> 
             <meta>
-                <etl-strategy>replace-source</etl-strategy>
+                <etl-strategy>insert</etl-strategy>
                 <source>
                     <xsl:attribute name="timestamp">
 						<xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:effectiveTime/@value)"/>
