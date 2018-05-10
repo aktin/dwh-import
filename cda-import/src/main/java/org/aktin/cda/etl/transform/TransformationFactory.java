@@ -110,6 +110,9 @@ public class TransformationFactory {
 	public void setAnonymizer(Anonymizer anonymizer){
 		this.anonymizer = anonymizer;
 	}
+	public Anonymizer getAnonymizer() {
+		return anonymizer;
+	}
 	public Transformation getTransformation(String templateId) throws IOException, TransformerConfigurationException, TransformerFactoryConfigurationError{
 		// look in cache
 		Transformation transform = cache.get(templateId);
