@@ -5,6 +5,7 @@ import java.util.Date;
 public class CDAStatus {
 	private CDASummary summary;
 	private Status status;
+	// XXX maybe add information/warning messages 
 	
 	public enum Status{
 		Created,
