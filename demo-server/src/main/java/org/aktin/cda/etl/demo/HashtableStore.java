@@ -61,7 +61,7 @@ public class HashtableStore implements CDAProcessor{
 		this.map = new Hashtable<>();
 	}
 	@Override
-	public CDAStatus createOrUpdate(Document document, String documentId, String templateId)
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId, String[] patientId, String[] encounterId)
 			throws CDAException {
 		VirtualDocument doc = map.get(documentId);
 		if( doc == null ){

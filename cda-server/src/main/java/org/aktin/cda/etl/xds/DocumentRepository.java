@@ -119,7 +119,10 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 				//ids = parser.extractIDs(cda);
 				// TODO compare to IDs from XDS call
 				// process document (XXX catch errors)
-				processor.createOrUpdate(cda, documentId, templateId);
+				String[] patientId = parser.extractPatientId(cda);
+				String[] encounterId = parser.extractEncounterId(cda);
+				
+				processor.createOrUpdate(cda, documentId, templateId, patientId, encounterId);
 				resp.setStatus(XDSConstants.RESPONSE_SUCCESS);
 			} catch (CDAException e) {
 				log.log(Level.WARNING, "Unable to import CDA", e);
@@ -128,6 +131,9 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 				Throwable cause = e.getCause();
 				if( null == cause )cause = e;
 				return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Error during import of CDA. See server log", cause);
+			} catch (XPathExpressionException e) {
+				log.log(Level.WARNING, "Unable to extract patient or encounter id", e);
+				return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Error during import of CDA. See server log", e);
 			}
 		}else{
 			// failed

@@ -151,8 +151,10 @@ public class Binary implements ExternalInterface{
 			if( isValid ){
 				// check arguments/valid id
 				// otherwise return HTTP_BAD_REQUEST
+				String[] patientId = parser.extractPatientId(cda);
+				String[] encounterId = parser.extractEncounterId(cda);
 				// process document
-				CDAStatus stat = processor.createOrUpdate(cda, documentId, templateId);
+				CDAStatus stat = processor.createOrUpdate(cda, documentId, templateId, patientId, encounterId);
 				// check whether document was created or updated, return 201 or 200
 				if( stat.getStatus() == Status.Created ){
 					// create location conforming to FHIR specification

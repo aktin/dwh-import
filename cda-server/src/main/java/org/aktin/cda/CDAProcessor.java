@@ -16,7 +16,7 @@ public interface CDAProcessor {
 	 * @throws CDAException processing error
 	 * @throws UnsupportedTemplateException template not supported
 	 */
-	public CDAStatus createOrUpdate(Document document, String documentId, String templateId) throws CDAException, UnsupportedTemplateException;
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId, String[] patientId, String[] encounterId) throws CDAException, UnsupportedTemplateException;
 	
 	public Path transform(Document cda, String templateId) throws CDAException;
 	/**

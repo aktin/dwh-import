@@ -32,6 +32,8 @@ import de.sekmi.histream.ObservationException;
 import de.sekmi.histream.ObservationFactory;
 import de.sekmi.histream.i2b2.DataDialect;
 import de.sekmi.histream.i2b2.I2b2Inserter;
+import de.sekmi.histream.i2b2.I2b2Visit;
+import de.sekmi.histream.i2b2.PostgresVisitStore;
 
 /**
  * CDA importer pojo EJB. Processed CDA documents are loaded into
@@ -45,6 +47,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private I2b2Inserter inserter;
 	private ObservationFactory factory;
 	private ZoneId localZone;
+	private PostgresVisitStore visitStore;
 
 	/**
 	 * Construct a CDAImporter
@@ -59,6 +62,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	public CDAImporter(ObservationFactory factory, Preferences prefs, Anonymizer anonymizer) throws NamingException, SQLException, IOException {
 		super(anonymizer);
 		this.factory = factory;
+		this.visitStore = (PostgresVisitStore)factory.getExtension(I2b2Visit.class);
 		this.localZone = ZoneId.of(prefs.get(PreferenceKey.timeZoneId));
 		log.info("Default timezone for CDA documents: "+localZone);
 		InitialContext ctx = new InitialContext();
@@ -131,17 +135,38 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		return inserter;
 	}
 
+	private void encounterPatientMerge(String documentId, String[] patientId, String[] encounterId) {
+		// extract encounter id, patient id. 
+		// if encounter exists and has different patient assigned, delete all facts for the encounter id. Then allow reassignment of new patient id
+		String encId = getAnonymizer().calculateEncounterPseudonym(encounterId[0], encounterId[1]);
+		String patId = getAnonymizer().calculatePatientPseudonym(patientId[0], patientId[1]);
+		log.info("Using patid="+patId+", encid="+encId+", docid="+documentId);
+		I2b2Visit visit = visitStore.findVisit(encId);
+		if( false == patId.equals(visit.getPatientId()) ) {
+			log.warning("Encounter "+encId+" assigned different patient "+patId);
+			// delete all facts for the encounter
+			try {
+				inserter.purgeVisit(visit.getNum());
+			} catch (SQLException e) {
+				log.log(Level.WARNING,"Failed to purge facts for visit "+visit.getNum(), e);
+			}
+			// update patient id
+			visit.setPatientId(patId);
+		}
+		
+	}
 	@Override
-	public synchronized CDAStatus createOrUpdate(Document document, String documentId, String templateId)
+	public synchronized CDAStatus createOrUpdate(Document document, String documentId, String templateId, String[] patientId, String[] encounterId)
 			throws CDAException {
-		//log.info("Using patid="+patientId+", encid="+encounterId+", docid="+documentId);
 
+		encounterPatientMerge(documentId, patientId, encounterId);
+		
 		final List<ObservationException> insertErrors = new LinkedList<>();
 		inserter.setErrorHandler(insertErrors::add);
 		// process document
 		CDAStatus status = null;
 		try{
-			status = super.createOrUpdate(document, documentId, templateId);
+			status = super.createOrUpdate(document, documentId, templateId, patientId, encounterId);
 		}finally{
 			inserter.setErrorHandler(null);
 			inserter.resetErrorCount();
