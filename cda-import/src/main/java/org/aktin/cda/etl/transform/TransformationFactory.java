@@ -102,7 +102,7 @@ public class TransformationFactory {
 			// declared template does not match template name
 			// there is an error in the template, 
 			// this should be reported to the developers
-			log.warning("Mismatch between template name="+templateId+" and declared template="+declaredTemplate);
+			log.severe("Mismatch between template name="+templateId+" and declared template="+declaredTemplate);
 		}
 		return new Transformation(moduleId, templateId, doc, anonymizer);
 	}
