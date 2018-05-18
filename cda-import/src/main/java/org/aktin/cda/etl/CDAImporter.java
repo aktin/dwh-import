@@ -142,7 +142,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		String patId = getAnonymizer().calculatePatientPseudonym(patientId[0], patientId[1]);
 		log.info("Using patid="+patId+", encid="+encId+", docid="+documentId);
 		I2b2Visit visit = visitStore.findVisit(encId);
-		if( false == patId.equals(visit.getPatientId()) ) {
+		if( visit != null && false == patId.equals(visit.getPatientId()) ) {
 			log.warning("Encounter "+encId+" assigned different patient "+patId);
 			// delete all facts for the encounter
 			try {
