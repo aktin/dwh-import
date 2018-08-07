@@ -32,7 +32,9 @@ import de.sekmi.histream.ObservationException;
 import de.sekmi.histream.ObservationFactory;
 import de.sekmi.histream.i2b2.DataDialect;
 import de.sekmi.histream.i2b2.I2b2Inserter;
+import de.sekmi.histream.i2b2.I2b2Patient;
 import de.sekmi.histream.i2b2.I2b2Visit;
+import de.sekmi.histream.i2b2.PostgresPatientStore;
 import de.sekmi.histream.i2b2.PostgresVisitStore;
 
 /**
@@ -48,10 +50,11 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private ObservationFactory factory;
 	private ZoneId localZone;
 	private PostgresVisitStore visitStore;
+	private PostgresPatientStore patientStore;
 
 	/**
 	 * Construct a CDAImporter
-	 * @param factory observation factory
+	 * @param factory observation factory, binding from dwh-db
 	 * @param prefs preferences
 	 * @param anonymizer anonymizer interface
 	 * @throws NamingException i2b2 data sources could not be found by their names
@@ -63,6 +66,7 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		super(anonymizer);
 		this.factory = factory;
 		this.visitStore = (PostgresVisitStore)factory.getExtension(I2b2Visit.class);
+		this.patientStore = (PostgresPatientStore)factory.getExtension(I2b2Patient.class);
 		this.localZone = ZoneId.of(prefs.get(PreferenceKey.timeZoneId));
 		log.info("Default timezone for CDA documents: "+localZone);
 		InitialContext ctx = new InitialContext();
@@ -138,20 +142,36 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private void encounterPatientMerge(String documentId, String[] patientId, String[] encounterId) {
 		// extract encounter id, patient id. 
 		// if encounter exists and has different patient assigned, delete all facts for the encounter id. Then allow reassignment of new patient id
+		
 		String encId = getAnonymizer().calculateEncounterPseudonym(encounterId[0], encounterId[1]);
 		String patId = getAnonymizer().calculatePatientPseudonym(patientId[0], patientId[1]);
 		log.info("Using patid="+patId+", encid="+encId+", docid="+documentId);
 		I2b2Visit visit = visitStore.findVisit(encId);
-		if( visit != null && false == patId.equals(visit.getPatientId()) ) {
-			log.warning("Encounter "+encId+" assigned different patient "+patId);
-			// delete all facts for the encounter
-			try {
-				inserter.purgeVisit(visit.getNum());
-			} catch (SQLException e) {
-				log.log(Level.WARNING,"Failed to purge facts for visit "+visit.getNum(), e);
+		if( visit == null ) {
+			log.info("No existing visit found for "+encId);
+		}else {
+			log.info("Existing visit found with patid="+visit.getPatientId());
+			// find new patient
+			I2b2Patient patient = patientStore.retrieve(patId);
+			boolean deleteFacts = false;
+			if( patient == null ) {
+				// new patient unknown, delete old encounter data
+				log.warning("Encounter "+encId+" assigned a new (unknown) patient "+patId);
+				deleteFacts = true;
+			}else if( patient.getNum() != visit.getPatientNum() ) {
+				// new patient differs from assigned patient
+				log.warning("Encounter "+encId+" assigned different patient "+patId);
+				// delete all facts for the encounter
+				deleteFacts = true;
 			}
-			// update patient id
-			visit.setPatientId(patId);
+			if( deleteFacts ) {
+				try {
+					inserter.purgeVisit(visit.getNum());
+				} catch (SQLException e) {
+					log.log(Level.WARNING,"Failed to purge facts for visit "+visit.getNum(), e);
+				}
+			}
+			// TODO make sure that the new patient is assigned later when it is created
 		}
 		
 	}
