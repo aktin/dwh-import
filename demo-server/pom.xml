@@ -4,7 +4,7 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>demo-server</artifactId>
-	<version>0.12nomerge-SNAPSHOT</version>
+	<version>0.11nomerge</version>
 
 	<description>
 		Demo server application. The demo server can receive
@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.12nomerge-SNAPSHOT</version>
+		<version>0.11nomerge</version>
 	</parent>
 	
 	<properties>
@@ -52,12 +52,12 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-validation</artifactId>
-			<version>0.12nomerge-SNAPSHOT</version>
+			<version>0.11nomerge</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-server</artifactId>
-			<version>0.12nomerge-SNAPSHOT</version>
+			<version>0.11nomerge</version>
 		</dependency>
 	</dependencies>
 </project>
