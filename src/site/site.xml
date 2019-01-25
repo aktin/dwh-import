@@ -23,7 +23,7 @@
 			<item href="demo-server.html" name="Demo Server" />
 		</menu>
 		<menu name="Siehe auch">
-			<item href="../../0.7/server/index.html" name="Serverinstallation und Updates" />
+			<item href="../server/index.html" name="Serverinstallation und Updates" />
 		</menu>
 		<menu ref="reports" inherit="top" />
 		<!--
