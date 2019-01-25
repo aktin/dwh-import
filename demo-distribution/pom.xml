@@ -6,19 +6,19 @@
 	
 	<groupId>org.aktin</groupId>
 	<artifactId>demo-distribution</artifactId>
-	<version>0.11nomerge</version>
+	<version>0.12nomerge-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.11nomerge</version>
+		<version>0.12nomerge-SNAPSHOT</version>
 	</parent>
   
 	<dependencies>
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>demo-server</artifactId>
-			<version>0.11nomerge</version>
+			<version>0.12nomerge-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
