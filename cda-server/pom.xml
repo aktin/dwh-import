@@ -4,7 +4,7 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-server</artifactId>
-	<version>0.12</version>
+	<version>0.13-SNAPSHOT</version>
 
 	<description>
 		The CDA server provides web service interfaces
@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.12</version>
+		<version>0.13-SNAPSHOT</version>
 	</parent>
 	
 	<properties>
@@ -98,7 +98,7 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-validation</artifactId>
-			<version>0.12</version>
+			<version>0.13-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
