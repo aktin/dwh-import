@@ -9,7 +9,8 @@ public class CDAStatus {
 	
 	public enum Status{
 		Created,
-		Updated
+		Updated,
+		Rejected
 	}
 
 	public CDAStatus(CDASummary summary, Status status){
@@ -22,6 +23,9 @@ public class CDAStatus {
 	}
 	public static CDAStatus updated(CDASummary summary){
 		return new CDAStatus(summary, Status.Updated);
+	}
+	public static CDAStatus rejected(String documentId) {
+		return new CDAStatus(new DocumentIdSummary(documentId), Status.Rejected);
 	}
 	
 	public Date getLastModified(){
