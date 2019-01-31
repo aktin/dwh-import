@@ -169,6 +169,8 @@ public class Binary implements ExternalInterface{
 					// Location header not allowed for status 200
 					hallihallo2.addUpdated();
 					importSuccessful = true;
+				}else if( stat.getStatus() == Status.Rejected ) {
+					response = Response.status(409); // HTTP conflict
 				}else{
 					throw new UnsupportedOperationException("Unexpected CDA status "+stat.getStatus());
 				}
