@@ -110,7 +110,10 @@
                 <surname>information privacy</surname>
                  -->
                 <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
-                <birthdate><xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime"/></birthdate>
+                <xsl:if test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value">
+                    <!-- 59 Geburtsdatum  HL7.TS =>  	YYYY[MM[DD]] -->
+                    <birthdate><xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value)"/></birthdate>
+                </xsl:if>
                 <!-- Discharge Disposition Code = 'Tod' ; then EncounterEnd=Death Date; If no Discharge Date = empty deceased-Element is sufficient for I2B2 -->
                 <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode/@code='1'">
                     <deceased>
@@ -248,12 +251,6 @@
             </value>
         </fact>
     </xsl:template> -->
-    
-    <!-- 59 Geburtsdatum 
-        HL7.TS =>  	YYYY[MM[DD]] -->
-    <xsl:template match="cda:patient/cda:birthTime">
-        <xsl:value-of select="func:ConvertDateTime(./@value)"/>
-    </xsl:template>
     
     <!-- 114 Rankin Scale als einzelne Konzept (0..6)-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4045']">
