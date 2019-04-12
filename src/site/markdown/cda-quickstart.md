@@ -42,7 +42,7 @@ Weiterhin gibt es eine ID, die sehr wünschenswert ist, aber nicht zwingend ange
 Darüber hinaus gibt es noch eine ID, die entsprechend der CDA-Regeln gesetzt werden sollte, aber für den Import in das DWH nicht wichtig ist:
 * SetID
 
-In [dieser grafischen Übersicht](id.png) ist die Hierarchie der wichtigen IDs dargestellt.
+In [dieser grafischen Übersicht](id.png) ist die Hierarchie der wichtigen IDs dargestellt. in dieser Grafik [Beispiel IDs im CDA] (cda-ids.png) ist dargestellt, wo die entsprechenden IDs im CDA zu finden sind.
 
 Als Identifier für eine Episode (hier definiert als ein Patientenkontakt, 
 für den ein neues Notaufnahmeprotokoll angelegt werden soll) wird das Element 

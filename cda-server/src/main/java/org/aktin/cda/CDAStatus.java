@@ -5,10 +5,12 @@ import java.util.Date;
 public class CDAStatus {
 	private CDASummary summary;
 	private Status status;
+	// XXX maybe add information/warning messages 
 	
 	public enum Status{
 		Created,
-		Updated
+		Updated,
+		Rejected
 	}
 
 	public CDAStatus(CDASummary summary, Status status){
@@ -21,6 +23,9 @@ public class CDAStatus {
 	}
 	public static CDAStatus updated(CDASummary summary){
 		return new CDAStatus(summary, Status.Updated);
+	}
+	public static CDAStatus rejected(String documentId) {
+		return new CDAStatus(new DocumentIdSummary(documentId), Status.Rejected);
 	}
 	
 	public Date getLastModified(){

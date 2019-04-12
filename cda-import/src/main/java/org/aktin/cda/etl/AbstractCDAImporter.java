@@ -123,15 +123,17 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 			throw new CDAException("Transformation to EAV failed", e);
 		}
 	}
-	
+	protected Anonymizer getAnonymizer() {
+		return cdaToDataWarehouse.getAnonymizer();
+	}
 	@Override
-	public CDAStatus createOrUpdate(Document document, String documentId, String templateId) throws CDAException{
+	public CDAStatus createOrUpdate(Document document, String documentId, String templateId, String[] patientId, String[] encounterId) throws CDAException{
 		// not using provided patientId, encounterId, documentId
 		// use IDs from EAV transformation result
 		
 		// transform CDA document to EAV XML in temporary file
 		Path tempEAV = transform(document, templateId);
-
+		
 		CDAStatus status;
 		try{
 			// parse EAV XML and insert into fact table

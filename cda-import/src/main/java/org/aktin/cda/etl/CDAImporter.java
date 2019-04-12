@@ -32,6 +32,10 @@ import de.sekmi.histream.ObservationException;
 import de.sekmi.histream.ObservationFactory;
 import de.sekmi.histream.i2b2.DataDialect;
 import de.sekmi.histream.i2b2.I2b2Inserter;
+import de.sekmi.histream.i2b2.I2b2Patient;
+import de.sekmi.histream.i2b2.I2b2Visit;
+import de.sekmi.histream.i2b2.PostgresPatientStore;
+import de.sekmi.histream.i2b2.PostgresVisitStore;
 
 /**
  * CDA importer pojo EJB. Processed CDA documents are loaded into
@@ -45,10 +49,12 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private I2b2Inserter inserter;
 	private ObservationFactory factory;
 	private ZoneId localZone;
+	private PostgresVisitStore visitStore;
+	private PostgresPatientStore patientStore;
 
 	/**
 	 * Construct a CDAImporter
-	 * @param factory observation factory
+	 * @param factory observation factory, binding from dwh-db
 	 * @param prefs preferences
 	 * @param anonymizer anonymizer interface
 	 * @throws NamingException i2b2 data sources could not be found by their names
@@ -59,6 +65,10 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	public CDAImporter(ObservationFactory factory, Preferences prefs, Anonymizer anonymizer) throws NamingException, SQLException, IOException {
 		super(anonymizer);
 		this.factory = factory;
+		this.visitStore = (PostgresVisitStore)factory.getExtension(I2b2Visit.class);
+		// set visit store to reject patient changes, in the case we miss one here (should not happen, TODO remove later)
+		this.visitStore.setRejectPatientChange(true);
+		this.patientStore = (PostgresPatientStore)factory.getExtension(I2b2Patient.class);
 		this.localZone = ZoneId.of(prefs.get(PreferenceKey.timeZoneId));
 		log.info("Default timezone for CDA documents: "+localZone);
 		InitialContext ctx = new InitialContext();
@@ -131,17 +141,72 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		return inserter;
 	}
 
+	private enum MergeResult{
+		NewVisit,
+		ExistingVisitNewPatient,
+		ExistingVisitDifferentPatient,
+		ExistingVisitSamePatient
+	}
+	private MergeResult encounterPatientMerge(String documentId, String[] patientId, String[] encounterId) {
+		// extract encounter id, patient id. 
+		// if encounter exists and has different patient assigned, delete all facts for the encounter id. Then allow reassignment of new patient id
+		MergeResult result;
+		String encId = getAnonymizer().calculateEncounterPseudonym(encounterId[0], encounterId[1]);
+		String patId = getAnonymizer().calculatePatientPseudonym(patientId[0], patientId[1]);
+		log.info("Using patid="+patId+", encid="+encId+", docid="+documentId);
+		I2b2Visit visit = visitStore.findVisit(encId);
+		if( visit == null ) {
+			log.info("No existing visit found for "+encId);
+			result = MergeResult.NewVisit;
+		}else {
+			log.info("Existing visit found with patid="+visit.getPatientId());
+			// find new patient
+			I2b2Patient patient = patientStore.retrieve(patId);
+			boolean deleteFacts = false;
+			if( patient == null ) {
+				// new patient unknown, delete old encounter data
+				log.warning("Encounter "+encId+" assigned a new (unknown) patient "+patId);
+				deleteFacts = true;
+				result = MergeResult.ExistingVisitNewPatient;
+			}else if( patient.getNum() != visit.getPatientNum() ) {
+				// new patient differs from assigned patient
+				log.warning("Encounter "+encId+" assigned different patient "+patId);
+				// delete all facts for the encounter
+				result = MergeResult.ExistingVisitDifferentPatient;
+				deleteFacts = true;
+			}else {
+				result = MergeResult.ExistingVisitSamePatient;
+				deleteFacts = true;
+			}
+			if( deleteFacts ) {
+				try {
+					inserter.purgeVisit(visit.getNum());
+				} catch (SQLException e) {
+					log.log(Level.WARNING,"Failed to purge facts for visit "+visit.getNum(), e);
+				}
+			}
+			// TODO make sure that the new patient is assigned later when it is created
+		}
+		return result;		
+	}
 	@Override
-	public synchronized CDAStatus createOrUpdate(Document document, String documentId, String templateId)
+	public synchronized CDAStatus createOrUpdate(Document document, String documentId, String templateId, String[] patientId, String[] encounterId)
 			throws CDAException {
-		//log.info("Using patid="+patientId+", encid="+encounterId+", docid="+documentId);
 
+		MergeResult merge = encounterPatientMerge(documentId, patientId, encounterId);
+		if( merge == MergeResult.ExistingVisitNewPatient || merge == MergeResult.ExistingVisitDifferentPatient ) {
+			log.info("Rejecting change of patient for existing visit");
+			// for now, reject the update
+			// TODO make sure that the previous facts are deleted
+			return CDAStatus.rejected(documentId);
+		}
+		
 		final List<ObservationException> insertErrors = new LinkedList<>();
 		inserter.setErrorHandler(insertErrors::add);
 		// process document
 		CDAStatus status = null;
 		try{
-			status = super.createOrUpdate(document, documentId, templateId);
+			status = super.createOrUpdate(document, documentId, templateId, patientId, encounterId);
 		}finally{
 			inserter.setErrorHandler(null);
 			inserter.resetErrorCount();
