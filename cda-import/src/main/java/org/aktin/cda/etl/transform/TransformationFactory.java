@@ -113,7 +113,7 @@ public class TransformationFactory {
 	public Anonymizer getAnonymizer() {
 		return anonymizer;
 	}
-	public Transformation getTransformation(String templateId) throws IOException, TransformerConfigurationException, TransformerFactoryConfigurationError{
+	public Transformation getTransformation(String documentRootNS, String documentRootName, String templateId) throws IOException, TransformerConfigurationException, TransformerFactoryConfigurationError{
 		// look in cache
 		Transformation transform = cache.get(templateId);
 		if( transform == null ){

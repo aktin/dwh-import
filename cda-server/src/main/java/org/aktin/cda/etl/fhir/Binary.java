@@ -161,13 +161,13 @@ public class Binary implements ExternalInterface{
 					location = URI.create("Binary/"+stat.getDocumentId()+"/_history/0");
 					response = Response.created(location);
 					
-					hallihallo2.addCreated();
+					hallihallo2.addCreated(templateId);
 					importSuccessful = true;
 				}else if( stat.getStatus() == Status.Updated ){
 					response = Response.ok();
 					location = URI.create("Binary/"+stat.getDocumentId());
 					// Location header not allowed for status 200
-					hallihallo2.addUpdated();
+					hallihallo2.addUpdated(templateId);
 					importSuccessful = true;
 				}else if( stat.getStatus() == Status.Rejected ) {
 					response = Response.status(409); // HTTP conflict
@@ -211,7 +211,7 @@ public class Binary implements ExternalInterface{
 		// should add a Location header with the created id and version
 		// Location: [base]/Binary/[id]/_history/[vid]
 		if( false == importSuccessful ){
-			hallihallo2.addRejected(isValid, outcome.toString());
+			hallihallo2.addRejected(templateId, isValid, outcome.toString());
 		}
 		if( cda != null ){
 			tryDebugProcessing(cda, outcome);

@@ -53,7 +53,7 @@ public class TestTransformToEAV {
 	public void transformExample1() throws Exception{
 		CDAParser parser = new CDAParser();
 		CDAImporterMockUp t = new CDAImporterMockUp();
-		try( InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml") ){
+		try( InputStream in = CDAParser.class.getResourceAsStream("/basismodul-minimal.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
 			
 			
@@ -65,7 +65,8 @@ public class TestTransformToEAV {
 				// verify patient birth date
 				Patient p = o.getExtension(Patient.class);
 				Assert.assertNotNull(p);
-				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("1996-05-31", t.getDefaultZoneId()), p.getBirthDate());
+				// no birthdate should be available
+				Assert.assertNull(p.getBirthDate());
 				// verify visit start date
 				Visit v = o.getExtension(Visit.class);
 				Assert.assertNotNull(v);
@@ -76,7 +77,7 @@ public class TestTransformToEAV {
 				Optional<Observation> opt = suppl.stream().filter(x -> x.getConceptId().equals("ICD10GM:S80.1")).findFirst();
 				Assert.assertTrue(opt.isPresent());
 				o = opt.get();
-				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T15:56+0100"), o.getStartTime());
+				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T16:03+0100"), o.getStartTime());
 				
 				suppl.close();
 			}finally{

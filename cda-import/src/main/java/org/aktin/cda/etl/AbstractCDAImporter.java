@@ -23,6 +23,7 @@ import org.aktin.cda.etl.transform.Transformation;
 import org.aktin.cda.etl.transform.TransformationFactory;
 import org.aktin.dwh.Anonymizer;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import de.sekmi.histream.Observation;
 import de.sekmi.histream.ObservationFactory;
@@ -114,7 +115,8 @@ public abstract class AbstractCDAImporter implements CDAProcessor{
 	@Override
 	public final Path transform(Document document, String templateId) throws CDAException, UnsupportedTemplateException{
 		try {
-			Transformation t = cdaToDataWarehouse.getTransformation(templateId);
+			Element rootEl = (Element)document.getDocumentElement();
+			Transformation t = cdaToDataWarehouse.getTransformation(rootEl.getNamespaceURI(), rootEl.getLocalName(), templateId);
 			if( t == null ){
 				throw new UnsupportedTemplateException(templateId);
 			}

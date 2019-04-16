@@ -58,20 +58,21 @@ public class NoOpStatistics  implements ImportSummary{
 		return null;
 	}
 
+
 	@Override
-	public void addRejected(boolean valid, String cause) {
+	public void addCreated(String templateId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addCreated() {
+	public void addRejected(String templateId, boolean valid, String cause) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addUpdated() {
+	public void addUpdated(String templateId) {
 		// TODO Auto-generated method stub
 		
 	}

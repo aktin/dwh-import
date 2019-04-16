@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.transform.TransformerConfigurationException;
@@ -102,6 +103,7 @@ public class Server{
 
 
 		// publish XDS.b end point
+		Objects.requireNonNull(xdsService);
 		xdsEndpoint = Endpoint.create(SOAPBinding.SOAP11HTTP_MTOM_BINDING, xdsService);
 		xdsEndpoint.publish(server.createContext(XDS_CONTEXT_PATH));
 		// enable MTOM for efficient binary transfer
