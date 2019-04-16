@@ -19,5 +19,9 @@ public class ValidationErrorsToOperationOutcome implements ValidationErrorHandle
 	public void error(String message, Throwable cause) {
 		outcome.addIssue(Severity.error, IssueType.exception, message);
 	}
+	@Override
+	public void info(String message) {
+		outcome.addIssue(Severity.information, IssueType.informational, message);
+	}
 
 }

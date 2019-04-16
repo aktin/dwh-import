@@ -17,7 +17,7 @@ public class ValidationErrorsToRegistryError implements ValidationErrorHandler{
 		e.setSeverity(XDSConstants.SEVERITY_WARNING);
 		e.setCodeContext(message); // free error message
 		e.setErrorCode(XDSConstants.ERR_DOC_INVALID_CONTENT);
-		rel.getRegistryError().add(e);	
+		rel.getRegistryError().add(e);
 	}
 
 	@Override
@@ -26,7 +26,15 @@ public class ValidationErrorsToRegistryError implements ValidationErrorHandler{
 		e.setSeverity(XDSConstants.SEVERITY_ERROR);
 		e.setCodeContext(message); // free error message
 		e.setErrorCode(XDSConstants.ERR_DOC_INVALID_CONTENT);
-		rel.getRegistryError().add(e);	
+		rel.getRegistryError().add(e);
+	}
+	@Override
+	public void info(String message) {
+		RegistryError e = new RegistryError();
+		e.setSeverity(XDSConstants.SEVERITY_WARNING);
+		e.setCodeContext(message); // free error message
+		e.setErrorCode(XDSConstants.ERR_DOC_INVALID_CONTENT);
+		rel.getRegistryError().add(e);
 	}
 
 }

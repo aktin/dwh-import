@@ -12,4 +12,7 @@ public class SuppressValidationErrors implements ValidationErrorHandler{
 	@Override
 	public void error(String message, Throwable cause) {
 	}
+	@Override
+	public void info(String message) {
+	}
 }

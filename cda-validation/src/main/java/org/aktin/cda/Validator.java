@@ -70,7 +70,7 @@ public class Validator implements NamespaceContext{
 		} catch (XPathExpressionException e) {
 			throw new IOException(e);
 		}
-		addTemplateValidator("1.2.276.0.76.10.1015", "/aktin-basism_svrl.xsl");
+		//addTemplateValidator("1.2.276.0.76.10.1015", "/aktin-basism_svrl.xsl");
 		addTemplateValidator("1.2.276.0.76.10.1019", "/aktin-basism20152b_svrl.xsl");
 
 	}
@@ -112,11 +112,14 @@ public class Validator implements NamespaceContext{
 				errorCount ++;
 				handler.error(messageText, null);
 				break;
+			case "info":
+				handler.info(messageText);
+				break;
 			default:
 				log.warning("Unexpected failed-assert/@role="+role);
 				// fall through to warning
 			case "warning":
-				handler.error(messageText, null);
+				handler.warning(messageText, null);
 			}
 		}
 		return errorCount;

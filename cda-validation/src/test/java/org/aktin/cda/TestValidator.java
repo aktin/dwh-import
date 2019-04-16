@@ -15,6 +15,7 @@ public class TestValidator {
 
 	public static final String[] v2ExampleDocuments = new String[]{
 		"/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml",
+		"/Additional Examples/basismodul-v2-beispiel-storyboard01-minimal.xml",
 		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml",
 		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard02.xml",
 		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard04.xml",
@@ -63,27 +64,29 @@ public class TestValidator {
 				Assert.assertFalse("Validation failure expected for "+example, isValid);
 			}
 		}
-		for( String example : v1InvalidExampleDocuments ){
-			p.setSystemId(example);
-			try( InputStream in = getClass().getResourceAsStream(example) ){
-				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, SuppressValidationErrors.staticInstance);
-				Assert.assertFalse("Validation failure expected for "+example, isValid);
-			}
-		}
-		for( String example : v1ExampleDocuments ){
-			p.setSystemId(example);
-			try( InputStream in = getClass().getResourceAsStream(example) ){
-				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, p);
-				if( !isValid ){
-					Assert.fail("Successful validation expected for "+example);
-				}
-			}
-		}
+		
+// v1 no longer supported
+//		for( String example : v1InvalidExampleDocuments ){
+//			p.setSystemId(example);
+//			try( InputStream in = getClass().getResourceAsStream(example) ){
+//				Assert.assertTrue(in.available() > 0);
+//				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, SuppressValidationErrors.staticInstance);
+//				Assert.assertFalse("Validation failure expected for "+example, isValid);
+//			}
+//		}
+//		for( String example : v1ExampleDocuments ){
+//			p.setSystemId(example);
+//			try( InputStream in = getClass().getResourceAsStream(example) ){
+//				Assert.assertTrue(in.available() > 0);
+//				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, p);
+//				if( !isValid ){
+//					Assert.fail("Successful validation expected for "+example);
+//				}
+//			}
+//		}
 	}
 	
-	@Test
+	//@Test
 	public void validateErrorsForOtherDocuments() throws Exception{
 		Validator v = new Validator();
 		CDAParser parser = new CDAParser();
