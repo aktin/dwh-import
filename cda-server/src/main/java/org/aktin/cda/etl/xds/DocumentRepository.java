@@ -107,7 +107,7 @@ public class DocumentRepository implements DocumentRepositoryPortType, ExternalI
 			return createErrorResponse(XDSConstants.ERR_REPO_ERROR, "Internal error", e);
 		} catch( UnsupportedTemplateException e ){
 			log.log(Level.WARNING, "Unsupported template", e);
-			return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Template not supportedr", e);
+			return createErrorResponse(XDSConstants.ERR_DOC_INVALID_CONTENT, "Template not supported: "+e.getTemplateId());
 		}
 
 		RegistryResponseType resp = new RegistryResponseType();
