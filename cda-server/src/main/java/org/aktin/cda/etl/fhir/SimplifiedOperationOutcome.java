@@ -3,7 +3,10 @@ package org.aktin.cda.etl.fhir;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.activation.DataSource;
 import javax.xml.XMLConstants;
@@ -104,6 +107,29 @@ public class SimplifiedOperationOutcome {
 		return issues.size();
 	}
 	/**
+	 * Retrieve detailed counts for debugging levels in the following order: errors, warnings, informational
+	 * @return array containing detailed counts for the outcome resource
+	 */
+	public int[] getDetailedCounts() {
+		int[] counts = new int[3];
+		for( Issue issue : issues ) {
+			switch( issue.severity ){
+			case error:
+			case fatal:
+				counts[0]++;
+				break;
+			case warning:
+				counts[1]++;
+				break;
+			case information:
+				counts[2]++;
+				break;
+			default:
+			}
+		}
+		return counts;
+	}
+	/**
 	 * Add an issue to the response
 	 * @param severity issue severity
 	 * @param details detail message
@@ -133,6 +159,39 @@ public class SimplifiedOperationOutcome {
 			writer.writeEndElement();
 		}
 		writer.writeEndElement();	
+	}
+
+	/**
+	 * Remove issues below a certain severity.
+	 * E.g. if the limit is {@code error} then warning and information messages are removed.
+	 * Limit of {@code information} has no effect, since no messages are below.}
+	 * To remove all issues, use {@link #removeAllIssues()}
+	 * @param severity. {@code null}
+	 */
+	public void removeIssuesBelowSeverity(Severity limit) {
+		Iterator<Issue> i = issues.iterator();
+		Set<Severity> forRemoval = new HashSet<>();
+		switch( limit ) {
+		case fatal:
+		case error:
+			forRemoval.add(Severity.warning);
+		case warning:
+			forRemoval.add(Severity.information);
+		case information:
+		default:
+		}
+		while( i.hasNext() ) {
+			Issue e = i.next();
+			if( forRemoval.contains(e.severity) ) {
+				i.remove();
+			}
+		}
+	}
+	/**
+	 * Remove all reported issues from the list.
+	 */
+	public void removeAllIssues() {
+		issues.clear();
 	}
 	/**
 	 * Generate the XML representation of the response

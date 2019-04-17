@@ -49,6 +49,7 @@ import org.aktin.cda.Validator;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.IssueType;
 import org.aktin.cda.etl.fhir.SimplifiedOperationOutcome.Severity;
 import org.aktin.dwh.ImportSummary;
+import org.aktin.dwh.PreferenceKey;
 import org.w3c.dom.Document;
 
 @Path("Binary")
@@ -128,6 +129,33 @@ public class Binary implements ExternalInterface{
 	private DataSource serverErrorOutcome(Throwable e) throws XMLStreamException{
 		return outcomeToXML(SimplifiedOperationOutcome.error(e));
 	}
+
+	/**
+	 * Filter the operation outcome messages according to the configuration.
+	 * E.g. remove entries with level below a certain treshold
+	 * @param outcome outcome to filter
+	 */
+	private void filterOutcome(SimplifiedOperationOutcome outcome) {
+		String filter = prefs.get(PreferenceKey.importCdaFhirOutcomeLevel);
+		if( filter == null || filter.length() == 0 || filter.equals("all") ) {
+			return; // nothing to do
+		}
+		switch( filter ) {
+		case "info":
+			outcome.removeIssuesBelowSeverity(Severity.information);
+			break;
+		case "warning":
+			outcome.removeIssuesBelowSeverity(Severity.warning);
+			break;
+		case "error":
+			outcome.removeIssuesBelowSeverity(Severity.error);
+			break;
+		case "none":
+			outcome.removeAllIssues();
+			break;
+		}
+	}
+
 	@POST
 	public Response create(Source doc){
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
@@ -226,14 +254,37 @@ public class Binary implements ExternalInterface{
 	}
 
 	private void tryDebugProcessing(Document cda, SimplifiedOperationOutcome outcome){
-		String debugDir = prefs.get("import.cda.debug.dir");
+		String debugDir = prefs.get(PreferenceKey.importCdaDebugDir);
 		if( debugDir == null || debugDir.length() == 0 ){
 			return; // nothing to do
 		}
-		String debugLevel = prefs.get("import.cda.debug.level");
-		if( debugLevel != null && debugLevel.equals("error") && outcome.getIssueCount() == 0 ){
-			// dump only documents with errors
-			return; // nothing to do
+		String debugLevel = prefs.get(PreferenceKey.importCdaDebugLevel);
+		if( debugLevel == null ) {
+			// unset debug level defaults to all documents
+			debugLevel = "all";
+		}
+		if( debugLevel.equals("none") ) {
+			// logging disables
+			return;
+		}
+		int[] counts = outcome.getDetailedCounts();
+		// add more severe messages to lesser ones
+		counts[1] += counts[0]; // warning logging also includes error logging
+		counts[2] += counts[1]; // info logging also includes error and warning logging
+		if( debugLevel.equals("all") ) {
+			// continue to store all documents
+		}else if( debugLevel.equals("error") && counts[0] == 0 ) {
+			// level is error but no errors occurred,
+			// skip this document
+			return;
+		}else if( debugLevel.equals("warning") && counts[1] == 0 ) {
+			// level is warning, but no warnings (or errors) occurred,
+			// skip document
+			return;
+		}else if( debugLevel.equals("info") && counts[2] == 0 ) {
+			// level is info, but no info message (or warnings/errors) occurred
+			// skip document
+			return;
 		}
 	
 		// XXX maybe extract patient id extension for name?
@@ -264,7 +315,7 @@ public class Binary implements ExternalInterface{
 				log.warning("Failed to configure indent for XML debug documents: "+e.getMessage());
 			}
 			copy.transform(src, new StreamResult(out));
-			// write errors in XML comment after content
+			// write messages in XML comment after content
 			out.write("\n\n<!-- OperationOutcome\n");
 			out.write(outcome.toString().replaceAll("<", "&lt;"));
 			out.write("\n-->\n");
