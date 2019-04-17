@@ -141,7 +141,7 @@ public class Binary implements ExternalInterface{
 			return; // nothing to do
 		}
 		switch( filter ) {
-		case "info":
+		case "info": // info is currently same as all. has no effect, since there are no levels below info
 			outcome.removeIssuesBelowSeverity(Severity.information);
 			break;
 		case "warning":
@@ -244,6 +244,7 @@ public class Binary implements ExternalInterface{
 		if( cda != null ){
 			tryDebugProcessing(cda, outcome);
 		}
+		filterOutcome(outcome);
 		try {
 			return response.entity(outcomeToXML(outcome)).build();
 		} catch (XMLStreamException e) {
