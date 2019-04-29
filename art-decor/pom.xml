@@ -2,8 +2,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<name>AKTIN : DWH Import : CDA Validation</name>
 
-	<groupId>org.aktin</groupId>
-	<artifactId>art-decor</artifactId>
+	<groupId>org.aktin.artdecor</groupId>
+	<artifactId>basis-schematron</artifactId>
 	<version>20151118T102028</version>
 	<description>
 	Install examples and schematron resources from aktin.art-decor.org to local repository
@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.13-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<schematronVersion>${project.version}</schematronVersion>          
@@ -25,13 +25,10 @@
 				<directory>src/main/resources</directory>
 			</resource>
 			<resource>
-				<directory>${project.build.directory}/schematron/${schematronArchive}</directory>
+				<directory>${project.build.directory}/schematron</directory>
 			</resource>
 			<resource>
-				<directory>${project.build.directory}/examples/${examplesArchive}</directory>
-				<excludes>
-					<exclude>**/.DS_Store</exclude>
-				</excludes>
+				<directory>${project.build.directory}/examples</directory>
 			</resource>
 		</resources>
 		<plugins>
@@ -57,15 +54,45 @@
 							<target>
 								<!-- schematron files -->
 								<get src="http://aktin.art-decor.org/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
-								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/schematron" />
-								<!-- download examples -->
+								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/temp" />
+								<move todir="${project.build.directory}/schematron" verbose="true">
+									<fileset dir="${project.build.directory}/temp">
+										<include name="**/*"/>
+										<exclude name="**/.DS_Store"/>
+										<exclude name="**/__MACOSX/**"/>
+									</fileset>
+									<!-- remove single directory with inconsistent name -->
+									<mapper type="regexp" from="^(.*)aktin-runtime-[0-9T]*(.*)" to="\1/\2"/>
+								</move>
+								<!-- rename aktin-instance2schematron.xml to exclude project name -->
+								<move todir="${project.build.directory}/schematron" verbose="true">
+									<fileset dir="${project.build.directory}/schematron">
+										<include name="*-instance2schematron.xml"/>
+									</fileset>
+									<mapper type="glob" from="*-instance2schematron.xml" to="instance2schematron.xml"/>
+								</move>
+								<delete dir="${project.build.directory}/temp" />
+								<delete file="${project.build.directory}/schematron.zip" />
+								
+
+								<!-- download examples  -->
+								<!-- TODO also add the XSD files from XML release -->
 								<get src="http://aktin.art-decor.org/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
-								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples" />
+								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/temp" />
+								<move todir="${project.build.directory}/examples" verbose="true">
+									<fileset dir="${project.build.directory}/temp">
+										<include name="**/*"/>
+										<exclude name="**/.DS_Store"/>
+										<exclude name="**/__MACOSX/**"/>
+									</fileset>
+								</move>
+
 							</target>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
@@ -87,6 +114,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 		</plugins>
 	</build>
 	<dependencies>

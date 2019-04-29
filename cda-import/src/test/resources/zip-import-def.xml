@@ -1,0 +1,12 @@
+<archive-import media-type="application/zip">
+	<!-- try to apply file name patterns to differentiate between different type of ZIP imports -->
+	<validate>
+		<require-file="FAB.csv"/>
+		<!-- e.g. also apply rules to file contents like first line -->
+		<require-file="FALL.csv"/>
+		<require-file="ICD.csv"/>
+		<require-file="info.csv"
+	</validate>
+	<!-- TODO detect unique source id to allow a later upload to replace this one. e.g. year timestamp for yearly P21 import -->
+	<!-- TODO link to datasource.xml for parsing and import of P21 -->
+</archive-import>

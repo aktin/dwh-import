@@ -1,0 +1,13 @@
+<xml-import root-ns="urn:hl7-org:v3" root-name="ClinicalDocument">
+	<template-path="XXXX XPath path to template id"/>
+	<template id="XXX template id v1">
+		<idref type="patient" root-path="XPATH to patient root" ext-path="XPath to patient id"/>
+		<idref type="encounter" root-path="XPATH to encounter root" ext-path="XPath to encounter id"/> 
+		<idref type="document" root-path="XPATH to document root" ext-path="XPath to document id"/> 
+		<validation type="schematron" location="path-to-schematron-file"/>
+		<validation type="xsd" location="path-to-XSD"/>
+		<transform target="eav" location="path-to-EAV transform"/>
+	</template>
+<!--  next template id (e.g. older version of same document type like basismodul) -->
+<!--  this file would be located in a folder used for discovery of import types and validations -->
+</xml-import>
