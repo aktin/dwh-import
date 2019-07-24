@@ -4,7 +4,7 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>demo-server</artifactId>
-	<version>0.13-SNAPSHOT</version>
+	<version>0.13</version>
 
 	<description>
 		Demo server application. The demo server can receive
@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.13-SNAPSHOT</version>
+		<version>0.13</version>
 	</parent>
 	
 	<properties>
@@ -52,12 +52,12 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-validation</artifactId>
-			<version>0.13-SNAPSHOT</version>
+			<version>0.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-server</artifactId>
-			<version>0.13-SNAPSHOT</version>
+			<version>0.13</version>
 		</dependency>
 		<!-- dependencies accounting for java12 removal of javax.activation and jaxb -->
 		<dependency>
