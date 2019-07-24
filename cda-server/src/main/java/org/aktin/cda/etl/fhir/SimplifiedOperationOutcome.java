@@ -166,7 +166,7 @@ public class SimplifiedOperationOutcome {
 	 * E.g. if the limit is {@code error} then warning and information messages are removed.
 	 * Limit of {@code information} has no effect, since no messages are below.}
 	 * To remove all issues, use {@link #removeAllIssues()}
-	 * @param severity. {@code null}
+	 * @param limit severity below which issues will be removed
 	 */
 	public void removeIssuesBelowSeverity(Severity limit) {
 		Iterator<Issue> i = issues.iterator();

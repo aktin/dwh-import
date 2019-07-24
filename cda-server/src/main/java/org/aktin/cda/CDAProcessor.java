@@ -12,6 +12,8 @@ public interface CDAProcessor {
 	 * @param document CDA DOM document
 	 * @param documentId document id, changes with new version of the document
 	 * @param templateId template id
+	 * @param patientId patient id root+ext
+	 * @param encounterId encounter id root+ext
 	 * @return status
 	 * @throws CDAException processing error
 	 * @throws UnsupportedTemplateException template not supported
