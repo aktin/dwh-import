@@ -45,6 +45,7 @@
 		<module>cda-ontology</module>
 		<module>demo-server</module>
 		<module>demo-distribution</module>
-	</modules>
+        <module>script-executioner</module>
+    </modules>
 
 </project>
