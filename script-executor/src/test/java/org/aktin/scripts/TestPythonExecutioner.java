@@ -83,7 +83,6 @@ public class TestPythonExecutioner {
     public void runInstance() throws ExecutionException, InterruptedException {
 
         ExecutorService executorService;
-
         ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
         for(int t=0; t<1; t++) {
@@ -100,19 +99,14 @@ public class TestPythonExecutioner {
                 }
                 return a;
             });
-
             executor.execute(future$t);
             System.out.println(future$t);
         }
 
-
         Integer result = null;
         try {
-
             for (int i = 0; i < 15; i++) {
                // System.out.println(executor.getQueue());
-
-
                 System.out.println(executor.toString() + "\n");
                 Thread.sleep(1000);
             }
@@ -123,5 +117,15 @@ public class TestPythonExecutioner {
         }
         executor.shutdown();
         System.out.println(executor.toString() + "\n");
+    }
+
+    @Test
+    public void runPythonRunner() throws InterruptedException {
+        PythonRunner runner = new PythonRunner();
+        new Thread(runner).start();
+
+        Thread.sleep(1000);
+        runner.stop();
+
     }
 }

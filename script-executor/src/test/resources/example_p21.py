@@ -9,6 +9,8 @@ Created on Wed Dec 16 13:25:30 2020
 #@DESC=test p21-import (zip)
 #@MIMETYPE=application/zip
 
-import sys
+def myfunction(mystring):
+    print(mystring)
 
-sys.exit()
+if __name__ == '__main__':
+    globals()[sys.argv[1]](sys.argv[2])

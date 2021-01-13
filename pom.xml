@@ -27,6 +27,7 @@
 		<developerConnection>scm:git:https://git.rwth-aachen.de/aktin/dwh-import.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
+
 	<repositories>
 		<repository>
 			<id>aktin-repo</id>
@@ -45,7 +46,7 @@
 		<module>cda-ontology</module>
 		<module>demo-server</module>
 		<module>demo-distribution</module>
-        <module>script-executioner</module>
+        <module>script-executor</module>
     </modules>
 
 </project>
