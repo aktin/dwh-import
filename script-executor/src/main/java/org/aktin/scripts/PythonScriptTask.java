@@ -2,10 +2,10 @@ package org.aktin.scripts;
 
 public class PythonScriptTask {
 
-    private String uuid;
-    private ScriptMethod method_script;
+    private final String uuid;
+    private final ScriptOperation method_script;
 
-    public PythonScriptTask(String uuid, ScriptMethod method_script) {
+    public PythonScriptTask(String uuid, ScriptOperation method_script) {
         this.uuid = uuid;
         this.method_script = method_script;
     }
@@ -14,7 +14,7 @@ public class PythonScriptTask {
         return this.uuid;
     }
 
-    public ScriptMethod getScriptMethod() {
+    public ScriptOperation getScriptMethod() {
         return this.method_script;
     }
 }

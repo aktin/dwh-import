@@ -1,6 +1,6 @@
 package org.aktin.scripts;
 
-public enum ScriptMethod {
+public enum ScriptOperation {
     import_file,
     verify_file
 }
