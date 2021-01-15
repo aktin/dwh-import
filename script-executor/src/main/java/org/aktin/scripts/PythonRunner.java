@@ -1,16 +1,14 @@
 package org.aktin.scripts;
 
-import org.aktin.Preferences;
-import org.aktin.dwh.PreferenceKey;
-import org.aktin.dwh.admin.importer.ImportState;
-import org.aktin.dwh.admin.importer.ImportStateManager;
-import org.aktin.dwh.admin.importer.PropertyKey;
+import org.aktin.dwh.admin.importer.FileOperationManager;
+import org.aktin.dwh.admin.importer.enums.ImportState;
+import org.aktin.dwh.admin.importer.enums.PropertyKey;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -23,13 +21,11 @@ public class PythonRunner implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(PythonRunner.class.getName());
 
     @Inject
-    private ImportStateManager importStateManager;
-
-    @Inject
-    private Preferences prefs;
+    private FileOperationManager fileOperationManager;
 
     private Queue<PythonScriptTask> queue;
     private String runningId;
+    private Process process;
     private boolean exit = false;
 
 
@@ -37,15 +33,9 @@ public class PythonRunner implements Runnable {
         queue = new LinkedList<>();
     }
 
-    public void submit(PythonScriptTask task) {
-        synchronized (queue) {
-            queue.add(task);
-            queue.notify();
-        }
-    }
-
     @Override
     public void run() {
+        LOGGER.info("Processing thread started");
         while (!exit) {
             PythonScriptTask task;
             synchronized (queue) {
@@ -53,7 +43,7 @@ public class PythonRunner implements Runnable {
                     try {
                         queue.wait();
                     } catch (InterruptedException e) {
-                        LOGGER.log(Level.WARNING, "Thread was interrupted!", e);
+                        LOGGER.log(Level.WARNING, "Processing thread was interrupted", e);
                         Thread.currentThread().interrupt();
                     }
                 }
@@ -62,14 +52,24 @@ public class PythonRunner implements Runnable {
                 else
                     task = queue.remove();
             }
+            if (exit)
+                break;
             execute(task);
+        }
+        LOGGER.info("Processing thread ended");
+    }
+
+    public void submit(PythonScriptTask task) {
+        synchronized (queue) {
+            queue.add(task);
+            changeTaskState(task.getId(), ImportState.queued, Level.INFO);
+            queue.notify();
         }
     }
 
     public void cancel(String uuid) {
         if (runningId.equals(uuid)) {
-            // Thread.currentThread().interrupt(); ???
-            runningId = null;
+            process.destroy();
         } else {
             synchronized (queue) {
                 for (PythonScriptTask task : queue) {
@@ -80,107 +80,84 @@ public class PythonRunner implements Runnable {
                 }
             }
         }
+        changeTaskState(uuid, ImportState.cancelled, Level.INFO);
     }
 
     public void terminate() {
         exit = true;
-        if (runningId != null) {
-            cancel(runningId);
-        } else {
-            synchronized (queue) {
-                queue.notify();
-            }
+        if (process != null) {
+            process.destroy();
+        }
+        synchronized (queue) {
+            queue.notify();
         }
     }
 
 
-    //TODO FIND A BETTER WAY FOR FINALLY
+    //TODO get std output and write to file
     //TODO Timeout
+    //TODO clean up output file if cancelled/interrupted
     // Pythonprozess kann endloss sein
     // Worker/Execution Warteschlange mit Timeout
     private void execute(PythonScriptTask task) {
-        runningId = task.getId();
-
-        String name_script = importStateManager.getPropertyByKey(task.getId(), PropertyKey.script);
-        String path_script = Paths.get(prefs.get(PreferenceKey.importScriptPath), name_script).toString();
-        String path_file = importStateManager.getPropertyByKey(task.getId(), PropertyKey.path);
-
-
-        String line;
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            setPropertyToTaskDoing(task.getId(), task.getScriptMethod());
-            Process p = new ProcessBuilder("python", path_script, task.getScriptMethod().name(), path_file).start();
-            stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            runningId = task.getId();
+            changeTaskState(task.getId(), ImportState.in_progress, Level.INFO);
 
+            HashMap<String, String> map_properties = fileOperationManager.checkPropertiesFileForIntegrity(task.getId());
+            String name_script = map_properties.get(PropertyKey.script.name());
+            String path_script = fileOperationManager.getScriptPath(name_script);
+            String path_file = fileOperationManager.getFilePath(task.getId());
+
+            process = new ProcessBuilder("python", path_script, task.getScriptMethod().name(), path_file).start();
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            String line;
             while ((line = stdInput.readLine()) != null) {
                 System.out.println(line);
                 //TODO
                 // kein XML
                 // properties datei zeilenweise
-
                 // stdin zusammenfassungen / Ergebnis
                 // stderror warnung, error / alle Logs
             }
             while ((line = stdError.readLine()) != null) {
                 System.out.println(line);
                 //TODO
+                // kein XML
+                // properties datei zeilenweise
+                // stdin zusammenfassungen / Ergebnis
+                // stderror warnung, error / alle Logs
             }
-
-            setPropertyToTaskDone(task.getId(), task.getScriptMethod());
-        } catch (Exception e) {
-            setPropertyToTaskFailed(task.getId(), task.getScriptMethod(), e);
+            changeTaskState(task.getId(), ImportState.successful, Level.INFO);
+        } catch (IOException e) {
+            changeTaskState(task.getId(), ImportState.failed, Level.SEVERE);
         } finally {
-            try {
-                runningId = null;
-                if (stdInput != null) stdInput.close();
-                if (stdError != null) stdError.close();
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "An Exception was thrown", e);
+            runningId = null;
+            process = null;
+            if (stdInput != null) {
+                try {
+                    stdInput.close();
+                } catch (IOException e) {
+                    LOGGER.log(Level.WARNING, "Closing of inputReader failed", e);
+                }
             }
+            if (stdError != null) {
+                try {
+                    stdError.close();
+                } catch (IOException e) {
+                    LOGGER.log(Level.WARNING, "Closing of errorReader failed", e);
+                }
+            }
+
         }
     }
 
-    //TODO cancelled und queued hier auch aufnehmen?
-    private void setPropertyToTaskDoing(String uuid, ScriptMethod method) {
-        switch (method) {
-            case verify_file:
-                importStateManager.changeStateProperty(uuid, ImportState.verifying);
-                LOGGER.log(Level.INFO, "Started file verification of {0}", uuid);
-                break;
-            case import_file:
-                importStateManager.changeStateProperty(uuid, ImportState.importing);
-                LOGGER.log(Level.INFO, "Started file import of {0}", uuid);
-                break;
-        }
-    }
-
-    private void setPropertyToTaskDone(String uuid, ScriptMethod method) {
-        switch (method) {
-            case verify_file:
-                importStateManager.writePropertyToFile(uuid, PropertyKey.verified, String.valueOf(System.currentTimeMillis()));
-                importStateManager.changeStateProperty(uuid, ImportState.verification_successful);
-                LOGGER.log(Level.INFO, "Verified file of {0}", uuid);
-                break;
-            case import_file:
-                importStateManager.writePropertyToFile(uuid, PropertyKey.imported, String.valueOf(System.currentTimeMillis()));
-                importStateManager.changeStateProperty(uuid, ImportState.import_successful);
-                LOGGER.log(Level.INFO, "Imported file of {0}", uuid);
-                break;
-        }
-    }
-
-    private void setPropertyToTaskFailed(String uuid, ScriptMethod method, Exception e) {
-        switch (method) {
-            case verify_file:
-                importStateManager.changeStateProperty(uuid, ImportState.verification_failed);
-                break;
-            case import_file:
-                importStateManager.changeStateProperty(uuid, ImportState.import_failed);
-                break;
-        }
-        LOGGER.log(Level.SEVERE, "An Exception was thrown", e);
+    private void changeTaskState(String uuid, ImportState state, Level level) {
+        fileOperationManager.writePropertyToFile(uuid, PropertyKey.state, state.name());
+        LOGGER.log(level, "Execution of task {0} changed to state {1}", new Object[]{uuid, state.name()});
     }
 }

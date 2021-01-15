@@ -1,14 +1,12 @@
 package org.aktin.scripts;
 
 import java.io.*;
-import java.nio.file.Paths;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.concurrent.*;
 
+import org.aktin.dwh.admin.importer.enums.ImportState;
 import org.junit.Assert;
 import org.junit.Test;
-
-import javax.xml.rpc.Call;
 
 
 public class TestPythonExecutioner {
@@ -21,7 +19,7 @@ public class TestPythonExecutioner {
         BufferedReader stdError = null;
 
         try {
-            Process p =  new ProcessBuilder("python", script_path, year_to_test).start();
+            Process p = new ProcessBuilder("python", script_path, year_to_test).start();
             stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
             stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
@@ -60,7 +58,7 @@ public class TestPythonExecutioner {
             }
             switch (value) {
                 case "application/zip":
-                    int[] header_bytes_array = {0x504B0304,0x504B0506,0x504B0708};
+                    int[] header_bytes_array = {0x504B0304, 0x504B0506, 0x504B0708};
                     boolean b = checkContentBytes(path_file, header_bytes_array);
 
                 default:
@@ -72,7 +70,7 @@ public class TestPythonExecutioner {
     public boolean checkContentBytes(String path_file, int[] bytesArray) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(path_file, "r");
         int fileSignature = raf.readInt();
-        for(int bytes : bytesArray) {
+        for (int bytes : bytesArray) {
             if (fileSignature == bytes)
                 return true;
         }
@@ -85,14 +83,14 @@ public class TestPythonExecutioner {
         ExecutorService executorService;
         ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
-        for(int t=0; t<1; t++) {
+        for (int t = 0; t < 1; t++) {
             FutureTask<Integer> future$t = new FutureTask<>(() -> {
                 Integer a = 0;
                 try {
                     for (int i = 0; i < 5; i++) {
                         a++;
                         Thread.sleep(1000);
-                       // System.out.println(this.toString() + " " + Thread.currentThread().getName());
+                        // System.out.println(this.toString() + " " + Thread.currentThread().getName());
                     }
                 } catch (InterruptedException e) {
                     System.out.println("Thread was interrupted");
@@ -106,7 +104,7 @@ public class TestPythonExecutioner {
         Integer result = null;
         try {
             for (int i = 0; i < 15; i++) {
-               // System.out.println(executor.getQueue());
+                // System.out.println(executor.getQueue());
                 System.out.println(executor.toString() + "\n");
                 Thread.sleep(1000);
             }
@@ -121,11 +119,12 @@ public class TestPythonExecutioner {
 
     @Test
     public void runPythonRunner() throws InterruptedException {
+
         PythonRunner runner = new PythonRunner();
         new Thread(runner).start();
 
         Thread.sleep(1000);
-        runner.stop();
+
 
     }
 }
