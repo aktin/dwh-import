@@ -1,10 +1,13 @@
 package org.aktin.scripts;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.concurrent.*;
+import java.util.logging.Level;
 
 import org.aktin.dwh.admin.importer.enums.ImportState;
+import org.aktin.dwh.admin.importer.enums.PropertyKey;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -117,7 +120,7 @@ public class TestPythonExecutioner {
         System.out.println(executor.toString() + "\n");
     }
 
-    @Test
+
     public void runPythonRunner() throws InterruptedException {
 
         PythonRunner runner = new PythonRunner();
@@ -127,4 +130,37 @@ public class TestPythonExecutioner {
 
 
     }
+
+    @Test
+    public void testExecute() throws InterruptedException, IOException {
+        String path = "C:\\Users\\User\\IdeaProjects\\dwh-import\\script-executor\\src\\test\\resources\\";
+        File error = new File(path + "error.txt");
+        File output = new File(path + "output.txt");
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("python", path + "leap_year.py", "12312312");
+            processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(output));
+            Process process = processBuilder.start();
+
+
+            if(!process.waitFor(10, TimeUnit.SECONDS)) {
+                System.out.println("Already waited 2s");
+                process.destroy();
+                process.waitFor(10, TimeUnit.SECONDS);
+                process.destroyForcibly();
+                process.waitFor();
+            } else {
+                System.out.println("finished just in time");
+            }
+
+
+
+        } finally {
+            //Files.deleteIfExists(error.toPath());
+            //Files.deleteIfExists(output.toPath());
+        }
+
+    }
+
+
 }

@@ -5,6 +5,7 @@
 #@MIMETYPE=application/zip
 
 import sys
+import time
 
 year = int(sys.argv[1])
 
@@ -18,3 +19,8 @@ if (year % 4) == 0:
        print("{0} is a leap year".format(year))
 else:
    print("{0} is not a leap year".format(year))
+
+
+time.sleep(5)
+
+print("finished")
