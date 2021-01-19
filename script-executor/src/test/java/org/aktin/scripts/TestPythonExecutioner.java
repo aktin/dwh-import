@@ -2,6 +2,8 @@ package org.aktin.scripts;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -122,28 +124,29 @@ public class TestPythonExecutioner {
 
 
     public void runPythonRunner() throws InterruptedException {
-
         PythonRunner runner = new PythonRunner();
         new Thread(runner).start();
-
         Thread.sleep(1000);
-
 
     }
 
-    @Test
+
     public void testExecute() throws InterruptedException, IOException {
         String path = "C:\\Users\\User\\IdeaProjects\\dwh-import\\script-executor\\src\\test\\resources\\";
-        File error = new File(path + "error.txt");
-        File output = new File(path + "output.txt");
+        BufferedReader stdInput = null;
+        BufferedReader stdError = null;
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", path + "leap_year.py", "12312312");
-            processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
-            processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(output));
-            Process process = processBuilder.start();
-
-
-            if(!process.waitFor(10, TimeUnit.SECONDS)) {
+            Process process = new ProcessBuilder("python", path + "leap_year.py", "12312312").start();
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String line;
+            while ((line = stdInput.readLine()) != null) {
+                Files.write(Paths.get(path + "output.txt"), line.getBytes(), StandardOpenOption.APPEND);
+            }
+            while ((line = stdError.readLine()) != null) {
+                Files.write(Paths.get(path + "error.txt"), line.getBytes(), StandardOpenOption.APPEND);
+            }
+            if (!process.waitFor(2, TimeUnit.SECONDS)) {
                 System.out.println("Already waited 2s");
                 process.destroy();
                 process.waitFor(10, TimeUnit.SECONDS);
@@ -152,9 +155,44 @@ public class TestPythonExecutioner {
             } else {
                 System.out.println("finished just in time");
             }
+        } catch (IOException e) {
+        } finally {
+            if (stdInput != null) {
+                try {
+                    stdInput.close();
+                } catch (IOException e) {
+                }
+            }
+            if (stdError != null) {
+                try {
+                    stdError.close();
+                } catch (IOException e) {
+                }
+            }
 
+        }
+    }
 
+    @Test
+    public void testExecute2() throws InterruptedException, IOException {
+        String path = "C:\\Users\\User\\IdeaProjects\\dwh-import\\script-executor\\src\\test\\resources\\";
+        File error = new File(path + "error.txt");
+        File output = new File(path + "output.txt");
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("python", path + "leap_year.py", "124");
+            processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
+            processBuilder.redirectOutput(output);
+            Process process = processBuilder.start();
 
+            if (!process.waitFor(10, TimeUnit.SECONDS)) {
+                System.out.println("Already waited 2s");
+                process.destroy();
+                process.waitFor(10, TimeUnit.SECONDS);
+                process.destroyForcibly();
+                process.waitFor();
+            } else {
+                System.out.println("finished just in time");
+            }
         } finally {
             //Files.deleteIfExists(error.toPath());
             //Files.deleteIfExists(output.toPath());
