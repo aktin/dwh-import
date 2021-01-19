@@ -1,6 +1,8 @@
 package org.aktin.scripts;
 
 import org.aktin.dwh.admin.importer.FileOperationManager;
+import org.aktin.dwh.admin.importer.ScriptOperationManager;
+import org.aktin.dwh.admin.importer.enums.ImportOperation;
 import org.aktin.dwh.admin.importer.enums.ImportState;
 import org.aktin.dwh.admin.importer.enums.PropertyKey;
 
@@ -24,11 +26,13 @@ public class PythonRunner implements Runnable {
     @Inject
     private FileOperationManager fileOperationManager;
 
+    @Inject
+    private ScriptOperationManager scriptOperationManager;
+
     private Queue<PythonScriptTask> queue;
     private String runningId;
     private Process process;
     private boolean exit = false;
-
 
     public PythonRunner() {
         queue = new LinkedList<>();
@@ -63,7 +67,7 @@ public class PythonRunner implements Runnable {
     public void submit(PythonScriptTask task) {
         synchronized (queue) {
             queue.add(task);
-            changeTaskState(task.getId(), ImportState.queued, Level.INFO);
+            changeTaskState(task.getId(), ImportState.queued);
             queue.notify();
         }
     }
@@ -81,7 +85,7 @@ public class PythonRunner implements Runnable {
                 }
             }
         }
-        changeTaskState(uuid, ImportState.cancelled, Level.INFO);
+        changeTaskState(uuid, ImportState.cancelled);
     }
 
     public void terminate() {
@@ -107,44 +111,52 @@ public class PythonRunner implements Runnable {
     }
 
 
-    // write nur wenn abgeschlossen 
-    //TODO what about clean up ??? if cancelled/interrupted
+    // TODO output nur bei Erfolg??? Kein Stream
+    // TODO what about clean up ??? if cancelled/interrupted
     private void execute(PythonScriptTask task) {
-        HashMap<String, String> map_properties = fileOperationManager.checkPropertiesFileForIntegrity(task.getId());
-        if (map_properties != null && !map_properties.isEmpty()) {
-            String name_script = map_properties.get(PropertyKey.script.name());
-            String path_script = fileOperationManager.getScriptPath(name_script);
-            String path_folder = fileOperationManager.getFileFolder(task.getId());
-            String path_file = Paths.get(path_folder, map_properties.get(PropertyKey.filename.name())).toString();
+        HashMap<String, String> map_properties = fileOperationManager.getPropertiesHashMap(task.getId());
 
-            long currentTime = System.currentTimeMillis();
-            File error = new File(new StringBuilder(path_folder).append(currentTime).append("_error").toString());
-            File output = new File(new StringBuilder(path_folder).append(currentTime).append("_output").toString());
-            try {
-                runningId = task.getId();
-                changeTaskState(task.getId(), ImportState.in_progress, Level.INFO);
+        String name_script = map_properties.get(PropertyKey.script.name());
+        String path_script = scriptOperationManager.getScriptPath(name_script);
+        String path_folder = fileOperationManager.getUploadFileFolderPath(task.getId());
+        String path_file = Paths.get(path_folder, map_properties.get(PropertyKey.filename.name())).toString();
 
-                ProcessBuilder processBuilder = new ProcessBuilder("python", path_script, task.getScriptMethod().name(), path_file);
-                processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
-                processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(output));
-                process = processBuilder.start();
+        long currentTime = System.currentTimeMillis();
+        File error = new File(new StringBuilder(path_folder).append(currentTime).append("_error").toString());
+        File output = new File(new StringBuilder(path_folder).append(currentTime).append("_output").toString());
+        try {
+            runningId = task.getId();
+            changeTaskState(task.getId(), ImportState.in_progress);
 
-                if (!process.waitFor(4, TimeUnit.HOURS)) {
-                    changeTaskState(task.getId(), ImportState.timeout, Level.SEVERE);
-                    killProcess();
-                } else
-                    changeTaskState(task.getId(), ImportState.successful, Level.INFO);
-            } catch (IOException | InterruptedException e) {
-                changeTaskState(task.getId(), ImportState.failed, Level.SEVERE);
-            } finally {
-                runningId = null;
-                process = null;
+            ProcessBuilder processBuilder = new ProcessBuilder("python", path_script, task.getScriptMethod().name(), path_file);
+            processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(output));
+            process = processBuilder.start();
+
+            if (!process.waitFor(4, TimeUnit.HOURS)) {
+                changeTaskState(task.getId(), ImportState.timeout);
+                killProcess();
+            } else {
+                changeTaskState(task.getId(), ImportState.successful);
+                Long finished = System.currentTimeMillis();
+                ImportOperation operation = ImportOperation.valueOf(map_properties.get(PropertyKey.operation.name()));
+                if (operation.equals(ImportOperation.verifying))
+                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.verified, finished.toString());
+                else if (operation.equals(ImportOperation.importing))
+                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.imported, finished.toString());
             }
+        } catch (IOException | InterruptedException e) {
+            LOGGER.log(Level.SEVERE, "Execution of task failed", e);
+            changeTaskState(task.getId(), ImportState.failed);
+        } finally {
+            runningId = null;
+            process = null;
         }
+
     }
 
-    private void changeTaskState(String uuid, ImportState state, Level level) {
-        fileOperationManager.writePropertyToFile(uuid, PropertyKey.state, state.name());
-        LOGGER.log(level, "Execution of task {0} changed to state {1}", new Object[]{uuid, state.name()});
+    private void changeTaskState(String uuid, ImportState state) {
+        fileOperationManager.addPropertyToProperties(uuid, PropertyKey.state, state.name());
+        LOGGER.log(Level.INFO, "Execution of task {0} changed to state {1}", new Object[]{uuid, state.name()});
     }
 }

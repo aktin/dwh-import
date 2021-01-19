@@ -28,32 +28,30 @@ public class PythonScriptExecutor {
 
 
     @PostConstruct
-    public void startup() throws IOException {
+    public void startup() {
         runner = new PythonRunner();
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }
 
-    public void addUnfinishedTasksToQueue() throws IOException {
-        PythonScriptTask task;
-        ArrayList<String> list_uuids = fileOperationManager.getUploadedFileIDs();
-        for (String uuid : list_uuids) {
-            HashMap<String, String> map_properties = fileOperationManager.checkPropertiesFileForIntegrity(uuid);
-            if (map_properties != null && !map_properties.isEmpty()) {
-                ImportState state = ImportState.valueOf(map_properties.get(PropertyKey.state));
-                if (state.equals(ImportState.queued) || state.equals(ImportState.in_progress)) {
-                    switch (ImportOperation.valueOf(map_properties.get(PropertyKey.operation))) {
-                        case verifying:
-                            task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
-                            break;
-                        case importing:
-                            task = new PythonScriptTask(uuid, ScriptOperation.import_file);
-                            break;
-                        default:
-                            throw new IllegalStateException("Unexpected value: " + ImportOperation.valueOf(map_properties.get(PropertyKey.operation)));
-                    }
-                    runner.submit(task);
+    public void addUnfinishedTasksToQueue() {
+        for (HashMap<String, String> map_properties : fileOperationManager.getHashMaps()) {
+            PythonScriptTask task;
+            ImportState state = ImportState.valueOf(map_properties.get(PropertyKey.state.name()));
+            if (state.equals(ImportState.queued) || state.equals(ImportState.in_progress)) {
+                String uuid = map_properties.get(PropertyKey.id.name());
+                ImportOperation operation = ImportOperation.valueOf(map_properties.get(PropertyKey.operation.name()));
+                switch (operation) {
+                    case verifying:
+                        task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
+                        break;
+                    case importing:
+                        task = new PythonScriptTask(uuid, ScriptOperation.import_file);
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + operation.name());
                 }
+                runner.submit(task);
             }
         }
     }
@@ -78,7 +76,8 @@ public class PythonScriptExecutor {
     }
 
     public boolean isTaskDone(String uuid) {
-        ImportState state = ImportState.valueOf(fileOperationManager.getPropertyByKey(uuid, PropertyKey.state));
+        HashMap<String, String> map_properties = fileOperationManager.getPropertiesHashMap(uuid);
+        ImportState state = ImportState.valueOf(map_properties.get(PropertyKey.state.name()));
         if (state.equals(ImportState.successful))
             return true;
         else
