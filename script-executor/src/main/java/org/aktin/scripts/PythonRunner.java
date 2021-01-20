@@ -138,12 +138,12 @@ public class PythonRunner implements Runnable {
                 killProcess();
             } else {
                 changeTaskState(task.getId(), ImportState.successful);
-                Long finished = System.currentTimeMillis();
+                Long finishedTime = System.currentTimeMillis();
                 ImportOperation operation = ImportOperation.valueOf(map_properties.get(PropertyKey.operation.name()));
                 if (operation.equals(ImportOperation.verifying))
-                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.verified, finished.toString());
+                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.verified, finishedTime.toString());
                 else if (operation.equals(ImportOperation.importing))
-                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.imported, finished.toString());
+                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.imported, finishedTime.toString());
             }
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);

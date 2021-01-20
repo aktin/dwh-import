@@ -10,7 +10,6 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
