@@ -3,14 +3,13 @@ package org.aktin.scripts;
 import org.aktin.dwh.admin.importer.*;
 import org.aktin.dwh.admin.importer.enums.ImportOperation;
 import org.aktin.dwh.admin.importer.enums.ImportState;
-import org.aktin.dwh.admin.importer.enums.PropertyKey;
+import org.aktin.dwh.admin.importer.pojos.PropertiesFilePOJO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.*;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 // TODO COMMENTS + JAVADOC
@@ -34,12 +33,12 @@ public class PythonScriptExecutor {
     }
 
     public void addUnfinishedTasksToQueue() {
-        for (HashMap<String, String> map_properties : fileOperationManager.getHashMaps()) {
+        for (PropertiesFilePOJO pojo_properties : fileOperationManager.getPropertiesPOJOs()) {
             PythonScriptTask task;
-            ImportState state = ImportState.valueOf(map_properties.get(PropertyKey.state.name()));
+            ImportState state = ImportState.valueOf(pojo_properties.getState());
             if (state.equals(ImportState.queued) || state.equals(ImportState.in_progress)) {
-                String uuid = map_properties.get(PropertyKey.id.name());
-                ImportOperation operation = ImportOperation.valueOf(map_properties.get(PropertyKey.operation.name()));
+                String uuid = pojo_properties.getId();
+                ImportOperation operation = ImportOperation.valueOf(pojo_properties.getOperation());
                 switch (operation) {
                     case verifying:
                         task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
@@ -75,12 +74,9 @@ public class PythonScriptExecutor {
     }
 
     public boolean isTaskDone(String uuid) {
-        HashMap<String, String> map_properties = fileOperationManager.getPropertiesHashMap(uuid);
-        ImportState state = ImportState.valueOf(map_properties.get(PropertyKey.state.name()));
-        if (state.equals(ImportState.successful))
-            return true;
-        else
-            return false;
+        PropertiesFilePOJO pojo_properties = fileOperationManager.getPropertiesPOJO(uuid);
+        ImportState state = ImportState.valueOf(pojo_properties.getState());
+        return state.equals(ImportState.successful);
     }
 
 }

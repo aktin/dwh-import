@@ -5,12 +5,12 @@ import org.aktin.dwh.admin.importer.ScriptOperationManager;
 import org.aktin.dwh.admin.importer.enums.ImportOperation;
 import org.aktin.dwh.admin.importer.enums.ImportState;
 import org.aktin.dwh.admin.importer.enums.PropertyKey;
+import org.aktin.dwh.admin.importer.pojos.PropertiesFilePOJO;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +29,7 @@ public class PythonRunner implements Runnable {
     @Inject
     private ScriptOperationManager scriptOperationManager;
 
-    private Queue<PythonScriptTask> queue;
+    private final Queue<PythonScriptTask> queue;
     private String runningId;
     private Process process;
     private boolean exit = false;
@@ -114,12 +114,12 @@ public class PythonRunner implements Runnable {
     // TODO output nur bei Erfolg??? Kein Stream
     // TODO what about clean up ??? if cancelled/interrupted
     private void execute(PythonScriptTask task) {
-        HashMap<String, String> map_properties = fileOperationManager.getPropertiesHashMap(task.getId());
+        PropertiesFilePOJO pojo_properties = fileOperationManager.getPropertiesPOJO(task.getId());
 
-        String name_script = map_properties.get(PropertyKey.script.name());
+        String name_script = pojo_properties.getScript();
         String path_script = scriptOperationManager.getScriptPath(name_script);
         String path_folder = fileOperationManager.getUploadFileFolderPath(task.getId());
-        String path_file = Paths.get(path_folder, map_properties.get(PropertyKey.filename.name())).toString();
+        String path_file = Paths.get(path_folder, pojo_properties.getFilename()).toString();
 
         long currentTime = System.currentTimeMillis();
         File error = new File(new StringBuilder(path_folder).append(currentTime).append("_error").toString());
@@ -138,12 +138,12 @@ public class PythonRunner implements Runnable {
                 killProcess();
             } else {
                 changeTaskState(task.getId(), ImportState.successful);
-                Long finishedTime = System.currentTimeMillis();
-                ImportOperation operation = ImportOperation.valueOf(map_properties.get(PropertyKey.operation.name()));
+                long finishedTime = System.currentTimeMillis();
+                ImportOperation operation = ImportOperation.valueOf(pojo_properties.getOperation());
                 if (operation.equals(ImportOperation.verifying))
-                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.verified, finishedTime.toString());
+                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.verified, Long.toString(finishedTime));
                 else if (operation.equals(ImportOperation.importing))
-                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.imported, finishedTime.toString());
+                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.imported, Long.toString(finishedTime));
             }
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);
