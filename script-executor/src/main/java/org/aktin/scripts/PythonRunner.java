@@ -4,6 +4,7 @@ import org.aktin.dwh.admin.importer.FileOperationManager;
 import org.aktin.dwh.admin.importer.ScriptOperationManager;
 import org.aktin.dwh.admin.importer.enums.ImportOperation;
 import org.aktin.dwh.admin.importer.enums.ImportState;
+import org.aktin.dwh.admin.importer.enums.LogType;
 import org.aktin.dwh.admin.importer.enums.PropertyKey;
 import org.aktin.dwh.admin.importer.pojos.PropertiesFilePOJO;
 
@@ -114,43 +115,45 @@ public class PythonRunner implements Runnable {
     // TODO output nur bei Erfolg??? Kein Stream
     // TODO what about clean up ??? if cancelled/interrupted
     private void execute(PythonScriptTask task) {
-        PropertiesFilePOJO pojo_properties = fileOperationManager.getPropertiesPOJO(task.getId());
+        String uuid = task.getId();
+        PropertiesFilePOJO pojo_properties = fileOperationManager.getPropertiesPOJO(uuid);
 
         String name_script = pojo_properties.getScript();
         String path_script = scriptOperationManager.getScriptPath(name_script);
-        String path_folder = fileOperationManager.getUploadFileFolderPath(task.getId());
+        String path_folder = fileOperationManager.getUploadFileFolderPath(uuid);
         String path_file = Paths.get(path_folder, pojo_properties.getFilename()).toString();
 
         long currentTime = System.currentTimeMillis();
-        File error = new File(new StringBuilder(path_folder).append(currentTime).append("_error").toString());
-        File output = new File(new StringBuilder(path_folder).append(currentTime).append("_output").toString());
+        File error = new File(new StringBuilder(path_folder).append(LogType.stdError.name()).toString());
+        File output = new File(new StringBuilder(path_folder).append(LogType.stdOutput.name()).toString());
         try {
-            runningId = task.getId();
-            changeTaskState(task.getId(), ImportState.in_progress);
+            runningId = uuid;
+            changeTaskState(uuid, ImportState.in_progress);
 
             ProcessBuilder processBuilder = new ProcessBuilder("python", path_script, task.getScriptMethod().name(), path_file);
-            processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
-            processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(output));
+            processBuilder.redirectError(ProcessBuilder.Redirect.to(error));
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.to(output));
             process = processBuilder.start();
 
             if (!process.waitFor(4, TimeUnit.HOURS)) {
-                changeTaskState(task.getId(), ImportState.timeout);
+                changeTaskState(uuid, ImportState.timeout);
                 killProcess();
             } else {
-                changeTaskState(task.getId(), ImportState.successful);
+                changeTaskState(uuid, ImportState.successful);
                 long finishedTime = System.currentTimeMillis();
                 ImportOperation operation = ImportOperation.valueOf(pojo_properties.getOperation());
                 if (operation.equals(ImportOperation.verifying))
-                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.verified, Long.toString(finishedTime));
+                    fileOperationManager.addPropertyToProperties(uuid, PropertyKey.verified, Long.toString(finishedTime));
                 else if (operation.equals(ImportOperation.importing))
-                    fileOperationManager.addPropertyToProperties(task.getId(), PropertyKey.imported, Long.toString(finishedTime));
+                    fileOperationManager.addPropertyToProperties(uuid, PropertyKey.imported, Long.toString(finishedTime));
             }
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);
-            changeTaskState(task.getId(), ImportState.failed);
+            changeTaskState(uuid, ImportState.failed);
         } finally {
             runningId = null;
             process = null;
+            fileOperationManager.reloadScriptLogList(uuid);
         }
 
     }

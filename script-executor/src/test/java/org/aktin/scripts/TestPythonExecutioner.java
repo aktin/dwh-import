@@ -2,11 +2,14 @@ package org.aktin.scripts;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.aktin.dwh.admin.importer.enums.ImportState;
 import org.aktin.dwh.admin.importer.enums.PropertyKey;
@@ -179,9 +182,9 @@ public class TestPythonExecutioner {
         File error = new File(path + "error.txt");
         File output = new File(path + "output.txt");
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", path + "leap_year.py", "124");
-            processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(error));
-            processBuilder.redirectOutput(output);
+            ProcessBuilder processBuilder = new ProcessBuilder("python", path + "leap_year.py", "AAA1");
+            processBuilder.redirectError(ProcessBuilder.Redirect.to(error));
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.to(output));
             Process process = processBuilder.start();
 
             if (!process.waitFor(10, TimeUnit.SECONDS)) {
@@ -194,8 +197,16 @@ public class TestPythonExecutioner {
                 System.out.println("finished just in time");
             }
         } finally {
-            //Files.deleteIfExists(error.toPath());
-            //Files.deleteIfExists(output.toPath());
+            Path p = Paths.get(path + "error1.txt");
+
+            System.out.println(Files.exists(p));
+
+            List<String> a = Files.readAllLines(p);
+            String result = a.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining("\n"));
+
+            System.out.println(result);
         }
 
     }
