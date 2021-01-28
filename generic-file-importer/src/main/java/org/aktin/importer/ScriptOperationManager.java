@@ -6,8 +6,9 @@ import org.aktin.importer.enums.ScriptKey;
 import org.aktin.importer.pojos.ScriptFilePOJO;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

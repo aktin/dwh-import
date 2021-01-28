@@ -8,8 +8,9 @@ import org.aktin.importer.pojos.PropertiesFilePOJO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Singleton;
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
 import java.io.*;
 import java.util.logging.Logger;
 

@@ -10,8 +10,8 @@ import org.aktin.importer.pojos.PropertiesFilePOJO;
 import org.aktin.importer.pojos.ScriptLogPOJO;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -57,11 +57,6 @@ public class FileOperationManager {
                 list_scriptLog = createScriptLogList(uuid);
                 operationLock_scriptLog.put(uuid, list_scriptLog);
             }
-        }
-
-        System.out.println(operationLock_scriptLog.keySet());
-        for (String key : operationLock_scriptLog.keySet()) {
-            System.out.println(operationLock_scriptLog.get(key).size());
         }
     }
 
