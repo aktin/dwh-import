@@ -40,17 +40,20 @@ public class ScriptOperationManager {
     // only scripts with all keys in operationLock
     @PostConstruct
     public void initOperationLock() {
-        HashMap<String, String> map;
-        ScriptFilePOJO pojo;
-        for (String script : getScriptIDs()) {
-            map = checkScriptFileForIntegrity(script);
-            if (map != null && !map.isEmpty()) {
-                pojo = createScriptPOJO(map);
-                operationLock_script.put(script, pojo);
-            } else
-                LOGGER.log(Level.WARNING, "{0} misses some keys", script);
+        synchronized (operationLock_script) {
+            HashMap<String, String> map;
+            ScriptFilePOJO pojo;
+            for (String script : getScriptIDs()) {
+                map = createIntegratedScriptMap(script);
+                if (map != null && !map.isEmpty()) {
+                    pojo = createScriptPOJO(map);
+                    operationLock_script.put(script, pojo);
+                } else
+                    LOGGER.log(Level.WARNING, "{0} misses some keys", script);
+            }
         }
     }
+
 
     // files.walk -> IOExveption
     private ArrayList<String> getScriptIDs() {
@@ -67,7 +70,7 @@ public class ScriptOperationManager {
         return list_scripts;
     }
 
-    private HashMap<String, String> checkScriptFileForIntegrity(String name_script) {
+    private HashMap<String, String> createIntegratedScriptMap(String name_script) {
         String path = Paths.get(preferences.get(PreferenceKey.importScriptPath), name_script).toString();
         String line, key, value;
         HashMap<String, String> result = new HashMap<>();
@@ -109,15 +112,14 @@ public class ScriptOperationManager {
     }
 
     public ScriptFilePOJO getScriptPOJO(String name_script) {
-        synchronized (operationLock_script.get(name_script)) {
-            ScriptFilePOJO result = null;
-            try {
+        ScriptFilePOJO result = null;
+        if (operationLock_script.containsKey(name_script)) {
+            synchronized (operationLock_script.get(name_script)) {
                 result = operationLock_script.get(name_script);
-            } catch (NullPointerException e) {
-                LOGGER.log(Level.SEVERE, "{0} misses some keys. Check integrity", name_script);
             }
-            return result;
-        }
+        } else
+            LOGGER.log(Level.WARNING, "{0} misses some keys. Check integrity", name_script);
+        return result;
     }
 
     public String getScriptPath(String name_script) {
