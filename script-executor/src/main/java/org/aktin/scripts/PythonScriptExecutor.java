@@ -47,7 +47,7 @@ public class PythonScriptExecutor {
                         task = new PythonScriptTask(uuid, ScriptOperation.import_file);
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value: " + operation.name());
+                        throw new IllegalStateException("Unexpected operation: " + operation.name());
                 }
                 runner.submit(task);
             }

@@ -11,6 +11,7 @@ import org.aktin.dwh.admin.importer.pojos.PropertiesFilePOJO;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -123,9 +124,8 @@ public class PythonRunner implements Runnable {
         String path_folder = fileOperationManager.getUploadFileFolderPath(uuid);
         String path_file = Paths.get(path_folder, pojo_properties.getFilename()).toString();
 
-        long currentTime = System.currentTimeMillis();
-        File error = new File(new StringBuilder(path_folder).append(LogType.stdError.name()).toString());
-        File output = new File(new StringBuilder(path_folder).append(LogType.stdOutput.name()).toString());
+        File error = new File(Paths.get(path_folder, LogType.stdError.name()).toString());
+        File output = new File(Paths.get(path_folder, LogType.stdOutput.name()).toString());
         try {
             runningId = uuid;
             changeTaskState(uuid, ImportState.in_progress);
