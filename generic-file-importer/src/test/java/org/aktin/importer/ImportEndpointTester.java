@@ -19,15 +19,14 @@ import org.aktin.importer.enums.ImportState;
 import org.aktin.importer.enums.ScriptKey;
 import org.aktin.importer.pojos.PropertiesFilePOJO;
 import org.junit.Assert;
-import sun.rmi.rmic.Main;
 
 public class ImportEndpointTester {
 
     private static final List<String> LIST_KEYS = new LinkedList<String>(Arrays.asList("VIEWNAME", "VERSION"));
 
     public void testUpload() throws Exception {
-        URL goodUrl = Main.class.getResource("/folder1/folder2/p21testdata");
-        File goodFile = new File(goodUrl.toURI());
+      //  URL goodUrl = Main.class.getResource("/folder1/folder2/p21testdata");
+      //  File goodFile = new File(goodUrl.toURI());
 
         //FileManagerEndpoint fue = new FileManagerEndpoint();
 
@@ -37,6 +36,7 @@ public class ImportEndpointTester {
     }
 
     public void testDelete() throws Exception {
+        /*
         URL url = Main.class.getResource("/folder1/folder2/p21testdata");
         File file = new File(url.toURI());
 
@@ -49,7 +49,7 @@ public class ImportEndpointTester {
         try (OutputStream os = new FileOutputStream(copiedFile.toFile())) {
             Files.copy(oldFile, os);
         }
-
+*/
         //FileManagerEndpoint fue = new FileManagerEndpoint();
         //Response r = fue.deleteFile(copiedFile.toString());
        // Assert.assertEquals(202, r.getStatus());
@@ -58,6 +58,7 @@ public class ImportEndpointTester {
     }
 
     public void testVerify() throws Exception {
+        /*
         URL url = Main.class.getResource("/folder1/folder3/script.py");
         File file = new File(url.toURI());
 
@@ -115,6 +116,7 @@ public class ImportEndpointTester {
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(scripts);
         System.out.println(json);
         Assert.assertEquals(true, true);
+         */
     }
 
     public void testGetFiles() throws Exception {
