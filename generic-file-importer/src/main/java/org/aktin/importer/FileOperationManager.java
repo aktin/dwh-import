@@ -59,7 +59,6 @@ public class FileOperationManager {
         }
     }
 
-
     // files.walk -> IOExveption
     private ArrayList<String> getUploadedFileIDs() {
         String path = preferences.get(PreferenceKey.importDataPath);
@@ -126,7 +125,7 @@ public class FileOperationManager {
             Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid, "properties");
             Properties properties = createPropertiesFile(uuid, file_name, file_size, script_name);
             savePropertiesFile(properties, path);
-            addPropertiesToOperationLock(properties);
+            addPropertiesFileToOperationLock(properties);
         }
     }
 
@@ -154,7 +153,7 @@ public class FileOperationManager {
         }
     }
 
-    private void addPropertiesToOperationLock(Properties properties) {
+    private void addPropertiesFileToOperationLock(Properties properties) {
         PropertiesFilePOJO pojo = createPropertiesPOJO(properties);
         synchronized (operationLock_properties) {
             operationLock_properties.put(pojo.getId(), pojo);
@@ -169,12 +168,11 @@ public class FileOperationManager {
                 Properties properties = loadPropertiesFile(uuid);
                 properties.setProperty(key.name(), value);
                 savePropertiesFile(properties, path);
-                addPropertiesToOperationLock(properties);
+                addPropertiesFileToOperationLock(properties);
             }
         } else
             LOGGER.log(Level.WARNING, "{0} misses some keys. Check integrity", uuid);
     }
-
 
     // Exception by createDirecotries
     public String deleteUploadFileFolder(String uuid) throws IOException {
@@ -214,6 +212,9 @@ public class FileOperationManager {
     }
 
 
+
+
+
     private ArrayList<ScriptLogPOJO> createScriptLogList(String uuid) {
         ArrayList<ScriptLogPOJO> list_scriptLog = new ArrayList<>();
         ScriptLogPOJO pojo;
@@ -246,15 +247,15 @@ public class FileOperationManager {
 
     // only for python runner
     //TODO make better??
-    public void reloadScriptLogList(String uuid) {
+    public void reloadScriptLog(String uuid) {
         if (operationLock_scriptLog.containsKey(uuid)) {
             synchronized (operationLock_scriptLog.get(uuid)) {
                 ArrayList<ScriptLogPOJO> list_scriptLog = createScriptLogList(uuid);
-                updateScriptLogList(uuid, list_scriptLog);
+                updateScriptLog(uuid, list_scriptLog);
             }
         } else {
             ArrayList<ScriptLogPOJO> list_scriptLog = createScriptLogList(uuid);
-            updateScriptLogList(uuid, list_scriptLog);
+            updateScriptLog(uuid, list_scriptLog);
         }
     }
 
@@ -262,21 +263,21 @@ public class FileOperationManager {
     public String deleteScriptLog(String uuid, LogType logType) throws IOException {
         synchronized (operationLock_scriptLog.get(uuid)) {
             Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid, logType.name());
-            Files.deleteIfExists(path);
             ArrayList<ScriptLogPOJO> list_scriptLog = operationLock_scriptLog.get(uuid);
+            Files.deleteIfExists(path);
             list_scriptLog.removeIf(scriptLog -> scriptLog.getType().equals(logType));
-            updateScriptLogList(uuid, list_scriptLog);
+            updateScriptLog(uuid, list_scriptLog);
             return path.toString();
         }
     }
 
-    private void updateScriptLogList(String uuid, ArrayList<ScriptLogPOJO> list) {
+    private void updateScriptLog(String uuid, ArrayList<ScriptLogPOJO> list) {
         synchronized (operationLock_scriptLog) {
             operationLock_scriptLog.put(uuid, list);
         }
     }
 
-    public ArrayList<ScriptLogPOJO> getScriptLogList(String uuid) {
+    public ArrayList<ScriptLogPOJO> getScriptLogs(String uuid) {
         synchronized (operationLock_scriptLog) {
             return operationLock_scriptLog.get(uuid);
         }

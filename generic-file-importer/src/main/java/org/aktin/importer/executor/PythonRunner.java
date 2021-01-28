@@ -152,7 +152,7 @@ public class PythonRunner implements Runnable {
         } finally {
             runningId = null;
             process = null;
-            fileOperationManager.reloadScriptLogList(uuid);
+            fileOperationManager.reloadScriptLog(uuid);
         }
 
     }
