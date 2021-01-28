@@ -16,16 +16,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // TODO COMMENTS + JAVA DOC
-// TODO synchronized
 
 @Singleton
 public class ScriptOperationManager {
@@ -42,21 +38,20 @@ public class ScriptOperationManager {
     public void initOperationLock() {
         synchronized (operationLock_script) {
             HashMap<String, String> map;
-            ScriptFilePOJO pojo;
-            for (String script : getScriptIDs()) {
-                map = createIntegratedScriptMap(script);
-                if (map != null && !map.isEmpty()) {
-                    pojo = createScriptPOJO(map);
-                    operationLock_script.put(script, pojo);
+            ScriptFilePOJO pojo_script;
+            for (String name_script : getScriptNames()) {
+                map = createScriptHashMap(name_script);
+                if (checkScriptHashMapForIntegrity(map)) {
+                    pojo_script = createScriptPOJO(map);
+                    operationLock_script.put(pojo_script.getId(), pojo_script);
                 } else
-                    LOGGER.log(Level.WARNING, "{0} misses some keys", script);
+                    LOGGER.log(Level.WARNING, "{0} misses some keys", name_script);
             }
         }
     }
 
-
     // files.walk -> IOExveption
-    private ArrayList<String> getScriptIDs() {
+    private ArrayList<String> getScriptNames() {
         Path path = Paths.get(preferences.get(PreferenceKey.importScriptPath));
         ArrayList<String> list_scripts = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(path)) {
@@ -70,31 +65,29 @@ public class ScriptOperationManager {
         return list_scripts;
     }
 
-    private HashMap<String, String> createIntegratedScriptMap(String name_script) {
+    private HashMap<String, String> createScriptHashMap(String name_script) {
         String path = Paths.get(preferences.get(PreferenceKey.importScriptPath), name_script).toString();
         String line, key, value;
         HashMap<String, String> result = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            List<String> list = Stream.of(ScriptKey.values()).map(Enum::name).collect(Collectors.toList());
             for (int i = 0; i < 15; i++) {
                 line = br.readLine();
                 if (line != null && line.startsWith("#") && line.contains("@") && line.contains("=")) {
                     key = line.substring(line.indexOf('@') + 1, line.indexOf('='));
                     value = line.substring(line.indexOf('=') + 1);
-                    if (list.contains(key) && !value.isEmpty()) {
-                        list.remove(key);
-                        result.put(key, value);
-                    }
+                    result.put(key, value);
                 }
             }
-            if (!list.isEmpty())
-                result = new HashMap<>();
         } catch (FileNotFoundException e) {
             LOGGER.log(Level.SEVERE, "No file to read found", e);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "No line to read found", e);
         }
         return result;
+    }
+
+    private boolean checkScriptHashMapForIntegrity(HashMap<String, String> map) {
+        return Arrays.stream(ScriptKey.values()).allMatch(key -> map.containsKey(key.name()));
     }
 
     private ScriptFilePOJO createScriptPOJO(HashMap<String, String> map) {
