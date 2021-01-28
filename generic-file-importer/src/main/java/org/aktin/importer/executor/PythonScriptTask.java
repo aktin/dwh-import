@@ -1,6 +1,6 @@
-package org.aktin.script.executor;
+package org.aktin.importer.executor;
 
-import org.aktin.enums.ScriptOperation;
+import org.aktin.importer.enums.ScriptOperation;
 
 public class PythonScriptTask {
 

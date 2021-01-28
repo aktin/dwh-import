@@ -1,12 +1,12 @@
-package org.aktin.script.executor;
+package org.aktin.importer.executor;
 
-import org.aktin.FileOperationManager;
-import org.aktin.ScriptOperationManager;
-import org.aktin.enums.ImportOperation;
-import org.aktin.enums.ImportState;
-import org.aktin.enums.LogType;
-import org.aktin.enums.PropertyKey;
-import org.aktin.pojos.PropertiesFilePOJO;
+import org.aktin.importer.FileOperationManager;
+import org.aktin.importer.ScriptOperationManager;
+import org.aktin.importer.enums.ImportOperation;
+import org.aktin.importer.enums.ImportState;
+import org.aktin.importer.enums.LogType;
+import org.aktin.importer.enums.PropertyKey;
+import org.aktin.importer.pojos.PropertiesFilePOJO;
 
 import javax.inject.Inject;
 import java.io.File;

@@ -1,4 +1,4 @@
-package org.aktin.enums;
+package org.aktin.importer.enums;
 
 // possible keys for properties file of uploaded files
 public enum PropertyKey {

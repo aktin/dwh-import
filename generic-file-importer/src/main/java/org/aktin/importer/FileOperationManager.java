@@ -1,13 +1,13 @@
-package org.aktin;
+package org.aktin.importer;
 
 import org.aktin.Preferences;
 import org.aktin.dwh.PreferenceKey;
-import org.aktin.enums.ImportOperation;
-import org.aktin.enums.ImportState;
-import org.aktin.enums.LogType;
-import org.aktin.enums.PropertyKey;
-import org.aktin.pojos.PropertiesFilePOJO;
-import org.aktin.pojos.ScriptLogPOJO;
+import org.aktin.importer.enums.ImportOperation;
+import org.aktin.importer.enums.ImportState;
+import org.aktin.importer.enums.LogType;
+import org.aktin.importer.enums.PropertyKey;
+import org.aktin.importer.pojos.PropertiesFilePOJO;
+import org.aktin.importer.pojos.ScriptLogPOJO;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

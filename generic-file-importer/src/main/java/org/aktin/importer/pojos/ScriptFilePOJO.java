@@ -1,4 +1,4 @@
-package org.aktin.pojos;
+package org.aktin.importer.pojos;
 
 public class ScriptFilePOJO {
 

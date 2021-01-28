@@ -1,4 +1,4 @@
-package org.aktin.script.executor;
+package org.aktin.importer.executor;
 
 import java.io.*;
 import java.nio.file.Files;

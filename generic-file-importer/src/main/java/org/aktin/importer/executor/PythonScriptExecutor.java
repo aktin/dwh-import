@@ -1,10 +1,10 @@
-package org.aktin.script.executor;
+package org.aktin.importer.executor;
 
-import org.aktin.FileOperationManager;
-import org.aktin.enums.ImportOperation;
-import org.aktin.enums.ImportState;
-import org.aktin.enums.ScriptOperation;
-import org.aktin.pojos.PropertiesFilePOJO;
+import org.aktin.importer.FileOperationManager;
+import org.aktin.importer.enums.ImportOperation;
+import org.aktin.importer.enums.ImportState;
+import org.aktin.importer.enums.ScriptOperation;
+import org.aktin.importer.pojos.PropertiesFilePOJO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

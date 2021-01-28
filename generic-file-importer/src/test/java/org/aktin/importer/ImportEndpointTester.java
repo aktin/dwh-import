@@ -14,16 +14,12 @@ import java.util.zip.ZipOutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.aktin.enums.ImportOperation;
-import org.aktin.enums.ImportState;
-import org.aktin.enums.ScriptKey;
-import org.aktin.pojos.PropertiesFilePOJO;
+import org.aktin.importer.enums.ImportOperation;
+import org.aktin.importer.enums.ImportState;
+import org.aktin.importer.enums.ScriptKey;
+import org.aktin.importer.pojos.PropertiesFilePOJO;
 import org.junit.Assert;
-import org.junit.Test;
-import sun.applet.Main;
-
-
-import javax.ws.rs.core.Response;
+import sun.rmi.rmic.Main;
 
 public class ImportEndpointTester {
 

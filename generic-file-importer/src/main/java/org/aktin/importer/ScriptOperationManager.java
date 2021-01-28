@@ -1,9 +1,9 @@
-package org.aktin;
+package org.aktin.importer;
 
 import org.aktin.Preferences;
 import org.aktin.dwh.PreferenceKey;
-import org.aktin.enums.ScriptKey;
-import org.aktin.pojos.ScriptFilePOJO;
+import org.aktin.importer.enums.ScriptKey;
+import org.aktin.importer.pojos.ScriptFilePOJO;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

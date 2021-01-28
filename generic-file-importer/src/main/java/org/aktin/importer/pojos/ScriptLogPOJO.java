@@ -1,6 +1,6 @@
-package org.aktin.pojos;
+package org.aktin.importer.pojos;
 
-import org.aktin.enums.LogType;
+import org.aktin.importer.enums.LogType;
 
 public class ScriptLogPOJO {
 

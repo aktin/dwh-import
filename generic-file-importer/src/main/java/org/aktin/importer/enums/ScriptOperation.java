@@ -1,4 +1,4 @@
-package org.aktin.enums;
+package org.aktin.importer.enums;
 
 public enum ScriptOperation {
     import_file,
