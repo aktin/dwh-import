@@ -177,7 +177,7 @@ public class FileOperationManager {
 
 
     // Exception by createDirecotries
-    public void deleteUploadFileFolder(String uuid) throws IOException {
+    public String deleteUploadFileFolder(String uuid) throws IOException {
         synchronized (operationLock_properties.get(uuid)) {
             Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid);
             try (Stream<Path> walk = Files.walk(path)) {
@@ -188,6 +188,7 @@ public class FileOperationManager {
             synchronized (operationLock_properties) {
                 operationLock_properties.remove(uuid);
             }
+            return path.toString();
         }
     }
 
