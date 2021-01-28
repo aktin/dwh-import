@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>AKTIN : DWH Import : generic file importer</name>
+    <packaging>jar</packaging>
+
+    <groupId>org.aktin</groupId>
+    <artifactId>generic-file-importer</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+    <parent>
+        <artifactId>dwh-import</artifactId>
+        <groupId>org.aktin</groupId>
+        <version>0.15-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aktin</groupId>
+            <artifactId>dwh-api</artifactId>
+            <version>0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
