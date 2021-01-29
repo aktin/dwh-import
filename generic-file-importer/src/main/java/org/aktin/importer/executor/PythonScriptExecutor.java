@@ -1,6 +1,7 @@
 package org.aktin.importer.executor;
 
 import org.aktin.importer.FileOperationManager;
+import org.aktin.importer.ScriptOperationManager;
 import org.aktin.importer.enums.ImportOperation;
 import org.aktin.importer.enums.ImportState;
 import org.aktin.importer.enums.ScriptOperation;
@@ -26,10 +27,12 @@ public class PythonScriptExecutor {
     @Inject
     private FileOperationManager fileOperationManager;
 
+    @Inject
+    private ScriptOperationManager scriptOperationManager;
 
     @PostConstruct
     public void startup() {
-        runner = new PythonRunner();
+        runner = new PythonRunner(fileOperationManager, scriptOperationManager);
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }
