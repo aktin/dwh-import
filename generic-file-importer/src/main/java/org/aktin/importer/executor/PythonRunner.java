@@ -8,7 +8,6 @@ import org.aktin.importer.enums.LogType;
 import org.aktin.importer.enums.PropertyKey;
 import org.aktin.importer.pojos.PropertiesFilePOJO;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -24,19 +23,18 @@ public class PythonRunner implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(PythonRunner.class.getName());
 
-    @Inject
-    private FileOperationManager fileOperationManager;
-
-    @Inject
-    private ScriptOperationManager scriptOperationManager;
+    private final FileOperationManager fileOperationManager;
+    private final ScriptOperationManager scriptOperationManager;
 
     private final Queue<PythonScriptTask> queue;
     private String runningId;
     private Process process;
     private boolean exit = false;
 
-    public PythonRunner() {
+    public PythonRunner(FileOperationManager fileOperationManager, ScriptOperationManager scriptOperationManager) {
         queue = new LinkedList<>();
+        this.fileOperationManager = fileOperationManager;
+        this.scriptOperationManager = scriptOperationManager;
     }
 
     @Override
@@ -68,6 +66,7 @@ public class PythonRunner implements Runnable {
     public void submit(PythonScriptTask task) {
         synchronized (queue) {
             queue.add(task);
+            changeTaskOperation(task);
             changeTaskState(task.getId(), ImportState.queued);
             queue.notify();
         }
@@ -114,6 +113,7 @@ public class PythonRunner implements Runnable {
 
     // TODO output nur bei Erfolg??? Kein Stream
     // TODO what about clean up ??? if cancelled/interrupted
+    // TODO python exception counts as success
     private void execute(PythonScriptTask task) {
         String uuid = task.getId();
         PropertiesFilePOJO pojo_properties = fileOperationManager.getPropertiesPOJO(uuid);
@@ -129,7 +129,7 @@ public class PythonRunner implements Runnable {
             runningId = uuid;
             changeTaskState(uuid, ImportState.in_progress);
 
-            ProcessBuilder processBuilder = new ProcessBuilder("python", path_script, task.getScriptMethod().name(), path_file);
+            ProcessBuilder processBuilder = new ProcessBuilder("python3", path_script, task.getScriptMethod().name(), path_file);
             processBuilder.redirectError(ProcessBuilder.Redirect.to(error));
             processBuilder.redirectOutput(ProcessBuilder.Redirect.to(output));
             process = processBuilder.start();
@@ -160,5 +160,23 @@ public class PythonRunner implements Runnable {
     private void changeTaskState(String uuid, ImportState state) {
         fileOperationManager.addPropertyToProperties(uuid, PropertyKey.state, state.name());
         LOGGER.log(Level.INFO, "Execution of task {0} changed to state {1}", new Object[]{uuid, state.name()});
+    }
+
+    private void changeTaskOperation(PythonScriptTask task) {
+        switch (task.getScriptMethod()) {
+            case verify_file:
+                changOperationProperty(task.getId(), ImportOperation.verifying);
+                break;
+            case import_file:
+                changOperationProperty(task.getId(), ImportOperation.importing);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected operation: " + task.getScriptMethod().name());
+        }
+    }
+
+    private void changOperationProperty(String uuid, ImportOperation operation) {
+        fileOperationManager.addPropertyToProperties(uuid, PropertyKey.operation, operation.name());
+        LOGGER.log(Level.INFO, "Operation of task {0} changed to {1}", new Object[]{uuid, operation.name()});
     }
 }
