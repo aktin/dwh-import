@@ -123,10 +123,9 @@ public class TestPythonExecutioner {
 
 
     public void runPythonRunner() throws InterruptedException {
-        PythonRunner runner = new PythonRunner();
-        new Thread(runner).start();
-        Thread.sleep(1000);
-
+    //    PythonRunner runner = new PythonRunner();
+      //  new Thread(runner).start();
+     //   Thread.sleep(1000);
     }
 
 
