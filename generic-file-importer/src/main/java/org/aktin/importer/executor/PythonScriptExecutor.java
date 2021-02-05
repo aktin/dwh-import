@@ -1,5 +1,6 @@
 package org.aktin.importer.executor;
 
+import org.aktin.importer.DataSourceCredsExtractor;
 import org.aktin.importer.FileOperationManager;
 import org.aktin.importer.ScriptOperationManager;
 import org.aktin.importer.enums.ImportOperation;
@@ -13,6 +14,7 @@ import javax.ejb.Singleton;
 import javax.inject.Inject;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 // TODO COMMENTS + JAVADOC
@@ -30,9 +32,13 @@ public class PythonScriptExecutor {
     @Inject
     private ScriptOperationManager scriptOperationManager;
 
+    @Inject
+    private DataSourceCredsExtractor dataSourceCredsExtractor;
+
     @PostConstruct
     public void startup() {
-        runner = new PythonRunner(fileOperationManager, scriptOperationManager);
+        HashMap<String, String> credentials = dataSourceCredsExtractor.getDataSourceCredentials("i2b2crcdata");
+        runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials);
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }

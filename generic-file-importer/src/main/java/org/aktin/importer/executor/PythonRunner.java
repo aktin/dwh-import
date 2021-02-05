@@ -11,7 +11,9 @@ import org.aktin.importer.pojos.PropertiesFilePOJO;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -25,16 +27,18 @@ public class PythonRunner implements Runnable {
 
     private final FileOperationManager fileOperationManager;
     private final ScriptOperationManager scriptOperationManager;
+    private final HashMap<String, String> creds_i2b2crc;
 
     private final Queue<PythonScriptTask> queue;
     private String runningId;
     private Process process;
     private boolean exit = false;
 
-    public PythonRunner(FileOperationManager fileOperationManager, ScriptOperationManager scriptOperationManager) {
+    public PythonRunner(FileOperationManager fileOperationManager, ScriptOperationManager scriptOperationManager, HashMap<String, String> credentials) {
         queue = new LinkedList<>();
         this.fileOperationManager = fileOperationManager;
         this.scriptOperationManager = scriptOperationManager;
+        creds_i2b2crc = credentials;
     }
 
     @Override
@@ -132,8 +136,12 @@ public class PythonRunner implements Runnable {
             ProcessBuilder processBuilder = new ProcessBuilder("python3", path_script, task.getScriptMethod().name(), path_file);
             processBuilder.redirectError(ProcessBuilder.Redirect.to(error));
             processBuilder.redirectOutput(ProcessBuilder.Redirect.to(output));
-            process = processBuilder.start();
 
+            Map<String, String> vars_environment = processBuilder.environment();
+            vars_environment.put("username", creds_i2b2crc.get("user-name"));
+            vars_environment.put("password", creds_i2b2crc.get("password"));
+
+            process = processBuilder.start();
             if (!process.waitFor(4, TimeUnit.HOURS)) {
                 changeTaskState(uuid, ImportState.timeout);
                 killProcess();
