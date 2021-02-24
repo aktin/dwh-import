@@ -43,17 +43,17 @@ public class ScriptOperationManager {
      */
     @PostConstruct
     public void initOperationLock() {
-        synchronized (operationLock_script) {
-            HashMap<String, String> map;
-            ScriptFile pojo_script;
-            for (String name_script : getScriptNames()) {
-                map = loadScriptMetadata(name_script);
-                if (checkScriptMetadataForIntegrity(map)) {
-                    pojo_script = createScriptFile(map);
+        HashMap<String, String> map;
+        ScriptFile pojo_script;
+        for (String name_script : getScriptNames()) {
+            map = loadScriptMetadata(name_script);
+            if (checkScriptMetadataForIntegrity(map)) {
+                pojo_script = createScriptFile(map);
+                synchronized (operationLock_script) {
                     operationLock_script.put(pojo_script.getId(), pojo_script);
-                } else
-                    LOGGER.log(Level.WARNING, "{0} misses some keys", name_script);
-            }
+                }
+            } else
+                LOGGER.log(Level.WARNING, "{0} misses some keys", name_script);
         }
     }
 
