@@ -1,17 +1,22 @@
 package org.aktin.importer.pojos;
 
-public class ScriptFilePOJO {
+/**
+ * POJO representation for file processing scripts
+ */
+public class ScriptFile {
 
     private String id;
     private String viewname;
     private String version;
     private String mimetype;
+    private String path;
 
-    public ScriptFilePOJO(String id, String viewname, String version, String mimetype) {
+    public ScriptFile(String id, String viewname, String version, String mimetype, String path) {
         this.id = id;
         this.viewname = viewname;
         this.version = version;
         this.mimetype = mimetype;
+        this.path = path;
     }
 
     public String getId() {
@@ -28,5 +33,9 @@ public class ScriptFilePOJO {
 
     public String getMimetype() {
         return mimetype;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

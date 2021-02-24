@@ -1,9 +1,23 @@
 package org.aktin.importer.enums;
 
-// possible keys for extern processing scripts
+/**
+ * Possible keys for extern processing scripts
+ */
 public enum ScriptKey {
-    ID,       // identifier of this script
-    VIEWNAME, // displayed script name in fronend
-    VERSION,  // displayed version in frontend
-    MIMETYPE  // processed media type of script
+    /**
+     * Unique script id
+     */
+    ID,
+    /**
+     * Name of script to show in view
+     */
+    VIEWNAME,
+    /**
+     * Script version
+     */
+    VERSION,
+    /**
+     * Http media type this script can process
+     */
+    MIMETYPE
 }

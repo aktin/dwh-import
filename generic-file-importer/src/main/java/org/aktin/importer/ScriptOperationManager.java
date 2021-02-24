@@ -3,7 +3,7 @@ package org.aktin.importer;
 import org.aktin.Preferences;
 import org.aktin.dwh.PreferenceKey;
 import org.aktin.importer.enums.ScriptKey;
-import org.aktin.importer.pojos.ScriptFilePOJO;
+import org.aktin.importer.pojos.ScriptFile;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -21,8 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-// TODO COMMENTS + JAVA DOC
-
 @Singleton
 public class ScriptOperationManager {
 
@@ -31,18 +29,27 @@ public class ScriptOperationManager {
     @Inject
     private Preferences preferences;
 
-    private final HashMap<String, ScriptFilePOJO> operationLock_script = new HashMap<>();
+    /**
+     * HashMap to store metadata of processing scripts as {id of script, ScriptFile object}
+     */
+    private final HashMap<String, ScriptFile> operationLock_script = new HashMap<>();
 
-    // only scripts with all keys in operationLock
+    /**
+     * Iterates on startup through all files in {importScriptPath}
+     * Checks these files for possible metadata information (key-value pairs)
+     * If found keys correspond to enums in ScriptKey, key-value pairs are converted
+     * to a ScriptFile object and stored in operationLock_script
+     * All future reading of script metadata is carried out via operationLock_script
+     */
     @PostConstruct
     public void initOperationLock() {
         synchronized (operationLock_script) {
             HashMap<String, String> map;
-            ScriptFilePOJO pojo_script;
+            ScriptFile pojo_script;
             for (String name_script : getScriptNames()) {
-                map = createScriptHashMap(name_script);
-                if (checkScriptHashMapForIntegrity(map)) {
-                    pojo_script = createScriptPOJO(map);
+                map = loadScriptMetadata(name_script);
+                if (checkScriptMetadataForIntegrity(map)) {
+                    pojo_script = createScriptFile(map);
                     operationLock_script.put(pojo_script.getId(), pojo_script);
                 } else
                     LOGGER.log(Level.WARNING, "{0} misses some keys", name_script);
@@ -50,8 +57,12 @@ public class ScriptOperationManager {
         }
     }
 
-    // files.walk -> IOExveption
-    private ArrayList<String> getScriptNames() {
+    /**
+     * Iterates through all regular files in {importScriptPath} and collects file names
+     *
+     * @return list of file names in {importScriptPath}
+     */
+    private List<String> getScriptNames() {
         Path path = Paths.get(preferences.get(PreferenceKey.importScriptPath));
         ArrayList<String> list_scripts = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(path)) {
@@ -65,7 +76,14 @@ public class ScriptOperationManager {
         return list_scripts;
     }
 
-    private HashMap<String, String> createScriptHashMap(String name_script) {
+    /**
+     * Iterates through first 15 line of a script in {importScriptPath} and writes encountered metadata information
+     * (key-value pairs) in HashMap. Possible metadata is tagged as #@KEY=VALUE
+     *
+     * @param name_script filename of the script
+     * @return Map of found key-value pairs in given script
+     */
+    private HashMap<String, String> loadScriptMetadata(String name_script) {
         String path = Paths.get(preferences.get(PreferenceKey.importScriptPath), name_script).toString();
         String line, key, value;
         HashMap<String, String> result = new HashMap<>();
@@ -78,6 +96,7 @@ public class ScriptOperationManager {
                     result.put(key, value);
                 }
             }
+            result.put("path", path);
         } catch (FileNotFoundException e) {
             LOGGER.log(Level.SEVERE, "No file to read found", e);
         } catch (IOException e) {
@@ -86,36 +105,48 @@ public class ScriptOperationManager {
         return result;
     }
 
-    private boolean checkScriptHashMapForIntegrity(HashMap<String, String> map) {
+    /**
+     * Iterates through ScriptKey and checks if enums match with keys of given map
+     *
+     * @param map map with key-value pairs of a script
+     * @return boolean if map contains all enum keys
+     */
+    private boolean checkScriptMetadataForIntegrity(HashMap<String, String> map) {
         return Arrays.stream(ScriptKey.values()).allMatch(key -> map.containsKey(key.name()));
     }
 
-    private ScriptFilePOJO createScriptPOJO(HashMap<String, String> map) {
+    /**
+     * Creates a ScriptFile object out of a given map
+     *
+     * @param map map with key-value pairs of a script
+     * @return ScriptFile object
+     */
+    private ScriptFile createScriptFile(HashMap<String, String> map) {
         String id = map.get(ScriptKey.ID.name());
         String viewname = map.get(ScriptKey.VIEWNAME.name());
         String version = map.get(ScriptKey.VERSION.name());
         String mimetype = map.get(ScriptKey.MIMETYPE.name());
-        return new ScriptFilePOJO(id, viewname, version, mimetype);
+        String path = map.get("path");
+        return new ScriptFile(id, viewname, version, mimetype, path);
     }
 
-    public ArrayList<ScriptFilePOJO> getScriptPOJOs() {
-        synchronized (operationLock_script) {
-            return new ArrayList<>(operationLock_script.values());
-        }
+    /**
+     * @return List with all ScriptFile objects in operationLock_script
+     */
+    public List<ScriptFile> getScripts() {
+        return new ArrayList<>(operationLock_script.values());
     }
 
-    public ScriptFilePOJO getScriptPOJO(String name_script) {
-        ScriptFilePOJO result = null;
-        if (operationLock_script.containsKey(name_script)) {
-            synchronized (operationLock_script.get(name_script)) {
-                result = operationLock_script.get(name_script);
-            }
+    /**
+     * @param id_script id of requested script
+     * @return corresponding ScriptFile object
+     */
+    public ScriptFile getScript(String id_script) {
+        ScriptFile result = null;
+        if (operationLock_script.containsKey(id_script)) {
+            result = operationLock_script.get(id_script);
         } else
-            LOGGER.log(Level.WARNING, "{0} misses some keys. Check integrity", name_script);
+            LOGGER.log(Level.WARNING, "{0} misses some keys. Check integrity", id_script);
         return result;
-    }
-
-    public String getScriptPath(String name_script) {
-        return Paths.get(preferences.get(PreferenceKey.importScriptPath), name_script).toString();
     }
 }
