@@ -1,7 +1,7 @@
 package org.aktin.importer.enums;
 
 /**
- * Possible keys for extern processing scripts
+ * possible keys for extern processing scripts
  */
 public enum ScriptKey {
     /**

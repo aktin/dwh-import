@@ -2,13 +2,16 @@ package org.aktin.importer.pojos;
 
 import org.aktin.importer.enums.LogType;
 
-public class ScriptLogPOJO {
+/**
+ * POJO representation for logs created by python processing scripts
+ */
+public class ScriptLog {
 
-    private String id;
-    private LogType type;
-    private String text;
+    private final String id;
+    private final LogType type;
+    private final String text;
 
-    public ScriptLogPOJO(String id, LogType type, String text) {
+    public ScriptLog(String id, LogType type, String text) {
         this.id = id;
         this.type = type;
         this.text = text;

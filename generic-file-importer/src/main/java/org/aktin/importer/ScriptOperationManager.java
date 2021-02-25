@@ -44,13 +44,13 @@ public class ScriptOperationManager {
     @PostConstruct
     public void initOperationLock() {
         HashMap<String, String> map;
-        ScriptFile pojo_script;
+        ScriptFile script;
         for (String name_script : getScriptNames()) {
             map = loadScriptMetadata(name_script);
             if (checkScriptMetadataForIntegrity(map)) {
-                pojo_script = createScriptFile(map);
+                script = createScriptFile(map);
                 synchronized (operationLock_script) {
-                    operationLock_script.put(pojo_script.getId(), pojo_script);
+                    operationLock_script.put(script.getId(), script);
                 }
             } else
                 LOGGER.log(Level.WARNING, "{0} misses some keys. Ignored...", name_script);

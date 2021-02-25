@@ -1,6 +1,8 @@
 package org.aktin.importer.enums;
 
-// possible log types for script output logs
+/**
+ * possible file names for script output logs
+ */
 public enum LogType {
     stdOutput,
     stdError
