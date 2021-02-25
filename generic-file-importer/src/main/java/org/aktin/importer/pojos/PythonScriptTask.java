@@ -1,7 +1,10 @@
-package org.aktin.importer.executor;
+package org.aktin.importer.pojos;
 
 import org.aktin.importer.enums.ScriptOperation;
 
+/**
+ * POJO representation for a queued file processing task
+ */
 public class PythonScriptTask {
 
     private final String uuid;

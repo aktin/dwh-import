@@ -138,9 +138,10 @@ public class ScriptOperationManager {
     }
 
     /**
+     *
      * @param id_script id of requested script
-     * @return corresponding ScriptFile object out of operationLock
-     * @throws FileNotFoundException if ScriptFile could not be found
+     * @return corresponding script path from ScriptFile object
+     * @throws FileNotFoundException if ScriptFile is not in operationLock
      */
     public String getScriptPath(String id_script) throws FileNotFoundException {
         String result;

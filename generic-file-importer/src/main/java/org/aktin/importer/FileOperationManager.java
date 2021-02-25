@@ -86,7 +86,7 @@ public class FileOperationManager {
     }
 
     /**
-     * Loads java properties file with metadata of given file id
+     * Loads java properties file (metadata) from directory of given file id
      *
      * @param uuid universally unique id of file
      * @return java properties file of uploaded file
@@ -131,8 +131,7 @@ public class FileOperationManager {
     }
 
     /**
-     * Walks recursively through given directory and deletes all files within
-     * Deletes directory itself at the end
+     * Walks recursively through given directory and deletes all files within. Deletes directory itself at the end
      * Directory name equals uuid of uploaded file
      *
      * @param uuid universally unique id of file
@@ -336,7 +335,7 @@ public class FileOperationManager {
     }
 
     /**
-     * Loads a log created by a python script in a given directory as a ScriptLog objet
+     * Loads a script log file in given directory as a ScriptLog objet
      *
      * @param uuid    id of file to load log from
      * @param logType type of log to load (stdError or stdOutput)
