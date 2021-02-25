@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-
+@Singleton
 public class DataSourceCredsExtractor {
 
     private static final Logger LOGGER = Logger.getLogger(DataSourceCredsExtractor.class.getName());
@@ -167,7 +168,7 @@ public class DataSourceCredsExtractor {
         try {
             Node security = getSecurityNodeFromParent(node_datasource);
             credentials = extractCredentialsFromSecurityNode(security);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.log(Level.SEVERE, "Node not found");
         }
         return credentials;
@@ -178,18 +179,17 @@ public class DataSourceCredsExtractor {
      *
      * @param node_datasource node to search security node in
      * @return found security node
-     * @throws IllegalStateException if security node not found
+     * @throws IllegalArgumentException if security node not found
      */
-    private Node getSecurityNodeFromParent(Node node_datasource) throws IllegalStateException {
+    private Node getSecurityNodeFromParent(Node node_datasource) throws IllegalArgumentException {
         NodeList list_node = node_datasource.getChildNodes();
         Node node;
         for (int i = 0; i < list_node.getLength(); i++) {
             node = list_node.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("security"))
                 return node;
-            ;
         }
-        throw new IllegalStateException();
+        throw new IllegalArgumentException();
     }
 
     /**

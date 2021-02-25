@@ -263,14 +263,14 @@ public class FileOperationManager {
     /**
      * @param uuid id of uploaded file
      * @return corresponding properties object out of operationLock
-     * @throws FileNotFoundException if properties object could not be found
+     * @throws IllegalArgumentException if properties object could not be found
      */
-    public Properties getPropertiesFile(String uuid) throws FileNotFoundException {
+    public Properties getPropertiesFile(String uuid) throws IllegalArgumentException {
         Properties result;
         if (operationLock_properties.containsKey(uuid)) {
             result = operationLock_properties.get(uuid);
         } else
-            throw new FileNotFoundException(String.format("%s could not be found in operationlock", uuid));
+            throw new IllegalArgumentException(String.format("%s could not be found in operationLock", uuid));
         return result;
     }
 

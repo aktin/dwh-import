@@ -3,21 +3,21 @@ package org.aktin.importer.executor;
 import org.aktin.importer.DataSourceCredsExtractor;
 import org.aktin.importer.FileOperationManager;
 import org.aktin.importer.ScriptOperationManager;
-import org.aktin.importer.enums.ImportOperation;
-import org.aktin.importer.enums.ImportState;
+import org.aktin.importer.enums.PropertiesKey;
+import org.aktin.importer.enums.PropertiesOperation;
+import org.aktin.importer.enums.PropertiesState;
 import org.aktin.importer.enums.ScriptOperation;
-import org.aktin.importer.pojos.PropertiesFilePOJO;
+import org.aktin.importer.pojos.PythonScriptTask;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 
-import java.io.*;
 import java.util.HashMap;
+import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-
-// TODO COMMENTS + JAVADOC
 
 @Singleton
 public class PythonScriptExecutor {
@@ -35,21 +35,30 @@ public class PythonScriptExecutor {
     @Inject
     private DataSourceCredsExtractor dataSourceCredsExtractor;
 
+    /**
+     * Extracts on startup i2b2crcdata credentials and connection url and forwards them to PythonRunner
+     * Adds ongoing processing operations to PythonRunners processing queue and start a new PythonRunner in a
+     * new Thread
+     */
     @PostConstruct
     public void startup() {
-        HashMap<String, String> credentials = dataSourceCredsExtractor.getDataSourceCredentials("i2b2crcdata");
+        HashMap<String, String> credentials = dataSourceCredsExtractor.getDataSourceCredentialsCRC();
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials);
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }
 
+    /**
+     * Iterates through all properties files of operationLock_properties and adds queued or unfinished operations
+     * to processing queue (to avoid manually restart of processing queue in case of server shutdown)
+     */
     public void addUnfinishedTasksToQueue() {
-        for (PropertiesFilePOJO pojo_properties : fileOperationManager.getPropertiesPOJOs()) {
+        for (Properties properties : fileOperationManager.getPropertiesFiles()) {
             PythonScriptTask task;
-            ImportState state = ImportState.valueOf(pojo_properties.getState());
-            if (state.equals(ImportState.queued) || state.equals(ImportState.in_progress)) {
-                String uuid = pojo_properties.getId();
-                ImportOperation operation = ImportOperation.valueOf(pojo_properties.getOperation());
+            PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
+            if (state.equals(PropertiesState.queued) || state.equals(PropertiesState.in_progress)) {
+                String uuid = properties.getProperty(PropertiesKey.id.name());
+                PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
                 switch (operation) {
                     case verifying:
                         task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
@@ -60,34 +69,52 @@ public class PythonScriptExecutor {
                     default:
                         throw new IllegalStateException("Unexpected operation: " + operation.name());
                 }
-                runner.submit(task);
+                runner.submitTask(task);
             }
         }
     }
 
+    /**
+     * cancels current file processing and breaks the running loop of PythonRunner
+     */
     @PreDestroy
     public void shutdown() {
         runner.terminate();
     }
 
     /**
-     * @param uuid
-     * @param method
-     * @throws IOException
+     * adds a new file processing task to processing queue
+     * @param uuid id of file to process
+     * @param method type of processing to perform (verify/import), equals the method called in python script
      */
     public void addTask(String uuid, ScriptOperation method) {
         PythonScriptTask task = new PythonScriptTask(uuid, method);
-        runner.submit(task);
+        runner.submitTask(task);
     }
 
+    /**
+     * cancels ongoing processing of file/removes file from processing queue
+     * @param uuid id of file to stop processing
+     */
     public void cancelTask(String uuid) {
-        runner.cancel(uuid);
+        runner.cancelTask(uuid);
     }
 
-    public boolean isTaskDone(String uuid) {
-        PropertiesFilePOJO pojo_properties = fileOperationManager.getPropertiesPOJO(uuid);
-        ImportState state = ImportState.valueOf(pojo_properties.getState());
-        return state.equals(ImportState.successful);
+    /**
+     * Checks if current file operation is finished successfully for given uuid via state key of properties file
+     * @param uuid id of file to check
+     * @return boolean if state is successful
+     * @throws IllegalArgumentException if properties file for give uuid could not be found in operationLock
+     */
+    public boolean isTaskDone(String uuid) throws IllegalArgumentException {
+        boolean result = false;
+        try {
+            Properties properties = fileOperationManager.getPropertiesFile(uuid);
+            PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
+            result = state.equals(PropertiesState.successful);
+        } catch (IllegalArgumentException e) {
+            LOGGER.log(Level.SEVERE, "{0} could not be found in operationLock", uuid);
+        }
+        return result;
     }
-
 }
