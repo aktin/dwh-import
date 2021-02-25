@@ -53,7 +53,7 @@ public class ScriptOperationManager {
                     operationLock_script.put(pojo_script.getId(), pojo_script);
                 }
             } else
-                LOGGER.log(Level.WARNING, "{0} misses some keys", name_script);
+                LOGGER.log(Level.WARNING, "{0} misses some keys. Ignored...", name_script);
         }
     }
 
@@ -119,7 +119,7 @@ public class ScriptOperationManager {
      * Creates a ScriptFile object out of a given map
      *
      * @param map map with key-value pairs of a script
-     * @return ScriptFile object
+     * @return ScriptFile object of given script
      */
     private ScriptFile createScriptFile(HashMap<String, String> map) {
         String id = map.get(ScriptKey.ID.name());
@@ -139,14 +139,16 @@ public class ScriptOperationManager {
 
     /**
      * @param id_script id of requested script
-     * @return corresponding ScriptFile object
+     * @return corresponding ScriptFile object out of operationLock
+     * @throws FileNotFoundException if ScriptFile could not be found
      */
-    public ScriptFile getScript(String id_script) {
-        ScriptFile result = null;
+    public String getScriptPath(String id_script) throws FileNotFoundException {
+        String result;
         if (operationLock_script.containsKey(id_script)) {
-            result = operationLock_script.get(id_script);
-        } else
-            LOGGER.log(Level.WARNING, "{0} misses some keys. Check integrity", id_script);
+            result = operationLock_script.get(id_script).getPath();
+        } else {
+            throw new FileNotFoundException(String.format("%s could not be found in operationLock", id_script));
+        }
         return result;
     }
 }

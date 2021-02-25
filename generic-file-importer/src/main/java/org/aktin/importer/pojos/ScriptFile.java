@@ -5,11 +5,11 @@ package org.aktin.importer.pojos;
  */
 public class ScriptFile {
 
-    private String id;
-    private String viewname;
-    private String version;
-    private String mimetype;
-    private String path;
+    private final String id;
+    private final String viewname;
+    private final String version;
+    private final String mimetype;
+    private final String path;
 
     public ScriptFile(String id, String viewname, String version, String mimetype, String path) {
         this.id = id;
