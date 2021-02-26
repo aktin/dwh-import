@@ -29,9 +29,6 @@ public class ScriptOperationManager {
     @Inject
     private Preferences preferences;
 
-    /**
-     * HashMap to store metadata of processing scripts as {id of script, ScriptFile object}
-     */
     private final HashMap<String, ScriptFile> operationLock_script = new HashMap<>();
 
     /**

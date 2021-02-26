@@ -29,13 +29,7 @@ public class FileOperationManager {
     @Inject
     private Preferences preferences;
 
-    /**
-     * HashMap to store metadata of uploaded files as {id of file, PropertiesFile object}
-     */
     private final Map<String, Properties> operationLock_properties = new HashMap<>();
-    /**
-     * HashMap to store script logs of uploaded files as {id of file, List with ScriptLogs}
-     */
     private final Map<String, List<ScriptLog>> operationLock_scriptLog = new HashMap<>();
 
     /**
