@@ -135,15 +135,14 @@ public class ScriptOperationManager {
     }
 
     /**
-     *
      * @param id_script id of requested script
-     * @return corresponding script path from ScriptFile object
+     * @return corresponding ScriptFile object
      * @throws FileNotFoundException if ScriptFile is not in operationLock
      */
-    public String getScriptPath(String id_script) throws FileNotFoundException {
-        String result;
+    public ScriptFile getScript(String id_script) throws FileNotFoundException {
+        ScriptFile result;
         if (operationLock_script.containsKey(id_script)) {
-            result = operationLock_script.get(id_script).getPath();
+            result = operationLock_script.get(id_script);
         } else {
             throw new FileNotFoundException(String.format("%s could not be found in operationLock", id_script));
         }

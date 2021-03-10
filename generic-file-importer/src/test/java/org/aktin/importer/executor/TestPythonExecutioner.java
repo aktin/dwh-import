@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
@@ -89,7 +91,7 @@ public class TestPythonExecutioner {
 
         for (int t = 0; t < 1; t++) {
             FutureTask<Integer> future$t = new FutureTask<>(() -> {
-                Integer a = 0;
+                int a = 0;
                 try {
                     for (int i = 0; i < 5; i++) {
                         a++;
@@ -123,9 +125,9 @@ public class TestPythonExecutioner {
 
 
     public void runPythonRunner() throws InterruptedException {
-    //    PythonRunner runner = new PythonRunner();
-      //  new Thread(runner).start();
-     //   Thread.sleep(1000);
+        //    PythonRunner runner = new PythonRunner();
+        //  new Thread(runner).start();
+        //   Thread.sleep(1000);
     }
 
 
@@ -174,37 +176,45 @@ public class TestPythonExecutioner {
     @Test
     public void testExecute2() throws InterruptedException, IOException {
         String path = "C:\\Users\\User\\IdeaProjects\\dwh-import\\generic-file-importer\\src\\test\\resources\\";
-        File error = new File(path + "error.txt");
-        File output = new File(path + "output.txt");
-        try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", path + "leap_year.py", "1234");
-            processBuilder.redirectError(ProcessBuilder.Redirect.to(error));
-            processBuilder.redirectOutput(ProcessBuilder.Redirect.to(output));
-            Process process = processBuilder.start();
+        Path error = Paths.get(path + "error.txt");
+        Path output = Paths.get(path + "output.txt");
+        Process process;
 
-            if (!process.waitFor(10, TimeUnit.SECONDS)) {
-                System.out.println("Already waited 2s");
-                process.destroy();
-                process.waitFor(10, TimeUnit.SECONDS);
-                process.destroyForcibly();
-                process.waitFor();
-            } else {
-                System.out.println("finished just in time");
-            }
-        } finally {
-            Path p = Paths.get(path + "error.txt");
+        Files.deleteIfExists(error);
+        Files.deleteIfExists(output);
 
-            System.out.println(Files.exists(p));
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "-u", path + "leap_year.py", "1234");
+        processBuilder.redirectError(error.toFile());
+        processBuilder.redirectOutput(output.toFile());
+        process = processBuilder.start();
 
-            List<String> a = Files.readAllLines(p);
-            String result = a.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.joining("\n"));
-
-            System.out.println(result);
+        boolean timeout = false;
+        int num_lines = 0;
+        int count_timeout = 0;
+        while (process.isAlive()) {
+            Thread.sleep(1000);
+            if (num_lines == Files.readAllLines(output).size()) {
+                count_timeout++;
+                if (count_timeout == 10) {
+                    process.destroy();
+                    process.waitFor(5, TimeUnit.SECONDS);
+                    process.destroyForcibly();
+                    process.waitFor();
+                    timeout = true;
+                }
+            } else
+                count_timeout = 0;
+            num_lines = Files.readAllLines(output).size();
         }
 
+        if (process.exitValue() == 0)
+            System.out.println("+++successful");
+        else {
+            if (timeout)
+                System.out.println("+++timeout");
+            else
+                System.out.println("+++failed");
+        }
     }
-
-
 }
+

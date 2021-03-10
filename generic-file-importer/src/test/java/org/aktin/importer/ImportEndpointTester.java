@@ -1,7 +1,6 @@
 package org.aktin.importer;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,10 +13,9 @@ import java.util.zip.ZipOutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.aktin.importer.enums.ImportOperation;
-import org.aktin.importer.enums.ImportState;
+import org.aktin.importer.enums.PropertiesOperation;
+import org.aktin.importer.enums.PropertiesState;
 import org.aktin.importer.enums.ScriptKey;
-import org.aktin.importer.pojos.PropertiesFilePOJO;
 import org.junit.Assert;
 
 public class ImportEndpointTester {
@@ -262,26 +260,4 @@ public class ImportEndpointTester {
         Assert.assertEquals(true, true);
     }
 
-
-    public void testJsonSerializer() throws IOException {
-        String id = UUID.randomUUID().toString();
-        String filename = "testname";
-        String size = "2131251";
-        String script = "testname2";
-        String operation = ImportOperation.uploading.name();
-        String state = ImportState.successful.name();
-
-        PropertiesFilePOJO d = new PropertiesFilePOJO(id, filename, size, script, operation, state);
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File("src/test/resources/properties.json"), d);
-        PropertiesFilePOJO[] d1 = {d, d, d};
-        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(d1);
-        System.out.println(json);
-
-        // TODO make to json and test against d.json
-
-        Assert.assertEquals(true, true);
-    }
 }
