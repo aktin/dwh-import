@@ -31,6 +31,7 @@ public class PythonRunner implements Runnable {
     private final Queue<PythonScriptTask> queue;
     private String runningId;
     private Process process;
+    private int exitCode = 0;
     private boolean exit = false;
 
     /**
@@ -118,6 +119,7 @@ public class PythonRunner implements Runnable {
      */
     public void cancelTask(String uuid) {
         if (runningId.equals(uuid)) {
+            exitCode = 3;
             killProcess();
         } else {
             synchronized (queue) {
@@ -161,7 +163,6 @@ public class PythonRunner implements Runnable {
      * @param task PythonScriptTask to process
      */
     private void executeTask(PythonScriptTask task) {
-        boolean is_timeout = false;
         int num_lines = 0, num_lines_last = 0, counter_timeout = 0;
         String uuid = task.getId();
         try {
@@ -196,7 +197,7 @@ public class PythonRunner implements Runnable {
                 num_lines = Files.readAllLines(output.toPath()).size();
                 if (num_lines_last == num_lines) {
                     if (counter_timeout == 10) {
-                        is_timeout = true;
+                        exitCode = 2;
                         killProcess();
                     }
                     counter_timeout++;
@@ -209,17 +210,21 @@ public class PythonRunner implements Runnable {
                 changeTaskState(uuid, PropertiesState.successful);
                 writeSuccessProperty(properties);
             } else {
-                if (is_timeout)
+                if (exitCode == 2)
                     changeTaskState(uuid, PropertiesState.timeout);
+                else if (exitCode == 3)
+                    ; // changeTaskState already handled by cancelTask()
                 else
                     changeTaskState(uuid, PropertiesState.failed);
             }
         } catch (IOException | InterruptedException e) {
+            if (process != null) killProcess();
             changeTaskState(uuid, PropertiesState.failed);
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);
         } finally {
             runningId = null;
             process = null;
+            exitCode = 0;
             fileOperationManager.reloadScriptLogs(uuid);
         }
     }
