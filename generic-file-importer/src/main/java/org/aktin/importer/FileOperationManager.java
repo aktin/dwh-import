@@ -193,7 +193,7 @@ public class FileOperationManager {
         properties.setProperty(PropertiesKey.script.name(), script_id);
         properties.setProperty(PropertiesKey.operation.name(), String.valueOf(PropertiesOperation.uploading));
         properties.setProperty(PropertiesKey.state.name(), String.valueOf(PropertiesState.successful));
-        properties.setProperty("UPLOADED", String.valueOf(System.currentTimeMillis()));
+        properties.setProperty("uploaded", String.valueOf(System.currentTimeMillis()));
         return properties;
     }
 

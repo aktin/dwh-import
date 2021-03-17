@@ -35,9 +35,10 @@ public class PythonRunner implements Runnable {
 
     /**
      * Constructor for PythonRunner runnable, creates a new empty queue to store tasks in
-     * @param fileOperationManager Singleton Class FileOperationManager (used to read/write in propertiesFile)
+     *
+     * @param fileOperationManager   Singleton Class FileOperationManager (used to read/write in propertiesFile)
      * @param scriptOperationManager Singleton Class ScriptOperationManager (used to read ScriptFile)
-     * @param credentials HashMap with i2b2crcdata credentials and connection-url
+     * @param credentials            HashMap with i2b2crcdata credentials and connection-url
      */
     public PythonRunner(
             FileOperationManager fileOperationManager,
@@ -96,6 +97,7 @@ public class PythonRunner implements Runnable {
     /**
      * Adds a new task object to queue and sets corresponding propertiesFile to operation of task (verify or import)
      * and state to 'queued'
+     *
      * @param task PythonScriptTask which is added to queue
      */
     public void submitTask(PythonScriptTask task) {
@@ -111,6 +113,7 @@ public class PythonRunner implements Runnable {
      * Cancels processing of given task
      * If task is currently executed, execution process is stopped
      * If task is still in queue, it is removed from queue
+     *
      * @param uuid id of file to cancel processing
      */
     public void cancelTask(String uuid) {
@@ -150,15 +153,16 @@ public class PythonRunner implements Runnable {
      * 2. Creates stdOut and stdError files to collect logs of python script
      * 3. Creates a python process with "path to script" "method to execute" and "path to file to process"
      * 4. Sets used information of python script as environment variables
-     * 5. Starts script and controls a hang-up by checking the length of stdOutput each hour
+     * 5. Starts script and controls a hang-up by checking the length of stdOutput each 10min (if no change in output
+     * was detected 10 times in a row, script is stopped by timeout)
      * 6. Writes corresponding outcome of script (success, error, timeout) into propertiesFile after script finishes
      * 7. Created script files are reloaded into operationLock at the end
+     *
      * @param task PythonScriptTask to process
      */
     private void executeTask(PythonScriptTask task) {
         boolean is_timeout = false;
-        int num_lines = 0;
-
+        int num_lines = 0, num_lines_last = 0, counter_timeout = 0;
         String uuid = task.getId();
         try {
             runningId = uuid;
@@ -189,12 +193,16 @@ public class PythonRunner implements Runnable {
             process = processBuilder.start();
 
             while (process.isAlive()) {
-                Thread.sleep(3600000); // 1h
-                if (num_lines == Files.readAllLines(output.toPath()).size()) {
-                    is_timeout = true;
-                    killProcess();
-                }
                 num_lines = Files.readAllLines(output.toPath()).size();
+                if (num_lines_last == num_lines) {
+                    if (counter_timeout == 10) {
+                        is_timeout = true;
+                        killProcess();
+                    }
+                    counter_timeout++;
+                }
+                num_lines_last = num_lines;
+                Thread.sleep(10000); // 10s
             }
 
             if (process.exitValue() == 0) {
@@ -218,6 +226,7 @@ public class PythonRunner implements Runnable {
 
     /**
      * Gets the corresponding ScriptFile of given properties File
+     *
      * @param properties properties to get Script to
      * @return ScriptFile out of scriptOperationManager.operationLock
      * @throws FileNotFoundException if ScriptFile not in operationLock
@@ -230,8 +239,9 @@ public class PythonRunner implements Runnable {
     /**
      * Creates a file named after enum in logType in given folder, deletes file and recreates it if
      * already existing in folder
+     *
      * @param path_folder string path to the corresponding folder
-     * @param logType name and function of file
+     * @param logType     name and function of file
      * @return File object of newly created file
      * @throws IOException if invalid path for delete operation
      */
@@ -243,6 +253,7 @@ public class PythonRunner implements Runnable {
 
     /**
      * Adds a milestone timestamp for successfully completed operation
+     *
      * @param properties properties file to write into
      */
     private void writeSuccessProperty(Properties properties) {
@@ -250,14 +261,15 @@ public class PythonRunner implements Runnable {
         String uuid = properties.getProperty(PropertiesKey.id.name());
         PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
         if (operation.equals(PropertiesOperation.verifying))
-            fileOperationManager.addPropertyToPropertiesFile(uuid, "VERIFIED", Long.toString(finishedTime));
+            fileOperationManager.addPropertyToPropertiesFile(uuid, "verified", Long.toString(finishedTime));
         else if (operation.equals(PropertiesOperation.importing))
-            fileOperationManager.addPropertyToPropertiesFile(uuid, "IMPORTED", Long.toString(finishedTime));
+            fileOperationManager.addPropertyToPropertiesFile(uuid, "imported", Long.toString(finishedTime));
     }
 
     /**
      * Changes "state"-value of properties file (in file and in operationLock)
-     * @param uuid id of file
+     *
+     * @param uuid  id of file
      * @param state current state of processing (see PropertiesState)
      */
     private void changeTaskState(String uuid, PropertiesState state) {
@@ -267,6 +279,7 @@ public class PythonRunner implements Runnable {
 
     /**
      * Changes "operation"-value of corresponding properties file of given task object
+     *
      * @param task task that is currently processed
      */
     private void changeTaskOperation(PythonScriptTask task) {
@@ -284,7 +297,8 @@ public class PythonRunner implements Runnable {
 
     /**
      * Changes "operation"-value of properties file (in file and in operationLock)
-     * @param uuid id of file
+     *
+     * @param uuid      id of file
      * @param operation current processing operation (see PropertiesOperation)
      */
     private void changeOperationProperty(String uuid, PropertiesOperation operation) {

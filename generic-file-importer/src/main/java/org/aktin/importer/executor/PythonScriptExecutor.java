@@ -13,10 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
@@ -84,7 +82,8 @@ public class PythonScriptExecutor {
 
     /**
      * adds a new file processing task to processing queue
-     * @param uuid id of file to process
+     *
+     * @param uuid   id of file to process
      * @param method type of processing to perform (verify/import), equals the method called in python script
      */
     public void addTask(String uuid, ScriptOperation method) {
@@ -94,27 +93,10 @@ public class PythonScriptExecutor {
 
     /**
      * cancels ongoing processing of file/removes file from processing queue
+     *
      * @param uuid id of file to stop processing
      */
     public void cancelTask(String uuid) {
         runner.cancelTask(uuid);
-    }
-
-    /**
-     * Checks if current file operation is finished successfully for given uuid via state key of properties file
-     * @param uuid id of file to check
-     * @return boolean if state is successful
-     * @throws IllegalArgumentException if properties file for give uuid could not be found in operationLock
-     */
-    public boolean isTaskDone(String uuid) throws IllegalArgumentException {
-        boolean result = false;
-        try {
-            Properties properties = fileOperationManager.getPropertiesFile(uuid);
-            PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
-            result = state.equals(PropertiesState.successful);
-        } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.SEVERE, "{0} could not be found in operationLock", uuid);
-        }
-        return result;
     }
 }
