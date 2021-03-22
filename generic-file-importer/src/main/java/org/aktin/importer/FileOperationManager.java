@@ -40,7 +40,7 @@ public class FileOperationManager {
      * All future reading of file metadata is carried out via the operationLock
      */
     @PostConstruct
-    private void initOperationLock() {
+    public void initOperationLock() {
         Properties properties;
         List<ScriptLog> list_scriptLog;
         for (String uuid : getUploadedFileIDs()) {
@@ -122,27 +122,6 @@ public class FileOperationManager {
         Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid);
         Files.createDirectories(path);
         return path.toString();
-    }
-
-    /**
-     * Walks recursively through given directory and deletes all files within. Deletes directory itself at the end
-     * Directory name equals uuid of uploaded file
-     *
-     * @param uuid universally unique id of file
-     * @return string path of deleted folder
-     * @throws IOException if path to walk is invalid
-     */
-    public String deleteUploadFileFolder(String uuid) throws IOException {
-        synchronized (operationLock_properties) {
-            Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid);
-            try (Stream<Path> walk = Files.walk(path)) {
-                walk.sorted(Comparator.reverseOrder())
-                        .map(java.nio.file.Path::toFile)
-                        .forEach(File::delete);
-            }
-            operationLock_properties.remove(uuid);
-            return path.toString();
-        }
     }
 
     /**
@@ -248,6 +227,28 @@ public class FileOperationManager {
     }
 
     /**
+     * Walks recursively through given directory and deletes all files within. Deletes directory itself at the end
+     * Directory name equals uuid of uploaded file
+     *
+     * @param uuid universally unique id of file
+     * @return string path of deleted folder
+     * @throws IOException if path to walk is invalid
+     */
+    public String deleteUploadFileFolder(String uuid) throws IOException {
+        synchronized (operationLock_properties) {
+            Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid);
+            try (Stream<Path> walk = Files.walk(path)) {
+                walk.sorted(Comparator.reverseOrder())
+                        .map(java.nio.file.Path::toFile)
+                        .forEach(File::delete);
+            }
+            operationLock_properties.remove(uuid);
+            return path.toString();
+        }
+    }
+
+
+    /**
      * @return List with all properties objects in operationLock_properties
      */
     public List<Properties> getPropertiesFiles() {
@@ -264,7 +265,7 @@ public class FileOperationManager {
         if (operationLock_properties.containsKey(uuid)) {
             result = operationLock_properties.get(uuid);
         } else
-            throw new IllegalArgumentException(String.format("%s could not be found in operationLock", uuid));
+            throw new IllegalArgumentException(String.format("%s could not be found in properties cache", uuid));
         return result;
     }
 
@@ -301,7 +302,7 @@ public class FileOperationManager {
         for (LogType logType : LogType.values()) {
             if (hasScriptLog(uuid, logType)) {
                 try {
-                    scriptLog = createScriptLog(uuid, logType);
+                    scriptLog = loadScriptLog(uuid, logType);
                     list_scriptLog.add(scriptLog);
                 } catch (IOException e) {
                     LOGGER.log(Level.SEVERE, "Script log could not be found for %s", uuid);
@@ -336,7 +337,7 @@ public class FileOperationManager {
      * @return ScriptLog object with logType, corresponding uuid and content
      * @throws FileNotFoundException if type of log does not exist in directory
      */
-    private ScriptLog createScriptLog(String uuid, LogType logType) throws IOException {
+    private ScriptLog loadScriptLog(String uuid, LogType logType) throws IOException {
         Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid, logType.name());
         ScriptLog scriptLog;
         if (Files.exists(path)) {
@@ -350,18 +351,13 @@ public class FileOperationManager {
     }
 
     /**
-     * Deletes all created script logs from directory of a given uuid and removes corresponding entry
-     * from operationLock
+     * Removes script log entry of corresponding uuid from operationLock (physical delete operation is done via
+     * deleteUploadFileFolder)
      *
      * @param uuid id of file to delete logs from
-     * @throws IOException if path for delete operation is invalid
      */
-    public void deleteScriptLogs(String uuid) throws IOException {
+    public void removeScriptLogs(String uuid) {
         synchronized (operationLock_scriptLog) {
-            for (LogType logType : LogType.values()) {
-                Path path = Paths.get(preferences.get(PreferenceKey.importDataPath), uuid, logType.name());
-                Files.deleteIfExists(path);
-            }
             operationLock_scriptLog.remove(uuid);
         }
     }
@@ -370,6 +366,11 @@ public class FileOperationManager {
      * @return List with scriptLog objects for corresponding uuid
      */
     public List<ScriptLog> getScriptLogs(String uuid) {
-        return operationLock_scriptLog.get(uuid);
-    }
+        List<ScriptLog> result;
+        if (operationLock_scriptLog.containsKey(uuid)) {
+            result = operationLock_scriptLog.get(uuid);
+        } else
+            throw new IllegalArgumentException(String.format("Script logs for %s could not be found in cache", uuid));
+        return result;
+    };
 }
