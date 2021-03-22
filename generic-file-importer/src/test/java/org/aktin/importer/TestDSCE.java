@@ -29,7 +29,7 @@ public class TestDSCE {
         test_getDataSourceCredentialsCRC(dsce);
     }
 
-    public void test_getDataSourceCredentialsCRC(DataSourceCredsExtractor dsce) {
+    private void test_getDataSourceCredentialsCRC(DataSourceCredsExtractor dsce) {
         HashMap<String, String> creds = dsce.getDataSourceCredentialsCRC();
         assertEquals("i2b2crcdata", creds.get("user-name"));
         assertEquals("demouser", creds.get("password"));
