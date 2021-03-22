@@ -144,7 +144,7 @@ public class ScriptOperationManager {
         if (operationLock_script.containsKey(id_script)) {
             result = operationLock_script.get(id_script);
         } else {
-            throw new FileNotFoundException(String.format("%s could not be found in operationLock", id_script));
+            throw new FileNotFoundException(String.format("%s could not be found in script cache", id_script));
         }
         return result;
     }

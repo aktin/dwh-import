@@ -158,7 +158,7 @@ public class PythonRunner implements Runnable {
      * 5. Starts script and controls a hang-up by checking the length of stdOutput each 10min (if no change in output
      * was detected 10 times in a row, script is stopped by timeout)
      * 6. Writes corresponding outcome of script (success, error, timeout) into propertiesFile after script finishes
-     * 7. Created script files are reloaded into operationLock at the end
+     * 7. Created script logs are reloaded into operationLock at the end
      *
      * @param task PythonScriptTask to process
      */
