@@ -27,6 +27,7 @@ public class PythonRunner implements Runnable {
     private final FileOperationManager fileOperationManager;
     private final ScriptOperationManager scriptOperationManager;
     private final HashMap<String, String> i2b2crcCredentials;
+    private final int scriptCheckInterval;
 
     private final Queue<PythonScriptTask> queue;
     private String runningId;
@@ -44,11 +45,13 @@ public class PythonRunner implements Runnable {
     public PythonRunner(
             FileOperationManager fileOperationManager,
             ScriptOperationManager scriptOperationManager,
-            HashMap<String, String> credentials) {
+            HashMap<String, String> credentials,
+            int interval) {
         queue = new LinkedList<>();
         this.fileOperationManager = fileOperationManager;
         this.scriptOperationManager = scriptOperationManager;
         this.i2b2crcCredentials = credentials;
+        this.scriptCheckInterval = interval;
     }
 
     /**
@@ -203,7 +206,7 @@ public class PythonRunner implements Runnable {
                     counter_timeout++;
                 }
                 num_lines_last = num_lines;
-                Thread.sleep(10000); // 10s
+                Thread.sleep(scriptCheckInterval);
             }
 
             if (process.exitValue() == 0) {

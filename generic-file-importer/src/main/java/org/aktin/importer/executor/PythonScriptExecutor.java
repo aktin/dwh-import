@@ -1,5 +1,7 @@
 package org.aktin.importer.executor;
 
+import org.aktin.Preferences;
+import org.aktin.dwh.PreferenceKey;
 import org.aktin.importer.DataSourceCredsExtractor;
 import org.aktin.importer.FileOperationManager;
 import org.aktin.importer.ScriptOperationManager;
@@ -25,6 +27,9 @@ public class PythonScriptExecutor {
     private PythonRunner runner;
 
     @Inject
+    private Preferences preferences;
+
+    @Inject
     private FileOperationManager fileOperationManager;
 
     @Inject
@@ -41,7 +46,8 @@ public class PythonScriptExecutor {
     @PostConstruct
     public void startup() {
         HashMap<String, String> credentials = dataSourceCredsExtractor.getDataSourceCredentialsCRC();
-        runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials);
+        int interval = Integer.parseInt(preferences.get(PreferenceKey.importScriptCheckInterval));
+        runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, interval);
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }
