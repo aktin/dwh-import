@@ -228,7 +228,7 @@ public class PythonRunner implements Runnable {
             runningId = null;
             process = null;
             exitCode = 0;
-            fileOperationManager.reloadScriptLogs(uuid);
+            fileOperationManager.loadScriptLogs(uuid);
         }
     }
 

@@ -40,7 +40,7 @@ public class TestFOM {
         test_getUploadFileFolderPath(fom);
         createScriptLogs();
         test_getScriptLogsException(fom);
-        test_reloadScriptLogs(fom);
+        test_loadScriptLogs(fom);
         test_deleteUploadFileFolder(fom);
         test_getPropertiesFileException(fom);
         test_removeScriptLogs(fom);
@@ -121,8 +121,8 @@ public class TestFOM {
         assertEquals("Script logs for 1 could not be found in cache", exception.getMessage());
     }
 
-    private void test_reloadScriptLogs(FileOperationManager fom) {
-        fom.reloadScriptLogs("1");
+    private void test_loadScriptLogs(FileOperationManager fom) {
+        fom.loadScriptLogs("1");
         assertTrue(Files.exists(Paths.get("src/test/resources/files/1/stdError")));
         assertTrue(Files.exists(Paths.get("src/test/resources/files/1/stdOutput")));
         assertEquals(2, fom.getScriptLogs("1").size());
