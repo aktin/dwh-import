@@ -42,17 +42,13 @@ public class FileOperationManager {
     @PostConstruct
     public void initOperationLock() {
         Properties properties;
-        List<ScriptLog> list_scriptLog;
         for (String uuid : getUploadedFileIDs()) {
             properties = loadFileMetadata(uuid);
             if (checkFileMetadataForIntegrity(properties)) {
                 synchronized (operationLock_properties) {
                     operationLock_properties.put(uuid, properties);
                 }
-                synchronized (operationLock_scriptLog) {
-                    list_scriptLog = loadScriptLogs(uuid);
-                    operationLock_scriptLog.put(uuid, list_scriptLog);
-                }
+                loadScriptLogs(uuid);
             } else
                 LOGGER.log(Level.WARNING, "{0} misses some keys. Ignored...", uuid);
         }
@@ -247,7 +243,6 @@ public class FileOperationManager {
         }
     }
 
-
     /**
      * @return List with all properties objects in operationLock_properties
      */
@@ -278,38 +273,27 @@ public class FileOperationManager {
     }
 
     /**
-     * Loads script logs from directory of given uuid and adds them to operation lock
-     *
-     * @param uuid id of file to reload logs
-     */
-    public void reloadScriptLogs(String uuid) {
-        List<ScriptLog> list_scriptLog = loadScriptLogs(uuid);
-        synchronized (operationLock_scriptLog) {
-            operationLock_scriptLog.put(uuid, list_scriptLog);
-        }
-    }
-
-    /**
-     * Loads script logs from directory of given uuid and returns them as a list of ScriptLog
+     * Loads script logs from directory of given uuid and adds them to operationLock_scriptLog
      * Only two logs can exist for each file (stdError and stdOutput)
      *
      * @param uuid id of file to load logs from
-     * @return List with loaded logs as ScriptLog objects
      */
-    private List<ScriptLog> loadScriptLogs(String uuid) {
-        List<ScriptLog> list_scriptLog = new ArrayList<>();
-        ScriptLog scriptLog;
-        for (LogType logType : LogType.values()) {
-            if (hasScriptLog(uuid, logType)) {
-                try {
-                    scriptLog = loadScriptLog(uuid, logType);
-                    list_scriptLog.add(scriptLog);
-                } catch (IOException e) {
-                    LOGGER.log(Level.SEVERE, "Script log could not be found for %s", uuid);
+    public void loadScriptLogs(String uuid) {
+        synchronized (operationLock_scriptLog) {
+            List<ScriptLog> list_scriptLog = new ArrayList<>();
+            ScriptLog scriptLog;
+            for (LogType logType : LogType.values()) {
+                if (hasScriptLog(uuid, logType)) {
+                    try {
+                        scriptLog = loadScriptLog(uuid, logType);
+                        list_scriptLog.add(scriptLog);
+                    } catch (IOException e) {
+                        LOGGER.log(Level.SEVERE, "Script log could not be found for %s", uuid);
+                    }
                 }
             }
+            operationLock_scriptLog.put(uuid, list_scriptLog);
         }
-        return list_scriptLog;
     }
 
     /**
@@ -351,6 +335,19 @@ public class FileOperationManager {
     }
 
     /**
+     * Adds empty List for given uuid in operationLock (only used during creation of metadata for new uploaded file in
+     * endpoint, reason is to have a consistent style where an invalid get() to objects in operationLock return an
+     * exception)
+     *
+     * @param uuid id of file to create empty list with logs for
+     */
+    public void createScriptLogsInCache(String uuid) {
+        synchronized (operationLock_scriptLog) {
+            operationLock_scriptLog.put(uuid, new ArrayList<>());
+        }
+    }
+
+    /**
      * Removes script log entry of corresponding uuid from operationLock (physical delete operation is done via
      * deleteUploadFileFolder)
      *
@@ -372,5 +369,5 @@ public class FileOperationManager {
         } else
             throw new IllegalArgumentException(String.format("Script logs for %s could not be found in cache", uuid));
         return result;
-    };
+    }
 }
