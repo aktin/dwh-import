@@ -14,12 +14,14 @@ import org.aktin.importer.pojos.PythonScriptTask;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 @Singleton
+@Startup
 public class PythonScriptExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
@@ -46,8 +48,8 @@ public class PythonScriptExecutor {
     @PostConstruct
     public void startup() {
         HashMap<String, String> credentials = dataSourceCredsExtractor.getDataSourceCredentialsCRC();
-        int interval = Integer.parseInt(preferences.get(PreferenceKey.importScriptCheckInterval));
-        runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, interval);
+        int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
+        runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }
@@ -56,7 +58,7 @@ public class PythonScriptExecutor {
      * Iterates through all properties files of operationLock_properties and adds queued or unfinished operations
      * to processing queue (to avoid manually restart of processing queue in case of server shutdown)
      */
-    public void addUnfinishedTasksToQueue() {
+    private void addUnfinishedTasksToQueue() {
         for (Properties properties : fileOperationManager.getPropertiesFiles()) {
             PythonScriptTask task;
             PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
@@ -103,6 +105,15 @@ public class PythonScriptExecutor {
      * @param uuid id of file to stop processing
      */
     public void cancelTask(String uuid) {
-        runner.cancelTask(uuid);
+            runner.cancelTask(uuid);
     }
+
+    /**
+     * @return length of PythonRunner's current Queue
+     */
+    public int getQueueSize() {
+        return runner.getQueueSize();
+    }
+
+
 }
