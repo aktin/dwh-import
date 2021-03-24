@@ -27,7 +27,7 @@ public class PythonRunner implements Runnable {
     private final FileOperationManager fileOperationManager;
     private final ScriptOperationManager scriptOperationManager;
     private final HashMap<String, String> i2b2crcCredentials;
-    private final int scriptCheckInterval;
+    private final int scriptProcessTimeout;
 
     private final Queue<PythonScriptTask> queue;
     private String runningId;
@@ -46,12 +46,12 @@ public class PythonRunner implements Runnable {
             FileOperationManager fileOperationManager,
             ScriptOperationManager scriptOperationManager,
             HashMap<String, String> credentials,
-            int interval) {
+            int timeout) {
         queue = new LinkedList<>();
         this.fileOperationManager = fileOperationManager;
         this.scriptOperationManager = scriptOperationManager;
         this.i2b2crcCredentials = credentials;
-        this.scriptCheckInterval = interval;
+        this.scriptProcessTimeout = timeout;
     }
 
     /**
@@ -114,6 +114,13 @@ public class PythonRunner implements Runnable {
     }
 
     /**
+     * @return length of current runner queue
+     */
+    public int getQueueSize() {
+        return this.queue.size();
+    }
+
+    /**
      * Cancels processing of given task
      * If task is currently executed, execution process is stopped
      * If task is still in queue, it is removed from queue
@@ -143,9 +150,10 @@ public class PythonRunner implements Runnable {
     private void killProcess() {
         try {
             process.destroy();
-            process.waitFor(10, TimeUnit.SECONDS);
-            process.destroyForcibly();
-            process.waitFor();
+            if (process != null && !process.waitFor(10, TimeUnit.SECONDS)) {
+                process.destroyForcibly();
+                process.waitFor();
+            }
         } catch (InterruptedException e) {
             LOGGER.log(Level.WARNING, "Killing thread was interrupted", e);
             Thread.currentThread().interrupt();
@@ -166,7 +174,6 @@ public class PythonRunner implements Runnable {
      * @param task PythonScriptTask to process
      */
     private void executeTask(PythonScriptTask task) {
-        int num_lines = 0, num_lines_last = 0, counter_timeout = 0;
         String uuid = task.getId();
         try {
             runningId = uuid;
@@ -197,16 +204,13 @@ public class PythonRunner implements Runnable {
             process = processBuilder.start();
 
             while (process.isAlive()) {
-                num_lines = Files.readAllLines(output.toPath()).size();
-                if (num_lines_last == num_lines) {
-                    if (counter_timeout == 10) {
+                try {
+                    if (!process.waitFor(this.scriptProcessTimeout, TimeUnit.MILLISECONDS)) {
                         exitCode = 2;
                         killProcess();
                     }
-                    counter_timeout++;
+                } catch (InterruptedException ignored) {
                 }
-                num_lines_last = num_lines;
-                Thread.sleep(scriptCheckInterval);
             }
 
             if (process.exitValue() == 0) {
@@ -220,7 +224,7 @@ public class PythonRunner implements Runnable {
                 else
                     changeTaskState(uuid, PropertiesState.failed);
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             if (process != null) killProcess();
             changeTaskState(uuid, PropertiesState.failed);
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);
