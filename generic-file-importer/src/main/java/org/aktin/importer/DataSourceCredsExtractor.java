@@ -7,6 +7,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ejb.Singleton;
 import javax.xml.parsers.DocumentBuilder;
@@ -31,30 +32,24 @@ public class DataSourceCredsExtractor {
     @Inject
     private Preferences preferences;
 
+    private HashMap<String, String> i2b2crcCredentials = new HashMap<>();
+
     /**
-     * Searches all deployed xml files for datasource corresponding to {i2b2.datasource.crc} and safes datasource
-     * credentials as well as connection url
+     * Getter for i2b2crcCredentials
+     *
      * @return hashmap with credentials and connection url for i2b2crcdata
      */
-    public HashMap<String, String> getDataSourceCredentialsCRC() {
-        Node node_datasource;
-        String i2b2CRC = getI2b2DataSourceCRC();
-        HashMap<String, String> credentials = new HashMap<>();
-        for (String name_xml : getDeployedXMLs()) {
-            node_datasource = getXMLParentNodeByJNDI(name_xml, i2b2CRC);
-            if (node_datasource != null) {
-                credentials = extractCredentialsFromParent(node_datasource);
-                credentials.putAll(extractConnectionUrlFromParent(node_datasource));
-            }
-        }
-        return credentials;
+    public HashMap<String, String> getI2b2crcCredentials() {
+        return this.i2b2crcCredentials;
     }
 
     /**
-     * @return path of wildfly deployments folder
+     * fills Credentials hashmaps with data after startup
      */
-    private Path getWildFlyDeploymentsFolder() {
-        return Paths.get(System.getProperty("jboss.server.base.dir"), "deployments");
+    @PostConstruct
+    public void startup() {
+        String datasource_crc = getI2b2DataSourceCRC();
+        this.i2b2crcCredentials = getDataSourceCredentials(datasource_crc);
     }
 
     /**
@@ -62,6 +57,25 @@ public class DataSourceCredsExtractor {
      */
     private String getI2b2DataSourceCRC() {
         return preferences.get(PreferenceKey.i2b2DatasourceCRC);
+    }
+
+    /**
+     * Searches all deployed xml files for datasource corresponding to given input and safes datasource
+     * credentials as well as connection url in a hashmap
+     *
+     * @return hashmap with credentials and connection url for i2b2crcdata
+     */
+    private HashMap<String, String> getDataSourceCredentials(String datasource_i2b2) {
+        Node node_datasource;
+        HashMap<String, String> credentials = new HashMap<>();
+        for (String name_xml : getDeployedXMLs()) {
+            node_datasource = getXMLParentNodeByJNDI(name_xml, datasource_i2b2);
+            if (node_datasource != null) {
+                credentials = extractCredentialsFromParent(node_datasource);
+                credentials.putAll(extractConnectionUrlFromParent(node_datasource));
+            }
+        }
+        return credentials;
     }
 
     /**
@@ -81,6 +95,13 @@ public class DataSourceCredsExtractor {
             LOGGER.log(Level.SEVERE, "No file to walk found", e);
         }
         return list_xml_deployed;
+    }
+
+    /**
+     * @return path of wildfly deployments folder
+     */
+    private Path getWildFlyDeploymentsFolder() {
+        return Paths.get(System.getProperty("jboss.server.base.dir"), "deployments");
     }
 
     /**

@@ -30,7 +30,8 @@ public class TestDSCE {
     }
 
     private void test_getDataSourceCredentialsCRC(DataSourceCredsExtractor dsce) {
-        HashMap<String, String> creds = dsce.getDataSourceCredentialsCRC();
+        dsce.startup();
+        HashMap<String, String> creds = dsce.getI2b2crcCredentials();
         assertEquals("i2b2crcdata", creds.get("user-name"));
         assertEquals("demouser", creds.get("password"));
         assertEquals("jdbc:postgresql://localhost:5432/i2b2?searchPath=i2b2crcdata", creds.get("connection-url"));

@@ -14,14 +14,12 @@ import org.aktin.importer.pojos.PythonScriptTask;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 @Singleton
-@Startup
 public class PythonScriptExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
@@ -47,7 +45,7 @@ public class PythonScriptExecutor {
      */
     @PostConstruct
     public void startup() {
-        HashMap<String, String> credentials = dataSourceCredsExtractor.getDataSourceCredentialsCRC();
+        HashMap<String, String> credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
         int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
         addUnfinishedTasksToQueue();

@@ -224,7 +224,7 @@ public class PythonRunner implements Runnable {
                 else
                     changeTaskState(uuid, PropertiesState.failed);
             }
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             if (process != null) killProcess();
             changeTaskState(uuid, PropertiesState.failed);
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);
