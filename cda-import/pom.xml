@@ -13,14 +13,14 @@
 		data warehouse. These facts are loaded into
 		the i2b2 data warehouse database via JDBC access.
 	</description>
-	
-	
+
+
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
 		<version>0.15-SNAPSHOT</version>
 	</parent>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -66,9 +66,8 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>dwh-api</artifactId>
-			<version>0.6</version>
+			<version>0.7-SNAPSHOT</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>javax</groupId>

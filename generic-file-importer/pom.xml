@@ -18,6 +18,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <developers>
+        <developer>
+            <name>Alexander Kombeiz</name>
+            <email>akombeiz (a) ukaachen.de</email>
+        </developer>
+    </developers>
+
     <dependencies>
         <dependency>
             <groupId>org.aktin</groupId>
