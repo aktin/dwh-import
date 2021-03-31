@@ -6,12 +6,12 @@
 
     <groupId>org.aktin</groupId>
     <artifactId>generic-file-importer</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.15</version>
 
     <parent>
         <artifactId>dwh-import</artifactId>
         <groupId>org.aktin</groupId>
-        <version>0.15-SNAPSHOT</version>
+        <version>0.15</version>
     </parent>
 
     <properties>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.aktin</groupId>
             <artifactId>dwh-api</artifactId>
-            <version>0.7-SNAPSHOT</version>
+            <version>0.7</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
