@@ -37,10 +37,14 @@ public class ImportDeleteManager {
      * Credentials are used to connect to postgres database schema
      */
     @PostConstruct
-    private void startup() throws NamingException {
-        String name_datasource = preferences.get(PreferenceKey.i2b2DatasourceCRC);
-        InitialContext ctx = new InitialContext();
-        this.dataSource = (DataSource) ctx.lookup(name_datasource);
+    private void startup() {
+        try {
+            String name_datasource = preferences.get(PreferenceKey.i2b2DatasourceCRC);
+            InitialContext context = new InitialContext();
+            this.dataSource = (DataSource) context.lookup(name_datasource);
+        } catch (NamingException e) {
+            LOGGER.log(Level.SEVERE, "Failed to read Datasource");
+        }
     }
 
     /**
