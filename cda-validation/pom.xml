@@ -13,9 +13,9 @@
 	</parent>
 	<properties>
 		<schematronVersion>20180323T201638</schematronVersion>
-		<examplesVersion>20180322T121703</examplesVersion> 
-		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            
-		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>            
+		<examplesVersion>20180322T121703</examplesVersion>
+		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>
+		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>
 	</properties>
 	<build>
 		<resources>
@@ -35,9 +35,9 @@
 		<plugins>
 			<!-- TODO don't depend on external server. build process fails if server down.
 				we should add the archives to the local repository,
-				e.g. via 
-				mvn install:install-file -Dfile=<path-to-file> 
-					-DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> 
+				e.g. via
+				mvn install:install-file -Dfile=<path-to-file>
+					-DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version>
 					-Dpackaging=<packaging>
 				 -->
 			<plugin>
@@ -72,10 +72,10 @@
 			<groupId>net.sf.saxon</groupId>
 			<artifactId>Saxon-HE</artifactId>
 		</dependency>
-		<!-- dependency injection is optional 
+		<!-- dependency injection is optional
 			and provided by the CDI container.
 			We need this to specify that only
-			one instance of the validator is 
+			one instance of the validator is
 			sufficient. -->
 		<dependency>
 			<groupId>javax.inject</groupId>

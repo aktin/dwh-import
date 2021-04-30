@@ -11,13 +11,13 @@
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.13-SNAPSHOT</version>
+		<version>0.16-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<schematronVersion>${project.version}</schematronVersion>          
-		<examplesVersion>${project.version}</examplesVersion>            
-		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>            
-		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>            
+		<schematronVersion>${project.version}</schematronVersion>
+		<examplesVersion>${project.version}</examplesVersion>
+		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>
+		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>
 	</properties>
 	<build>
 		<resources>
@@ -34,9 +34,9 @@
 		<plugins>
 			<!-- TODO don't depend on external server. build process fails if server down.
 				we should add the archives to the local repository,
-				e.g. via 
-				mvn install:install-file -Dfile=<path-to-file> 
-					-DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> 
+				e.g. via
+				mvn install:install-file -Dfile=<path-to-file>
+					-DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version>
 					-Dpackaging=<packaging>
 				 -->
 			<plugin>
@@ -73,7 +73,7 @@
 								</move>
 								<delete dir="${project.build.directory}/temp" />
 								<delete file="${project.build.directory}/schematron.zip" />
-								
+
 
 								<!-- download examples  -->
 								<!-- TODO also add the XSD files from XML release -->

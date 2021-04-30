@@ -11,18 +11,18 @@
 		for receiving CDA documents. The server can validate
 		the received documents, but no action is performed.
 	</description>
-	
-	
+
+
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
 		<version>0.16-SNAPSHOT</version>
 	</parent>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-  
+
 	<build>
 		<plugins>
     			<plugin>
@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>dwh-api</artifactId>
-			<version>0.7</version>
+			<version>0.8</version>
 		</dependency>
 
 		<!-- dependency injection -->
