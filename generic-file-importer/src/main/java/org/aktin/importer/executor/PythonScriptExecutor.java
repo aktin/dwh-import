@@ -1,6 +1,7 @@
 package org.aktin.importer.executor;
 
 import org.aktin.Preferences;
+import org.aktin.dwh.BrokerResourceManager;
 import org.aktin.dwh.PreferenceKey;
 import org.aktin.importer.DataSourceCredsExtractor;
 import org.aktin.importer.FileOperationManager;
@@ -15,8 +16,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 @Singleton
@@ -25,6 +26,9 @@ public class PythonScriptExecutor {
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
 
     private PythonRunner runner;
+
+    @Inject
+    private BrokerResourceManager brokerResourceManager;
 
     @Inject
     private Preferences preferences;
@@ -39,12 +43,14 @@ public class PythonScriptExecutor {
     private DataSourceCredsExtractor dataSourceCredsExtractor;
 
     /**
-     * Extracts on startup i2b2crcdata credentials and connection url and forwards them to PythonRunner
-     * Adds ongoing processing operations to PythonRunners processing queue and start a new PythonRunner in a
-     * new Thread
+     * First, collects installed python packages and puts them as a resource on the AKTIN Broker (as a
+     * CompletableFuture). Extracts on startup i2b2crcdata credentials and connection url and forwards them
+     * to PythonRunner. Adds ongoing processing operations to PythonRunners processing queue and start a
+     * new PythonRunner in a new Thread.
      */
     @PostConstruct
     public void startup() {
+        putPythonBrokerClientResources();
         HashMap<String, String> credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
         int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
@@ -79,6 +85,32 @@ public class PythonScriptExecutor {
     }
 
     /**
+     * Collect (hard-coded) Python apt packages and put them as a new resource group
+     * on the AKTIN Broker.
+     */
+    private void putPythonBrokerClientResources() {
+        CompletableFuture.runAsync(() -> {
+            Map<String, String> versions_python = collectPythonPackageVersions();
+            brokerResourceManager.putResourceGroup("python", versions_python);
+        });
+    }
+
+    /**
+     * Iterate through a list of necessary Python packages and get the corresponding installed version on operating system.
+     * Package names are from apt package manager (ubuntu is default operating system on dwh)
+     * @return Hashmap with {package name} : {installed version}
+     */
+    private Map<String, String> collectPythonPackageVersions() {
+        Map<String, String> versions_python = new HashMap<>();
+        List<String> packages_python = Arrays.asList("python3", "python3-pandas", "python3-numpy", "python3-requests", "python3-sqlalchemy", "python3-psycopg2", "python3-postgresql", "python3-zipp", "python3-plotly", "python3-unicodecsv", "python3-gunicorn");
+        packages_python.forEach(aptPackage -> {
+            String version = brokerResourceManager.getLinuxPackageVersion(aptPackage);
+            versions_python.put(aptPackage, version);
+        });
+        return versions_python;
+    }
+
+    /**
      * cancels current file processing and breaks the running loop of PythonRunner
      */
     @PreDestroy
@@ -103,7 +135,7 @@ public class PythonScriptExecutor {
      * @param uuid id of file to stop processing
      */
     public void cancelTask(String uuid) {
-            runner.cancelTask(uuid);
+        runner.cancelTask(uuid);
     }
 
     /**

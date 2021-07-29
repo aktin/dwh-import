@@ -1,6 +1,7 @@
 package org.aktin.importer;
 
 import org.aktin.Preferences;
+import org.aktin.dwh.BrokerResourceManager;
 import org.aktin.dwh.PreferenceKey;
 import org.aktin.importer.enums.ScriptKey;
 import org.aktin.importer.pojos.ScriptFile;
@@ -27,6 +28,9 @@ public class ScriptOperationManager {
     private static final Logger LOGGER = Logger.getLogger(ScriptOperationManager.class.getName());
 
     @Inject
+    private BrokerResourceManager brokerResourceManager;
+
+    @Inject
     private Preferences preferences;
 
     private final HashMap<String, ScriptFile> operationLock_script = new HashMap<>();
@@ -36,7 +40,8 @@ public class ScriptOperationManager {
      * Checks these files for possible metadata information (key-value pairs)
      * If found keys correspond to enums in ScriptKey, key-value pairs are converted
      * to a ScriptFile object and stored in operationLock_script
-     * All future reading of script metadata is carried out via operationLock_script
+     * All future reading of script metadata is carried out via operationLock_script.
+     * Sends all found scripts as a resource to the AKTIN Broker at the end.
      */
     @PostConstruct
     public void initOperationLock() {
@@ -52,6 +57,28 @@ public class ScriptOperationManager {
             } else
                 LOGGER.log(Level.WARNING, "{0} misses some keys. Ignored...", name_script);
         }
+        putImportScriptBrokerClientResources();
+    }
+
+    /**
+     * Iterate through operationLock_script and collect all script names with corresponding version
+     * @return Hashmap with {script name} : {installed version}
+     */
+    private Map<String, String> collectImportScriptVersions() {
+        Map<String, String> versions_importScript = new HashMap<>();
+        operationLock_script.forEach((name_script, script) -> {
+            versions_importScript.put(name_script, script.getVersion());
+        });
+        return versions_importScript;
+    }
+
+    /**
+     * Collects installed import scripts with version number and puts them as a new
+     * resource on the AKTIN Broker
+     */
+    private void putImportScriptBrokerClientResources() {
+        Map<String, String> versions_importScript = collectImportScriptVersions();
+        brokerResourceManager.putResourceGroup("import-scripts", versions_importScript);
     }
 
     /**
