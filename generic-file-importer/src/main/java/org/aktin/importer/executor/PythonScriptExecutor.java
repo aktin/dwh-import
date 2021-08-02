@@ -3,6 +3,7 @@ package org.aktin.importer.executor;
 import org.aktin.Preferences;
 import org.aktin.dwh.BrokerResourceManager;
 import org.aktin.dwh.PreferenceKey;
+import org.aktin.dwh.SystemStatusManager;
 import org.aktin.importer.DataSourceCredsExtractor;
 import org.aktin.importer.FileOperationManager;
 import org.aktin.importer.ScriptOperationManager;
@@ -28,6 +29,9 @@ public class PythonScriptExecutor {
     private PythonRunner runner;
 
     @Inject
+    private SystemStatusManager systemStatusManager;
+
+    @Inject
     private BrokerResourceManager brokerResourceManager;
 
     @Inject
@@ -50,7 +54,7 @@ public class PythonScriptExecutor {
      */
     @PostConstruct
     public void startup() {
-        putPythonBrokerClientResources();
+        uploadPythonPackageVersions();
         HashMap<String, String> credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
         int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
@@ -85,29 +89,24 @@ public class PythonScriptExecutor {
     }
 
     /**
-     * Collect (hard-coded) Python apt packages and put them as a new resource group
-     * on the AKTIN Broker.
+     * Collect (hard-coded) Python apt packages and put them as a new resource group on the AKTIN Broker.
      */
-    private void putPythonBrokerClientResources() {
-        CompletableFuture.runAsync(() -> {
-            Map<String, String> versions_python = collectPythonPackageVersions();
-            brokerResourceManager.putResourceGroup("python", versions_python);
-        });
+    private void uploadPythonPackageVersions() {
+        Properties versions_python = collectPythonPackageVersions();
+        brokerResourceManager.putMyResourceProperties("python", versions_python);
     }
 
     /**
-     * Iterate through a list of necessary Python packages and get the corresponding installed version on operating system.
+     * Iterate through a list of necessary Python packages and get the corresponding installed version.
      * Package names are from apt package manager (ubuntu is default operating system on dwh)
-     * @return Hashmap with {package name} : {installed version}
+     * @return Properties with {package name} = {installed version}
      */
-    private Map<String, String> collectPythonPackageVersions() {
-        Map<String, String> versions_python = new HashMap<>();
+    private Properties collectPythonPackageVersions() {
+        Properties properties = new Properties();
         List<String> packages_python = Arrays.asList("python3", "python3-pandas", "python3-numpy", "python3-requests", "python3-sqlalchemy", "python3-psycopg2", "python3-postgresql", "python3-zipp", "python3-plotly", "python3-unicodecsv", "python3-gunicorn");
-        packages_python.forEach(aptPackage -> {
-            String version = brokerResourceManager.getLinuxPackageVersion(aptPackage);
-            versions_python.put(aptPackage, version);
-        });
-        return versions_python;
+        Map<String, String> versions_python = systemStatusManager.getLinuxPackagesVersion(packages_python);
+        properties.putAll(versions_python);
+        return properties;
     }
 
     /**

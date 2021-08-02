@@ -57,28 +57,28 @@ public class ScriptOperationManager {
             } else
                 LOGGER.log(Level.WARNING, "{0} misses some keys. Ignored...", name_script);
         }
-        putImportScriptBrokerClientResources();
-    }
-
-    /**
-     * Iterate through operationLock_script and collect all script names with corresponding version
-     * @return Hashmap with {script name} : {installed version}
-     */
-    private Map<String, String> collectImportScriptVersions() {
-        Map<String, String> versions_importScript = new HashMap<>();
-        operationLock_script.forEach((name_script, script) -> {
-            versions_importScript.put(name_script, script.getVersion());
-        });
-        return versions_importScript;
+        uploadImportScriptVersions();
     }
 
     /**
      * Collects installed import scripts with version number and puts them as a new
      * resource on the AKTIN Broker
      */
-    private void putImportScriptBrokerClientResources() {
-        Map<String, String> versions_importScript = collectImportScriptVersions();
-        brokerResourceManager.putResourceGroup("import-scripts", versions_importScript);
+    private void uploadImportScriptVersions() {
+        Properties versions_importScript = collectImportScriptVersions();
+        brokerResourceManager.putMyResourceProperties("import-scripts", versions_importScript);
+    }
+
+    /**
+     * Iterate through operationLock_script and collect all script names with corresponding version
+     * @return java Properties with {script name} = {installed version}
+     */
+    private Properties collectImportScriptVersions() {
+        Properties versions_importScript = new Properties();
+        operationLock_script.forEach((id_script, script) -> {
+            versions_importScript.put(id_script, script.getVersion());
+        });
+        return versions_importScript;
     }
 
     /**
