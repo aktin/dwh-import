@@ -57,7 +57,7 @@ public class ImportDeleteManager {
             Properties properties = fileOperationManager.getPropertiesFile(uuid);
             if (isFileImported(properties)) {
                 String id_script = properties.getProperty(PropertiesKey.script.name());
-                String sourcesystem = String.join("_", "i", id_script, uuid);
+                String sourcesystem = String.join("_", id_script, uuid);
                 deleteImportedDataBySource(sourcesystem);
             }
         } catch (IllegalArgumentException e) {
