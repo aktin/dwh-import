@@ -33,7 +33,7 @@ public class ImportDeleteManager {
     private DataSource dataSource;
 
     /**
-     * On startup, extract credentials and connection-url for i2b2crcdata and save them in hashmap
+     * On startup, extract credentials and connection-url for i2b2crcdata and save them in hashmap.
      * Credentials are used to connect to postgres database schema
      */
     @PostConstruct
@@ -84,8 +84,8 @@ public class ImportDeleteManager {
     }
 
     /**
-     * Deletes all entries from i2b2crcdata.observation_fact for given sourcesystem
-     * Sourcesystem_cd for imported files is always "i_{id_script}_{uuid}"
+     * Deletes all entries from i2b2crcdata.observation_fact for given sourcesystem.
+     * Sourcesystem_cd for imported files is always "{id_script}_{uuid}"
      *
      * @param sourcesystem source code for file to delete entries from
      */
