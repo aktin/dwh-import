@@ -6,7 +6,6 @@ import org.aktin.importer.enums.PropertiesOperation;
 import org.aktin.importer.enums.PropertiesState;
 import org.aktin.importer.enums.LogType;
 import org.aktin.importer.enums.PropertiesKey;
-import org.aktin.importer.pojos.PythonScriptTask;
 import org.aktin.importer.pojos.ScriptFile;
 
 import java.io.File;
@@ -21,20 +20,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PythonRunner implements Runnable {
-
+    
     private static final Logger LOGGER = Logger.getLogger(PythonRunner.class.getName());
-
+    
     private final FileOperationManager fileOperationManager;
     private final ScriptOperationManager scriptOperationManager;
     private final HashMap<String, String> i2b2crcCredentials;
     private final int scriptProcessTimeout;
-
-    private final Queue<PythonScriptTask> queue;
+    
+    private final Queue<String> queue;
     private String runningId;
     private Process process;
     private int exitCode = 0;
     private boolean exit = false;
-
+    
     /**
      * Constructor for PythonRunner runnable, creates a new empty queue to store tasks in
      *
@@ -42,18 +41,14 @@ public class PythonRunner implements Runnable {
      * @param scriptOperationManager Singleton Class ScriptOperationManager (used to read ScriptFile)
      * @param credentials            HashMap with i2b2crcdata credentials and connection-url
      */
-    public PythonRunner(
-            FileOperationManager fileOperationManager,
-            ScriptOperationManager scriptOperationManager,
-            HashMap<String, String> credentials,
-            int timeout) {
+    public PythonRunner(FileOperationManager fileOperationManager, ScriptOperationManager scriptOperationManager, HashMap<String, String> credentials, int timeout) {
         queue = new LinkedList<>();
         this.fileOperationManager = fileOperationManager;
         this.scriptOperationManager = scriptOperationManager;
         this.i2b2crcCredentials = credentials;
         this.scriptProcessTimeout = timeout;
     }
-
+    
     /**
      * Working loop of runnable, is stopped when exit = true
      * If queue is empty, waits till queue has content
@@ -63,7 +58,7 @@ public class PythonRunner implements Runnable {
     public void run() {
         LOGGER.info("Processing thread started");
         while (!exit) {
-            PythonScriptTask task;
+            String uuid;
             synchronized (queue) {
                 if (queue.isEmpty()) {
                     try {
@@ -76,15 +71,15 @@ public class PythonRunner implements Runnable {
                 if (queue.isEmpty())
                     continue;
                 else
-                    task = queue.remove();
+                    uuid = queue.remove();
             }
             if (exit)
                 break;
-            executeTask(task);
+            executeTask(uuid);
         }
         LOGGER.info("Processing thread ended");
     }
-
+    
     /**
      * Stops working loop of runnable, if task is currently executed, execution process is stopped prior
      */
@@ -97,29 +92,28 @@ public class PythonRunner implements Runnable {
             queue.notify();
         }
     }
-
+    
     /**
-     * Adds a new task object to queue and sets corresponding propertiesFile to operation of task (verify or import)
-     * and state to 'queued'
+     * Adds a new task object to import queue and sets corresponding state in file properties
      *
-     * @param task PythonScriptTask which is added to queue
+     * @param uuid Id of file to process
      */
-    public void submitTask(PythonScriptTask task) {
+    public void submitTask(String uuid) {
         synchronized (queue) {
-            queue.add(task);
-            changeTaskOperation(task);
-            changeTaskState(task.getId(), PropertiesState.queued);
+            queue.add(uuid);
+            setOperationToImporting(uuid);
+            changeTaskState(uuid, PropertiesState.queued);
             queue.notify();
         }
     }
-
+    
     /**
      * @return length of current runner queue
      */
     public int getQueueSize() {
         return this.queue.size();
     }
-
+    
     /**
      * Cancels processing of given task
      * If task is currently executed, execution process is stopped
@@ -133,9 +127,9 @@ public class PythonRunner implements Runnable {
             killProcess();
         } else {
             synchronized (queue) {
-                for (PythonScriptTask task : queue) {
-                    if (task.getId().equals(uuid)) {
-                        queue.remove(task);
+                for (String taskId : queue) {
+                    if (taskId.equals(uuid)) {
+                        queue.remove(taskId);
                         break;
                     }
                 }
@@ -143,7 +137,7 @@ public class PythonRunner implements Runnable {
         }
         changeTaskState(uuid, PropertiesState.cancelled);
     }
-
+    
     /**
      * Stops the current execution process
      */
@@ -159,38 +153,37 @@ public class PythonRunner implements Runnable {
             Thread.currentThread().interrupt();
         }
     }
-
+    
     /**
      * Runs given python script method on given file:
      * 1. Collects corresponding ScriptFile and PropertiesFile of given id
      * 2. Creates stdOut and stdError files to collect logs of python script
-     * 3. Creates a python process with "path to script" "method to execute" and "path to file to process"
+     * 3. Creates a python process with "path to script" and "path to file to process"
      * 4. Sets used information of python script as environment variables
      * 5. Starts script and controls a hang-up by checking the length of stdOutput each 10min (if no change in output
      * was detected 10 times in a row, script is stopped by timeout)
      * 6. Writes corresponding outcome of script (success, error, timeout) into propertiesFile after script finishes
      * 7. Created script logs are reloaded into operationLock at the end
      *
-     * @param task PythonScriptTask to process
+     * @param uuid Id of file to import
      */
-    private void executeTask(PythonScriptTask task) {
-        String uuid = task.getId();
+    private void executeTask(String uuid) {
         try {
             runningId = uuid;
             changeTaskState(uuid, PropertiesState.in_progress);
-
+            
             Properties properties = fileOperationManager.getPropertiesFile(uuid);
             ScriptFile script = getScriptByPropertiesFile(properties);
             String path_folder = fileOperationManager.getUploadFileFolderPath(uuid);
-
+            
             File output = initLogFile(path_folder, LogType.stdOutput);
             File error = initLogFile(path_folder, LogType.stdError);
-
+            
             String path_file = Paths.get(path_folder, properties.getProperty(PropertiesKey.filename.name())).toString();
-            ProcessBuilder processBuilder = new ProcessBuilder("python3", script.getPath(), task.getScriptMethod().name(), path_file);
+            ProcessBuilder processBuilder = new ProcessBuilder("python3", script.getPath(), path_file);
             processBuilder.redirectError(error);
             processBuilder.redirectOutput(output);
-
+            
             String path_aktin_properties = Paths.get(System.getProperty("jboss.server.config.dir"), "aktin.properties").toString();
             Map<String, String> vars_environment = processBuilder.environment();
             vars_environment.put("username", i2b2crcCredentials.get("user-name"));
@@ -200,9 +193,9 @@ public class PythonRunner implements Runnable {
             vars_environment.put("script_id", script.getId());
             vars_environment.put("script_version", script.getVersion());
             vars_environment.put("path_aktin_properties", path_aktin_properties);
-
+            
             process = processBuilder.start();
-
+            
             while (process.isAlive()) {
                 try {
                     if (!process.waitFor(this.scriptProcessTimeout, TimeUnit.MILLISECONDS)) {
@@ -212,10 +205,10 @@ public class PythonRunner implements Runnable {
                 } catch (InterruptedException ignored) {
                 }
             }
-
+            
             if (process.exitValue() == 0) {
                 changeTaskState(uuid, PropertiesState.successful);
-                writeSuccessProperty(properties);
+                writeSuccessfulImportTimestamp(properties);
             } else {
                 if (exitCode == 2)
                     changeTaskState(uuid, PropertiesState.timeout);
@@ -225,7 +218,8 @@ public class PythonRunner implements Runnable {
                     changeTaskState(uuid, PropertiesState.failed);
             }
         } catch (IOException | NullPointerException e) {
-            if (process != null) killProcess();
+            if (process != null)
+                killProcess();
             changeTaskState(uuid, PropertiesState.failed);
             LOGGER.log(Level.SEVERE, "Execution of task failed", e);
         } finally {
@@ -235,7 +229,7 @@ public class PythonRunner implements Runnable {
             fileOperationManager.loadScriptLogs(uuid);
         }
     }
-
+    
     /**
      * Gets the corresponding ScriptFile of given properties File
      *
@@ -247,7 +241,7 @@ public class PythonRunner implements Runnable {
         String id_script = properties.getProperty(PropertiesKey.script.name());
         return scriptOperationManager.getScript(id_script);
     }
-
+    
     /**
      * Creates a file named after enum in logType in given folder, deletes file and recreates it if
      * already existing in folder
@@ -262,22 +256,18 @@ public class PythonRunner implements Runnable {
         Files.deleteIfExists(path);
         return new File(path.toString());
     }
-
+    
     /**
      * Adds a milestone timestamp for successfully completed operation
      *
      * @param properties properties file to write into
      */
-    private void writeSuccessProperty(Properties properties) {
+    private void writeSuccessfulImportTimestamp(Properties properties) {
         long finishedTime = System.currentTimeMillis();
         String uuid = properties.getProperty(PropertiesKey.id.name());
-        PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
-        if (operation.equals(PropertiesOperation.verifying))
-            fileOperationManager.addPropertyToPropertiesFile(uuid, "verified", Long.toString(finishedTime));
-        else if (operation.equals(PropertiesOperation.importing))
-            fileOperationManager.addPropertyToPropertiesFile(uuid, "imported", Long.toString(finishedTime));
+        fileOperationManager.addPropertyToPropertiesFile(uuid, "imported", Long.toString(finishedTime));
     }
-
+    
     /**
      * Changes "state"-value of properties file (in file and in operationLock)
      *
@@ -288,33 +278,14 @@ public class PythonRunner implements Runnable {
         fileOperationManager.addPropertyToPropertiesFile(uuid, PropertiesKey.state.name(), state.name());
         LOGGER.log(Level.INFO, "Execution of task {0} changed to state {1}", new Object[]{uuid, state.name()});
     }
-
-    /**
-     * Changes "operation"-value of corresponding properties file of given task object
-     *
-     * @param task task that is currently processed
-     */
-    private void changeTaskOperation(PythonScriptTask task) {
-        switch (task.getScriptMethod()) {
-            case verify_file:
-                changeOperationProperty(task.getId(), PropertiesOperation.verifying);
-                break;
-            case import_file:
-                changeOperationProperty(task.getId(), PropertiesOperation.importing);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected operation: " + task.getScriptMethod().name());
-        }
-    }
-
+    
     /**
      * Changes "operation"-value of properties file (in file and in operationLock)
      *
-     * @param uuid      id of file
-     * @param operation current processing operation (see PropertiesOperation)
+     * @param uuid id of file
      */
-    private void changeOperationProperty(String uuid, PropertiesOperation operation) {
-        fileOperationManager.addPropertyToPropertiesFile(uuid, PropertiesKey.operation.name(), operation.name());
-        LOGGER.log(Level.INFO, "Operation of task {0} changed to {1}", new Object[]{uuid, operation.name()});
+    private void setOperationToImporting(String uuid) {
+        fileOperationManager.addPropertyToPropertiesFile(uuid, PropertiesKey.operation.name(), PropertiesOperation.importing.name());
+        LOGGER.log(Level.INFO, "Operation of task {0} changed to importing", uuid);
     }
 }

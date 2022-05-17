@@ -10,42 +10,39 @@ import org.aktin.importer.ScriptOperationManager;
 import org.aktin.importer.enums.PropertiesKey;
 import org.aktin.importer.enums.PropertiesOperation;
 import org.aktin.importer.enums.PropertiesState;
-import org.aktin.importer.enums.ScriptOperation;
-import org.aktin.importer.pojos.PythonScriptTask;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 @Singleton
 public class PythonScriptExecutor {
-
+    
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
-
+    
     private PythonRunner runner;
-
+    
     @Inject
     private SystemStatusManager systemStatusManager;
-
+    
     @Inject
     private BrokerResourceManager brokerResourceManager;
-
+    
     @Inject
     private Preferences preferences;
-
+    
     @Inject
     private FileOperationManager fileOperationManager;
-
+    
     @Inject
     private ScriptOperationManager scriptOperationManager;
-
+    
     @Inject
     private DataSourceCredsExtractor dataSourceCredsExtractor;
-
+    
     /**
      * First, collects installed python packages and puts them as a resource on the AKTIN Broker (as a
      * CompletableFuture). Extracts on startup i2b2crcdata credentials and connection url and forwards them
@@ -61,33 +58,24 @@ public class PythonScriptExecutor {
         addUnfinishedTasksToQueue();
         new Thread(runner).start();
     }
-
+    
     /**
      * Iterates through all properties files of operationLock_properties and adds queued or unfinished operations
      * to processing queue (to avoid manually restart of processing queue in case of server shutdown)
      */
     private void addUnfinishedTasksToQueue() {
         for (Properties properties : fileOperationManager.getPropertiesFiles()) {
-            PythonScriptTask task;
-            PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
-            if (state.equals(PropertiesState.queued) || state.equals(PropertiesState.in_progress)) {
-                String uuid = properties.getProperty(PropertiesKey.id.name());
-                PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
-                switch (operation) {
-                    case verifying:
-                        task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
-                        break;
-                    case importing:
-                        task = new PythonScriptTask(uuid, ScriptOperation.import_file);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected operation: " + operation.name());
+            PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
+            if (operation == PropertiesOperation.importing) {
+                PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
+                if (state.equals(PropertiesState.queued) || state.equals(PropertiesState.in_progress)) {
+                    String uuid = properties.getProperty(PropertiesKey.id.name());
+                    runner.submitTask(uuid);
                 }
-                runner.submitTask(task);
             }
         }
     }
-
+    
     /**
      * Collect (hard-coded) Python apt packages and put them as a new resource group on the AKTIN Broker.
      */
@@ -95,10 +83,11 @@ public class PythonScriptExecutor {
         Properties versions_python = collectPythonPackageVersions();
         brokerResourceManager.putMyResourceProperties("python", versions_python);
     }
-
+    
     /**
      * Iterate through a list of necessary Python packages and get the corresponding installed version.
      * Package names are from apt package manager (ubuntu is default operating system on dwh)
+     *
      * @return Properties with {package name} = {installed version}
      */
     private Properties collectPythonPackageVersions() {
@@ -108,7 +97,7 @@ public class PythonScriptExecutor {
         properties.putAll(versions_python);
         return properties;
     }
-
+    
     /**
      * cancels current file processing and breaks the running loop of PythonRunner
      */
@@ -116,18 +105,16 @@ public class PythonScriptExecutor {
     public void shutdown() {
         runner.terminate();
     }
-
+    
     /**
      * adds a new file processing task to processing queue
      *
-     * @param uuid   id of file to process
-     * @param method type of processing to perform (verify/import), equals the method called in python script
+     * @param uuid id of file to process
      */
-    public void addTask(String uuid, ScriptOperation method) {
-        PythonScriptTask task = new PythonScriptTask(uuid, method);
-        runner.submitTask(task);
+    public void addTask(String uuid) {
+        runner.submitTask(uuid);
     }
-
+    
     /**
      * cancels ongoing processing of file/removes file from processing queue
      *
@@ -136,13 +123,13 @@ public class PythonScriptExecutor {
     public void cancelTask(String uuid) {
         runner.cancelTask(uuid);
     }
-
+    
     /**
      * @return length of PythonRunner's current Queue
      */
     public int getQueueSize() {
         return runner.getQueueSize();
     }
-
-
+    
+    
 }
