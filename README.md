@@ -4,15 +4,15 @@ Schnittstelle zwischen Notaufnahme/Klinik und Datawarehouse
 
 Beispiel CDA
 ------------
-Beispielhafte CDA-Dokumente sowie ein vollständiges CDA Dokument erstellen, in dem alle Felder ausgefühlt sind. 
-Im ersten Schritt mit unrealistischen Daten. Später dann realistische Daten.
+Beispielhafte CDA-Dokumente sowie ein vollstï¿½ndiges CDA Dokument erstellen, in dem alle Felder ausgefï¿½hlt sind. 
+Im ersten Schritt mit unrealistischen Daten. Spï¿½ter dann realistische Daten.
 
 REST-Schnittstelle
 -----------------
 XML-Datei entgegennehmen per REST-Schnittstelle.
 
 Im ersten Schritt reicht HTTP. Wenn die Schnittstelle steht, dann Umstellung
-auf FHIR, IHE und eventuell auf SSL+TLS mit Clientauthentifizierung über selbstsigniertes Zertifikat.
+auf FHIR, IHE und eventuell auf SSL+TLS mit Clientauthentifizierung ï¿½ber selbstsigniertes Zertifikat.
 
 FHIR-Schnittstelle
 ------------------
@@ -25,12 +25,17 @@ IHE XDS.b Dokument Repo
 Validation via Schematron 
 -------------------------
 Einarbeiten in XML-Validation mit Schematron: Transformation Schematron -> XSLT, dann Validation mit XSLT.
-Implementierung über Saxon. 
+Implementierung Ã¼ber Saxon. 
+
+**Hinweis**: Gegebenenfalls muss beim Kompilieren fÃ¼r den Download der Schematrons das Zertifikat von https://aktin.art-decor.pub manuell in den JAVA Keystore eingelesen werden:
+1. Ãœber den Browser o.Ã¤. das Zertifikat von https://aktin.art-decor.pub als .cer exportieren
+2. `keytool -importcert -alias [SELBSTGEWÃ„HLTER ALIAS] -file [PFAD ZUR .cer] -keystore [PFAD ZUR cacerts DER JEWEILIGEN JAVA VERSION]
+   `
 
 XSLT-Transformation CDA->DWH
 ----------------------------
 Transformation nach EAV Format. Personbezogene Daten werden in diesem Schritt entfernt. 
-Transformation läuft über Java.xml.
+Transformation lÃ¤uft Ã¼ber Java.xml.
 
 RESTful API
 -----------
@@ -38,8 +43,8 @@ RESTful API
 PUT /aktin/dwh/<patid>/<visit>/cda
 oder PUT /aktin/dwh/cda (wenn Patid und Visit aus Inhalt hervorgeht)
 
-EinfÜgen eines einzelnen CDA dokuments für einzelnen Patienten und Fall ins DWH.
-Überschreibt ggf. vorhandenes CDA mit gleicher Fallnr/Patid.
+Einfï¿½gen eines einzelnen CDA dokuments fï¿½r einzelnen Patienten und Fall ins DWH.
+ï¿½berschreibt ggf. vorhandenes CDA mit gleicher Fallnr/Patid.
 
 Replies: 
 200 OK
@@ -47,7 +52,7 @@ xxx Invalid request (e.g. errors in CDA / XML)
 
 
 DELETE /aktin/dwh/<patid>/<visit>/cda
-Löscht ein CDA dokument
+Lï¿½scht ein CDA dokument
 
 POST? /aktin/dwh/patient/merge/12345+789012
 Merges two patient identifiers
@@ -67,11 +72,11 @@ Replies:
 200 OK
 40x Access denied (if this feature is not enabled)
 
-Optional (kann später implementiert werden)
+Optional (kann spï¿½ter implementiert werden)
 
 GET /patient/12345/43f232/cda
-Lädt ein CDA zu einem bestimmten Patienten und Fall.
-Auch wenn IDAT nicht gespeichert werden dürfen, kann die Funktion angeboten werden: Die angefragte ID wird über Einweg-Hash auf interne ID abgebildet. Ergebnis wird zurückgeliefert.
+Lï¿½dt ein CDA zu einem bestimmten Patienten und Fall.
+Auch wenn IDAT nicht gespeichert werden dï¿½rfen, kann die Funktion angeboten werden: Die angefragte ID wird ï¿½ber Einweg-Hash auf interne ID abgebildet. Ergebnis wird zurï¿½ckgeliefert.
 Replies:
 200 OK
 404 Patient not found
@@ -79,15 +84,15 @@ Replies:
 
 Implementierung
 ---------------
-Für jede CDA-Version gibt es zwei Transformationen (XSLT):
+Fï¿½r jede CDA-Version gibt es zwei Transformationen (XSLT):
 1. CDA nach EAV
 2. EAV nach CDA
 
 Implementierung von PUT /patient/12345/cda
 1. CDA mit Schematron validieren. Fehlermeldung bei Inkonsistenz
 2. XSLT CDA -> EAV-XML
-3. EAV mit Sax2 prozessieren und transaktionssicher in Datenbank einfügen
-4. Erfolg zurückmelden
+3. EAV mit Sax2 prozessieren und transaktionssicher in Datenbank einfï¿½gen
+4. Erfolg zurï¿½ckmelden
 
 EAV-XML Schema siehe dwh-eav-example.xml
 

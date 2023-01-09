@@ -54,10 +54,10 @@
 						<configuration>
 							<target>
 								<!-- schematron files -->
-								<get src="http://aktin.art-decor.org/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/schematron" />
 								<!-- download examples -->
-								<get src="http://aktin.art-decor.org/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples" />
 							</target>
 						</configuration>
