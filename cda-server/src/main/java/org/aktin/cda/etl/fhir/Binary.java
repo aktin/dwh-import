@@ -156,6 +156,8 @@ public class Binary implements ExternalInterface{
 		}
 	}
 
+	// If doc is not a valid XML, the application server will not execute this method and
+	// return 415 instead
 	@POST
 	public Response create(Source doc){
 		SimplifiedOperationOutcome outcome = new SimplifiedOperationOutcome();
