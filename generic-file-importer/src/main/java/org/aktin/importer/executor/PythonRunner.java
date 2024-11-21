@@ -6,6 +6,7 @@ import org.aktin.importer.enums.PropertiesOperation;
 import org.aktin.importer.enums.PropertiesState;
 import org.aktin.importer.enums.LogType;
 import org.aktin.importer.enums.PropertiesKey;
+import org.aktin.importer.pojos.DatabaseCreds;
 import org.aktin.importer.pojos.PythonScriptTask;
 import org.aktin.importer.pojos.ScriptFile;
 
@@ -26,7 +27,7 @@ public class PythonRunner implements Runnable {
 
     private final FileOperationManager fileOperationManager;
     private final ScriptOperationManager scriptOperationManager;
-    private final HashMap<String, String> i2b2crcCredentials;
+    private final DatabaseCreds i2b2crcCredentials;
     private final int scriptProcessTimeout;
 
     private final Queue<PythonScriptTask> queue;
@@ -40,12 +41,12 @@ public class PythonRunner implements Runnable {
      *
      * @param fileOperationManager   Singleton Class FileOperationManager (used to read/write in propertiesFile)
      * @param scriptOperationManager Singleton Class ScriptOperationManager (used to read ScriptFile)
-     * @param credentials            HashMap with i2b2crcdata credentials and connection-url
+     * @param credentials            Pojo with i2b2crcdata credentials and connection-url
      */
     public PythonRunner(
             FileOperationManager fileOperationManager,
             ScriptOperationManager scriptOperationManager,
-            HashMap<String, String> credentials,
+            DatabaseCreds credentials,
             int timeout) {
         queue = new LinkedList<>();
         this.fileOperationManager = fileOperationManager;
@@ -193,9 +194,9 @@ public class PythonRunner implements Runnable {
 
             String path_aktin_properties = Paths.get(System.getProperty("jboss.server.config.dir"), "aktin.properties").toString();
             Map<String, String> vars_environment = processBuilder.environment();
-            vars_environment.put("username", i2b2crcCredentials.get("user-name"));
-            vars_environment.put("password", i2b2crcCredentials.get("password"));
-            vars_environment.put("connection-url", i2b2crcCredentials.get("connection-url"));
+            vars_environment.put("username", i2b2crcCredentials.getUsername());
+            vars_environment.put("password", i2b2crcCredentials.getPassword());
+            vars_environment.put("connection-url", i2b2crcCredentials.getConnectionUrl());
             vars_environment.put("uuid", uuid);
             vars_environment.put("script_id", script.getId());
             vars_environment.put("script_version", script.getVersion());

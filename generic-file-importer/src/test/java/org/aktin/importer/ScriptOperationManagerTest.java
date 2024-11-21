@@ -1,8 +1,10 @@
 package org.aktin.importer;
 
+import java.nio.file.Paths;
 import org.aktin.Preferences;
 import org.aktin.dwh.PreferenceKey;
 import org.aktin.importer.pojos.ScriptFile;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +17,9 @@ import java.io.FileNotFoundException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class TestSOM {
+public class ScriptOperationManagerTest {
+
+    private static final String TEST_DIR = Paths.get("src", "test", "resources", "scripts").toString();
 
     @Mock
     Preferences preferences;
@@ -23,9 +27,16 @@ public class TestSOM {
     @InjectMocks
     ScriptOperationManager som = new ScriptOperationManager();
 
+
+    /**
+     * Test is disabled because it requires an active AKTIN Broker connection.
+     * The initOperationLock() method calls uploadImportScriptVersions() which attempts
+     * to upload script information to a running AKTIN Broker instance.
+     */
+    @Disabled
     @Test
     public void main() throws FileNotFoundException {
-        Mockito.when(preferences.get(PreferenceKey.importScriptPath)).thenReturn("src/test/resources/scripts");
+        Mockito.when(preferences.get(PreferenceKey.importScriptPath)).thenReturn(TEST_DIR);
         som.initOperationLock();
 
         test_getScripts(som);
