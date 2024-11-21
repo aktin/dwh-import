@@ -24,7 +24,7 @@
 	</properties>
 
 	<scm>
-		<developerConnection>scm:git:https://git.rwth-aachen.de/aktin/dwh-import.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/aktin/dwh-import.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
