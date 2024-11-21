@@ -11,6 +11,7 @@ import org.aktin.importer.enums.PropertiesKey;
 import org.aktin.importer.enums.PropertiesOperation;
 import org.aktin.importer.enums.PropertiesState;
 import org.aktin.importer.enums.ScriptOperation;
+import org.aktin.importer.pojos.DatabaseCreds;
 import org.aktin.importer.pojos.PythonScriptTask;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +19,6 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 @Singleton
@@ -55,7 +55,7 @@ public class PythonScriptExecutor {
     @PostConstruct
     public void startup() {
         uploadPythonPackageVersions();
-        HashMap<String, String> credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
+        DatabaseCreds credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
         int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
         addUnfinishedTasksToQueue();
@@ -143,6 +143,4 @@ public class PythonScriptExecutor {
     public int getQueueSize() {
         return runner.getQueueSize();
     }
-
-
 }
