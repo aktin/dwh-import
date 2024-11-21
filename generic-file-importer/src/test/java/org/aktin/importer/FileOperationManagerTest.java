@@ -1,8 +1,22 @@
 package org.aktin.importer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 import org.aktin.Preferences;
 import org.aktin.dwh.PreferenceKey;
-import org.aktin.importer.enums.*;
+import org.aktin.importer.enums.PropertiesKey;
+import org.aktin.importer.enums.PropertiesOperation;
+import org.aktin.importer.enums.PropertiesState;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,15 +24,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Properties;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-public class TestFOM {
+public class FileOperationManagerTest {
+
+    private static final String TEST_DIR = Paths.get("src", "test", "resources", "files").toString();
 
     @Mock
     Preferences preferences;
@@ -28,7 +37,7 @@ public class TestFOM {
 
     @Test
     public void main() throws IOException {
-        Mockito.when(preferences.get(PreferenceKey.importDataPath)).thenReturn("src/test/resources/files");
+        Mockito.when(preferences.get(PreferenceKey.importDataPath)).thenReturn(TEST_DIR);
         fom.initOperationLock();
 
         test_createUploadFileFolder(fom);
@@ -50,16 +59,16 @@ public class TestFOM {
     private void test_createUploadFileFolder(FileOperationManager fom) throws IOException {
         String path_folder = fom.createUploadFileFolder("1");
         assertTrue(Files.exists(Paths.get(path_folder)));
-        assertEquals("src\\test\\resources\\files\\1", path_folder);
+        assertEquals(Paths.get(TEST_DIR, "1").toString(), path_folder);
     }
 
     private void test_moveUploadFile(FileOperationManager fom) throws IOException {
-        File file = new File("src/test/resources/files/name");
+        File file = new File(Paths.get(TEST_DIR, "name").toString());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.append("I am a file");
         }
         String path_old = file.getPath();
-        String path_new = "src/test/resources/files/1";
+        String path_new = Paths.get(TEST_DIR, "1").toString();
         fom.moveUploadFile(path_old, path_new, "renamed");
         assertFalse(Files.exists(Paths.get(path_old)));
         assertTrue(Files.exists(Paths.get(path_new, "renamed")));
@@ -67,7 +76,7 @@ public class TestFOM {
 
     private void test_createNewPropertiesFile(FileOperationManager fom) {
         fom.createNewPropertiesFile("1", "renamed", 123456789, "success");
-        assertTrue(Files.exists(Paths.get("src/test/resources/files/1/properties")));
+        assertTrue(Files.exists(Paths.get(TEST_DIR, "1", "properties")));
         Properties properties = fom.getPropertiesFile("1");
         assertEquals("1", properties.getProperty(PropertiesKey.id.name()));
         assertEquals("renamed", properties.getProperty(PropertiesKey.filename.name()));
@@ -100,15 +109,15 @@ public class TestFOM {
     }
 
     private void test_getUploadFileFolderPath(FileOperationManager fom) {
-        assertEquals("src\\test\\resources\\files\\2", fom.getUploadFileFolderPath("2"));
+       assertEquals(Paths.get(TEST_DIR, "2").toString(), fom.getUploadFileFolderPath("2"));
     }
 
     private void createScriptLogs() throws IOException {
-        File error = new File("src/test/resources/files/1/stdError");
+        File error = new File(Paths.get(TEST_DIR, "1", "stdError").toString());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(error))) {
             writer.append("I am error");
         }
-        File output = new File("src/test/resources/files/1/stdOutput");
+        File output = new File(Paths.get(TEST_DIR, "1", "stdOutput").toString());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(output))) {
             writer.append("I am output");
         }
@@ -123,17 +132,17 @@ public class TestFOM {
 
     private void test_loadScriptLogs(FileOperationManager fom) {
         fom.loadScriptLogs("1");
-        assertTrue(Files.exists(Paths.get("src/test/resources/files/1/stdError")));
-        assertTrue(Files.exists(Paths.get("src/test/resources/files/1/stdOutput")));
+        assertTrue(Files.exists(Paths.get(TEST_DIR, "1", "stdError")));
+        assertTrue(Files.exists(Paths.get(TEST_DIR, "1", "stdOutput")));
         assertEquals(2, fom.getScriptLogs("1").size());
     }
 
     private void test_deleteUploadFileFolder(FileOperationManager fom) throws IOException {
         String path_folder = fom.deleteUploadFileFolder("1");
         assertFalse(Files.exists(Paths.get(path_folder)));
-        assertFalse(Files.exists(Paths.get("src/test/resources/files/1/stdError")));
-        assertFalse(Files.exists(Paths.get("src/test/resources/files/1/stdOutput")));
-        assertEquals("src\\test\\resources\\files\\1", path_folder);
+        assertFalse(Files.exists(Paths.get(TEST_DIR, "1", "stdError")));
+        assertFalse(Files.exists(Paths.get(TEST_DIR, "1", "stdOutput")));
+        assertEquals(Paths.get(TEST_DIR, "1").toString(), path_folder);
     }
 
     private void test_getPropertiesFileException(FileOperationManager fom) {
