@@ -4,12 +4,12 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-validation</artifactId>
-	<version>0.19-SNAPSHOT</version>
+	<version>0.19rc1</version>
 
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.19-SNAPSHOT</version>
+		<version>0.19rc1</version>
 	</parent>
 	<properties>
 		<schematronVersion>20180323T201638</schematronVersion>
