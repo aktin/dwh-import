@@ -8,3 +8,4 @@ target/
 */tmp/
 .idea
 *.iml
+.flattened-pom.xml
