@@ -108,7 +108,6 @@ public class PythonRunner implements Runnable {
     public void submitTask(PythonScriptTask task) {
         synchronized (queue) {
             queue.add(task);
-            changeTaskOperation(task);
             changeTaskState(task.getId(), PropertiesState.queued);
             queue.notify();
         }
@@ -188,7 +187,7 @@ public class PythonRunner implements Runnable {
             File error = initLogFile(path_folder, LogType.stdError);
 
             String path_file = Paths.get(path_folder, properties.getProperty(PropertiesKey.filename.name())).toString();
-            ProcessBuilder processBuilder = new ProcessBuilder("python3", script.getPath(), task.getScriptMethod().name(), path_file);
+            ProcessBuilder processBuilder = new ProcessBuilder("python3", script.getPath(), path_file);
             processBuilder.redirectError(error);
             processBuilder.redirectOutput(output);
 
@@ -273,10 +272,9 @@ public class PythonRunner implements Runnable {
         long finishedTime = System.currentTimeMillis();
         String uuid = properties.getProperty(PropertiesKey.id.name());
         PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
-        if (operation.equals(PropertiesOperation.verifying))
-            fileOperationManager.addPropertyToPropertiesFile(uuid, "verified", Long.toString(finishedTime));
-        else if (operation.equals(PropertiesOperation.importing))
+        if (operation.equals(PropertiesOperation.importing)) {
             fileOperationManager.addPropertyToPropertiesFile(uuid, "imported", Long.toString(finishedTime));
+        }
     }
 
     /**
@@ -288,24 +286,6 @@ public class PythonRunner implements Runnable {
     private void changeTaskState(String uuid, PropertiesState state) {
         fileOperationManager.addPropertyToPropertiesFile(uuid, PropertiesKey.state.name(), state.name());
         LOGGER.log(Level.INFO, "Execution of task {0} changed to state {1}", new Object[]{uuid, state.name()});
-    }
-
-    /**
-     * Changes "operation"-value of corresponding properties file of given task object
-     *
-     * @param task task that is currently processed
-     */
-    private void changeTaskOperation(PythonScriptTask task) {
-        switch (task.getScriptMethod()) {
-            case verify_file:
-                changeOperationProperty(task.getId(), PropertiesOperation.verifying);
-                break;
-            case import_file:
-                changeOperationProperty(task.getId(), PropertiesOperation.importing);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected operation: " + task.getScriptMethod().name());
-        }
     }
 
     /**

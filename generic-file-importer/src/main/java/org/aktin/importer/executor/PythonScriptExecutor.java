@@ -10,7 +10,6 @@ import org.aktin.importer.ScriptOperationManager;
 import org.aktin.importer.enums.PropertiesKey;
 import org.aktin.importer.enums.PropertiesOperation;
 import org.aktin.importer.enums.PropertiesState;
-import org.aktin.importer.enums.ScriptOperation;
 import org.aktin.importer.pojos.DatabaseCreds;
 import org.aktin.importer.pojos.PythonScriptTask;
 
@@ -74,11 +73,8 @@ public class PythonScriptExecutor {
                 String uuid = properties.getProperty(PropertiesKey.id.name());
                 PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
                 switch (operation) {
-                    case verifying:
-                        task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
-                        break;
                     case importing:
-                        task = new PythonScriptTask(uuid, ScriptOperation.import_file);
+                        task = new PythonScriptTask(uuid);
                         break;
                     default:
                         throw new IllegalStateException("Unexpected operation: " + operation.name());
@@ -121,10 +117,9 @@ public class PythonScriptExecutor {
      * adds a new file processing task to processing queue
      *
      * @param uuid   id of file to process
-     * @param method type of processing to perform (verify/import), equals the method called in python script
      */
-    public void addTask(String uuid, ScriptOperation method) {
-        PythonScriptTask task = new PythonScriptTask(uuid, method);
+    public void addTask(String uuid) {
+        PythonScriptTask task = new PythonScriptTask(uuid);
         runner.submitTask(task);
     }
 
