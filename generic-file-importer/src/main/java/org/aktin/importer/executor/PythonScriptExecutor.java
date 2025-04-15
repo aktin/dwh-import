@@ -71,14 +71,7 @@ public class PythonScriptExecutor {
             PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
             if (state.equals(PropertiesState.queued) || state.equals(PropertiesState.in_progress)) {
                 String uuid = properties.getProperty(PropertiesKey.id.name());
-                PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
-                switch (operation) {
-                    case importing:
-                        task = new PythonScriptTask(uuid);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected operation: " + operation.name());
-                }
+                task = new PythonScriptTask(uuid);
                 runner.submitTask(task);
             }
         }
