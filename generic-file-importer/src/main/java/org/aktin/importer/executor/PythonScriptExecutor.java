@@ -25,7 +25,7 @@ public class PythonScriptExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
 
-    private PythonRunner runner;
+    protected PythonRunner runner;
 
     @Inject
     private SystemStatusManager systemStatusManager;
@@ -37,7 +37,7 @@ public class PythonScriptExecutor {
     private Preferences preferences;
 
     @Inject
-    private FileOperationManager fileOperationManager;
+    protected FileOperationManager fileOperationManager;
 
     @Inject
     private ScriptOperationManager scriptOperationManager;
@@ -65,7 +65,7 @@ public class PythonScriptExecutor {
      * Iterates through all properties files of operationLock_properties and adds queued or unfinished operations
      * to processing queue (to avoid manually restart of processing queue in case of server shutdown)
      */
-    private void addUnfinishedTasksToQueue() {
+    protected void addUnfinishedTasksToQueue() {
         for (Properties properties : fileOperationManager.getPropertiesFiles()) {
             PythonScriptTask task;
             PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
