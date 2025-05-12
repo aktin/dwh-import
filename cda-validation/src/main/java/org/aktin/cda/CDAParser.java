@@ -17,6 +17,9 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import net.sf.saxon.Configuration;
+import net.sf.saxon.jaxp.SaxonTransformerFactory;
+
 /**
  * Parses CDA documents into DOM tree nodes and extracts IDs from the CDA.
  * <p>
@@ -47,6 +50,8 @@ public class CDAParser {
 //	
 //	private XPathExpression[] idExpr;
 
+	// Saxon configuration property constants for XML security
+	private static final String SAXON_BRIDGE_DISALLOW_DOCTYPE = "http://saxon.sf.net/feature/parserFeature?uri=http://apache.org/xml/features/disallow-doctype-decl";
 	private Transformer domTransform;
 	private XPath xpath;
 	
@@ -65,7 +70,16 @@ public class CDAParser {
 //			throw new RuntimeException(e);
 //		}
 		try {
-			domTransform = TransformerFactory.newInstance().newTransformer();
+			TransformerFactory tfactory = TransformerFactory.newInstance();
+			tfactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			SaxonTransformerFactory saxonFactory = (SaxonTransformerFactory) tfactory;
+			Configuration saxonConfig = saxonFactory.getConfiguration();
+
+
+			// Use Saxon's bridge to set the underlying parser feature
+			saxonConfig.setConfigurationProperty(SAXON_BRIDGE_DISALLOW_DOCTYPE, true);
+			domTransform = tfactory.newTransformer();
+			//domTransform = TransformerFactory.newInstance().newTransformer();
 		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
 			throw new RuntimeException(e);
 		}
