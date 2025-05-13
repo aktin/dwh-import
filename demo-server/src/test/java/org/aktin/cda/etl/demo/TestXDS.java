@@ -6,7 +6,10 @@ import java.net.URL;
 
 import org.aktin.cda.etl.demo.client.XdsClient;
 import org.aktin.cda.etl.xds.XDSConstants;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 
@@ -43,18 +46,7 @@ public class TestXDS {
 		Assert.assertNotNull(resp);
 		Assert.assertEquals(XDSConstants.RESPONSE_SUCCESS, resp.getStatus());
 	}
-	@Test
-	public void expectOkForValidCDA2024() throws IOException{
-		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml");
-
-		RegistryResponseType resp = XdsClient.submitToXDSb(soapUrl, in, "UTF-8", "12345", "123", "example");
-
-		in.close();
-
-		Assert.assertNotNull(resp);
-		Assert.assertEquals(XDSConstants.RESPONSE_SUCCESS, resp.getStatus());
-	}
-
+	
 	@Test
 	public void expectFailForInvalidCDA() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01-error1.xml");

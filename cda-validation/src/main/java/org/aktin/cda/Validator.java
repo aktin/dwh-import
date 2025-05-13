@@ -71,8 +71,7 @@ public class Validator implements NamespaceContext{
 			throw new IOException(e);
 		}
 		//addTemplateValidator("1.2.276.0.76.10.1015", "/aktin-basism_svrl.xsl");
-		addTemplateValidator("1.2.276.0.76.10.1019", "/aktin-runtime-20180323T201638/aktin-basism20152b_svrl.xsl");
-		addTemplateValidator("1.2.276.0.76.3.1.195.10.2", "/aktin-runtime-20241202T134738/aktin-nar2025_svrl.xsl");
+		addTemplateValidator("1.2.276.0.76.10.1019", "/aktin-basism20152b_svrl.xsl");
 
 	}
 
