@@ -3,21 +3,64 @@ package org.aktin.cda;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import static org.hamcrest.CoreMatchers.is;
+
 
 public class TestCDAParser {
 	private static final String[] exampleDocuments = new String[]{
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml"
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",
+			"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml"
 	};
+
+//	private static String schematronVersion;
+
+
+//	@BeforeClass
+//	public static void m() throws IOException, ParserConfigurationException, SAXException {
+//		try( InputStream is = TestCDAParser.class.getClassLoader().getResourceAsStream("maven.properties") ) {
+//			Properties properties = new Properties();
+//			properties.load(is);
+//			System.out.println(properties.getProperty("schematronVersion"));
+//			schematronVersion = properties.getProperty("schematronVersion");
+//		}
+//
+//
+//		// Note: aktin-instance2schematron.xml contains signature="20241202T134738"
+//		// janky method
+//		try( InputStream is2 = TestCDAParser.class.getClassLoader().getResourceAsStream("aktin-instance2schematron.xml") ) {
+//			Properties properties2 = new Properties();
+//			properties2.load(is2);
+//			System.out.println(properties2.getProperty("signature").replace("\"", ""));
+//		}
+//		// more robust method
+//		try( InputStream is3 = TestCDAParser.class.getClassLoader().getResourceAsStream("aktin-instance2schematron.xml") ) {
+//			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder db = dbf.newDocumentBuilder();
+//			Document document = db.parse(is3);
+//			NodeList nodeList = document.getElementsByTagName("release");
+//			for (int x = 0, size = nodeList.getLength(); x < size; x++) {
+//				System.out.println(nodeList.item(x).getAttributes().getNamedItem("signature").getNodeValue());
+//			}
+//		}
+//	}
+
 	/*
 	@Test
 	public void extractIds() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
@@ -56,8 +99,24 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractDocumentIDs() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		
+	public void extractDocumentIDsV2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+//		Assume.assumeThat(schematronVersion, is("20241202T134738"));
+
+		CDAParser parser = new CDAParser();
+		try( InputStream in = openExampleDocument(exampleDocuments[1]) ){
+			Assert.assertTrue(in.available() > 0);
+			Document cda = parser.buildDOM(new StreamSource(in));
+			String docId = parser.extractDocumentId(cda);
+			String templateId = parser.extractTemplateId(cda);
+			Assert.assertEquals("1.2.276.0.76.3.1.195.10.2", templateId);
+//			System.out.println("TemplateId="+templateId);
+			System.out.println("DocumentId="+docId);
+		}
+	}
+	@Test
+	public void extractDocumentIDsV1() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+//		Assume.assumeThat(schematronVersion, is("20180322T121703"));
+
 		CDAParser parser = new CDAParser();
 		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
@@ -69,6 +128,8 @@ public class TestCDAParser {
 			System.out.println("DocumentId="+docId);
 		}
 	}
+
+
 	@Test
 	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();

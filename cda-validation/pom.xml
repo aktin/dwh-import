@@ -16,6 +16,18 @@
 		<examplesVersion>20180322T121703</examplesVersion>
 		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>
 		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>
+		<schematronVersion2>20241202T134738</schematronVersion2>
+		<examplesVersion2>20241202T134738</examplesVersion2>
+		<schematronArchive2>aktin-runtime-${schematronVersion2}</schematronArchive2>
+		<examplesArchive2>aktin-xml-${examplesVersion2}</examplesArchive2>
+<!--		<cda.v2.schematronVersion>20180323T201638</cda.v2.schematronVersion>-->
+<!--		<cda.v2.examplesVersion>20180322T121703</cda.v2.examplesVersion>-->
+<!--		<cda.v2.schematronArchive>aktin-runtime-${cda.v2.schematronVersion}</cda.v2.schematronArchive>-->
+<!--		<cda.v2.examplesArchive>aktin-xml-${cda.v2.examplesVersion}</cda.v2.examplesArchive>-->
+<!--		<cda.2024.schematronVersion>20241202T134738</cda.2024.schematronVersion>-->
+<!--		<cda.2024.examplesVersion>20241202T134738</cda.2024.examplesVersion>-->
+<!--		<cda.2024.schematronArchive>aktin-runtime-${cda.2024.schematronVersion}</cda.2024.schematronArchive>-->
+<!--		<cda.2024.examplesArchive>aktin-xml-${cda.2024.examplesVersion}</cda.2024.examplesArchive>-->
 	</properties>
 	<build>
 		<resources>
@@ -23,7 +35,7 @@
 				<directory>src/main/resources</directory>
 			</resource>
 			<resource>
-				<directory>${project.build.directory}/schematron/${schematronArchive}</directory>
+				<directory>${project.build.directory}/schematron</directory>
 			</resource>
 			<resource>
 				<directory>${project.build.directory}/examples/${examplesArchive}</directory>
@@ -31,6 +43,51 @@
 					<exclude>**/.DS_Store</exclude>
 				</excludes>
 			</resource>
+			<resource>
+				<directory>${project.build.directory}/schematron</directory>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/examples/${examplesArchive2}</directory>
+			</resource>
+
+
+<!--			<resource>-->
+<!--				<directory>.</directory>-->
+<!--				<includes>-->
+<!--					<include>pom.xml</include>-->
+<!--				</includes>-->
+<!--			</resource>-->
+
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/schematron/${cda.v2.schematronArchive}</directory>-->
+<!--			</resource>-->
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/examples/${cda.v2.examplesArchive}</directory>-->
+<!--				<excludes>-->
+<!--					<exclude>**/.DS_Store</exclude>-->
+<!--				</excludes>-->
+<!--			</resource>-->
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/schematron/${cda.2024.schematronArchive}</directory>-->
+<!--			</resource>-->
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/examples/${cda.2024.examplesArchive}</directory>-->
+<!--			</resource>-->
+
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/schematron/v2</directory>-->
+<!--			</resource>-->
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/examples/v2</directory>-->
+<!--			</resource>-->
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/schematron/2024</directory>-->
+<!--			</resource>-->
+<!--			<resource>-->
+<!--				<directory>${project.build.directory}/examples/2024</directory>-->
+<!--			</resource>-->
+
+
 		</resources>
 		<plugins>
 			<!-- TODO don't depend on external server. build process fails if server down.
@@ -59,11 +116,68 @@
 								<!-- download examples -->
 								<get src="https://aktin.art-decor.pub/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples" />
+								<!-- schematron files -->
+								<get src="https://aktin.art-decor.pub/${schematronArchive2}.zip" dest="${project.build.directory}/schematron-2024.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/schematron-2024.zip" dest="${project.build.directory}/schematron" />
+								<!-- download examples -->
+								<get src="https://aktin.art-decor.pub/${examplesArchive2}.zip" dest="${project.build.directory}/examples-2024.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/examples" />
 							</target>
 						</configuration>
+<!--						<configuration>-->
+<!--							<target>-->
+<!--								&lt;!&ndash; schematron files &ndash;&gt;-->
+<!--								<get src="https://aktin.art-decor.pub/${cda.v2.schematronArchive}.zip" dest="${project.build.directory}/schematron-${cda.v2.schematronVersion}.zip" verbose="false" usetimestamp="true" />-->
+<!--								<unzip src="${project.build.directory}/schematron-${cda.v2.schematronVersion}.zip" dest="${project.build.directory}/schematron/v2">-->
+<!--									<patternset>-->
+<!--										<exclude name="**/aktin-instance2schematron.xml"/>-->
+<!--									</patternset>-->
+<!--									<cutdirsmapper dirs="1"/>-->
+<!--								</unzip>-->
+<!--								&lt;!&ndash; download examples &ndash;&gt;-->
+<!--								<get src="https://aktin.art-decor.pub/${cda.v2.examplesArchive}.zip" dest="${project.build.directory}/examples-${cda.v2.examplesVersion}.zip" verbose="false" usetimestamp="true" />-->
+<!--								<unzip src="${project.build.directory}/examples-${cda.v2.examplesVersion}.zip" dest="${project.build.directory}/examples/v2">-->
+<!--									<patternset>-->
+<!--										<include name="${cda.v2.examplesArchive}/CDA Beispiele*/*.xml"/>-->
+<!--										<include name="${cda.v2.examplesArchive}/schemas/*"/>-->
+<!--									</patternset>-->
+<!--									<cutdirsmapper dirs="1"/>-->
+<!--								</unzip>-->
+<!--								&lt;!&ndash; schematron files &ndash;&gt;-->
+<!--								<get src="https://aktin.art-decor.pub/${cda.2024.schematronArchive}.zip" dest="${project.build.directory}/schematron-${cda.2024.schematronVersion}.zip" verbose="false" usetimestamp="true" />-->
+<!--								<unzip src="${project.build.directory}/schematron-${cda.2024.schematronVersion}.zip" dest="${project.build.directory}/schematron/2024">-->
+<!--									<cutdirsmapper dirs="1"/>-->
+<!--								</unzip>-->
+<!--								&lt;!&ndash; download examples &ndash;&gt;-->
+<!--								<get src="https://aktin.art-decor.pub/${cda.2024.examplesArchive}.zip" dest="${project.build.directory}/examples-${cda.2024.examplesVersion}.zip" verbose="false" usetimestamp="true" />-->
+<!--								<unzip src="${project.build.directory}/examples-${cda.2024.examplesVersion}.zip" dest="${project.build.directory}/examples/2024">-->
+<!--									<patternset>-->
+<!--										<include name="${cda.2024.examplesArchive}/CDA Beispiele*/*.xml"/>-->
+<!--										<include name="${cda.2024.examplesArchive}/schemas/*"/>-->
+<!--									</patternset>-->
+<!--									<cutdirsmapper dirs="1"/>-->
+<!--								</unzip>-->
+<!--							</target>-->
+<!--						</configuration>-->
 					</execution>
 				</executions>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.codehaus.mojo</groupId>-->
+<!--				<artifactId>properties-maven-plugin</artifactId>-->
+<!--				<version>1.0.0</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>generate-resources</phase>-->
+<!--						<goals>-->
+<!--							<goal>write-project-properties</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<outputFile>${project.build.outputDirectory}/maven.properties</outputFile>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 	<dependencies>

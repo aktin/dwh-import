@@ -10,10 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.aktin.cda.etl.demo.client.FhirClient;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -93,17 +90,46 @@ public class TestFHIR {
 		c.connect();
 		verifyConformanceStatement(new URL(fhirBase,"metadata"), c);
 	}
-	
+
 	/**
 	 * Submits a valid CDA document to the FHIR interface.
 	 * The actual document submission is done in {@link FhirClient#submitToFHIR(URL, InputStream, String)}
-	 * 
+	 *
 	 * @throws IOException error during loading/transfer
 	 */
 	@Test
 	public void expectCreatedForValidCDA() throws IOException{
 		// open example CDA document
 		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml");
+
+		// submit document to URL connection
+		// see the corresponding source code how it is done
+		HttpURLConnection uc = FhirClient.submitToFHIR(fhirBinary, in, "UTF-8");
+
+		// close CDA input stream
+		in.close();
+
+		// read response
+		int responseCode = uc.getResponseCode();
+		// should be 201 Created
+		Assert.assertEquals(HttpURLConnection.HTTP_CREATED, responseCode);
+		String loc = uc.getHeaderField("Location");
+		Assert.assertNotNull(loc);
+		// optionally consume response stream
+		in = uc.getInputStream();
+		in.close();
+	}
+
+	/**
+	 * Submits a valid CDA document to the FHIR interface.
+	 * The actual document submission is done in {@link FhirClient#submitToFHIR(URL, InputStream, String)}
+	 *
+	 * @throws IOException error during loading/transfer
+	 */
+	@Test
+	public void expectCreatedForValidCDA2024() throws IOException{
+		// open example CDA document
+		InputStream in = getClass().getResourceAsStream("/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml");
 
 		// submit document to URL connection
 		// see the corresponding source code how it is done
