@@ -54,49 +54,29 @@ public class TestValidator {
 	).toArray(String[]::new);
 
 	@Test
-	public void validateExampleDocuments() throws Exception{
+	public void validateExampleDocuments() throws Exception {
 		Validator v = new Validator();
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
 		CDAParser parser = new CDAParser();
-		
-		for( String example : v2ExampleDocuments ){
+
+		for (String example : v2ExampleDocuments) {
 			p.setSystemId(example);
-			try( InputStream in = getClass().getResourceAsStream(example) ){
+			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
 				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, p);
-				if( !isValid ){
-					Assert.fail("Successful validation expected for "+example);
+				if (!isValid) {
+					Assert.fail("Successful validation expected for " + example);
 				}
 			}
 		}
-		for( String example : v2InvalidExampleDocuments ){
+		for (String example : v2InvalidExampleDocuments) {
 			p.setSystemId(example);
-			try( InputStream in = getClass().getResourceAsStream(example) ){
+			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
 				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-				Assert.assertFalse("Validation failure expected for "+example, isValid);
+				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
 		}
-
-// v1 no longer supported
-//		for( String example : v1InvalidExampleDocuments ){
-//			p.setSystemId(example);
-//			try( InputStream in = getClass().getResourceAsStream(example) ){
-//				Assert.assertTrue(in.available() > 0);
-//				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, SuppressValidationErrors.staticInstance);
-//				Assert.assertFalse("Validation failure expected for "+example, isValid);
-//			}
-//		}
-//		for( String example : v1ExampleDocuments ){
-//			p.setSystemId(example);
-//			try( InputStream in = getClass().getResourceAsStream(example) ){
-//				Assert.assertTrue(in.available() > 0);
-//				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v1TemplateId, p);
-//				if( !isValid ){
-//					Assert.fail("Successful validation expected for "+example);
-//				}
-//			}
-//		}
 	}
 
 	@Test
