@@ -1,6 +1,8 @@
 package org.aktin.cda;
 
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
@@ -44,7 +46,13 @@ public class TestValidator {
 			"/Additional Examples/basismodul-beispiel-storyboard01-complete.xml",	//old version, now invalid
 			"/Additional Examples/basismodul-beispiel-storyboard01-mandatory.xml"	//old version, now invalid
 		};
-	
+
+	// Invalid v1/v2 example documents are still invalid in v2024
+	public static final String[] v2024InvalidExampleDocuments = Stream.concat(
+			Arrays.stream(v2InvalidExampleDocuments),
+			Arrays.stream(v1InvalidExampleDocuments)
+	).toArray(String[]::new);
+
 	@Test
 	public void validateExampleDocuments() throws Exception{
 		Validator v = new Validator();
@@ -69,7 +77,7 @@ public class TestValidator {
 				Assert.assertFalse("Validation failure expected for "+example, isValid);
 			}
 		}
-		
+
 // v1 no longer supported
 //		for( String example : v1InvalidExampleDocuments ){
 //			p.setSystemId(example);
@@ -105,6 +113,16 @@ public class TestValidator {
 				if (!isValid) {
 					Assert.fail("Successful validation expected for " + example);
 				}
+			}
+		}
+
+		for (String example : v2024InvalidExampleDocuments){
+			p.setSystemId(example);
+			try (InputStream in = getClass().getResourceAsStream(example)){
+				Assert.assertTrue(in.available() > 0);
+				boolean isValid = v.validate(
+						parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
+				Assert.assertFalse("Validation failure expected for "+example, isValid);
 			}
 		}
 	}
