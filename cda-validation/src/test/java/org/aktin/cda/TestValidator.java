@@ -109,7 +109,7 @@ public class TestValidator {
 		}
 	}
 
-	//@Test
+	@Test
 	public void validateErrorsForOtherDocuments() throws Exception{
 		Validator v = new Validator();
 		CDAParser parser = new CDAParser();
