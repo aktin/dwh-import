@@ -16,7 +16,8 @@ import org.xml.sax.SAXException;
 
 public class TestCDAParser {
 	private static final String[] exampleDocuments = new String[]{
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml"
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",
+			"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml"
 	};
 	/*
 	@Test
@@ -56,8 +57,7 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractDocumentIDs() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		
+	public void extractDocumentIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();
 		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
@@ -69,6 +69,21 @@ public class TestCDAParser {
 			System.out.println("DocumentId="+docId);
 		}
 	}
+
+	@Test
+	public void extractDocumentIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+		CDAParser parser = new CDAParser();
+		try( InputStream in = openExampleDocument(exampleDocuments[1]) ){
+			Assert.assertTrue(in.available() > 0);
+			Document cda = parser.buildDOM(new StreamSource(in));
+			String docId = parser.extractDocumentId(cda);
+			String templateId = parser.extractTemplateId(cda);
+			Assert.assertEquals("1.2.276.0.76.3.1.195.10.2", templateId);
+//			System.out.println("TemplateId="+templateId);
+			System.out.println("DocumentId="+docId);
+		}
+	}
+
 	@Test
 	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		CDAParser parser = new CDAParser();

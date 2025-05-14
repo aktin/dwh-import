@@ -10,9 +10,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TestValidator {
+	private static final String v2024TemplateId = "1.2.276.0.76.3.1.195.10.2";
 	private static final String v2TemplateId = "1.2.276.0.76.10.1019";
 	private static final String v1TemplateId = "1.2.276.0.76.10.1015";
 
+	public static final String[] v2024ExampleDocuments = new String[]{
+		"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml",
+		"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard02.xml"
+	};
 	public static final String[] v2ExampleDocuments = new String[]{
 		"/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml",
 		//"/Additional Examples/basismodul-v2-beispiel-storyboard01-minimal.xml",
@@ -85,7 +90,25 @@ public class TestValidator {
 //			}
 //		}
 	}
-	
+
+	@Test
+	public void validateExampleDocuments2024() throws Exception {
+		Validator v = new Validator();
+		ValidationErrorPrinter p = new ValidationErrorPrinter();
+		CDAParser parser = new CDAParser();
+
+		for (String example : v2024ExampleDocuments) {
+			p.setSystemId(example);
+			try (InputStream in = getClass().getResourceAsStream(example)) {
+				Assert.assertTrue(in.available() > 0);
+				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, p);
+				if (!isValid) {
+					Assert.fail("Successful validation expected for " + example);
+				}
+			}
+		}
+	}
+
 	//@Test
 	public void validateErrorsForOtherDocuments() throws Exception{
 		Validator v = new Validator();
