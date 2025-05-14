@@ -21,6 +21,7 @@ public class TestSchemaValidator {
 	@Test
 	public void assumeValidSchemaForExampleDocuments() throws Exception{
 		String[][] validSchemaCollections = new String[][]{
+			TestValidator.v2024ExampleDocuments,
 			TestValidator.v2ExampleDocuments,
 			TestValidator.v1ExampleDocuments,
 			TestValidator.v1InvalidExampleDocuments,
