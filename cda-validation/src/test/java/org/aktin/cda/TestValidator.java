@@ -53,7 +53,7 @@ public class TestValidator {
 	).toArray(String[]::new);
 
 	@Test
-	public void validateExampleDocuments() throws Exception {
+	public void validateExampleDocuments_expectValid() throws Exception {
 		Validator v = new Validator();
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
 		CDAParser parser = new CDAParser();
@@ -68,8 +68,14 @@ public class TestValidator {
 				}
 			}
 		}
+	}
+
+	@Test
+	public void validateExampleDocuments_expectInvalid() throws Exception {
+		Validator v = new Validator();
+		CDAParser parser = new CDAParser();
+
 		for (String example : v2InvalidExampleDocuments) {
-			p.setSystemId(example);
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
 				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
@@ -79,7 +85,7 @@ public class TestValidator {
 	}
 
 	@Test
-	public void validateExampleDocuments2024() throws Exception {
+	public void validateExampleDocuments2024_expectValid() throws Exception {
 		Validator v = new Validator();
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
 		CDAParser parser = new CDAParser();
@@ -94,20 +100,24 @@ public class TestValidator {
 				}
 			}
 		}
+	}
 
-		for (String example : v2024InvalidExampleDocuments){
-			p.setSystemId(example);
-			try (InputStream in = getClass().getResourceAsStream(example)){
+	@Test
+	public void validateExampleDocuments2024_expectInvalid() throws Exception {
+		Validator v = new Validator();
+		CDAParser parser = new CDAParser();
+
+		for (String example : v2024InvalidExampleDocuments) {
+			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(
-						parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
-				Assert.assertFalse("Validation failure expected for "+example, isValid);
+				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
+				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
 		}
 	}
 
 	@Test
-	public void validateErrorsForOtherDocuments() throws Exception{
+	public void validateErrorsForOtherDocuments_syntaxError() throws Exception {
 		Validator v = new Validator();
 		CDAParser parser = new CDAParser();
 		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
@@ -121,10 +131,15 @@ public class TestValidator {
 			// expected error
 		}
 		in.close();
+	}
 
-		// check other XML document
-		// should return result
-		in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
+	@Test
+	public void validateErrorsForOtherDocuments_nonCDA_expectInvalid() throws Exception {
+		Validator v = new Validator();
+		CDAParser parser = new CDAParser();
+		InputStream in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
+		Assert.assertTrue(in.available() > 0);
+
 		try {
 			boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 			// should not pass validation
