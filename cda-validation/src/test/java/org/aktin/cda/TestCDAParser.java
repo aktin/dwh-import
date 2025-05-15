@@ -10,6 +10,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -22,7 +23,6 @@ public class TestCDAParser {
 	/*
 	@Test
 	public void extractIds() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		CDAParser parser = new CDAParser();
 		for( String example : exampleDocuments ){
 			try( InputStream in = getClass().getResourceAsStream(example) ){
 				Assert.assertTrue(in.available() > 0);
@@ -38,7 +38,6 @@ public class TestCDAParser {
 	}
 	@Test
 	public void verifyId() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		CDAParser parser = new CDAParser();
 		try( InputStream in = getClass().getResourceAsStream(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
 			Node cda = parser.buildDOM(new StreamSource(in));
@@ -49,6 +48,13 @@ public class TestCDAParser {
 		}
 	}
 */
+	private CDAParser parser;
+
+	@Before
+	public void setup() {
+		parser = new CDAParser();
+	}
+
 	private final InputStream openExampleDocument(String source) throws IOException {
 		URL url = getClass().getResource(source);
 		Assert.assertNotNull("CDA example document not found in external release: "+url, url);
@@ -58,7 +64,6 @@ public class TestCDAParser {
 
 	@Test
 	public void extractDocumentIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		CDAParser parser = new CDAParser();
 		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
@@ -72,7 +77,6 @@ public class TestCDAParser {
 
 	@Test
 	public void extractDocumentIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		CDAParser parser = new CDAParser();
 		try( InputStream in = openExampleDocument(exampleDocuments[1]) ){
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
@@ -86,7 +90,6 @@ public class TestCDAParser {
 
 	@Test
 	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		CDAParser parser = new CDAParser();
 		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));

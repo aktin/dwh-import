@@ -9,6 +9,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestValidator {
@@ -52,17 +53,24 @@ public class TestValidator {
 			Arrays.stream(v1InvalidExampleDocuments)
 	).toArray(String[]::new);
 
+	private Validator validator;
+	private CDAParser parser;
+
+	@Before
+	public void setup() throws Exception {
+		validator = new Validator();
+		parser = new CDAParser();
+	}
+
 	@Test
 	public void validateExampleDocuments_expectValid() throws Exception {
-		Validator v = new Validator();
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
-		CDAParser parser = new CDAParser();
 
 		for (String example : v2ExampleDocuments) {
 			p.setSystemId(example);
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, p);
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, p);
 				if (!isValid) {
 					Assert.fail("Successful validation expected for " + example);
 				}
@@ -72,13 +80,10 @@ public class TestValidator {
 
 	@Test
 	public void validateExampleDocuments_expectInvalid() throws Exception {
-		Validator v = new Validator();
-		CDAParser parser = new CDAParser();
-
 		for (String example : v2InvalidExampleDocuments) {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
 		}
@@ -86,15 +91,13 @@ public class TestValidator {
 
 	@Test
 	public void validateExampleDocuments2024_expectValid() throws Exception {
-		Validator v = new Validator();
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
-		CDAParser parser = new CDAParser();
 
 		for (String example : v2024ExampleDocuments) {
 			p.setSystemId(example);
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, p);
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, p);
 				if (!isValid) {
 					Assert.fail("Successful validation expected for " + example);
 				}
@@ -104,13 +107,10 @@ public class TestValidator {
 
 	@Test
 	public void validateExampleDocuments2024_expectInvalid() throws Exception {
-		Validator v = new Validator();
-		CDAParser parser = new CDAParser();
-
 		for (String example : v2024InvalidExampleDocuments) {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertTrue(in.available() > 0);
-				boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
 				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
 		}
@@ -118,12 +118,10 @@ public class TestValidator {
 
 	@Test
 	public void validateErrorsForOtherDocuments_syntaxError() throws Exception {
-		Validator v = new Validator();
-		CDAParser parser = new CDAParser();
 		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
 		Assert.assertTrue(in.available() > 0);
 		try {
-			v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+			validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 			Assert.fail();
 		} catch (XPathExpressionException e) {
 			Assert.fail();
@@ -135,13 +133,11 @@ public class TestValidator {
 
 	@Test
 	public void validateErrorsForOtherDocuments_nonCDA_expectInvalid() throws Exception {
-		Validator v = new Validator();
-		CDAParser parser = new CDAParser();
 		InputStream in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
 		Assert.assertTrue(in.available() > 0);
 
 		try {
-			boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+			boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 			// should not pass validation
 			Assert.assertFalse(isValid);
 		} catch (XPathExpressionException | TransformerException e) {
