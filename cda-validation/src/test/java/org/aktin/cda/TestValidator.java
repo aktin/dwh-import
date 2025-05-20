@@ -1,6 +1,7 @@
 package org.aktin.cda;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -31,7 +32,9 @@ public class TestValidator {
 	public static final String[] v1ExampleDocuments = new String[]{
 			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",
 			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard02.xml",
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard04.xml"
+			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard04.xml",
+			"/Additional Examples/basismodul-beispiel-storyboard01-complete.xml",
+			"/Additional Examples/basismodul-beispiel-storyboard01-mandatory.xml"
 		};
 	public static final String[] invalidSchemaDocuments = new String[]{
 			"/Additional Examples/invalid-xsd.xml"  //should be in invalid, XSD not checked yet
@@ -40,19 +43,8 @@ public class TestValidator {
 			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01-error1.xml",
 		};
 	public static final String[] v2InvalidExampleDocuments = new String[]{
-			"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml",
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",	//old version, now invalid
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard02.xml",	//old version, now invalid
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard04.xml",	//old version, now invalid
-			"/Additional Examples/basismodul-beispiel-storyboard01-complete.xml",	//old version, now invalid
-			"/Additional Examples/basismodul-beispiel-storyboard01-mandatory.xml"	//old version, now invalid
+			"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml"
 		};
-
-	// Invalid v1/v2 example documents are still invalid in v2024
-	public static final String[] v2024InvalidExampleDocuments = Stream.concat(
-			Arrays.stream(v2InvalidExampleDocuments),
-			Arrays.stream(v1InvalidExampleDocuments)
-	).toArray(String[]::new);
 
 	private Validator validator;
 	private CDAParser parser;
@@ -80,7 +72,12 @@ public class TestValidator {
 
 	@Test
 	public void validateExampleDocuments_expectInvalid() throws Exception {
-		for (String example : v2InvalidExampleDocuments) {
+		ArrayList<String> invalidDocuments = new ArrayList<>();
+		invalidDocuments.addAll(Arrays.asList(v2InvalidExampleDocuments));
+		invalidDocuments.addAll(Arrays.asList(v1InvalidExampleDocuments));
+		invalidDocuments.addAll(Arrays.asList(v1ExampleDocuments));
+
+		for (String example : invalidDocuments) {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);
@@ -107,7 +104,13 @@ public class TestValidator {
 
 	@Test
 	public void validateExampleDocuments2024_expectInvalid() throws Exception {
-		for (String example : v2024InvalidExampleDocuments) {
+		ArrayList<String> invalidDocuments = new ArrayList<>();
+		invalidDocuments.addAll(Arrays.asList(v2InvalidExampleDocuments));
+		invalidDocuments.addAll(Arrays.asList(v1InvalidExampleDocuments));
+		invalidDocuments.addAll(Arrays.asList(v2ExampleDocuments));
+		invalidDocuments.addAll(Arrays.asList(v1ExampleDocuments));
+
+		for (String example : invalidDocuments) {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);

@@ -21,11 +21,11 @@ public class TestSchemaValidator {
 	@Test
 	public void assumeValidSchemaForExampleDocuments() throws Exception{
 		String[][] validSchemaCollections = new String[][]{
+			TestValidator.v2024ExampleDocuments,
 			TestValidator.v2ExampleDocuments,
-			//TestValidator.v1ExampleDocuments,  // included in TestValidator.v2InvalidExampleDocuments
-			//TestValidator.v1InvalidExampleDocuments,  // included in TestValidator.v2024ExampleDocuments
-			//TestValidator.v2InvalidExampleDocuments,  // included in TestValidator.v2024ExampleDocuments
-			TestValidator.v2024ExampleDocuments
+			TestValidator.v1ExampleDocuments,
+			TestValidator.v1InvalidExampleDocuments,
+			TestValidator.v2InvalidExampleDocuments
 		};
 		for( String[] collection : validSchemaCollections ){
 			for( String example : collection ){
