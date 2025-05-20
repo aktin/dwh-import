@@ -33,7 +33,8 @@ public class TestSchemaValidator {
 				try( InputStream in = getClass().getResourceAsStream(example) ){
 					Assert.assertNotNull("File not found at " + example, in);
 					Assert.assertTrue("File is empty " + example, in.available() > 0);
-					Assert.assertTrue(validator.validate(new StreamSource(in), errorPrinter));
+					boolean isValid = validator.validate(new StreamSource(in), errorPrinter);
+					Assert.assertTrue("Valid schema expected for " + example, isValid);
 				}
 			}
 		}
@@ -45,7 +46,8 @@ public class TestSchemaValidator {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				// all documents should produce schema validation errors
-				Assert.assertFalse(validator.validate(new StreamSource(in), SuppressValidationErrors.staticInstance));
+				boolean isValid = validator.validate(new StreamSource(in), SuppressValidationErrors.staticInstance);
+				Assert.assertFalse("Invalid schema expected for " + example, isValid);
 			}
 		}
 	}
