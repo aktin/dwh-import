@@ -22,7 +22,6 @@ public class TestValidator {
 	};
 	public static final String[] v2ExampleDocuments = new String[]{
 		"/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml",
-		//"/Additional Examples/basismodul-v2-beispiel-storyboard01-minimal.xml",
 		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01.xml",
 		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard02.xml",
 		"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard04.xml",
