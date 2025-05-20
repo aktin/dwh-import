@@ -3,7 +3,6 @@ package org.aktin.cda;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
@@ -12,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 public class TestCDAParser {
 	private static final String[] exampleDocuments = new String[]{
@@ -28,7 +26,7 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractTemplateIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException {
+	public void extractTemplateIDsV2() throws TransformerException, IOException, XPathExpressionException {
 		String example = exampleDocuments[0];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertNotNull("File not found at " + example, in);
@@ -40,7 +38,7 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractTemplateIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException {
+	public void extractTemplateIDs2024() throws TransformerException, IOException, XPathExpressionException {
 		String example = exampleDocuments[1];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertNotNull("File not found at " + example, in);
@@ -52,7 +50,7 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException {
 		String example = exampleDocuments[0];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertNotNull("File not found at " + example, in);
