@@ -124,9 +124,9 @@ public class TestValidator {
 			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			try {
 				validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-				Assert.fail();
+				Assert.fail("XML syntax error expected, but validation occurred without errors for " + example);
 			} catch (XPathExpressionException e) {
-				Assert.fail();
+				Assert.fail("XML syntax error expected, but XPathExpressionException occurred for " + example);
 			} catch (TransformerException e) {
 				// expected error
 			}
@@ -140,7 +140,7 @@ public class TestValidator {
 			Assert.assertNotNull("File not found at " + example, in);
 			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-			Assert.assertFalse(isValid);
+			Assert.assertFalse("Validation failure expected for", isValid);
 		}
 	}
 }
