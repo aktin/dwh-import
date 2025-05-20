@@ -58,7 +58,8 @@ public class TestCDAParser {
 	public void extractDocumentIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		String example = exampleDocuments[0];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
-			Assert.assertTrue(in.available() > 0);
+			Assert.assertNotNull("File not found at " + example, in);
+			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String docId = parser.extractDocumentId(cda);
 			String templateId = parser.extractTemplateId(cda);
@@ -72,7 +73,8 @@ public class TestCDAParser {
 	public void extractDocumentIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		String example = exampleDocuments[1];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
-			Assert.assertTrue(in.available() > 0);
+			Assert.assertNotNull("File not found at " + example, in);
+			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String docId = parser.extractDocumentId(cda);
 			String templateId = parser.extractTemplateId(cda);
@@ -86,7 +88,8 @@ public class TestCDAParser {
 	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
 		String example = exampleDocuments[0];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
-			Assert.assertTrue(in.available() > 0);
+			Assert.assertNotNull("File not found at " + example, in);
+			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String[] pat = parser.extractPatientId(cda);
 //			System.out.println("Patient="+Arrays.toString(pat));
