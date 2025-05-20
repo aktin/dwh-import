@@ -28,7 +28,7 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractDocumentIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+	public void extractTemplateIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException {
 		String example = exampleDocuments[0];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertNotNull("File not found at " + example, in);
@@ -43,7 +43,7 @@ public class TestCDAParser {
 	}
 
 	@Test
-	public void extractDocumentIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+	public void extractTemplateIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException {
 		String example = exampleDocuments[1];
 		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertNotNull("File not found at " + example, in);
