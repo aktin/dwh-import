@@ -2,7 +2,6 @@ package org.aktin.cda;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -55,16 +54,10 @@ public class TestCDAParser {
 		parser = new CDAParser();
 	}
 
-	private final InputStream openExampleDocument(String source) throws IOException {
-		URL url = getClass().getResource(source);
-		Assert.assertNotNull("CDA example document not found in external release: "+url, url);
-		System.out.println(url);
-		return url.openStream();
-	}
-
 	@Test
 	public void extractDocumentIDsV2() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
+		String example = exampleDocuments[0];
+		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String docId = parser.extractDocumentId(cda);
@@ -77,7 +70,8 @@ public class TestCDAParser {
 
 	@Test
 	public void extractDocumentIDs2024() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		try( InputStream in = openExampleDocument(exampleDocuments[1]) ){
+		String example = exampleDocuments[1];
+		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String docId = parser.extractDocumentId(cda);
@@ -90,7 +84,8 @@ public class TestCDAParser {
 
 	@Test
 	public void extractPatientID() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		try( InputStream in = openExampleDocument(exampleDocuments[0]) ){
+		String example = exampleDocuments[0];
+		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertTrue(in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String[] pat = parser.extractPatientId(cda);
