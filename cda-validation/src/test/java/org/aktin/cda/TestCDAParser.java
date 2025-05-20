@@ -34,11 +34,8 @@ public class TestCDAParser {
 			Assert.assertNotNull("File not found at " + example, in);
 			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
-			String docId = parser.extractDocumentId(cda);
 			String templateId = parser.extractTemplateId(cda);
 			Assert.assertEquals("1.2.276.0.76.10.1015", templateId);
-//			System.out.println("TemplateId="+templateId);
-			System.out.println("DocumentId="+docId);
 		}
 	}
 
@@ -49,11 +46,8 @@ public class TestCDAParser {
 			Assert.assertNotNull("File not found at " + example, in);
 			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
-			String docId = parser.extractDocumentId(cda);
 			String templateId = parser.extractTemplateId(cda);
 			Assert.assertEquals("1.2.276.0.76.3.1.195.10.2", templateId);
-//			System.out.println("TemplateId="+templateId);
-			System.out.println("DocumentId="+docId);
 		}
 	}
 
@@ -65,7 +59,6 @@ public class TestCDAParser {
 			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			Document cda = parser.buildDOM(new StreamSource(in));
 			String[] pat = parser.extractPatientId(cda);
-//			System.out.println("Patient="+Arrays.toString(pat));
 			Assert.assertEquals("1.2.276.0.76.4.8", pat[0]);
 			Assert.assertEquals("1234567890", pat[1]);
 		}
