@@ -118,31 +118,31 @@ public class TestValidator {
 
 	@Test
 	public void validateErrorsForOtherDocuments_syntaxError() throws Exception {
-		InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml");
-		Assert.assertTrue(in.available() > 0);
-		try {
-			validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-			Assert.fail();
-		} catch (XPathExpressionException e) {
-			Assert.fail();
-		} catch (TransformerException e) {
-			// expected error
+		try (InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml")) {
+			Assert.assertTrue(in.available() > 0);
+			try {
+				validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+				Assert.fail();
+			} catch (XPathExpressionException e) {
+				Assert.fail();
+			} catch (TransformerException e) {
+				// expected error
+			}
 		}
-		in.close();
 	}
 
 	@Test
 	public void validateErrorsForOtherDocuments_nonCDA_expectInvalid() throws Exception {
-		InputStream in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
-		Assert.assertTrue(in.available() > 0);
+		try (InputStream in = getClass().getResourceAsStream("/Additional Examples/other-document.xml")) {
+			Assert.assertTrue(in.available() > 0);
 
-		try {
-			boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-			// should not pass validation
-			Assert.assertFalse(isValid);
-		} catch (XPathExpressionException | TransformerException e) {
-			Assert.fail();
+			try {
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+				// should not pass validation
+				Assert.assertFalse(isValid);
+			} catch (XPathExpressionException | TransformerException e) {
+				Assert.fail();
+			}
 		}
-		in.close();
 	}
 }
