@@ -19,34 +19,7 @@ public class TestCDAParser {
 			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",
 			"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml"
 	};
-	/*
-	@Test
-	public void extractIds() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		for( String example : exampleDocuments ){
-			try( InputStream in = getClass().getResourceAsStream(example) ){
-				Assert.assertTrue(in.available() > 0);
-				Node cda = parser.buildDOM(new StreamSource(in));
-				String[] ids = parser.extractIDs(cda);
-				Assert.assertEquals(3, ids.length);
-				for( String id : ids ){
-					Assert.assertNotNull(id);
-					Assert.assertNotEquals("", id);
-				}
-			}
-		}
-	}
-	@Test
-	public void verifyId() throws TransformerException, IOException, XPathExpressionException, ParserConfigurationException, SAXException{
-		try( InputStream in = getClass().getResourceAsStream(exampleDocuments[0]) ){
-			Assert.assertTrue(in.available() > 0);
-			Node cda = parser.buildDOM(new StreamSource(in));
-			String[] ids = parser.extractIDs(cda);
-			Assert.assertEquals(3, ids.length);
-			Assert.assertEquals("1234567890", ids[0]);
-			Assert.assertEquals("0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf", ids[1]);
-		}
-	}
-*/
+
 	private CDAParser parser;
 
 	@Before
