@@ -73,9 +73,7 @@ public class TestValidator {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, p);
-				if (!isValid) {
-					Assert.fail("Successful validation expected for " + example);
-				}
+				Assert.assertTrue("Successful validation expected for " + example, isValid);
 			}
 		}
 	}
@@ -102,9 +100,7 @@ public class TestValidator {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, p);
-				if (!isValid) {
-					Assert.fail("Successful validation expected for " + example);
-				}
+				Assert.assertTrue("Successful validation expected for " + example, isValid);
 			}
 		}
 	}
@@ -144,13 +140,8 @@ public class TestValidator {
 		try (InputStream in = getClass().getResourceAsStream(example)) {
 			Assert.assertNotNull("File not found at " + example, in);
 			Assert.assertTrue("File is empty " + example, in.available() > 0);
-			try {
-				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-				// should not pass validation
-				Assert.assertFalse(isValid);
-			} catch (XPathExpressionException | TransformerException e) {
-				Assert.fail();
-			}
+			boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+			Assert.assertFalse(isValid);
 		}
 	}
 }
