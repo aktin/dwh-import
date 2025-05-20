@@ -56,7 +56,7 @@ public class TestValidator {
 	}
 
 	@Test
-	public void validateExampleDocuments_expectValid() throws Exception {
+	public void validateExampleDocumentsV2_expectValid() throws Exception {
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
 
 		for (String example : v2ExampleDocuments) {
@@ -71,7 +71,7 @@ public class TestValidator {
 	}
 
 	@Test
-	public void validateExampleDocuments_expectInvalid() throws Exception {
+	public void validateExampleDocumentsV2_expectInvalid() throws Exception {
 		ArrayList<String> invalidDocuments = new ArrayList<>();
 		invalidDocuments.addAll(Arrays.asList(v2InvalidExampleDocuments));
 		invalidDocuments.addAll(Arrays.asList(v1InvalidExampleDocuments));
