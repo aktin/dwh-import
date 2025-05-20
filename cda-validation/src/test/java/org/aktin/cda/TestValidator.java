@@ -70,7 +70,8 @@ public class TestValidator {
 		for (String example : v2ExampleDocuments) {
 			p.setSystemId(example);
 			try (InputStream in = getClass().getResourceAsStream(example)) {
-				Assert.assertTrue(in.available() > 0);
+				Assert.assertNotNull("File not found at " + example, in);
+				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, p);
 				if (!isValid) {
 					Assert.fail("Successful validation expected for " + example);
@@ -83,7 +84,8 @@ public class TestValidator {
 	public void validateExampleDocuments_expectInvalid() throws Exception {
 		for (String example : v2InvalidExampleDocuments) {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
-				Assert.assertTrue(in.available() > 0);
+				Assert.assertNotNull("File not found at " + example, in);
+				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
@@ -97,7 +99,8 @@ public class TestValidator {
 		for (String example : v2024ExampleDocuments) {
 			p.setSystemId(example);
 			try (InputStream in = getClass().getResourceAsStream(example)) {
-				Assert.assertTrue(in.available() > 0);
+				Assert.assertNotNull("File not found at " + example, in);
+				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, p);
 				if (!isValid) {
 					Assert.fail("Successful validation expected for " + example);
@@ -110,7 +113,8 @@ public class TestValidator {
 	public void validateExampleDocuments2024_expectInvalid() throws Exception {
 		for (String example : v2024InvalidExampleDocuments) {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
-				Assert.assertTrue(in.available() > 0);
+				Assert.assertNotNull("File not found at " + example, in);
+				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
 				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
@@ -119,8 +123,10 @@ public class TestValidator {
 
 	@Test
 	public void validateErrorsForOtherDocuments_syntaxError() throws Exception {
-		try (InputStream in = getClass().getResourceAsStream("/Additional Examples/invalid-syntax.xml")) {
-			Assert.assertTrue(in.available() > 0);
+		String example = "/Additional Examples/invalid-syntax.xml";
+		try (InputStream in = getClass().getResourceAsStream(example)) {
+			Assert.assertNotNull("File not found at " + example, in);
+			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			try {
 				validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 				Assert.fail();
@@ -134,9 +140,10 @@ public class TestValidator {
 
 	@Test
 	public void validateErrorsForOtherDocuments_nonCDA_expectInvalid() throws Exception {
-		try (InputStream in = getClass().getResourceAsStream("/Additional Examples/other-document.xml")) {
-			Assert.assertTrue(in.available() > 0);
-
+		String example = "/Additional Examples/other-document.xml";
+		try (InputStream in = getClass().getResourceAsStream(example)) {
+			Assert.assertNotNull("File not found at " + example, in);
+			Assert.assertTrue("File is empty " + example, in.available() > 0);
 			try {
 				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
 				// should not pass validation
