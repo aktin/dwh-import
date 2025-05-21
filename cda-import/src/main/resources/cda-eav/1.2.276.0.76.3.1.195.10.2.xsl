@@ -202,6 +202,7 @@
         </fact>
 
         <!-- kann die ID (IKNR) in scopingOrganisation auch weggelassen werden? -->
+        <!-- https://wiki.hl7.de/index.php?title=1.2.276.0.76.10.2022 -->
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>IKNR</xsl:attribute>
             <value>
@@ -210,6 +211,7 @@
             </value>
         </fact>
         <!-- VK-Nummer, wenn vorhanden -->
+        <!-- https://ig.fhir.de/basisprofile-de/1.2.0/Terminologie-Namensraueme-NationaleNamensraeume.html -->
         <xsl:if test="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']">
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>VKNR</xsl:attribute>
@@ -253,6 +255,7 @@
     </xsl:template> -->
 
     <!-- 114 Rankin Scale als einzelne Konzept (0..6)-->
+    <!-- https://wiki.hl7.de/index.php?title=1.2.276.0.76.10.4045 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4045']">
         <!--
         <xsl:comment>114 Rankin Scale (Konzeptcode)</xsl:comment>
@@ -326,7 +329,7 @@
 
     <!-- 5 Schwanger L:11449-6'-->
     <!-- Unterscheidung Unknown und Nicht ausgefüllt? -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4043']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.11.46']">
         <xsl:comment>5 Schwangerschaftsstatus</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
@@ -349,27 +352,28 @@
     </xsl:template>
 
     <!-- 6 Tetanusschutz L:11458-7-->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">
-        <xsl:comment>6 Tetanusschutz</xsl:comment>
-        <fact>
-            <xsl:attribute name= "concept">
-                <xsl:choose>
-                    <xsl:when test="../@negationInd = 'true'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NEG</xsl:when>
-                    <xsl:when test="../@negationInd = 'false' and not (../@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>
-                    <xsl:when test="../@negationInd = 'false' and  ../@nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:if test="../cda:effectiveTime/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>
-        </fact>
-    </xsl:template>
+    <!-- TODO: Not longer avaliable in the CDA -->
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">-->
+<!--        <xsl:comment>6 Tetanusschutz</xsl:comment>-->
+<!--        <fact>-->
+<!--            <xsl:attribute name= "concept">-->
+<!--                <xsl:choose>-->
+<!--                    <xsl:when test="../@negationInd = 'true'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NEG</xsl:when>-->
+<!--                    <xsl:when test="../@negationInd = 'false' and not (../@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>-->
+<!--                    <xsl:when test="../@negationInd = 'false' and  ../@nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>-->
+<!--                </xsl:choose>-->
+<!--            </xsl:attribute>-->
+<!--            <xsl:if test="../cda:effectiveTime/@value">-->
+<!--                <xsl:attribute name="start">-->
+<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>-->
+<!--                </xsl:attribute>-->
+<!--            </xsl:if>-->
+<!--            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>-->
+<!--        </fact>-->
+<!--    </xsl:template>-->
 
     <!-- 7 Isolation -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4068']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.65']">
         <xsl:comment>7 Isolation</xsl:comment>
         <xsl:if test="../cda:code/@code = 'RISO'"> <!-- Reverse Isolation -->
             <fact>
@@ -392,7 +396,7 @@
     </xsl:template>
 
     <!-- 8 Isolation Begründung -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4069']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.66']">
         <xsl:comment>8 Isolation Begründung</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
@@ -412,7 +416,7 @@
     <!-- 9 Atemfrequenz
     <fact concept="L:9279-1">
     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4030']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.34']">
         <xsl:comment>9 Atemfrequenz</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -423,7 +427,7 @@
     <fact concept="L:59408-5">
     LOINC Code ist im CDA anders gewählt
     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4031']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.35']">
         <xsl:comment>10 Sauerstoffsättigung</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -433,8 +437,16 @@
     <!-- 11 Systolischer Blutdruck 8480-6
     <fact concept="L:8480-6">
     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4032']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.38']">
         <xsl:comment>11 Systolischer Blutdruck</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Diastolischer Blutdruck -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.37']">
+        <xsl:comment>Diastolischer Blutdruck</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
@@ -443,7 +455,7 @@
     <!-- 12 Herzfrequenz 8867-4
     <fact concept="L:8867-4" </fact>
     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4033']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.39']">
         <xsl:comment>12 Herzfrequenz</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -494,7 +506,7 @@
 
     <!-- 17 GCS Summe
     <fact concept="L:9269-2" > -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4034']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.42']">
         <xsl:comment>17 Glasgow Coma Scale(</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -502,7 +514,7 @@
     </xsl:template>
 
     <!-- 18 Pupillenweite bei Aufnahme in der Notaufnahme -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4046']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.11.49']">
         <xsl:comment>18 Pupillenweite bei Aufnahme in der Notaufnahme</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
@@ -515,7 +527,7 @@
     </xsl:template>
 
     <!-- 19 Pupillenreaktion -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4047']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.11.50']">
         <xsl:comment>19 Pupillenreaktion</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
@@ -528,7 +540,7 @@
     </xsl:template>
 
     <!-- 20 Körperkerntemperatur -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4035']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.41']">
         <xsl:comment>20 Körperkerntemperatur</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -538,8 +550,8 @@
     <!-- 21 Schmerz bei Aufnahme, loinc-schmerzskala 0-10 ggf. Answer list LL2335-9
     <fact concept="L:72514-3" >
     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4036']">
-        <xsl:comment>21 Schmerz bei Aufnahme</xsl:comment>
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.43']">
+        <xsl:comment>21 Schmerzen</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
@@ -570,7 +582,7 @@
     <!-- incl. 770 Zeitpunkt der Ersteinschätzung
          incl. 804	Verwendetes Ersteinschätzungssystem
     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4042']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.18']">
         <!-- <xsl:comment>804 Verwendetes Ersteinschätzungssystem</xsl:comment> => Information in 23/770 enthalten
         <fact>
             <xsl:attribute name="concept">
@@ -585,7 +597,7 @@
             <xsl:attribute name="concept">
                 <xsl:choose>
                     <xsl:when test="not(../cda:value)"><xsl:value-of select="$AKTIN-Prefix"/>ASSESSMENT</xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.438'">MTS:<xsl:value-of select="../cda:value/@code"/></xsl:when>
+                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.11.44'">MTS:<xsl:value-of select="../cda:value/@code"/></xsl:when>
                     <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.437'">ESI:<xsl:value-of select="../cda:value/@code"/></xsl:when>
                 </xsl:choose>
             </xsl:attribute>
@@ -608,7 +620,7 @@
     <!-- 29 Modul Präklinik -->
     <!-- 30 Modul Chargendokumentation -->
     <!-- 767 Modul Neurologie -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4070']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.73']">
         <xsl:comment>25-30+767 Zusatzmodule</xsl:comment>
         <xsl:for-each select="../cda:reference/cda:externalDocument">
             <fact>
@@ -651,38 +663,40 @@
     </xsl:template>
 
     <!-- Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">
-        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$Allergie-Prefix"/>TXT</xsl:attribute>
-            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>
-                </xsl:attribute>
-            </xsl:if>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="../cda:text"/>
-            </value>
-        </fact>
-    </xsl:template>
+    <!-- TODO: How are allergies now handled? -->
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">-->
+<!--        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>-->
+<!--        <fact>-->
+<!--            <xsl:attribute name="concept"><xsl:value-of select="$Allergie-Prefix"/>TXT</xsl:attribute>-->
+<!--            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">-->
+<!--                <xsl:attribute name="start">-->
+<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>-->
+<!--                </xsl:attribute>-->
+<!--            </xsl:if>-->
+<!--            <value>-->
+<!--                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                <xsl:value-of select="../cda:text"/>-->
+<!--            </value>-->
+<!--        </fact>-->
+<!--    </xsl:template>-->
 
     <!-- 36 Beschwerden bei Vorstellung / Freitext-->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3048']">
-        <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
-            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>
-                </xsl:attribute>
-            </xsl:if>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="../cda:text"/>
-            </value>
-        </fact>
-    </xsl:template>
+    <!-- TODO: Where are they now stored? -->
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3048']">-->
+<!--        <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>-->
+<!--        <fact>-->
+<!--            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>-->
+<!--            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">-->
+<!--                <xsl:attribute name="start">-->
+<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>-->
+<!--                </xsl:attribute>-->
+<!--            </xsl:if>-->
+<!--            <value>-->
+<!--                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                <xsl:value-of select="../cda:text"/>-->
+<!--            </value>-->
+<!--        </fact>-->
+<!--    </xsl:template>-->
 
     <!-- 212 Symptomdauer
     siehe 805 CEDIS-->
@@ -727,32 +741,32 @@
 
     <!-- 42 Abschlussdiagnosen / Freitext-->
     <!-- 44 Abschlussdiagnosen-->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3055']">
+    <xsl:template match="cda:act/cda:templateId[@root='1.2.276.0.76.3.1.195.10.69']">
         <xsl:comment>44 Abschlussdiagnosen</xsl:comment>
-        <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4049']">
+        <xsl:for-each select="../cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']">
             <fact>
                 <xsl:choose>
-                    <xsl:when test="../cda:value/@code">
-                        <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="../cda:value/@code"/></xsl:attribute>
-                        <xsl:if test="../cda:effectiveTime/cda:low/@value">
+                    <xsl:when test="cda:value/@code">
+                        <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="cda:value/@code"/></xsl:attribute>
+                        <xsl:if test="cda:effectiveTime/cda:low/@value">
                             <xsl:attribute name="start">
-                                <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
+                                <xsl:value-of select="func:ConvertDateTime(cda:effectiveTime/cda:low/@value)"/>
                             </xsl:attribute>
                         </xsl:if>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/>NULL<xsl:value-of select="position()"/></xsl:attribute>
-                        <xsl:if test="../cda:effectiveTime/cda:low/@value">
+                        <xsl:if test="cda:effectiveTime/cda:low/@value">
                             <xsl:attribute name="start">
-                                <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
+                                <xsl:value-of select="func:ConvertDateTime(cda:effectiveTime/cda:low/@value)"/>
                             </xsl:attribute>
                         </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="../cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code">
+                <xsl:if test="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code">
                     <modifier>
                         <xsl:attribute name="code">
-                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="../cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code"/>
+                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code"/>
                         </xsl:attribute>
                     </modifier>
                 </xsl:if>
@@ -761,12 +775,12 @@
                         <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>F</xsl:attribute>
                     </modifier>
                 </xsl:if>
-                <xsl:if test="../cda:value/cda:originalText">
+                <xsl:if test="cda:value/cda:originalText">
                     <modifier>
                         <xsl:attribute name="code">originalText</xsl:attribute>
                         <value>
                             <xsl:attribute name="xsi:type">string</xsl:attribute>
-                            <xsl:value-of select="../cda:value/cda:originalText"/>
+                            <xsl:value-of select="cda:value/cda:originalText"/>
                         </value>
                     </modifier>
                 </xsl:if>
@@ -804,9 +818,9 @@
     <!-- 806 multiresistente Erreger -->
     <!-- 807 multiresistente Erreger: Erregertyp -->
     <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4072']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4039']">
         <xsl:comment>806/807 multiresistente Erreger</xsl:comment>
-        <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4073']">
+        <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4040']">
             <xsl:if test="../cda:value">
                 <fact>
                     <xsl:attribute name="concept">
@@ -882,7 +896,7 @@
 
 
     <!-- 884 Transportmittel -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4037']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.10']">
         <xsl:comment>884 Transportmittel</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
@@ -912,7 +926,7 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
-    <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.10.4067']">
+    <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.3.1.195.11.26']">
         <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
@@ -933,7 +947,7 @@
     <!-- Diagnostik 25ff @negationInd -->
     <!-- Diagnostik 25ff opB -->
     <!-- Diagnostik 25ff Zeitpunkt-->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3050']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.62']">
         <xsl:for-each select="../cda:entry/cda:observation/cda:templateId">
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
             <fact>

@@ -289,7 +289,11 @@
                                             <value xsi:type="CE" code="17" codeSystem="1.2.276.0.76.3.1.195.5.101" displayName="Extremitätenprobleme"/>
                                         </observation>
                                     </entryRelationship>
-                                    <entryRelationship typeCode="COMP">
+                                    <entryRelationship typeCode="COMP">Assert.assertEquals(
+                                        "2024-01-17",
+                                        o.getStartTime().toString().substring(0, 10)
+                                        );
+
                                         <!-- MTS-Indikatoren GELB -->
                                         <observation classCode="OBS" moodCode="EVN">
                                             <templateId root="1.2.276.0.76.3.1.195.10.24"/>
