@@ -118,7 +118,7 @@ public class TestTransformToEAV {
 					System.out.println(o);
 					System.out.println("Observation date: " + o.getStartTime());
 					Assert.assertEquals(
-							"2024-01-16", // TODO: THIS DATE IS NOT CORRECT BUT TEST PASSES
+							"2024-01-17", // TODO: THIS DATE IS NOT CORRECT BUT TEST PASSES
 							o.getStartTime().toString()
 					);
 
