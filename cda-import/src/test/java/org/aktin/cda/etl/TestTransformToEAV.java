@@ -70,6 +70,46 @@ public class TestTransformToEAV {
 
 	@SuppressWarnings("deprecation")
 	@Test
+	public void transformExample1() throws Exception{
+		CDAParser parser = new CDAParser();
+		CDAImporterMockUp t = new CDAImporterMockUp();
+		try( InputStream in = CDAParser.class.getResourceAsStream("/basismodul-minimal.xml") ){
+			Document dom = parser.buildDOM(new StreamSource(in));
+
+
+			Path temp = t.transform(dom, parser.extractTemplateId(dom));
+			try( InputStream eav = Files.newInputStream(temp) ){
+				GroupedXMLReader suppl = t.readEAV(eav);
+				Observation o = suppl.get();
+
+				// verify patient birth date
+				Patient p = o.getExtension(Patient.class);
+				Assert.assertNotNull(p);
+				// no birthdate should be available
+				Assert.assertNull(p.getBirthDate());
+				// verify visit start date
+				Visit v = o.getExtension(Visit.class);
+				Assert.assertNotNull(v);
+				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T16:03+0100"), v.getStartTime());
+
+				// verify observation
+				// skip observations until LOINC
+				Optional<Observation> opt = suppl.stream().filter(x -> x.getConceptId().equals("ICD10GM:S80.1")).findFirst();
+				Assert.assertTrue(opt.isPresent());
+				o = opt.get();
+				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T16:03+0100"), o.getStartTime());
+
+				suppl.close();
+			}finally{
+				Files.delete(temp);
+			}
+		}
+
+		t.close();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
 	public void transformExamplev2024() throws Exception {
 		CDAParser parser = new CDAParser();
 		CDAImporterMockUp t = new CDAImporterMockUp();
@@ -108,7 +148,6 @@ public class TestTransformToEAV {
 							v.getStartTime()
 					);
 
-					// TODO: check test after parsing works as intended.Currently, no ICD10 observation recorded.
 					// verify observation: finde Abschlussdiagnose S93.40
 					Optional<Observation> opt = suppl.stream()
 							.filter(x -> x.getConceptId().equals("ICD10GM:S93.40"))
@@ -118,7 +157,7 @@ public class TestTransformToEAV {
 					System.out.println(o);
 					System.out.println("Observation date: " + o.getStartTime());
 					Assert.assertEquals(
-							"2024-01-17", // TODO: THIS DATE IS NOT CORRECT BUT TEST PASSES
+							"2024-01-16",
 							o.getStartTime().toString()
 					);
 
