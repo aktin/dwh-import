@@ -896,7 +896,7 @@
 
 
     <!-- 884 Transportmittel -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.10']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.11']">
         <xsl:comment>884 Transportmittel</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
