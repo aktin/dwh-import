@@ -12,8 +12,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import javax.xml.transform.stream.StreamSource;
+import java.io.BufferedReader;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class XsltIntegrationTest {
@@ -52,6 +54,12 @@ public class XsltIntegrationTest {
         transformer.transform();
 
         System.out.println("Output file: "+outputFile.getAbsolutePath());
+        // Print the content of the temporary file
+        System.out.println("=== Output File Content ===");
+        try (BufferedReader reader = Files.newBufferedReader(outputFile.toPath())) {
+            reader.lines().forEach(System.out::println);
+        }
+        System.out.println("=== End of Output File Content ===");
 
         assertTrue(outputFile.exists() && outputFile.length() > 0);
     }
