@@ -45,6 +45,10 @@ public class PythonScriptExecutor {
     @Inject
     private DataSourceCredsExtractor dataSourceCredsExtractor;
 
+    @Inject
+    private PythonVersionNotifier notifier;
+
+
     /**
      * First, collects installed python packages and puts them as a resource on the AKTIN Broker (as a
      * CompletableFuture). Extracts on startup i2b2crcdata credentials and connection url and forwards them
@@ -53,7 +57,7 @@ public class PythonScriptExecutor {
      */
     @PostConstruct
     public void startup() {
-        uploadPythonPackageVersions();
+        notifier.uploadPythonPackageVersions();
         DatabaseCreds credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
         int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
@@ -75,27 +79,6 @@ public class PythonScriptExecutor {
                 runner.submitTask(task);
             }
         }
-    }
-
-    /**
-     * Collect (hard-coded) Python apt packages and put them as a new resource group on the AKTIN Broker.
-     */
-    private void uploadPythonPackageVersions() {
-        Properties versions_python = collectPythonPackageVersions();
-        brokerResourceManager.putMyResourceProperties("python", versions_python);
-    }
-
-    /**
-     * Iterate through a list of necessary Python packages and get the corresponding installed version.
-     * Package names are from apt package manager (ubuntu is default operating system on dwh)
-     * @return Properties with {package name} = {installed version}
-     */
-    private Properties collectPythonPackageVersions() {
-        Properties properties = new Properties();
-        List<String> packages_python = Arrays.asList("python3", "python3-pandas", "python3-numpy", "python3-requests", "python3-sqlalchemy", "python3-psycopg2", "python3-postgresql", "python3-zipp", "python3-plotly", "python3-unicodecsv", "python3-gunicorn");
-        Map<String, String> versions_python = systemStatusManager.getLinuxPackagesVersion(packages_python);
-        properties.putAll(versions_python);
-        return properties;
     }
 
     /**
