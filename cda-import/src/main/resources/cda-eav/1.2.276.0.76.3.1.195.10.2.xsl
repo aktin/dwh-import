@@ -758,10 +758,32 @@
     <!-- 46 Procedere / Freitext-->
 
     <!-- 42 Abschlussdiagnosen / Freitext-->
-    <!-- 44 Abschlussdiagnosen-->
-    <xsl:template match="cda:act/cda:templateId[@root='1.2.276.0.76.3.1.195.10.69']">
-        <xsl:comment>44 Abschlussdiagnosen</xsl:comment>
-        <xsl:for-each select="../cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']">
+    <!-- 44 Abschlussdiagnosen - DEBUG VERSION -->
+    <!-- 44 Abschlussdiagnosen - Korrigierte Version -->
+    <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.68']">
+        <xsl:comment>44 Abschlussdiagnosen - Section approach</xsl:comment>
+
+        <!-- Debug: Verschiedene XPath-Ausdrücke testen -->
+        <xsl:comment>DEBUG - Testing different XPath expressions:</xsl:comment>
+        <xsl:comment>Count with .//cda:observation: <xsl:value-of select="count(.//cda:observation)"/></xsl:comment>
+        <xsl:comment>Count with descendant::cda:observation: <xsl:value-of select="count(descendant::cda:observation)"/></xsl:comment>
+        <xsl:comment>Count with specific template: <xsl:value-of select="count(.//cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70'])"/></xsl:comment>
+        <xsl:comment>Count with entryRelationship path: <xsl:value-of select="count(.//cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70'])"/></xsl:comment>
+
+        <!-- Expliziter Pfad über die CDA-Struktur -->
+        <xsl:variable name="diagnoses" select="cda:entry/cda:act/cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']"/>
+
+        <xsl:comment>Found <xsl:value-of select="count($diagnoses)"/> diagnoses with explicit path</xsl:comment>
+        <xsl:comment>Diagnosis codes:
+            <xsl:for-each select="$diagnoses">
+                <xsl:value-of select="cda:value/@code"/><xsl:if test="position() != last()">, </xsl:if>
+            </xsl:for-each>
+        </xsl:comment>
+
+        <!-- Verarbeitung aller Diagnosen -->
+        <xsl:for-each select="$diagnoses">
+            <xsl:comment>Processing diagnosis <xsl:value-of select="position()"/>: <xsl:value-of select="cda:value/@code"/> - <xsl:value-of select="cda:value/cda:originalText"/></xsl:comment>
+
             <fact>
                 <xsl:choose>
                     <xsl:when test="cda:value/@code">
@@ -781,6 +803,17 @@
                         </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
+
+                <!-- Side qualifier (L for left) -->
+                <xsl:if test="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.5.412']/@code">
+                    <modifier>
+                        <xsl:attribute name="code">
+                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.5.412']/@code"/>
+                        </xsl:attribute>
+                    </modifier>
+                </xsl:if>
+
+                <!-- Original diagnosis certainty qualifier -->
                 <xsl:if test="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code">
                     <modifier>
                         <xsl:attribute name="code">
@@ -788,11 +821,15 @@
                         </xsl:attribute>
                     </modifier>
                 </xsl:if>
+
+                <!-- Hauptdiagnose-Kennzeichnung -->
                 <xsl:if test="../../cda:sequenceNumber/@value='1'">
                     <modifier>
                         <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>F</xsl:attribute>
                     </modifier>
                 </xsl:if>
+
+                <!-- Original Text -->
                 <xsl:if test="cda:value/cda:originalText">
                     <modifier>
                         <xsl:attribute name="code">originalText</xsl:attribute>
@@ -802,11 +839,36 @@
                         </value>
                     </modifier>
                 </xsl:if>
+
                 <xsl:call-template name="GetEffectiveTimes"/>
             </fact>
         </xsl:for-each>
     </xsl:template>
 
+    <!-- Alternative: Falls der explizite Pfad nicht funktioniert -->
+    <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.68']" mode="fallback">
+        <xsl:comment>44 Abschlussdiagnosen - Fallback approach</xsl:comment>
+
+        <!-- Alle observations in der Section, unabhängig vom Pfad -->
+        <xsl:for-each select=".//observation[templateId/@root='1.2.276.0.76.3.1.195.10.70']">
+            <xsl:comment>Fallback diagnosis <xsl:value-of select="position()"/>: <xsl:value-of select="value/@code"/></xsl:comment>
+
+            <fact>
+                <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="value/@code"/></xsl:attribute>
+                <xsl:if test="effectiveTime/low/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(effectiveTime/low/@value)"/>
+                    </xsl:attribute>
+                </xsl:if>
+
+                <xsl:if test="value/originalText">
+                    <modifier code="originalText">
+                        <value xsi:type="string"><xsl:value-of select="value/originalText"/></value>
+                    </modifier>
+                </xsl:if>
+            </fact>
+        </xsl:for-each>
+    </xsl:template>
     <!-- 804 verwendetes Ersteinschätzungssystem
     siehe 23 Ersteinschätzung -->
 
