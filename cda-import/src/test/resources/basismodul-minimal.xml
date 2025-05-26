@@ -133,14 +133,14 @@
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Transportmittel -->
                 <section>
-                    <templateId root="1.2.276.0.76.10.3045"/>
-                    <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Transport mode"/>
+                    <templateId root="1.2.276.0.76.3.1.195.10.10 "/>
+                    <code code="11459-5" codeSystem="1.2.276.0.76.3.1.195.10.11" codeSystemName="LOINC" displayName="Transport mode"/>
                     <title>Transportmittel</title>
                     <text>Ohne</text>
                     <entry typeCode="COMP">
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4037"/>                          
-                            <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
+                            <code code="11459-5" codeSystem="1.2.276.0.76.3.1.195.10.11" displayName="Transport method"/>
                             <statusCode code="completed"/>
                             <value xsi:type="CV" nullFlavor="NA"/>
                         </observation>
