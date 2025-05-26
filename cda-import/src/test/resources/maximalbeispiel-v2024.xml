@@ -220,7 +220,7 @@
                 </section>
             </component>
 
-            <!-- section: Wiedervorstellung nicht zutreffend -->
+            <!-- section: Wiedervorstellung-->
 
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Ersteinschätzung -->
@@ -612,7 +612,7 @@
                     <text>
                         <list>
                             <item ID="outsideDE">
-                                Patient war in den letzten 12&nbsp;Monaten außerhalb Deutschlands: <b>ja</b>
+                                Patient war in den letzten 12 Monaten außerhalb Deutschlands: <b>ja</b>
                             </item>
                             <item ID="countries">
                                 Bereiste Länder: Italien, Österreich
