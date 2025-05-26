@@ -5,7 +5,118 @@
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
     <!--
         CDA Header
+    CDA Header Level Template sind alle enthalten mit einem Beispiel, wie auch CDA Section level templates.
+    Für die CDA Entry Level Templates sind NICHT enhalten:
+    - Zeit bis zum Export
+    - Zeitpunkt Export aus EDIS
+    - Wildcard Theraphie/diagnostik
+    - Version des EDIS
+    - Sonographie angefordert
+    - Röntgenthorax angefordert
+    - Röntgen Wirbelsäule durchgeführt
+    - Röntgen-Thorax durchgeführt
+    - Röntgen Becken durchgeführt
+    - Pulsfreqenz
+    - Niedrigste GCS Summe
+    - Name des EDIS
+    - MRT durchgefphrt
+    - Mikrobilogie durchgeführt
+    - Ganzkörper CT durchgeführt
+    - ESI Triagefaktoren
+    - Erste Schmerzmessung
+    - Emergency Severity Index
+    - EKG angefordert
+    - CT-MR/DS/Angiographie
+    - CT-Thorax
+    - CT-Kopf
+    - CT-HWS
+    - CT-Abdomen durcheführt
+
     -->
+    <!-- Author -->
+    <author typeCode="AUT">
+        <time value="20240526"/> <!-- aktuelles Datum oder Dokumentationszeitpunkt -->
+        <assignedAuthor>
+            <id root="1.2.276.0.76.4.1234567890.1.1.1" extension="123456789"/> <!-- eindeutige ID des Autors -->
+            <assignedPerson>
+                <name>
+                    <given>Max</given>
+                    <family>Mustermann</family>
+                </name>
+            </assignedPerson>
+            <representedOrganization>
+                <id root="1.2.276.0.76.10.90011"/>
+                <name>Krankenhaus Musterstadt</name>
+            </representedOrganization>
+        </assignedAuthor>
+    </author>
+
+    <!-- Custodian -->
+    <custodian typeCode="CST">
+        <assignedCustodian classCode="ASSIGNED">
+            <representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
+                <id root="1 1.2.276.0.76.10.90011"/>
+                <name>Krankenhaus Musterstadt</name>
+                <telecom value="tel:+49-1234-567890"/>
+                <addr>
+                    <streetAddressLine>Musterstraße 1</streetAddressLine>
+                    <city>Musterstadt</city>
+                    <postalCode>12345</postalCode>
+                    <country>DE</country>
+                </addr>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <!-- Information Reciepient -->
+    <informationRecipient typeCode="PRCP">
+        <intendedRecipient>
+            <id root="1.2.276.0.76.4.1234567890.1.1.5" extension="Empf001"/>
+            <informationRecipient classCode="PSN" determinerCode="INSTANCE">
+                <name>
+                    <given>Erika</given>
+                    <family>Musterfrau</family>
+                </name>
+            </informationRecipient>
+            <receivedOrganization classCode="ORG" determinerCode="INSTANCE">
+                <id root="1.2.276.0.76.4.1234567890.1.1.6" extension="KH-01"/>
+                <name>Krankenhaus Beispielstadt</name>
+                <telecom value="tel:+49-9876-54321"/>
+                <addr>
+                    <streetAddressLine>Beispielweg 2</streetAddressLine>
+                    <city>Beispielstadt</city>
+                    <postalCode>54321</postalCode>
+                    <country>DE</country>
+                </addr>
+            </receivedOrganization>
+        </intendedRecipient>
+    </informationRecipient>
+    <!-- Dienstleistung / Behandlung -->
+    <documentationOf typeCode="DOC">
+        <serviceEvent classCode="ACT" moodCode="EVN">
+            <code code="182813001"
+                  codeSystem="2.16.840.1.113883.6.96"
+                  displayName="Emergency treatment (procedure)"/>
+            <effectiveTime>
+                <low value="202405121301"/>  <!-- Therapiebeginn: 12. Mai 2024, 13:01 Uhr -->
+                <high value="202405121345"/> <!-- Therapieende / Entlassung: 13:45 Uhr -->
+            </effectiveTime>
+            <performer typeCode="PRF">
+                <functionCode code="ATTPHYS"
+                              codeSystem="2.16.840.1.113883.5.88"
+                              displayName="attending physician"/>
+                <time>
+                    <low value="202405121301"/>
+                    <high value="202405121345"/>
+                </time>
+                <assignedEntity classCode="ASSIGNED">
+                    <id nullFlavor="NA"/>
+                </assignedEntity>
+            </performer>
+        </serviceEvent>
+    </documentationOf>
+
+    <!-- Lang. code -->
+    <languageCode code="de-DE"/>
     <!-- Realmcode (fix) -->
     <realmCode code="DE"/>
     <!-- Type Id (fix) -->
