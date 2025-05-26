@@ -596,6 +596,68 @@
                 </section>
             </component>
 
+            <!-- Reise-Anamnese  (Template 1.2.276.0.76.3.1.195.10.31)         -->
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+
+                    <!-- Pflicht-Metadaten der Section -->
+                    <templateId root="1.2.276.0.76.3.1.195.10.31"/>
+                    <code code="8691-8"
+                          codeSystem="2.16.840.1.113883.6.1"
+                          codeSystemName="LOINC"
+                          displayName="History of travel"/>
+                    <title>Reise-Anamnese</title>
+
+                    <!-- Narrativer Text (Listeneinträge werden unten referenziert) -->
+                    <text>
+                        <list>
+                            <item ID="outsideDE">
+                                Patient war in den letzten 12&nbsp;Monaten außerhalb Deutschlands: <b>ja</b>
+                            </item>
+                            <item ID="countries">
+                                Bereiste Länder: Italien, Österreich
+                            </item>
+                        </list>
+                    </text>
+                    <!-- (1) Frage: Auslandsaufenthalt innerhalb 12 Monate?        -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <!-- eigener Eintrags-Template-Identifier (falls definiert) -->
+                            <templateId root="1.2.276.0.76.3.1.195.10.77"/>
+                            <code code="FLN-138"
+                                  codeSystem="1.2.276.0.76.3.1.195.5.98"
+                                  displayName="War der Patient innerhalb der letzten 12 Monate außerhalb Deutschlands?"/>
+                            <text><reference value="#outsideDE"/></text>
+                            <statusCode code="completed"/>
+                            <!-- Ja = true, Nein = false -->
+                            <value xsi:type="BL" value="true"/>
+                        </observation>
+                    </entry>
+                    <!-- (2) Bereiste Länder                                       -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.78"/>
+                            <code code="10660008"
+                                  codeSystem="2.16.840.1.113883.6.96"
+                                  displayName="Recent countries visited (observable entity)"/>
+                            <text><reference value="#countries"/></text>
+                            <statusCode code="completed"/>
+                            <!-- ISO-3166-1-Codes: Hauptland + Translation für weiteres -->
+                            <value xsi:type="CD"
+                                   code="IT"
+                                   codeSystem="2.16.840.1.113883.6.238"
+                                   displayName="Italy">
+                                <originalText>Italien</originalText>
+                                <translation code="AT"
+                                             codeSystem="2.16.840.1.113883.6.238"
+                                             displayName="Austria"/>
+                            </value>
+                        </observation>
+                    </entry>
+                </section>
+            </component>
+
+
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Diagnostik -->
                 <section classCode="DOCSECT">
