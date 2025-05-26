@@ -28,12 +28,6 @@ public class PythonScriptExecutor {
     protected PythonRunner runner;
 
     @Inject
-    private SystemStatusManager systemStatusManager;
-
-    @Inject
-    private BrokerResourceManager brokerResourceManager;
-
-    @Inject
     private Preferences preferences;
 
     @Inject
