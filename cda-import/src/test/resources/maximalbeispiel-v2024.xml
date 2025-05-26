@@ -221,6 +221,62 @@
             </component>
 
             <!-- section: Wiedervorstellung-->
+            <!-- Wiedervorstellung (Follow-up visit)                             -->
+            <!-- Template-ID: 1.2.276.0.76.3.1.195.10.13                         -->
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+
+                    <!-- Pflicht-Metadaten der Section -->
+                    <templateId root="1.2.276.0.76.3.1.195.10.13"/>
+                    <code code="LA21590-7"
+                          codeSystem="2.16.840.1.113883.6.1"
+                          displayName="Follow-up visit"/>
+                    <title>Wiedervorstellung</title>
+
+                    <text>
+                        <list>
+                            <item ID="revisit">
+                                Ungeplante Wiedervorstellung <b>ja</b> (innerhalb von 28Tagen)
+                            </item>
+                            <item ID="interval">
+                                Zeit seit letzter Vorstellung: 72h
+                            </item>
+                        </list>
+                    </text>
+
+                    <!-- (1) Ungeplante Wiedervorstellung binnen 28 Tagen          -->
+                    <!--     Template-ID 1.2.276.0.76.3.1.195.10.14                -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.14"/>
+                            <code code="FLN-11"
+                                  codeSystem="1.2.276.0.76.3.1.195.5.98"
+                                  displayName="Hat sich der Patient ungeplant ... innerhalb von 28 Tagen wieder vorgestellt?"/>
+                            <text><reference value="#revisit"/></text>
+                            <statusCode code="completed"/>
+                            <!-- true = ja | false = nein -->
+                            <value xsi:type="BL" value="true"/>
+                        </observation>
+                    </entry>
+
+                    <!-- (2) Zeit seit letzter Vorstellung                         -->
+                    <!--     Template-ID 1.2.276.0.76.3.1.195.10.15                -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.15"/>
+                            <code code="FLN-12"
+                                  codeSystem="1.2.276.0.76.3.1.195.5.98"
+                                  displayName="Zeitabstand seit letzter Vorstellung zum gleichen Vorstellungsgrund"/>
+                            <text><reference value="#interval"/></text>
+                            <statusCode code="completed"/>
+                            <!-- Beispiel: 72 Stunden -->
+                            <value xsi:type="PQ" value="72" unit="h"/>
+                        </observation>
+                    </entry>
+                </section>
+            </component>
+
+
 
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Ersteinschätzung -->
