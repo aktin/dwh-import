@@ -372,46 +372,70 @@
 <!--        </fact>-->
 <!--    </xsl:template>-->
 
-    <!-- 7 Isolation -->
+    <!-- =============================================================== -->
+    <!-- 7 Isolation  –  TemplateId 1.2.276.0.76.3.1.195.10.65          -->
+    <!-- =============================================================== -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.65']">
         <xsl:comment>7 Isolation</xsl:comment>
-        <xsl:if test="../cda:code/@code = 'RISO'"> <!-- Reverse Isolation -->
-            <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>RISO</xsl:attribute>
-                <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
-            </fact>
-        </xsl:if>
-        <xsl:if test="../cda:code/@code = 'ISO' and ../../cda:procedure/@negationInd = 'true'"> <!-- No Isolation -->
-            <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>ISO:NEG</xsl:attribute>
-                <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
-            </fact>
-        </xsl:if>
-        <xsl:if test="../cda:code/@code = 'ISO' and not(../../cda:procedure/@negationInd = 'true')">
-            <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>ISO</xsl:attribute>
-                <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
-            </fact>
-        </xsl:if>
+
+        <!-- ► zugehöriges <procedure>-Element zwischenspeichern           -->
+        <xsl:variable name="proc"  select="parent::cda:procedure"/>
+        <xsl:variable name="code"  select="$proc/cda:code/@code"/>
+        <xsl:variable name="neg"   select="$proc/@negationInd='true'"/>
+
+        <xsl:choose>
+            <!-- a) *Reverse* Isolation – alte Kodierung (Code = RISO)  -->
+            <xsl:when test="$code = 'RISO'">
+                <fact concept="{ $Isolation-Prefix }RISO">
+                    <xsl:call-template name="GetEffectiveTimes"/>
+                </fact>
+            </xsl:when>
+
+            <!-- b) *Keine* Isolation – neuer SNOMED-Code + negationInd -->
+            <xsl:when test="$code = '40174006' and $neg">
+                <fact concept="{ $Isolation-Prefix }ISO:NEG">
+                    <xsl:call-template name="GetEffectiveTimes"/>
+                </fact>
+            </xsl:when>
+
+            <!-- c) Isolation erforderlich – neuer SNOMED-Code (ohne neg) -->
+            <xsl:when test="$code = '40174006'">
+                <fact concept="{ $Isolation-Prefix }ISO">
+                    <xsl:call-template name="GetEffectiveTimes"/>
+                </fact>
+            </xsl:when>
+
+            <!-- d) andernfalls nichts erzeugen                           -->
+        </xsl:choose>
     </xsl:template>
 
-    <!-- 8 Isolation Begründung -->
+
+
+    <!-- =============================================================== -->
+    <!-- 8 Isolation-Begründung – TemplateId 1.2.276.0.76.3.1.195.10.66 -->
+    <!-- (hier ändert sich lediglich das Kommentarfeld)                  -->
+    <!-- =============================================================== -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.66']">
         <xsl:comment>8 Isolation Begründung</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
+                    <!-- SNOMED-Code vorhanden -->
                     <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="$IsolationReason-Prefix"/><xsl:value-of select="../cda:value/@code"/>
+                        <xsl:value-of select="$IsolationReason-Prefix"/>
+                        <xsl:value-of select="../cda:value/@code"/>
                     </xsl:when>
+                    <!-- sonst NullFlavor weitergeben -->
                     <xsl:otherwise>
-                        <xsl:value-of select="$IsolationReason-Prefix"/><xsl:value-of select="../cda:value/@nullFlavor"/>
+                        <xsl:value-of select="$IsolationReason-Prefix"/>
+                        <xsl:value-of select="../cda:value/@nullFlavor"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation -->
+            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
+
 
     <!-- 9 Atemfrequenz
     <fact concept="L:9279-1">

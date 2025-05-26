@@ -661,27 +661,47 @@
                 <!-- Maßnahmen -->
                 <section classCode="DOCSECT">
                     <templateId root="1.2.276.0.76.3.1.195.10.63"/>
-                    <code code="29554-3" codeSystem="2.16.840.1.113883.6.1"/>
+                    <code code="29554-3"
+                          codeSystem="2.16.840.1.113883.6.1"/>
                     <title>Prozeduren und Maßnahmen</title>
+
                     <text>
                         <list>
                             <item>Exsikkierter Patient, tachykard mit Fieber und Zeichen der Sepsis. Beginn der antibiotischen Therapie und Wechsel des Blasenkatheters.</item>
                             <item>An Therapie erfolgt nach Urinkultur die Anlage von zwei Venenverweilkanülen.</item>
-                            <item ID="iso">Isolation: nein</item>
+                            <item ID="iso">Isolation: <b>ja</b> (Grund: multiresistenter Keim)</item>
                         </list>
                     </text>
+
                     <entry typeCode="COMP">
-                        <procedure classCode="PROC" moodCode="EVN" negationInd="true">
+                        <!-- Isolation durchgeführt -->
+                        <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.65"/>
-                            <code code="40174006" codeSystem="2.16.840.1.113883.6.96" displayName="Isolation procedure (procedure)"/>
-                            <text>
-                                <reference value="#iso"/>
-                            </text>
+                            <code code="40174006"
+                                  codeSystem="2.16.840.1.113883.6.96"
+                                  displayName="Isolation procedure (procedure)"/>
+                            <text><reference value="#iso"/></text>
                             <statusCode code="completed"/>
+
+                            <entryRelationship typeCode="RSON">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.66"/>
+                                    <code code="44100-6"
+                                          codeSystem="2.16.840.1.113883.6.1"
+                                          displayName="Medical Problem"/>
+                                    <statusCode code="completed"/>
+                                    <!-- Beispiel-Grund: multiresistenter Keim                    -->
+                                    <value xsi:type="CV"
+                                           code="372292006"
+                                           codeSystem="2.16.840.1.113883.6.96"
+                                           displayName="Infection due to resistant organism"/>
+                                </observation>
+                            </entryRelationship>
                         </procedure>
                     </entry>
                 </section>
             </component>
+
 
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Medikamentöse Therapie -->
