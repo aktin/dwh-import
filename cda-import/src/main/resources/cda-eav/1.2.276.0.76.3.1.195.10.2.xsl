@@ -99,6 +99,7 @@
                     <xsl:attribute name="id">
                         <xsl:call-template name="import-id"/>
                     </xsl:attribute>
+                    <!-- Author -->
                     <xsl:attribute name="author-name">
                         <xsl:value-of select="concat(
                             /cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:assignedPerson/cda:name/cda:prefix, ' ',
@@ -113,7 +114,26 @@
                     <xsl:attribute name="author-time">
                         <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:author/cda:time/@value)[1]"/>
                     </xsl:attribute>
-                </xsl:if>
+                    </xsl:if>
+                    <!-- Custodian -->
+                    <xsl:if test="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization">
+                        <xsl:attribute name="custodian-organization">
+                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:name"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="custodian-telecom">
+                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:telecom/@value"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="custodian-city">
+                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:city"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="custodian-postalCode">
+                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:postalCode"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="custodian-country">
+                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:country"/>
+                        </xsl:attribute>
+                    </xsl:if>
+
                 </source>
             </meta>
             <patient>
