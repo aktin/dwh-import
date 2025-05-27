@@ -130,6 +130,12 @@
                             <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:country"/>
                         </xsl:attribute>
                     </xsl:if>
+                    <!-- CDA language -->
+                    <xsl:if test="/cda:ClinicalDocument/cda:languageCode">
+                        <xsl:attribute name="cda-language">
+                            <xsl:value-of select="/cda:ClinicalDocument/cda:languageCode"/>
+                        </xsl:attribute>
+                    </xsl:if>
                     <!-- Information Recipient -->
                     <xsl:for-each select="/cda:ClinicalDocument/cda:informationRecipient/cda:intendedRecipient">
                         <fact concept="RECIPIENT">
@@ -150,7 +156,6 @@
                             </modifier>
                         </fact>
                     </xsl:for-each>
-
                 </source>
             </meta>
             <patient>
