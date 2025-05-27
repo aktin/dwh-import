@@ -279,6 +279,24 @@
             </fact>
         </xsl:if>
 
+        <!-- Versicherungsstatus (KV-Fall) -->
+        <xsl:if test="./cda:code/@code or ./cda:code/@nullFlavor">
+            <fact>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KVFALL</xsl:attribute>
+                <value xsi:type="string">
+                    <xsl:choose>
+                        <xsl:when test="./cda:code/@code">
+                            <xsl:value-of select="./cda:code/@code"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="./cda:code/@nullFlavor"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </value>
+            </fact>
+        </xsl:if>
+
+
     </xsl:template>
 
     <!-- 53 Patientenname -->
@@ -429,9 +447,7 @@
 <!--        </fact>-->
 <!--    </xsl:template>-->
 
-    <!-- =============================================================== -->
     <!-- 7 Isolation  –  TemplateId 1.2.276.0.76.3.1.195.10.65          -->
-    <!-- =============================================================== -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.65']">
         <xsl:comment>7 Isolation</xsl:comment>
 
@@ -468,10 +484,7 @@
 
 
 
-    <!-- =============================================================== -->
     <!-- 8 Isolation-Begründung – TemplateId 1.2.276.0.76.3.1.195.10.66 -->
-    <!-- (hier ändert sich lediglich das Kommentarfeld)                  -->
-    <!-- =============================================================== -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.66']">
         <xsl:comment>8 Isolation Begründung</xsl:comment>
         <fact>
