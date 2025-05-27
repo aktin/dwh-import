@@ -857,13 +857,6 @@
     <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.68']">
         <xsl:comment>44 Abschlussdiagnosen - Section approach</xsl:comment>
 
-        <!-- Debug: Verschiedene XPath-Ausdrücke testen -->
-        <xsl:comment>DEBUG - Testing different XPath expressions:</xsl:comment>
-        <xsl:comment>Count with .//cda:observation: <xsl:value-of select="count(.//cda:observation)"/></xsl:comment>
-        <xsl:comment>Count with descendant::cda:observation: <xsl:value-of select="count(descendant::cda:observation)"/></xsl:comment>
-        <xsl:comment>Count with specific template: <xsl:value-of select="count(.//cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70'])"/></xsl:comment>
-        <xsl:comment>Count with entryRelationship path: <xsl:value-of select="count(.//cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70'])"/></xsl:comment>
-
         <!-- Expliziter Pfad über die CDA-Struktur -->
         <xsl:variable name="diagnoses" select="cda:entry/cda:act/cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']"/>
 
