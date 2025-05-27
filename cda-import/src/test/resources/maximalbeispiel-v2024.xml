@@ -9,7 +9,7 @@
     Für die CDA Entry Level Templates sind NICHT enhalten:
     - Zeit bis zum Export
     - Zeitpunkt Export aus EDIS
-    - Wildcard Theraphie/diagnostik
+    - Wildcard Therapie/Diagnostik
     - Version des EDIS
     - Sonographie angefordert
     - Röntgenthorax angefordert
@@ -19,7 +19,7 @@
     - Pulsfreqenz
     - Niedrigste GCS Summe
     - Name des EDIS
-    - MRT durchgefphrt
+    - MRT durchgeführt
     - Mikrobilogie durchgeführt
     - Ganzkörper CT durchgeführt
     - ESI Triagefaktoren
@@ -31,25 +31,7 @@
     - CT-Kopf
     - CT-HWS
     - CT-Abdomen durcheführt
-
     -->
-    <!-- Author -->
-    <author typeCode="AUT">
-        <time value="20240526"/> <!-- aktuelles Datum oder Dokumentationszeitpunkt -->
-        <assignedAuthor>
-            <id root="1.2.276.0.76.4.1234567890.1.1.1" extension="123456789"/> <!-- eindeutige ID des Autors -->
-            <assignedPerson>
-                <name>
-                    <given>Max</given>
-                    <family>Mustermann</family>
-                </name>
-            </assignedPerson>
-            <representedOrganization>
-                <id root="1.2.276.0.76.10.90011"/>
-                <name>Krankenhaus Musterstadt</name>
-            </representedOrganization>
-        </assignedAuthor>
-    </author>
 
     <!-- Custodian -->
     <custodian typeCode="CST">
