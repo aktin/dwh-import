@@ -120,9 +120,6 @@
                         <xsl:attribute name="custodian-organization">
                             <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:name"/>
                         </xsl:attribute>
-                        <xsl:attribute name="custodian-telecom">
-                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:telecom/@value"/>
-                        </xsl:attribute>
                         <xsl:attribute name="custodian-city">
                             <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:city"/>
                         </xsl:attribute>
@@ -133,6 +130,26 @@
                             <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:country"/>
                         </xsl:attribute>
                     </xsl:if>
+                    <!-- Information Recipient -->
+                    <xsl:for-each select="/cda:ClinicalDocument/cda:informationRecipient/cda:intendedRecipient">
+                        <fact concept="RECIPIENT">
+                            <modifier code="id">
+                                <value xsi:type="string">
+                                    <xsl:value-of select="cda:id/@extension"/>
+                                </value>
+                            </modifier>
+                            <modifier code="type">
+                                <value xsi:type="string">
+                                    <xsl:value-of select="../@typeCode"/>
+                                </value>
+                            </modifier>
+                            <modifier code="organization">
+                                <value xsi:type="string">
+                                    <xsl:value-of select="cda:receivedOrganization/cda:name"/>
+                                </value>
+                            </modifier>
+                        </fact>
+                    </xsl:for-each>
 
                 </source>
             </meta>
