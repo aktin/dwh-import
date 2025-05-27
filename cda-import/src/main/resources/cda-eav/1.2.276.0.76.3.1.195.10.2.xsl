@@ -99,6 +99,21 @@
                     <xsl:attribute name="id">
                         <xsl:call-template name="import-id"/>
                     </xsl:attribute>
+                    <xsl:attribute name="author-name">
+                        <xsl:value-of select="concat(
+                            /cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:assignedPerson/cda:name/cda:prefix, ' ',
+                            /cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:assignedPerson/cda:name/cda:given, ' ',
+                            /cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:assignedPerson/cda:name/cda:family
+                      )"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="organization-name">
+                        <xsl:value-of select="/cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:representedOrganization/cda:name"/>
+                    </xsl:attribute>
+                    <xsl:if test="/cda:ClinicalDocument/cda:author/cda:time">
+                    <xsl:attribute name="author-time">
+                        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:author/cda:time/@value)[1]"/>
+                    </xsl:attribute>
+                </xsl:if>
                 </source>
             </meta>
             <patient>
