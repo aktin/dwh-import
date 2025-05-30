@@ -889,6 +889,15 @@
         </fact>
     </xsl:template>
 
+    <!-- Name des EDIS -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.86']">
+        <xsl:comment>Name des EDIS</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+
     <!-- 24 Diagnostik  Überschrift/Freitext -->
 
     <!-- Zusatzmodule -->
