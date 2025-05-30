@@ -542,6 +542,14 @@
         </fact>
     </xsl:template>
 
+    <!-- Version des EDIS    -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.87']">
+        <xsl:comment>Version des EDIS</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- 9 Atemfrequenz
     <fact concept="L:9279-1">
     -->
