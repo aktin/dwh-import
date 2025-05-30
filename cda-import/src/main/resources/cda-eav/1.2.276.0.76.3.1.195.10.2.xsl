@@ -92,6 +92,9 @@
     <!-- Concept Code Prefix for Medication Codes -->
     <xsl:variable name="Medikation-Prefix">AKTIN:MEDICATION:</xsl:variable>
 
+    <!-- Concept Code Prefix for Wildcard Diagnostik Codes -->
+    <xsl:variable name="WildcardDiagnostik-Prefix">AKTIN:WILDCARDDIAG:</xsl:variable>
+
     <!-- MAIN Template -->
 
     <xsl:template match="/">
@@ -1793,6 +1796,102 @@
             <xsl:attribute name="concept">
                 <xsl:value-of select="$TemplateVersion-Prefix"/><xsl:value-of select="$aktin.module.template"/>
             </xsl:attribute>
+        </fact>
+    </xsl:template>
+
+    <!-- Wildcard Diagnostik-->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.89']">
+        <xsl:comment>Wildcard Diagnostik</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$WildcardDiagnostik-Prefix"/>
+                <xsl:value-of select="../cda:code/@code"/>
+            </xsl:attribute>
+
+            <!-- IDs (ggf. mehrere) -->
+            <xsl:for-each select="../cda:id">
+                <modifier>
+                    <xsl:attribute name="code">id</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="@root"/>
+                        <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
+                    </value>
+                </modifier>
+            </xsl:for-each>
+
+            <!-- Effektivzeiten: IVL_TS und TS werden unterstützt -->
+            <xsl:if test="../cda:effectiveTime/cda:low/@value">
+                <modifier>
+                    <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="../cda:effectiveTime/cda:high/@value">
+                <modifier>
+                    <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:effectiveTime/cda:high/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="../cda:effectiveTime[@xsi:type='TS']/@value">
+                <modifier>
+                    <xsl:attribute name="code">effectiveTimeTS</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:effectiveTime[@xsi:type='TS']/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- negationInd, falls vorhanden -->
+            <xsl:if test="../@negationInd">
+                <modifier>
+                    <xsl:attribute name="code">negationInd</xsl:attribute>
+                    <value xsi:type="boolean">
+                        <xsl:value-of select="../@negationInd"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- Wert der Beobachtung -->
+            <xsl:if test="../cda:value">
+                <modifier>
+                    <xsl:attribute name="code">value</xsl:attribute>
+                    <value>
+                        <xsl:choose>
+                            <xsl:when test="../cda:value/@xsi:type">
+                                <xsl:attribute name="xsi:type">
+                                    <xsl:value-of select="../cda:value/@xsi:type"/>
+                                </xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:value-of select="../cda:value/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- Referenz auf Freitext/externes Dokument -->
+            <xsl:if test="../cda:text/cda:reference/@value">
+                <modifier>
+                    <xsl:attribute name="code">textReference</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:text/cda:reference/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
+                <modifier>
+                    <xsl:attribute name="code">externalDefinition</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
         </fact>
     </xsl:template>
 
