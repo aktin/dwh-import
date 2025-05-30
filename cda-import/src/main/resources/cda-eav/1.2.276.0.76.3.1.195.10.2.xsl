@@ -574,6 +574,14 @@
         </fact>
     </xsl:template>
 
+    <!-- Röntgen-Becken durchgeführt -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.52']">
+        <xsl:comment>Röntgen-Thorax durchgeführt</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- 11 Systolischer Blutdruck 8480-6
     <fact concept="L:8480-6">
     -->
