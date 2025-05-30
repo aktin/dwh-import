@@ -1932,6 +1932,15 @@
         </fact>
     </xsl:template>
 
+    <!-- Zeitpunkt Export aus EDIS  -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.88']">
+        <xsl:comment>Zeitpunkt Export aus EDIS</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+    
+
     <!-- UV Subordinate Substance Administration -->
     <xsl:template match="cda:templateId[@root='2.16.840.1.113883.10.21.4.6']">
         <xsl:comment>UV Subordinate Substance Administration</xsl:comment>
