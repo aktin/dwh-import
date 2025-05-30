@@ -603,7 +603,7 @@
         </fact>
     </xsl:template>
 
-    <!-- CT-/MR-/DS-Angiographie -->
+    <!-- Datum Beginn patientenbezogene Dokumentation -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.79']">
         <xsl:comment>Datum Beginn patientenbezogene Dokumentation</xsl:comment>
         <fact>
