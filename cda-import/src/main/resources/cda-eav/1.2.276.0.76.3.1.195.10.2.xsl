@@ -574,7 +574,7 @@
         </fact>
     </xsl:template>
 
-    <!-- Röntgen-Becken durchgeführt -->
+    <!-- Röntgen-Thorax durchgeführt -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.52']">
         <xsl:comment>Röntgen-Thorax durchgeführt</xsl:comment>
         <fact>
