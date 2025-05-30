@@ -86,6 +86,9 @@
     <!-- Prefix for Import Transformation Template Information -->
     <xsl:variable name="TemplateVersion-Prefix">AKTIN:ITTI:</xsl:variable>
 
+    <!-- Prefix for Combined Transfer and Discharge Types -->
+    <xsl:variable name="TransferDischargeCombo-Prefix">AKTIN:TRANSFER_DISCHARGE:</xsl:variable>
+
     <!-- MAIN Template -->
 
     <xsl:template match="/">
@@ -505,6 +508,29 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
+
+    <!-- Kombination Typen Verlegung und Entlassung -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.74']">
+        <xsl:comment>Kombination Typen Verlegung und Entlassung</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$TransferDischargeCombo-Prefix"/>
+                <xsl:choose>
+                    <xsl:when test="../cda:value/@code">
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="../cda:value/@nullFlavor"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="status">
+                <xsl:value-of select="../cda:statusCode/@code"/>
+            </xsl:attribute>
+            <xsl:call-template name="GetEffectiveTimes"/>
+        </fact>
+    </xsl:template>
+
 
 
     <!-- 9 Atemfrequenz
