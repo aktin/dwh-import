@@ -1161,34 +1161,41 @@
     <!-- 806 multiresistente Erreger -->
     <!-- 807 multiresistente Erreger: Erregertyp -->
     <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. -->
-<!--    TODO: NO longer included?-->
-<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4039']">-->
-<!--        <xsl:comment>806/807 multiresistente Erreger</xsl:comment>-->
-<!--        <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4040']">-->
-<!--            <xsl:if test="../cda:value">-->
-<!--                <fact>-->
-<!--                    <xsl:attribute name="concept">-->
-<!--                        <xsl:value-of select="$Pathogen-Prefix"/>-->
-<!--                        <xsl:choose>-->
-<!--                            <xsl:when test="../cda:value/@code">-->
-<!--                                <xsl:value-of select="../cda:value/@code"/><xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']">:<xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']/@code"/></xsl:if><xsl:if test="../@negationInd">:NEG</xsl:if>-->
-<!--                            </xsl:when>-->
-<!--                            <xsl:when test="../cda:value/@nullFlavor">-->
-<!--                                <xsl:value-of select="../cda:value/@nullFlavor"/>:<xsl:value-of select="../cda:value/@code"/><xsl:if test="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']">:<xsl:value-of select="../cda:value/cda:qualifier/cda:value[../cda:name/@code='FSTAT']/@code"/></xsl:if>-->
-<!--                            </xsl:when>-->
-<!--                        </xsl:choose>-->
-<!--                    </xsl:attribute>-->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4039']">
+        <xsl:comment>Problem Concern Act (Text/CEDIS)</xsl:comment>
+        <xsl:for-each select="../cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.10.4040']">
+            <!-- Fact for CEDIS code (if present) -->
+            <xsl:if test="cda:value/@codeSystem='1.2.276.0.76.5.439' and cda:value/@code">
+                <fact>
+                    <xsl:attribute name="concept">
+                        <xsl:value-of select="$CEDIS-Prefix"/>
+                        <xsl:value-of select="cda:value/@code"/>
+                    </xsl:attribute>
+                    <xsl:call-template name="GetEffectiveTimes"/>
+                    <!-- statusCode modifier (if present) -->
+                    <xsl:if test="cda:statusCode/@code">
+                        <modifier>
+                            <xsl:attribute name="code">status</xsl:attribute>
+                            <value xsi:type="string">
+                                <xsl:value-of select="cda:statusCode/@code"/>
+                            </value>
+                        </modifier>
+                    </xsl:if>
+                </fact>
+            </xsl:if>
+            <!-- Fact for Free-Text complaint (if present) -->
+            <xsl:if test="cda:text and normalize-space(cda:text) != ''">
+                <fact>
+                    <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
+                    <xsl:call-template name="GetEffectiveTimes"/>
+                    <value xsi:type="string">
+                        <xsl:value-of select="cda:text"/>
+                    </value>
+                </fact>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
 
-<!--                    <xsl:if test="../cda:effectiveTime/cda:low/@value">-->
-<!--                        <xsl:attribute name="start">-->
-<!--                            <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>-->
-<!--                        </xsl:attribute>-->
-<!--                    </xsl:if>-->
-<!--                    <xsl:call-template name="GetEffectiveTimes"/>-->
-<!--                </fact>-->
-<!--            </xsl:if>-->
-<!--        </xsl:for-each>-->
-<!--    </xsl:template>-->
 
     <!-- 808 Versicherungsnummer -->
     <!-- siehe 60 Versicherungsname / 771 Versicherungsträger -->
