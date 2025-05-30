@@ -858,6 +858,37 @@
         </fact>
     </xsl:template>
 
+    <!-- MTS-Präsentationsdiagramm -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.21']">
+        <xsl:comment>MTS-Präsentationsdiagramm</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$AKTIN-Prefix"/>MTS-PRAESDIAG
+            </xsl:attribute>
+            <!-- Das eigentliche Code-Attribut: -->
+            <modifier>
+                <xsl:attribute name="code">code</xsl:attribute>
+                <value xsi:type="string">
+                    <xsl:value-of select="../cda:code/@code"/>
+                </value>
+            </modifier>
+            <!-- value/@code -->
+            <modifier>
+                <xsl:attribute name="code">value</xsl:attribute>
+                <value xsi:type="string">
+                    <xsl:value-of select="../cda:value/@code"/>
+                </value>
+            </modifier>
+            <!-- reference -->
+            <modifier>
+                <xsl:attribute name="code">reference</xsl:attribute>
+                <value xsi:type="string">
+                    <xsl:value-of select="../cda:reference/@value"/>
+                </value>
+            </modifier>
+        </fact>
+    </xsl:template>
+
     <!-- 24 Diagnostik  Überschrift/Freitext -->
 
     <!-- Zusatzmodule -->
@@ -1398,6 +1429,14 @@
     <!-- Mikrobiologie angefordert -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.47']">
         <xsl:comment>Mikrobiologie angefordert</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- MRT durchgeführt -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.61']">
+        <xsl:comment>MRT durchgeführt</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
