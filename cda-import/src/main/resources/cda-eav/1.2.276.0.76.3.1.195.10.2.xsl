@@ -579,6 +579,14 @@
         </fact>
     </xsl:template>
 
+    <!-- CT Kopf durchgeführt -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.56 ']">
+        <xsl:comment>CT Kopf durchgeführt</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- 12 Herzfrequenz 8867-4
     <fact concept="L:8867-4" </fact>
     -->
