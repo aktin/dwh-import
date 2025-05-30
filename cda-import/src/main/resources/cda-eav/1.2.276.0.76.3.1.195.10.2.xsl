@@ -635,6 +635,14 @@
         </fact>
     </xsl:template>
 
+    <!-- ESI-Triagefaktoren -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.26']">
+        <xsl:comment>ESI-Triagefaktoren</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
 
     <!-- 12 Herzfrequenz 8867-4
     <fact concept="L:8867-4" </fact>
