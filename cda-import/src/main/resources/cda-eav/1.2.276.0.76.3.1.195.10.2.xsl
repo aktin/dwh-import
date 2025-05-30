@@ -1196,6 +1196,13 @@
         </xsl:for-each>
     </xsl:template>
 
+    <!-- Pulsfrequenz -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.40']">
+        <xsl:comment>Pulsfrequenz</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
 
     <!-- 808 Versicherungsnummer -->
     <!-- siehe 60 Versicherungsname / 771 Versicherungsträger -->
