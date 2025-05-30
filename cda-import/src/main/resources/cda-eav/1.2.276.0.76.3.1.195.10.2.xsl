@@ -1387,6 +1387,13 @@
         </fact>
     </xsl:template>
 
+    <!-- Medizinische Begleitung -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.12']">
+        <xsl:comment>Medizinische Begleitung</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
 
     <!-- Diagnostik 25ff @negationInd -->
     <!-- Diagnostik 25ff opB -->
