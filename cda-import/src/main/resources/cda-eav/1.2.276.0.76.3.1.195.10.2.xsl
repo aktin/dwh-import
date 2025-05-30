@@ -517,6 +517,15 @@
         </fact>
     </xsl:template>
 
+    <!-- BGA angefordert
+    -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.48']">
+        <xsl:comment>BGA angefordert</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- 10 Sauerstoffsättigung 59408-5
     <fact concept="L:59408-5">
     LOINC Code ist im CDA anders gewählt
