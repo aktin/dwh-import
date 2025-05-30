@@ -1909,8 +1909,16 @@
     </xsl:template>
 
     <!-- Zeit zwischen Aufnahme und Verlassen des Patienten  -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.84 ']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.84']">
         <xsl:comment>Zeit zwischen Aufnahme und Verlassen des Patienten</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten  -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.83']">
+        <xsl:comment>Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
