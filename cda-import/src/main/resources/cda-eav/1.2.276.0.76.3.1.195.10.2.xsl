@@ -98,6 +98,9 @@
     <!-- Concept Code Prefix for Wildcard Therapie Codes -->
     <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WILDCARDTHERAPY:</xsl:variable>
 
+    <xsl:variable name="UVSubordinateAdministration-Prefix">AKTIN:UVSSA:</xsl:variable>
+
+
     <!-- MAIN Template -->
 
     <xsl:template match="/">
@@ -1872,6 +1875,136 @@
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
+
+    <!-- UV Subordinate Substance Administration -->
+    <xsl:template match="cda:templateId[@root='2.16.840.1.113883.10.21.4.6']">
+        <xsl:comment>UV Subordinate Substance Administration</xsl:comment>
+        <xsl:variable name="sub" select=".."/>
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$UVSubordinateAdministration-Prefix"/>
+                <xsl:value-of select="$sub/cda:code/@code"/>
+            </xsl:attribute>
+
+            <!-- Dosis -->
+            <xsl:if test="$sub/cda:doseQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">dose</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:if test="$sub/cda:doseQuantity/@unit">
+                            <xsl:attribute name="unit">
+                                <xsl:value-of select="$sub/cda:doseQuantity/@unit"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <xsl:value-of select="$sub/cda:doseQuantity/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="$sub/cda:doseQuantity/cda:low/@value or $sub/cda:doseQuantity/cda:high/@value">
+                <modifier>
+                    <xsl:attribute name="code">doseRange</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:if test="$sub/cda:doseQuantity/cda:low/@value">
+                            <xsl:text>low=</xsl:text>
+                            <xsl:value-of select="$sub/cda:doseQuantity/cda:low/@value"/>
+                            <xsl:if test="$sub/cda:doseQuantity/cda:low/@unit">
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="$sub/cda:doseQuantity/cda:low/@unit"/>
+                            </xsl:if>
+                        </xsl:if>
+                        <xsl:if test="$sub/cda:doseQuantity/cda:high/@value">
+                            <xsl:text> high=</xsl:text>
+                            <xsl:value-of select="$sub/cda:doseQuantity/cda:high/@value"/>
+                            <xsl:if test="$sub/cda:doseQuantity/cda:high/@unit">
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="$sub/cda:doseQuantity/cda:high/@unit"/>
+                            </xsl:if>
+                        </xsl:if>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- Rate Quantity -->
+            <xsl:if test="$sub/cda:rateQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">rate</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:if test="$sub/cda:rateQuantity/@unit">
+                            <xsl:attribute name="unit">
+                                <xsl:value-of select="$sub/cda:rateQuantity/@unit"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <xsl:value-of select="$sub/cda:rateQuantity/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- Max Dose Quantity -->
+            <xsl:if test="$sub/cda:maxDoseQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">maxDose</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:if test="$sub/cda:maxDoseQuantity/@unit">
+                            <xsl:attribute name="unit">
+                                <xsl:value-of select="$sub/cda:maxDoseQuantity/@unit"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <xsl:value-of select="$sub/cda:maxDoseQuantity/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- Administration Unit Code -->
+            <xsl:if test="$sub/cda:administrationUnitCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">adminUnit</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="$sub/cda:administrationUnitCode/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
+            <!-- Effective Times -->
+            <xsl:for-each select="$sub/cda:effectiveTime">
+                <modifier>
+                    <xsl:attribute name="code">effectiveTime</xsl:attribute>
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
+                        <xsl:choose>
+                            <xsl:when test="@value">
+                                <xsl:value-of select="@value"/>
+                            </xsl:when>
+                            <xsl:when test="@nullFlavor">
+                                <xsl:value-of select="@nullFlavor"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </value>
+                </modifier>
+                <!-- Type-specific handling -->
+                <xsl:if test="@xsi:type">
+                    <modifier>
+                        <xsl:attribute name="code">effectiveTimeType</xsl:attribute>
+                        <value xsi:type="string">
+                            <xsl:value-of select="@xsi:type"/>
+                        </value>
+                    </modifier>
+                </xsl:if>
+            </xsl:for-each>
+
+            <!-- Consumable (manufacturedMaterial) -->
+            <xsl:if test="$sub/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/@nullFlavor">
+                <modifier>
+                    <xsl:attribute name="code">nullFlavor</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="$sub/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/@nullFlavor"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+        </fact>
+    </xsl:template>
+
+
+
 
     <!-- GLOBAL TEMPLATES -->
 
