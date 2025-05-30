@@ -1974,6 +1974,14 @@
         </fact>
     </xsl:template>
 
+    <!--  Zeit bis zum Export -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.85']">
+        <xsl:comment> Zeit bis zum Export</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- GLOBAL TEMPLATES -->
 
 
