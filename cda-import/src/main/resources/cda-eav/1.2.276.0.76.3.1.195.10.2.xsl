@@ -1395,6 +1395,14 @@
         </fact>
     </xsl:template>
 
+    <!-- Mikrobiologie angefordert -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.47']">
+        <xsl:comment>Mikrobiologie angefordert</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- Diagnostik 25ff @negationInd -->
     <!-- Diagnostik 25ff opB -->
     <!-- Diagnostik 25ff Zeitpunkt-->
