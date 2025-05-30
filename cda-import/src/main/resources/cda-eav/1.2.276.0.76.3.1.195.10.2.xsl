@@ -89,6 +89,9 @@
     <!-- Prefix for Combined Transfer and Discharge Types -->
     <xsl:variable name="TransferDischargeCombo-Prefix">AKTIN:TRANSFER_DISCHARGE:</xsl:variable>
 
+    <!-- Concept Code Prefix for Medication Codes -->
+    <xsl:variable name="Medikation-Prefix">AKTIN:MEDICATION:</xsl:variable>
+
     <!-- MAIN Template -->
 
     <xsl:template match="/">
@@ -653,13 +656,6 @@
         </fact>
     </xsl:template>
 
-    <!-- Emergency Severity Index -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.20']">
-        <xsl:comment>Emergency Severity Index</xsl:comment>
-        <fact>
-            <xsl:call-template name="templateGetConceptCode"/>
-        </fact>
-    </xsl:template>
 
     <!-- ESI-Triagefaktoren -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.26']">
@@ -849,8 +845,8 @@
             <xsl:attribute name="concept">
                 <xsl:choose>
                     <xsl:when test="not(../cda:value)"><xsl:value-of select="$AKTIN-Prefix"/>ASSESSMENT</xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.11.44'">MTS:<xsl:value-of select="../cda:value/@code"/></xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.437'">ESI:<xsl:value-of select="../cda:value/@code"/></xsl:when>
+                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.19'">MTS:<xsl:value-of select="../cda:value/@code"/></xsl:when>
+                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.20'">ESI:<xsl:value-of select="../cda:value/@code"/></xsl:when>
                 </xsl:choose>
             </xsl:attribute>
             <xsl:if test="../cda:effectiveTime/cda:low/@value">
@@ -1251,6 +1247,146 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
+
+    <!--  Medikation (TemplateId 1.2.276.0.76.3.1.195.10.67) -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.67']">
+        <xsl:comment>Medikation (Medication Statement)</xsl:comment>
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$Medikation-Prefix"/>
+                <!-- z.B. Medikamenten-Code, falls vorhanden -->
+                <xsl:if test="../cda:code/@code">
+                    <xsl:value-of select="../cda:code/@code"/>
+                </xsl:if>
+            </xsl:attribute>
+            <!-- Textbeschreibung -->
+            <xsl:if test="../cda:text">
+                <modifier>
+                    <xsl:attribute name="code">text</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:text"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Referenz (z.B. auf #med-{ID}) -->
+            <xsl:if test="../cda:reference/@value">
+                <modifier>
+                    <xsl:attribute name="code">reference</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:reference/@value"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Status der Medikation -->
+            <xsl:if test="../cda:statusCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">status</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:statusCode/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Zeitangabe (effectiveTime) -->
+            <xsl:call-template name="GetEffectiveTimes"/>
+            <!-- Route (z.B. oral, intravenös) -->
+            <xsl:if test="../cda:routeCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">route</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:routeCode/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Dosierung, falls vorhanden -->
+            <xsl:if test="../cda:doseQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">dose</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:value-of select="../cda:doseQuantity/@value"/>
+                    </value>
+                    <xsl:if test="../cda:doseQuantity/@unit">
+                        <xsl:attribute name="unit">
+                            <xsl:value-of select="../cda:doseQuantity/@unit"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </modifier>
+            </xsl:if>
+            <!-- Max. Dosis, falls vorhanden -->
+            <xsl:if test="../cda:maxDoseQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">maxDose</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:value-of select="../cda:maxDoseQuantity/@value"/>
+                    </value>
+                    <xsl:if test="../cda:maxDoseQuantity/@unit">
+                        <xsl:attribute name="unit">
+                            <xsl:value-of select="../cda:maxDoseQuantity/@unit"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </modifier>
+            </xsl:if>
+            <!-- Einheit der Verabreichung -->
+            <xsl:if test="../cda:administrationUnitCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">adminUnit</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:administrationUnitCode/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Consumable (Medikationspräparat, falls vorhanden) -->
+            <xsl:if test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
+                <modifier>
+                    <xsl:attribute name="code">consumable</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Eintrag für subordinate SubstanceAdministration-Statements -->
+            <xsl:for-each select="../cda:entryRelationship/cda:substanceAdministration">
+                <modifier>
+                    <xsl:attribute name="code">substanceAdministration</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="cda:code/@code"/>
+                    </value>
+                </modifier>
+            </xsl:for-each>
+            <!-- Sequence number (optional) -->
+            <xsl:if test="../cda:sequenceNumber">
+                <modifier>
+                    <xsl:attribute name="code">sequenceNumber</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:value-of select="../cda:sequenceNumber"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Approach Site(s) -->
+            <xsl:for-each select="../cda:approachSiteCode">
+                <modifier>
+                    <xsl:attribute name="code">approachSite</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="@code"/>
+                    </value>
+                </modifier>
+            </xsl:for-each>
+            <!-- Applikationsrate -->
+            <xsl:if test="../cda:rateQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">rate</xsl:attribute>
+                    <value xsi:type="numeric">
+                        <xsl:value-of select="../cda:rateQuantity/@value"/>
+                    </value>
+                    <xsl:if test="../cda:rateQuantity/@unit">
+                        <xsl:attribute name="unit">
+                            <xsl:value-of select="../cda:rateQuantity/@unit"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </modifier>
+            </xsl:if>
+        </fact>
+    </xsl:template>
+
 
     <!-- Diagnostik 25ff @negationInd -->
     <!-- Diagnostik 25ff opB -->
