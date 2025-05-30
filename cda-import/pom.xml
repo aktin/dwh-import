@@ -76,6 +76,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.aktin.dwh</groupId>
+			<artifactId>dwh-prefs</artifactId>
+			<version>0.12</version>
+		</dependency>
+
 		<!-- HIStream for ETL process -->
 		<dependency>
 			<groupId>de.sekmi.histream</groupId>

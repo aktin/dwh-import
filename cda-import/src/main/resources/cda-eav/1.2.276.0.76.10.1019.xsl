@@ -15,7 +15,8 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
 
-	<!-- RESERVED VARIABLES -->
+    <xsl:param name="aktin.root.id"/>
+    <!-- RESERVED VARIABLES -->
 	<!--
 		these variables are used outside of the XSLT file
 		to modify the cda-import configuration.
@@ -133,6 +134,19 @@
                     <!-- <location></location> -->
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
+                    <xsl:for-each select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[@root != $aktin.root.id]">
+                        <fact>
+                            <xsl:attribute name="concept">AKTIN:ID</xsl:attribute>
+                            <value xsi:type="string">
+                                <xsl:value-of select="aktin:patient-hash(@root, @extension)"/>
+                            </value>
+                            <modifier code="root">
+                                <value xsi:type="string">
+                                    <xsl:value-of select="@root"/>
+                                </value>
+                            </modifier>
+                        </fact>
+                    </xsl:for-each>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode"/>
@@ -185,8 +199,12 @@
     <!-- 3	PatientenId im Basismodul -->
     <!-- <xsl:comment>3	PatientenId im Basismodul</xsl:comment> -->
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
-        <xsl:value-of select="aktin:patient-hash(./cda:id/@root, ./cda:id/@extension)"/>
+        <xsl:value-of select="aktin:patient-hash(
+        ./cda:id[@root=$aktin.root.id][1]/@root,
+        ./cda:id[@root=$aktin.root.id][1]/@extension
+    )"/>
     </xsl:template>
+
 
     <!-- 60 Versicherungsname -->
     <!-- 771 Versicherungsträger -->
@@ -307,8 +325,20 @@
     </xsl:template> -->
 
     <xsl:template name="import-id">
-    	<!-- generate a unique id for encounter and module  -->
-        <xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension,$aktin.module.id)"/>
+        <!-- generate a unique id for encounter and module -->
+        <xsl:variable name="matching-element" select="/cda:ClinicalDocument//cda:id[@root=$aktin.root.id]"/>
+
+
+        <xsl:if test="$matching-element">
+            <!-- Use the specified root and the extension from the matching element -->
+            <xsl:value-of select="aktin:import-hash(
+                /cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[@root=$aktin.root.id]/@root,
+                /cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[@root=$aktin.root.id]/@extension,
+            $aktin.root.id,
+            $matching-element/@extension,
+            $aktin.module.id)"/>
+        </xsl:if>
+
     </xsl:template>
 
     <xsl:template name="EAV-Geschlecht">

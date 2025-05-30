@@ -58,6 +58,13 @@ public class TestTransformToEAV {
 			
 			
 			Path temp = t.transform(dom, parser.extractTemplateId(dom));
+
+			System.out.println("=== EAV XML Content ===");
+			try (BufferedReader reader = Files.newBufferedReader(temp)) {
+				reader.lines().forEach(System.out::println);
+			}
+			System.out.println("=== End of EAV XML Content ===");
+
 			try( InputStream eav = Files.newInputStream(temp) ){
 				GroupedXMLReader suppl = t.readEAV(eav);
 				Observation o = suppl.get();

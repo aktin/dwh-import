@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+
+import javax.inject.Inject;
 import javax.xml.transform.Result;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -13,6 +15,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.aktin.Preferences;
 import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
 import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
 import org.aktin.cda.etl.transform.fun.CalculateSourceId;
@@ -34,6 +37,9 @@ public class Transformation {
 	private TransformerFactoryImpl transformerFactory;
 	private Templates transformerTemplates;
 	private Anonymizer anonymizer;
+	@Inject
+	private Preferences aktinProperties;
+
 
 	/**
 	 * Construct a CDA template to EAV transformation
@@ -84,7 +90,12 @@ public class Transformation {
 	}
 	
 	public void transformToEAV(Document cda, Result result) throws TransformerException{
-		newTransformer().transform(new DOMSource(cda), result);		
+		// Apply parameters before transformation
+		//String rootId = aktinProperties.get("rootId");
+		Transformer transformer = newTransformer();
+		//TODO: JUST FOR TESTING AND FAST MINIMAL WORKING EXAMPLE
+		transformer.setParameter("aktin.root.id", "1.2.276.0.76.4.8");
+		transformer.transform(new DOMSource(cda), result);
 	}
 	/**
  	 * transform CDA document to EAV XML in temporary file

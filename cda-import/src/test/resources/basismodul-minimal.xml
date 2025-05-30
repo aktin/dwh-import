@@ -33,6 +33,7 @@
     <recordTarget>
         <patientRole>
             <!-- Identifikation -->
+            <id extension="9999999999" root="1.2.276.0.76.4.8.2"/>
             <id extension="1234567890" root="1.2.276.0.76.4.8"/>
             <!-- Adresse -->
            <addr use="WP">
