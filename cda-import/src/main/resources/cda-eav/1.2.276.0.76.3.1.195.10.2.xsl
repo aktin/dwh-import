@@ -534,7 +534,13 @@
         </fact>
     </xsl:template>
 
-
+    <!-- Verlegung    -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.72']">
+        <xsl:comment>Verlegung</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
 
     <!-- 9 Atemfrequenz
     <fact concept="L:9279-1">
