@@ -782,6 +782,14 @@
         </fact>
     </xsl:template>
 
+    <!-- Laboruntersuchung angefordert -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.46']">
+        <xsl:comment>Laboruntersuchung angefordert</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- 21 Schmerz bei Aufnahme, loinc-schmerzskala 0-10 ggf. Answer list LL2335-9
     <fact concept="L:72514-3" >
     -->
