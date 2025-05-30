@@ -1283,13 +1283,6 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.67']">
         <xsl:comment>Medikation (Medication Statement)</xsl:comment>
         <fact>
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$Medikation-Prefix"/>
-                <!-- z.B. Medikamenten-Code, falls vorhanden -->
-                <xsl:if test="../cda:code/@code">
-                    <xsl:value-of select="../cda:code/@code"/>
-                </xsl:if>
-            </xsl:attribute>
             <!-- Textbeschreibung -->
             <xsl:if test="../cda:text">
                 <modifier>
