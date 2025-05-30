@@ -1252,6 +1252,14 @@
         </fact>
     </xsl:template>
 
+    <!-- Ungeplante Vorstellung zum gleichen Vorstellungsgrund innerhalb von 28 Tagen -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.14']">
+        <xsl:comment>Ungeplante Vorstellung zum gleichen Vorstellungsgrund innerhalb von 28 Tagen</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
     <!-- 808 Versicherungsnummer -->
     <!-- siehe 60 Versicherungsname / 771 Versicherungsträger -->
 
