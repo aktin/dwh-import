@@ -15,7 +15,6 @@
       <!-- Now, select which projects to include in this module-set. -->
       <includes>
         <include>org.aktin:cda-validation</include>
-        <include>org.aktin:demo-server</include>
       </includes>
       <binaries>
         <outputDirectory>lib</outputDirectory>
@@ -45,7 +44,6 @@
         -->
         <fileSet>
             <directory>${project.build.scriptSourceDirectory}/startup</directory>
-            <outputDirectory></outputDirectory>
             <includes>
                 <include>*</include>
             </includes>
@@ -56,7 +54,6 @@
         -->
 	<fileSet>
 		<directory>${basedir}</directory>
-		<outputDirectory></outputDirectory>
 		<includes>
 			<include>*.txt</include>
 		</includes>

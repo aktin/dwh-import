@@ -19,9 +19,6 @@
 			<item href="roadmap.html" name="Roadmap" />
 			<item href="support.html" name="Support"/>
 		</menu>
-		<menu name="Demo Server">
-			<item href="demo-server.html" name="Demo Server" />
-		</menu>
 		<menu name="Siehe auch">
 			<item href="../1.5/server/index.html" name="Serverinstallation und Updates" />
 		</menu>
