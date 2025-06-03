@@ -39,10 +39,18 @@ public class Transformation {
 	private TransformerFactoryImpl transformerFactory;
 	private Templates transformerTemplates;
 	private Anonymizer anonymizer;
-	@Inject
 	private Preferences aktinProperties;
 	private static final Logger LOGGER = Logger.getLogger(Transformation.class.getName());
 
+	/**
+	 * Constructor for dependency injection
+	 *
+	 * @param aktinProperties preferences containing configuration properties
+	 */
+	@Inject
+	public Transformation(Preferences aktinProperties) {
+		this.aktinProperties = aktinProperties;
+	}
 
 	/**
 	 * Construct a CDA template to EAV transformation
@@ -91,13 +99,16 @@ public class Transformation {
 	public Transformer newTransformer() throws TransformerConfigurationException{
 		return transformerTemplates.newTransformer();
 	}
-	
+
 	public void transformToEAV(Document cda, Result result) throws TransformerException{
 		// Apply parameters before transformation
 		String rootId = null;
-		rootId = aktinProperties.get("rootId");
-		if(rootId == null){
-			LOGGER.log(Level.SEVERE, "No rootId was configured in aktin.properties.");
+		try{
+			rootId = aktinProperties.get("rootId");
+		} catch (NullPointerException e){
+			LOGGER.log(Level.SEVERE, "The property rootId in aktin.properties is missing! " +
+					"Setting default to 1.2.276.0.76.4.8.");
+			rootId = "1.2.276.0.76.4.8";
 		}
 		Transformer transformer = newTransformer();
 		transformer.setParameter("aktin.root.id", rootId);
