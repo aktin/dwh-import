@@ -119,6 +119,9 @@
                 <!-- Ende Patientenkontakt = Zeitpunkt der Verlegung/Entlassung -->
                 <high value="201501171735"/>
             </effectiveTime>
+            <id extension="1.2.3.4.5.6.7.8.9" root="1.2.276.0.76.4.17" />
+            <id extension="1.2.3.4.5.6.7.8.9" root="1.2.276.0.76.4.18" />
+            <id extension="1.2.3.4.5.6.7.8.9" root="1.2.276.0.76.4.19" />
             <!-- Entlassung des Patienten mit Entlassungsgrund -->
             <dischargeDispositionCode code="4" codeSystem="1.2.276.0.76.3.1.195.5.56"/>
         </encompassingEncounter>
