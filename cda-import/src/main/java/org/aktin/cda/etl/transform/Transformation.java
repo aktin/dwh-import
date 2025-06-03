@@ -3,6 +3,8 @@ package org.aktin.cda.etl.transform;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import javax.inject.Inject;
@@ -39,6 +41,7 @@ public class Transformation {
 	private Anonymizer anonymizer;
 	@Inject
 	private Preferences aktinProperties;
+	private static final Logger LOGGER = Logger.getLogger(Transformation.class.getName());
 
 
 	/**
@@ -91,10 +94,13 @@ public class Transformation {
 	
 	public void transformToEAV(Document cda, Result result) throws TransformerException{
 		// Apply parameters before transformation
-		//String rootId = aktinProperties.get("rootId");
+		String rootId = null;
+		rootId = aktinProperties.get("rootId");
+		if(rootId == null){
+			LOGGER.log(Level.SEVERE, "No rootId was configured in aktin.properties.");
+		}
 		Transformer transformer = newTransformer();
-		//TODO: JUST FOR TESTING AND FAST MINIMAL WORKING EXAMPLE
-		transformer.setParameter("aktin.root.id", "1.2.276.0.76.4.8");
+		transformer.setParameter("aktin.root.id", rootId);
 		transformer.transform(new DOMSource(cda), result);
 	}
 	/**
