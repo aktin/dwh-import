@@ -15,7 +15,6 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
 
-    <xsl:param name="aktin.root.id"/>
     <!-- RESERVED VARIABLES -->
     <!--
         these variables are used outside of the XSLT file
@@ -141,7 +140,7 @@
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
                     <xsl:for-each
-                            select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[@root != $aktin.root.id]">
+                            select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[position() > 1]">
                         <fact>
                             <xsl:attribute name="concept">AKTIN:ID</xsl:attribute>
                             <value xsi:type="string">
@@ -226,8 +225,8 @@
     <!-- <xsl:comment>3	PatientenId im Basismodul</xsl:comment> -->
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
         <xsl:value-of select="aktin:patient-hash(
-        ./cda:id[@root=$aktin.root.id][1]/@root,
-        ./cda:id[@root=$aktin.root.id][1]/@extension
+        ./cda:id[1]/@root,
+        ./cda:id[1]/@extension
     )"/>
     </xsl:template>
 
@@ -356,39 +355,32 @@
     </xsl:template> -->
 
     <xsl:template name="import-id">
-        <!-- generate a unique id for encounter and module -->
-        <xsl:variable name="matching-element" select="/cda:ClinicalDocument//cda:id[@root=$aktin.root.id]"/>
-
-
-        <xsl:if test="$matching-element">
-            <!-- Use the specified root and the extension from the matching element -->
-            <xsl:value-of select="aktin:import-hash(
-                /cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[@root=$aktin.root.id]/@root,
-                /cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[@root=$aktin.root.id]/@extension,
-            $aktin.root.id,
-            $matching-element/@extension,
-            $aktin.module.id)"/>
-        </xsl:if>
-
+        <!-- generate a unique id for encounter and module  -->
+        <xsl:value-of
+                select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[1]/@root,
+                /cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[1]/@extension,
+                /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root,
+                /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension,$aktin.module.id)"/>
     </xsl:template>
 
     <xsl:template name="EAV-Geschlecht">
         <xsl:choose>
             <xsl:when
                     test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">
-                female
+                <xsl:text>female</xsl:text>
             </xsl:when>
             <xsl:when
                     test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='M'">
-                male
+                <xsl:text>male</xsl:text>
             </xsl:when>
             <xsl:when
                     test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='UN'">
-                indeterminate
+                <xsl:text>indeterminate</xsl:text>
             </xsl:when>
             <!-- Unknown as explicit value not supported by EAV (= not answered)-->
         </xsl:choose>
     </xsl:template>
+
 
     <!-- 57/58 Aufnahmedatum/uhrzeit
     vgl. 882
