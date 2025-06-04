@@ -26,12 +26,12 @@ import org.w3c.dom.Document;
  * @author R.W.Majeed
  */
 public class Transformation {
-  private String moduleId;
-  private String templateId;
+  private final String moduleId;
+  private final String templateId;
 
-  private TransformerFactoryImpl transformerFactory;
-  private Templates transformerTemplates;
-  private Anonymizer anonymizer;
+  private final TransformerFactoryImpl transformerFactory;
+  private final Templates transformerTemplates;
+  private final Anonymizer anonymizer;
   private static final Logger LOGGER = Logger.getLogger(Transformation.class.getName());
 
   /**
