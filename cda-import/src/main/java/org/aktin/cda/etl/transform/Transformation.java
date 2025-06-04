@@ -3,9 +3,7 @@ package org.aktin.cda.etl.transform;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.xml.transform.Result;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -16,7 +14,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.TransformerFactoryImpl;
-import org.aktin.Preferences;
 import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
 import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
 import org.aktin.cda.etl.transform.fun.CalculateSourceId;
@@ -35,18 +32,7 @@ public class Transformation {
   private TransformerFactoryImpl transformerFactory;
   private Templates transformerTemplates;
   private Anonymizer anonymizer;
-  private Preferences aktinProperties;
   private static final Logger LOGGER = Logger.getLogger(Transformation.class.getName());
-
-  /**
-   * Constructor for dependency injection
-   *
-   * @param aktinProperties preferences containing configuration properties
-   */
-  @Inject
-  public Transformation(Preferences aktinProperties) {
-    this.aktinProperties = aktinProperties;
-  }
 
   /**
    * Construct a CDA template to EAV transformation
@@ -100,19 +86,7 @@ public class Transformation {
   }
 
   public void transformToEAV(Document cda, Result result) throws TransformerException {
-    // Apply parameters before transformation
-    String rootId = null;
-    try {
-      rootId = aktinProperties.get("rootId");
-    } catch (NullPointerException e) {
-      LOGGER.log(
-          Level.SEVERE,
-          "The property rootId in aktin.properties is missing! "
-              + "Setting default to 1.2.276.0.76.4.8.");
-      rootId = "1.2.276.0.76.4.8";
-    }
     Transformer transformer = newTransformer();
-    transformer.setParameter("aktin.root.id", rootId);
     transformer.transform(new DOMSource(cda), result);
   }
 
