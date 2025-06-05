@@ -1071,7 +1071,7 @@
     <!-- 212 Symptomdauer
     siehe 805 CEDIS-->
 
-    <!-- 37 Zeitpunkt erster Arztkontakt-->
+    <!-- 37 Zeitpunkt erster/letzter Arztkontakt-->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:performer/cda:time">
         <xsl:if test="./cda:low/@value">
             <xsl:comment>37 Zeitpunkt erster Arztkontakt</xsl:comment>
