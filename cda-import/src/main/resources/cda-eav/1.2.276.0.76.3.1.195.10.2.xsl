@@ -450,15 +450,15 @@
         <xsl:choose>
             <xsl:when
                     test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">
-                <xsl:text>female</xsl:text>
+                female
             </xsl:when>
             <xsl:when
                     test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='M'">
-                <xsl:text>male</xsl:text>
+                male
             </xsl:when>
             <xsl:when
                     test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='UN'">
-                <xsl:text>indeterminate</xsl:text>
+                indeterminate
             </xsl:when>
             <!-- Unknown as explicit value not supported by EAV (= not answered)-->
         </xsl:choose>
