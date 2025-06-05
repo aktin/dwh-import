@@ -122,6 +122,13 @@
                             /cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:assignedPerson/cda:name/cda:family
                       )"/>
                     </xsl:attribute>
+                    <!-- Confidentiality code -->
+                    <xsl:attribute name="confidentiality-code">
+                        <xsl:value-of select="concat(cda:ClinicalDocument/cda:confidentialityCode/@code, ' / ',
+                        cda:ClinicalDocument/cda:confidentialityCode/@codeSystem)"/>
+                    </xsl:attribute>
+
+                    <!-- Organization name -->
                     <xsl:attribute name="organization-name">
                         <xsl:value-of select="/cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:representedOrganization/cda:name"/>
                     </xsl:attribute>
