@@ -2,7 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../stylesheets/CDA.xsl"?>
 
 <?xml-model href="../schematron-episodenzusammenfassung-notaufnahmeregister2024/aktin-nar2025.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
     <!--
         CDA Header
     CDA Header Level Template sind alle enthalten mit einem Beispiel, wie auch CDA Section level templates.
@@ -1038,6 +1039,8 @@
                             <entryRelationship typeCode="SUBJ">
                                 <!-- Abschlussdiagnose 1 -->
                                 <observation classCode="OBS" moodCode="EVN">
+                                    <id extension="1234" root="5678"/>
+                                    <id extension="91011" root="91011"/>
                                     <templateId root="1.2.276.0.76.3.1.195.10.70"/>
                                     <code code="29308-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>

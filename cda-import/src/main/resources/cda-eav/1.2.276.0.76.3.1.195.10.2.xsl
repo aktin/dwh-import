@@ -1149,6 +1149,19 @@
                     </xsl:otherwise>
                 </xsl:choose>
 
+                <!-- ID of the diagnosis -->
+                <xsl:for-each select="cda:id">
+                    <modifier>
+                        <xsl:attribute name="code">
+                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="@root"/>
+                            <xsl:if test="@extension">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="@extension"/>
+                            </xsl:if>
+                        </xsl:attribute>
+                    </modifier>
+                </xsl:for-each>
+
                 <!-- Side qualifier (L for left) -->
                 <xsl:if test="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.5.412']/@code">
                     <modifier>
