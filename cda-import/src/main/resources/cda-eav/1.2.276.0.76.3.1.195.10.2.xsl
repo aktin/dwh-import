@@ -122,6 +122,10 @@
                             /cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:assignedPerson/cda:name/cda:family
                       )"/>
                     </xsl:attribute>
+                    <xsl:attribute name="author-time">
+                        <xsl:value-of
+                                select="func:ConvertDateTime(/cda:ClinicalDocument/cda:author/cda:time/@value)"/>
+                    </xsl:attribute>
                     <!-- Confidentiality code -->
                     <xsl:attribute name="confidentiality-code">
                         <xsl:value-of select="concat(cda:ClinicalDocument/cda:confidentialityCode/@code, ' / ',
