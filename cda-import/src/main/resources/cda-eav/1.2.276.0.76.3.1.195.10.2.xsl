@@ -143,7 +143,7 @@
                                     select="func:ConvertDateTime(/cda:ClinicalDocument/cda:author/cda:time/@value)[1]"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <!-- Custodian -->
+                    <!-- Custodian (name, telecom and address omitted) -->
                     <xsl:if test="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization">
                         <xsl:attribute name="custodian-organization">
                             <xsl:value-of
