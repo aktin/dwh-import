@@ -74,7 +74,7 @@
     <!-- Prefix for Target Site Modifiers -->
     <xsl:variable name="TargetSite-Prefix">AKTIN:TSITE:</xsl:variable>
 
-    <!-- Prefix for Diagnosis Modifiers -->
+    <!-- Prefix for Discharge Diagnosis Modifiers -->
     <xsl:variable name="Diagnosis-Prefix">AKTIN:DIAG:</xsl:variable>
 
     <!-- Prefix for Diagnostic Result Modifiers -->
@@ -1110,10 +1110,17 @@
     <!-- 46 Procedere / Freitext-->
 
     <!-- 42 Abschlussdiagnosen / Freitext-->
-    <!-- 44 Abschlussdiagnosen - DEBUG VERSION -->
-    <!-- 44 Abschlussdiagnosen - Korrigierte Version -->
     <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.68']">
-        <xsl:comment>44 Abschlussdiagnosen - Section approach</xsl:comment>
+        <xsl:comment>44 Abschlussdiagnosen</xsl:comment>
+
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="$Diagnosis-Prefix"/>dischargediagnosistext</xsl:attribute>
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <xsl:copy-of select="cda:text/node()"/>
+            </value>
+        </fact>
 
         <!-- Expliziter Pfad über die CDA-Struktur -->
         <xsl:variable name="diagnoses" select="cda:entry/cda:act/cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']"/>
