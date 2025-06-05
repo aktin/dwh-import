@@ -130,26 +130,32 @@
 
                     <!-- Organization name -->
                     <xsl:attribute name="organization-name">
-                        <xsl:value-of select="/cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:representedOrganization/cda:name"/>
+                        <xsl:value-of
+                                select="/cda:ClinicalDocument/cda:author/cda:assignedAuthor/cda:representedOrganization/cda:name"/>
                     </xsl:attribute>
                     <xsl:if test="/cda:ClinicalDocument/cda:author/cda:time">
-                    <xsl:attribute name="author-time">
-                        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:author/cda:time/@value)[1]"/>
-                    </xsl:attribute>
+                        <xsl:attribute name="author-time">
+                            <xsl:value-of
+                                    select="func:ConvertDateTime(/cda:ClinicalDocument/cda:author/cda:time/@value)[1]"/>
+                        </xsl:attribute>
                     </xsl:if>
                     <!-- Custodian -->
                     <xsl:if test="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization">
                         <xsl:attribute name="custodian-organization">
-                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:name"/>
+                            <xsl:value-of
+                                    select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:name"/>
                         </xsl:attribute>
                         <xsl:attribute name="custodian-city">
-                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:city"/>
+                            <xsl:value-of
+                                    select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:city"/>
                         </xsl:attribute>
                         <xsl:attribute name="custodian-postalCode">
-                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:postalCode"/>
+                            <xsl:value-of
+                                    select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:postalCode"/>
                         </xsl:attribute>
                         <xsl:attribute name="custodian-country">
-                            <xsl:value-of select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:country"/>
+                            <xsl:value-of
+                                    select="/cda:ClinicalDocument/cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:addr/cda:country"/>
                         </xsl:attribute>
                     </xsl:if>
                     <!-- CDA language -->
@@ -188,16 +194,22 @@
                 <given-name>information privacy</given-name>
                 <surname>information privacy</surname>
                  -->
-                <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
+                <gender>
+                    <xsl:call-template name="EAV-Geschlecht"></xsl:call-template>
+                </gender>
                 <xsl:if test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value">
                     <!-- 59 Geburtsdatum  HL7.TS =>  	YYYY[MM[DD]] -->
-                    <birthdate><xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value)"/></birthdate>
+                    <birthdate>
+                        <xsl:value-of
+                                select="func:ConvertDateTime(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value)"/>
+                    </birthdate>
                 </xsl:if>
                 <!-- Discharge Disposition Code = 'Tod' ; then EncounterEnd=Death Date; If no Discharge Date = empty deceased-Element is sufficient for I2B2 -->
                 <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode/@code='1'">
                     <deceased>
                         <xsl:if test="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value">
-                            <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value)"/>
+                            <xsl:value-of
+                                    select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value)"/>
                         </xsl:if>
                     </deceased>
                 </xsl:if>
@@ -212,24 +224,34 @@
                     <!-- <location></location> -->
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:city"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:performer/cda:time"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:effectiveTime"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:city"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:performer/cda:time"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:documentationOf/cda:serviceEvent/cda:effectiveTime"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:participant/cda:associatedEntity"/>
                     <!-- Alle Fact-Templates auf Body/Component/Section Ebene aufrufen -->
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
+                    <xsl:apply-templates
+                            select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:templateId"/>
                 </encounter>
             </patient>
         </eav-data>
     </xsl:template>
 
-    <xsl:template match="text()"/>   <!-- Match plain text nodes and do nothing, i.e. mask default output for text nodes     -->
+    <xsl:template
+            match="text()"/>   <!-- Match plain text nodes and do nothing, i.e. mask default output for text nodes     -->
 
 
     <!-- COMPONENT Templates -->
@@ -238,13 +260,15 @@
     <!-- Eindeutiger Identifier (~EpisodenID), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
     <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // shall be present to enable further updates to this ClinicalDocument. -->
     <xsl:template name="encounter-id">
-        <xsl:value-of select="aktin:encounter-hash(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root, /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension)"/>
+        <xsl:value-of
+                select="aktin:encounter-hash(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root, /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension)"/>
     </xsl:template>
 
     <!-- Internes Fallkennzeichen // optionale Angabe zwecks Mapping von Entlassdaten, wird nicht ausgewertet -->
     <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]">
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Fallkennzeichen</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Fallkennzeichen
+            </xsl:attribute>
             <value>
                 <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
@@ -273,7 +297,8 @@
     <xsl:template match="cda:participant/cda:associatedEntity">
         <xsl:comment>60 Versicherungsname</xsl:comment>
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KKNAME</xsl:attribute>  <!-- Name der Krankenkasse als Freitext -->
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KKNAME
+            </xsl:attribute>  <!-- Name der Krankenkasse als Freitext -->
             <value>
                 <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="./cda:scopingOrganization/cda:name"/>
@@ -283,7 +308,8 @@
         <!-- kann die ID (IKNR) in scopingOrganisation auch weggelassen werden? -->
         <!-- https://wiki.hl7.de/index.php?title=1.2.276.0.76.10.2022 -->
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>IKNR</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>IKNR
+            </xsl:attribute>
             <value>
                 <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.5']/@extension"/>
@@ -293,7 +319,8 @@
         <!-- https://ig.fhir.de/basisprofile-de/1.2.0/Terminologie-Namensraueme-NationaleNamensraeume.html -->
         <xsl:if test="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']">
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>VKNR</xsl:attribute>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>VKNR
+                </xsl:attribute>
                 <value>
                     <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']/@extension"/>
@@ -304,7 +331,8 @@
         <!-- Versicherungsstatus (KV-Fall) -->
         <xsl:if test="./cda:code/@code or ./cda:code/@nullFlavor">
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KVFALL</xsl:attribute>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KVFALL
+                </xsl:attribute>
                 <value xsi:type="string">
                     <xsl:choose>
                         <xsl:when test="./cda:code/@code">
@@ -330,7 +358,8 @@
     <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode">
         <xsl:comment>772 Patientenadresse (PLZ)</xsl:comment>
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>ZIPCODE</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>ZIPCODE
+            </xsl:attribute>
             <value>
                 <!-- <xsl:attribute name="unit"></xsl:attribute> -->
                 <xsl:attribute name="xsi:type">string</xsl:attribute>
@@ -374,7 +403,8 @@
         <!-- 114 Rankin Scale numerisch (0..6) -->
         <xsl:comment>114 Rankin Scale</xsl:comment>
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>75859-9</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>75859-9
+            </xsl:attribute>
             <xsl:if test="../cda:effectiveTime/@value">
                 <xsl:attribute name="start">
                     <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
@@ -408,14 +438,24 @@
 
     <xsl:template name="import-id">
         <!-- generate a unique id for encounter and module  -->
-        <xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension,$aktin.module.id)"/>
+        <xsl:value-of
+                select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension,$aktin.module.id)"/>
     </xsl:template>
 
     <xsl:template name="EAV-Geschlecht">
         <xsl:choose>
-            <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">female</xsl:when>
-            <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='M'">male</xsl:when>
-            <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='UN'">indeterminate</xsl:when>
+            <xsl:when
+                    test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">
+                female
+            </xsl:when>
+            <xsl:when
+                    test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='M'">
+                male
+            </xsl:when>
+            <xsl:when
+                    test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='UN'">
+                indeterminate
+            </xsl:when>
             <!-- Unknown as explicit value not supported by EAV (= not answered)-->
         </xsl:choose>
     </xsl:template>
@@ -435,7 +475,8 @@
                         <xsl:value-of select="$Schwangerschaft-Prefix"/><xsl:value-of select="../cda:value/@code"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$Schwangerschaft-Prefix"/><xsl:value-of select="../cda:value/@nullFlavor"/>
+                        <xsl:value-of select="$Schwangerschaft-Prefix"/><xsl:value-of
+                            select="../cda:value/@nullFlavor"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
@@ -450,33 +491,33 @@
 
     <!-- 6 Tetanusschutz L:11458-7-->
     <!-- TODO: Not longer avaliable in the CDA -->
-<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">-->
-<!--        <xsl:comment>6 Tetanusschutz</xsl:comment>-->
-<!--        <fact>-->
-<!--            <xsl:attribute name= "concept">-->
-<!--                <xsl:choose>-->
-<!--                    <xsl:when test="../@negationInd = 'true'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NEG</xsl:when>-->
-<!--                    <xsl:when test="../@negationInd = 'false' and not (../@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>-->
-<!--                    <xsl:when test="../@negationInd = 'false' and  ../@nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>-->
-<!--                </xsl:choose>-->
-<!--            </xsl:attribute>-->
-<!--            <xsl:if test="../cda:effectiveTime/@value">-->
-<!--                <xsl:attribute name="start">-->
-<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>-->
-<!--                </xsl:attribute>-->
-<!--            </xsl:if>-->
-<!--            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>-->
-<!--        </fact>-->
-<!--    </xsl:template>-->
+    <!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">-->
+    <!--        <xsl:comment>6 Tetanusschutz</xsl:comment>-->
+    <!--        <fact>-->
+    <!--            <xsl:attribute name= "concept">-->
+    <!--                <xsl:choose>-->
+    <!--                    <xsl:when test="../@negationInd = 'true'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NEG</xsl:when>-->
+    <!--                    <xsl:when test="../@negationInd = 'false' and not (../@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>-->
+    <!--                    <xsl:when test="../@negationInd = 'false' and  ../@nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>-->
+    <!--                </xsl:choose>-->
+    <!--            </xsl:attribute>-->
+    <!--            <xsl:if test="../cda:effectiveTime/@value">-->
+    <!--                <xsl:attribute name="start">-->
+    <!--                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>-->
+    <!--                </xsl:attribute>-->
+    <!--            </xsl:if>-->
+    <!--            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>-->
+    <!--        </fact>-->
+    <!--    </xsl:template>-->
 
     <!-- 7 Isolation  –  TemplateId 1.2.276.0.76.3.1.195.10.65          -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.65']">
         <xsl:comment>7 Isolation</xsl:comment>
 
         <!-- ► zugehöriges <procedure>-Element zwischenspeichern           -->
-        <xsl:variable name="proc"  select="parent::cda:procedure"/>
-        <xsl:variable name="code"  select="$proc/cda:code/@code"/>
-        <xsl:variable name="neg"   select="$proc/@negationInd='true'"/>
+        <xsl:variable name="proc" select="parent::cda:procedure"/>
+        <xsl:variable name="code" select="$proc/cda:code/@code"/>
+        <xsl:variable name="neg" select="$proc/@negationInd='true'"/>
 
         <xsl:choose>
             <!-- a) *Reverse* Isolation – alte Kodierung (Code = RISO)  -->
@@ -503,7 +544,6 @@
             <!-- d) andernfalls nichts erzeugen                           -->
         </xsl:choose>
     </xsl:template>
-
 
 
     <!-- 8 Isolation-Begründung – TemplateId 1.2.276.0.76.3.1.195.10.66 -->
@@ -889,12 +929,14 @@
         <fact>
             <xsl:if test="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@code">
                 <xsl:attribute name="concept">
-                    <xsl:value-of select="$Zuweiser-Prefix"/><xsl:value-of select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@code"/>
+                    <xsl:value-of select="$Zuweiser-Prefix"/><xsl:value-of
+                        select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@code"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@nullFlavor">
                 <xsl:attribute name="concept">
-                    <xsl:value-of select="$Zuweiser-Prefix"/><xsl:value-of select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@nullFlavor"/>
+                    <xsl:value-of select="$Zuweiser-Prefix"/><xsl:value-of
+                        select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@nullFlavor"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:call-template name="GetEffectiveTimes"/> <!-- no Times in Zuweisung -->
@@ -918,13 +960,19 @@
                 </xsl:choose>
             </xsl:attribute>
         </fact>  => Information in 23/770 enthalten -->
-        <xsl:comment>804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung</xsl:comment>
+        <xsl:comment>804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung
+        </xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
-                    <xsl:when test="not(../cda:value)"><xsl:value-of select="$AKTIN-Prefix"/>ASSESSMENT</xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.19'">MTS:<xsl:value-of select="../cda:value/@code"/></xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.20'">ESI:<xsl:value-of select="../cda:value/@code"/></xsl:when>
+                    <xsl:when test="not(../cda:value)"><xsl:value-of select="$AKTIN-Prefix"/>ASSESSMENT
+                    </xsl:when>
+                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.19'">MTS:<xsl:value-of
+                            select="../cda:value/@code"/>
+                    </xsl:when>
+                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.20'">ESI:<xsl:value-of
+                            select="../cda:value/@code"/>
+                    </xsl:when>
                 </xsl:choose>
             </xsl:attribute>
             <xsl:if test="../cda:effectiveTime/cda:low/@value">
@@ -1010,10 +1058,12 @@
                     <xsl:value-of select="$Allergie-Prefix"/>
                     <xsl:choose>
                         <xsl:when test="../cda:participant/cda:participantRole/cda:playingEntity/cda:code/@code">
-                            <xsl:value-of select="../cda:participant/cda:participantRole/cda:playingEntity/cda:code/@code"/>
+                            <xsl:value-of
+                                    select="../cda:participant/cda:participantRole/cda:playingEntity/cda:code/@code"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="../cda:participant/cda:participantRole/cda:playingEntity/cda:code/@nullFlavor"/>
+                            <xsl:value-of
+                                    select="../cda:participant/cda:participantRole/cda:playingEntity/cda:code/@nullFlavor"/>
                         </xsl:otherwise>
                     </xsl:choose>
                     <xsl:if test="../@negationInd = 'true'">:NEG</xsl:if>
@@ -1030,28 +1080,29 @@
 
     <!-- Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien -->
     <!-- TODO: How are allergies now handled? -->
-<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">-->
-<!--        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>-->
-<!--        <fact>-->
-<!--            <xsl:attribute name="concept"><xsl:value-of select="$Allergie-Prefix"/>TXT</xsl:attribute>-->
-<!--            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">-->
-<!--                <xsl:attribute name="start">-->
-<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>-->
-<!--                </xsl:attribute>-->
-<!--            </xsl:if>-->
-<!--            <value>-->
-<!--                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
-<!--                <xsl:value-of select="../cda:text"/>-->
-<!--            </value>-->
-<!--        </fact>-->
-<!--    </xsl:template>-->
+    <!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">-->
+    <!--        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>-->
+    <!--        <fact>-->
+    <!--            <xsl:attribute name="concept"><xsl:value-of select="$Allergie-Prefix"/>TXT</xsl:attribute>-->
+    <!--            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">-->
+    <!--                <xsl:attribute name="start">-->
+    <!--                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>-->
+    <!--                </xsl:attribute>-->
+    <!--            </xsl:if>-->
+    <!--            <value>-->
+    <!--                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+    <!--                <xsl:value-of select="../cda:text"/>-->
+    <!--            </value>-->
+    <!--        </fact>-->
+    <!--    </xsl:template>-->
 
     <!-- 36 Beschwerden bei Vorstellung / Freitext-->
 
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4040 ']">
         <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT
+            </xsl:attribute>
             <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
                 <xsl:attribute name="start">
                     <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>
@@ -1072,7 +1123,8 @@
         <xsl:if test="./cda:low/@value">
             <xsl:comment>37 Zeitpunkt erster Arztkontakt</xsl:comment>
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>PHYSENCOUNTER</xsl:attribute>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>PHYSENCOUNTER
+                </xsl:attribute>
                 <xsl:if test="./cda:low/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
@@ -1088,7 +1140,8 @@
         <xsl:if test="./cda:low/@value">
             <xsl:comment>38 Zeitpunkt Therapiebeginn</xsl:comment>
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>STARTTHERAPY</xsl:attribute>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>STARTTHERAPY
+                </xsl:attribute>
                 <xsl:if test="./cda:low/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
@@ -1112,23 +1165,32 @@
         <xsl:comment>44 Abschlussdiagnosen - Section approach</xsl:comment>
 
         <!-- Expliziter Pfad über die CDA-Struktur -->
-        <xsl:variable name="diagnoses" select="cda:entry/cda:act/cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']"/>
+        <xsl:variable name="diagnoses"
+                      select="cda:entry/cda:act/cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.70']"/>
 
-        <xsl:comment>Found <xsl:value-of select="count($diagnoses)"/> diagnoses with explicit path</xsl:comment>
+        <xsl:comment>Found
+            <xsl:value-of select="count($diagnoses)"/> diagnoses with explicit path
+        </xsl:comment>
         <xsl:comment>Diagnosis codes:
             <xsl:for-each select="$diagnoses">
-                <xsl:value-of select="cda:value/@code"/><xsl:if test="position() != last()">, </xsl:if>
+                <xsl:value-of select="cda:value/@code"/>
+                <xsl:if test="position() != last()">,</xsl:if>
             </xsl:for-each>
         </xsl:comment>
 
         <!-- Verarbeitung aller Diagnosen -->
         <xsl:for-each select="$diagnoses">
-            <xsl:comment>Processing diagnosis <xsl:value-of select="position()"/>: <xsl:value-of select="cda:value/@code"/> - <xsl:value-of select="cda:value/cda:originalText"/></xsl:comment>
+            <xsl:comment>Processing diagnosis <xsl:value-of select="position()"/>:
+                <xsl:value-of select="cda:value/@code"/> -
+                <xsl:value-of select="cda:value/cda:originalText"/>
+            </xsl:comment>
 
             <fact>
                 <xsl:choose>
                     <xsl:when test="cda:value/@code">
-                        <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="cda:value/@code"/></xsl:attribute>
+                        <xsl:attribute name="concept">
+                            <xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="cda:value/@code"/>
+                        </xsl:attribute>
                         <xsl:if test="cda:effectiveTime/cda:low/@value">
                             <xsl:attribute name="start">
                                 <xsl:value-of select="func:ConvertDateTime(cda:effectiveTime/cda:low/@value)"/>
@@ -1136,7 +1198,9 @@
                         </xsl:if>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/>NULL<xsl:value-of select="position()"/></xsl:attribute>
+                        <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/>NULL<xsl:value-of
+                                select="position()"/>
+                        </xsl:attribute>
                         <xsl:if test="cda:effectiveTime/cda:low/@value">
                             <xsl:attribute name="start">
                                 <xsl:value-of select="func:ConvertDateTime(cda:effectiveTime/cda:low/@value)"/>
@@ -1149,7 +1213,8 @@
                 <xsl:if test="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.5.412']/@code">
                     <modifier>
                         <xsl:attribute name="code">
-                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.5.412']/@code"/>
+                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of
+                                select="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.5.412']/@code"/>
                         </xsl:attribute>
                     </modifier>
                 </xsl:if>
@@ -1158,7 +1223,8 @@
                 <xsl:if test="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code">
                     <modifier>
                         <xsl:attribute name="code">
-                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of select="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code"/>
+                            <xsl:value-of select="$Diagnosis-Prefix"/><xsl:value-of
+                                select="cda:value/cda:qualifier/cda:value[@codeSystem='1.2.276.0.76.3.1.1.5.1.21']/@code"/>
                         </xsl:attribute>
                     </modifier>
                 </xsl:if>
@@ -1166,7 +1232,8 @@
                 <!-- Hauptdiagnose-Kennzeichnung -->
                 <xsl:if test="../../cda:sequenceNumber/@value='1'">
                     <modifier>
-                        <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>F</xsl:attribute>
+                        <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>F
+                        </xsl:attribute>
                     </modifier>
                 </xsl:if>
 
@@ -1192,10 +1259,14 @@
 
         <!-- Alle observations in der Section, unabhängig vom Pfad -->
         <xsl:for-each select=".//observation[templateId/@root='1.2.276.0.76.3.1.195.10.70']">
-            <xsl:comment>Fallback diagnosis <xsl:value-of select="position()"/>: <xsl:value-of select="value/@code"/></xsl:comment>
+            <xsl:comment>Fallback diagnosis <xsl:value-of select="position()"/>:
+                <xsl:value-of select="value/@code"/>
+            </xsl:comment>
 
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="value/@code"/></xsl:attribute>
+                <xsl:attribute name="concept">
+                    <xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="value/@code"/>
+                </xsl:attribute>
                 <xsl:if test="effectiveTime/low/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(effectiveTime/low/@value)"/>
@@ -1204,7 +1275,9 @@
 
                 <xsl:if test="value/originalText">
                     <modifier code="originalText">
-                        <value xsi:type="string"><xsl:value-of select="value/originalText"/></value>
+                        <value xsi:type="string">
+                            <xsl:value-of select="value/originalText"/>
+                        </value>
                     </modifier>
                 </xsl:if>
             </fact>
@@ -1224,7 +1297,8 @@
         <xsl:if test="../cda:effectiveTime/cda:width/@value">
             <xsl:comment>212 Symptomdauer</xsl:comment>
             <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>SYMPTOMDURATION</xsl:attribute>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>SYMPTOMDURATION
+                </xsl:attribute>
                 <value>
                     <xsl:attribute name="unit">
                         <xsl:value-of select="../cda:effectiveTime/cda:width/@unit"/>
@@ -1264,7 +1338,8 @@
             <!-- Fact for Free-Text complaint (if present) -->
             <xsl:if test="cda:text and normalize-space(cda:text) != ''">
                 <fact>
-                    <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
+                    <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT
+                    </xsl:attribute>
                     <xsl:call-template name="GetEffectiveTimes"/>
                     <value xsi:type="string">
                         <xsl:value-of select="cda:text"/>
@@ -1325,7 +1400,8 @@
     -->
     <!-- Template für visit/encounter -->
     <xsl:template name="ZeitpunktEntlassungOptional">
-        <xsl:variable name="ts" select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value"/>
+        <xsl:variable name="ts"
+                      select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value"/>
         <xsl:if test="$ts">
             <end>
                 <xsl:value-of select="func:ConvertDateTime($ts)"/>
@@ -1335,7 +1411,8 @@
 
     <!-- Template für visit/encounter -->
     <xsl:template name="ZeitpunktAufnahme">
-        <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:low/@value)"/>
+        <xsl:value-of
+                select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:low/@value)"/>
     </xsl:template>
 
 
@@ -1378,15 +1455,18 @@
                 </modifier>
             </xsl:if>
             <!-- Unfallursache/-kinetik -->
-            <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.29']">
+            <xsl:for-each
+                    select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.29']">
                 <xsl:call-template name="UnfallursacheKinetik"/>
             </xsl:for-each>
             <!-- Unfallart Traumaregister -->
-            <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.30']">
+            <xsl:for-each
+                    select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.30']">
                 <xsl:call-template name="UnfallartTraumaregister"/>
             </xsl:for-each>
             <!-- Reise-Anamnese -->
-            <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.31']">
+            <xsl:for-each
+                    select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.31']">
                 <xsl:call-template name="Reiseanamnese"/>
             </xsl:for-each>
         </fact>
@@ -1573,7 +1653,8 @@
                 <modifier>
                     <xsl:attribute name="code">consumable</xsl:attribute>
                     <value xsi:type="string">
-                        <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
+                        <xsl:value-of
+                                select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
                     </value>
                 </modifier>
             </xsl:if>
@@ -1650,11 +1731,15 @@
     <!-- Diagnostik 25ff Zeitpunkt-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.62']">
         <xsl:for-each select="../cda:entry/cda:observation/cda:templateId">
-            <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
+            <xsl:comment>
+                <xsl:value-of select="../cda:code/@displayName"/>
+            </xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
                     <xsl:choose>
-                        <xsl:when test="../@negationInd"><xsl:value-of select="$LOINC-Prefix"/><xsl:value-of select="../cda:code/@code"/>:NEG</xsl:when>
+                        <xsl:when test="../@negationInd">
+                            <xsl:value-of select="$LOINC-Prefix"/><xsl:value-of select="../cda:code/@code"/>:NEG
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="$LOINC-Prefix"/><xsl:value-of select="../cda:code/@code"/>
                         </xsl:otherwise>
@@ -1673,7 +1758,8 @@
                                 <xsl:value-of select="$Diagnostic-Prefix"/><xsl:value-of select="../cda:value/@code"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="$Diagnostic-Prefix"/><xsl:value-of select="../cda:value/@nullFlavor"/>
+                                <xsl:value-of select="$Diagnostic-Prefix"/><xsl:value-of
+                                    select="../cda:value/@nullFlavor"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
@@ -1718,7 +1804,8 @@
                     <xsl:attribute name="code">id</xsl:attribute>
                     <value xsi:type="string">
                         <xsl:value-of select="@root"/>
-                        <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
+                        <xsl:if test="@extension">:<xsl:value-of select="@extension"/>
+                        </xsl:if>
                     </value>
                 </modifier>
             </xsl:for-each>
@@ -1814,7 +1901,8 @@
                     <xsl:attribute name="code">id</xsl:attribute>
                     <value xsi:type="string">
                         <xsl:value-of select="@root"/>
-                        <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
+                        <xsl:if test="@extension">:<xsl:value-of select="@extension"/>
+                        </xsl:if>
                     </value>
                 </modifier>
             </xsl:for-each>
@@ -1877,7 +1965,7 @@
 
     <!--  Zeit bis zum Export -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.85']">
-        <xsl:comment> Zeit bis zum Export</xsl:comment>
+        <xsl:comment>Zeit bis zum Export</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
@@ -1909,7 +1997,7 @@
 
     <!-- Zeit zwischen Aufnahme und erster Ersteinschätzung  -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.81']">
-        <xsl:comment>Zeit zwischen Aufnahme und erster Ersteinschätzung </xsl:comment>
+        <xsl:comment>Zeit zwischen Aufnahme und erster Ersteinschätzung</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
@@ -1933,7 +2021,7 @@
 
     <!-- Zeitpunkt Entscheidung zur Verlegung / Entlassung  -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.75']">
-        <xsl:comment>Zeitpunkt Entscheidung zur Verlegung / Entlassung </xsl:comment>
+        <xsl:comment>Zeitpunkt Entscheidung zur Verlegung / Entlassung</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
@@ -2091,14 +2179,13 @@
                 <modifier>
                     <xsl:attribute name="code">nullFlavor</xsl:attribute>
                     <value xsi:type="string">
-                        <xsl:value-of select="$sub/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/@nullFlavor"/>
+                        <xsl:value-of
+                                select="$sub/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/@nullFlavor"/>
                     </value>
                 </modifier>
             </xsl:if>
         </fact>
     </xsl:template>
-
-
 
 
     <!-- GLOBAL TEMPLATES -->
@@ -2108,7 +2195,9 @@
     <xsl:template name="templateGetConceptCode">
         <xsl:attribute name="concept">
             <xsl:choose>
-                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>
+                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.1'">
+                    <xsl:value-of select="$LOINC-Prefix"/>
+                </xsl:when>
             </xsl:choose>
             <xsl:value-of select="../cda:code/@code"/>
         </xsl:attribute>
@@ -2125,12 +2214,21 @@
     <xsl:template name="templateGetConceptValue">
         <xsl:attribute name="concept">
             <xsl:choose>
-                <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.439'"><xsl:value-of select="$CEDIS-Prefix"/></xsl:when>
-                <xsl:when test="../cda:code/@code='75322-8'"><xsl:value-of select="$CEDIS-Prefix"/></xsl:when>
-                <xsl:when test="../cda:code/@code='11459-5'"><xsl:value-of select="$Transport-Prefix"/></xsl:when>
-                <xsl:when test="../cda:code/@code='RPPL'"><xsl:value-of select="$AKTIN-Prefix"/>RPPL:</xsl:when>
-                <xsl:when test="../cda:code/@code='SPPL'"><xsl:value-of select="$AKTIN-Prefix"/>SPPL:</xsl:when>
-                <xsl:otherwise><xsl:value-of select="../cda:code/@code"/>:</xsl:otherwise>  <!-- Default Prefix code/code -->
+                <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.439'">
+                    <xsl:value-of select="$CEDIS-Prefix"/>
+                </xsl:when>
+                <xsl:when test="../cda:code/@code='75322-8'">
+                    <xsl:value-of select="$CEDIS-Prefix"/>
+                </xsl:when>
+                <xsl:when test="../cda:code/@code='11459-5'">
+                    <xsl:value-of select="$Transport-Prefix"/>
+                </xsl:when>
+                <xsl:when test="../cda:code/@code='RPPL'"><xsl:value-of select="$AKTIN-Prefix"/>RPPL:
+                </xsl:when>
+                <xsl:when test="../cda:code/@code='SPPL'"><xsl:value-of select="$AKTIN-Prefix"/>SPPL:
+                </xsl:when>
+                <xsl:otherwise><xsl:value-of select="../cda:code/@code"/>:
+                </xsl:otherwise>  <!-- Default Prefix code/code -->
             </xsl:choose>
             <xsl:choose>
                 <xsl:when test="../cda:value/@code">
@@ -2284,12 +2382,39 @@
             <!-- [0-9]{1,8} | ( [0-9]{9,14} | [0-9]{14,14}\.[0-9]+ )
                  ([+\-][0-9]{1,4})?                                  -->
             <xsl:choose>
-                <xsl:when test="string-length($DateTimeString) = 4"><xsl:value-of select="$DateTimeString"/></xsl:when>
-                <xsl:when test="string-length($DateTimeString) = 6"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/></xsl:when>
-                <xsl:when test="string-length($DateTimeString) = 8"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/></xsl:when>
-                <xsl:when test="string-length($DateTimeString) = 10"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/></xsl:when>
-                <xsl:when test="string-length($DateTimeString) = 12"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/>:<xsl:value-of select="substring($DateTimeString,11,2)"/></xsl:when>
-                <xsl:when test="string-length($DateTimeString) > 13"><xsl:value-of select="substring($DateTimeString,1,4)"/>-<xsl:value-of select="substring($DateTimeString,5,2)"/>-<xsl:value-of select="substring($DateTimeString,7,2)"/>T<xsl:value-of select="substring($DateTimeString,9,2)"/>:<xsl:value-of select="substring($DateTimeString,11,2)"/>:<xsl:value-of select="substring($DateTimeString,13,2)"/></xsl:when>
+                <xsl:when test="string-length($DateTimeString) = 4">
+                    <xsl:value-of select="$DateTimeString"/>
+                </xsl:when>
+                <xsl:when test="string-length($DateTimeString) = 6"><xsl:value-of
+                        select="substring($DateTimeString,1,4)"/>-<xsl:value-of
+                        select="substring($DateTimeString,5,2)"/>
+                </xsl:when>
+                <xsl:when test="string-length($DateTimeString) = 8"><xsl:value-of
+                        select="substring($DateTimeString,1,4)"/>-<xsl:value-of
+                        select="substring($DateTimeString,5,2)"/>-<xsl:value-of
+                        select="substring($DateTimeString,7,2)"/>
+                </xsl:when>
+                <xsl:when test="string-length($DateTimeString) = 10"><xsl:value-of
+                        select="substring($DateTimeString,1,4)"/>-<xsl:value-of
+                        select="substring($DateTimeString,5,2)"/>-<xsl:value-of
+                        select="substring($DateTimeString,7,2)"/>T<xsl:value-of
+                        select="substring($DateTimeString,9,2)"/>
+                </xsl:when>
+                <xsl:when test="string-length($DateTimeString) = 12"><xsl:value-of
+                        select="substring($DateTimeString,1,4)"/>-<xsl:value-of
+                        select="substring($DateTimeString,5,2)"/>-<xsl:value-of
+                        select="substring($DateTimeString,7,2)"/>T<xsl:value-of
+                        select="substring($DateTimeString,9,2)"/>:<xsl:value-of
+                        select="substring($DateTimeString,11,2)"/>
+                </xsl:when>
+                <xsl:when test="string-length($DateTimeString) > 13"><xsl:value-of
+                        select="substring($DateTimeString,1,4)"/>-<xsl:value-of
+                        select="substring($DateTimeString,5,2)"/>-<xsl:value-of
+                        select="substring($DateTimeString,7,2)"/>T<xsl:value-of
+                        select="substring($DateTimeString,9,2)"/>:<xsl:value-of
+                        select="substring($DateTimeString,11,2)"/>:<xsl:value-of
+                        select="substring($DateTimeString,13,2)"/>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:message terminate="yes">XSL-Transformation Error: Datetime Format not recognized</xsl:message>
                 </xsl:otherwise>
