@@ -1190,30 +1190,6 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- Alternative: Falls der explizite Pfad nicht funktioniert -->
-    <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.68']" mode="fallback">
-        <xsl:comment>44 Abschlussdiagnosen - Fallback approach</xsl:comment>
-
-        <!-- Alle observations in der Section, unabhängig vom Pfad -->
-        <xsl:for-each select=".//observation[templateId/@root='1.2.276.0.76.3.1.195.10.70']">
-            <xsl:comment>Fallback diagnosis <xsl:value-of select="position()"/>: <xsl:value-of select="value/@code"/></xsl:comment>
-
-            <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$ICD10GM-Prefix"/><xsl:value-of select="value/@code"/></xsl:attribute>
-                <xsl:if test="effectiveTime/low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(effectiveTime/low/@value)"/>
-                    </xsl:attribute>
-                </xsl:if>
-
-                <xsl:if test="value/originalText">
-                    <modifier code="originalText">
-                        <value xsi:type="string"><xsl:value-of select="value/originalText"/></value>
-                    </modifier>
-                </xsl:if>
-            </fact>
-        </xsl:for-each>
-    </xsl:template>
     <!-- 804 verwendetes Ersteinschätzungssystem
     siehe 23 Ersteinschätzung -->
 
