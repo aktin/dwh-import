@@ -15,6 +15,10 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
 
+    <xsl:key name="byId"
+             match="*[@ID or @id]"
+             use="@ID | @id"/>
+
     <!-- RESERVED VARIABLES -->
     <!--
         these variables are used outside of the XSLT file
@@ -1427,66 +1431,114 @@
                 </modifier>
             </xsl:if>
             <!-- Unfallursache/-kinetik -->
-            <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.29']">
+            <xsl:for-each select="../cda:entryRelationship/cda:observation
+                      [cda:templateId/@root='1.2.276.0.76.3.1.195.10.29']">
                 <xsl:call-template name="UnfallursacheKinetik"/>
             </xsl:for-each>
+
             <!-- Unfallart Traumaregister -->
-            <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.30']">
+            <xsl:for-each select="../cda:entryRelationship/cda:observation
+                      [cda:templateId/@root='1.2.276.0.76.3.1.195.10.30']">
                 <xsl:call-template name="UnfallartTraumaregister"/>
             </xsl:for-each>
-            <!-- Reise-Anamnese -->
-            <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.3.1.195.10.31']">
-                <xsl:call-template name="Reiseanamnese"/>
+
+            <!-- ► Reise-Anamnese-Section über Referenz suchen -->
+            <xsl:variable name="refVal"
+                          select="../cda:entryRelationship/cda:act
+                             /cda:text/cda:reference/@value"/>
+            <xsl:variable name="refId" select="substring-after($refVal,'#')"/>
+
+            <!-- Wenn es eine Referenz gibt UND das Ziel gefunden wird … -->
+            <xsl:for-each select="key('byId',$refId)[self::cda:section
+                        and cda:templateId/@root='1.2.276.0.76.3.1.195.10.31']">
+                <!-- nur Modifier erzeugen, kein eigenes fact -->
+                <xsl:apply-templates select="." mode="asModifier"/>
             </xsl:for-each>
         </fact>
     </xsl:template>
 
-    <!-- Unfallursache/-kinetik -->
     <xsl:template name="UnfallursacheKinetik">
+        <xsl:comment>UnfallursacheKinetik</xsl:comment>
+
+        <!-- Hauptursache -->
         <modifier>
             <xsl:attribute name="code">primaryCause</xsl:attribute>
             <value xsi:type="string">
-                <xsl:value-of select="../cda:value/@code"/>
+                <xsl:value-of select="cda:value/@code"/>
             </value>
         </modifier>
-        <!-- Unfallkinetik als zusätzlicher modifier, falls vorhanden -->
-        <xsl:if test="../cda:qualifier/cda:name[@code='67496-0']/following-sibling::cda:value/@code">
+
+        <!-- alle Qualifier -->
+        <xsl:for-each select="cda:value/cda:qualifier">
             <modifier>
-                <xsl:attribute name="code">mechanism</xsl:attribute>
+                <xsl:attribute name="code">
+                    <xsl:value-of select="cda:name/@code"/>
+                </xsl:attribute>
                 <value xsi:type="string">
-                    <xsl:value-of select="../cda:qualifier/cda:value/@code"/>
+                    <xsl:value-of select="cda:value/@code"/>
                 </value>
             </modifier>
-        </xsl:if>
+        </xsl:for-each>
     </xsl:template>
+
+
 
     <!-- Unfallart Traumaregister -->
     <xsl:template name="UnfallartTraumaregister">
+        <xsl:comment>UnfallartTraumaregister</xsl:comment>
         <modifier>
             <xsl:attribute name="code">injuryType</xsl:attribute>
             <value xsi:type="string">
-                <xsl:value-of select="../cda:value/@code"/>
+                <xsl:value-of select="cda:value/@code"/>
             </value>
         </modifier>
-        <!-- displayName optional -->
-        <xsl:if test="../cda:code/@displayName">
+
+        <xsl:if test="cda:value/@displayName">
             <modifier>
                 <xsl:attribute name="code">displayName</xsl:attribute>
                 <value xsi:type="string">
-                    <xsl:value-of select="../cda:code/@displayName"/>
+                    <xsl:value-of select="cda:value/@displayName"/>
                 </value>
             </modifier>
         </xsl:if>
     </xsl:template>
 
-    <!-- Reise-Anamnese (Platzhalter – Struktur ggf. anpassen) -->
-    <xsl:template name="Reiseanamnese">
-        <modifier>
-            <xsl:attribute name="code">travelHistory</xsl:attribute>
-            <value xsi:type="string">
-                <xsl:value-of select="../cda:value/@code"/>
-            </value>
-        </modifier>
+
+    <!-- Reise-Anamnese (TemplateId: 1.2.276.0.76.3.1.195.10.31) -->
+    <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.31']"
+                  mode="asModifier">
+        <xsl:comment>Reise-Anamnese</xsl:comment>
+        <!-- Frage Ja/Nein -->
+        <xsl:for-each select="cda:entry/cda:observation
+         [cda:templateId/@root='1.2.276.0.76.3.1.195.10.77']">
+            <modifier>
+                <xsl:attribute name="code">traveledAbroad</xsl:attribute>
+                <value xsi:type="string">
+                    <xsl:value-of select="cda:value/@value"/>
+                </value>
+            </modifier>
+        </xsl:for-each>
+
+        <!-- Länder -->
+        <xsl:for-each select="cda:entry/cda:observation
+         [cda:templateId/@root='1.2.276.0.76.3.1.195.10.78']">
+
+            <modifier>
+                <xsl:attribute name="code">visitedCountry</xsl:attribute>
+                <value xsi:type="string">
+                    <xsl:value-of select="cda:value/@code"/>
+                </value>
+            </modifier>
+
+            <xsl:for-each select="cda:value/cda:translation">
+                <modifier>
+                    <xsl:attribute name="code">visitedCountry</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="@code"/>
+                    </value>
+                </modifier>
+            </xsl:for-each>
+        </xsl:for-each>
     </xsl:template>
 
 

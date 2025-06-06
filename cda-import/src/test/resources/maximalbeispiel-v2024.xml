@@ -521,6 +521,17 @@
                                     <value xsi:type="CE" code="33036003" codeSystem="2.16.840.1.113883.6.96" displayName="Fall on same level (event)"/>
                                 </observation>
                             </entryRelationship>
+                            <!-- 3) Reise-Anamnese – nur Verweis -->
+                            <entryRelationship typeCode="COMP">
+                                <act classCode="ACT" moodCode="EVN">
+                                    <code code="8691-8" codeSystem="2.16.840.1.113883.6.1"
+                                          displayName="History of travel"/>
+                                    <statusCode code="completed"/>
+                                    <text>
+                                        <reference value="#travelSec"/>
+                                    </text>
+                                </act>
+                            </entryRelationship>
                         </act>
                     </entry>
                 </section>
@@ -730,7 +741,7 @@
 
             <!-- Reise-Anamnese  (Template 1.2.276.0.76.3.1.195.10.31)         -->
             <component typeCode="COMP" contextConductionInd="true">
-                <section classCode="DOCSECT">
+                <section classCode="DOCSECT" ID="travelSec">>
 
                     <!-- Pflicht-Metadaten der Section -->
                     <templateId root="1.2.276.0.76.3.1.195.10.31"/>
