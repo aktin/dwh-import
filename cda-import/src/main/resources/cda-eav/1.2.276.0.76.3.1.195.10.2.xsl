@@ -1405,7 +1405,7 @@
         <xsl:comment>Unfall-Anamnese</xsl:comment>
         <fact>
             <!-- concept = LOINC:74209-8 -->
-            <xsl:attribute name="concept">LOINC:74209-8</xsl:attribute>
+            <xsl:attribute name="concept">AKTIN:ACCIDENT:</xsl:attribute>
             <!-- Zeitpunkt (start) -->
             <xsl:if test="../cda:effectiveTime/cda:low/@value">
                 <xsl:attribute name="start">
