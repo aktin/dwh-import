@@ -1132,31 +1132,21 @@
 
     <!-- 37 Zeitpunkt erster/letzter Arztkontakt-->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:performer/cda:time">
-        <xsl:if test="./cda:low/@value">
-            <xsl:comment>37 Zeitpunkt erster Arztkontakt</xsl:comment>
+        <xsl:if test="./cda:low/@value or ./cda:high/@value">
+            <xsl:comment>37 Zeitpunkt erster/letzter Arztkontakt</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>PHYSENCOUNTER</xsl:attribute>
-                <xsl:if test="./cda:low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
-                    </xsl:attribute>
-                </xsl:if>
                 <xsl:call-template name="GetEffectiveTimes"/>
             </fact>
         </xsl:if>
     </xsl:template>
 
-    <!-- 38 Zeitpunkt Therapiebeginn-->
+    <!-- 38 Zeitpunkt Therapiebeginn/Ende-->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:effectiveTime">
-        <xsl:if test="./cda:low/@value">
-            <xsl:comment>38 Zeitpunkt Therapiebeginn</xsl:comment>
+        <xsl:if test="./cda:low/@value or ./cda:high/@value">
+            <xsl:comment>38 Zeitpunkt Therapiebeginn/Ende</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>STARTTHERAPY</xsl:attribute>
-                <xsl:if test="./cda:low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
-                    </xsl:attribute>
-                </xsl:if>
                 <xsl:call-template name="GetEffectiveTimes"/>
             </fact>
         </xsl:if>
