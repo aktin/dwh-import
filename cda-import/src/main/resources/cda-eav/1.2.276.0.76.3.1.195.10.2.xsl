@@ -984,8 +984,7 @@
         <xsl:comment>MTS-Präsentationsdiagramm</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
-                <xsl:value-of select="$AKTIN-Prefix"/>MTS-PRAESDIAG
-            </xsl:attribute>
+                <xsl:value-of select="$AKTIN-Prefix"/>MTS-PRAESDIAG</xsl:attribute>
             <!-- Das eigentliche Code-Attribut: -->
             <modifier>
                 <xsl:attribute name="code">code</xsl:attribute>
