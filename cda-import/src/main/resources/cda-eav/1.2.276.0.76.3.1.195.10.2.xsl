@@ -974,6 +974,16 @@
             <!-- ► optional additional time info -->
             <xsl:call-template name="GetEffectiveTimes"/>
 
+            <!-- ► color as modifier for MTS -->
+            <xsl:if test="../cda:methodCode/@code='713009001' and ../cda:value/@code">
+                <modifier>
+                    <xsl:attribute name="code">color</xsl:attribute>
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+
         </fact>
 
     </xsl:template>
