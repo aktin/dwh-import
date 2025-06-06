@@ -908,37 +908,76 @@
     <!-- 62 Zuweiser -->
     <!-- Auf dem Bogen nicht vorgesehen / Freitext -->
 
-    <!-- 23 Ersteinschätzung -->
-    <!-- incl. 770 Zeitpunkt der Ersteinschätzung
-         incl. 804	Verwendetes Ersteinschätzungssystem
-    -->
+    <!-- 804 Verwendetes Ersteinschätzungssystem / 23 Ersteinschätzung / 770 Zeitpunkt der Ersteinschätzung -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.18']">
-        <!-- <xsl:comment>804 Verwendetes Ersteinschätzungssystem</xsl:comment> => Information in 23/770 enthalten
-        <fact>
-            <xsl:attribute name="concept">
-                <xsl:choose>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.438'"><xsl:value-of select="../cda:code/@code"/>:MTS</xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.437'"><xsl:value-of select="../cda:code/@code"/>:ESI</xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-        </fact>  => Information in 23/770 enthalten -->
+
         <xsl:comment>804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung</xsl:comment>
+
         <fact>
+            <!-- ► concept -->
             <xsl:attribute name="concept">
                 <xsl:choose>
-                    <xsl:when test="not(../cda:value)"><xsl:value-of select="$AKTIN-Prefix"/>ASSESSMENT</xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.19'">MTS:<xsl:value-of select="../cda:value/@code"/></xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.3.1.195.10.20'">ESI:<xsl:value-of select="../cda:value/@code"/></xsl:when>
+
+                    <!-- ───────────── no triage value at all ───────────── -->
+                    <xsl:when test="not(../cda:value)">
+                        <xsl:value-of select="concat($AKTIN-Prefix,'ASSESSMENT')"/>
+                    </xsl:when>
+
+                    <!-- ───────────── Manchester Triage System ─────────── -->
+                    <xsl:when test="../cda:methodCode/@code='713009001'">
+                        <xsl:text>MTS:</xsl:text>
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+
+                    <!-- ───────────── Emergency Severity Index ─────────── -->
+                    <xsl:when test="../cda:methodCode/@code='713010006'">
+                        <xsl:text>ESI:</xsl:text>
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+
+                    <!-- ───────────── SmED (case-insensitive) ───────────── -->
+                    <!--   XSLT 1.0 compatible: translate() for lower-case   -->
+                    <xsl:when test="translate(../cda:methodCode/@code,
+                                   'abcdefghijklmnopqrstuvwxyz',
+                                   'ABCDEFGHIJKLMNOPQRSTUVWXYZ') = 'SMED'">
+                        <xsl:text>SmED:</xsl:text>
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+
+                    <!-- ───────────── “Other” qualifier ──────────────── -->
+                    <xsl:when test="../cda:methodCode/@code='74964007'">
+                        <xsl:text>AKTIN:ASSESSMENT:OTHER:</xsl:text>
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+
+                    <!-- ───────────── “None” qualifier ──────────────── -->
+                    <xsl:when test="../cda:methodCode/@code='260413007'">
+                        <xsl:text>AKTIN:ASSESSMENT:NONE:</xsl:text>
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:when>
+
+                    <!-- ───────────── anything else ───────────────────── -->
+                    <xsl:otherwise>
+                        <xsl:value-of select="../cda:value/@code"/>
+                    </xsl:otherwise>
+
                 </xsl:choose>
             </xsl:attribute>
-            <xsl:if test="../cda:effectiveTime/cda:low/@value">
+
+            <!-- ► start (timestamp) -->
+            <xsl:if test="../cda:effectiveTime/@value">
                 <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/>
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>
+
+            <!-- ► optional additional time info -->
+            <xsl:call-template name="GetEffectiveTimes"/>
+
         </fact>
+
     </xsl:template>
+
 
     <!-- MTS-Präsentationsdiagramm -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.21']">
