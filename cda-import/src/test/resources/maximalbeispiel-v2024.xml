@@ -423,24 +423,6 @@
                                         </observation>
                                     </entryRelationship>
                                     <entryRelationship typeCode="COMP">
-                                        <!-- MTS-Indikatoren GELB -->
-                                        <observation classCode="OBS" moodCode="EVN">
-                                            <templateId root="1.2.276.0.76.3.1.195.10.24"/>
-                                            <code code="SCTPOCC-103391001" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Indikatoren GELB"/>
-                                            <statusCode code="completed"/>
-                                            <value xsi:type="CE" code="149" codeSystem="1.2.276.0.76.3.1.195.5.102" displayName="Sehr niedrige O2-Sättigung"/>
-                                        </observation>
-                                    </entryRelationship>
-                                    <entryRelationship typeCode="COMP">
-                                        <!-- MTS-Indikatoren ORANGE -->
-                                        <observation classCode="OBS" moodCode="EVN">
-                                            <templateId root="1.2.276.0.76.3.1.195.10.23"/>
-                                            <code code="SCTPOCC-25876001" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Indikatoren ORANGE"/>
-                                            <statusCode code="completed"/>
-                                            <value xsi:type="CE" code="46" codeSystem="1.2.276.0.76.3.1.195.5.102" displayName="Erschöpfungszustand"/>
-                                        </observation>
-                                    </entryRelationship>
-                                    <entryRelationship typeCode="COMP">
                                         <!-- MTS-Indikatoren ORANGE -->
                                         <observation classCode="OBS" moodCode="EVN">
                                             <templateId root="1.2.276.0.76.3.1.195.10.23"/>
