@@ -36,6 +36,13 @@
     <!-- Concept Code Prefix for LOINC Codes -->
     <xsl:variable name="LOINC-Prefix">LOINC:</xsl:variable>
 
+    <!-- Concept Code Prefix for SNOMED Codes -->
+    <xsl:variable name="SNOMED-Prefix">SNOMED:</xsl:variable>
+
+    <!-- Concept Code Prefix for SNOMED-CT Postkoordinierte Terme Codes -->
+    <!-- TODO https://art-decor.org/ad/#/aktin-/terminology/codesystems/1.2.276.0.76.3.1.195.5.99/2023-12-30T00:00:00 -->
+    <xsl:variable name="SNOMED-CT-Prefix">SNOMED-CT:</xsl:variable>
+
     <!-- Concept Code Prefix for ICD10GM Codes -->
     <xsl:variable name="ICD10GM-Prefix">ICD10GM:</xsl:variable>
 
@@ -48,8 +55,11 @@
     <!-- Concept Code Prefix for AKTIN Codes -->
     <xsl:variable name="AKTIN-Prefix">AKTIN:</xsl:variable>
 
+    <!-- Concept Code Prefix for Assessment Codes -->
+    <xsl:variable name="Zuweiser-Prefix">AKTIN:ASSESSMENT:</xsl:variable>
+
     <!-- Concept Code Prefix for Zuweiser Codes -->
-    <xsl:variable name="Zuweiser-Prefix">AKTIN:REFERRAL:</xsl:variable>
+    <xsl:variable name="Assessment-Prefix">AKTIN:REFERRAL:</xsl:variable>
 
     <!-- Concept Code Prefix for Signifikante Pathogene Codes -->
     <xsl:variable name="Pathogen-Prefix">AKTIN:PATHOGENE:</xsl:variable>
@@ -118,6 +128,7 @@
                     <xsl:attribute name="id">
                         <xsl:call-template name="import-id"/>
                     </xsl:attribute>
+                    <!-- TODO do we want these details now? were already supported in v2 but not used -->
                     <!-- Author -->
                     <xsl:attribute name="author-name">
                         <xsl:value-of select="concat(
@@ -313,6 +324,7 @@
         </xsl:if>
 
         <!-- Versicherungsstatus (KV-Fall) -->
+        <!-- TODO remove if condition ? : do it if it exists or not exists -->
         <xsl:if test="./cda:code/@code or ./cda:code/@nullFlavor">
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KVFALL</xsl:attribute>
@@ -485,28 +497,33 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.65']">
         <xsl:comment>7 Isolation</xsl:comment>
 
-        <!-- ► zugehöriges <procedure>-Element zwischenspeichern           -->
+        <!-- zugehöriges <procedure>-Element zwischenspeichern           -->
+        <!-- TODO does this improve readability? -->
         <xsl:variable name="proc"  select="parent::cda:procedure"/>
         <xsl:variable name="code"  select="$proc/cda:code/@code"/>
         <xsl:variable name="neg"   select="$proc/@negationInd='true'"/>
 
         <xsl:choose>
-            <!-- a) *Reverse* Isolation – alte Kodierung (Code = RISO)  -->
-            <xsl:when test="$code = 'RISO'">
+            <!-- codes: https://art-decor.org/ad/#/aktin-/terminology/valueset/1.2.276.0.76.3.1.195.5.54 (subset of SNOMED Clinical Terms 2.16.840.1.113883.6.96) -->
+            <!-- a) *Reverse* Isolation -->
+            <xsl:when test="$code = '275829005'">
+                <!-- TODO this way of adding the attribute "concept" is inconsistent with existing xsl version but tends
+                         to be more readable; we should be consistent one way or the other -->
                 <fact concept="{ $Isolation-Prefix }RISO">
                     <xsl:call-template name="GetEffectiveTimes"/>
                 </fact>
             </xsl:when>
 
             <!-- b) *Keine* Isolation – neuer SNOMED-Code + negationInd -->
-            <xsl:when test="$code = '40174006' and $neg">
+            <xsl:when test="$code = '170497006' and $neg">
                 <fact concept="{ $Isolation-Prefix }ISO:NEG">
                     <xsl:call-template name="GetEffectiveTimes"/>
                 </fact>
             </xsl:when>
 
             <!-- c) Isolation erforderlich – neuer SNOMED-Code (ohne neg) -->
-            <xsl:when test="$code = '40174006'">
+            <!-- TODO performs as intended but might be unclear and translator implementation dependent (impled not($neg)) -->
+            <xsl:when test="$code = '170497006'">
                 <fact concept="{ $Isolation-Prefix }ISO">
                     <xsl:call-template name="GetEffectiveTimes"/>
                 </fact>
@@ -526,21 +543,20 @@
                 <xsl:choose>
                     <!-- SNOMED-Code vorhanden -->
                     <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="$IsolationReason-Prefix"/>
-                        <xsl:value-of select="../cda:value/@code"/>
+                        <xsl:value-of select="$IsolationReason-Prefix"/><xsl:value-of select="../cda:value/@code"/>
                     </xsl:when>
                     <!-- sonst NullFlavor weitergeben -->
                     <xsl:otherwise>
-                        <xsl:value-of select="$IsolationReason-Prefix"/>
-                        <xsl:value-of select="../cda:value/@nullFlavor"/>
+                        <xsl:value-of select="$IsolationReason-Prefix"/><xsl:value-of select="../cda:value/@nullFlavor"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <xsl:call-template name="GetEffectiveTimes"/>
+            <xsl:call-template name="GetEffectiveTimes"/> <!-- No times in Isolation --> <!-- TODO keep or remove -->
         </fact>
     </xsl:template>
 
     <!-- Kombination Typen Verlegung und Entlassung -->
+    <!-- TODO is the combined prefix wanted? should this be interpreted as simple DISCHARGE? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.74']">
         <xsl:comment>Kombination Typen Verlegung und Entlassung</xsl:comment>
         <fact>
@@ -555,6 +571,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
+            <!-- TODO do we want status code? this is not used anywhere in the old templates -->
             <xsl:attribute name="status">
                 <xsl:value-of select="../cda:statusCode/@code"/>
             </xsl:attribute>
@@ -562,7 +579,8 @@
         </fact>
     </xsl:template>
 
-    <!-- Verlegung    -->
+    <!-- Verlegung  -->
+    <!-- TODO missing prefix : it creates "<fact concept="3"/>" -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.72']">
         <xsl:comment>Verlegung</xsl:comment>
         <fact>
@@ -571,6 +589,7 @@
     </xsl:template>
 
     <!-- Version des EDIS    -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.87']">
         <xsl:comment>Version des EDIS</xsl:comment>
         <fact>
@@ -609,6 +628,7 @@
     </xsl:template>
 
     <!-- Röntgen-Becken durchgeführt -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.53']">
         <xsl:comment>Röntgen-Becken durchgeführt</xsl:comment>
         <fact>
@@ -617,6 +637,7 @@
     </xsl:template>
 
     <!-- Röntgen-Thorax durchgeführt -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.52']">
         <xsl:comment>Röntgen-Thorax durchgeführt</xsl:comment>
         <fact>
@@ -625,6 +646,7 @@
     </xsl:template>
 
     <!-- Röntgen-Wirbelsäule durchgeführt -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.54']">
         <xsl:comment>Röntgen-Wirbelsäule durchgeführt</xsl:comment>
         <fact>
@@ -633,6 +655,7 @@
     </xsl:template>
 
     <!-- Röntgenthorax angefordert -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.51']">
         <xsl:comment>Röntgenthorax angefordert</xsl:comment>
         <fact>
@@ -641,6 +664,7 @@
     </xsl:template>
 
     <!-- Sonographie angefordert -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.50']">
         <xsl:comment>Sonographie angefordert</xsl:comment>
         <fact>
@@ -649,7 +673,7 @@
     </xsl:template>
 
     <!-- Stunde Beginn patientenbezogene Dokumentation -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.78 ']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.78']">
         <xsl:comment>Stunde Beginn patientenbezogene Dokumentation</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -660,6 +684,8 @@
     <fact concept="L:8480-6">
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.38']">
+        <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+        <!-- TODO welche Werte wollen wir ? -->
         <xsl:comment>11 Systolischer Blutdruck</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -667,6 +693,8 @@
     </xsl:template>
 
     <!-- Diastolischer Blutdruck -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.37']">
         <xsl:comment>Diastolischer Blutdruck</xsl:comment>
         <fact>
@@ -675,6 +703,8 @@
     </xsl:template>
 
     <!-- CT Abdomen durchgeführt -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.59']">
         <xsl:comment>CT Abdomen durchgeführt</xsl:comment>
         <fact>
@@ -683,6 +713,8 @@
     </xsl:template>
 
     <!-- CT Extremitäten durchgeführt -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.60']">
         <xsl:comment>CT Extremitäten durchgeführt</xsl:comment>
         <fact>
@@ -691,6 +723,8 @@
     </xsl:template>
 
     <!-- CT HWS durchgeführt -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.57']">
         <xsl:comment>CT HWS durchgeführt</xsl:comment>
         <fact>
@@ -699,7 +733,9 @@
     </xsl:template>
 
     <!-- CT Kopf durchgeführt -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.56 ']">
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.56']">
         <xsl:comment>CT Kopf durchgeführt</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -707,6 +743,8 @@
     </xsl:template>
 
     <!-- CT Thorax durchgeführt -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.58']">
         <xsl:comment>CT Thorax durchgeführt</xsl:comment>
         <fact>
@@ -715,6 +753,8 @@
     </xsl:template>
 
     <!-- CT-/MR-/DS-Angiographie -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.91']">
         <xsl:comment>CT-/MR-/DS-Angiographie</xsl:comment>
         <fact>
@@ -723,6 +763,8 @@
     </xsl:template>
 
     <!-- Datum Beginn patientenbezogene Dokumentation -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.79']">
         <xsl:comment>Datum Beginn patientenbezogene Dokumentation</xsl:comment>
         <fact>
@@ -731,6 +773,8 @@
     </xsl:template>
 
     <!-- Direkter Arztkontakt -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.17']">
         <xsl:comment>Direkter Arztkontakt</xsl:comment>
         <fact>
@@ -739,6 +783,8 @@
     </xsl:template>
 
     <!-- EKG angefordert -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.49']">
         <xsl:comment>EKG angefordert</xsl:comment>
         <fact>
@@ -748,6 +794,8 @@
 
 
     <!-- ESI-Triagefaktoren -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.26']">
         <xsl:comment>ESI-Triagefaktoren</xsl:comment>
         <fact>
@@ -756,6 +804,8 @@
     </xsl:template>
 
     <!-- Ganzkörper-CT durchgeführt -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.55']">
         <xsl:comment>Ganzkörper-CT durchgeführt</xsl:comment>
         <fact>
@@ -767,6 +817,23 @@
     <!-- 12 Herzfrequenz 8867-4
     <fact concept="L:8867-4" </fact>
     -->
+    <!-- TODO incorrect concept code -->
+    <!-- should look like this :-->
+    <!--    <fact concept="LOINC:8867-4" start="2015-01-16T19:24">-->
+    <!--        <value unit="/min" xsi:type="numeric">111</value>-->
+    <!--        <modifier code="effectiveTime">-->
+    <!--            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>201501161924</value>-->
+    <!--        </modifier>-->
+    <!--    </fact>-->
+    <!-- but looks like this :-->
+    <!--    <fact concept="364075005" start="2024-01-17T16:21">-->
+    <!--        <value unit="/min" xsi:type="numeric">80</value>-->
+    <!--        <modifier code="effectiveTime">-->
+    <!--            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>202401171621</value>-->
+    <!--        </modifier>-->
+    <!--    </fact>-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.39']">
         <xsl:comment>12 Herzfrequenz</xsl:comment>
         <fact>
@@ -861,6 +928,8 @@
     </xsl:template>
 
     <!-- 20 Körperkerntemperatur -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.41']">
         <xsl:comment>20 Körperkerntemperatur</xsl:comment>
         <fact>
@@ -869,6 +938,8 @@
     </xsl:template>
 
     <!-- Laboruntersuchung angefordert -->
+    <!-- TODO incorrect concept code, see "12 Herzfrequenz" for example -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.46']">
         <xsl:comment>Laboruntersuchung angefordert</xsl:comment>
         <fact>
@@ -886,10 +957,10 @@
         </fact>
     </xsl:template>
 
-    <!-- Erste Schmerzmessung
-    -->
+    <!-- Erste Schmerzmessung -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.45']">
-        <xsl:comment>21 Schmerzen</xsl:comment>
+        <xsl:comment> Erste Schmerzmessung</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
@@ -917,83 +988,80 @@
     <!-- Auf dem Bogen nicht vorgesehen / Freitext -->
 
     <!-- 804 Verwendetes Ersteinschätzungssystem / 23 Ersteinschätzung / 770 Zeitpunkt der Ersteinschätzung -->
+    <!-- triage systems: https://art-decor.org/ad/#/aktin-/terminology/valueset/1.2.276.0.76.3.1.195.11.12/2024-07-22T15:20:32 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.18']">
 
         <xsl:comment>804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung</xsl:comment>
 
         <fact>
-            <!-- ► concept -->
+            <!-- concept -->
             <xsl:attribute name="concept">
                 <xsl:choose>
-
-                    <!-- ───────────── no triage value at all ───────────── -->
-                    <xsl:when test="not(../cda:value)">
-                        <xsl:value-of select="concat($AKTIN-Prefix,'ASSESSMENT')"/>
-                    </xsl:when>
-
-                    <!-- ───────────── Manchester Triage System ─────────── -->
-                    <xsl:when test="../cda:methodCode/@code='713009001'">
-                        <xsl:text>MTS:</xsl:text>
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:when>
-
-                    <!-- ───────────── Emergency Severity Index ─────────── -->
-                    <xsl:when test="../cda:methodCode/@code='713010006'">
-                        <xsl:text>ESI:</xsl:text>
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:when>
-
-                    <!-- ───────────── SmED (case-insensitive) ───────────── -->
-                    <!--   XSLT 1.0 compatible: translate() for lower-case   -->
-                    <xsl:when test="translate(../cda:methodCode/@code,
-                                   'abcdefghijklmnopqrstuvwxyz',
-                                   'ABCDEFGHIJKLMNOPQRSTUVWXYZ') = 'SMED'">
-                        <xsl:text>SmED:</xsl:text>
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:when>
-
-                    <!-- ───────────── “Other” qualifier ──────────────── -->
-                    <xsl:when test="../cda:methodCode/@code='74964007'">
-                        <xsl:text>AKTIN:ASSESSMENT:OTHER:</xsl:text>
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:when>
-
-                    <!-- ───────────── “None” qualifier ──────────────── -->
-                    <xsl:when test="../cda:methodCode/@code='260413007'">
-                        <xsl:text>AKTIN:ASSESSMENT:NONE:</xsl:text>
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:when>
-
-                    <!-- ───────────── anything else ───────────────────── -->
-                    <xsl:otherwise>
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:otherwise>
-
+                    <!-- TODO current implementation always grabs "1.2.276.0.76.3.1.195.10.18:value" which is the generic=LOINC code but it prefixes the LOINC code with MTS/ESI/SMED -->
+                    <!-- TODO use aktin prefix variable -->
+                    <!-- TODO remove : it must have a value -->
+                    <!-- no triage value at all -->
+<!--                    <xsl:when test="not(../cda:value)"><xsl:value-of select="concat($AKTIN-Prefix,'ASSESSMENT')"/></xsl:when>-->
+                    <!-- Manchester Triage System -->
+                    <xsl:when test="../cda:methodCode/@code='713009001'">MTS:</xsl:when>
+                    <!-- Emergency Severity Index -->
+                    <xsl:when test="../cda:methodCode/@code='713010006'">ESI:</xsl:when>
+                    <!-- SmED (case-insensitive) -->
+                    <xsl:when test="translate(../cda:methodCode/@code, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') = 'SMED'">SMED:</xsl:when>
+                    <!-- “Other” qualifier -->
+                    <xsl:when test="../cda:methodCode/@code='74964007'"><xsl:value-of select="$Assessment-Prefix"/>OTHER:</xsl:when>
+                    <!-- “None” qualifier -->
+                    <xsl:when test="../cda:methodCode/@code='260413007'"><xsl:value-of select="$Assessment-Prefix"/>NONE:</xsl:when>
+                    <!-- TODO remove: it must be one of the other choices -->
+                    <!-- anything else -->
+<!--                    <xsl:otherwise><xsl:value-of select="../cda:value/@code"/></xsl:otherwise>-->
                 </xsl:choose>
+                <xsl:value-of select="../cda:value/@code"/>
             </xsl:attribute>
 
-            <!-- ► start (timestamp) -->
+            <!-- start (timestamp) -->
             <xsl:if test="../cda:effectiveTime/@value">
                 <xsl:attribute name="start">
                     <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
                 </xsl:attribute>
             </xsl:if>
 
-            <!-- ► optional additional time info -->
+            <!-- optional additional time info -->
             <xsl:call-template name="GetEffectiveTimes"/>
 
-            <!-- ► color as modifier for MTS -->
-            <xsl:if test="../cda:methodCode/@code='713009001' and ../cda:value/@code">
+            <!-- color as modifier for MTS -->
+            <!-- TODO MTS (1.2.276.0.76.3.1.195.10.19) can have any number and combination of colors -->
+            <xsl:if test="../cda:entryRelationship/cda:observation/cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.99'">
                 <modifier>
                     <xsl:attribute name="code">color</xsl:attribute>
                     <value>
                         <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:value/@code"/>
+                        <!-- TODO color names, old 1-5 codes (1.2.276.0.76.11.44 2015 version), or SNOMED-CT codes (1.2.276.0.76.3.1.195.5.99)? -->
+                        <!-- TODO blue=5 does not exist anymore in 1.2.276.0.76.3.1.195.5.99 -->
+<!--                    <xsl:choose>-->
+<!--                        <xsl:when test="../cda:entryRelationship/cda:observation/cda:templateId/@root='1.2.276.0.76.3.1.195.10.22'">1</xsl:when>-->
+<!--                        <xsl:when test="../cda:entryRelationship/cda:observation/cda:templateId/@root='1.2.276.0.76.3.1.195.10.23'">2</xsl:when>-->
+<!--                        <xsl:when test="../cda:entryRelationship/cda:observation/cda:templateId/@root='1.2.276.0.76.3.1.195.10.24'">3</xsl:when>-->
+<!--                        <xsl:when test="../cda:entryRelationship/cda:observation/cda:templateId/@root='1.2.276.0.76.3.1.195.10.25'">4</xsl:when>-->
+<!--                    </xsl:choose>-->
+                        <!-- TODO add prefix ? it should be clear without it -->
+                        <xsl:value-of select="../cda:entryRelationship/cda:observation/cda:code/@code"/>
                     </value>
                 </modifier>
             </xsl:if>
+            <!-- TODO remove: always grabs always grabs "1.2.276.0.76.3.1.195.10.18:value" -->
+<!--            <xsl:if test="../cda:methodCode/@code='713009001' and ../cda:value/@code">-->
+<!--                <modifier>-->
+<!--                    <xsl:attribute name="code">color</xsl:attribute>-->
+<!--                    <value>-->
+<!--                        <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                        <xsl:value-of select="../cda:value/@code"/>-->
+<!--                    </value>-->
+<!--                </modifier>-->
+<!--            </xsl:if>-->
 
-            <!-- ► generic triage level as modifier -->
+            <!-- generic triage level as modifier -->
+            <!-- TODO remove if condition ? : code must have a value -->
             <xsl:if test="../cda:value/@code">
                 <modifier>
                     <xsl:attribute name="code">level</xsl:attribute>
@@ -1014,17 +1082,21 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.21']">
         <xsl:comment>MTS-Präsentationsdiagramm</xsl:comment>
         <fact>
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$AKTIN-Prefix"/>MTS-PRAESDIAG</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>MTS-PRAESDIAG</xsl:attribute>
+            <!-- TODO remove : code is always the same SNOMED-CT code -->
             <!-- Das eigentliche Code-Attribut: -->
-            <modifier>
-                <xsl:attribute name="code">code</xsl:attribute>
-                <value>
-                    <xsl:attribute name="xsi:type">string</xsl:attribute>
-                    <xsl:value-of select="../cda:code/@code"/>
-                </value>
-            </modifier>
+<!--            <modifier>-->
+<!--                <xsl:attribute name="code">code</xsl:attribute>-->
+<!--                <value>-->
+<!--                    <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                    <xsl:value-of select="../cda:code/@code"/>-->
+<!--                </value>-->
+<!--            </modifier>-->
             <!-- value/@code -->
+            <!-- TODO use this or "<xsl:call-template name="templateGetConceptValue"/>" ?
+                     It would get the codeSystem and displayname of value as modifiers and set the code and time as attribute;
+                     codeSystem is 1.2.276.0.76.3.1.195.11.10 which is a dynamic reference currently to 1.2.276.0.76.3.1.195.5.101;
+                     it does not have a timestame -->
             <modifier>
                 <xsl:attribute name="code">value</xsl:attribute>
                 <value>
@@ -1032,18 +1104,20 @@
                     <xsl:value-of select="../cda:value/@code"/>
                 </value>
             </modifier>
+            <!-- TODO remove : reference does not exist in 1.2.276.0.76.3.1.195.10.21 -->
             <!-- reference -->
-            <modifier>
-                <xsl:attribute name="code">reference</xsl:attribute>
-                <value>
-                    <xsl:attribute name="xsi:type">string</xsl:attribute>
-                    <xsl:value-of select="../cda:reference/@value"/>
-                </value>
-            </modifier>
+<!--            <modifier>-->
+<!--                <xsl:attribute name="code">reference</xsl:attribute>-->
+<!--                <value>-->
+<!--                    <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                    <xsl:value-of select="../cda:reference/@value"/>-->
+<!--                </value>-->
+<!--            </modifier>-->
         </fact>
     </xsl:template>
 
     <!-- Name des EDIS -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.86']">
         <xsl:comment>Name des EDIS</xsl:comment>
         <fact>
@@ -1105,7 +1179,8 @@
     </xsl:template>
 
     <!-- Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien -->
-    <!-- TODO: How are allergies now handled? -->
+    <!-- TODO: How are allergies now handled? https://art-decor.org/ad/#/aktin-/terminology/codesystems/1.2.276.0.76.3.1.195.5.101/2019-08-16T00:00:00 -->
+    <!-- TODO this template is still listed as active but not part of the 2024 templates; do we still accept this here ? -->
 <!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">-->
 <!--        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>-->
 <!--        <fact>-->
@@ -1123,27 +1198,49 @@
 <!--    </xsl:template>-->
 
     <!-- 36 Beschwerden bei Vorstellung / Freitext-->
-
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4040 ']">
-        <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
-            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>
-                </xsl:attribute>
-            </xsl:if>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="../cda:text"/>
-            </value>
-        </fact>
-    </xsl:template>
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3048']">-->
+<!--        <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>-->
+<!--        <fact>-->
+<!--            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>-->
+<!--            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">-->
+<!--                <xsl:attribute name="start">-->
+<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>-->
+<!--                </xsl:attribute>-->
+<!--            </xsl:if>-->
+<!--            <value>-->
+<!--                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                <xsl:value-of select="../cda:text"/>-->
+<!--            </value>-->
+<!--        </fact>-->
+<!--    </xsl:template>-->
 
     <!-- 212 Symptomdauer
     siehe 805 CEDIS-->
 
     <!-- 37 Zeitpunkt erster/letzter Arztkontakt-->
+    <!-- TODO does not use the "start" attribute -->
+    <!-- used to produce :-->
+    <!--                <fact concept="AKTIN:PHYSENCOUNTER" start="2024-05-12T13:01">-->
+    <!--                    <modifier code="timeLow">-->
+    <!--                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>202405121301</value>-->
+    <!--                    </modifier>-->
+    <!--                    <modifier code="timeHigh">-->
+    <!--                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>202405121345</value>-->
+    <!--                    </modifier>-->
+    <!--                </fact>-->
+    <!-- now produces :-->
+    <!--                <fact concept="AKTIN:PHYSENCOUNTER">-->
+    <!--                    <modifier code="timeLow">-->
+    <!--                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>202401171618</value>-->
+    <!--                    </modifier>-->
+    <!--                    <modifier code="timeHigh">-->
+    <!--                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>202401171714</value>-->
+    <!--                    </modifier>-->
+    <!--                </fact>-->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:performer/cda:time">
         <xsl:if test="./cda:low/@value or ./cda:high/@value">
             <xsl:comment>37 Zeitpunkt erster/letzter Arztkontakt</xsl:comment>
@@ -1155,6 +1252,8 @@
     </xsl:template>
 
     <!-- 38 Zeitpunkt Therapiebeginn/Ende-->
+    <!-- TODO see 37 -->
+    <!-- TODO does not make use of the start/end attributes specified in excel (use old version as reference and add attribut "end") -->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:effectiveTime">
         <xsl:if test="./cda:low/@value or ./cda:high/@value">
             <xsl:comment>38 Zeitpunkt Therapiebeginn/Ende</xsl:comment>
@@ -1172,6 +1271,7 @@
     <!-- 46 Procedere / Freitext-->
 
     <!-- 42 Abschlussdiagnosen / Freitext-->
+    <!-- TODO this whole template requires a deeper look at -->
     <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.68']">
         <xsl:comment>44 Abschlussdiagnosen</xsl:comment>
 
@@ -1301,44 +1401,48 @@
     <!-- 806 multiresistente Erreger -->
     <!-- 807 multiresistente Erreger: Erregertyp -->
     <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4039']">
-        <xsl:comment>Problem Concern Act (Text/CEDIS)</xsl:comment>
-        <xsl:for-each select="../cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.10.4040']">
-            <!-- Fact for CEDIS code (if present) -->
-            <xsl:if test="cda:value/@codeSystem='1.2.276.0.76.5.439' and cda:value/@code">
-                <fact>
-                    <xsl:attribute name="concept">
-                        <xsl:value-of select="$CEDIS-Prefix"/>
-                        <xsl:value-of select="cda:value/@code"/>
-                    </xsl:attribute>
-                    <xsl:call-template name="GetEffectiveTimes"/>
-                    <!-- statusCode modifier (if present) -->
-                    <xsl:if test="cda:statusCode/@code">
-                        <modifier>
-                            <xsl:attribute name="code">status</xsl:attribute>
-                            <value>
-                                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                                <xsl:value-of select="cda:statusCode/@code"/>
-                            </value>
-                        </modifier>
-                    </xsl:if>
-                </fact>
-            </xsl:if>
-            <!-- Fact for Free-Text complaint (if present) -->
-            <xsl:if test="cda:text and normalize-space(cda:text) != ''">
-                <fact>
-                    <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
-                    <xsl:call-template name="GetEffectiveTimes"/>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="cda:text"/>
-                    </value>
-                </fact>
-            </xsl:if>
-        </xsl:for-each>
-    </xsl:template>
+    <!-- TODO 706/807 wurden in 2024 entfernt -->
+
+    <!-- TODO do we want these details now? were already supported in v2 but not used ; also creates redundant info -->
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4039']">-->
+<!--        <xsl:comment>Problem Concern Act (Text/CEDIS)</xsl:comment>-->
+<!--        <xsl:for-each select="../cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.10.4040']">-->
+<!--            &lt;!&ndash; Fact for CEDIS code (if present) &ndash;&gt;-->
+<!--            <xsl:if test="cda:value/@codeSystem='1.2.276.0.76.5.439' and cda:value/@code">-->
+<!--                <fact>-->
+<!--                    <xsl:attribute name="concept">-->
+<!--                        <xsl:value-of select="$CEDIS-Prefix"/>-->
+<!--                        <xsl:value-of select="cda:value/@code"/>-->
+<!--                    </xsl:attribute>-->
+<!--                    <xsl:call-template name="GetEffectiveTimes"/>-->
+<!--                    &lt;!&ndash; statusCode modifier (if present) &ndash;&gt;-->
+<!--                    <xsl:if test="cda:statusCode/@code">-->
+<!--                        <modifier>-->
+<!--                            <xsl:attribute name="code">status</xsl:attribute>-->
+<!--                            <value>-->
+<!--                                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                                <xsl:value-of select="cda:statusCode/@code"/>-->
+<!--                            </value>-->
+<!--                        </modifier>-->
+<!--                    </xsl:if>-->
+<!--                </fact>-->
+<!--            </xsl:if>-->
+<!--            &lt;!&ndash; Fact for Free-Text complaint (if present) &ndash;&gt;-->
+<!--            <xsl:if test="normalize-space(cda:text) != ''">-->
+<!--                <fact>-->
+<!--                    <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>-->
+<!--                    <xsl:call-template name="GetEffectiveTimes"/>-->
+<!--                    <value>-->
+<!--                        <xsl:attribute name="xsi:type">string</xsl:attribute>-->
+<!--                        <xsl:value-of select="cda:text"/>-->
+<!--                    </value>-->
+<!--                </fact>-->
+<!--            </xsl:if>-->
+<!--        </xsl:for-each>-->
+<!--    </xsl:template>-->
 
     <!-- Pulsfrequenz -->
+    <!-- TODO gleiche wie 12 Herzfrequenz ? 1.2.276.0.76.3.1.195.10.40 ist nicht im Beispiel -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.40']">
         <xsl:comment>Pulsfrequenz</xsl:comment>
         <fact>
@@ -1347,6 +1451,7 @@
     </xsl:template>
 
     <!-- Ungeplante Vorstellung zum gleichen Vorstellungsgrund innerhalb von 28 Tagen -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.14']">
         <xsl:comment>Ungeplante Vorstellung zum gleichen Vorstellungsgrund innerhalb von 28 Tagen</xsl:comment>
         <fact>
@@ -1412,11 +1517,12 @@
     </xsl:template>
 
     <!-- Unfall Anamnese -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.28']">
         <xsl:comment>Unfall-Anamnese</xsl:comment>
         <fact>
             <!-- concept = LOINC:74209-8 -->
-            <xsl:attribute name="concept">AKTIN:ACCIDENT:</xsl:attribute>
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>ACCIDENT:</xsl:attribute>
             <!-- Zeitpunkt (start) -->
             <xsl:if test="../cda:effectiveTime/cda:low/@value">
                 <xsl:attribute name="start">
@@ -1455,7 +1561,7 @@
                 <xsl:call-template name="UnfallartTraumaregister"/>
             </xsl:for-each>
 
-            <!-- ► Reise-Anamnese-Section über Referenz suchen -->
+            <!-- Reise-Anamnese-Section über Referenz suchen -->
             <xsl:variable name="refVal"
                           select="../cda:entryRelationship/cda:act
                              /cda:text/cda:reference/@value"/>
@@ -1470,6 +1576,7 @@
         </fact>
     </xsl:template>
 
+    <!-- Unfallursache Kinetik -->
     <xsl:template name="UnfallursacheKinetik">
         <xsl:comment>UnfallursacheKinetik</xsl:comment>
 
@@ -1563,6 +1670,9 @@
 
 
     <!-- 596	Patient verlegt / entlassen nach -->
+    <!-- TODO Kombination Typen Verlegung und Entlassung 1.2.276.0.76.3.1.195.10.74 = cda:dischargeDispositionCode -->
+    <!-- TODO Verlegung 1.2.276.0.76.3.1.195.10.72 -->
+    <!-- TODO SNOMED Codes https://art-decor.org/ad/#/aktin-/terminology/browser/2.16.840.1.113883.6.96/concept/183515008 -->
     <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode">
         <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
         <fact>
@@ -1585,6 +1695,8 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
+
+    <!-- TODO this template references a codesystem https://art-decor.org/ad/#/aktin-/terminology/valueset/1.2.276.0.76.3.1.195.11.26/2024-02-19T13:08:53 -->
     <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.3.1.195.11.26']">
         <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
         <fact>
@@ -1604,6 +1716,24 @@
     </xsl:template>
 
     <!--  Medikation (TemplateId 1.2.276.0.76.3.1.195.10.67) -->
+    <!-- TODO welche Werte wollen wir ? -->
+    <!-- currently creates :-->
+    <!--    <fact concept="AKTIN:MEDICATION:DRUG">-->
+    <!--        <modifier code="text">-->
+    <!--            <value xsi:type="string"/>-->
+    <!--        </modifier>-->
+    <!--        <modifier code="status">-->
+    <!--            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>active</value>-->
+    <!--        </modifier>-->
+    <!--        <modifier code="consumable">-->
+    <!--            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>M01AE01</value>-->
+    <!--        </modifier>-->
+    <!--        <modifier code="substanceAdministration">-->
+    <!--            <value xsi:type="string"/>-->
+    <!--        </modifier>-->
+    <!--    </fact>-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.67']">
         <xsl:comment>Medikation (Medication Statement)</xsl:comment>
         <fact>
@@ -1755,6 +1885,7 @@
     </xsl:template>
 
     <!-- Medizinische Begleitung -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.12']">
         <xsl:comment>Medizinische Begleitung</xsl:comment>
         <fact>
@@ -1763,6 +1894,7 @@
     </xsl:template>
 
     <!-- Mikrobiologie angefordert -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.47']">
         <xsl:comment>Mikrobiologie angefordert</xsl:comment>
         <fact>
@@ -1771,6 +1903,7 @@
     </xsl:template>
 
     <!-- MRT durchgeführt -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.61']">
         <xsl:comment>MRT durchgeführt</xsl:comment>
         <fact>
@@ -1837,6 +1970,8 @@
     </xsl:template>
 
     <!-- Wildcard Diagnostik-->
+    <!-- TODO has no example and is new in 2024 -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.89']">
         <xsl:comment>Wildcard Diagnostik</xsl:comment>
         <fact>
@@ -1940,6 +2075,8 @@
     </xsl:template>
 
     <!-- Wildcard Therapie-->
+    <!-- TODO has no example and is new in 2024 -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.90']">
         <xsl:comment>Wildcard Therapie</xsl:comment>
         <fact>
@@ -2023,14 +2160,16 @@
     </xsl:template>
 
     <!--  Zeit bis zum Export -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.85']">
-        <xsl:comment> Zeit bis zum Export</xsl:comment>
+        <xsl:comment>Zeit bis zum Export</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
     <!--  Zeit seit letzter Vorstellung zum gleichen Vorstellungsgrund -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.15']">
         <xsl:comment>Zeit seit letzter Vorstellung zum gleichen Vorstellungsgrund</xsl:comment>
         <fact>
@@ -2071,6 +2210,7 @@
     </xsl:template>
 
     <!-- Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten  -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.83']">
         <xsl:comment>Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten</xsl:comment>
         <fact>
@@ -2087,6 +2227,7 @@
     </xsl:template>
 
     <!-- Zeitpunkt Export aus EDIS  -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.88']">
         <xsl:comment>Zeitpunkt Export aus EDIS</xsl:comment>
         <fact>
@@ -2095,6 +2236,7 @@
     </xsl:template>
 
     <!-- Zeitpunkt Patient verlegt / entlassen nach  -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.77']">
         <xsl:comment>Zeitpunkt Patient verlegt / entlassen nach</xsl:comment>
         <fact>
@@ -2103,6 +2245,7 @@
     </xsl:template>
 
     <!-- Zeitpunkt Patient verlegungs- / entlassungsfähig  -->
+    <!-- TODO has no example and is new in 2024 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.76']">
         <xsl:comment>Zeitpunkt Patient verlegungs- / entlassungsfähig</xsl:comment>
         <fact>
@@ -2111,14 +2254,16 @@
     </xsl:template>
 
     <!-- Zuweisung mit Zuweiser  -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4038 ']">
-        <xsl:comment>Zuweisung mit Zuweiser</xsl:comment>
-        <fact>
-            <xsl:call-template name="templateGetConceptCode"/>
-        </fact>
-    </xsl:template>
+    <!-- TODO do we want these details now? were already supported in v2 but not used -->
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4038']">-->
+<!--        <xsl:comment>Zuweisung mit Zuweiser</xsl:comment>-->
+<!--        <fact>-->
+<!--            <xsl:call-template name="templateGetConceptCode"/>-->
+<!--        </fact>-->
+<!--    </xsl:template>-->
 
     <!-- UV Subordinate Substance Administration -->
+    <!-- TODO welche Werte wollen wir ? -->
     <xsl:template match="cda:templateId[@root='2.16.840.1.113883.10.21.4.6']">
         <xsl:comment>UV Subordinate Substance Administration</xsl:comment>
         <xsl:variable name="sub" select=".."/>
@@ -2263,6 +2408,10 @@
         <xsl:attribute name="concept">
             <xsl:choose>
                 <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>
+                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.96'"><xsl:value-of select="$SNOMED-Prefix"/></xsl:when>
+                <!-- TODO different prefix for future LOINC codes ? -->
+                <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.98'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>
+                <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.99'"><xsl:value-of select="$SNOMED-CT-Prefix"/></xsl:when>
             </xsl:choose>
             <xsl:value-of select="../cda:code/@code"/>
         </xsl:attribute>
