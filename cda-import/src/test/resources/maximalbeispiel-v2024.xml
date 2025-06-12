@@ -538,8 +538,8 @@
             </component>
 
             <component typeCode="COMP" contextConductionInd="true">
+                <!-- Vitalparameter/Scores -->
                 <section classCode="DOCSECT">
-                    <!-- Vitalparameter/Scores -->
                     <templateId root="1.2.276.0.76.3.1.195.10.33"/>
                     <code code="8716-3" codeSystem="2.16.840.1.113883.6.1"/>
                     <title>Vitalparameter/Scores</title>
