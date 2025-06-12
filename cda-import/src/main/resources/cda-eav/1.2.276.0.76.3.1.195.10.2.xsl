@@ -170,17 +170,20 @@
                     <xsl:for-each select="/cda:ClinicalDocument/cda:informationRecipient/cda:intendedRecipient">
                         <fact concept="RECIPIENT">
                             <modifier code="id">
-                                <value xsi:type="string">
+                                <value>
+                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                                     <xsl:value-of select="cda:id/@extension"/>
                                 </value>
                             </modifier>
                             <modifier code="type">
-                                <value xsi:type="string">
+                                <value>
+                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                                     <xsl:value-of select="../@typeCode"/>
                                 </value>
                             </modifier>
                             <modifier code="organization">
-                                <value xsi:type="string">
+                                <value>
+                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                                     <xsl:value-of select="cda:receivedOrganization/cda:name"/>
                                 </value>
                             </modifier>
@@ -313,7 +316,8 @@
         <xsl:if test="./cda:code/@code or ./cda:code/@nullFlavor">
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KVFALL</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:choose>
                         <xsl:when test="./cda:code/@code">
                             <xsl:value-of select="./cda:code/@code"/>
@@ -982,7 +986,8 @@
             <xsl:if test="../cda:methodCode/@code='713009001' and ../cda:value/@code">
                 <modifier>
                     <xsl:attribute name="code">color</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:value/@code"/>
                     </value>
                 </modifier>
@@ -992,7 +997,8 @@
             <xsl:if test="../cda:value/@code">
                 <modifier>
                     <xsl:attribute name="code">level</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:value/@code"/>
                     </value>
                 </modifier>
@@ -1013,21 +1019,24 @@
             <!-- Das eigentliche Code-Attribut: -->
             <modifier>
                 <xsl:attribute name="code">code</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="../cda:code/@code"/>
                 </value>
             </modifier>
             <!-- value/@code -->
             <modifier>
                 <xsl:attribute name="code">value</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="../cda:value/@code"/>
                 </value>
             </modifier>
             <!-- reference -->
             <modifier>
                 <xsl:attribute name="code">reference</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="../cda:reference/@value"/>
                 </value>
             </modifier>
@@ -1307,7 +1316,8 @@
                     <xsl:if test="cda:statusCode/@code">
                         <modifier>
                             <xsl:attribute name="code">status</xsl:attribute>
-                            <value xsi:type="string">
+                            <value>
+                                <xsl:attribute name="xsi:type">string</xsl:attribute>
                                 <xsl:value-of select="cda:statusCode/@code"/>
                             </value>
                         </modifier>
@@ -1319,7 +1329,8 @@
                 <fact>
                     <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
                     <xsl:call-template name="GetEffectiveTimes"/>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="cda:text"/>
                     </value>
                 </fact>
@@ -1416,7 +1427,8 @@
             <xsl:if test="../cda:text">
                 <modifier>
                     <xsl:attribute name="code">description</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:text"/>
                     </value>
                 </modifier>
@@ -1425,7 +1437,8 @@
             <xsl:if test="../cda:participant/cda:participantRole/cda:code/@code">
                 <modifier>
                     <xsl:attribute name="code">vehicle</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:participant/cda:participantRole/cda:code/@code"/>
                     </value>
                 </modifier>
@@ -1463,7 +1476,8 @@
         <!-- Hauptursache -->
         <modifier>
             <xsl:attribute name="code">primaryCause</xsl:attribute>
-            <value xsi:type="string">
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="cda:value/@code"/>
             </value>
         </modifier>
@@ -1474,7 +1488,8 @@
                 <xsl:attribute name="code">
                     <xsl:value-of select="cda:name/@code"/>
                 </xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="cda:value/@code"/>
                 </value>
             </modifier>
@@ -1488,7 +1503,8 @@
         <xsl:comment>UnfallartTraumaregister</xsl:comment>
         <modifier>
             <xsl:attribute name="code">injuryType</xsl:attribute>
-            <value xsi:type="string">
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="cda:value/@code"/>
             </value>
         </modifier>
@@ -1496,7 +1512,8 @@
         <xsl:if test="cda:value/@displayName">
             <modifier>
                 <xsl:attribute name="code">displayName</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="cda:value/@displayName"/>
                 </value>
             </modifier>
@@ -1513,7 +1530,8 @@
          [cda:templateId/@root='1.2.276.0.76.3.1.195.10.77']">
             <modifier>
                 <xsl:attribute name="code">traveledAbroad</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="cda:value/@value"/>
                 </value>
             </modifier>
@@ -1525,7 +1543,8 @@
 
             <modifier>
                 <xsl:attribute name="code">visitedCountry</xsl:attribute>
-                <value xsi:type="string">
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="cda:value/@code"/>
                 </value>
             </modifier>
@@ -1533,7 +1552,8 @@
             <xsl:for-each select="cda:value/cda:translation">
                 <modifier>
                     <xsl:attribute name="code">visitedCountry</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="@code"/>
                     </value>
                 </modifier>
@@ -1598,7 +1618,8 @@
             <xsl:if test="../cda:text">
                 <modifier>
                     <xsl:attribute name="code">text</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:text"/>
                     </value>
                 </modifier>
@@ -1607,7 +1628,8 @@
             <xsl:if test="../cda:reference/@value">
                 <modifier>
                     <xsl:attribute name="code">reference</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:reference/@value"/>
                     </value>
                 </modifier>
@@ -1616,7 +1638,8 @@
             <xsl:if test="../cda:statusCode/@code">
                 <modifier>
                     <xsl:attribute name="code">status</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:statusCode/@code"/>
                     </value>
                 </modifier>
@@ -1627,7 +1650,8 @@
             <xsl:if test="../cda:routeCode/@code">
                 <modifier>
                     <xsl:attribute name="code">route</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:routeCode/@code"/>
                     </value>
                 </modifier>
@@ -1636,7 +1660,8 @@
             <xsl:if test="../cda:doseQuantity/@value">
                 <modifier>
                     <xsl:attribute name="code">dose</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:value-of select="../cda:doseQuantity/@value"/>
                     </value>
                     <xsl:if test="../cda:doseQuantity/@unit">
@@ -1650,7 +1675,8 @@
             <xsl:if test="../cda:maxDoseQuantity/@value">
                 <modifier>
                     <xsl:attribute name="code">maxDose</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:value-of select="../cda:maxDoseQuantity/@value"/>
                     </value>
                     <xsl:if test="../cda:maxDoseQuantity/@unit">
@@ -1664,7 +1690,8 @@
             <xsl:if test="../cda:administrationUnitCode/@code">
                 <modifier>
                     <xsl:attribute name="code">adminUnit</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:administrationUnitCode/@code"/>
                     </value>
                 </modifier>
@@ -1673,7 +1700,8 @@
             <xsl:if test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
                 <modifier>
                     <xsl:attribute name="code">consumable</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
                     </value>
                 </modifier>
@@ -1682,7 +1710,8 @@
             <xsl:for-each select="../cda:entryRelationship/cda:substanceAdministration">
                 <modifier>
                     <xsl:attribute name="code">substanceAdministration</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="cda:code/@code"/>
                     </value>
                 </modifier>
@@ -1691,7 +1720,8 @@
             <xsl:if test="../cda:sequenceNumber">
                 <modifier>
                     <xsl:attribute name="code">sequenceNumber</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:value-of select="../cda:sequenceNumber"/>
                     </value>
                 </modifier>
@@ -1700,7 +1730,8 @@
             <xsl:for-each select="../cda:approachSiteCode">
                 <modifier>
                     <xsl:attribute name="code">approachSite</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="@code"/>
                     </value>
                 </modifier>
@@ -1709,7 +1740,8 @@
             <xsl:if test="../cda:rateQuantity/@value">
                 <modifier>
                     <xsl:attribute name="code">rate</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:value-of select="../cda:rateQuantity/@value"/>
                     </value>
                     <xsl:if test="../cda:rateQuantity/@unit">
@@ -1817,7 +1849,8 @@
             <xsl:for-each select="../cda:id">
                 <modifier>
                     <xsl:attribute name="code">id</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="@root"/>
                         <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
                     </value>
@@ -1828,7 +1861,8 @@
             <xsl:if test="../cda:effectiveTime/cda:low/@value">
                 <modifier>
                     <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
                     </value>
                 </modifier>
@@ -1836,7 +1870,8 @@
             <xsl:if test="../cda:effectiveTime/cda:high/@value">
                 <modifier>
                     <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:effectiveTime/cda:high/@value"/>
                     </value>
                 </modifier>
@@ -1844,7 +1879,8 @@
             <xsl:if test="../cda:effectiveTime[@xsi:type='TS']/@value">
                 <modifier>
                     <xsl:attribute name="code">effectiveTimeTS</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:effectiveTime[@xsi:type='TS']/@value"/>
                     </value>
                 </modifier>
@@ -1854,7 +1890,8 @@
             <xsl:if test="../@negationInd">
                 <modifier>
                     <xsl:attribute name="code">negationInd</xsl:attribute>
-                    <value xsi:type="boolean">
+                    <value>
+                        <xsl:attribute name="xsi:type">boolean</xsl:attribute>
                         <xsl:value-of select="../@negationInd"/>
                     </value>
                 </modifier>
@@ -1884,7 +1921,8 @@
             <xsl:if test="../cda:text/cda:reference/@value">
                 <modifier>
                     <xsl:attribute name="code">textReference</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:text/cda:reference/@value"/>
                     </value>
                 </modifier>
@@ -1892,7 +1930,8 @@
             <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
                 <modifier>
                     <xsl:attribute name="code">externalDefinition</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/>
                     </value>
                 </modifier>
@@ -1913,7 +1952,8 @@
             <xsl:for-each select="../cda:id">
                 <modifier>
                     <xsl:attribute name="code">id</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="@root"/>
                         <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
                     </value>
@@ -1924,7 +1964,8 @@
             <xsl:if test="../cda:effectiveTime/cda:low/@value">
                 <modifier>
                     <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
                     </value>
                 </modifier>
@@ -1932,7 +1973,8 @@
             <xsl:if test="../cda:effectiveTime/cda:high/@value">
                 <modifier>
                     <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:effectiveTime/cda:high/@value"/>
                     </value>
                 </modifier>
@@ -1940,7 +1982,8 @@
             <xsl:if test="../cda:effectiveTime[@xsi:type='TS']/@value">
                 <modifier>
                     <xsl:attribute name="code">effectiveTimeTS</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:effectiveTime[@xsi:type='TS']/@value"/>
                     </value>
                 </modifier>
@@ -1950,7 +1993,8 @@
             <xsl:if test="../@negationInd">
                 <modifier>
                     <xsl:attribute name="code">negationInd</xsl:attribute>
-                    <value xsi:type="boolean">
+                    <value>
+                        <xsl:attribute name="xsi:type">boolean</xsl:attribute>
                         <xsl:value-of select="../@negationInd"/>
                     </value>
                 </modifier>
@@ -1960,7 +2004,8 @@
             <xsl:if test="../cda:text/cda:reference/@value">
                 <modifier>
                     <xsl:attribute name="code">textReference</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:text/cda:reference/@value"/>
                     </value>
                 </modifier>
@@ -1968,7 +2013,8 @@
             <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
                 <modifier>
                     <xsl:attribute name="code">externalDefinition</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/>
                     </value>
                 </modifier>
@@ -2086,7 +2132,8 @@
             <xsl:if test="$sub/cda:doseQuantity/@value">
                 <modifier>
                     <xsl:attribute name="code">dose</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:if test="$sub/cda:doseQuantity/@unit">
                             <xsl:attribute name="unit">
                                 <xsl:value-of select="$sub/cda:doseQuantity/@unit"/>
@@ -2099,7 +2146,8 @@
             <xsl:if test="$sub/cda:doseQuantity/cda:low/@value or $sub/cda:doseQuantity/cda:high/@value">
                 <modifier>
                     <xsl:attribute name="code">doseRange</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:if test="$sub/cda:doseQuantity/cda:low/@value">
                             <xsl:text>low=</xsl:text>
                             <xsl:value-of select="$sub/cda:doseQuantity/cda:low/@value"/>
@@ -2124,7 +2172,8 @@
             <xsl:if test="$sub/cda:rateQuantity/@value">
                 <modifier>
                     <xsl:attribute name="code">rate</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:if test="$sub/cda:rateQuantity/@unit">
                             <xsl:attribute name="unit">
                                 <xsl:value-of select="$sub/cda:rateQuantity/@unit"/>
@@ -2139,7 +2188,8 @@
             <xsl:if test="$sub/cda:maxDoseQuantity/@value">
                 <modifier>
                     <xsl:attribute name="code">maxDose</xsl:attribute>
-                    <value xsi:type="numeric">
+                    <value>
+                        <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                         <xsl:if test="$sub/cda:maxDoseQuantity/@unit">
                             <xsl:attribute name="unit">
                                 <xsl:value-of select="$sub/cda:maxDoseQuantity/@unit"/>
@@ -2154,7 +2204,8 @@
             <xsl:if test="$sub/cda:administrationUnitCode/@code">
                 <modifier>
                     <xsl:attribute name="code">adminUnit</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="$sub/cda:administrationUnitCode/@code"/>
                     </value>
                 </modifier>
@@ -2180,7 +2231,8 @@
                 <xsl:if test="@xsi:type">
                     <modifier>
                         <xsl:attribute name="code">effectiveTimeType</xsl:attribute>
-                        <value xsi:type="string">
+                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>
                             <xsl:value-of select="@xsi:type"/>
                         </value>
                     </modifier>
@@ -2191,7 +2243,8 @@
             <xsl:if test="$sub/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/@nullFlavor">
                 <modifier>
                     <xsl:attribute name="code">nullFlavor</xsl:attribute>
-                    <value xsi:type="string">
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
                         <xsl:value-of select="$sub/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/@nullFlavor"/>
                     </value>
                 </modifier>
