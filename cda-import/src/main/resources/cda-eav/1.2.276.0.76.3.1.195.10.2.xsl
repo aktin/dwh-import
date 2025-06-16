@@ -102,6 +102,7 @@
     <!-- Concept Code Prefix for Wildcard Therapie Codes -->
     <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WILDCARDTHERAPY:</xsl:variable>
 
+    <!-- Prefix for UV Subordinate Administration Codes -->
     <xsl:variable name="UVSubordinateAdministration-Prefix">AKTIN:UVSSA:</xsl:variable>
 
 
