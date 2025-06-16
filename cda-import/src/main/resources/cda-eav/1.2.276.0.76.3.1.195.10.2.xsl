@@ -399,7 +399,7 @@
                     <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="GetNumericValues"/>
+            <xsl:call-template name="GetstringValues"/>
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
@@ -1274,7 +1274,7 @@
                     <xsl:attribute name="unit">
                         <xsl:value-of select="../cda:effectiveTime/cda:width/@unit"/>
                     </xsl:attribute>
-                    <xsl:attribute name="xsi:type">numeric</xsl:attribute>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="../cda:effectiveTime/cda:width/@value"/>
                 </value>
             </fact>
@@ -1676,7 +1676,7 @@
                     <xsl:if test="cda:doseQuantity/@unit">
                         <xsl:attribute name="unit"><xsl:value-of select="cda:doseQuantity/@unit"/></xsl:attribute>
                     </xsl:if>
-                    <value xsi:type="numeric"><xsl:value-of select="cda:doseQuantity/@value"/></value>
+                    <value xsi:type="string"><xsl:value-of select="cda:doseQuantity/@value"/></value>
                 </modifier>
             </xsl:if>
             <!-- Rate -->
@@ -1686,7 +1686,7 @@
                     <xsl:if test="cda:rateQuantity/@unit">
                         <xsl:attribute name="unit"><xsl:value-of select="cda:rateQuantity/@unit"/></xsl:attribute>
                     </xsl:if>
-                    <value xsi:type="numeric"><xsl:value-of select="cda:rateQuantity/@value"/></value>
+                    <value xsi:type="string"><xsl:value-of select="cda:rateQuantity/@value"/></value>
                 </modifier>
             </xsl:if>
             <!-- Max Dose -->
@@ -1696,7 +1696,7 @@
                     <xsl:if test="cda:maxDoseQuantity/@unit">
                         <xsl:attribute name="unit"><xsl:value-of select="cda:maxDoseQuantity/@unit"/></xsl:attribute>
                     </xsl:if>
-                    <value xsi:type="numeric"><xsl:value-of select="cda:maxDoseQuantity/@value"/></value>
+                    <value xsi:type="string"><xsl:value-of select="cda:maxDoseQuantity/@value"/></value>
                 </modifier>
             </xsl:if>
             <!-- Administration Unit -->
@@ -1739,7 +1739,7 @@
             <xsl:if test="cda:sequenceNumber">
                 <modifier>
                     <xsl:attribute name="code">sequenceNumber</xsl:attribute>
-                    <value xsi:type="numeric"><xsl:value-of select="cda:sequenceNumber"/></value>
+                    <value xsi:type="string"><xsl:value-of select="cda:sequenceNumber"/></value>
                 </modifier>
             </xsl:if>
         </fact>
@@ -2133,7 +2133,7 @@
                 <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:call-template name="GetNumericValues"/>
+        <xsl:call-template name="GetstringValues"/>
         <xsl:call-template name="GetEffectiveTimes"/>
     </xsl:template>
 
@@ -2280,13 +2280,13 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="GetNumericValues">
+    <xsl:template name="GetstringValues">
         <xsl:if test="../cda:value/@unit">
             <value>
                 <xsl:attribute name="unit">
                     <xsl:value-of select="../cda:value/@unit"/>
                 </xsl:attribute>
-                <xsl:attribute name="xsi:type">numeric</xsl:attribute>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="../cda:value/@value"/>
             </value>
         </xsl:if>
