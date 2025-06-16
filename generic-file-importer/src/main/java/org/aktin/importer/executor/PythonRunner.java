@@ -108,6 +108,7 @@ public class PythonRunner implements Runnable {
     public void submitTask(PythonScriptTask task) {
         synchronized (queue) {
             queue.add(task);
+            changeOperationPropertyToImporting(task.getId());
             changeTaskState(task.getId(), PropertiesState.queued);
             queue.notify();
         }
@@ -271,10 +272,7 @@ public class PythonRunner implements Runnable {
     private void writeSuccessProperty(Properties properties) {
         long finishedTime = System.currentTimeMillis();
         String uuid = properties.getProperty(PropertiesKey.id.name());
-        PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
-        if (operation.equals(PropertiesOperation.importing)) {
-            fileOperationManager.addPropertyToPropertiesFile(uuid, "imported", Long.toString(finishedTime));
-        }
+        fileOperationManager.addPropertyToPropertiesFile(uuid, "imported", Long.toString(finishedTime));
     }
 
     /**
@@ -291,11 +289,10 @@ public class PythonRunner implements Runnable {
     /**
      * Changes "operation"-value of properties file (in file and in operationLock)
      *
-     * @param uuid      id of file
-     * @param operation current processing operation (see PropertiesOperation)
+     * @param uuid id of file
      */
-    private void changeOperationProperty(String uuid, PropertiesOperation operation) {
-        fileOperationManager.addPropertyToPropertiesFile(uuid, PropertiesKey.operation.name(), operation.name());
-        LOGGER.log(Level.INFO, "Operation of task {0} changed to {1}", new Object[]{uuid, operation.name()});
+    private void changeOperationPropertyToImporting(String uuid) {
+        fileOperationManager.addPropertyToPropertiesFile(uuid, PropertiesKey.operation.name(), PropertiesOperation.importing.name());
+        LOGGER.log(Level.INFO, "Operation of task {0} changed to {1}", new Object[]{uuid, PropertiesOperation.importing.name()});
     }
 }
