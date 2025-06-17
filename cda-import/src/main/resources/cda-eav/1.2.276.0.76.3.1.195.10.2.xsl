@@ -399,7 +399,7 @@
                     <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="GetstringValues"/>
+            <xsl:call-template name="GetStringValues"/>
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
@@ -2133,7 +2133,7 @@
                 <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:call-template name="GetstringValues"/>
+        <xsl:call-template name="GetStringValues"/>
         <xsl:call-template name="GetEffectiveTimes"/>
     </xsl:template>
 
@@ -2280,7 +2280,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="GetstringValues">
+    <xsl:template name="GetStringValues">
         <xsl:if test="../cda:value/@unit">
             <value>
                 <xsl:attribute name="unit">
