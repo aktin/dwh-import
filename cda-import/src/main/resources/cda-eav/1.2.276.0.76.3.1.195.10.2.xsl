@@ -51,6 +51,9 @@
     <!-- Concept Code Prefix for AKTIN Codes -->
     <xsl:variable name="AKTIN-Prefix">AKTIN:</xsl:variable>
 
+    <!-- Concept Code Prefix for Assessment Codes -->
+    <xsl:variable name="Assessment-Prefix">AKTIN:ASSESSMENT:</xsl:variable>
+
     <!-- Concept Code Prefix for Zuweiser Codes -->
     <xsl:variable name="Zuweiser-Prefix">AKTIN:REFERRAL:</xsl:variable>
 
@@ -922,15 +925,15 @@
                     <!-- no triage value at all -->
                     <xsl:when test="not(../cda:value)"><xsl:value-of select="concat($AKTIN-Prefix,'ASSESSMENT')"/></xsl:when>
                     <!-- Manchester Triage System -->
-                    <xsl:when test="../cda:methodCode/@code='713009001'"><xsl:value-of select="$AKTIN-Prefix"/>MTS:</xsl:when>
+                    <xsl:when test="../cda:methodCode/@code='713009001'">MTS:</xsl:when>
                     <!-- Emergency Severity Index -->
-                    <xsl:when test="../cda:methodCode/@code='713010006'"><xsl:value-of select="$AKTIN-Prefix"/>ESI:</xsl:when>
+                    <xsl:when test="../cda:methodCode/@code='713010006'">ESI:</xsl:when>
                     <!-- SmED (case-insensitive) -->
                     <xsl:when test="translate(../cda:methodCode/@code, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') = 'SMED'">SMED:</xsl:when>
                     <!-- “Other” qualifier -->
-                    <xsl:when test="../cda:methodCode/@code='74964007'">OTHER:</xsl:when>
+                    <xsl:when test="../cda:methodCode/@code='74964007'"><xsl:value-of select="$Assessment-Prefix"/>OTHER:</xsl:when>
                     <!-- “None” qualifier -->
-                    <xsl:when test="../cda:methodCode/@code='260413007'">NONE:</xsl:when>
+                    <xsl:when test="../cda:methodCode/@code='260413007'"><xsl:value-of select="$Assessment-Prefix"/>NONE:</xsl:when>
                 </xsl:choose>
                 <xsl:value-of select="../cda:value/@code"/>
             </xsl:attribute>
