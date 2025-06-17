@@ -25,13 +25,13 @@ public class PythonScriptExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
 
-    protected PythonRunner runner;
+    private PythonRunner runner;
 
     @Inject
     private Preferences preferences;
 
     @Inject
-    protected FileOperationManager fileOperationManager;
+    private FileOperationManager fileOperationManager;
 
     @Inject
     private ScriptOperationManager scriptOperationManager;
@@ -41,7 +41,6 @@ public class PythonScriptExecutor {
 
     @Inject
     private PythonVersionNotifier notifier;
-
 
     /**
      * First, collects installed python packages and puts them as a resource on the AKTIN Broker (as a
@@ -63,7 +62,7 @@ public class PythonScriptExecutor {
      * Iterates through all properties files of operationLock_properties and adds queued or unfinished operations
      * to processing queue (to avoid manually restart of processing queue in case of server shutdown)
      */
-    protected void addUnfinishedTasksToQueue() {
+    private void addUnfinishedTasksToQueue() {
         for (Properties properties : fileOperationManager.getPropertiesFiles()) {
             PythonScriptTask task;
             PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
