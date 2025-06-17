@@ -9,10 +9,6 @@ public enum PropertiesOperation {
      */
     uploading,
     /**
-     * operation for file verification
-     */
-    verifying,
-    /**
      * operation for file import
      */
     importing
