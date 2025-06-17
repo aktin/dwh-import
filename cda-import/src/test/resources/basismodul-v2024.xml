@@ -271,7 +271,7 @@
                             <statusCode code="completed"/>
                             <!-- Zeitpunkt der Ersteinschätzung -->
                             <effectiveTime value="202401171623"/>
-                            <value xsi:type="CE" code="LA21587-3" codeSystem="2.16.840.1.113883.6.1" displayName="Less urgent"/>
+                            <value xsi:type="CE" code="LA21587-3" codeSystem="2.16.840.1.113883.6.11" displayName="Less urgent"/>
                             <methodCode code="713009001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System (assessment scale)"/>
                             <entryRelationship typeCode="COMP">
                                 <!-- Manchester Triage System -->
