@@ -1090,23 +1090,8 @@
 <!--        </fact>-->
 <!--    </xsl:template>-->
 
-    <!-- 36 Beschwerden bei Vorstellung / Freitext-->
-
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4040']">
-        <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
-            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>
-                </xsl:attribute>
-            </xsl:if>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="../cda:text"/>
-            </value>
-        </fact>
-    </xsl:template>
+    <!-- 36 Beschwerden bei Vorstellung / Freitext -->
+    <!-- siehe 805 CEDIS -->
 
     <!-- 212 Symptomdauer
     siehe 805 CEDIS-->
@@ -1262,7 +1247,8 @@
     siehe 23 Ersteinschätzung -->
 
     <!-- 805 Beschwerden bei Vorstellung (CEDIS)
-    incl. 212 Symptomdauer -->
+    incl. 212 Symptomdauer
+    incl. 36 Beschwerden bei Vorstellung (Freitext) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4040']">
         <xsl:comment>805 Beschwerden bei Vorstellung (CEDIS)</xsl:comment>
         <fact>
@@ -1282,47 +1268,27 @@
                 </value>
             </fact>
         </xsl:if>
+
+        <xsl:if test="../cda:value/cda:originalText">
+            <xsl:comment>36 Beschwerden bei Vorstellung (Freitext)</xsl:comment>
+            <fact>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
+                <xsl:if test="../../../cda:effectiveTime/cda:low/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/cda:low/@value)"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value/cda:originalText"/>
+                </value>
+            </fact>
+        </xsl:if>
     </xsl:template>
 
     <!-- 806 multiresistente Erreger -->
     <!-- 807 multiresistente Erreger: Erregertyp -->
-    <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4039']">
-        <xsl:comment>Problem Concern Act (Text/CEDIS)</xsl:comment>
-        <xsl:for-each select="../cda:entryRelationship/cda:observation[cda:templateId/@root='1.2.276.0.76.10.4040']">
-            <!-- Fact for CEDIS code (if present) -->
-            <xsl:if test="cda:value/@codeSystem='1.2.276.0.76.5.439' and cda:value/@code">
-                <fact>
-                    <xsl:attribute name="concept">
-                        <xsl:value-of select="$CEDIS-Prefix"/>
-                        <xsl:value-of select="cda:value/@code"/>
-                    </xsl:attribute>
-                    <xsl:call-template name="GetEffectiveTimes"/>
-                    <!-- statusCode modifier (if present) -->
-                    <xsl:if test="cda:statusCode/@code">
-                        <modifier>
-                            <xsl:attribute name="code">status</xsl:attribute>
-                            <value>
-                                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                                <xsl:value-of select="cda:statusCode/@code"/>
-                            </value>
-                        </modifier>
-                    </xsl:if>
-                </fact>
-            </xsl:if>
-            <!-- Fact for Free-Text complaint (if present) -->
-            <xsl:if test="cda:text and normalize-space(cda:text) != ''">
-                <fact>
-                    <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
-                    <xsl:call-template name="GetEffectiveTimes"/>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="cda:text"/>
-                    </value>
-                </fact>
-            </xsl:if>
-        </xsl:for-each>
-    </xsl:template>
+    <!-- 806/807 in CDA Version 2024 entfernt, nutze 805 stattdessen -->
 
     <!-- Pulsfrequenz -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.40']">
