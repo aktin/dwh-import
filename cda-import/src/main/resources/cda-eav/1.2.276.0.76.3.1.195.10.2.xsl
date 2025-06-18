@@ -696,7 +696,7 @@
     </xsl:template>
 
     <!-- CT Kopf durchgeführt -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.56 ']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.56']">
         <xsl:comment>CT Kopf durchgeführt</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
@@ -2072,7 +2072,7 @@
     </xsl:template>
 
     <!-- Zuweisung mit Zuweiser  -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4038 ']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4038']">
         <xsl:comment>Zuweisung mit Zuweiser</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
