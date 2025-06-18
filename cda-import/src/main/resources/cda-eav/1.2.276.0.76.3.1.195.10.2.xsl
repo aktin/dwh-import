@@ -538,34 +538,36 @@
     </xsl:template>
 
     <!-- Kombination Typen Verlegung und Entlassung -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.74']">
-        <xsl:comment>Kombination Typen Verlegung und Entlassung</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$TransferDischargeCombo-Prefix"/>
-                <xsl:choose>
-                    <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="../cda:value/@code"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="../cda:value/@nullFlavor"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:attribute name="status">
-                <xsl:value-of select="../cda:statusCode/@code"/>
-            </xsl:attribute>
-            <xsl:call-template name="GetEffectiveTimes"/>
-        </fact>
-    </xsl:template>
-
-    <!-- Verlegung    -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.72']">
-        <xsl:comment>Verlegungsart</xsl:comment>
-        <fact>
-            <xsl:call-template name="templateGetConceptCode"/>
-        </fact>
-    </xsl:template>
+    <!-- TODO dieses template enthält als value entweder einen Code vom Typ Entlassung oder vom Typ Verlegung
+            dies sind zwar eigene AKTIN value sets die u.a. SNOMED codes benutze. Es ist unklar wie geprüft werden kann,
+            ob die Werte einem bestimmten value set angehören (außer einem "choose"), entsprechend lässt sich hier nicht
+            gut entscheiden, ob es Entlassung oder Verlegung ist. Entlassungen müssen außerdem im Patientenkontakt vermerkt
+            sein (im Beispiel ist die Entlassung sowohl dort als auch hier). Es existiert auch ein Verlegung template
+            welches auch optional ist.
+            Es ist auch unklar ob die proprietären codes, die SNOMED Codes direkt oder die SNOMED Codes mit proprietären
+            präfix genutzt werden sollen.
+            Außerdem gibt es verschiedene Level für die Codes.
+    -->
+<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.74']">-->
+<!--        <xsl:comment>Kombination Typen Verlegung und Entlassung</xsl:comment>-->
+<!--        <fact>-->
+<!--            <xsl:attribute name="concept">-->
+<!--                <xsl:value-of select="$TransferDischargeCombo-Prefix"/>-->
+<!--                <xsl:choose>-->
+<!--                    <xsl:when test="../cda:value/@code">-->
+<!--                        <xsl:value-of select="../cda:value/@code"/>-->
+<!--                    </xsl:when>-->
+<!--                    <xsl:otherwise>-->
+<!--                        <xsl:value-of select="../cda:value/@nullFlavor"/>-->
+<!--                    </xsl:otherwise>-->
+<!--                </xsl:choose>-->
+<!--            </xsl:attribute>-->
+<!--            <xsl:attribute name="status">-->
+<!--                <xsl:value-of select="../cda:statusCode/@code"/>-->
+<!--            </xsl:attribute>-->
+<!--            <xsl:call-template name="GetEffectiveTimes"/>-->
+<!--        </fact>-->
+<!--    </xsl:template>-->
 
     <!-- Version des EDIS    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.87']">
@@ -1522,7 +1524,7 @@
 
     <!-- 596	Patient verlegt / entlassen nach -->
     <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode">
-        <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
+        <xsl:comment>596 Patient verlegt / entlassen nach (entlassen)</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:value-of select="$Entlassung-Prefix"/>
@@ -1543,21 +1545,16 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
-    <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.3.1.195.11.26']">
-        <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
+    <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.3.1.195.10.72']">
+        <xsl:comment>596 Patient verlegt / entlassen nach (verlegt)</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:value-of select="$Verlegung-Prefix"/>
                 <xsl:choose>
-                    <xsl:when test="./@code">
-                        <xsl:value-of select="./@code"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="./@nullFlavor"/>
-                    </xsl:otherwise>
+                    <xsl:when test="./@code"><xsl:value-of select="./@code"/></xsl:when>
+                    <xsl:otherwise><xsl:value-of select="./@nullFlavor"/></xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
 
