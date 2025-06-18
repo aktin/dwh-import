@@ -96,9 +96,6 @@
     <!-- Prefix for Import Transformation Template Information -->
     <xsl:variable name="TemplateVersion-Prefix">AKTIN:ITTI:</xsl:variable>
 
-    <!-- Prefix for Combined Transfer and Discharge Types -->
-    <xsl:variable name="TransferDischargeCombo-Prefix">AKTIN:TRANSFER_DISCHARGE:</xsl:variable>
-
     <!-- Concept Code Prefix for Medication Codes -->
     <xsl:variable name="Medikation-Prefix">AKTIN:MEDICATION:</xsl:variable>
 
@@ -109,10 +106,7 @@
     <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WILDCARDTHERAPY:</xsl:variable>
 
     <!-- Prefix for SNOMED-CT Codes -->
-    <xsl:variable name="SNOMED-CT-Prefix">SNOMED-CT:</xsl:variable>
-
-    <!-- Prefix for DIVI 53 Codes Codes -->
-    <xsl:variable name="DIVI53-Prefix">DIVI53:</xsl:variable>
+    <xsl:variable name="SNOMED-Prefix">SNOMED:</xsl:variable>
 
 
     <!-- MAIN Template -->
@@ -2086,11 +2080,11 @@
     <xsl:template name="templateGetConceptCode">
         <xsl:attribute name="concept">
             <xsl:choose>
-                <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.53'"><xsl:value-of select="$DIVI53-Prefix"/></xsl:when>
                 <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>
                 <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.98'"><xsl:value-of select="$Future-LOINC-Prefix"/></xsl:when>
-                <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.98'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>
-                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.96'"><xsl:value-of select="$SNOMED-CT-Prefix"/></xsl:when>
+                <!-- <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.98'"><xsl:value-of select="$LOINC-Prefix"/></xsl:when>  TODO or this for future loinc? -->
+                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.96'"><xsl:value-of select="$SNOMED-Prefix"/></xsl:when>
+                <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.99'"><xsl:value-of select="$SNOMED-Prefix"/></xsl:when> <!-- TODO same prefix as normal SNOMED codes ? -->
             </xsl:choose>
             <xsl:value-of select="../cda:code/@code"/>
         </xsl:attribute>
