@@ -26,7 +26,8 @@
 
 -->
 <?xml-model href="../schematron-episodenzusammenfassung-notaufnahmeregister2024/aktin-nar2025.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
     <!--
         CDA Header
     -->
@@ -271,7 +272,10 @@
                             <statusCode code="completed"/>
                             <!-- Zeitpunkt der Ersteinschätzung -->
                             <effectiveTime value="202401171623"/>
-                            <value xsi:type="CE" code="LA21587-3" codeSystem="2.16.840.1.113883.6.11" displayName="Less urgent"/>
+                            <value xsi:type="CE"
+                                   code="LA21544-4"
+                                   codeSystem="2.16.840.1.113883.6.1"
+                                   displayName="Urgent"/>
                             <methodCode code="713009001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System (assessment scale)"/>
                             <entryRelationship typeCode="COMP">
                                 <!-- Manchester Triage System -->
@@ -819,7 +823,7 @@
                             <templateId root="1.2.276.0.76.3.1.195.10.82"/>
                             <code code="FLN-131" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit zwischen Aufnahme und erstem Arztkontakt"/>
                             <text>
-                                <reference value="#FLN-130"/>
+                                <reference value="#FLN-131"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171735"/>
