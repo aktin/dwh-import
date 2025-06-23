@@ -396,7 +396,7 @@
                     <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="GetStringValues"/>
+            <xsl:call-template name="GetNumericValues"/>
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
@@ -463,27 +463,6 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
-
-    <!-- 6 Tetanusschutz L:11458-7-->
-    <!-- TODO: Not longer avaliable in the CDA -->
-<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">-->
-<!--        <xsl:comment>6 Tetanusschutz</xsl:comment>-->
-<!--        <fact>-->
-<!--            <xsl:attribute name= "concept">-->
-<!--                <xsl:choose>-->
-<!--                    <xsl:when test="../@negationInd = 'true'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NEG</xsl:when>-->
-<!--                    <xsl:when test="../@negationInd = 'false' and not (../@nullFlavor = 'NI')"><xsl:value-of select="$LOINC-Prefix"/>11458-7</xsl:when>-->
-<!--                    <xsl:when test="../@negationInd = 'false' and  ../@nullFlavor = 'NI'"><xsl:value-of select="$LOINC-Prefix"/>11458-7:NI</xsl:when>-->
-<!--                </xsl:choose>-->
-<!--            </xsl:attribute>-->
-<!--            <xsl:if test="../cda:effectiveTime/@value">-->
-<!--                <xsl:attribute name="start">-->
-<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>-->
-<!--                </xsl:attribute>-->
-<!--            </xsl:if>-->
-<!--            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>-->
-<!--        </fact>-->
-<!--    </xsl:template>-->
 
     <!-- 7 Isolation  –  TemplateId 1.2.276.0.76.3.1.195.10.65          -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.65']">
@@ -1068,24 +1047,6 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien -->
-    <!-- TODO: How are allergies now handled? -->
-<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">-->
-<!--        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>-->
-<!--        <fact>-->
-<!--            <xsl:attribute name="concept"><xsl:value-of select="$Allergie-Prefix"/>TXT</xsl:attribute>-->
-<!--            <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">-->
-<!--                <xsl:attribute name="start">-->
-<!--                    <xsl:value-of select="func:ConvertDateTime(../cda:entry/cda:act/cda:effectiveTime/cda:low/@value)"/>-->
-<!--                </xsl:attribute>-->
-<!--            </xsl:if>-->
-<!--            <value>-->
-<!--                <xsl:attribute name="xsi:type">string</xsl:attribute>-->
-<!--                <xsl:value-of select="../cda:text"/>-->
-<!--            </value>-->
-<!--        </fact>-->
-<!--    </xsl:template>-->
-
     <!-- 36 Beschwerden bei Vorstellung / Freitext -->
     <!-- siehe 805 CEDIS -->
 
@@ -1259,7 +1220,7 @@
                     <xsl:attribute name="unit">
                         <xsl:value-of select="../cda:effectiveTime/cda:width/@unit"/>
                     </xsl:attribute>
-                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                     <xsl:value-of select="../cda:effectiveTime/cda:width/@value"/>
                 </value>
             </fact>
@@ -2093,7 +2054,7 @@
                 <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:call-template name="GetStringValues"/>
+        <xsl:call-template name="GetNumericValues"/>
         <xsl:call-template name="GetEffectiveTimes"/>
     </xsl:template>
 
@@ -2240,13 +2201,13 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="GetStringValues">
+    <xsl:template name="GetNumericValues">
         <xsl:if test="../cda:value/@unit">
             <value>
                 <xsl:attribute name="unit">
                     <xsl:value-of select="../cda:value/@unit"/>
                 </xsl:attribute>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                 <xsl:value-of select="../cda:value/@value"/>
             </value>
         </xsl:if>
