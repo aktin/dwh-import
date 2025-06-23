@@ -547,6 +547,13 @@
         <xsl:comment>Version des EDIS</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
+            <modifier>
+                <xsl:attribute name="value">edisVersion</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value"/>
+                </value>
+            </modifier>
         </fact>
     </xsl:template>
 

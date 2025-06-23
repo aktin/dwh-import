@@ -873,6 +873,7 @@
                             <item ID="FLN-131">Zeit zwischen Aufnahme und erstem Arztkontakt: 14 Minuten</item>
                             <item ID="FLN-132">Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten: 104 Minuten</item>
                             <item ID="FLN-133">Zeit zwischen Aufnahme und Verlassen des Patienten: 108 Minuten</item>
+                            <item ID="FLN-136">Version des EDIS</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -1005,6 +1006,18 @@
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171735"/>
                             <value xsi:type="PQ" value="92" unit="min"/>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.87"/>
+                            <code code="FLN-136" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Version des EDIS"/>
+                            <text>
+                                <reference value="#FLN-136"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401171735"/>
+                            <value xsi:type="ST">4</value>
                         </observation>
                     </entry>
                 </section>
