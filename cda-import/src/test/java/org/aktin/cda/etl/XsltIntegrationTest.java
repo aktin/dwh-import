@@ -1,31 +1,9 @@
 package org.aktin.cda.etl;
 
-import net.sf.saxon.Configuration;
-import net.sf.saxon.s9api.Processor;
-import net.sf.saxon.s9api.Serializer;
-import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.s9api.XsltCompiler;
-import net.sf.saxon.s9api.XsltExecutable;
-import net.sf.saxon.s9api.XsltTransformer;
-
-import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
-import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
-import org.aktin.cda.etl.transform.fun.CalculateSourceId;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.stream.StreamSource;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,6 +11,24 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.stream.StreamSource;
+import net.sf.saxon.Configuration;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.s9api.XsltCompiler;
+import net.sf.saxon.s9api.XsltExecutable;
+import net.sf.saxon.s9api.XsltTransformer;
+import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
+import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
+import org.aktin.cda.etl.transform.fun.CalculateSourceId;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class XsltIntegrationTest {
 
@@ -117,7 +113,7 @@ public class XsltIntegrationTest {
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
-    String inputXmlPath = "/basismodul-v2024.xml";
+    String inputXmlPath = "/basismodul-v2025.xml";
     String transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
 
     System.out.println("--- Transformed Output for " + inputXmlPath + " ---");
@@ -130,7 +126,7 @@ public class XsltIntegrationTest {
 
   @Test
   public void testEAVOutputFromBasismodul() throws Exception {
-    String inputXmlPath = "/basismodul-v2024.xml";
+    String inputXmlPath = "/basismodul-v2025.xml";
     String eavXmlOutput = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
 
     System.out.println("--- EAV Output for " + inputXmlPath + " ---");
@@ -143,7 +139,7 @@ public class XsltIntegrationTest {
 
   @Test
   public void testEAVOutputFromMaximalbeispiel() throws Exception {
-    String inputXmlPath = "/maximalbeispiel-v2024.xml";
+    String inputXmlPath = "/maximalbeispiel-v2025.xml";
     String eavXmlOutput = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
 
     System.out.println("--- EAV Output for " + inputXmlPath + " ---");

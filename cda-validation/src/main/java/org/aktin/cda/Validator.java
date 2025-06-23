@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
 import javax.inject.Singleton;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
@@ -23,7 +22,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,12 +45,12 @@ import org.xml.sax.SAXException;
 public class Validator implements NamespaceContext{
 	private static final Logger log = Logger.getLogger(Validator.class.getName());
 	// XPaths to interpret the svrl result
-	private XPathFactory xfactory;
+	private final XPathFactory xfactory;
 	
-	private XPathExpression selectFailedAsserts;
+	private final XPathExpression selectFailedAsserts;
 	// TODO warnings are same as asserts with a different attribute
-	private Map<String, SingleTemplateValidator> templateValidators;
-	private SchemaValidator schemaValidator;
+	private final Map<String, SingleTemplateValidator> templateValidators;
+	private final SchemaValidator schemaValidator;
 	
 	public Validator() throws IOException, TransformerConfigurationException, SAXException{
 		// create XSD-schema validator
@@ -154,11 +152,11 @@ public class Validator implements NamespaceContext{
 		}else{
 			StringBuilder info = new StringBuilder();
 			info.append("Document validation: FAILED (");
-			if( isValid == false ){
+			if(!isValid){
 				info.append("xsd error");
 			}
 			if( errorCount != 0 ){
-				if( isValid == false ){
+				if(!isValid){
 					info.append(" + ");
 				}
 				info.append(errorCount + " schematron errors");
@@ -208,7 +206,7 @@ public class Validator implements NamespaceContext{
 	 * @param args file name arguments
 	 * @throws Exception error
 	 */
-	public static void main(String args[]) throws Exception{
+	public static void main(String[] args) throws Exception{
 		// TODO use file name from commmand line
 		if( args.length != 1 ){
 			System.err.println("Please specify exactly one CDA file path");
