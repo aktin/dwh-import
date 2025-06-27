@@ -69,21 +69,18 @@ public class CDAParser {
     //		}
     try {
       TransformerFactory tfactory = TransformerFactory.newInstance();
+      // Disables features like external DTDs by default (i.e. !DOCTYPE / !ELEMENT)
       tfactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
-
+      // Cast to Saxon to access advanced configuration
       SaxonTransformerFactory saxonFactory = (SaxonTransformerFactory) tfactory;
       Configuration saxonConfig = saxonFactory.getConfiguration();
-
-      // Use Saxon's bridge to set the underlying parser feature
+      // Disable use of external Java functions in XPath/XSLT, disable resolution of external entities
       saxonConfig.setConfigurationProperty(ALLOW_EXTERNAL_FUNCTIONS, false);
       saxonConfig.setConfigurationProperty(
           XML_PARSER_FEATURE + "http%3A//xml.org/sax/features/external-general-entities", false);
-
       saxonConfig.setConfigurationProperty(
           XML_PARSER_FEATURE + "http%3A//xml.org/sax/features/external-parameter-entities", false);
-
       domTransform = tfactory.newTransformer();
-      // domTransform = TransformerFactory.newInstance().newTransformer();
     } catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
       throw new RuntimeException(e);
     }
