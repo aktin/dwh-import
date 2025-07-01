@@ -548,7 +548,7 @@
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
             <modifier>
-                <xsl:attribute name="value">edisVersion</xsl:attribute>
+                <xsl:attribute name="code">edisVersion</xsl:attribute>
                 <value>
                     <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="../cda:value"/>
@@ -1741,10 +1741,6 @@
     <xsl:template match="/cda:ClinicalDocument/cda:templateId">
         <xsl:comment>Import Transformation/Version Information</xsl:comment>
         <fact>
-            <!-- ACHTUNG: in anderen Modulen (z.B. Traumamodul) darf das nachfolgende fact nicht
-                genauso ausgegeben werden, da dann die Möglichkeit besteht dass das unique constraint
-                der observation_fact tabelle verletzt wird. Da die Software-Version aber gleich ist,
-                kann dies komplett weggelassen werden. -->
             <xsl:attribute name="concept">
                 <xsl:value-of select="$ProjectVersion-Prefix"/><xsl:value-of select="$aktin.release.version"/>
             </xsl:attribute>
@@ -1813,26 +1809,6 @@
                     <value>
                         <xsl:attribute name="xsi:type">boolean</xsl:attribute>
                         <xsl:value-of select="../@negationInd"/>
-                    </value>
-                </modifier>
-            </xsl:if>
-
-            <!-- Wert der Beobachtung -->
-            <xsl:if test="../cda:value">
-                <modifier>
-                    <xsl:attribute name="code">value</xsl:attribute>
-                    <value>
-                        <xsl:choose>
-                            <xsl:when test="../cda:value/@xsi:type">
-                                <xsl:attribute name="xsi:type">
-                                    <xsl:value-of select="../cda:value/@xsi:type"/>
-                                </xsl:attribute>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:value-of select="../cda:value/@value"/>
                     </value>
                 </modifier>
             </xsl:if>
