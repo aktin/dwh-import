@@ -85,6 +85,7 @@
 										<include name="**/schemas/*"/>
 										<include name="**/coreschemas/*"/>
 									</patternset>
+									<!-- Extract the files without the zip Archive name -->
 									<cutdirsmapper dirs="1"/>
 								</unzip>
 							</target>
