@@ -1761,7 +1761,25 @@
                 <xsl:value-of select="../cda:code/@code"/>
             </xsl:attribute>
 
-            <!-- IDs (ggf. mehrere) -->
+            <xsl:if test="../cda:value">
+                <value>
+                    <xsl:attribute name="xsi:type">
+                        <xsl:variable name="cda_type" select="../cda:value/@xsi:type"/>
+                        <xsl:choose>
+                            <xsl:when test="$cda_type = 'PQ' or $cda_type = 'INT' or $cda_type = 'REAL'">numeric</xsl:when>
+                            <xsl:otherwise>string</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+
+                    <xsl:if test="../cda:value/@unit">
+                        <xsl:attribute name="unit">
+                            <xsl:value-of select="../cda:value/@unit"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:value-of select="../cda:value/@value | ../cda:value/text()"/>
+                </value>
+            </xsl:if>
+
             <xsl:for-each select="../cda:id">
                 <modifier>
                     <xsl:attribute name="code">id</xsl:attribute>
@@ -1773,36 +1791,8 @@
                 </modifier>
             </xsl:for-each>
 
-            <!-- Effektivzeiten: IVL_TS und TS werden unterstützt -->
-            <xsl:if test="../cda:effectiveTime/cda:low/@value">
-                <modifier>
-                    <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
-                    </value>
-                </modifier>
-            </xsl:if>
-            <xsl:if test="../cda:effectiveTime/cda:high/@value">
-                <modifier>
-                    <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:effectiveTime/cda:high/@value"/>
-                    </value>
-                </modifier>
-            </xsl:if>
-            <xsl:if test="../cda:effectiveTime[@xsi:type='TS']/@value">
-                <modifier>
-                    <xsl:attribute name="code">effectiveTimeTS</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:effectiveTime[@xsi:type='TS']/@value"/>
-                    </value>
-                </modifier>
-            </xsl:if>
+            <xsl:call-template name="GetEffectiveTimes"/>
 
-            <!-- negationInd, falls vorhanden -->
             <xsl:if test="../@negationInd">
                 <modifier>
                     <xsl:attribute name="code">negationInd</xsl:attribute>
@@ -1813,7 +1803,6 @@
                 </modifier>
             </xsl:if>
 
-            <!-- Referenz auf Freitext/externes Dokument -->
             <xsl:if test="../cda:text/cda:reference/@value">
                 <modifier>
                     <xsl:attribute name="code">textReference</xsl:attribute>
