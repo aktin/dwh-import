@@ -12,14 +12,14 @@
 		<version>0.20-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<schematronVersion>20180323T201638</schematronVersion>
-		<examplesVersion>20180322T121703</examplesVersion>
-		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>
-		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>
-		<schematronVersion2>20241202T134738</schematronVersion2>
-		<examplesVersion2>20241202T134738</examplesVersion2>
-		<schematronArchive2>aktin-runtime-${schematronVersion2}</schematronArchive2>
-		<examplesArchive2>aktin-xml-${examplesVersion2}</examplesArchive2>
+		<schematronVersion2018>20180323T201638</schematronVersion2018>
+		<examplesVersion2018>20180322T121703</examplesVersion2018>
+		<schematronArchive>aktin-runtime-${schematronVersion2018}</schematronArchive>
+		<examplesArchive>aktin-xml-${examplesVersion2018}</examplesArchive>
+		<schematronVersion2025>20241202T134738</schematronVersion2025>
+		<examplesVersion2025>20241202T134738</examplesVersion2025>
+		<schematronArchive2>aktin-runtime-${schematronVersion2025}</schematronArchive2>
+		<examplesArchive2>aktin-xml-${examplesVersion2025}</examplesArchive2>
 	</properties>
 	<build>
 		<resources>
