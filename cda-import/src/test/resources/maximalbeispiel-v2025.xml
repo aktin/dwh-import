@@ -5,7 +5,6 @@
 Momentan fehlt noch:
 - Zeit bis zum Export
 - Zeitpunkt Export aus EDIS
-- Wildcard Therapie/Diagnostik
 - Name des EDIS
 - Sonographie angefordert
 - Röntgenthorax angefordert
@@ -697,6 +696,7 @@ Momentan fehlt noch:
                             <item>Exsikkierter Patient, tachykard mit Fieber und Zeichen der Sepsis. Beginn der antibiotischen Therapie und Wechsel des Blasenkatheters.</item>
                             <item>An Therapie erfolgt nach Urinkultur die Anlage von zwei Venenverweilkanülen.</item>
                             <item ID="iso">Isolation: ja (Grund: multiresistenter Keim)</item>
+                            <item ID="wildcard-therapy-1">Spezielle Wundversorgung durchgeführt</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -718,6 +718,33 @@ Momentan fehlt noch:
                             </entryRelationship>
                         </procedure>
                     </entry>
+
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <procedure classCode="PROC" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.90"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-proc-001"/>
+
+                            <code code="SWV_01"
+                                  codeSystem="1.2.276.0.76.5.999"
+                                  displayName="Spezielle Wundversorgung"/>
+
+                            <statusCode code="completed"/>
+
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117171000"/>
+                                <high value="20240117171500"/>
+                            </effectiveTime>
+
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://art-decor.org/ad/#/aktin-/.../concept/IHRE-DEFINITION-ID"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </procedure>
+                    </entry>
+
                 </section>
             </component>
 
