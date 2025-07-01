@@ -618,43 +618,71 @@ Momentan fehlt noch:
                     <title>Diagnostik</title>
                     <text>
                         <list>
-                            <item ID="proc-1">Laboruntersuchung angefordert: ja</item>
-                            <item ID="proc-2">BGA angefordert: ja</item>
-                            <item ID="proc-3">Selektives CT der Extremitäten durchgeführt: ja</item>
+                            <item ID="diag-item-1">Laboruntersuchung angefordert: ja</item>
+                            <item ID="diag-item-2">BGA angefordert: ja</item>
+                            <item ID="diag-item-3">Selektives CT der Extremitäten durchgeführt: ja</item>
+                            <item ID="diag-item-wildcard-1">Wildcard-Diagnostik: Spezifische Sonographie durchgeführt</item>
                         </list>
                     </text>
+
                     <entry typeCode="COMP" contextConductionInd="true">
                         <procedure classCode="PROC" moodCode="RQO" negationInd="false">
                             <templateId root="1.2.276.0.76.3.1.195.10.46"/>
                             <code code="15220000" codeSystem="2.16.840.1.113883.6.96" displayName="Laboratory test (procedure)"/>
                             <text>
-                                <reference value="#proc-1"/>
+                                <reference value="#diag-item-1"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171620"/>
                         </procedure>
                     </entry>
+
                     <entry typeCode="COMP" contextConductionInd="true">
                         <procedure classCode="PROC" moodCode="RQO" negationInd="false">
                             <templateId root="1.2.276.0.76.3.1.195.10.48"/>
                             <code code="278297009" codeSystem="2.16.840.1.113883.6.96" displayName="Blood gas analysis (procedure)"/>
                             <text>
-                                <reference value="#proc-2"/>
+                                <reference value="#diag-item-2"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171620"/>
                         </procedure>
                     </entry>
+
                     <entry typeCode="COMP" contextConductionInd="true">
                         <procedure classCode="PROC" moodCode="EVN" negationInd="false">
                             <templateId root="1.2.276.0.76.3.1.195.10.60"/>
                             <code code="303681001" codeSystem="2.16.840.1.113883.6.96" displayName="Computed tomography of limb regions (procedure)"/>
                             <text>
-                                <reference value="#proc-3"/>
+                                <reference value="#diag-item-3"/>
                             </text>
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171650"/>
                         </procedure>
+                    </entry>
+
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-entry-001"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Spezifische Sonographie"/>
+                            <statusCode code="completed"/>
+
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117170500"/>
+                                <high value="20240117170559"/>
+                            </effectiveTime>
+
+                            <value xsi:type="ST">Durchgeführt</value>
+
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://art-decor.org/ad/#/aktin-/datasets/dataset/2.16.840.1.113883.2.6.60.3.1.11/2023-12-28T22:06:39/concept/2.16.840.1.113883.2.6.60.3.2.9.29602/2023-12-28T22:06:39"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </observation>
                     </entry>
                 </section>
             </component>
