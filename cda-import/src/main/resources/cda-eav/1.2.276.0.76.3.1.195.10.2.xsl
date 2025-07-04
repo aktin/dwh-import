@@ -511,36 +511,54 @@
     </xsl:template>
 
     <!-- Kombination Typen Verlegung und Entlassung -->
-    <!-- TODO dieses template enthält als value entweder einen Code vom Typ Entlassung oder vom Typ Verlegung
-            dies sind zwar eigene AKTIN value sets die u.a. SNOMED codes benutze. Es ist unklar wie geprüft werden kann,
-            ob die Werte einem bestimmten value set angehören (außer einem "choose"), entsprechend lässt sich hier nicht
-            gut entscheiden, ob es Entlassung oder Verlegung ist. Entlassungen müssen außerdem im Patientenkontakt vermerkt
-            sein (im Beispiel ist die Entlassung sowohl dort als auch hier). Es existiert auch ein Verlegung template
-            welches auch optional ist.
-            Es ist auch unklar ob die proprietären codes, die SNOMED Codes direkt oder die SNOMED Codes mit proprietären
-            präfix genutzt werden sollen.
-            Außerdem gibt es verschiedene Level für die Codes.
-    -->
-<!--    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.74']">-->
-<!--        <xsl:comment>Kombination Typen Verlegung und Entlassung</xsl:comment>-->
-<!--        <fact>-->
-<!--            <xsl:attribute name="concept">-->
-<!--                <xsl:value-of select="$TransferDischargeCombo-Prefix"/>-->
-<!--                <xsl:choose>-->
-<!--                    <xsl:when test="../cda:value/@code">-->
-<!--                        <xsl:value-of select="../cda:value/@code"/>-->
-<!--                    </xsl:when>-->
-<!--                    <xsl:otherwise>-->
-<!--                        <xsl:value-of select="../cda:value/@nullFlavor"/>-->
-<!--                    </xsl:otherwise>-->
-<!--                </xsl:choose>-->
-<!--            </xsl:attribute>-->
-<!--            <xsl:attribute name="status">-->
-<!--                <xsl:value-of select="../cda:statusCode/@code"/>-->
-<!--            </xsl:attribute>-->
-<!--            <xsl:call-template name="GetEffectiveTimes"/>-->
-<!--        </fact>-->
-<!--    </xsl:template>-->
+    <xsl:template match="cda:templateId" mode="embedTimes">
+        <xsl:call-template name="GetEffectiveTimes"/>
+    </xsl:template>
+
+    <xsl:template match="cda:observation[cda:templateId/@root =
+                   '1.2.276.0.76.3.1.195.10.74']">
+        <xsl:comment>Kombination Typen Verlegung und Entlassung</xsl:comment>
+        <xsl:variable name="code" select="cda:value/@code"/>
+
+        <xsl:variable name="verlegung"
+                      select="'37729005,429202003,1,3,5,7'"/>
+        <xsl:variable name="entlassung"
+                      select="'371828006,225928004,34596002,306689006,306205009,
+                         307374004,25675004,183515008,6,74964007'"/>
+
+        <xsl:variable name="isDis"
+                      select="contains(concat(',',$entlassung,','),concat(',',$code,','))"/>
+        <xsl:variable name="isTrans"
+                      select="contains(concat(',',$verlegung,','),concat(',',$code,','))"/>
+
+        <xsl:variable name="eff"
+                      select="cda:effectiveTime | ../cda:effectiveTime"/>
+
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:choose>
+                    <xsl:when test="$isDis"><xsl:value-of select="concat($AKTIN-Prefix,'DISCHARGE:')"/><xsl:value-of select="$code"/></xsl:when>
+                    <xsl:when test="$isTrans"><xsl:value-of select="concat($AKTIN-Prefix,'TRANSFER:')"/><xsl:value-of select="$code"/></xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+
+            <xsl:if test="$eff/@value or $eff/cda:low/@value">
+                <xsl:attribute name="start">
+                    <xsl:choose>
+                        <xsl:when test="$eff/@value">
+                            <xsl:value-of select="func:ConvertDateTime($eff/@value)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="func:ConvertDateTime($eff/cda:low/@value)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+            </xsl:if>
+
+            <xsl:apply-templates select="cda:templateId[1]" mode="embedTimes"/>
+        </fact>
+    </xsl:template>
+
 
     <!-- Version des EDIS    -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.87']">
