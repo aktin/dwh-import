@@ -37,7 +37,7 @@
     <xsl:variable name="LOINC-Prefix">LOINC:</xsl:variable>
 
     <!-- Concept Code Prefix for Future LOINC Codes -->
-    <xsl:variable name="Future-LOINC-Prefix">FUTURELOINC:</xsl:variable>
+    <xsl:variable name="Future-LOINC-Prefix">AKTIN:FLN:</xsl:variable>
 
     <!-- Concept Code Prefix for ICD10GM Codes -->
     <xsl:variable name="ICD10GM-Prefix">ICD10GM:</xsl:variable>
@@ -97,7 +97,7 @@
     <xsl:variable name="TemplateVersion-Prefix">AKTIN:ITTI:</xsl:variable>
 
     <!-- Concept Code Prefix for Medication Codes -->
-    <xsl:variable name="Medikation-Prefix">AKTIN:MEDICATION:</xsl:variable>
+    <xsl:variable name="Medikation-Prefix">AKTIN:MED:</xsl:variable>
 
     <!-- Concept Code Prefix for Wildcard Diagnostik Codes -->
     <xsl:variable name="WildcardDiagnostik-Prefix">AKTIN:WDIAG:</xsl:variable>
