@@ -67,10 +67,10 @@
 									</patternset>
 									<cutdirsmapper dirs="1"/>
 								</unzip>
-								<!-- schematron files for CDA version 2024 -->
+								<!-- schematron files for CDA version 2025 -->
 								<get src="https://aktin.art-decor.pub/${schematronArchive2}.zip" dest="${project.build.directory}/schematron-2024.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron-2024.zip" dest="${project.build.directory}/schematron" />
-								<!-- examples for CDA version 2024 -->
+								<!-- examples for CDA version 2025 -->
 								<get src="https://aktin.art-decor.pub/${examplesArchive2}.zip" dest="${project.build.directory}/examples-2024.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/examples">
 									<patternset>
