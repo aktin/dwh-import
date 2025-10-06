@@ -1770,7 +1770,7 @@
         </fact>
     </xsl:template>
 
-    <!-- Wildcard Diagnostik-->
+        <!-- Wildcard Diagnostik -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.89']">
         <xsl:comment>Wildcard Diagnostik</xsl:comment>
         <fact>
@@ -1778,71 +1778,107 @@
                 <xsl:value-of select="$WildcardDiagnostik-Prefix"/>
                 <xsl:value-of select="../cda:code/@code"/>
             </xsl:attribute>
-
+    
+            <!-- Value handling - MANDATORY per CDA spec -->
             <xsl:if test="../cda:value">
                 <value>
                     <xsl:attribute name="xsi:type">
                         <xsl:variable name="cda_type" select="../cda:value/@xsi:type"/>
                         <xsl:choose>
                             <xsl:when test="$cda_type = 'PQ' or $cda_type = 'INT' or $cda_type = 'REAL'">numeric</xsl:when>
+                            <xsl:when test="$cda_type = 'BL'">boolean</xsl:when>
                             <xsl:otherwise>string</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
-
+    
+                    <!-- Unit for PQ -->
                     <xsl:if test="../cda:value/@unit">
                         <xsl:attribute name="unit">
                             <xsl:value-of select="../cda:value/@unit"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <xsl:value-of select="../cda:value/@value | ../cda:value/text()"/>
+    
+                    <!-- Extract value based on datatype -->
+                    <xsl:choose>
+                        <xsl:when test="../cda:value/@xsi:type = 'CD'">
+                            <xsl:value-of select="../cda:value/@code"/>
+                        </xsl:when>
+                        <xsl:when test="../cda:value/@xsi:type = 'BL' or ../cda:value/@xsi:type = 'PQ' or ../cda:value/@xsi:type = 'INT' or ../cda:value/@xsi:type = 'REAL'">
+                            <xsl:value-of select="../cda:value/@value"/>
+                        </xsl:when>
+                        <xsl:when test="../cda:value/@xsi:type = 'ST'">
+                            <xsl:value-of select="../cda:value/text()"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="../cda:value/@value | ../cda:value/text()"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </value>
+    
+                <!-- CD metadata as modifiers -->
+                <xsl:if test="../cda:value/@xsi:type = 'CD'">
+                    <xsl:if test="../cda:value/@codeSystem">
+                        <modifier code="valueCodeSystem">
+                            <value xsi:type="string"><xsl:value-of select="../cda:value/@codeSystem"/></value>
+                        </modifier>
+                    </xsl:if>
+                    <xsl:if test="../cda:value/@displayName">
+                        <modifier code="valueDisplayName">
+                            <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName"/></value>
+                        </modifier>
+                    </xsl:if>
+                </xsl:if>
             </xsl:if>
-
+    
+            <!-- IDs (multiple allowed) -->
             <xsl:for-each select="../cda:id">
-                <modifier>
-                    <xsl:attribute name="code">id</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <modifier code="id">
+                    <value xsi:type="string">
                         <xsl:value-of select="@root"/>
                         <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
                     </value>
                 </modifier>
             </xsl:for-each>
-
+    
+            <!-- Code metadata -->
+            <xsl:if test="../cda:code/@codeSystem">
+                <modifier code="codeSystem">
+                    <value xsi:type="string"><xsl:value-of select="../cda:code/@codeSystem"/></value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="../cda:code/@displayName">
+                <modifier code="codeDisplayName">
+                    <value xsi:type="string"><xsl:value-of select="../cda:code/@displayName"/></value>
+                </modifier>
+            </xsl:if>
+    
+            <!-- Effective times -->
             <xsl:call-template name="GetEffectiveTimes"/>
-
+    
+            <!-- Negation indicator -->
             <xsl:if test="../@negationInd">
-                <modifier>
-                    <xsl:attribute name="code">negationInd</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">boolean</xsl:attribute>
-                        <xsl:value-of select="../@negationInd"/>
-                    </value>
+                <modifier code="negationInd">
+                    <value xsi:type="boolean"><xsl:value-of select="../@negationInd"/></value>
                 </modifier>
             </xsl:if>
-
+    
+            <!-- Text reference -->
             <xsl:if test="../cda:text/cda:reference/@value">
-                <modifier>
-                    <xsl:attribute name="code">textReference</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:text/cda:reference/@value"/>
-                    </value>
+                <modifier code="textReference">
+                    <value xsi:type="string"><xsl:value-of select="../cda:text/cda:reference/@value"/></value>
                 </modifier>
             </xsl:if>
+    
+            <!-- External definition -->
             <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
-                <modifier>
-                    <xsl:attribute name="code">externalDefinition</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/>
-                    </value>
+                <modifier code="externalDefinition">
+                    <value xsi:type="string"><xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/></value>
                 </modifier>
             </xsl:if>
         </fact>
     </xsl:template>
-
-    <!-- Wildcard Therapie-->
+    
+        <!-- Wildcard Therapie -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.90']">
         <xsl:comment>Wildcard Therapie</xsl:comment>
         <fact>
@@ -1850,76 +1886,50 @@
                 <xsl:value-of select="$WildcardTherapie-Prefix"/>
                 <xsl:value-of select="../cda:code/@code"/>
             </xsl:attribute>
-
-            <!-- IDs (ggf. mehrere) -->
+    
+            <!-- IDs -->
             <xsl:for-each select="../cda:id">
-                <modifier>
-                    <xsl:attribute name="code">id</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <modifier code="id">
+                    <value xsi:type="string">
                         <xsl:value-of select="@root"/>
                         <xsl:if test="@extension">:<xsl:value-of select="@extension"/></xsl:if>
                     </value>
                 </modifier>
             </xsl:for-each>
-
-            <!-- Effektivzeiten: IVL_TS und TS werden unterstützt -->
-            <xsl:if test="../cda:effectiveTime/cda:low/@value">
-                <modifier>
-                    <xsl:attribute name="code">effectiveTimeLow</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:effectiveTime/cda:low/@value"/>
-                    </value>
+    
+            <!-- Code metadata -->
+            <xsl:if test="../cda:code/@codeSystem">
+                <modifier code="codeSystem">
+                    <value xsi:type="string"><xsl:value-of select="../cda:code/@codeSystem"/></value>
                 </modifier>
             </xsl:if>
-            <xsl:if test="../cda:effectiveTime/cda:high/@value">
-                <modifier>
-                    <xsl:attribute name="code">effectiveTimeHigh</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:effectiveTime/cda:high/@value"/>
-                    </value>
+            <xsl:if test="../cda:code/@displayName">
+                <modifier code="codeDisplayName">
+                    <value xsi:type="string"><xsl:value-of select="../cda:code/@displayName"/></value>
                 </modifier>
             </xsl:if>
-            <xsl:if test="../cda:effectiveTime[@xsi:type='TS']/@value">
-                <modifier>
-                    <xsl:attribute name="code">effectiveTimeTS</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:effectiveTime[@xsi:type='TS']/@value"/>
-                    </value>
-                </modifier>
-            </xsl:if>
-
-            <!-- negationInd, falls vorhanden -->
+    
+            <!-- Effective times using template -->
+            <xsl:call-template name="GetEffectiveTimes"/>
+    
+            <!-- Negation indicator -->
             <xsl:if test="../@negationInd">
-                <modifier>
-                    <xsl:attribute name="code">negationInd</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">boolean</xsl:attribute>
-                        <xsl:value-of select="../@negationInd"/>
-                    </value>
+                <modifier code="negationInd">
+                    <value xsi:type="boolean"><xsl:value-of select="../@negationInd"/></value>
                 </modifier>
             </xsl:if>
-
-            <!-- Referenz auf Freitext/externes Dokument -->
+    
+            <!-- Text reference -->
             <xsl:if test="../cda:text/cda:reference/@value">
-                <modifier>
-                    <xsl:attribute name="code">textReference</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:text/cda:reference/@value"/>
-                    </value>
+                <modifier code="textReference">
+                    <value xsi:type="string"><xsl:value-of select="../cda:text/cda:reference/@value"/></value>
                 </modifier>
             </xsl:if>
+    
+            <!-- External definition-->
             <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
-                <modifier>
-                    <xsl:attribute name="code">externalDefinition</xsl:attribute>
-                    <value>
-                        <xsl:attribute name="xsi:type">string</xsl:attribute>
-                        <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/>
-                    </value>
+                <modifier code="externalDefinition">
+                    <value xsi:type="string"><xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value"/></value>
                 </modifier>
             </xsl:if>
         </fact>
