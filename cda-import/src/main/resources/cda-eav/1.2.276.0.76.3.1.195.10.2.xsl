@@ -100,10 +100,10 @@
     <xsl:variable name="Medikation-Prefix">AKTIN:MEDICATION:</xsl:variable>
 
     <!-- Concept Code Prefix for Wildcard Diagnostik Codes -->
-    <xsl:variable name="WildcardDiagnostik-Prefix">AKTIN:WILDCARDDIAG:</xsl:variable>
+    <xsl:variable name="WildcardDiagnostik-Prefix">AKTIN:WDIAG:</xsl:variable>
 
     <!-- Concept Code Prefix for Wildcard Therapie Codes -->
-    <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WILDCARDTHERAPY:</xsl:variable>
+    <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WTHERAPY:</xsl:variable>
 
     <!-- Prefix for SNOMED-CT Codes -->
     <xsl:variable name="SNOMED-Prefix">SNOMED:</xsl:variable>
