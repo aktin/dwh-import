@@ -170,29 +170,6 @@
                             <xsl:value-of select="/cda:ClinicalDocument/cda:languageCode/@code"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <!-- Information Recipient -->
-                    <xsl:for-each select="/cda:ClinicalDocument/cda:informationRecipient/cda:intendedRecipient">
-                        <fact concept="RECIPIENT">
-                            <modifier code="id">
-                                <value>
-                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
-                                    <xsl:value-of select="cda:id/@extension"/>
-                                </value>
-                            </modifier>
-                            <modifier code="type">
-                                <value>
-                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
-                                    <xsl:value-of select="../@typeCode"/>
-                                </value>
-                            </modifier>
-                            <modifier code="organization">
-                                <value>
-                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
-                                    <xsl:value-of select="cda:receivedOrganization/cda:name"/>
-                                </value>
-                            </modifier>
-                        </fact>
-                    </xsl:for-each>
                 </source>
             </meta>
             <patient>
@@ -236,6 +213,29 @@
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:participant/cda:associatedEntity"/>
+                    <!-- Information Recipient Facts -->
+                    <xsl:for-each select="/cda:ClinicalDocument/cda:informationRecipient/cda:intendedRecipient">
+                        <fact concept="RECIPIENT">
+                            <modifier code="id">
+                                <value>
+                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                                    <xsl:value-of select="cda:id/@extension"/>
+                                </value>
+                            </modifier>
+                            <modifier code="type">
+                                <value>
+                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                                    <xsl:value-of select="../@typeCode"/>
+                                </value>
+                            </modifier>
+                            <modifier code="organization">
+                                <value>
+                                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                                    <xsl:value-of select="cda:receivedOrganization/cda:name"/>
+                                </value>
+                            </modifier>
+                        </fact>
+                    </xsl:for-each>
                     <!-- Alle Fact-Templates auf Body/Component/Section Ebene aufrufen -->
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:templateId"/>
