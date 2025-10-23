@@ -1,24 +1,20 @@
 package org.aktin.importer.executor;
 
-import org.aktin.Preferences;
-import org.aktin.dwh.BrokerResourceManager;
-import org.aktin.dwh.PreferenceKey;
-import org.aktin.dwh.SystemStatusManager;
-import org.aktin.importer.DataSourceCredsExtractor;
-import org.aktin.importer.FileOperationManager;
-import org.aktin.importer.ScriptOperationManager;
-import org.aktin.importer.enums.PropertiesKey;
-import org.aktin.importer.enums.PropertiesOperation;
-import org.aktin.importer.enums.PropertiesState;
-import org.aktin.importer.pojos.DatabaseCreds;
-import org.aktin.importer.pojos.PythonScriptTask;
-
+import java.util.Properties;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-import java.util.*;
-import java.util.logging.Logger;
+import org.aktin.Preferences;
+import org.aktin.dwh.PreferenceKey;
+import org.aktin.importer.DataSourceCredsExtractor;
+import org.aktin.importer.FileOperationManager;
+import org.aktin.importer.ScriptOperationManager;
+import org.aktin.importer.enums.PropertiesKey;
+import org.aktin.importer.enums.PropertiesState;
+import org.aktin.importer.pojos.DatabaseCreds;
+import org.aktin.importer.pojos.PythonScriptTask;
 
 @Singleton
 public class PythonScriptExecutor {

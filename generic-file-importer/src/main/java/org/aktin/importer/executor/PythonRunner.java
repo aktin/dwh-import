@@ -1,25 +1,27 @@
 package org.aktin.importer.executor;
 
-import org.aktin.importer.FileOperationManager;
-import org.aktin.importer.ScriptOperationManager;
-import org.aktin.importer.enums.PropertiesOperation;
-import org.aktin.importer.enums.PropertiesState;
-import org.aktin.importer.enums.LogType;
-import org.aktin.importer.enums.PropertiesKey;
-import org.aktin.importer.pojos.DatabaseCreds;
-import org.aktin.importer.pojos.PythonScriptTask;
-import org.aktin.importer.pojos.ScriptFile;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.aktin.importer.FileOperationManager;
+import org.aktin.importer.ScriptOperationManager;
+import org.aktin.importer.enums.LogType;
+import org.aktin.importer.enums.PropertiesKey;
+import org.aktin.importer.enums.PropertiesOperation;
+import org.aktin.importer.enums.PropertiesState;
+import org.aktin.importer.pojos.DatabaseCreds;
+import org.aktin.importer.pojos.PythonScriptTask;
+import org.aktin.importer.pojos.ScriptFile;
 
 public class PythonRunner implements Runnable {
 
