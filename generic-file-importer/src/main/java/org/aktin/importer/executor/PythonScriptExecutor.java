@@ -1,25 +1,20 @@
 package org.aktin.importer.executor;
 
-import org.aktin.Preferences;
-import org.aktin.dwh.BrokerResourceManager;
-import org.aktin.dwh.PreferenceKey;
-import org.aktin.dwh.SystemStatusManager;
-import org.aktin.importer.DataSourceCredsExtractor;
-import org.aktin.importer.FileOperationManager;
-import org.aktin.importer.ScriptOperationManager;
-import org.aktin.importer.enums.PropertiesKey;
-import org.aktin.importer.enums.PropertiesOperation;
-import org.aktin.importer.enums.PropertiesState;
-import org.aktin.importer.enums.ScriptOperation;
-import org.aktin.importer.pojos.DatabaseCreds;
-import org.aktin.importer.pojos.PythonScriptTask;
-
+import java.util.Properties;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-import java.util.*;
-import java.util.logging.Logger;
+import org.aktin.Preferences;
+import org.aktin.dwh.PreferenceKey;
+import org.aktin.importer.DataSourceCredsExtractor;
+import org.aktin.importer.FileOperationManager;
+import org.aktin.importer.ScriptOperationManager;
+import org.aktin.importer.enums.PropertiesKey;
+import org.aktin.importer.enums.PropertiesState;
+import org.aktin.importer.pojos.DatabaseCreds;
+import org.aktin.importer.pojos.PythonScriptTask;
 
 @Singleton
 public class PythonScriptExecutor {
@@ -27,12 +22,6 @@ public class PythonScriptExecutor {
     private static final Logger LOGGER = Logger.getLogger(PythonScriptExecutor.class.getName());
 
     private PythonRunner runner;
-
-    @Inject
-    private SystemStatusManager systemStatusManager;
-
-    @Inject
-    private BrokerResourceManager brokerResourceManager;
 
     @Inject
     private Preferences preferences;
@@ -46,6 +35,9 @@ public class PythonScriptExecutor {
     @Inject
     private DataSourceCredsExtractor dataSourceCredsExtractor;
 
+    @Inject
+    private PythonVersionNotifier notifier;
+
     /**
      * First, collects installed python packages and puts them as a resource on the AKTIN Broker (as a
      * CompletableFuture). Extracts on startup i2b2crcdata credentials and connection url and forwards them
@@ -54,7 +46,7 @@ public class PythonScriptExecutor {
      */
     @PostConstruct
     public void startup() {
-        uploadPythonPackageVersions();
+        notifier.uploadPythonPackageVersions();
         DatabaseCreds credentials = dataSourceCredsExtractor.getI2b2crcCredentials();
         int timeout = Integer.parseInt(preferences.get(PreferenceKey.importScriptTimeout));
         runner = new PythonRunner(fileOperationManager, scriptOperationManager, credentials, timeout);
@@ -72,41 +64,10 @@ public class PythonScriptExecutor {
             PropertiesState state = PropertiesState.valueOf(properties.getProperty(PropertiesKey.state.name()));
             if (state.equals(PropertiesState.queued) || state.equals(PropertiesState.in_progress)) {
                 String uuid = properties.getProperty(PropertiesKey.id.name());
-                PropertiesOperation operation = PropertiesOperation.valueOf(properties.getProperty(PropertiesKey.operation.name()));
-                switch (operation) {
-                    case verifying:
-                        task = new PythonScriptTask(uuid, ScriptOperation.verify_file);
-                        break;
-                    case importing:
-                        task = new PythonScriptTask(uuid, ScriptOperation.import_file);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected operation: " + operation.name());
-                }
+                task = new PythonScriptTask(uuid);
                 runner.submitTask(task);
             }
         }
-    }
-
-    /**
-     * Collect (hard-coded) Python apt packages and put them as a new resource group on the AKTIN Broker.
-     */
-    private void uploadPythonPackageVersions() {
-        Properties versions_python = collectPythonPackageVersions();
-        brokerResourceManager.putMyResourceProperties("python", versions_python);
-    }
-
-    /**
-     * Iterate through a list of necessary Python packages and get the corresponding installed version.
-     * Package names are from apt package manager (ubuntu is default operating system on dwh)
-     * @return Properties with {package name} = {installed version}
-     */
-    private Properties collectPythonPackageVersions() {
-        Properties properties = new Properties();
-        List<String> packages_python = Arrays.asList("python3", "python3-pandas", "python3-numpy", "python3-requests", "python3-sqlalchemy", "python3-psycopg2", "python3-postgresql", "python3-zipp", "python3-plotly", "python3-unicodecsv", "python3-gunicorn");
-        Map<String, String> versions_python = systemStatusManager.getLinuxPackagesVersion(packages_python);
-        properties.putAll(versions_python);
-        return properties;
     }
 
     /**
@@ -121,10 +82,9 @@ public class PythonScriptExecutor {
      * adds a new file processing task to processing queue
      *
      * @param uuid   id of file to process
-     * @param method type of processing to perform (verify/import), equals the method called in python script
      */
-    public void addTask(String uuid, ScriptOperation method) {
-        PythonScriptTask task = new PythonScriptTask(uuid, method);
+    public void addTask(String uuid) {
+        PythonScriptTask task = new PythonScriptTask(uuid);
         runner.submitTask(task);
     }
 
