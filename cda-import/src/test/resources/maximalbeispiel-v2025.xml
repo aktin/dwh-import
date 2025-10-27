@@ -684,6 +684,149 @@ Momentan fehlt noch:
                             </reference>
                         </observation>
                     </entry>
+                   <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-CD"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (CD)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="CD"
+                                code="S27.3"
+                                codeSystem="2.16.840.1.113883.6.3"
+                                displayName="Verletzung der Bronchien"/>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-REAL"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (REAL)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="REAL" value="3.14"/>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-REAL"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (REAL)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="REAL" value="3.14"/>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-PQ"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (PQ)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="PQ" value="120" unit="mmHg"/>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-INT"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (INT)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="INT" value="42"/>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-ST"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (ST)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="ST">Freitext-Ergebnis</value>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wildcard-BL"/>
+                            <code code="YOUR-WILDCARD-CODE" codeSystem="YOUR-CODE-SYSTEM-OID" displayName="Wildcard Diagnose (BL)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                            <low  value="20240117170000"/>
+                            <high value="20240117170559"/>
+                            </effectiveTime>
+                            <value xsi:type="BL" value="true"/>
+                            <reference typeCode="REFR">
+                            <externalDocument classCode="DOC" moodCode="EVN">
+                                <text mediaType="text/plain">
+                                <reference value="https://art-decor.org/ad/#/aktin-/datasets/..."/>
+                                </text>
+                            </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
                 </section>
             </component>
 
