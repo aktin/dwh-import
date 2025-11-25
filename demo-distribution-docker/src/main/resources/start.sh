@@ -6,10 +6,10 @@
 CONFIG_FILE="/app/config/logging.properties"
 echo "Using logging config: $CONFIG_FILE"
 
-exec "$JAVA_HOME"/bin/java -Xmx1024m \
+"$JAVA_HOME"/bin/java -Xmx1024m \
   -Djava.util.logging.config.file="$CONFIG_FILE" \
   -cp "/app/lib/*" \
-  org.aktin.broker.admin.standalone.HttpServer "${SERVER_PORT}"
+  org.aktin.cda.etl.demo.Server "${SERVER_PORT}"
 
 
       # java -Xmx1024m \
