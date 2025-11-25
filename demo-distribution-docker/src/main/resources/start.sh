@@ -1,15 +1,14 @@
 #!/bin/bash
-# AKTIN : DWH Import : Demo Distribution
 
-# Resolve the directory where the script is located
-mydir="$(cd "$(dirname "$0")" && pwd)"
+# Check if SERVER_PORT is set, otherwise default to 8080 (safety net)
+: "${SERVER_PORT:=8080}"
 
-# Run Java
-# We use "$mydir/lib/*" to include all jars found in the lib folder
-exec java -Xmx1024m \
-  -Djava.util.logging.config.file="$mydir/logging.properties" \
-  -cp "$mydir/lib/*" \
-  org.aktin.cda.etl.demo.Server "$@"
+"$JAVA_HOME"/bin/java -Xmx1024m \
+  -Daktin.broker.password=CHANGEME \
+  -Djava.util.logging.config.file=logging.properties \
+  -cp lib/\* \
+  org.aktin.broker.admin.standalone.HttpServer "${SERVER_PORT}"
+
 
 
   # java -Xmx1024m \

@@ -1,15 +1,17 @@
 FROM eclipse-temurin:11-jre
 WORKDIR /app
 
-# Copy the lib folder from the maven build context
+# Define the build-time argument for the port (Default: 8080)
+ARG PORT=8080
+
+# Persist this as an environment variable for start.sh to read at runtime
+ENV SERVER_PORT=${PORT}
+
 COPY lib/ /app/lib/
-
-# Copy the start script
 COPY start.sh /app/
-RUN chmod +x /app/start.sh
-
-# Configuration (optional, can be overridden by volume)
 COPY logging.properties /app/
 
-EXPOSE 8080
+RUN chmod +x /app/start.sh
+
+EXPOSE ${PORT}
 ENTRYPOINT ["/app/start.sh"]
