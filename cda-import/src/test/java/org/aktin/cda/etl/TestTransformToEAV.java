@@ -1,24 +1,21 @@
 package org.aktin.cda.etl;
 
+import de.sekmi.histream.DateTimeAccuracy;
+import de.sekmi.histream.Observation;
+import de.sekmi.histream.ext.Patient;
+import de.sekmi.histream.ext.Visit;
+import de.sekmi.histream.io.GroupedXMLReader;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-
 import javax.xml.transform.stream.StreamSource;
-
 import org.aktin.cda.CDAParser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
-
-import de.sekmi.histream.DateTimeAccuracy;
-import de.sekmi.histream.Observation;
-import de.sekmi.histream.ext.Patient;
-import de.sekmi.histream.ext.Visit;
-import de.sekmi.histream.io.GroupedXMLReader;
 
 /** 
  * Test the template transformations from CDA to EAV-XML. Multiple template ids
@@ -48,6 +45,26 @@ public class TestTransformToEAV {
 			Assert.assertTrue(templateId.length() > 0);
 		}
 	}
+	@Test
+	public void extractTemplateIdv2024() throws Exception{
+		CDAParser parser = new CDAParser();
+		try( InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/" +
+				"episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml") ){
+			Document dom = parser.buildDOM(new StreamSource(in));
+			String templateId = parser.extractTemplateId(dom);
+			Assert.assertNotNull(templateId);
+			Assert.assertTrue(templateId.length() > 0);
+		}
+		CDAParser parser2 = new CDAParser();
+		try( InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/" +
+				"episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard02.xml") ){
+			Document dom = parser2.buildDOM(new StreamSource(in));
+			String templateId = parser2.extractTemplateId(dom);
+			Assert.assertNotNull(templateId);
+			Assert.assertTrue(templateId.length() > 0);
+		}
+	}
+
 	@SuppressWarnings("deprecation")
 	@Test
 	public void transformExample1() throws Exception{
@@ -55,13 +72,13 @@ public class TestTransformToEAV {
 		CDAImporterMockUp t = new CDAImporterMockUp();
 		try( InputStream in = CDAParser.class.getResourceAsStream("/basismodul-minimal.xml") ){
 			Document dom = parser.buildDOM(new StreamSource(in));
-			
-			
+
+
 			Path temp = t.transform(dom, parser.extractTemplateId(dom));
 			try( InputStream eav = Files.newInputStream(temp) ){
 				GroupedXMLReader suppl = t.readEAV(eav);
 				Observation o = suppl.get();
-				
+
 				// verify patient birth date
 				Patient p = o.getExtension(Patient.class);
 				Assert.assertNotNull(p);
@@ -71,30 +88,96 @@ public class TestTransformToEAV {
 				Visit v = o.getExtension(Visit.class);
 				Assert.assertNotNull(v);
 				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T16:03+0100"), v.getStartTime());
-				
+
 				// verify observation
 				// skip observations until LOINC
 				Optional<Observation> opt = suppl.stream().filter(x -> x.getConceptId().equals("ICD10GM:S80.1")).findFirst();
 				Assert.assertTrue(opt.isPresent());
 				o = opt.get();
 				Assert.assertEquals(DateTimeAccuracy.parsePartialIso8601("2015-01-17T16:03+0100"), o.getStartTime());
-				
+
 				suppl.close();
 			}finally{
 				Files.delete(temp);
 			}
 		}
-		
+
 		t.close();
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void transformExamplev2024() throws Exception {
+		CDAParser parser = new CDAParser();
+		CDAImporterMockUp t = new CDAImporterMockUp();
+		try (InputStream in = CDAParser.class.getResourceAsStream(
+				"/basismodul-v2025.xml")) {
+			Document dom = parser.buildDOM(new StreamSource(in));
+
+			Path temp = t.transform(dom, parser.extractTemplateId(dom));
+			try {
+				// Ausgabe des EAV-Inhalts auf der Konsole
+				System.out.println("=== EAV-INHALT ANFANG ===");
+				try (BufferedReader reader = Files.newBufferedReader(temp)) {
+					reader.lines().forEach(System.out::println);
+				}
+				System.out.println("=== EAV-INHALT ENDE ===");
+
+				// Die ursprüngliche Verarbeitung mit einem neuen InputStream
+				try (InputStream eav = Files.newInputStream(temp)) {
+					GroupedXMLReader suppl = t.readEAV(eav);
+					Observation o = suppl.get();
+
+					// verify patient birth date
+					Patient p = o.getExtension(Patient.class);
+					Assert.assertNotNull(p);
+					// now a birthdate is available in the XML (1996-05-31)
+					Assert.assertEquals(
+							p.getBirthDate().toString(),
+							DateTimeAccuracy.parsePartialIso8601("1996-05-30").toString()
+					);
+
+					// verify visit start date (2024, nicht 2015)
+					Visit v = o.getExtension(Visit.class);
+					Assert.assertNotNull(v);
+					Assert.assertEquals(
+							DateTimeAccuracy.parsePartialIso8601("2024-01-17T16:03+0100"),
+							v.getStartTime()
+					);
+
+					// verify observation: finde Abschlussdiagnose S93.40
+					Optional<Observation> opt = suppl.stream()
+							.filter(x -> x.getConceptId().equals("ICD10GM:S93.40"))
+							.findFirst();
+					Assert.assertTrue(opt.isPresent());
+					o = opt.get();
+					System.out.println(o);
+					System.out.println("Observation date: " + o.getStartTime());
+					Assert.assertEquals(
+							"2024-01-16",
+							o.getStartTime().toString()
+					);
+
+
+
+					suppl.close();
+				}
+			} finally {
+				Files.delete(temp);
+			}
+		}
+
+		t.close();
+	}
+
+
 	/**
 	 * Transform a CDA file to a EAV which is output on stdout.
 	 * Call with {@code java -classpath "test-classes;classes;dependencies/*" org.aktin.cda.etl.TestTransformToEAV filename}
 	 * @param args file name argument
 	 * @throws Exception error
 	 */
-	public static void main(String args[]) throws Exception{
+	public static void main(String[] args) throws Exception{
 		// TODO use file name from commmand line
 		if( args.length != 1 ){
 			System.err.println("Please specify exactly one CDA file path");
