@@ -82,6 +82,9 @@
               <build>
                 <dockerFile>${project.basedir}/Dockerfile</dockerFile>
                 <contextDir>${project.build.directory}/docker-context</contextDir>
+                <tags>
+                  <tag>latest</tag>
+                </tags>
               </build>
             </image>
           </images>
