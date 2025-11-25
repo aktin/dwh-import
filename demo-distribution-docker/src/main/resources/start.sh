@@ -4,7 +4,6 @@
 : "${SERVER_PORT:=8080}"
 
 CONFIG_FILE="/app/config/logging.properties"
-echo "Using logging config: $CONFIG_FILE"
 
 "$JAVA_HOME"/bin/java -Xmx1024m \
   -Djava.util.logging.config.file="$CONFIG_FILE" \

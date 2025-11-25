@@ -38,7 +38,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <outputDirectory>${project.build.directory}/docker-context/lib</outputDirectory>
             </configuration>
           </execution>
         </executions>
@@ -53,7 +53,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}</outputDirectory>
+              <outputDirectory>${project.build.directory}/docker-context</outputDirectory>
               <resources>
                 <resource>
                   <directory>src/main/resources</directory>
@@ -81,7 +81,7 @@
               <name>${docker.image.name}:${project.version}</name>
               <build>
                 <dockerFile>${project.basedir}/Dockerfile</dockerFile>
-                <contextDir>${project.build.directory}</contextDir>
+                <contextDir>${project.build.directory}/docker-context</contextDir>
               </build>
             </image>
           </images>
