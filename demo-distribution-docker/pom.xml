@@ -59,6 +59,12 @@
                   <directory>src/main/resources</directory>
                   <filtering>false</filtering>
                 </resource>
+                <resource>
+                  <directory>../demo-distribution/src/main/scripts/startup</directory>
+                  <includes>
+                    <include>logging.properties</include>
+                  </includes>
+                </resource>
               </resources>
             </configuration>
           </execution>

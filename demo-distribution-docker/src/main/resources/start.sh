@@ -3,15 +3,16 @@
 # Check if SERVER_PORT is set, otherwise default to 8080 (safety net)
 : "${SERVER_PORT:=8080}"
 
-"$JAVA_HOME"/bin/java -Xmx1024m \
-  -Daktin.broker.password=CHANGEME \
-  -Djava.util.logging.config.file=logging.properties \
-  -cp lib/\* \
+CONFIG_FILE="/app/config/logging.properties"
+echo "Using logging config: $CONFIG_FILE"
+
+exec "$JAVA_HOME"/bin/java -Xmx1024m \
+  -Djava.util.logging.config.file="$CONFIG_FILE" \
+  -cp "/app/lib/*" \
   org.aktin.broker.admin.standalone.HttpServer "${SERVER_PORT}"
 
 
-
-  # java -Xmx1024m \
+      # java -Xmx1024m \
       #  -Djava.util.logging.config.file=logging.properties \
       #  -cp lib/\* \
       #  org.aktin.cda.etl.demo.Server 8080
