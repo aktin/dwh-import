@@ -21,6 +21,7 @@ public class TestSchemaValidator {
 	@Test
 	public void assumeValidSchemaForExampleDocuments() throws Exception{
 		String[][] validSchemaCollections = new String[][]{
+			TestValidator.v2024ExampleDocuments,
 			TestValidator.v2ExampleDocuments,
 			TestValidator.v1ExampleDocuments,
 			TestValidator.v1InvalidExampleDocuments,
@@ -30,8 +31,10 @@ public class TestSchemaValidator {
 			for( String example : collection ){
 				errorPrinter.setSystemId(example);
 				try( InputStream in = getClass().getResourceAsStream(example) ){
-					Assert.assertTrue(in.available() > 0);
-					Assert.assertTrue(validator.validate(new StreamSource(in), errorPrinter));
+					Assert.assertNotNull("File not found at " + example, in);
+					Assert.assertTrue("File is empty " + example, in.available() > 0);
+					boolean isValid = validator.validate(new StreamSource(in), errorPrinter);
+					Assert.assertTrue("Valid schema expected for " + example, isValid);
 				}
 			}
 		}
@@ -40,9 +43,11 @@ public class TestSchemaValidator {
 	public void expectSchemaErrorForSchemaErrorExample() throws Exception{
 		for( String example : TestValidator.invalidSchemaDocuments ){
 			try( InputStream in = getClass().getResourceAsStream(example) ){
-				Assert.assertTrue(in.available() > 0);
+				Assert.assertNotNull("File not found at " + example, in);
+				Assert.assertTrue("File is empty " + example, in.available() > 0);
 				// all documents should produce schema validation errors
-				Assert.assertFalse(validator.validate(new StreamSource(in), SuppressValidationErrors.staticInstance));
+				boolean isValid = validator.validate(new StreamSource(in), SuppressValidationErrors.staticInstance);
+				Assert.assertFalse("Invalid schema expected for " + example, isValid);
 			}
 		}
 	}

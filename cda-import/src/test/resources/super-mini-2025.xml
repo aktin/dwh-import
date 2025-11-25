@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../stylesheets/CDA.xsl"?>
+<?xml-model href="../schematron-episodenzusammenfassung-notaufnahmeregister2024/aktin-nar2025.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
+    <!-- Patient -->
+    <recordTarget typeCode="RCT" contextControlCode="OP">
+        <patientRole classCode="PAT">
+            <id extension="1234567890" root="1.2.276.0.76.4.8"/>
+        </patientRole>
+    </recordTarget>
+
+    <!-- Patientenkontakt -->
+    <componentOf>
+        <encompassingEncounter classCode="ENC" moodCode="EVN">
+            <id root="1.2.276.0.76.3.87686" extension="987654321-01"/>
+        </encompassingEncounter>
+    </componentOf>
+
+    <component>
+        <structuredBody>
+            <component typeCode="COMP" contextConductionInd="true">
+                <!-- Transportmittel -->
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.3.1.195.10.10"/>
+                    <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Transport mode"/>
+                    <title>Transportmittel</title>
+                    <text>Keins</text>
+                    <entry typeCode="COMP">
+                        <!-- Transportmethode -->
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.11"/>
+                            <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
+                            <statusCode code="completed"/>
+                            <!-- Optional: Ankunftszeit -->
+                            <effectiveTime>
+                                <high value="202401171603"/>
+                            </effectiveTime>
+                            <value xsi:type="CV" code="260413007" codeSystem="2.16.840.1.113883.6.96" displayName="None (qualifier value)"/>
+                        </observation>
+                    </entry>
+                </section>
+            </component>
+        </structuredBody>
+    </component>
+</ClinicalDocument>

@@ -12,10 +12,14 @@
 		<version>0.21-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<schematronVersion>20180323T201638</schematronVersion>
-		<examplesVersion>20180322T121703</examplesVersion>
-		<schematronArchive>aktin-runtime-${schematronVersion}</schematronArchive>
-		<examplesArchive>aktin-xml-${examplesVersion}</examplesArchive>
+		<schematronVersion2018>20180323T201638</schematronVersion2018>
+		<examplesVersion2018>20180322T121703</examplesVersion2018>
+		<schematronArchive>aktin-runtime-${schematronVersion2018}</schematronArchive>
+		<examplesArchive>aktin-xml-${examplesVersion2018}</examplesArchive>
+		<schematronVersion2025>20241202T134738</schematronVersion2025>
+		<examplesVersion2025>20241202T134738</examplesVersion2025>
+		<schematronArchive2>aktin-runtime-${schematronVersion2025}</schematronArchive2>
+		<examplesArchive2>aktin-xml-${examplesVersion2025}</examplesArchive2>
 	</properties>
 	<build>
 		<resources>
@@ -23,13 +27,10 @@
 				<directory>src/main/resources</directory>
 			</resource>
 			<resource>
-				<directory>${project.build.directory}/schematron/${schematronArchive}</directory>
+				<directory>${project.build.directory}/schematron</directory>
 			</resource>
 			<resource>
-				<directory>${project.build.directory}/examples/${examplesArchive}</directory>
-				<excludes>
-					<exclude>**/.DS_Store</exclude>
-				</excludes>
+				<directory>${project.build.directory}/examples/</directory>
 			</resource>
 		</resources>
 		<plugins>
@@ -53,12 +54,40 @@
 						</goals>
 						<configuration>
 							<target>
-								<!-- schematron files -->
+								<!-- schematron files for CDA version v2 -->
 								<get src="https://aktin.art-decor.pub/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/schematron" />
-								<!-- download examples -->
+								<!-- examples for CDA version v2 -->
 								<get src="https://aktin.art-decor.pub/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
-								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples" />
+								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples">
+									<patternset>
+										<include name="**/CDA Beispiele*/*"/>
+										<exclude name="__MACOSX/"/>
+										<!--<include name="aktin-xml*/stylesheets/*"/>-->
+									</patternset>
+									<cutdirsmapper dirs="1"/>
+								</unzip>
+								<!-- schematron files for CDA version 2025 -->
+								<get src="https://aktin.art-decor.pub/${schematronArchive2}.zip" dest="${project.build.directory}/schematron-2024.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/schematron-2024.zip" dest="${project.build.directory}/schematron" />
+								<!-- examples for CDA version 2025 -->
+								<get src="https://aktin.art-decor.pub/${examplesArchive2}.zip" dest="${project.build.directory}/examples-2024.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/examples">
+									<patternset>
+										<include name="**/CDA Beispiele*/*"/>
+										<include name="**/stylesheets/*"/>
+									</patternset>
+									<cutdirsmapper dirs="1"/>
+								</unzip>
+								<!-- CDA schema definition and core schemas -->
+								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/schematron">
+									<patternset>
+										<include name="**/schemas/*"/>
+										<include name="**/coreschemas/*"/>
+									</patternset>
+									<!-- Extract the files without the zip Archive name -->
+									<cutdirsmapper dirs="1"/>
+								</unzip>
 							</target>
 						</configuration>
 					</execution>

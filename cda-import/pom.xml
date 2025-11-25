@@ -82,5 +82,19 @@
 			<artifactId>histream-i2b2</artifactId>
 		</dependency>
 
+		<!-- Saxon-HE for XSLT 2/3 processing -->
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>12.4</version>
+		</dependency>
+
+		<!-- XMLResolver (required for Saxon 11+) -->
+		<dependency>
+			<groupId>org.xmlresolver</groupId>
+			<artifactId>xmlresolver</artifactId>
+			<version>4.5.0</version>
+		</dependency>
+
 	</dependencies>
 </project>
