@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:11-jre-jammy
 WORKDIR /app
 
 # Demo server port (Default: 8080)
