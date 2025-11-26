@@ -14,16 +14,17 @@ docker pull ghcr.io/aktin/demo-distribution-docker:latest
 
 ## Running the Container
 ### 1. Basic Start
-Run this command to start the server. The container listens to port `8080` by default.
+Run this command to start the server. The internal server uses port `8080`, so startup logs will always reference this port.
 ```bash
-docker run ghcr.io/aktin/demo-distribution-docker:latest
+docker run -p 8080:8080 ghcr.io/aktin/demo-distribution-docker:latest
 ```
 
 ### 2. Running on a Custom Port
-If you want the server to be accessible on a custom port like `9090`, run:
+To access the server on a different port like `9090`, map the internal port `8080` using the `-p` flag.
 ```bash
 docker run -e SERVER_PORT=9090 ghcr.io/aktin/demo-distribution-docker:latest
 ```
+
 ### 3. Custom Logging Configuration
 The container uses a default `logging.properties` file. You can override this by mounting your own configuration file to `/app/config/logging.properties`.
 ```bash
