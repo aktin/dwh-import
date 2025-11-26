@@ -21,6 +21,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
+  <repositories>
+    <repository>
+      <id>aktin-repo</id>
+      <name>AKTIN.org</name>
+      <url>https://aktin.org/software/repo/</url>
+    </repository>
+  </repositories>
+
 	<scm>
 		<developerConnection>scm:git:https://github.com/aktin/dwh-import.git</developerConnection>
 		<tag>HEAD</tag>
@@ -39,5 +47,4 @@
 		<module>generic-file-importer</module>
     <module>demo-distribution-docker</module>
   </modules>
-
 </project>
