@@ -36,5 +36,5 @@ jobs:
       - name: Build Docker Image via Maven
         run: mvn -B clean package -DskipTests
 
-      - name: Push Docker Images
-        run: docker push --all-tags ${{ env.IMAGE }}
+#      - name: Push Docker Images
+#        run: docker push --all-tags ${{ env.IMAGE }}
