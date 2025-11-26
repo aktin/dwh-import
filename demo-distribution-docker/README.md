@@ -22,7 +22,7 @@ docker run -p 8080:8080 ghcr.io/aktin/demo-distribution-docker:latest
 ### 2. Running on a Custom Port
 To access the server on a different port like `9090`, map the internal port `8080` using the `-p` flag.
 ```bash
-docker run -e SERVER_PORT=9090 ghcr.io/aktin/demo-distribution-docker:latest
+docker run -p 9090:8080 ghcr.io/aktin/demo-distribution-docker:latest
 ```
 
 ### 3. Custom Logging Configuration
