@@ -47,5 +47,6 @@ curl -v \
 ```
 
 ### Interpreting the Response
-* **HTTP 2xx:** The document was accepted and is valid.
-* **HTTP 4xx/5xx:** The document is invalid or rejected. The response body usually contains details about the validation errors.
+* **HTTP 2xx:** The document was accepted and is valid
+* **HTTP 4xx:** The document is invalid or rejected. The response body usually contains details about the validation errors
+* **HTTP 5xx:** An unexpected error occurred on our side. Please report this issue to us if it persists
