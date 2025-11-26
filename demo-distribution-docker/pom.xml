@@ -84,6 +84,10 @@
                 <tags>
                   <tag>latest</tag>
                 </tags>
+                <args>
+                  <BUILD_TIME>${maven.build.timestamp}</BUILD_TIME>
+                  <DWH_GITHUB_TAG>${project.version}</DWH_GITHUB_TAG>
+                </args>
               </build>
             </image>
           </images>
