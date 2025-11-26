@@ -4,12 +4,12 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-validation</artifactId>
-	<version>0.21-SNAPSHOT</version>
+	<version>0.21rc1</version>
 
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.21-SNAPSHOT</version>
+		<version>0.21rc1</version>
 	</parent>
 	<properties>
 		<schematronVersion2018>20180323T201638</schematronVersion2018>
@@ -61,11 +61,11 @@
 								<get src="https://aktin.art-decor.pub/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples">
 									<patternset>
-										<include name="**/CDA Beispiele*/*"/>
-										<exclude name="__MACOSX/"/>
-										<!--<include name="aktin-xml*/stylesheets/*"/>-->
+										<include name="**/CDA Beispiele*/*" />
+										<exclude name="__MACOSX/" />
+										<!--<include name="aktin-xml*/stylesheets/*" />-->
 									</patternset>
-									<cutdirsmapper dirs="1"/>
+									<cutdirsmapper dirs="1" />
 								</unzip>
 								<!-- schematron files for CDA version 2025 -->
 								<get src="https://aktin.art-decor.pub/${schematronArchive2}.zip" dest="${project.build.directory}/schematron-2024.zip" verbose="false" usetimestamp="true" />
@@ -74,19 +74,19 @@
 								<get src="https://aktin.art-decor.pub/${examplesArchive2}.zip" dest="${project.build.directory}/examples-2024.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/examples">
 									<patternset>
-										<include name="**/CDA Beispiele*/*"/>
-										<include name="**/stylesheets/*"/>
+										<include name="**/CDA Beispiele*/*" />
+										<include name="**/stylesheets/*" />
 									</patternset>
-									<cutdirsmapper dirs="1"/>
+									<cutdirsmapper dirs="1" />
 								</unzip>
 								<!-- CDA schema definition and core schemas -->
 								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/schematron">
 									<patternset>
-										<include name="**/schemas/*"/>
-										<include name="**/coreschemas/*"/>
+										<include name="**/schemas/*" />
+										<include name="**/coreschemas/*" />
 									</patternset>
 									<!-- Extract the files without the zip Archive name -->
-									<cutdirsmapper dirs="1"/>
+									<cutdirsmapper dirs="1" />
 								</unzip>
 							</target>
 						</configuration>
