@@ -111,7 +111,7 @@
                  -->
                 <gender><xsl:call-template name="EAV-Geschlecht"></xsl:call-template></gender>
                 <xsl:if test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value">
-                    <!-- 59 Geburtsdatum  HL7.TS =>  	YYYY[MM[DD]] -->
+                    <!-- Date of Birth  HL7.TS =>  	YYYY[MM[DD]] -->
                     <birthdate><xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value)"/></birthdate>
                 </xsl:if>
                 <!-- Discharge Disposition Code = 'Tod' ; then EncounterEnd=Death Date; If no Discharge Date = empty deceased-Element is sufficient for I2B2 -->
@@ -142,7 +142,7 @@
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:participant/cda:associatedEntity"/>
-                    <!-- Alle Fact-Templates auf Body/Component/Section Ebene aufrufen -->
+                    <!-- Call all fact templates at body/component/section level -->
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section"/>
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:templateId"/>
                 </encounter>
@@ -156,13 +156,13 @@
     <!-- COMPONENT Templates -->
 
 
-    <!-- Eindeutiger Identifier (~EpisodenID), identisch bei Updates des gleichen Dokuments (nicht PatID!) -->
-    <!-- SetID(@root/@extension) identisch, versionNumer für Updates! // shall be present to enable further updates to this ClinicalDocument. -->
+    <!-- Unique identifier (~episode ID), identical for updates of the same document (not patient ID!) -->
+    <!-- SetID(@root/@extension) identical, versionNumber for updates! // shall be present to enable further updates to this ClinicalDocument. -->
     <xsl:template name="encounter-id">
         <xsl:value-of select="aktin:encounter-hash(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root, /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension)"/>
     </xsl:template>
 
-    <!-- Internes Fallkennzeichen // optionale Angabe zwecks Mapping von Entlassdaten, wird nicht ausgewertet -->
+    <!-- Internal encounter indicator // optional information for mapping discharge data, not evaluated -->
     <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]">
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Fallkennzeichen</xsl:attribute>
@@ -173,35 +173,33 @@
         </fact>
     </xsl:template>
 
-    <!-- 1	ID des Krankenhauses
-    Die KrankenhausID muss nicht im DWH gespeichert werden.
-    Bei der Zusammenführung ist dem Broker die Quelle bekannt und kann ggf. ergänzt werden.
-    Im CDA ist es über Custodian vermutlich am sinnvollsten abbildbar. -->
+    <!-- Hospital ID
+    The hospital ID does not need to be stored in the DWH.
+    During merging, the broker knows the source and can be supplemented if necessary.
+    In the CDA, it is probably most sensible to represent it via Custodian. -->
 
-    <!-- 2	ID der Notaufnahme
-    siehe 1 - Falls es zwei Notaufnahmen gibt, haben sie ein seperates DWH oder ein gemeinsames und werden nicht getrennt ausgewertet. In beiden Fällen ist die Frage nicht wirklich relevant.
+    <!-- Emergency department ID
+    see 1 - If there are two emergency departments, they have a separate DWH or a shared one and are not evaluated separately. In both cases, the question is not really relevant.
     -->
 
-    <!-- 3	PatientenId im Basismodul -->
-    <!-- <xsl:comment>3	PatientenId im Basismodul</xsl:comment> -->
+    <!-- Patient ID in the base module -->
+    <!-- <xsl:comment>Patient ID in the base module</xsl:comment> -->
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
         <xsl:value-of select="aktin:patient-hash(./cda:id/@root, ./cda:id/@extension)"/>
     </xsl:template>
 
-    <!-- 60 Versicherungsname -->
-    <!-- 771 Versicherungsträger -->
-    <!-- 808 Versicherungsnummer -->
-    <xsl:template match="cda:participant/cda:associatedEntity">
-        <xsl:comment>60 Versicherungsname</xsl:comment>
+
+        <xsl:template match="cda:participant/cda:associatedEntity">
+        <xsl:comment>Insurance Information</xsl:comment>
+        <!-- Health insurance Name -->
         <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KKNAME</xsl:attribute>  <!-- Name der Krankenkasse als Freitext -->
+            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>KKNAME</xsl:attribute>
             <value>
                 <xsl:attribute name="xsi:type">string</xsl:attribute>
                 <xsl:value-of select="./cda:scopingOrganization/cda:name"/>
             </value>
         </fact>
-
-        <!-- kann die ID (IKNR) in scopingOrganisation auch weggelassen werden? -->
+        <!-- IKNR -->
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>IKNR</xsl:attribute>
             <value>
@@ -209,7 +207,7 @@
                 <xsl:value-of select="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.5']/@extension"/>
             </value>
         </fact>
-        <!-- VK-Nummer, wenn vorhanden -->
+        <!-- VK-Nummer -->
         <xsl:if test="./cda:scopingOrganization/cda:id[@root='1.2.276.0.76.4.7']">
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>VKNR</xsl:attribute>
@@ -219,17 +217,16 @@
                 </value>
             </fact>
         </xsl:if>
-
     </xsl:template>
 
-    <!-- 53 Patientenname -->
-    <!-- 54 Patientenadresse (Strasse) -->
-    <!-- 55 Patientenadresse (Ort) -->
-    <!-- 772 Patientenadresse (PLZ) -->
-    <!-- 56 Patientenadresse (Telefonnummer) -->
-    <!-- information privacy (alles außer PLZ), ggf. an dieser Stelle schon Stellen weglassen? -->
+    <!-- Patient name -->
+    <!-- Patient address (street) -->
+    <!-- Patient address (city) -->
+    <!-- Patient address (ZIP) -->
+    <!-- Patient address (phone number) -->
+    <!-- information privacy (everything except ZIP), maybe omit digits at this point already? -->
     <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode">
-        <xsl:comment>772 Patientenadresse (PLZ)</xsl:comment>
+        <xsl:comment>Patient address (ZIP)</xsl:comment>
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>ZIPCODE</xsl:attribute>
             <value>
@@ -240,9 +237,9 @@
         </fact>
     </xsl:template>
 
-    <!-- Auswertung des Ortsnamens (für Kreis/Gemeindekennziffer) aktuell nicht vorgesehen
+    <!-- Evaluation of the city name (for district/municipality code) currently not planned
     <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:city">
-        <xsl:comment>Patientenadresse (Ort)</xsl:comment>
+        <xsl:comment>Patient address (city)</xsl:comment>
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Ort</xsl:attribute>
             <value>
@@ -252,10 +249,10 @@
         </fact>
     </xsl:template> -->
 
-    <!-- 114 Rankin Scale als einzelne Konzept (0..6)-->
+    <!-- Rankin Scale as individual concept (0..6)-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4045']">
         <!--
-        <xsl:comment>114 Rankin Scale (Konzeptcode)</xsl:comment>
+        <xsl:comment>Rankin Scale (concept code)</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
@@ -271,8 +268,8 @@
             <xsl:call-template name="GetEffectiveTimes"/>
         </fact> -->
 
-        <!-- 114 Rankin Scale numerisch (0..6) -->
-        <xsl:comment>114 Rankin Scale</xsl:comment>
+        <!-- Rankin Scale numeric (0..6) -->
+        <xsl:comment>Rankin Scale</xsl:comment>
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>75859-9</xsl:attribute>
             <xsl:if test="../cda:effectiveTime/@value">
@@ -285,13 +282,13 @@
         </fact>
     </xsl:template>
 
-    <!-- 65 Patientengeschlecht
-    I2B2: keine Einschränkung
+    <!-- Patient gender
+    I2B2: no restrictions
     EAV: female, male, indeterminate
-    Datensatz: M/F/UN + beliebige NullFlavor (min. "unbekannt" und "nicht angegeben")
+    Dataset: M/F/UN + any NullFlavor (min. "unknown" and "not specified")
 
     <xsl:template match="cda:patient/cda:administrativeGenderCode">
-        <xsl:comment>65 Patientengeschlecht</xsl:comment>
+        <xsl:comment>Patient gender</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
@@ -320,14 +317,14 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- 57/58 Aufnahmedatum/uhrzeit
-    vgl. 882
+    <!-- Admission date/time
+    cf. 882
     -->
 
-    <!-- 5 Schwanger L:11449-6'-->
-    <!-- Unterscheidung Unknown und Nicht ausgefüllt? -->
+    <!-- Pregnant L:11449-6'-->
+    <!-- Distinction between Unknown and Not filled in? -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4043']">
-        <xsl:comment>5 Schwangerschaftsstatus</xsl:comment>
+        <xsl:comment>Pregnancy status</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
@@ -348,9 +345,9 @@
         </fact>
     </xsl:template>
 
-    <!-- 6 Tetanusschutz L:11458-7-->
+    <!-- Tetanus protection L:11458-7-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4044']">
-        <xsl:comment>6 Tetanusschutz</xsl:comment>
+        <xsl:comment>Tetanus protection</xsl:comment>
         <fact>
             <xsl:attribute name= "concept">
                 <xsl:choose>
@@ -368,9 +365,9 @@
         </fact>
     </xsl:template>
 
-    <!-- 7 Isolation -->
+    <!-- Isolation -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4068']">
-        <xsl:comment>7 Isolation</xsl:comment>
+        <xsl:comment>Isolation</xsl:comment>
         <xsl:if test="../cda:code/@code = 'RISO'"> <!-- Reverse Isolation -->
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$Isolation-Prefix"/>RISO</xsl:attribute>
@@ -391,9 +388,9 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- 8 Isolation Begründung -->
+    <!-- Isolation reason -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4069']">
-        <xsl:comment>8 Isolation Begründung</xsl:comment>
+        <xsl:comment>Isolation reason</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
@@ -409,51 +406,51 @@
         </fact>
     </xsl:template>
 
-    <!-- 9 Atemfrequenz
+    <!-- Respiratory rate
     <fact concept="L:9279-1">
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4030']">
-        <xsl:comment>9 Atemfrequenz</xsl:comment>
+        <xsl:comment>Respiratory rate</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 10 Sauerstoffsättigung 59408-5
+    <!-- Oxygen saturation 59408-5
     <fact concept="L:59408-5">
-    LOINC Code ist im CDA anders gewählt
+    LOINC code is chosen differently in the CDA
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4031']">
-        <xsl:comment>10 Sauerstoffsättigung</xsl:comment>
+        <xsl:comment>Oxygen saturation</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 11 Systolischer Blutdruck 8480-6
+    <!-- Systolic blood pressure 8480-6
     <fact concept="L:8480-6">
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4032']">
-        <xsl:comment>11 Systolischer Blutdruck</xsl:comment>
+        <xsl:comment>Systolic blood pressure</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 12 Herzfrequenz 8867-4
+    <!-- Heart rate 8867-4
     <fact concept="L:8867-4" </fact>
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4033']">
-        <xsl:comment>12 Herzfrequenz</xsl:comment>
+        <xsl:comment>Heart rate</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 13 GCS Augenöffnen
+    <!-- GCS Eye opening
     <fact concept="L:9267-6"</fact> -->
     <xsl:template match="cda:code[@code='9267-6']">
-        <xsl:comment>13 Glasgow Coma Scale Eye Opening(</xsl:comment>
+        <xsl:comment>Glasgow Coma Scale Eye Opening</xsl:comment>
         <fact>
             <xsl:if test="../../../cda:effectiveTime/@value">
                 <xsl:attribute name="start">
@@ -464,10 +461,10 @@
         </fact>
     </xsl:template>
 
-    <!-- 14 GCS verbale Antwort
+    <!-- GCS Verbal response
     <fact concept="L:9270-0"/fact> -->
     <xsl:template match="cda:code[@code='9270-0']">
-        <xsl:comment>14 Glasgow Coma Scale Verbal Response(</xsl:comment>
+        <xsl:comment>Glasgow Coma Scale Verbal Response</xsl:comment>
         <fact>
             <xsl:if test="../../../cda:effectiveTime/@value">
                 <xsl:attribute name="start">
@@ -478,10 +475,10 @@
         </fact>
     </xsl:template>
 
-    <!-- 16 GCS motorische Antwort
+    <!-- GCS Motor response
     <fact concept="L:9268-4" > -->
     <xsl:template match="cda:code[@code='9268-4']">
-        <xsl:comment>16 Glasgow Coma Scale Motor Response(</xsl:comment>
+        <xsl:comment>Glasgow Coma Scale Motor Response</xsl:comment>
         <fact>
             <xsl:if test="../../../cda:effectiveTime/@value">
                 <xsl:attribute name="start">
@@ -492,18 +489,18 @@
         </fact>
     </xsl:template>
 
-    <!-- 17 GCS Summe
+    <!-- GCS Total
     <fact concept="L:9269-2" > -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4034']">
-        <xsl:comment>17 Glasgow Coma Scale(</xsl:comment>
+        <xsl:comment>Glasgow Coma Scale</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 18 Pupillenweite bei Aufnahme in der Notaufnahme -->
+    <!-- Pupil dilation on admission to the emergency department -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4046']">
-        <xsl:comment>18 Pupillenweite bei Aufnahme in der Notaufnahme</xsl:comment>
+        <xsl:comment>Pupil dilation on admission to the emergency department</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
             <modifier>
@@ -514,9 +511,9 @@
         </fact>
     </xsl:template>
 
-    <!-- 19 Pupillenreaktion -->
+    <!-- Pupillary response -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4047']">
-        <xsl:comment>19 Pupillenreaktion</xsl:comment>
+        <xsl:comment>Pupillary response</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
             <modifier>
@@ -527,27 +524,27 @@
         </fact>
     </xsl:template>
 
-    <!-- 20 Körperkerntemperatur -->
+    <!-- Core body temperature -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4035']">
-        <xsl:comment>20 Körperkerntemperatur</xsl:comment>
+        <xsl:comment>Core body temperature</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 21 Schmerz bei Aufnahme, loinc-schmerzskala 0-10 ggf. Answer list LL2335-9
+    <!-- Pain on admission, LOINC pain scale 0-10 possibly Answer list LL2335-9
     <fact concept="L:72514-3" >
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4036']">
-        <xsl:comment>21 Schmerz bei Aufnahme</xsl:comment>
+        <xsl:comment>Pain on admission</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode"/>
         </fact>
     </xsl:template>
 
-    <!-- 22 Zuweisung -->
+    <!-- Referral -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3046']">
-        <xsl:comment>22 Zuweisung</xsl:comment>
+        <xsl:comment>Referral</xsl:comment>
         <fact>
             <xsl:if test="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@code">
                 <xsl:attribute name="concept">
@@ -559,28 +556,20 @@
                     <xsl:value-of select="$Zuweiser-Prefix"/><xsl:value-of select="../cda:entry/cda:act/cda:participant/cda:participantRole/cda:code/@nullFlavor"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="GetEffectiveTimes"/> <!-- no Times in Zuweisung -->
+            <xsl:call-template name="GetEffectiveTimes"/> <!-- no times in referral -->
         </fact>
     </xsl:template>
 
-    <!-- 62 Zuweiser -->
-    <!-- Auf dem Bogen nicht vorgesehen / Freitext -->
+    <!-- Referring physician/entity -->
+    <!-- Not provided on the form / free text -->
 
-    <!-- 23 Ersteinschätzung -->
-    <!-- incl. 770 Zeitpunkt der Ersteinschätzung
-         incl. 804	Verwendetes Ersteinschätzungssystem
+    <!-- Initial assessment -->
+    <!-- incl. 770 time of initial assessment
+         incl. 804 initial assessment system used
     -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4042']">
-        <!-- <xsl:comment>804 Verwendetes Ersteinschätzungssystem</xsl:comment> => Information in 23/770 enthalten
-        <fact>
-            <xsl:attribute name="concept">
-                <xsl:choose>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.438'"><xsl:value-of select="../cda:code/@code"/>:MTS</xsl:when>
-                    <xsl:when test="../cda:value/@codeSystem='1.2.276.0.76.5.437'"><xsl:value-of select="../cda:code/@code"/>:ESI</xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-        </fact>  => Information in 23/770 enthalten -->
-        <xsl:comment>804 Verwendetes Ersteinschätzungssystem/23 Ersteinschätzung/770 Zeitpunkt der Ersteinschätzung</xsl:comment>
+        <!-- <xsl:comment>Initial assessment system used</xsl:comment> => Information contained in 23/770 -->
+        <xsl:comment>Initial assessment system used/Initial assessment/Time of initial assessment</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:choose>
@@ -598,18 +587,18 @@
         </fact>
     </xsl:template>
 
-    <!-- 24 Diagnostik  Überschrift/Freitext -->
+    <!-- Diagnostics heading/free text -->
 
-    <!-- Zusatzmodule -->
-    <!-- 25 Modul Überwachung -->
-    <!-- 26 Modul Trauma -->
-    <!-- 27 Modul Anästhesie -->
-    <!-- 28 Modul Konsil -->
-    <!-- 29 Modul Präklinik -->
-    <!-- 30 Modul Chargendokumentation -->
-    <!-- 767 Modul Neurologie -->
+    <!-- Additional modules -->
+    <!-- Monitoring module -->
+    <!-- Trauma module -->
+    <!-- Anesthesia module -->
+    <!-- Consultation module -->
+    <!-- Pre-clinical module -->
+    <!-- Batch documentation module -->
+    <!-- Neurology module -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4070']">
-        <xsl:comment>25-30+767 Zusatzmodule</xsl:comment>
+        <xsl:comment>Additional modules</xsl:comment>
         <xsl:for-each select="../cda:reference/cda:externalDocument">
             <fact>
                 <xsl:attribute name="concept">
@@ -620,12 +609,12 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- 31 Allergie -->
-    <!-- 33 Antibiotikaallergie -->
-    <!-- 32 Kontrastmittelallergie -->
-    <!-- 34 Allergie Sonstige -->
+    <!-- Allergy -->
+    <!-- Antibiotic allergy -->
+    <!-- Contrast medium allergy -->
+    <!-- Other allergies -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4065']">
-        <xsl:comment>31/32/33/34 Allergien</xsl:comment>
+        <xsl:comment>Allergies</xsl:comment>
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4066']">
             <fact>
                 <xsl:attribute name="concept">
@@ -650,9 +639,9 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien -->
+    <!-- Free text for anamnestic intolerances / allergies -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3051']">
-        <xsl:comment>Freitext für anamnestisch bestehende Unverträglichkeiten / Allergien</xsl:comment>
+        <xsl:comment>Free text for anamnestic intolerances / allergies</xsl:comment>
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$Allergie-Prefix"/>TXT</xsl:attribute>
             <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
@@ -667,9 +656,9 @@
         </fact>
     </xsl:template>
 
-    <!-- 36 Beschwerden bei Vorstellung / Freitext-->
+    <!-- Complaints on presentation / free text-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3048']">
-        <xsl:comment>Beschwerden bei Vorstellung (Freitext)</xsl:comment>
+        <xsl:comment>Complaints on presentation (free text)</xsl:comment>
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>COMPLAINT</xsl:attribute>
             <xsl:if test="../cda:entry/cda:act/cda:effectiveTime/cda:low/@value">
@@ -684,13 +673,13 @@
         </fact>
     </xsl:template>
 
-    <!-- 212 Symptomdauer
-    siehe 805 CEDIS-->
+    <!-- Symptom duration
+    see 805 CEDIS-->
 
-    <!-- 37 Zeitpunkt erster Arztkontakt-->
+    <!-- Time of first doctor contact-->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:performer/cda:time">
         <xsl:if test="./cda:low/@value">
-            <xsl:comment>37 Zeitpunkt erster Arztkontakt</xsl:comment>
+            <xsl:comment>Time of first doctor contact</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>PHYSENCOUNTER</xsl:attribute>
                 <xsl:if test="./cda:low/@value">
@@ -703,10 +692,10 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- 38 Zeitpunkt Therapiebeginn-->
+    <!-- Time of therapy start-->
     <xsl:template match="cda:documentationOf/cda:serviceEvent/cda:effectiveTime">
         <xsl:if test="./cda:low/@value">
-            <xsl:comment>38 Zeitpunkt Therapiebeginn</xsl:comment>
+            <xsl:comment>Time of therapy start</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>STARTTHERAPY</xsl:attribute>
                 <xsl:if test="./cda:low/@value">
@@ -719,16 +708,16 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- 40 Notfallanamnese / Freitext-->
+    <!-- Emergency history / free text-->
 
-    <!-- 41 Befunde / Freitext-->
+    <!-- Findings / free text-->
 
-    <!-- 46 Procedere / Freitext-->
+    <!-- Procedure / free text-->
 
-    <!-- 42 Abschlussdiagnosen / Freitext-->
-    <!-- 44 Abschlussdiagnosen-->
+    <!-- Final diagnoses / free text-->
+    <!-- Final diagnoses-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3055']">
-        <xsl:comment>44 Abschlussdiagnosen</xsl:comment>
+        <xsl:comment>Final diagnoses</xsl:comment>
         <xsl:for-each select="../cda:entry/cda:act/cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4049']">
             <fact>
                 <xsl:choose>
@@ -775,19 +764,19 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- 804 verwendetes Ersteinschätzungssystem
-    siehe 23 Ersteinschätzung -->
+    <!-- Initial assessment system used
+    see 23 Initial assessment -->
 
-    <!-- 805 Beschwerden bei Vorstellung (CEDIS)
-    incl. 212 Symptomdauer -->
+    <!-- Complaints on presentation (CEDIS)
+    incl. symptom duration -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4040']">
-        <xsl:comment>805 Beschwerden bei Vorstellung (CEDIS)</xsl:comment>
+        <xsl:comment>Complaints on presentation (CEDIS)</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
         </fact>
 
         <xsl:if test="../cda:effectiveTime/cda:width/@value">
-            <xsl:comment>212 Symptomdauer</xsl:comment>
+            <xsl:comment>Symptom duration</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>SYMPTOMDURATION</xsl:attribute>
                 <value>
@@ -801,11 +790,11 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- 806 multiresistente Erreger -->
-    <!-- 807 multiresistente Erreger: Erregertyp -->
-    <!-- Es sind einige Angaben im CDA möglich, die nicht vorgesehen sind. -->
+    <!-- multi-resistant pathogens -->
+    <!-- multi-resistant pathogens: Pathogen type -->
+    <!-- Some details are possible in the CDA that are not intended. -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4072']">
-        <xsl:comment>806/807 multiresistente Erreger</xsl:comment>
+        <xsl:comment>multi-resistant pathogens</xsl:comment>
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId[@root='1.2.276.0.76.10.4073']">
             <xsl:if test="../cda:value">
                 <fact>
@@ -832,15 +821,15 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- 808 Versicherungsnummer -->
-    <!-- siehe 60 Versicherungsname / 771 Versicherungsträger -->
+    <!-- insurance number -->
+    <!-- see insurance name / insurance carrier -->
 
-    <!-- 882 Uhrzeit Verlegung / Entlassung -->
-    <!-- incl. 57/58 Aufnahmedatum/uhrzeit
-        Aufnahme/Entlassung muss nicht als Konzept noch einmal abgebildet werden, da bereits in i2b2 Metadaten enthalten
+    <!-- Time of transfer / discharge -->
+    <!-- incl. admission date/time
+        Admission/discharge does not need to be represented as a concept again, as it is already contained in i2b2 metadata
     <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:effectiveTime">
         <xsl:if test="./cda:high/@value">
-            <xsl:comment>882 Uhrzeit Verlegung / Entlassung</xsl:comment>
+            <xsl:comment>Time of transfer / discharge</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>ZeitpunktVerlegung</xsl:attribute>
                 <xsl:if test="./cda:high/@value">
@@ -852,7 +841,7 @@
             </fact>
         </xsl:if>
         <xsl:if test="./cda:low/@value">
-            <xsl:comment>57/58 Aufnahmedatum/uhrzeit</xsl:comment>
+            <xsl:comment>Admission date/time</xsl:comment>
             <fact>
                 <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>52455-3</xsl:attribute>
                 <xsl:if test="./cda:low/@value">
@@ -865,7 +854,7 @@
         </xsl:if>
     </xsl:template>
     -->
-    <!-- Template für visit/encounter -->
+    <!-- Template for visit/encounter -->
     <xsl:template name="ZeitpunktEntlassungOptional">
         <xsl:variable name="ts" select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value"/>
         <xsl:if test="$ts">
@@ -875,23 +864,23 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- Template für visit/encounter -->
+    <!-- Template for visit/encounter -->
     <xsl:template name="ZeitpunktAufnahme">
         <xsl:value-of select="func:ConvertDateTime(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:low/@value)"/>
     </xsl:template>
 
 
-    <!-- 884 Transportmittel -->
+    <!-- Means of transport -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4037']">
-        <xsl:comment>884 Transportmittel</xsl:comment>
+        <xsl:comment>Means of transport</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue"/>
         </fact>
     </xsl:template>
 
-    <!-- 596	Patient verlegt / entlassen nach -->
+    <!-- Patient transferred / discharged to -->
     <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:dischargeDispositionCode">
-        <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
+        <xsl:comment>Patient transferred / discharged to</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:value-of select="$Entlassung-Prefix"/>
@@ -913,7 +902,7 @@
         </fact>
     </xsl:template>
     <xsl:template match="cda:code[../cda:templateId/@root='1.2.276.0.76.10.4067']">
-        <xsl:comment>596 Patient verlegt / entlassen nach</xsl:comment>
+        <xsl:comment>Patient transferred / discharged to</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
                 <xsl:value-of select="$Verlegung-Prefix"/>
@@ -930,9 +919,9 @@
         </fact>
     </xsl:template>
 
-    <!-- Diagnostik 25ff @negationInd -->
-    <!-- Diagnostik 25ff opB -->
-    <!-- Diagnostik 25ff Zeitpunkt-->
+    <!-- Diagnostics @negationInd -->
+    <!-- Diagnostics normal findings -->
+    <!-- Diagnostics time-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3050']">
         <xsl:for-each select="../cda:entry/cda:observation/cda:templateId">
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
@@ -951,7 +940,7 @@
                     </xsl:attribute>
                 </xsl:if>
                 <xsl:call-template name="GetEffectiveTimes"/>
-                <modifier>   <!-- Mehr Ausprägungen +NullFlavor vorhanden als abgefragt (nur Ja/Nein+NAV oder UNK)-->
+                <modifier>   <!-- More expressions +NullFlavor available than queried (only Yes/No+NAV or UNK)-->
                     <xsl:attribute name="code">
                         <xsl:choose>
                             <xsl:when test="../cda:value/@code">
@@ -973,10 +962,10 @@
     <xsl:template match="/cda:ClinicalDocument/cda:templateId">
         <xsl:comment>Import Transformation/Version Information</xsl:comment>
         <fact>
-            <!-- ACHTUNG: in anderen Modulen (z.B. Traumamodul) darf das nachfolgende fact nicht
-                genauso ausgegeben werden, da dann die Möglichkeit besteht dass das unique constraint
-                der observation_fact tabelle verletzt wird. Da die Software-Version aber gleich ist,
-                kann dies komplett weggelassen werden. -->
+            <!-- CAUTION: in other modules (e.g. trauma module), the following fact must not
+                be output in the same way, as there is then a possibility that the unique constraint
+                of the observation_fact table is violated. Since the software version is the same, however,
+                this can be completely omitted. -->
             <xsl:attribute name="concept">
                 <xsl:value-of select="$ProjectVersion-Prefix"/><xsl:value-of select="$aktin.release.version"/>
             </xsl:attribute>
