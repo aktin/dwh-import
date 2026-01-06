@@ -1479,6 +1479,160 @@
         </fact>
     </xsl:template>
 
+    <!-- substanceAdministration -->
+    <xsl:template match="cda:substanceAdministration[cda:templateId/@root='1.2.276.0.76.3.1.195.10.67']">
+        <xsl:variable name="medCode"
+                      select="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
+        <fact concept="{concat($Medikation-Prefix, $medCode)}">
+            <!-- moodCode -->
+            <xsl:if test="@moodCode">
+                <modifier>
+                    <xsl:attribute name="code">moodCode</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="@moodCode"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- id -->
+            <xsl:for-each select="cda:id">
+                <modifier>
+                    <xsl:attribute name="code">id</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="@root"/></value>
+                </modifier>
+            </xsl:for-each>
+            <!-- Referenz -->
+            <xsl:if test="cda:text/cda:reference/@value">
+                <modifier>
+                    <xsl:attribute name="code">reference</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="cda:text/cda:reference/@value"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- Klartext (item) -->
+            <xsl:variable name="itemId" select="substring-after(cda:text/cda:reference/@value,'#')"/>
+            <xsl:variable name="itemText" select="//cda:item[@ID=$itemId]"/>
+            <xsl:if test="$itemText">
+                <modifier>
+                    <xsl:attribute name="code">text</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="normalize-space($itemText)"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- StatementType -->
+            <xsl:if test="cda:code/@code">
+                <modifier>
+                    <xsl:attribute name="code">statementType</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="cda:code/@code"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- Status -->
+            <xsl:if test="cda:statusCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">status</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="cda:statusCode/@code"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- effectiveTime -->
+            <xsl:for-each select="cda:effectiveTime">
+                <modifier>
+                    <xsl:attribute name="code">effectiveTime</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="."/></value>
+                </modifier>
+            </xsl:for-each>
+            <!-- Route -->
+            <xsl:if test="cda:routeCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">route</xsl:attribute>
+                    <xsl:if test="cda:routeCode/@displayName">
+                        <xsl:attribute name="displayName">
+                            <xsl:value-of select="cda:routeCode/@displayName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="cda:routeCode/@code"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- ApproachSiteCode -->
+            <xsl:for-each select="cda:approachSiteCode">
+                <modifier>
+                    <xsl:attribute name="code">approachSite</xsl:attribute>
+                    <xsl:if test="@displayName">
+                        <xsl:attribute name="displayName"><xsl:value-of select="@displayName"/></xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="@code"/></value>
+                </modifier>
+            </xsl:for-each>
+            <!-- Dosis -->
+            <xsl:if test="cda:doseQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">dose</xsl:attribute>
+                    <xsl:if test="cda:doseQuantity/@unit">
+                        <xsl:attribute name="unit"><xsl:value-of select="cda:doseQuantity/@unit"/></xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="cda:doseQuantity/@value"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- Rate -->
+            <xsl:if test="cda:rateQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">rate</xsl:attribute>
+                    <xsl:if test="cda:rateQuantity/@unit">
+                        <xsl:attribute name="unit"><xsl:value-of select="cda:rateQuantity/@unit"/></xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="cda:rateQuantity/@value"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- Max Dose -->
+            <xsl:if test="cda:maxDoseQuantity/@value">
+                <modifier>
+                    <xsl:attribute name="code">maxDose</xsl:attribute>
+                    <xsl:if test="cda:maxDoseQuantity/@unit">
+                        <xsl:attribute name="unit"><xsl:value-of select="cda:maxDoseQuantity/@unit"/></xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="cda:maxDoseQuantity/@value"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- Administration Unit -->
+            <xsl:if test="cda:administrationUnitCode/@code">
+                <modifier>
+                    <xsl:attribute name="code">adminUnit</xsl:attribute>
+                    <xsl:if test="cda:administrationUnitCode/@displayName">
+                        <xsl:attribute name="displayName">
+                            <xsl:value-of select="cda:administrationUnitCode/@displayName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="cda:administrationUnitCode/@code"/></value>
+                </modifier>
+            </xsl:if>
+            <!-- Consumable -->
+            <xsl:if test="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
+                <modifier>
+                    <xsl:attribute name="code">consumable</xsl:attribute>
+                    <xsl:if test="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName">
+                        <xsl:attribute name="displayName">
+                            <xsl:value-of select="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string">
+                        <xsl:value-of select="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
+                    </value>
+                </modifier>
+            </xsl:if>
+            <!-- Subordinate substanceAdministration -->
+            <xsl:for-each select="cda:entryRelationship/cda:substanceAdministration">
+                <modifier>
+                    <xsl:attribute name="code">substanceAdministration</xsl:attribute>
+                    <xsl:if test="cda:code/@displayName">
+                        <xsl:attribute name="displayName"><xsl:value-of select="cda:code/@displayName"/></xsl:attribute>
+                    </xsl:if>
+                    <value xsi:type="string"><xsl:value-of select="cda:code/@code"/></value>
+                </modifier>
+            </xsl:for-each>
+            <!-- sequenceNumber -->
+            <xsl:if test="cda:sequenceNumber">
+                <modifier>
+                    <xsl:attribute name="code">sequenceNumber</xsl:attribute>
+                    <value xsi:type="string"><xsl:value-of select="cda:sequenceNumber"/></value>
+                </modifier>
+            </xsl:if>
+        </fact>
+    </xsl:template>
+
     <!-- GLOBAL TEMPLATES -->
 
 
