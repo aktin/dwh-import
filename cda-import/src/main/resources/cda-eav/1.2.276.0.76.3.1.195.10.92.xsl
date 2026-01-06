@@ -957,6 +957,19 @@
         </xsl:for-each>
     </xsl:template>
 
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.32']">
+        <xsl:comment>Suspicion of substance influence</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptValue" />
+            <modifier>
+                <xsl:attribute name="code">
+                    <xsl:value-of select="$LOINC-Prefix" /><xsl:value-of
+                        select="../cda:value/@code" />
+                </xsl:attribute>
+            </modifier>
+        </fact>
+    </xsl:template>
+
     <!-- Procedure / free text-->
 
     <!-- Final diagnoses / free text-->
