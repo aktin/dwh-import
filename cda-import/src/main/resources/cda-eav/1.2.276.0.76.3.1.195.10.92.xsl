@@ -810,6 +810,152 @@
     <!-- Emergency history / free text-->
 
     <!-- Findings / free text-->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.28']">
+        <xsl:comment>Accident Anamnesis</xsl:comment>
+        <xsl:variable name="eventStart"
+            select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)" />
+        <fact>
+            <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix" />74209-8</xsl:attribute>
+
+            <xsl:attribute name="start">
+                <xsl:value-of select="$eventStart" />
+            </xsl:attribute>
+
+            <xsl:attribute name="instance_num">
+                <xsl:number level="any"
+                    count="cda:templateId[@root='1.2.276.0.76.3.1.195.10.28']" />
+            </xsl:attribute>
+            <xsl:if test="../cda:text">
+                <modifier>
+                    <xsl:attribute name="code">description</xsl:attribute>
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
+                        <xsl:value-of select="../cda:text" />
+                    </value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="../cda:participant/cda:participantRole/cda:code/@code">
+                <modifier>
+                    <xsl:attribute name="code">vehicle</xsl:attribute>
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
+                        <xsl:value-of select="../cda:participant/cda:participantRole/cda:code/@code" />
+                    </value>
+                </modifier>
+            </xsl:if>
+            <xsl:for-each
+                select="../cda:entryRelationship/cda:observation
+                      [cda:templateId/@root='1.2.276.0.76.3.1.195.10.29']">
+                <xsl:call-template name="UnfallursacheKinetik" />
+            </xsl:for-each>
+
+            <xsl:for-each
+                select="../cda:entryRelationship/cda:observation
+                      [cda:templateId/@root='1.2.276.0.76.3.1.195.10.30']">
+                <xsl:call-template name="UnfallartTraumaregister" />
+            </xsl:for-each>
+
+            <xsl:variable name="refVal"
+                select="../cda:entryRelationship/cda:act
+                             /cda:text/cda:reference/@value" />
+            <xsl:variable name="refId" select="substring-after($refVal,'#')" />
+
+            <xsl:for-each
+                select="key('byId',$refId)[self::cda:section
+                        and cda:templateId/@root='1.2.276.0.76.3.1.195.10.31']">
+                <xsl:apply-templates select="." mode="asModifier" />
+            </xsl:for-each>
+        </fact>
+    </xsl:template>
+
+    <xsl:template name="UnfallursacheKinetik">
+        <xsl:comment>AccidentCauseKinetics</xsl:comment>
+
+        <modifier>
+            <xsl:attribute name="code">primaryCause</xsl:attribute>
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <xsl:value-of select="cda:value/@code" />
+            </value>
+        </modifier>
+
+        <xsl:for-each
+            select="cda:value/cda:qualifier">
+            <modifier>
+                <xsl:attribute name="code">
+                    <xsl:value-of select="cda:name/@code" />
+                </xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="cda:value/@code" />
+                </value>
+            </modifier>
+        </xsl:for-each>
+    </xsl:template>
+
+
+    <xsl:template name="UnfallartTraumaregister">
+        <xsl:comment>TraumaRegisterAccidentType</xsl:comment>
+        <modifier>
+            <xsl:attribute name="code">injuryType</xsl:attribute>
+            <value>
+                <xsl:attribute name="xsi:type">string</xsl:attribute>
+                <xsl:value-of select="cda:value/@code" />
+            </value>
+        </modifier>
+
+        <xsl:if
+            test="cda:value/@displayName">
+            <modifier>
+                <xsl:attribute name="code">displayName</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="cda:value/@displayName" />
+                </value>
+            </modifier>
+        </xsl:if>
+    </xsl:template>
+
+
+    <xsl:template match="cda:section[cda:templateId/@root='1.2.276.0.76.3.1.195.10.31']"
+        mode="asModifier">
+        <xsl:comment>TravelAnamnesis</xsl:comment>
+        <xsl:for-each
+            select="cda:entry/cda:observation
+         [cda:templateId/@root='1.2.276.0.76.3.1.195.10.77']">
+            <modifier>
+                <xsl:attribute name="code">traveledAbroad</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="cda:value/@value" />
+                </value>
+            </modifier>
+        </xsl:for-each>
+
+        <xsl:for-each
+            select="cda:entry/cda:observation
+         [cda:templateId/@root='1.2.276.0.76.3.1.195.10.78']">
+
+            <modifier>
+                <xsl:attribute name="code">visitedCountry</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="cda:value/@code" />
+                </value>
+            </modifier>
+
+            <xsl:for-each
+                select="cda:value/cda:translation">
+                <modifier>
+                    <xsl:attribute name="code">visitedCountry</xsl:attribute>
+                    <value>
+                        <xsl:attribute name="xsi:type">string</xsl:attribute>
+                        <xsl:value-of select="@code" />
+                    </value>
+                </modifier>
+            </xsl:for-each>
+        </xsl:for-each>
+    </xsl:template>
 
     <!-- Procedure / free text-->
 
