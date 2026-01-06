@@ -15,6 +15,10 @@
     <xsl:output method="xml" indent="yes" />
     <xsl:strip-space elements="*" />
 
+    <xsl:key name="byId"
+             match="*[@ID or @id]"
+             use="@ID | @id"/>
+
     <!-- RESERVED VARIABLES -->
     <!--
         these variables are used outside of the XSLT file
@@ -88,6 +92,12 @@
 
     <!-- Concept Code Prefix for Medication Codes -->
     <xsl:variable name="Medikation-Prefix">AKTIN:MED:</xsl:variable>
+
+    <!-- Concept Code Prefix for Wildcard Diagnostics -->
+    <xsl:variable name="WildcardDiagnostik-Prefix">AKTIN:WDIAG:</xsl:variable>
+
+    <!-- Concept Code Prefix for Wildcard Therapy -->
+    <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WTHERAPY:</xsl:variable>
 
     <!-- MAIN Template -->
 
@@ -346,15 +356,9 @@
 
     <xsl:template name="EAV-Geschlecht">
         <xsl:choose>
-            <xsl:when
-                test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">
-        female</xsl:when>
-            <xsl:when
-                test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='M'">
-        male</xsl:when>
-            <xsl:when
-                test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='UN'">
-        indeterminate</xsl:when>
+            <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='F'">female</xsl:when>
+            <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='M'">male</xsl:when>
+            <xsl:when test="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode/@code='UN'">indeterminate</xsl:when>
             <!-- Unknown as explicit value not supported by EAV (= not answered)-->
         </xsl:choose>
     </xsl:template>
