@@ -5,7 +5,7 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-import</artifactId>
-	<version>0.20-SNAPSHOT</version>
+	<version>0.22-SNAPSHOT</version>
 
 	<description>
 		The CDA import module transforms received
@@ -18,7 +18,7 @@
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.20-SNAPSHOT</version>
+		<version>0.22-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -61,12 +61,12 @@
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>cda-server</artifactId>
-			<version>0.20-SNAPSHOT</version>
+			<version>0.22-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aktin</groupId>
 			<artifactId>dwh-api</artifactId>
-			<version>0.10</version>
+			<version>0.11</version>
 		</dependency>
 
 		<dependency>
@@ -80,6 +80,20 @@
 		<dependency>
 			<groupId>de.sekmi.histream</groupId>
 			<artifactId>histream-i2b2</artifactId>
+		</dependency>
+
+		<!-- Saxon-HE for XSLT 2/3 processing -->
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>12.4</version>
+		</dependency>
+
+		<!-- XMLResolver (required for Saxon 11+) -->
+		<dependency>
+			<groupId>org.xmlresolver</groupId>
+			<artifactId>xmlresolver</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 
 	</dependencies>

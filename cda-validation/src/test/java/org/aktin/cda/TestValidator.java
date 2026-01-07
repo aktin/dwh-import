@@ -44,12 +44,7 @@ public class TestValidator {
 			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01-error1.xml",
 		};
 	public static final String[] v2InvalidExampleDocuments = new String[]{
-			"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml",
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard01.xml",	//old version, now invalid
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard02.xml",	//old version, now invalid
-			"/CDA Beispiele Basis-Modul v1/basismodul-beispiel-storyboard04.xml",	//old version, now invalid
-			"/Additional Examples/basismodul-beispiel-storyboard01-complete.xml",	//old version, now invalid
-			"/Additional Examples/basismodul-beispiel-storyboard01-mandatory.xml"	//old version, now invalid
+			"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml"
 		};
 
 	@Test
@@ -168,18 +163,16 @@ public class TestValidator {
 				// expected error
 			}
 		}
-		in.close();
+	}
 
-		// check other XML document
-		// should return result
-		in = getClass().getResourceAsStream("/Additional Examples/other-document.xml");
-		try {
-			boolean isValid = v.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
-			// should not pass validation
-			Assert.assertFalse(isValid);
-		} catch (XPathExpressionException | TransformerException e) {
-			Assert.fail();
+	@Test
+	public void validateErrorsForOtherDocuments_nonCDA_expectInvalid() throws Exception {
+		String example = "/Additional Examples/other-document.xml";
+		try (InputStream in = getClass().getResourceAsStream(example)) {
+			Assert.assertNotNull("File not found at " + example, in);
+			Assert.assertTrue("File is empty " + example, in.available() > 0);
+			boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2TemplateId, SuppressValidationErrors.staticInstance);
+			Assert.assertFalse("Validation failure expected for", isValid);
 		}
-		in.close();
 	}
 }

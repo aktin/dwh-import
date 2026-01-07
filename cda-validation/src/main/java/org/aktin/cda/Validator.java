@@ -153,11 +153,11 @@ public class Validator implements NamespaceContext{
 		}else{
 			StringBuilder info = new StringBuilder();
 			info.append("Document validation: FAILED (");
-			if( isValid == false ){
+			if(!isValid){
 				info.append("xsd error");
 			}
 			if( errorCount != 0 ){
-				if( isValid == false ){
+				if(!isValid){
 					info.append(" + ");
 				}
 				info.append(errorCount + " schematron errors");
@@ -207,7 +207,7 @@ public class Validator implements NamespaceContext{
 	 * @param args file name arguments
 	 * @throws Exception error
 	 */
-	public static void main(String args[]) throws Exception{
+	public static void main(String[] args) throws Exception{
 		// TODO use file name from commmand line
 		if( args.length != 1 ){
 			System.err.println("Please specify exactly one CDA file path");
