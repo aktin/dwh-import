@@ -47,6 +47,15 @@ public class TestValidator {
 			"/CDA Beispiele Basis-Modul v2/basismodul-v2-beispiel-storyboard01-error1.xml"
 		};
 
+	private Validator validator;
+	private CDAParser parser;
+
+	@Before
+	public void initialize() throws Exception {
+		validator = new Validator();
+		parser = new CDAParser();
+	}
+
 	@Test
 	public void validateExampleDocumentsV2_expectValid() throws Exception {
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
