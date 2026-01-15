@@ -1161,7 +1161,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4037']">
         <xsl:comment>Means of transport</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptValue" />
+            <xsl:call-template name="templateGetConceptCode" />
         </fact>
     </xsl:template>
 
