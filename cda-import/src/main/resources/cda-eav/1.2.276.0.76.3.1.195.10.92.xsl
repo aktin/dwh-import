@@ -829,9 +829,7 @@
 
         <xsl:for-each select="cda:value/cda:qualifier">
             <modifier>
-                <xsl:attribute name="code">
-                    <xsl:value-of select="cda:name/@code" />
-                </xsl:attribute>
+                <xsl:attribute name="code">accident-type</xsl:attribute>
                 <value>
                     <xsl:attribute name="xsi:type">string</xsl:attribute>
                     <xsl:value-of select="cda:value/@code" />
