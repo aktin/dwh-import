@@ -1678,6 +1678,156 @@
         </fact>
     </xsl:template>
 
+    <!-- EDIS Version -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.87']">
+        <xsl:comment>EDIS Version</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+            <modifier>
+                <xsl:attribute name="code">edisVersion</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value"/>
+                </value>
+            </modifier>
+        </fact>
+    </xsl:template>
+
+    <!-- EDIS Name -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.86']">
+        <xsl:comment>EDIS Name</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Export time from EDIS -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.88']">
+        <xsl:comment>Export time from EDIS</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time until export -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.85']">
+        <xsl:comment>Time until export</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time since last presentation for the same reason -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.15']">
+        <xsl:comment>Time since last presentation for the same reason</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time between arrival and admission -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.80']">
+        <xsl:comment>Time between arrival and admission</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time between admission and first doctor contact -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.82']">
+        <xsl:comment>Time between admission and first doctor contact</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time between admission and first initial assessment -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.81']">
+        <xsl:comment>Time between admission and first initial assessment</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time between admission and patient discharge/leaving -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.84']">
+        <xsl:comment>Time between admission and patient discharge/leaving</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time between admission and patient transfer/discharge readiness -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.83']">
+        <xsl:comment>Time between admission and patient transfer/discharge readiness</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Time of decision for transfer / discharge -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.75']">
+        <xsl:comment>Time of decision for transfer / discharge</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <xsl:template match="cda:observation[cda:templateId/@root = '1.2.276.0.76.3.1.195.10.74']">
+        <xsl:comment>Combination of transfer and discharge types</xsl:comment>
+        <xsl:variable name="code" select="cda:value/@code"/>
+
+        <xsl:variable name="verlegung" select="'37729005,429202003,1,3,5,7'"/>
+        <xsl:variable name="entlassung" select="'371828006,225928004,34596002,306689006,306205009,307374004,25675004,183515008,6,74964007'"/>
+
+        <xsl:variable name="isDis"
+                      select="contains(concat(',',$entlassung,','),concat(',',$code,','))"/>
+        <xsl:variable name="isTrans"
+                      select="contains(concat(',',$verlegung,','),concat(',',$code,','))"/>
+
+        <xsl:variable name="eff"
+                      select="cda:effectiveTime | ../cda:effectiveTime"/>
+
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:choose>
+                    <xsl:when test="$isDis"><xsl:value-of select="concat($AKTIN-Prefix,'DISCHARGE:')"/><xsl:value-of select="$code"/></xsl:when>
+                    <xsl:when test="$isTrans"><xsl:value-of select="concat($AKTIN-Prefix,'TRANSFER:')"/><xsl:value-of select="$code"/></xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+
+            <xsl:if test="$eff/@value or $eff/cda:low/@value">
+                <xsl:attribute name="start">
+                    <xsl:choose>
+                        <xsl:when test="$eff/@value">
+                            <xsl:value-of select="func:ConvertDateTime($eff/@value)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="func:ConvertDateTime($eff/cda:low/@value)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+            </xsl:if>
+
+            <xsl:apply-templates select="cda:templateId[1]" mode="embedTimes"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Hour of start of patient related documentation -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.78']">
+        <xsl:comment>Hour of start of patient related documentation</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
+
+    <!-- Date of start of patient related documentation -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.79']">
+        <xsl:comment>Date of start of patient related documentation</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptCode"/>
+        </fact>
+    </xsl:template>
     <!-- GLOBAL TEMPLATES -->
 
 
