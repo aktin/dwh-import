@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://sekmi.de/histream/ns/eav-data"
+           xmlns="http://sekmi.de/histream/ns/eav-data"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="types.xsd"/>
+    <xs:include schemaLocation="fact.xsd"/>
+
+    <xs:element name="eav-data">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="meta" type="MetaType"/>
+                <xs:element name="patient" type="PatientType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="MetaType">
+        <xs:sequence>
+            <xs:element name="etl-strategy" type="xs:string" minOccurs="0"/>
+            <xs:element name="source" type="sourceType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PatientType">
+        <xs:sequence>
+            <xs:element name="gender" type="xs:string" minOccurs="0"/>
+            <xs:element name="birthdate" type="partialDate" minOccurs="0"/>
+            <xs:element name="deceased" type="partialDate" minOccurs="0"/>
+            <xs:element name="encounter" type="EncounterType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="EncounterType">
+        <xs:sequence>
+            <xs:element name="start" type="partialDate"/>
+            <xs:element name="end" type="partialDate" minOccurs="0"/>
+            <xs:element name="fact" type="factType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

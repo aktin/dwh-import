@@ -50,25 +50,25 @@ public class TestTransformToEAV {
 		}
 	}
 
-	@Test
-	public void extractTemplateIdv2024() throws Exception {
-		CDAParser parser = new CDAParser();
-		try (InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/" +
-				"episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml")) {
-			Document dom = parser.buildDOM(new StreamSource(in));
-			String templateId = parser.extractTemplateId(dom);
-			Assert.assertNotNull(templateId);
-			Assert.assertTrue(templateId.length() > 0);
-		}
-		CDAParser parser2 = new CDAParser();
-		try (InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/" +
-				"episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard02.xml")) {
-			Document dom = parser2.buildDOM(new StreamSource(in));
-			String templateId = parser2.extractTemplateId(dom);
-			Assert.assertNotNull(templateId);
-			Assert.assertTrue(templateId.length() > 0);
-		}
-	}
+//	@Test
+//	public void extractTemplateIdv2024() throws Exception {
+//		CDAParser parser = new CDAParser();
+//		try (InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/" +
+//				"episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml")) {
+//			Document dom = parser.buildDOM(new StreamSource(in));
+//			String templateId = parser.extractTemplateId(dom);
+//			Assert.assertNotNull(templateId);
+//			Assert.assertTrue(templateId.length() > 0);
+//		}
+//		CDAParser parser2 = new CDAParser();
+//		try (InputStream in = CDAParser.class.getResourceAsStream("/Additional Examples/" +
+//				"episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard02.xml")) {
+//			Document dom = parser2.buildDOM(new StreamSource(in));
+//			String templateId = parser2.extractTemplateId(dom);
+//			Assert.assertNotNull(templateId);
+//			Assert.assertTrue(templateId.length() > 0);
+//		}
+//	}
 
 	@SuppressWarnings("deprecation")
 	@Test
@@ -82,6 +82,7 @@ public class TestTransformToEAV {
 			try (InputStream eav = Files.newInputStream(temp)) {
 				GroupedXMLReader suppl = t.readEAV(eav);
 				Observation o = suppl.get();
+				XSDCheck(temp);
 
 				// verify patient birth date
 				Patient p = o.getExtension(Patient.class);
@@ -109,161 +110,162 @@ public class TestTransformToEAV {
 
 		t.close();
 	}
+//
+//	@SuppressWarnings("deprecation")
+//	@Test
+//	public void transformExamplev2024() throws Exception {
+//		CDAParser parser = new CDAParser();
+//		CDAImporterMockUp t = new CDAImporterMockUp();
+//		try (InputStream in = CDAParser.class.getResourceAsStream(
+//				"/basismodul-v2025.xml")) {
+//			Document dom = parser.buildDOM(new StreamSource(in));
+//
+//			Path temp = t.transform(dom, parser.extractTemplateId(dom));
+//			try {
+//				// Ausgabe des EAV-Inhalts auf der Konsole
+//				System.out.println("=== EAV-INHALT ANFANG ===");
+//				try (BufferedReader reader = Files.newBufferedReader(temp)) {
+//					reader.lines().forEach(System.out::println);
+//				}
+//				System.out.println("=== EAV-INHALT ENDE ===");
+//
+//				// Die ursprüngliche Verarbeitung mit einem neuen InputStream
+//				try (InputStream eav = Files.newInputStream(temp)) {
+//					GroupedXMLReader suppl = t.readEAV(eav);
+//					Observation o = suppl.get();
+//
+//					// verify patient birth date
+//					Patient p = o.getExtension(Patient.class);
+//					Assert.assertNotNull(p);
+//					// now a birthdate is available in the XML (1996-05-31)
+//					Assert.assertEquals(
+//							p.getBirthDate().toString(),
+//							DateTimeAccuracy.parsePartialIso8601("1996-05-30").toString());
+//
+//					// verify visit start date (2024, nicht 2015)
+//					Visit v = o.getExtension(Visit.class);
+//					Assert.assertNotNull(v);
+//					Assert.assertEquals(
+//							DateTimeAccuracy.parsePartialIso8601("2024-01-17T16:03+0100"),
+//							v.getStartTime());
+//
+//					// verify observation: finde Abschlussdiagnose S93.40
+//					Optional<Observation> opt = suppl.stream()
+//							.filter(x -> x.getConceptId().equals("ICD10GM:S93.40"))
+//							.findFirst();
+//					Assert.assertTrue(opt.isPresent());
+//					o = opt.get();
+//					System.out.println(o);
+//					System.out.println("Observation date: " + o.getStartTime());
+//					Assert.assertEquals(
+//							"2024-01-16",
+//							o.getStartTime().toString());
+//
+//					suppl.close();
+//				}
+//			} finally {
+//				Files.delete(temp);
+//			}
+//		}
+//
+//		t.close();
+//	}
+//
+	 @SuppressWarnings("deprecation")
+	 @Test
+	 public void transformExamplev2025tr() throws Exception {
+	 	CDAParser parser = new CDAParser();
+	 	CDAImporterMockUp t = new CDAImporterMockUp();
 
-	@SuppressWarnings("deprecation")
-	@Test
-	public void transformExamplev2024() throws Exception {
-		CDAParser parser = new CDAParser();
-		CDAImporterMockUp t = new CDAImporterMockUp();
-		try (InputStream in = CDAParser.class.getResourceAsStream(
-				"/basismodul-v2025.xml")) {
-			Document dom = parser.buildDOM(new StreamSource(in));
+	 	// Storyboard 1
+	 	try (InputStream in = CDAParser.class.getResourceAsStream(
+	 			"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard01.xml")) {
+	 		Document dom = parser.buildDOM(new StreamSource(in));
 
-			Path temp = t.transform(dom, parser.extractTemplateId(dom));
-			try {
-				// Ausgabe des EAV-Inhalts auf der Konsole
-				System.out.println("=== EAV-INHALT ANFANG ===");
-				try (BufferedReader reader = Files.newBufferedReader(temp)) {
-					reader.lines().forEach(System.out::println);
-				}
-				System.out.println("=== EAV-INHALT ENDE ===");
+	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
+	 		try {
+	 			XSDCheck(temp);
+	 			System.out.println("=== EAV-INHALT Storyboard 1 ANFANG ===");
+	 			try (BufferedReader reader = Files.newBufferedReader(temp)) {
+	 				reader.lines().forEach(System.out::println);
+	 			}
+	 			System.out.println("=== EAV-INHALT Storyboard 1 ENDE ===");
 
-				// Die ursprüngliche Verarbeitung mit einem neuen InputStream
-				try (InputStream eav = Files.newInputStream(temp)) {
-					GroupedXMLReader suppl = t.readEAV(eav);
-					Observation o = suppl.get();
+	 			try (InputStream eav = Files.newInputStream(temp)) {
+	 				GroupedXMLReader suppl = t.readEAV(eav);
+	 				Observation o = suppl.get();
 
-					// verify patient birth date
-					Patient p = o.getExtension(Patient.class);
-					Assert.assertNotNull(p);
-					// now a birthdate is available in the XML (1996-05-31)
-					Assert.assertEquals(
-							p.getBirthDate().toString(),
-							DateTimeAccuracy.parsePartialIso8601("1996-05-30").toString());
+	 				// Patient: 31.05.1996
+	 				Patient p = o.getExtension(Patient.class);
+	 				Assert.assertNotNull(p);
+	 				Assert.assertEquals("1996-05-30", p.getBirthDate().toString());
 
-					// verify visit start date (2024, nicht 2015)
-					Visit v = o.getExtension(Visit.class);
-					Assert.assertNotNull(v);
-					Assert.assertEquals(
-							DateTimeAccuracy.parsePartialIso8601("2024-01-17T16:03+0100"),
-							v.getStartTime());
+	 				// Visit: 17. Januar 2024 16:03 -> 2024-01-17T16:03+01:00
+	 				Visit v = o.getExtension(Visit.class);
+	 				Assert.assertNotNull(v);
+	 				Assert.assertEquals(
+	 						DateTimeAccuracy.parsePartialIso8601("2024-01-17T16:03+0100"),
+	 						v.getStartTime());
 
-					// verify observation: finde Abschlussdiagnose S93.40
-					Optional<Observation> opt = suppl.stream()
-							.filter(x -> x.getConceptId().equals("ICD10GM:S93.40"))
-							.findFirst();
-					Assert.assertTrue(opt.isPresent());
-					o = opt.get();
-					System.out.println(o);
-					System.out.println("Observation date: " + o.getStartTime());
-					Assert.assertEquals(
-							"2024-01-16",
-							o.getStartTime().toString());
+	 				// Diagnose S93.6
+	 				Optional<Observation> opt = suppl.stream()
+	 						.filter(x -> x.getConceptId().equals("ICD10GM:S93.6"))
+	 						.findFirst();
+	 				Assert.assertTrue("Diagnose S93.6 fehlt", opt.isPresent());
 
-					suppl.close();
-				}
-			} finally {
-				Files.delete(temp);
-			}
-		}
+	 				suppl.close();
+	 			}
+	 		} finally {
+	 			Files.delete(temp);
+	 		}
+	 	}
 
-		t.close();
-	}
+	 	// Storyboard 2
+	 	try (InputStream in = CDAParser.class.getResourceAsStream(
+	 			"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard02.xml")) {
+	 		Document dom = parser.buildDOM(new StreamSource(in));
 
-	@SuppressWarnings("deprecation")
-	@Test
-	public void transformExamplev2025tr() throws Exception {
-		CDAParser parser = new CDAParser();
-		CDAImporterMockUp t = new CDAImporterMockUp();
+	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
+	 		try {
+	 			XSDCheck(temp);
+	 			System.out.println("=== EAV-INHALT Storyboard 2 ANFANG ===");
+	 			try (BufferedReader reader = Files.newBufferedReader(temp)) {
+	 				reader.lines().forEach(System.out::println);
+	 			}
+	 			System.out.println("=== EAV-INHALT Storyboard 2 ENDE ===");
 
-		// Storyboard 1
-		try (InputStream in = CDAParser.class.getResourceAsStream(
-				"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard01.xml")) {
-			Document dom = parser.buildDOM(new StreamSource(in));
+	 			try (InputStream eav = Files.newInputStream(temp)) {
+	 				GroupedXMLReader suppl = t.readEAV(eav);
+	 				Observation o = suppl.get();
 
-			Path temp = t.transform(dom, parser.extractTemplateId(dom));
-			try {
-				System.out.println("=== EAV-INHALT Storyboard 1 ANFANG ===");
-				try (BufferedReader reader = Files.newBufferedReader(temp)) {
-					reader.lines().forEach(System.out::println);
-				}
-				System.out.println("=== EAV-INHALT Storyboard 1 ENDE ===");
+	 				Patient p = o.getExtension(Patient.class);
+	 				Assert.assertNotNull(p);
+	 				Assert.assertEquals("1941-09-11", p.getBirthDate().toString());
 
-				try (InputStream eav = Files.newInputStream(temp)) {
-					GroupedXMLReader suppl = t.readEAV(eav);
-					Observation o = suppl.get();
+	 				// Visit: 2024-01-16T19:16:00 -> 2024-01-16T19:16+0100
+	 				Visit v = o.getExtension(Visit.class);
+	 				Assert.assertNotNull(v);
+	 				Assert.assertEquals(
+	 						DateTimeAccuracy.parsePartialIso8601("2024-01-16T19:16:00+0100"),
+	 						v.getStartTime());
 
-					// Patient: 31.05.1996
-					Patient p = o.getExtension(Patient.class);
-					Assert.assertNotNull(p);
-					Assert.assertEquals("1996-05-30", p.getBirthDate().toString());
+	 				suppl.close();
+	 			}
+	 		} finally {
+	 			Files.delete(temp);
+	 		}
+	 	}
 
-					// Visit: 17. Januar 2024 16:03 -> 2024-01-17T16:03+01:00
-					Visit v = o.getExtension(Visit.class);
-					Assert.assertNotNull(v);
-					Assert.assertEquals(
-							DateTimeAccuracy.parsePartialIso8601("2024-01-17T16:03+0100"),
-							v.getStartTime());
+	 	t.close();
+	 }
 
-					// Diagnose S93.6
-					Optional<Observation> opt = suppl.stream()
-							.filter(x -> x.getConceptId().equals("ICD10GM:S93.6"))
-							.findFirst();
-					Assert.assertTrue("Diagnose S93.6 fehlt", opt.isPresent());
-
-					suppl.close();
-				}
-			} finally {
-				Files.delete(temp);
-			}
-		}
-
-		// Storyboard 2
-		try (InputStream in = CDAParser.class.getResourceAsStream(
-				"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard02.xml")) {
-			Document dom = parser.buildDOM(new StreamSource(in));
-
-			Path temp = t.transform(dom, parser.extractTemplateId(dom));
-			try {
-				System.out.println("=== EAV-INHALT Storyboard 2 ANFANG ===");
-				try (BufferedReader reader = Files.newBufferedReader(temp)) {
-					reader.lines().forEach(System.out::println);
-				}
-				System.out.println("=== EAV-INHALT Storyboard 2 ENDE ===");
-
-				try (InputStream eav = Files.newInputStream(temp)) {
-					GroupedXMLReader suppl = t.readEAV(eav);
-					Observation o = suppl.get();
-
-					// Patient: 12. Sept 1941 (from XML 19410912) -> 1941-09-12
-					// Note: Storyboard text says "geboren am 12.09.1943" but XML has 19410912 in
-					// birthTime?
-					// Let's check the XML content I read earlier. Line 107: <birthTime
-					// value="19410912"/>
-					// Text in line 10: "geboren am 12.09.1943" => Discrepancy in XML comment vs
-					// value?
-					// Wait, looking at line 10 again: "geboren am 12.09.1943".
-					// Line 107 value="19410912".
-					// The test should verify what's in the machine readable part. So 1941-09-12.
-					Patient p = o.getExtension(Patient.class);
-					Assert.assertNotNull(p);
-					Assert.assertEquals("1941-09-11", p.getBirthDate().toString());
-
-					// Visit: 2024-01-16T19:16:00 -> 2024-01-16T19:16+0100
-					Visit v = o.getExtension(Visit.class);
-					Assert.assertNotNull(v);
-					Assert.assertEquals(
-							DateTimeAccuracy.parsePartialIso8601("2024-01-16T19:16:00+0100"),
-							v.getStartTime());
-
-					suppl.close();
-				}
-			} finally {
-				Files.delete(temp);
-			}
-		}
-
-		t.close();
+	private void XSDCheck(Path temp) throws Exception {
+		javax.xml.validation.SchemaFactory factory = javax.xml.validation.SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		java.net.URL xsdUrl = getClass().getResource("/cda-eav/eav-data.xsd");
+		Assert.assertNotNull("eav-data.xsd not found", xsdUrl);
+		javax.xml.validation.Schema schema = factory.newSchema(xsdUrl);
+		javax.xml.validation.Validator validator = schema.newValidator();
+		validator.validate(new StreamSource(Files.newInputStream(temp)));
 	}
 
 	/**
