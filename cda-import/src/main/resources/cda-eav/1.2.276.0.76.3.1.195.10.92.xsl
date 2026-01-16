@@ -499,6 +499,8 @@
         </fact>
     </xsl:template>
 
+
+
     <!-- Heart rate 8867-4
     <fact concept="L:8867-4" </fact>
     -->
@@ -1180,21 +1182,48 @@
     <!-- Diagnostics normal findings -->
     <!-- Diagnostics time-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3050']">
-        <xsl:for-each select="../cda:entry/cda:observation/cda:templateId">
+        <xsl:for-each select="../cda:entry/cda:observation/cda:templateId | ../cda:entry/cda:procedure/cda:templateId">
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:choose>
-                        <xsl:when test="../@negationInd"><xsl:value-of select="$LOINC-Prefix" /><xsl:value-of select="../cda:code/@code" />:NEG</xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$LOINC-Prefix" /><xsl:value-of select="../cda:code/@code" />
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:variable name="prefix">
+                        <xsl:choose>
+                            <xsl:when test="../cda:code/@codeSystem">
+                                <xsl:value-of select="func:GetCodePrefix(../cda:code/@codeSystem)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:variable name="baseCode" select="concat($prefix, ../cda:code/@code)" />
+                    <xsl:variable name="neg">
+                        <xsl:if test="../@negationInd='true'">:NEG</xsl:if>
+                    </xsl:variable>
+                    <xsl:value-of select="concat($baseCode, $neg)" />
                 </xsl:attribute>
                 <xsl:if test="../cda:effectiveTime/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
                     </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="../@classCode">
+                    <modifier code="classCode">
+                        <value xsi:type="string">
+                            <xsl:value-of select="../@classCode" />
+                        </value>
+                    </modifier>
+                </xsl:if>
+                <xsl:if test="../@moodCode">
+                    <modifier code="moodCode">
+                        <value xsi:type="string">
+                            <xsl:value-of select="../@moodCode" />
+                        </value>
+                    </modifier>
+                </xsl:if>
+                <xsl:if test="../@negationInd">
+                    <modifier code="negationInd">
+                        <value xsi:type="string">
+                            <xsl:value-of select="../@negationInd" />
+                        </value>
+                    </modifier>
                 </xsl:if>
                 <xsl:call-template name="GetEffectiveTimes" />
                 <modifier>   <!-- More expressions +NullFlavor available than queried (only Yes/No+NAV
@@ -1204,9 +1233,6 @@
                             <xsl:when test="../cda:value/@code">
                                 <xsl:value-of select="$Diagnostic-Prefix" /><xsl:value-of select="../cda:value/@code" />
                             </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="$Diagnostic-Prefix" /><xsl:value-of select="../cda:value/@nullFlavor" />
-                            </xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
                 </modifier>
@@ -1675,6 +1701,8 @@
         <xsl:call-template name="GetNumericValues" />
         <xsl:call-template name="GetEffectiveTimes" />
     </xsl:template>
+
+
 
 
     <xsl:template name="templateGetConceptValue">
