@@ -99,6 +99,11 @@
     <!-- Concept Code Prefix for Wildcard Therapy -->
     <xsl:variable name="WildcardTherapie-Prefix">AKTIN:WTHERAPY:</xsl:variable>
 
+    <!-- Concept Code Prefix for Future LOINC Codes -->
+    <xsl:variable name="Future-LOINC-Prefix">AKTIN:FLN:</xsl:variable>
+
+    <!-- Prefix for SNOMED-CT Codes -->
+    <xsl:variable name="SNOMED-Prefix">SNOMED:</xsl:variable>
     <!-- MAIN Template -->
 
     <xsl:template match="/">
@@ -465,7 +470,7 @@
     <!-- Diastolic blood pressure
     <fact concept="Snomed:271650006">
      -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.37']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.38']">
         <xsl:comment>Diastolic blood pressure</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptCode" />
@@ -534,7 +539,7 @@
     </xsl:template>
 
     <!-- Smallest Glasgow Coma Scale
-    <fact concept="L:9269-2" > -->
+    <fact concept="FLN-14" > -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.44']">
         <xsl:comment>Smallest Glasgow Coma Scale</xsl:comment>
         <fact>
@@ -895,7 +900,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.32 ']">
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.32']">
         <xsl:comment>Suspicion of substance influence</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue" />
@@ -1407,29 +1412,6 @@
                     <value xsi:type="string"><xsl:value-of select="@root"/></value>
                 </modifier>
             </xsl:for-each>
-            <!-- Referenz -->
-            <xsl:if test="cda:text/cda:reference/@value">
-                <modifier>
-                    <xsl:attribute name="code">reference</xsl:attribute>
-                    <value xsi:type="string"><xsl:value-of select="cda:text/cda:reference/@value"/></value>
-                </modifier>
-            </xsl:if>
-            <!-- Klartext (item) -->
-            <xsl:variable name="itemId" select="substring-after(cda:text/cda:reference/@value,'#')"/>
-            <xsl:variable name="itemText" select="//cda:item[@ID=$itemId]"/>
-            <xsl:if test="$itemText">
-                <modifier>
-                    <xsl:attribute name="code">text</xsl:attribute>
-                    <value xsi:type="string"><xsl:value-of select="normalize-space($itemText)"/></value>
-                </modifier>
-            </xsl:if>
-            <!-- StatementType -->
-            <xsl:if test="cda:code/@code">
-                <modifier>
-                    <xsl:attribute name="code">statementType</xsl:attribute>
-                    <value xsi:type="string"><xsl:value-of select="cda:code/@code"/></value>
-                </modifier>
-            </xsl:if>
             <!-- Status -->
             <xsl:if test="cda:statusCode/@code">
                 <modifier>
@@ -1603,7 +1585,9 @@
     <xsl:template name="templateGetConceptCode">
         <xsl:attribute name="concept">
             <xsl:choose>
+                <xsl:when test="../cda:code/@codeSystem='1.2.276.0.76.3.1.195.5.98'"><xsl:value-of select="$Future-LOINC-Prefix"/></xsl:when>
                 <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.1'"><xsl:value-of select="$LOINC-Prefix" /></xsl:when>
+                <xsl:when test="../cda:code/@codeSystem='2.16.840.1.113883.6.96'"><xsl:value-of select="$SNOMED-Prefix"/></xsl:when>
             </xsl:choose>
             <xsl:value-of select="../cda:code/@code" />
         </xsl:attribute>
