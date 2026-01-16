@@ -293,36 +293,8 @@
         </fact>
     </xsl:template>
 
-    <!-- Evaluation of the city name (for district/municipality code) currently not planned
-    <xsl:template match="cda:recordTarget/cda:patientRole/cda:addr/cda:city">
-        <xsl:comment>Patient address (city)</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix"/>Ort</xsl:attribute>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="."/>
-            </value>
-        </fact>
-    </xsl:template> -->
-
     <!-- Rankin Scale as individual concept (0..6)-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4045']">
-        <!--
-        <xsl:comment>Rankin Scale (concept code)</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept">
-                <xsl:choose>
-                    <xsl:when test="../cda:value/@value = '0'"><xsl:value-of select="$Rankin-Prefix"/>0</xsl:when>
-                    <xsl:when test="../cda:value/@value = '1'"><xsl:value-of select="$Rankin-Prefix"/>1</xsl:when>
-                    <xsl:when test="../cda:value/@value = '2'"><xsl:value-of select="$Rankin-Prefix"/>2</xsl:when>
-                    <xsl:when test="../cda:value/@value = '3'"><xsl:value-of select="$Rankin-Prefix"/>3</xsl:when>
-                    <xsl:when test="../cda:value/@value = '4'"><xsl:value-of select="$Rankin-Prefix"/>4</xsl:when>
-                    <xsl:when test="../cda:value/@value = '5'"><xsl:value-of select="$Rankin-Prefix"/>5</xsl:when>
-                    <xsl:when test="../cda:value/@value = '6'"><xsl:value-of select="$Rankin-Prefix"/>6</xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:call-template name="GetEffectiveTimes"/>
-        </fact> -->
 
         <!-- Rankin Scale numeric (0..6) -->
         <xsl:comment>Rankin Scale</xsl:comment>
@@ -337,27 +309,6 @@
             <xsl:call-template name="GetEffectiveTimes" />
         </fact>
     </xsl:template>
-
-    <!-- Patient gender
-    I2B2: no restrictions
-    EAV: female, male, indeterminate
-    Dataset: M/F/UN + any NullFlavor (min. "unknown" and "not specified")
-
-    <xsl:template match="cda:patient/cda:administrativeGenderCode">
-        <xsl:comment>Patient gender</xsl:comment>
-        <fact>
-            <xsl:attribute name="concept">
-                <xsl:choose>
-                    <xsl:when test="./@code">
-                        <xsl:value-of select="$LOINC-Prefix"/>21840-4:<xsl:value-of select="./@code"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$LOINC-Prefix"/>21840-4:<xsl:value-of select="./@nullFlavor"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-        </fact>
-    </xsl:template> -->
 
     <xsl:template name="import-id">
         <!-- generate a unique id for encounter and module  -->
@@ -1349,41 +1300,6 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- insurance number -->
-    <!-- see insurance name / insurance carrier -->
-
-    <!-- Time of transfer / discharge -->
-    <!-- incl. admission date/time
-        Admission/discharge does not need to be represented as a concept again, as it is already contained
-    in i2b2 metadata
-    <xsl:template match="cda:componentOf/cda:encompassingEncounter/cda:effectiveTime">
-        <xsl:if test="./cda:high/@value">
-            <xsl:comment>Time of transfer / discharge</xsl:comment>
-            <fact>
-                <xsl:attribute name="concept"><xsl:value-of
-    select="$AKTIN-Prefix"/>ZeitpunktVerlegung</xsl:attribute>
-                <xsl:if test="./cda:high/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(./cda:high/@value)"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:call-template name="GetEffectiveTimes"/>
-            </fact>
-        </xsl:if>
-        <xsl:if test="./cda:low/@value">
-            <xsl:comment>Admission date/time</xsl:comment>
-            <fact>
-                <xsl:attribute name="concept"><xsl:value-of select="$LOINC-Prefix"/>52455-3</xsl:attribute>
-                <xsl:if test="./cda:low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(./cda:low/@value)"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:call-template name="GetEffectiveTimes"/>
-            </fact>
-        </xsl:if>
-    </xsl:template>
-    -->
     <!-- Template for visit/encounter -->
     <xsl:template name="ZeitpunktEntlassungOptional">
         <xsl:variable name="ts" select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:effectiveTime/cda:high/@value" />
@@ -2307,26 +2223,6 @@
             </xsl:choose>
         </xsl:if>
     </xsl:function>
-
-    <!-- deprecated
-    <xsl:function name="func:age-in-months">
-        <xsl:param name="date-of-birth" />
-        <xsl:param name="current-date" />
-        <xsl:variable name="y1" select="number(substring($date-of-birth, 1, 4))"/>
-        <xsl:variable name="y2" select="number(substring($current-date, 1, 4))"/>
-        <xsl:variable name="m1" select="number(substring($date-of-birth, 6, 2))"/>
-        <xsl:variable name="m2" select="number(substring($current-date, 6, 2))"/>
-        <xsl:variable name="d1" select="number(substring($date-of-birth, 9, 2))"/>
-        <xsl:variable name="d2" select="number(substring($current-date, 9, 2))"/>
-        <xsl:value-of select="12 * ($y2 - $y1) + $m2 - $m1 - number($d2 &lt; $d1)"/>
-    </xsl:function>
-
-    <xsl:function name="func:age-in-years">
-        <xsl:param name="dob" />
-        <xsl:param name="current" />
-        <xsl:value-of select="floor(func:age-in-months($dob,$current) div 12)"/>
-    </xsl:function>
-    -->
 
     <!-- Generic Code System Prefix Function -->
     <xsl:function name="func:GetCodePrefix">
