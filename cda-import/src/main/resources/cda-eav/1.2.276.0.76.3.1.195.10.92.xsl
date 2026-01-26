@@ -184,7 +184,6 @@
                     <!-- <location></location> -->
                     <!-- <provider></provider> -->
                     <!-- <source></source> -->
-                    <xsl:apply-templates select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id" />
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode" />
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:postalCode" />
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:addr/cda:city" />
@@ -195,6 +194,7 @@
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:participant/cda:associatedEntity" />
                     <!-- Call all fact templates at body/component/section level -->
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section" />
+                    <xsl:call-template name="process-ids" />
                     <xsl:apply-templates select="/cda:ClinicalDocument/cda:templateId" />
                 </encounter>
             </patient>
@@ -216,15 +216,23 @@
         <xsl:value-of select="aktin:encounter-hash(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root, /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension)" />
     </xsl:template>
 
-    <!-- Internal encounter indicator // optional information for mapping discharge data, not evaluated -->
-    <xsl:template match="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[2]">
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix" />Fallkennzeichen</xsl:attribute>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)" />
-            </value>
-        </fact>
+    <!-- Internal encounter indicators -->
+    <xsl:template name="process-ids">
+        <xsl:for-each select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[position() >= 2]">
+            <fact>
+                <xsl:attribute name="concept">
+                    <xsl:value-of select="$AKTIN-Prefix"/>
+                    <xsl:choose>
+                        <xsl:when test="position() = 1">Fallkennzeichen</xsl:when>
+                        <xsl:otherwise>Fallzusatzkennzeichen:<xsl:value-of select="translate(./@root, '.', '')"/>:<xsl:value-of select="./@extension"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
+                </value>
+            </fact>
+        </xsl:for-each>
     </xsl:template>
 
     <!-- Hospital ID
