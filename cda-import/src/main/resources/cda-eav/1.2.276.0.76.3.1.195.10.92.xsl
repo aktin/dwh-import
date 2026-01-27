@@ -1478,7 +1478,7 @@
             <!-- Case 1: Has subordinate substance administrations - create one fact per subordinate -->
             <xsl:when test="cda:entryRelationship/cda:substanceAdministration">
                 <xsl:for-each select="cda:entryRelationship/cda:substanceAdministration">
-                    <fact concept="{concat($Medikation-Prefix, $medCode)}">
+                    <fact concept="{concat($Medikation-Prefix, $medCode)}" instance_num="{position()}">
                         <!-- Start Time from subordinate effectiveTime -->
                         <xsl:variable name="startTime">
                             <xsl:choose>
