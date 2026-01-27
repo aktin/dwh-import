@@ -120,6 +120,12 @@
     <!-- Prefix for Emergency Severity Index -->
     <xsl:variable name="ESI-Prefix">ESI:</xsl:variable>
 
+    <!-- Prefix for Generic Triage Score -->
+    <xsl:variable name="GenericTriage-Prefix">AKTIN:TRIAGE:</xsl:variable>
+
+    <!-- Prefix for Triage System -->
+    <xsl:variable name="TriageSystem-Prefix">AKTIN:TRIAGESYSTEM:</xsl:variable>
+
     <!-- Prefix for ISO 3166-1 Country Codes -->
     <xsl:variable name="ISO3166-1-Prefix">ISO3166-1:</xsl:variable>
 
@@ -130,7 +136,7 @@
     <xsl:variable name="TravelAbroad-Prefix">AKTIN:TRAVEL:</xsl:variable>
 
     <!-- Prefix for Other Triage Systems (Andere Triagesysteme - SmED, etc.) -->
-    <xsl:variable name="SmED-Prefix">SmED:</xsl:variable>
+    <xsl:variable name="SMED-Prefix">SMED:</xsl:variable>
 
     <!-- MAIN Template -->
 
@@ -603,317 +609,102 @@
     <!-- Referring physician/entity -->
     <!-- Not provided on the form / free text -->
 
-    <!-- Initial assessment -->
-    <!-- incl. 770 time of initial assessment
-         incl. 804 initial assessment system used
-    -->
+    <!-- Ersteinschätzung 1.2.276.0.76.3.1.195.10.18 -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.18']">
-        <!-- <xsl:comment>Initial assessment system used</xsl:comment> => Information contained in
-        23/770 -->
-        <xsl:comment>Initial assessment system used/Initial assessment/Time of initial assessment</xsl:comment>
+        <xsl:comment>Initial assessment</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetConceptValue"/>
+        </fact>
+
+        <xsl:comment>Initial assessment system used</xsl:comment>
         <fact>
             <xsl:attribute name="concept">
+                <xsl:value-of select="$TriageSystem-Prefix" />
+                <!-- methodCode/@code must be in valueset 1.2.276.0.76.3.1.195.11.12 -->
                 <xsl:choose>
-                    <xsl:when test="not(../cda:value)"><xsl:value-of select="$AKTIN-Prefix" />ASSESSMENT</xsl:when>
-                    <!-- 2025tr format: Store generic 5-level triage assessment as AKTIN:TRIAGE:<code> -->
-                    <!-- System-specific values (MTS/ESI) are stored separately via entryRelationship templates -->
-                    <xsl:when test="../cda:value and ../cda:methodCode"><xsl:value-of select="$AKTIN-Prefix" />TRIAGE:<xsl:value-of select="../cda:value/@code" /></xsl:when>
-                    <!-- Fallback for other/unknown formats -->
-                    <xsl:otherwise><xsl:value-of select="$AKTIN-Prefix" />ASSESSMENT:<xsl:value-of select="../cda:value/@code" /></xsl:otherwise>
+                        <!-- MTS via methodCode 713009001 (Manchester Triage System, SNOMED) -->
+                        <xsl:when test="../cda:methodCode/@code='713009001'">MTS</xsl:when>
+                        <!-- ESI via methodCode 713010006 (Emergency Severity Index, SNOMED) -->
+                        <xsl:when test="../cda:methodCode/@code='713010006'">ESI</xsl:when>
+                        <!-- SmED via methodCode 'smed' (Strukturierte medizinische Ersteinschätzung in Deutschland, Andere Triagesysteme) -->
+                        <xsl:when test="../cda:methodCode/@code='smed'">SMED</xsl:when>
+                        <!-- Explicitly other triage System via methodCode 74964007 (Other (qualifier value), SNOMED) -->
+                        <xsl:when test="../cda:methodCode/@code='74964007'">OTH</xsl:when>
+                        <!-- Explicitly no triage System via methodCode 260413007 (None (qualifier value), SNOMED) -->
+                        <xsl:when test="../cda:methodCode/@code='260413007'">NONE</xsl:when>
+                        <!-- Fallback for no triage system specified -->
+                        <xsl:when test="../cda:methodCode/@nullFlavor">UNK</xsl:when>
                 </xsl:choose>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:when test="../cda:effectiveTime/cda:low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
-            <!-- methodCode as modifier (triage system used) - with proper prefix -->
-            <xsl:if test="../cda:methodCode/@code">
-                <modifier code="methodCode">
-                    <value xsi:type="string"><xsl:value-of select="func:GetCodePrefix(../cda:methodCode/@codeSystem)" /><xsl:value-of select="../cda:methodCode/@code" /></value>
-                </modifier>
-                <xsl:if test="../cda:methodCode/@displayName">
-                    <modifier code="AKTIN:TRIAGE:METHOD:DN">
-                        <value xsi:type="string"><xsl:value-of select="../cda:methodCode/@displayName" /></value>
-                    </modifier>
-                </xsl:if>
-            </xsl:if>
-            <!-- Value displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
-            <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>
+            <xsl:call-template name="GetEffectiveTimes" />
         </fact>
     </xsl:template>
 
-    <!-- Manchester Triage System (1.2.276.0.76.3.1.195.10.19) - 2025tr format -->
-    <!-- Stores MTS-specific triage assessment as MTS:<code> -->
+    <!-- Manchester Triage System (1.2.276.0.76.3.1.195.10.19) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.19']">
-        <xsl:comment>Manchester Triage System - specific assessment</xsl:comment>
         <xsl:if test="../cda:value/@code">
+            <xsl:comment>MTS Bewertung</xsl:comment>
             <fact>
-                <xsl:attribute name="concept">
-                    <xsl:value-of select="$MTS-Prefix" />
-                    <xsl:value-of select="../cda:value/@code" />
-                </xsl:attribute>
-                <!-- Use effectiveTime if available -->
-                <xsl:choose>
-                    <xsl:when test="../cda:effectiveTime/@value">
-                        <xsl:attribute name="start">
-                            <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
-                        </xsl:attribute>
-                    </xsl:when>
-                </xsl:choose>
-                <!-- displayName as modifier -->
-                <xsl:if test="../cda:value/@displayName">
-                    <modifier code="displayName">
-                        <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                    </modifier>
-                </xsl:if>
-                <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>
+                <xsl:call-template name="templateGetConceptValue"/>
             </fact>
         </xsl:if>
-    </xsl:template>
 
     <!-- MTS Präsentationsdiagramm (1.2.276.0.76.3.1.195.10.21) -->
-    <!-- Using MTS: prefix to match the Triage Level format -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.21']">
-        <xsl:comment>MTS Präsentationsdiagramm</xsl:comment>
-        <fact>
-            <!-- Concept: MTS:value/@code (e.g., MTS:17) -->
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$MTS-Prefix" /><xsl:choose>
-                    <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="../cda:value/@code" />
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="../cda:value/@nullFlavor" />
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <!-- Use effectiveTime from parent MTS observation if available -->
-            <xsl:choose>
-                <xsl:when test="../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:when test="../../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
-            <!-- displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
-        </fact>
-    </xsl:template>
-
     <!-- MTS-Indikatoren RED (1.2.276.0.76.3.1.195.10.22) -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.22']">
-        <xsl:comment>MTS-Indikatoren RED</xsl:comment>
-        <fact>
-            <!-- Concept: MTS:IND:R:value/@code -->
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$MTS-Prefix" />IND:R:<xsl:choose>
-                    <xsl:when test="../cda:value/@code"><xsl:value-of select="../cda:value/@code" /></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="../cda:value/@nullFlavor" /></xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:when test="../../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
-            <!-- displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
-        </fact>
-    </xsl:template>
-
     <!-- MTS-Indikatoren ORANGE (1.2.276.0.76.3.1.195.10.23) -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.23']">
-        <xsl:comment>MTS-Indikatoren ORANGE</xsl:comment>
-        <fact>
-            <!-- Concept: MTS:IND:O:value/@code -->
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$MTS-Prefix" />IND:O:<xsl:choose>
-                    <xsl:when test="../cda:value/@code"><xsl:value-of select="../cda:value/@code" /></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="../cda:value/@nullFlavor" /></xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:when test="../../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
-            <!-- displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
-        </fact>
-    </xsl:template>
-
     <!-- MTS-Indikatoren YELLOW (1.2.276.0.76.3.1.195.10.24) -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.24']">
-        <xsl:comment>MTS-Indikatoren YELLOW</xsl:comment>
+        <!-- MTS-Indikatoren GREEN (1.2.276.0.76.3.1.195.10.25) -->
+        <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId">
+            <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
         <fact>
-            <!-- Concept: MTS:IND:Y:value/@code -->
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$MTS-Prefix" />IND:Y:<xsl:choose>
-                    <xsl:when test="../cda:value/@code"><xsl:value-of select="../cda:value/@code" /></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="../cda:value/@nullFlavor" /></xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
+                <!-- Use effectiveTime from parent MTS observation if available or parent initial assessment observation -->
             <xsl:choose>
-                <xsl:when test="../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
                 <xsl:when test="../../../cda:effectiveTime/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
                     </xsl:attribute>
                 </xsl:when>
-            </xsl:choose>
-            <!-- displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
-        </fact>
-    </xsl:template>
-
-    <!-- MTS-Indikatoren GREEN (1.2.276.0.76.3.1.195.10.25) -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.25']">
-        <xsl:comment>MTS-Indikatoren GREEN</xsl:comment>
-        <fact>
-            <!-- Concept: MTS:IND:G:value/@code -->
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$MTS-Prefix" />IND:G:<xsl:choose>
-                    <xsl:when test="../cda:value/@code"><xsl:value-of select="../cda:value/@code" /></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="../cda:value/@nullFlavor" /></xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="../../cda:effectiveTime/@value">
+                    <xsl:when test="../../../../../cda:effectiveTime/@value">
                     <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:when test="../../../cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
+                            <xsl:value-of select="func:ConvertDateTime(../../../../../cda:effectiveTime/@value)" />
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
-            <!-- displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
+                <xsl:call-template name="templateGetConceptValue"/>
         </fact>
+        </xsl:for-each>
     </xsl:template>
 
-    <!-- Emergency Severity Index (1.2.276.0.76.3.1.195.10.20) - 2025tr format -->
-    <!-- Stores ESI-specific triage assessment as ESI:<code> -->
+    <!-- Emergency Severity Index (1.2.276.0.76.3.1.195.10.20) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.20']">
-        <xsl:comment>Emergency Severity Index - specific assessment</xsl:comment>
         <xsl:if test="../cda:value/@code">
+            <xsl:comment>ESI Bewertung</xsl:comment>
             <fact>
-                <xsl:attribute name="concept">
-                    <xsl:value-of select="$ESI-Prefix" /><xsl:value-of select="../cda:value/@code" />
-                </xsl:attribute>
-                <!-- Use effectiveTime from parent triage observation if available -->
-                <xsl:choose>
-                    <xsl:when test="../../cda:effectiveTime/@value">
-                        <xsl:attribute name="start">
-                            <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
-                        </xsl:attribute>
-                    </xsl:when>
-                    <xsl:when test="../cda:effectiveTime/@value">
-                        <xsl:attribute name="start">
-                            <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
-                        </xsl:attribute>
-                    </xsl:when>
-                </xsl:choose>
-                <!-- displayName as modifier -->
-                <xsl:if test="../cda:value/@displayName">
-                    <modifier code="displayName">
-                        <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                    </modifier>
-                </xsl:if>
-                <xsl:call-template name="GetEffectiveTimes"></xsl:call-template>
+                <xsl:call-template name="templateGetConceptValue"/>
             </fact>
         </xsl:if>
-    </xsl:template>
 
     <!-- ESI-Triagefaktoren (1.2.276.0.76.3.1.195.10.26) -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.26']">
-        <xsl:comment>ESI-Triagefaktoren</xsl:comment>
+        <!-- TODO aktuell kann nur eine (genau eine) Triagefaktor angegeben werden, bei MTS sind es beliebige -->
+        <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId">
+            <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
         <fact>
-            <!-- Concept: ESI:value/@code -->
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$ESI-Prefix" /><xsl:choose>
-                    <xsl:when test="../cda:value/@code"><xsl:value-of select="../cda:value/@code" /></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="../cda:value/@nullFlavor" /></xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <!-- Use effectiveTime from parent ESI observation if available -->
+                <!-- Use effectiveTime from parent MTS observation if available or parent initial assessment observation -->
             <xsl:choose>
-                <xsl:when test="../../cda:effectiveTime/@value">
+                    <xsl:when test="../../../cda:effectiveTime/@value">
                     <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../cda:effectiveTime/@value)" />
+                            <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
                     </xsl:attribute>
                 </xsl:when>
-                <xsl:when test="../../../cda:effectiveTime/@value">
+                    <xsl:when test="../../../../../cda:effectiveTime/@value">
                     <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
+                            <xsl:value-of select="func:ConvertDateTime(../../../../../cda:effectiveTime/@value)" />
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
-            <!-- displayName as modifier -->
-            <xsl:if test="../cda:value/@displayName">
-                <modifier code="displayName">
-                    <value xsi:type="string"><xsl:value-of select="../cda:value/@displayName" /></value>
-                </modifier>
-            </xsl:if>
+                <xsl:call-template name="templateGetConceptValue"/>
         </fact>
+        </xsl:for-each>
     </xsl:template>
 
     <!-- Diagnostics heading/free text -->
@@ -2057,6 +1848,14 @@
                 <xsl:when test="../cda:code/@code='88068-2'"><xsl:value-of select="$SubstanceInfluence-Prefix" /></xsl:when>
                 <xsl:when test="../cda:code/@code='RPPL'"><xsl:value-of select="$AKTIN-Prefix" />RPPL:</xsl:when>
                 <xsl:when test="../cda:code/@code='SPPL'"><xsl:value-of select="$AKTIN-Prefix" />SPPL:</xsl:when>
+                <xsl:when test="../cda:code/@code='1255867001'"><xsl:value-of select="$MTS-Prefix" /></xsl:when>
+                <xsl:when test="../cda:code/@code='1255873000'"><xsl:value-of select="$ESI-Prefix" /></xsl:when>
+                <xsl:when test="../cda:code/@code='273887006'"><xsl:value-of select="$GenericTriage-Prefix" /></xsl:when>
+                <xsl:when test="../cda:code/@code='SCTPOCC-1269489004'"><xsl:value-of select="$MTS-Prefix" />DIAG:</xsl:when>
+                <xsl:when test="../cda:code/@code='SCTPOCC-49499008'"><xsl:value-of select="$MTS-Prefix" />IND:RED:</xsl:when>
+                <xsl:when test="../cda:code/@code='SCTPOCC-25876001'"><xsl:value-of select="$MTS-Prefix" />IND:ORANGE:</xsl:when>
+                <xsl:when test="../cda:code/@code='SCTPOCC-103391001'"><xsl:value-of select="$MTS-Prefix" />IND:YELLOW:</xsl:when>
+                <xsl:when test="../cda:code/@code='SCTPOCC-394848005'"><xsl:value-of select="$MTS-Prefix" />IND:GREEN:</xsl:when>
                 <xsl:otherwise><xsl:value-of select="../cda:code/@code" />:</xsl:otherwise>  <!--
                 Default Prefix code/code -->
             </xsl:choose>
@@ -2244,7 +2043,7 @@
             <xsl:when test="$codeSystem = '1.2.276.0.76.3.1.195.5.98'"><xsl:value-of select="$Future-LOINC-Prefix"/></xsl:when>
             <xsl:when test="$codeSystem = '1.2.276.0.76.3.1.195.5.105'"><xsl:value-of select="$TravelAbroad-Prefix"/></xsl:when>
             <xsl:when test="$codeSystem = '1.0.3166.1.2.2'"><xsl:value-of select="$ISO3166-1-Prefix"/></xsl:when>
-            <xsl:when test="$codeSystem = '1.2.276.0.76.3.1.195.5.60'"><xsl:value-of select="$SmED-Prefix"/></xsl:when>
+            <xsl:when test="$codeSystem = '1.2.276.0.76.3.1.195.5.60'"><xsl:value-of select="$SMED-Prefix"/></xsl:when>
             <!--            Unknown Code System (UCS)-->
             <xsl:otherwise>UCS:</xsl:otherwise>
         </xsl:choose>

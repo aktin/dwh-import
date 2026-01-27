@@ -315,6 +315,7 @@ Momentan fehlt noch:
                                     <code code="1255867001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System score (observable entity)"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="202401171623"/>
+                                    <value xsi:type="CE" code="4" codeSystem="1.2.276.0.76.5.438" displayName="normal - grün - 90 Minuten"/>
                                     <entryRelationship typeCode="COMP">
                                         <observation classCode="OBS" moodCode="EVN">
                                             <templateId root="1.2.276.0.76.3.1.195.10.21"/>
