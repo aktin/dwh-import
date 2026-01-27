@@ -1477,8 +1477,6 @@
             <!-- Start Time Logic: Check both outer and inner effectiveTime -->
             <xsl:variable name="startTime">
                 <xsl:choose>
-                    <xsl:when test="cda:effectiveTime/cda:low/@value"><xsl:value-of select="cda:effectiveTime/cda:low/@value"/></xsl:when>
-                    <xsl:when test="cda:effectiveTime/@value"><xsl:value-of select="cda:effectiveTime/@value"/></xsl:when>
                     <xsl:when test="cda:entryRelationship/cda:substanceAdministration/cda:effectiveTime/cda:low/@value"><xsl:value-of select="cda:entryRelationship/cda:substanceAdministration/cda:effectiveTime/cda:low/@value"/></xsl:when>
                     <xsl:when test="cda:entryRelationship/cda:substanceAdministration/cda:effectiveTime/@value"><xsl:value-of select="cda:entryRelationship/cda:substanceAdministration/cda:effectiveTime/@value"/></xsl:when>
                 </xsl:choose>
@@ -1491,24 +1489,14 @@
             </xsl:if>
 
             <!-- Main Value: Dose (Prioritize Inner) -->
-            <xsl:choose>
-                <xsl:when test="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@value">
-                    <value xsi:type="numeric">
-                        <xsl:if test="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@unit">
-                            <xsl:attribute name="unit"><xsl:value-of select="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@unit"/></xsl:attribute>
-                        </xsl:if>
-                        <xsl:value-of select="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@value"/>
-                    </value>
-                </xsl:when>
-                <xsl:when test="cda:doseQuantity/@value">
-                    <value xsi:type="numeric">
-                        <xsl:if test="cda:doseQuantity/@unit">
-                            <xsl:attribute name="unit"><xsl:value-of select="cda:doseQuantity/@unit"/></xsl:attribute>
-                        </xsl:if>
-                        <xsl:value-of select="cda:doseQuantity/@value"/>
-                    </value>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:if test="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@value">
+                <value xsi:type="numeric">
+                    <xsl:if test="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@unit">
+                        <xsl:attribute name="unit"><xsl:value-of select="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@unit"/></xsl:attribute>
+                    </xsl:if>
+                    <xsl:value-of select="cda:entryRelationship/cda:substanceAdministration/cda:doseQuantity/@value"/>
+                </value>
+            </xsl:if>
 
             <!-- moodCode -->
             <xsl:if test="@moodCode">
@@ -1568,19 +1556,8 @@
                 </xsl:if>
             </xsl:for-each>
 
-            <!-- rateQuantity -->
-            <xsl:if test="cda:rateQuantity/@value">
-                <modifier code="rateQuantity">
-                    <value xsi:type="numeric">
-                        <xsl:if test="cda:rateQuantity/@unit">
-                            <xsl:attribute name="unit"><xsl:value-of select="cda:rateQuantity/@unit"/></xsl:attribute>
-                        </xsl:if>
-                        <xsl:value-of select="cda:rateQuantity/@value"/>
-                    </value>
-                </modifier>
-            </xsl:if>
-
             <!-- maxDoseQuantity -->
+            <!-- TODO ISSUE-C wrong type: https://docs.art-decor.org/documentation/datatypes/DTr1_RTO_PQ_PQ/ -->
             <xsl:if test="cda:maxDoseQuantity/@value">
                 <modifier code="maxDoseQuantity">
                     <value xsi:type="numeric">
@@ -1615,7 +1592,7 @@
             </xsl:if>
             <xsl:if test="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName">
                 <modifier>
-                    <xsl:attribute name="code">AKTIN:MED:CONSUMABLE:DN</xsl:attribute>
+                    <xsl:attribute name="code">displayName</xsl:attribute>
                     <value xsi:type="string">
                         <xsl:value-of select="cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName"/>
                     </value>
@@ -1626,14 +1603,14 @@
                 <!-- Subordinate statusCode -->
                 <xsl:if test="cda:statusCode/@code">
                     <modifier>
-                        <xsl:attribute name="code">AKTIN:MED:SUBSTATUS</xsl:attribute>
+                        <xsl:attribute name="code">statusCode</xsl:attribute>
                         <value xsi:type="string"><xsl:value-of select="cda:statusCode/@code"/></value>
                     </modifier>
                 </xsl:if>
                 <!-- Subordinate effectiveTime - simple TS value -->
                 <xsl:if test="cda:effectiveTime/@value">
                     <modifier>
-                        <xsl:attribute name="code">AKTIN:MED:SUBTIME</xsl:attribute>
+                        <xsl:attribute name="code">effectiveTime</xsl:attribute>
                         <value xsi:type="string"><xsl:value-of select="cda:effectiveTime/@value"/></value>
                     </modifier>
                 </xsl:if>
@@ -1641,14 +1618,14 @@
                 <!-- Subordinate effectiveTime - PIVL_TS phase/low (start time) -->
                 <xsl:if test="cda:effectiveTime/cda:phase/cda:low/@value">
                     <modifier>
-                        <xsl:attribute name="code">AKTIN:MED:SUBPHASE</xsl:attribute>
+                        <xsl:attribute name="code">effectiveTimePhaseLow</xsl:attribute>
                         <value xsi:type="string"><xsl:value-of select="cda:effectiveTime/cda:phase/cda:low/@value"/></value>
                     </modifier>
                 </xsl:if>
                 <!-- Subordinate effectiveTime - period -->
                 <xsl:if test="cda:effectiveTime/cda:period/@value">
                     <modifier>
-                        <xsl:attribute name="code">AKTIN:MED:SUBPERIOD</xsl:attribute>
+                        <xsl:attribute name="code">effectiveTimePeriod</xsl:attribute>
                         <value xsi:type="numeric">
                             <xsl:if test="cda:effectiveTime/cda:period/@unit">
                                 <xsl:attribute name="unit"><xsl:value-of select="cda:effectiveTime/cda:period/@unit"/></xsl:attribute>
@@ -1660,7 +1637,7 @@
                 <!-- Subordinate rateQuantity -->
                 <xsl:if test="cda:rateQuantity/@value">
                     <modifier>
-                        <xsl:attribute name="code">AKTIN:MED:SUBRATE</xsl:attribute>
+                        <xsl:attribute name="code">rateQuantity</xsl:attribute>
                         <value xsi:type="numeric">
                             <xsl:if test="cda:rateQuantity/@unit">
                                 <xsl:attribute name="unit"><xsl:value-of select="cda:rateQuantity/@unit"/></xsl:attribute>
@@ -1672,7 +1649,7 @@
                 <!-- Subordinate maxDoseQuantity -->
                 <xsl:if test="cda:maxDoseQuantity/cda:numerator/@value">
                     <modifier>
-                        <xsl:attribute name="code">AKTIN:MED:SUBMAXDOSE</xsl:attribute>
+                        <xsl:attribute name="code">maxDoseQuantity</xsl:attribute>
                         <value xsi:type="numeric">
                             <xsl:if test="cda:maxDoseQuantity/cda:numerator/@unit">
                                 <xsl:attribute name="unit"><xsl:value-of select="cda:maxDoseQuantity/cda:numerator/@unit"/></xsl:attribute>
@@ -1681,14 +1658,15 @@
                         </value>
                     </modifier>
                 </xsl:if>
+                <!-- sequenceNumber -->
+                <!-- TODO-->
+                <xsl:if test="../cda:sequenceNumber">
+                    <modifier>
+                        <xsl:attribute name="code">sequenceNumber</xsl:attribute>
+                        <value xsi:type="numeric"><xsl:value-of select="../cda:sequenceNumber/@value"/></value>
+                    </modifier>
+                </xsl:if>
             </xsl:for-each>
-            <!-- sequenceNumber -->
-            <xsl:if test="cda:sequenceNumber">
-                <modifier>
-                    <xsl:attribute name="code">AKTIN:MED:SEQNUM</xsl:attribute>
-                    <value xsi:type="string"><xsl:value-of select="cda:sequenceNumber"/></value>
-                </modifier>
-            </xsl:if>
         </fact>
     </xsl:template>
 
