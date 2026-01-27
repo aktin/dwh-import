@@ -618,25 +618,7 @@
 
         <xsl:comment>Initial assessment system used</xsl:comment>
         <fact>
-            <xsl:attribute name="concept">
-                <xsl:value-of select="$TriageSystem-Prefix" />
-                <!-- methodCode/@code must be in valueset 1.2.276.0.76.3.1.195.11.12 -->
-                <xsl:choose>
-                        <!-- MTS via methodCode 713009001 (Manchester Triage System, SNOMED) -->
-                        <xsl:when test="../cda:methodCode/@code='713009001'">MTS</xsl:when>
-                        <!-- ESI via methodCode 713010006 (Emergency Severity Index, SNOMED) -->
-                        <xsl:when test="../cda:methodCode/@code='713010006'">ESI</xsl:when>
-                        <!-- SmED via methodCode 'smed' (Strukturierte medizinische Ersteinschätzung in Deutschland, Andere Triagesysteme) -->
-                        <xsl:when test="../cda:methodCode/@code='smed'">SMED</xsl:when>
-                        <!-- Explicitly other triage System via methodCode 74964007 (Other (qualifier value), SNOMED) -->
-                        <xsl:when test="../cda:methodCode/@code='74964007'">OTH</xsl:when>
-                        <!-- Explicitly no triage System via methodCode 260413007 (None (qualifier value), SNOMED) -->
-                        <xsl:when test="../cda:methodCode/@code='260413007'">NONE</xsl:when>
-                        <!-- Fallback for no triage system specified -->
-                        <xsl:when test="../cda:methodCode/@nullFlavor">UNK</xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:call-template name="GetEffectiveTimes" />
+            <xsl:call-template name="templateGetConceptMethod"/>
         </fact>
     </xsl:template>
 
@@ -1900,6 +1882,43 @@
         </xsl:if>
         <xsl:call-template name="GetEffectiveTimes" />
     </xsl:template>
+
+    <xsl:template name="templateGetConceptMethod">
+        <xsl:attribute name="concept">
+            <xsl:choose>
+                <xsl:when test="../cda:code/@code='273887006'"><xsl:value-of select="$TriageSystem-Prefix" /></xsl:when>
+                <xsl:otherwise><xsl:value-of select="../cda:code/@code" />:</xsl:otherwise>  <!-- Default Prefix code/code -->
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="../cda:methodCode/@code">
+                    <xsl:value-of select="../cda:methodCode/@code" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="../cda:methodCode/@nullFlavor" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+        <xsl:if test="../cda:methodCode/@codeSystem">
+            <modifier>
+                <xsl:attribute name="code">codeSystem</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:methodCode/@codeSystem" /> <!-- mostly static/fixed -->
+                </value>
+            </modifier>
+        </xsl:if>
+        <xsl:if test="../cda:methodCode/@displayName">
+            <modifier>
+                <xsl:attribute name="code">displayName</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:methodCode/@displayName" />
+                </value>
+            </modifier>
+        </xsl:if>
+        <xsl:call-template name="GetEffectiveTimes" />
+    </xsl:template>
+
 
     <xsl:template name="GetEffectiveTimes">
         <xsl:if test="../cda:effectiveTime/@value">
