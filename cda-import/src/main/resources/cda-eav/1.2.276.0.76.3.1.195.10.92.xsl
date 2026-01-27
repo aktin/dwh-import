@@ -1714,14 +1714,22 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.87']">
         <xsl:comment>EDIS Version</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode"/>
-            <modifier>
-                <xsl:attribute name="code">AKTIN:EDIS:VERSION</xsl:attribute>
-                <value>
-                    <xsl:attribute name="xsi:type">string</xsl:attribute>
-                    <xsl:value-of select="../cda:value"/>
-                </value>
-            </modifier>
+            <!-- Concept attribute -->
+            <xsl:attribute name="concept">
+                <xsl:value-of select="concat(func:GetCodePrefix(../cda:code/@codeSystem), ../cda:code/@code)" />
+            </xsl:attribute>
+            <!-- Start time attribute -->
+            <xsl:if test="../cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:if>
+            <!-- Value (string) -->
+            <value xsi:type="string">
+                <xsl:value-of select="../cda:value"/>
+            </value>
+            <!-- Modifiers -->
+            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
 
@@ -1729,7 +1737,22 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.86']">
         <xsl:comment>EDIS Name</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode"/>
+            <!-- Concept attribute -->
+            <xsl:attribute name="concept">
+                <xsl:value-of select="concat(func:GetCodePrefix(../cda:code/@codeSystem), ../cda:code/@code)" />
+            </xsl:attribute>
+            <!-- Start time attribute -->
+            <xsl:if test="../cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:if>
+            <!-- Value (string) -->
+            <value xsi:type="string">
+                <xsl:value-of select="../cda:value"/>
+            </value>
+            <!-- Modifiers -->
+            <xsl:call-template name="GetEffectiveTimes"/>
         </fact>
     </xsl:template>
 

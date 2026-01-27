@@ -868,6 +868,9 @@ Momentan fehlt noch:
                             <item ID="FLN-132">Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten: 104 Minuten</item>
                             <item ID="FLN-133">Zeit zwischen Aufnahme und Verlassen des Patienten: 108 Minuten</item>
                             <item ID="FLN-136">Version des EDIS</item>
+                            <item ID="FLN-135">Name des EDIS</item>
+                            <item ID="FLN-137">Zeitpunkt Export aus EDIS: 17. Januar 2024 18:00</item>
+                            <item ID="FLN-134">Zeit bis zum Export: 2 Stunden</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
@@ -1012,6 +1015,42 @@ Momentan fehlt noch:
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171735"/>
                             <value xsi:type="ST">4</value>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.86"/>
+                            <code code="FLN-135" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Name des EDIS"/>
+                            <text>
+                                <reference value="#FLN-135"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401171735"/>
+                            <value xsi:type="ST">EDISNAME</value>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.88"/>
+                            <code code="FLN-137" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeitpunkt Export aus EDIS"/>
+                            <text>
+                                <reference value="#FLN-137"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401171800"/>
+                            <value xsi:type="TS" value="202401171800"/>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.85"/>
+                            <code code="FLN-134" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit bis zum Export"/>
+                            <text>
+                                <reference value="#FLN-134"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401171800"/>
+                            <value xsi:type="PQ" value="2" unit="h"/>
                         </observation>
                     </entry>
                 </section>
