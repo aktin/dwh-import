@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Test file for all supported datatypes in Wildcard Diagnostik observation.
+    Tests the EAV transformation for:
+    1. PQ (Physical Quantity) - numeric with unit
+    2. INT (Integer) - numeric
+    3. REAL (Real number) - numeric
+    4. BL (Boolean) - boolean
+    5. CD (Coded) - string with code, codeSystem, displayName
+    6. ST (String) - string text content
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.92"/>
+    <id root="1.2.276.0.76.4.17.9814184919" extension="test-wildcard-datatypes"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
+    <effectiveTime value="20240117120000"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <recordTarget>
+        <patientRole>
+            <id root="1.2.276.0.76.4.8" extension="TEST-DATATYPES-001"/>
+            <patient>
+                <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19850615"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author>
+        <time value="20240117120000"/>
+        <assignedAuthor>
+            <id root="1.2.276.0.76.4.17.9814184919" extension="author-001"/>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.276.0.76.4.17.9814184919" extension="org-001"/>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <componentOf>
+        <encompassingEncounter>
+            <id root="1.2.276.0.76.4.17.9814184919" extension="encounter-datatypes-test"/>
+            <effectiveTime>
+                <low value="20240117100000"/>
+                <high value="20240117180000"/>
+            </effectiveTime>
+            <dischargeDispositionCode code="1"/>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+            <!-- Diagnostik Section with Wildcard entries using all datatypes -->
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.10.3048"/>
+                    <code code="30954-2" codeSystem="2.16.840.1.113883.6.1"/>
+                    <title>Diagnostik</title>
+                    <text>
+                        <list>
+                            <item ID="diag-pq">PQ Datatype Test</item>
+                            <item ID="diag-int">INT Datatype Test</item>
+                            <item ID="diag-real">REAL Datatype Test</item>
+                            <item ID="diag-bl-true">BL Datatype Test (true)</item>
+                            <item ID="diag-bl-false">BL Datatype Test (false)</item>
+                            <item ID="diag-cd">CD Datatype Test</item>
+                            <item ID="diag-st">ST Datatype Test</item>
+                        </list>
+                    </text>
+
+                    <!-- Wildcard Diagnostik 1: PQ (Physical Quantity) -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-pq"/>
+                            <code code="DIAG-PQ-001" codeSystem="1.2.276.0.76.5.999" displayName="Temperature Measurement"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117110000"/>
+                            <value xsi:type="PQ" value="37.5" unit="Cel"/>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 2: INT (Integer) -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-int"/>
+                            <code code="DIAG-INT-002" codeSystem="1.2.276.0.76.5.999" displayName="Pain Score"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117111500"/>
+                            <value xsi:type="INT" value="7"/>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 3: REAL (Real number) -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-real"/>
+                            <code code="DIAG-REAL-003" codeSystem="1.2.276.0.76.5.999" displayName="Glasgow Coma Scale"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117120000"/>
+                            <value xsi:type="REAL" value="14.5"/>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 4: BL (Boolean) - true -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-bl-true"/>
+                            <code code="DIAG-BL-004" codeSystem="1.2.276.0.76.5.999" displayName="Trauma Patient"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117121500"/>
+                            <value xsi:type="BL" value="true"/>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 5: BL (Boolean) - false -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-bl-false"/>
+                            <code code="DIAG-BL-005" codeSystem="1.2.276.0.76.5.999" displayName="Allergies Known"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117122000"/>
+                            <value xsi:type="BL" value="false"/>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 6: CD (Coded) -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-cd"/>
+                            <code code="DIAG-CD-006" codeSystem="1.2.276.0.76.5.999" displayName="Consciousness Level"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117130000"/>
+                            <value xsi:type="CD" code="ALERT" codeSystem="2.16.840.1.113883.5.1001" displayName="Alert and oriented"/>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 7: ST (String) -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-st"/>
+                            <code code="DIAG-ST-007" codeSystem="1.2.276.0.76.5.999" displayName="Clinical Notes"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117140000"/>
+                            <value xsi:type="ST">Patient presents with acute abdominal pain, onset 2 hours ago.</value>
+                        </observation>
+                    </entry>
+
+                </section>
+            </component>
+
+        </structuredBody>
+    </component>
+</ClinicalDocument>

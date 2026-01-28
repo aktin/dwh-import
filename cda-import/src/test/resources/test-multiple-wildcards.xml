@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Test file for multiple wildcard diagnostics and wildcard therapies.
+    This tests the EAV transformation for:
+    1. Multiple Wildcard Diagnostik entries (observation with templateId 1.2.276.0.76.3.1.195.10.89)
+    2. Multiple Wildcard Therapie entries (procedure with templateId 1.2.276.0.76.3.1.195.10.90)
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.92"/>
+    <id root="1.2.276.0.76.4.17.9814184919" extension="test-multi-wildcards"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
+    <effectiveTime value="20240117120000"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <recordTarget>
+        <patientRole>
+            <id root="1.2.276.0.76.4.8" extension="TEST-WILDCARDS-001"/>
+            <patient>
+                <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19750320"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author>
+        <time value="20240117120000"/>
+        <assignedAuthor>
+            <id root="1.2.276.0.76.4.17.9814184919" extension="author-001"/>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.276.0.76.4.17.9814184919" extension="org-001"/>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <componentOf>
+        <encompassingEncounter>
+            <id root="1.2.276.0.76.4.17.9814184919" extension="encounter-wildcards-test"/>
+            <effectiveTime>
+                <low value="20240117100000"/>
+                <high value="20240117180000"/>
+            </effectiveTime>
+            <dischargeDispositionCode code="1"/>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+            <!-- Diagnostik Section with multiple Wildcard Diagnostik entries -->
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.10.3048"/>
+                    <code code="30954-2" codeSystem="2.16.840.1.113883.6.1"/>
+                    <title>Diagnostik</title>
+                    <text>
+                        <list>
+                            <item ID="diag-1">Sonographie Abdomen</item>
+                            <item ID="diag-2">Spezial-EKG</item>
+                            <item ID="diag-3">Labortest Troponin</item>
+                        </list>
+                    </text>
+
+                    <!-- Wildcard Diagnostik 1: Sonographie -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-001"/>
+                            <code code="SONO-ABD-001" codeSystem="1.2.276.0.76.5.999" displayName="Sonographie Abdomen"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117110000"/>
+                                <high value="20240117111500"/>
+                            </effectiveTime>
+                            <value xsi:type="ST">Unauffaelliger Befund</value>
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://example.org/definition/sono-abd"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 2: Spezial-EKG -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-002"/>
+                            <code code="EKG-SPECIAL-002" codeSystem="1.2.276.0.76.5.999" displayName="Spezial-EKG mit Belastung"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117120000"/>
+                                <high value="20240117123000"/>
+                            </effectiveTime>
+                            <value xsi:type="ST">Sinusrhythmus, keine Auffaelligkeiten</value>
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://example.org/definition/ekg-special"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </observation>
+                    </entry>
+
+                    <!-- Wildcard Diagnostik 3: Labortest -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.89"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wdiag-003"/>
+                            <code code="LAB-TROP-003" codeSystem="1.2.276.0.76.5.999" displayName="Troponin-Schnelltest"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117130000"/>
+                            <value xsi:type="ST">Negativ</value>
+                        </observation>
+                    </entry>
+                </section>
+            </component>
+
+            <!-- Therapie Section with multiple Wildcard Therapie entries -->
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.10.3054"/>
+                    <code code="67781-5" codeSystem="2.16.840.1.113883.6.1"/>
+                    <title>Prozeduren und Massnahmen</title>
+                    <text>
+                        <list>
+                            <item ID="proc-1">Wundversorgung</item>
+                            <item ID="proc-2">Schienung</item>
+                            <item ID="proc-3">Infusion</item>
+                            <item ID="proc-4">Lokalanaesthesie</item>
+                        </list>
+                    </text>
+
+                    <!-- Wildcard Therapie 1: Wundversorgung -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <procedure classCode="PROC" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.90"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wproc-001"/>
+                            <code code="WV-001" codeSystem="1.2.276.0.76.5.999" displayName="Primaere Wundversorgung"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117140000"/>
+                                <high value="20240117141500"/>
+                            </effectiveTime>
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://example.org/definition/wundversorgung"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </procedure>
+                    </entry>
+
+                    <!-- Wildcard Therapie 2: Schienung -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <procedure classCode="PROC" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.90"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wproc-002"/>
+                            <code code="SCHIENE-002" codeSystem="1.2.276.0.76.5.999" displayName="Unterarmschiene anlegen"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117150000"/>
+                                <high value="20240117151000"/>
+                            </effectiveTime>
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://example.org/definition/schienung"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </procedure>
+                    </entry>
+
+                    <!-- Wildcard Therapie 3: Infusion -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <procedure classCode="PROC" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.90"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wproc-003"/>
+                            <code code="INF-003" codeSystem="1.2.276.0.76.5.999" displayName="Infusionstherapie NaCl"/>
+                            <statusCode code="active"/>
+                            <effectiveTime xsi:type="IVL_TS">
+                                <low value="20240117160000"/>
+                            </effectiveTime>
+                        </procedure>
+                    </entry>
+
+                    <!-- Wildcard Therapie 4: Lokalanaesthesie -->
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <procedure classCode="PROC" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.90"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="wproc-004"/>
+                            <code code="LA-004" codeSystem="1.2.276.0.76.5.999" displayName="Lokalanaesthesie Finger"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20240117143000"/>
+                            <reference typeCode="REFR">
+                                <externalDocument classCode="DOC" moodCode="EVN">
+                                    <text mediaType="text/plain">
+                                        <reference value="https://example.org/definition/lokalan"/>
+                                    </text>
+                                </externalDocument>
+                            </reference>
+                        </procedure>
+                    </entry>
+                </section>
+            </component>
+
+        </structuredBody>
+    </component>
+</ClinicalDocument>

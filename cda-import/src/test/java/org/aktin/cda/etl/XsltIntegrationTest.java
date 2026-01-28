@@ -157,6 +157,108 @@ public class XsltIntegrationTest {
   }
 
   /**
+   * Test transformation of multiple wildcard diagnostics and therapies.
+   * Verifies that:
+   * 1. Multiple Wildcard Diagnostik entries are all transformed
+   * 2. Multiple Wildcard Therapie entries are all transformed
+   */
+  @Test
+  public void testMultipleWildcardDiagnosticsAndTherapies() throws Exception {
+    String inputXmlPath = "/test-multiple-wildcards.xml";
+    String transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
+
+    assertNotNull("Transformed XML should not be null", transformedXml);
+    assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
+
+    // Write output for inspection
+    writeEavOutput(transformedXml, "eav-test-multiple-wildcards.xml");
+
+    // Test: Should have 3 Wildcard Diagnostik facts
+    int wdiagFacts = countOccurrences(transformedXml, "concept=\"AKTIN:WDIAG:");
+    assertEquals("Should have 3 Wildcard Diagnostik facts", 3, wdiagFacts);
+
+    // Test: Should have 4 Wildcard Therapie facts
+    int wtherapyFacts = countOccurrences(transformedXml, "concept=\"AKTIN:WTHERAPY:");
+    assertEquals("Should have 4 Wildcard Therapie facts", 4, wtherapyFacts);
+
+    // Verify specific diagnostik codes
+    assertTrue("Should have SONO-ABD-001 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:SONO-ABD-001\""));
+    assertTrue("Should have EKG-SPECIAL-002 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:EKG-SPECIAL-002\""));
+    assertTrue("Should have LAB-TROP-003 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:LAB-TROP-003\""));
+
+    // Verify specific therapie codes
+    assertTrue("Should have WV-001 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:WV-001\""));
+    assertTrue("Should have SCHIENE-002 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:SCHIENE-002\""));
+    assertTrue("Should have INF-003 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:INF-003\""));
+    assertTrue("Should have LA-004 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:LA-004\""));
+  }
+
+  /**
+   * Test transformation of wildcard observations with all supported datatypes.
+   * Verifies that:
+   * 1. PQ (Physical Quantity) - transforms to numeric with unit
+   * 2. INT (Integer) - transforms to numeric
+   * 3. REAL (Real number) - transforms to numeric
+   * 4. BL (Boolean) - transforms to boolean
+   * 5. CD (Coded) - transforms to string with code/codeSystem/displayName modifiers
+   * 6. ST (String) - transforms to string
+   */
+  @Test
+  public void testWildcardDiagnostikAllDatatypes() throws Exception {
+    String inputXmlPath = "/test-wildcard-datatypes.xml";
+    String transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
+
+    assertNotNull("Transformed XML should not be null", transformedXml);
+    assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
+
+    // Write output for inspection
+    writeEavOutput(transformedXml, "eav-test-wildcard-datatypes.xml");
+
+    // Test: Should have 7 Wildcard Diagnostik facts (one per datatype)
+    int wdiagFacts = countOccurrences(transformedXml, "concept=\"AKTIN:WDIAG:");
+    assertEquals("Should have 7 Wildcard Diagnostik facts (all datatypes)", 7, wdiagFacts);
+
+    // Verify all diagnostic codes are present
+    assertTrue("Should have DIAG-PQ-001", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-PQ-001\""));
+    assertTrue("Should have DIAG-INT-002", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-INT-002\""));
+    assertTrue("Should have DIAG-REAL-003", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-REAL-003\""));
+    assertTrue("Should have DIAG-BL-004", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-BL-004\""));
+    assertTrue("Should have DIAG-BL-005", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-BL-005\""));
+    assertTrue("Should have DIAG-CD-006", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-CD-006\""));
+    assertTrue("Should have DIAG-ST-007", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-ST-007\""));
+
+    // Test PQ datatype: numeric with unit
+    assertTrue("PQ should have numeric type", transformedXml.contains("xsi:type=\"numeric\" unit=\"Cel\">37.5</value>"));
+
+    // Test INT datatype: numeric without unit
+    assertTrue("INT should have numeric type with value 7",
+        transformedXml.contains("xsi:type=\"numeric\">7</value>"));
+
+    // Test REAL datatype: numeric without unit
+    assertTrue("REAL should have numeric type with value 14.5",
+        transformedXml.contains("xsi:type=\"numeric\">14.5</value>"));
+
+    // Test BL datatype: boolean true and false
+    assertTrue("BL should have boolean type with true",
+        transformedXml.contains("xsi:type=\"boolean\">true</value>"));
+    assertTrue("BL should have boolean type with false",
+        transformedXml.contains("xsi:type=\"boolean\">false</value>"));
+
+    // Test CD datatype: string value with code/codeSystem/displayName modifiers
+    assertTrue("CD should have string type with code",
+        transformedXml.contains("xsi:type=\"string\">ALERT</value>"));
+    assertTrue("CD should have codeSystem modifier with value codeSystem",
+        transformedXml.contains("code=\"codeSystem\"") &&
+        transformedXml.contains("2.16.840.1.113883.5.1001"));
+    assertTrue("CD should have displayName modifier with Alert and oriented",
+        transformedXml.contains(">Alert and oriented</value>"));
+
+    // Test ST datatype: string value
+    assertTrue("ST should have string type",
+        transformedXml.contains("xsi:type=\"string\">Patient presents with acute abdominal pain"));
+  }
+
+  /**
    * Writes the EAV content to a file in the output directory.
    */
   private void writeEavOutput(String eavContent, String outputFileName) throws Exception {
