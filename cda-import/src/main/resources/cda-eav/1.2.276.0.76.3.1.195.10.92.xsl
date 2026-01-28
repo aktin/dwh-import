@@ -884,31 +884,26 @@
             </xsl:if>
         </fact>
 
-        <!-- emit Unfallkinetik as separate fact as well -->
-        <xsl:apply-templates select=".." mode="unfallkinetik" />
-    </xsl:template>
-
-
-    <!-- Unfallkinetik (qualifier where name/@code='67496-0') -->
-    <xsl:template match="cda:observation[cda:templateId/@root='1.2.276.0.76.3.1.195.10.29']" mode="unfallkinetik">
-        <xsl:comment>Accident kinetics (Unfallkinetik)</xsl:comment>
-
-        <xsl:for-each select="cda:value/cda:qualifier[cda:name/@code='67496-0']">
+        <!-- Unfallkinetik (qualifier where name/@code='67496-0') -->
+        <xsl:if test="../cda:value/cda:qualifier/cda:name/@code='67496-0'">
+            <xsl:comment>Accident kinetics (Unfallkinetik)</xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:value-of select="concat($acc-kin-Prefix, cda:value/@code)" />
+                    <xsl:value-of select="concat($acc-kin-Prefix, ../cda:value/cda:qualifier/cda:value/@code)" />
                 </xsl:attribute>
 
-                <xsl:if test="cda:value/@displayName">
+                <xsl:if test="../cda:value/@displayName">
                     <modifier code="displayName">
                         <value xsi:type="string">
-                            <xsl:value-of select="cda:value/@displayName" />
+                            <xsl:value-of select="../cda:value/cda:qualifier/cda:value/@displayName" />
                         </value>
                     </modifier>
                 </xsl:if>
             </fact>
-        </xsl:for-each>
+        </xsl:if>
     </xsl:template>
+
+
 
     <!-- Unfallart Traumaregister / Injury cause (1.2.276.0.76.3.1.195.10.30) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.30']">
