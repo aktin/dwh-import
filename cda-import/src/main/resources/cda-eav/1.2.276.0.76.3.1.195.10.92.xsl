@@ -583,17 +583,6 @@
         </fact>
     </xsl:template>
 
-
-    <!-- First pain measurement
-     <fact concept="FLN:15" >
-     -->
-    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.45']">
-        <xsl:comment>First pain measurement</xsl:comment>
-        <fact>
-            <xsl:call-template name="templateGetConceptCode" />
-        </fact>
-    </xsl:template>
-
     <!-- Referral -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3046']">
         <xsl:comment>Referral</xsl:comment>
