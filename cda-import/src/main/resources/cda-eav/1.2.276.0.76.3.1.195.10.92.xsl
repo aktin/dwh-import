@@ -856,11 +856,21 @@
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/@value)" />
                     </xsl:attribute>
+                    <modifier code="effectiveTime">
+                        <value xsi:type="string">
+                            <xsl:value-of select="ancestor::cda:act[1]/cda:effectiveTime/@value" />
+                        </value>
+                    </modifier>
                 </xsl:when>
                 <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value">
                     <xsl:attribute name="start">
                         <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value)" />
                     </xsl:attribute>
+                    <modifier code="effectiveTimeLow">
+                        <value xsi:type="string">
+                            <xsl:value-of select="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value" />
+                        </value>
+                    </modifier>
                 </xsl:when>
             </xsl:choose>
 
