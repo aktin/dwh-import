@@ -1163,18 +1163,8 @@
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:variable name="prefix">
-                        <xsl:choose>
-                            <xsl:when test="../cda:code/@codeSystem">
-                                <xsl:value-of select="func:GetCodePrefix(../cda:code/@codeSystem)"/>
-                            </xsl:when>
-                        </xsl:choose>
-                    </xsl:variable>
-                    <xsl:variable name="baseCode" select="concat($prefix, ../cda:code/@code)" />
-                    <xsl:variable name="neg">
-                        <xsl:if test="../@negationInd='true'">:NEG</xsl:if>
-                    </xsl:variable>
-                    <xsl:value-of select="concat($baseCode, $neg)" />
+                    <xsl:value-of select="concat(func:GetCodePrefix(../cda:code/@codeSystem), ../cda:code/@code)" />
+                    <xsl:if test="../@negationInd='true'">:NEG</xsl:if>
                 </xsl:attribute>
                 <xsl:if test="../cda:effectiveTime/@value">
                     <xsl:attribute name="start">
