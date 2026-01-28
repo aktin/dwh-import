@@ -83,7 +83,6 @@
                             </consumable>
                             <!-- First subordinate: Morning dose 500mg -->
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="1"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
                                     <statusCode code="completed"/>
@@ -98,7 +97,6 @@
                             </entryRelationship>
                             <!-- Second subordinate: Noon dose 1000mg -->
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="2"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
                                     <statusCode code="completed"/>
@@ -114,7 +112,6 @@
                             </entryRelationship>
                             <!-- Third subordinate: Evening dose 500mg -->
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="3"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
                                     <statusCode code="active"/>
@@ -178,7 +175,6 @@
                             </consumable>
                             <!-- Single subordinate for this test -->
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="1"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
                                     <statusCode code="completed"/>

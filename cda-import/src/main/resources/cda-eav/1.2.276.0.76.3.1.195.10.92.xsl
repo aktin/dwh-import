@@ -1562,12 +1562,10 @@
                             </xsl:if>
                         </xsl:if>
 
-                        <!-- sequenceNumber from entryRelationship -->
-                        <xsl:if test="../cda:sequenceNumber/@value">
-                            <modifier code="sequenceNumber">
-                                <value xsi:type="numeric"><xsl:value-of select="../cda:sequenceNumber/@value"/></value>
-                            </modifier>
-                        </xsl:if>
+                        <!-- sequenceNumber derived from position in for-each -->
+                        <modifier code="sequenceNumber">
+                            <value xsi:type="numeric"><xsl:value-of select="position()"/></value>
+                        </modifier>
                     </fact>
                 </xsl:for-each>
             </xsl:when>
