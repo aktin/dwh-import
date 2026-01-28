@@ -1159,7 +1159,7 @@
     <!-- Diagnostics normal findings -->
     <!-- Diagnostics time-->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.3050']">
-        <xsl:for-each select="../cda:entry/cda:observation/cda:templateId[@root != '1.2.276.0.76.3.1.195.10.89']">
+        <xsl:for-each select="../cda:entry/(cda:observation|cda:procedure)/cda:templateId[@root != '1.2.276.0.76.3.1.195.10.89']">
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
@@ -1195,14 +1195,6 @@
                         </value>
                     </modifier>
                 </xsl:if>
-                <xsl:if test="../@negationInd">
-                    <modifier code="negationInd">
-                        <value xsi:type="string">
-                            <xsl:value-of select="../@negationInd" />
-                        </value>
-                    </modifier>
-                </xsl:if>
-                <xsl:call-template name="GetEffectiveTimes" />
                 <xsl:if test="../cda:value/@code">
                     <modifier>   <!-- More expressions +NullFlavor available than queried (only Yes/No+NAV
                         or UNK)-->
@@ -1211,6 +1203,7 @@
                         </xsl:attribute>
                     </modifier>
                 </xsl:if>
+                <xsl:call-template name="GetEffectiveTimes" />
             </fact>
         </xsl:for-each>
     </xsl:template>

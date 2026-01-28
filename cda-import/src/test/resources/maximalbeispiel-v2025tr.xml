@@ -566,13 +566,43 @@ Momentan fehlt noch:
                     <title>Diagnostik</title>
                     <text>
                         <list>
-                            <item ID="diag-item-1">Laboruntersuchung angefordert: ja</item>
+                            <item ID="obs-1">Laboruntersuchung druchgeführt: ohne path. Befund</item>
                             <item ID="diag-item-2">BGA angefordert: ja</item>
                             <item ID="diag-item-3">Selektives CT der Extremitäten durchgeführt: ja</item>
                             <item ID="diag-item-wildcard-1">Wildcard-Diagnostik: Spezifische Sonographie durchgeführt</item>
                         </list>
                     </text>
-
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN" negationInd="false">
+                            <templateId root="1.2.276.0.76.10.4057"/>
+                            <id root="0c935298-9a73-4f40-bcac-beb167de0edf"/>
+                            <code code="26436-6" codeSystem="2.16.840.1.113883.6.1" displayName="Laboratory studies (set)"/>
+                            <text>
+                                <reference value="#obs-1"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401171620"/>
+                            <value xsi:type="CE" code="OPB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="ohne path. Befund"/>
+                        </observation>
+                    </entry>
+                    <entry typeCode="COMP" contextConductionInd="true">
+                        <observation classCode="OBS" moodCode="EVN" negationInd="true">
+                            <templateId root="1.2.276.0.76.10.4052"/>
+                            <id root="7152E2CB-B208-4833-A70B-7F8317E34ED6"/>
+                            <code code="28561-9" codeSystem="2.16.840.1.113883.6.1" displayName="Pelvis X-ray"/>
+                            <text>
+                                <reference value="#obs-2"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="20150117"/>
+                            <value xsi:type="CE" nullFlavor="UNK"/>
+                            <participant typeCode="LOC">
+                                <participantRole classCode="SDLOC">
+                                    <code code="ER" codeSystem="2.16.840.1.113883.5.111" displayName="Notaufnahme"/>
+                                </participantRole>
+                            </participant>
+                        </observation>
+                    </entry>
                     <entry typeCode="COMP" contextConductionInd="true">
                         <procedure classCode="PROC" moodCode="RQO" negationInd="false">
                             <templateId root="1.2.276.0.76.3.1.195.10.48"/>
@@ -586,7 +616,7 @@ Momentan fehlt noch:
                     </entry>
 
                     <entry typeCode="COMP" contextConductionInd="true">
-                        <procedure classCode="PROC" moodCode="EVN" negationInd="false">
+                        <procedure classCode="PROC" moodCode="EVN" negationInd="true">
                             <templateId root="1.2.276.0.76.3.1.195.10.60"/>
                             <code code="303681001" codeSystem="2.16.840.1.113883.6.96" displayName="Computed tomography of limb regions (procedure)"/>
                             <text>
