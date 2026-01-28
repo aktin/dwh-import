@@ -138,6 +138,12 @@
     <!-- Prefix for Other Triage Systems (Andere Triagesysteme - SmED, etc.) -->
     <xsl:variable name="SMED-Prefix">SMED:</xsl:variable>
 
+    <!-- Prefix for Accident cinetics -->
+    <xsl:variable name="acc-kin-Prefix">AKTIN:ACC:KIN:</xsl:variable>
+
+    <!-- Prefix for Accident cause -->
+    <xsl:variable name="acc-cause-Prefix">AKTIN:ACC:CAUSE:</xsl:variable>
+
     <!-- MAIN Template -->
 
     <xsl:template match="/">
@@ -846,21 +852,14 @@
 
     </xsl:template>
 
-    <!-- Unfallursache/-kinetik (1.2.276.0.76.3.1.195.10.29) -->
+    <!-- Accident cause and kinetics (1.2.276.0.76.3.1.195.10.29) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.29']">
         <xsl:comment>Accident cause (Unfallursache)</xsl:comment>
 
         <fact>
             <!-- concept from value/@code (SNOMED cause code) instead of observation/code -->
             <xsl:attribute name="concept">
-                <xsl:choose>
-                    <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="concat(func:GetCodePrefix(../cda:value/@codeSystem), ../cda:value/@code)" />
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="concat('UNK:', ../cda:value/@nullFlavor)" />
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="concat(func:GetCodePrefix(../cda:value/@codeSystem), ../cda:value/@code)" />
             </xsl:attribute>
 
             <xsl:choose>
@@ -898,14 +897,7 @@
         <xsl:for-each select="cda:value/cda:qualifier[cda:name/@code='67496-0']">
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:choose>
-                        <xsl:when test="cda:value/@code">
-                            <xsl:value-of select="concat(func:GetCodePrefix(cda:value/@codeSystem), cda:value/@code)" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="concat('UCS:', cda:value/@nullFlavor)" />
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="concat($acc-kin-Prefix, cda:value/@code)" />
                 </xsl:attribute>
 
                 <xsl:if test="cda:value/@displayName">
@@ -927,14 +919,7 @@
         <fact>
             <!-- concept from value/@code (SNOMED injury cause code) instead of observation/code -->
             <xsl:attribute name="concept">
-                <xsl:choose>
-                    <xsl:when test="../cda:value/@code">
-                        <xsl:value-of select="concat(func:GetCodePrefix(../cda:value/@codeSystem), ../cda:value/@code)" />
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="concat('UNK:', ../cda:value/@nullFlavor)" />
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="concat($acc-cause-Prefix, ../cda:value/@code)" />
             </xsl:attribute>
 
             <!-- start from effectiveTime -->
