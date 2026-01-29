@@ -1339,15 +1339,6 @@
                 </modifier>
             </xsl:if>
 
-            <!-- Text reference -->
-            <xsl:if test="../cda:text/cda:reference/@value">
-                <modifier code="AKTIN:TXTREF">
-                    <value xsi:type="string">
-                        <xsl:value-of select="../cda:text/cda:reference/@value" />
-                    </value>
-                </modifier>
-            </xsl:if>
-
             <!-- External definition -->
             <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
                 <modifier code="AKTIN:EXTDEF">
@@ -1416,15 +1407,6 @@
                 <modifier code="negationInd">
                     <value xsi:type="boolean">
                         <xsl:value-of select="../@negationInd" />
-                    </value>
-                </modifier>
-            </xsl:if>
-
-            <!-- Text reference -->
-            <xsl:if test="../cda:text/cda:reference/@value">
-                <modifier code="AKTIN:TXTREF">
-                    <value xsi:type="string">
-                        <xsl:value-of select="../cda:text/cda:reference/@value" />
                     </value>
                 </modifier>
             </xsl:if>
