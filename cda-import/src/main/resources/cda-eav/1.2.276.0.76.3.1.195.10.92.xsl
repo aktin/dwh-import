@@ -613,6 +613,11 @@
 
         <xsl:comment>Initial assessment system used</xsl:comment>
         <fact>
+            <xsl:if test="../cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:if>
             <xsl:call-template name="templateGetConceptMethod"/>
         </fact>
     </xsl:template>
