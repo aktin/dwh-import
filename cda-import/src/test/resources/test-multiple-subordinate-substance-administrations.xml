@@ -5,12 +5,13 @@
     1. Medication with MULTIPLE subordinate administrations (should create separate facts)
     2. Medication WITHOUT subordinate (edge case - single fact with medication info only)
     3. Multiple approachSiteCode elements (should be numbered: approachSiteCode:1, approachSiteCode:2)
+    4. Medication defined in subordinate substance administration not the outer medication statement
 -->
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <realmCode code="DE"/>
     <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
     <templateId root="1.2.276.0.76.3.1.195.10.92"/>
-    <id root="1.2.276.0.76.4.17.9814184919" extension="test-multi-subordinate"/>
+    <id root="1.2.3.456" extension="test-multi-subordinate"/>
     <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
     <effectiveTime value="20240117120000"/>
     <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
@@ -27,19 +28,19 @@
     <author>
         <time value="20240117120000"/>
         <assignedAuthor>
-            <id root="1.2.276.0.76.4.17.9814184919" extension="author-001"/>
+            <id root="1.2.3.456" extension="author-001"/>
         </assignedAuthor>
     </author>
     <custodian>
         <assignedCustodian>
             <representedCustodianOrganization>
-                <id root="1.2.276.0.76.4.17.9814184919" extension="org-001"/>
+                <id root="1.2.3.456" extension="org-001"/>
             </representedCustodianOrganization>
         </assignedCustodian>
     </custodian>
     <componentOf>
         <encompassingEncounter>
-            <id root="1.2.276.0.76.4.17.9814184919" extension="encounter-multi-sub-test"/>
+            <id root="1.2.3.456" extension="encounter-multi-sub-test"/>
             <effectiveTime>
                 <low value="20240117100000"/>
                 <high value="20240117180000"/>
@@ -59,6 +60,7 @@
                             <item ID="med-multi">Paracetamol with 3 administrations (morning 500mg, noon 1000mg, evening 500mg)</item>
                             <item ID="med-single">Aspirin standalone medication without subordinate</item>
                             <item ID="med-sites">Lidocain with multiple approach sites</item>
+                            <item ID="med-compound">Compound medication: Morphine 10mg + Atropine 0.5mg + Dextrose 5ml</item>
                         </list>
                     </text>
 
@@ -66,25 +68,32 @@
                     <entry typeCode="COMP">
                         <substanceAdministration classCode="SBADM" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
-                            <id root="1.2.276.0.76.4.17.9814184919" extension="med-multi-001"/>
+                            <id root="1.2.3.456" extension="med-multi-001"/>
                             <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
                             <text>
                                 <reference value="#med-multi"/>
                             </text>
-                            <statusCode code="active"/>
                             <routeCode code="PO" codeSystem="2.16.840.1.113883.5.112" displayName="Oral"/>
                             <consumable typeCode="CSM">
                                 <manufacturedProduct classCode="MANU">
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
                                     <manufacturedMaterial classCode="MMAT">
-                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" displayName="Paracetamol"/>
+                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" displayName="Paracetamol">
+                                            <translation code="4021780" codeSystem="2.16.840.1.113883.6.275" displayName="Paracetamol 500mg Tabletten"/>
+                                        </code>
+                                        <lotNumberText>BATCH-2024-001</lotNumberText>
                                     </manufacturedMaterial>
+                                    <manufacturerOrganization>
+                                        <name>Pharma GmbH</name>
+                                    </manufacturerOrganization>
                                 </manufacturedProduct>
                             </consumable>
-                            <!-- First subordinate: Morning dose 500mg -->
+                            <!-- First subordinate: Morning dose 500mg (with CDA-declared sequenceNumber) -->
                             <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="1"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-para-001"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="20240117080000"/>
                                     <doseQuantity value="500" unit="mg"/>
@@ -95,14 +104,15 @@
                                     </consumable>
                                 </substanceAdministration>
                             </entryRelationship>
-                            <!-- Second subordinate: Noon dose 1000mg -->
+                            <!-- Second subordinate: Noon dose 1000mg (with CDA-declared sequenceNumber) -->
                             <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="2"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-para-002"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="20240117120000"/>
                                     <doseQuantity value="1000" unit="mg"/>
-                                    <rateQuantity value="100" unit="ml/h"/>
                                     <consumable>
                                         <manufacturedProduct>
                                             <manufacturedMaterial nullFlavor="NA"/>
@@ -110,10 +120,12 @@
                                     </consumable>
                                 </substanceAdministration>
                             </entryRelationship>
-                            <!-- Third subordinate: Evening dose 500mg -->
+                            <!-- Third subordinate: Evening dose 500mg (with CDA-declared sequenceNumber) -->
                             <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="3"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-para-003"/>
                                     <statusCode code="active"/>
                                     <effectiveTime value="20240117200000"/>
                                     <doseQuantity value="500" unit="mg"/>
@@ -131,7 +143,7 @@
                     <entry typeCode="COMP">
                         <substanceAdministration classCode="SBADM" moodCode="INT">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
-                            <id root="1.2.276.0.76.4.17.9814184919" extension="med-single-001"/>
+                            <id root="1.2.3.456" extension="med-single-001"/>
                             <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
                             <text>
                                 <reference value="#med-single"/>
@@ -154,7 +166,7 @@
                     <entry typeCode="COMP">
                         <substanceAdministration classCode="SBADM" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
-                            <id root="1.2.276.0.76.4.17.9814184919" extension="med-sites-001"/>
+                            <id root="1.2.3.456" extension="med-sites-001"/>
                             <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
                             <text>
                                 <reference value="#med-sites"/>
@@ -165,6 +177,10 @@
                             <approachSiteCode code="LA" codeSystem="2.16.840.1.113883.5.1052" displayName="Left Arm"/>
                             <approachSiteCode code="RA" codeSystem="2.16.840.1.113883.5.1052" displayName="Right Arm"/>
                             <approachSiteCode code="LF" codeSystem="2.16.840.1.113883.5.1052" displayName="Left Foot"/>
+                            <maxDoseQuantity>
+                                <numerator value="5" unit="mg"/>
+                                <denominator value="1" unit="kg"/>
+                            </maxDoseQuantity>
                             <consumable typeCode="CSM">
                                 <manufacturedProduct classCode="MANU">
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
@@ -173,16 +189,88 @@
                                     </manufacturedMaterial>
                                 </manufacturedProduct>
                             </consumable>
-                            <!-- Single subordinate for this test -->
+                            <!-- Single subordinate for this test (no CDA-declared sequenceNumber - tests fallback) -->
                             <entryRelationship typeCode="COMP">
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-lido-001"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="20240117143000"/>
                                     <doseQuantity value="20" unit="ml"/>
                                     <consumable>
                                         <manufacturedProduct>
                                             <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+
+                    <!-- Test Case 4: Compound Medication - multiple substances in subordinates -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-compound-001"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-compound"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <routeCode code="IVC" codeSystem="2.16.840.1.113883.5.112" displayName="Infusion, intravenous catheter"/>
+                            <!-- Subordinate 1: Morphine -->
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="1"/>
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-morph-001"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime value="20240117150000"/>
+                                    <doseQuantity value="10" unit="mg"/>
+                                    <consumable typeCode="CSM">
+                                        <manufacturedProduct classCode="MANU">
+                                            <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                            <manufacturedMaterial classCode="MMAT">
+                                                <code code="N02AA01" codeSystem="2.16.840.1.113883.6.73" displayName="Morphine"/>
+                                            </manufacturedMaterial>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                            <!-- Subordinate 2: Atropine -->
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="2"/>
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-atrop-001"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime value="20240117150000"/>
+                                    <doseQuantity value="0.5" unit="mg"/>
+                                    <consumable typeCode="CSM">
+                                        <manufacturedProduct classCode="MANU">
+                                            <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                            <manufacturedMaterial classCode="MMAT">
+                                                <code code="A03BA01" codeSystem="2.16.840.1.113883.6.73" displayName="Atropine"/>
+                                            </manufacturedMaterial>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                            <!-- Subordinate 3: Dextrose -->
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="3"/>
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <id root="1.2.3.456" extension="sub-dext-001"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime value="20240117150000"/>
+                                    <doseQuantity value="5" unit="ml"/>
+                                    <consumable typeCode="CSM">
+                                        <manufacturedProduct classCode="MANU">
+                                            <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                            <manufacturedMaterial classCode="MMAT">
+                                                <code code="V06DC01" codeSystem="2.16.840.1.113883.6.73" displayName="Dextrose"/>
+                                            </manufacturedMaterial>
                                         </manufacturedProduct>
                                     </consumable>
                                 </substanceAdministration>

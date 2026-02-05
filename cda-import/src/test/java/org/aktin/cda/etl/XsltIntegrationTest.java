@@ -129,7 +129,18 @@ public class XsltIntegrationTest {
 
     // Test Case 3: Lidocaine (N01BB02) with multiple approach sites
     int lidocaineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:N01BB02\"");
+
     assertEquals("Should have 1 fact for Lidocaine (single subordinate)", 1, lidocaineFacts);
+
+    // Test Case 4: Compound Medication - each component should have 1 fact
+    int morphineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:N02AA01\"");
+    assertEquals("Should have 1 fact for Morphine (compound component)", 1, morphineFacts);
+
+    int atropineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:A03BA01\"");
+    assertEquals("Should have 1 fact for Atropine (compound component)", 1, atropineFacts);
+
+    int dextroseFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:V06DC01\"");
+    assertEquals("Should have 1 fact for Dextrose (compound component)", 1, dextroseFacts);
 
     // Verify numbered approachSiteCode modifiers
     assertTrue("Should have approachSiteCode:1", transformedXml.contains("code=\"approachSiteCode:1\""));
@@ -154,6 +165,122 @@ public class XsltIntegrationTest {
     assertTrue("Aspirin should have moodCode INT",
         transformedXml.contains("concept=\"AKTIN:MED:N02BA01\"") &&
         transformedXml.contains("<value xsi:type=\"string\">INT</value>"));
+
+    // Verify instance_num for multiple administrations of same medication
+    assertTrue("Should have instance_num=\"1\"", transformedXml.contains("instance_num=\"1\""));
+    assertTrue("Should have instance_num=\"2\"", transformedXml.contains("instance_num=\"2\""));
+    assertTrue("Should have instance_num=\"3\"", transformedXml.contains("instance_num=\"3\""));
+
+    // Verify subordinate substance administration IDs are captured
+    assertTrue("Should have subordinate ID sub-para-001",
+        transformedXml.contains("code=\"id:1\"") &&
+        transformedXml.contains("1.2.3.456:sub-para-001"));
+    assertTrue("Should have subordinate ID sub-para-002",
+        transformedXml.contains("1.2.3.456:sub-para-002"));
+    assertTrue("Should have subordinate ID sub-para-003",
+        transformedXml.contains("1.2.3.456:sub-para-003"));
+    assertTrue("Should have subordinate ID sub-lido-001",
+        transformedXml.contains("1.2.3.456:sub-lido-001"));
+    assertTrue("Should have subordinate ID sub-morph-001",
+        transformedXml.contains("1.2.3.456:sub-morph-001"));
+
+    // Verify code translation from UV Medication Information (simple)
+    assertTrue("Should have translation code",
+        transformedXml.contains("code=\"translation:1\"") &&
+        transformedXml.contains(">4021780<"));
+    assertTrue("Should have translation codeSystem",
+        transformedXml.contains("code=\"translation:codeSystem:1\"") &&
+        transformedXml.contains("2.16.840.1.113883.6.275"));
+    assertTrue("Should have translation displayName",
+        transformedXml.contains("code=\"translation:displayName:1\"") &&
+        transformedXml.contains("Paracetamol 500mg Tabletten"));
+
+    // Verify lotNumberText
+    assertTrue("Should have lotNumberText",
+        transformedXml.contains("code=\"lotNumberText\"") &&
+        transformedXml.contains("BATCH-2024-001"));
+
+    // Verify manufacturerOrganization
+    assertTrue("Should have manufacturerOrganization",
+        transformedXml.contains("code=\"manufacturerOrganization\"") &&
+        transformedXml.contains("Pharma GmbH"));
+  }
+
+  /**
+   * Test transformation of medication effectiveTime variations.
+   * Verifies all temporal data types are correctly transformed:
+   * 1. Simple TS timestamp
+   * 2. PIVL_TS with full phase (low/high), period, institutionSpecified
+   * 3. EIVL_TS event-based timing (after meals)
+   * 4. SXPR_TS combined intervals
+   * 5. NullFlavor for unknown times
+   */
+  @Test
+  public void testMedicationEffectiveTimeVariations() throws Exception {
+    String inputXmlPath = "/test-medication-effectivetime-variations.xml";
+    String transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
+
+    assertNotNull("Transformed XML should not be null", transformedXml);
+    assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
+
+    // Write output for inspection
+    writeEavOutput(transformedXml, "eav-test-medication-effectivetime-variations.xml");
+
+    // Test Case 1: Simple TS value
+    assertTrue("Should have simple effectiveTime value",
+        transformedXml.contains("concept=\"AKTIN:MED:N02BE01\"") &&
+        transformedXml.contains("code=\"effectiveTime\"") &&
+        transformedXml.contains("20240120140000"));
+
+    // Test Case 2: PIVL_TS with phase (low/high), period, institutionSpecified
+    assertTrue("Should have effectiveTimePhaseLow",
+        transformedXml.contains("code=\"effectiveTimePhaseLow\"") &&
+        transformedXml.contains("20240120080000"));
+    assertTrue("Should have effectiveTimePhaseHigh",
+        transformedXml.contains("code=\"effectiveTimePhaseHigh\"") &&
+        transformedXml.contains("20240122080000"));
+    assertTrue("Should have effectiveTimePeriod with 8 hours",
+        transformedXml.contains("code=\"effectiveTimePeriod\"") &&
+        transformedXml.contains("unit=\"h\">8"));
+    assertTrue("Should have institutionSpecified=true",
+        transformedXml.contains("code=\"effectiveTimeInstitutionSpecified\"") &&
+        transformedXml.contains(">true<"));
+    assertTrue("Should have operator A",
+        transformedXml.contains("code=\"effectiveTimeOperator\"") &&
+        transformedXml.contains(">A<"));
+
+    // Test Case 3: EIVL_TS event-based timing
+    assertTrue("Should have event code ACM",
+        transformedXml.contains("code=\"effectiveTimeEventCode\"") &&
+        transformedXml.contains(">ACM<"));
+    assertTrue("Should have event displayName",
+        transformedXml.contains("code=\"effectiveTimeEventDisplayName\"") &&
+        transformedXml.contains("After meal"));
+    assertTrue("Should have event offset 30 minutes",
+        transformedXml.contains("code=\"effectiveTimeEventOffset\"") &&
+        transformedXml.contains("unit=\"min\">30"));
+
+    // Test Case 4: SXPR_TS combined intervals
+    assertTrue("Should have set operator I",
+        transformedXml.contains("code=\"effectiveTimeSetOperator\"") &&
+        transformedXml.contains(">I<"));
+    assertTrue("Should have comp:1",
+        transformedXml.contains("code=\"effectiveTimeComp:1\"") &&
+        transformedXml.contains("20240120080000"));
+    assertTrue("Should have comp:2",
+        transformedXml.contains("code=\"effectiveTimeComp:2\"") &&
+        transformedXml.contains("20240120200000"));
+
+    // Test Case 5: NullFlavor handling
+    assertTrue("Should have effectiveTimeNullFlavor",
+        transformedXml.contains("code=\"effectiveTimeNullFlavor\"") &&
+        transformedXml.contains(">UNK<"));
+    assertTrue("Should have doseQuantityNullFlavor",
+        transformedXml.contains("code=\"doseQuantityNullFlavor\"") &&
+        transformedXml.contains(">UNK<"));
+    assertTrue("Should have rateQuantityNullFlavor",
+        transformedXml.contains("code=\"rateQuantityNullFlavor\"") &&
+        transformedXml.contains(">NAV<"));
   }
 
   /**
@@ -214,9 +341,18 @@ public class XsltIntegrationTest {
     // Write output for inspection
     writeEavOutput(transformedXml, "eav-test-wildcard-datatypes.xml");
 
+    URL inputUrl = getClass().getResource(inputXmlPath);
+    assertNotNull("Input XML resource not found: " + inputXmlPath, inputUrl);
+    File inputFile = new File(inputUrl.toURI());
+    net.sf.saxon.s9api.DocumentBuilder saxonBuilder = processor.newDocumentBuilder();
+    XdmNode source = saxonBuilder.build(new StreamSource(inputFile));
+    writeEavOutput(source.toString(), "test.xml");
+    int w = countOccurrences(source.toString(), "1.2.276.0.76.3.1.195.10.89");
+    assertEquals("Source XML should have 8 occurrences of template id for wildcard diagnostic", 8, w);
+
     // Test: Should have 7 Wildcard Diagnostik facts (one per datatype)
     int wdiagFacts = countOccurrences(transformedXml, "concept=\"AKTIN:WDIAG:");
-    assertEquals("Should have 7 Wildcard Diagnostik facts (all datatypes)", 7, wdiagFacts);
+    assertEquals("Should have 8 Wildcard Diagnostik facts (all datatypes)", 8, wdiagFacts);
 
     // Verify all diagnostic codes are present
     assertTrue("Should have DIAG-PQ-001", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-PQ-001\""));
@@ -226,6 +362,7 @@ public class XsltIntegrationTest {
     assertTrue("Should have DIAG-BL-005", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-BL-005\""));
     assertTrue("Should have DIAG-CD-006", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-CD-006\""));
     assertTrue("Should have DIAG-ST-007", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-ST-007\""));
+    assertTrue("Should have DIAG-OTH-008", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-OTH-008\""));
 
     // Test PQ datatype: numeric with unit
     assertTrue("PQ should have numeric type", transformedXml.contains("xsi:type=\"numeric\" unit=\"Cel\">37.5</value>"));
@@ -255,7 +392,11 @@ public class XsltIntegrationTest {
 
     // Test ST datatype: string value
     assertTrue("ST should have string type",
-        transformedXml.contains("xsi:type=\"string\">Patient presents with acute abdominal pain"));
+            transformedXml.contains("xsi:type=\"string\">Patient presents with acute abdominal pain"));
+
+    // Test OTH datatype: type which is not predefined in schema
+    assertTrue("OTH should have string type and concatenate value/@value and value/@text()",
+            transformedXml.contains("xsi:type=\"string\">NOTE Patient asks a lot of questions."));
   }
 
   /**

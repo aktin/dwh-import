@@ -747,7 +747,7 @@ Momentan fehlt noch:
                             <entryRelationship typeCode="COMP">
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <statusCode code="active"/>
+                                    <statusCode code="completed"/>
                                     <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
                                         <period value="8" unit="h"/>
                                     </effectiveTime>
