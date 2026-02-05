@@ -1600,7 +1600,7 @@
                     </modifier>
                 </xsl:when>
                 <xsl:when test="../cda:doseQuantity/@nullFlavor">
-                    <modifier code="doseQuantityNullFlavor">
+                    <modifier code="doseQuantity">
                         <value xsi:type="string"><xsl:value-of select="../cda:doseQuantity/@nullFlavor"/></value>
                     </modifier>
                 </xsl:when>
@@ -1619,7 +1619,7 @@
                     </modifier>
                 </xsl:when>
                 <xsl:when test="../cda:rateQuantity/@nullFlavor">
-                    <modifier code="rateQuantityNullFlavor">
+                    <modifier code="rateQuantity">
                         <value xsi:type="string"><xsl:value-of select="../cda:rateQuantity/@nullFlavor"/></value>
                     </modifier>
                 </xsl:when>
@@ -1641,7 +1641,7 @@
                             </modifier>
                         </xsl:when>
                         <xsl:when test="../cda:maxDoseQuantity/cda:numerator/@nullFlavor">
-                            <modifier code="maxDoseQuantityNumeratorNullFlavor">
+                            <modifier code="maxDoseQuantityNumerator">
                                 <value xsi:type="string"><xsl:value-of select="../cda:maxDoseQuantity/cda:numerator/@nullFlavor"/></value>
                             </modifier>
                         </xsl:when>
@@ -1658,7 +1658,7 @@
                             </modifier>
                         </xsl:when>
                         <xsl:when test="../cda:maxDoseQuantity/cda:denominator/@nullFlavor">
-                            <modifier code="maxDoseQuantityDenominatorNullFlavor">
+                            <modifier code="maxDoseQuantityDenominator">
                                 <value xsi:type="string"><xsl:value-of select="../cda:maxDoseQuantity/cda:denominator/@nullFlavor"/></value>
                             </modifier>
                         </xsl:when>
@@ -1678,7 +1678,7 @@
                             </modifier>
                         </xsl:when>
                         <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:maxDoseQuantity/cda:numerator/@nullFlavor">
-                            <modifier code="maxDoseQuantityNumeratorNullFlavor">
+                            <modifier code="maxDoseQuantityNumerator">
                                 <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:maxDoseQuantity/cda:numerator/@nullFlavor"/></value>
                             </modifier>
                         </xsl:when>
@@ -1695,7 +1695,7 @@
                             </modifier>
                         </xsl:when>
                         <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:maxDoseQuantity/cda:denominator/@nullFlavor">
-                            <modifier code="maxDoseQuantityDenominatorNullFlavor">
+                            <modifier code="maxDoseQuantityDenominator">
                                 <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:maxDoseQuantity/cda:denominator/@nullFlavor"/></value>
                             </modifier>
                         </xsl:when>
@@ -1718,7 +1718,7 @@
                     </modifier>
                 </xsl:when>
                 <xsl:when test="../@nullFlavor">
-                    <modifier code="moodCodeNullFlavor">
+                    <modifier code="moodCode">
                         <value xsi:type="string"><xsl:value-of select="../@nullFlavor"/></value>
                     </modifier>
                 </xsl:when>
@@ -1735,7 +1735,7 @@
                     </modifier>
                 </xsl:when>
                 <xsl:when test="../cda:statusCode/@nullFlavor">
-                    <modifier code="statusCodeNullFlavor">
+                    <modifier code="statusCode">
                         <value xsi:type="string"><xsl:value-of select="../cda:statusCode/@nullFlavor"/></value>
                     </modifier>
                 </xsl:when>
@@ -1754,7 +1754,7 @@
 
                 <!-- Simple nullFlavor -->
                 <xsl:when test="../cda:effectiveTime/@nullFlavor">
-                    <modifier code="effectiveTimeNullFlavor">
+                    <modifier code="effectiveTime">
                         <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/@nullFlavor"/></value>
                     </modifier>
                 </xsl:when>
