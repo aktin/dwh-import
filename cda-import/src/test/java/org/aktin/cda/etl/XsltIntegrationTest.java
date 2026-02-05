@@ -271,15 +271,15 @@ public class XsltIntegrationTest {
         transformedXml.contains("code=\"effectiveTimeComp:2\"") &&
         transformedXml.contains("20240120200000"));
 
-    // Test Case 5: NullFlavor handling
-    assertTrue("Should have effectiveTimeNullFlavor",
-        transformedXml.contains("code=\"effectiveTimeNullFlavor\"") &&
+    // Test Case 5: NullFlavor handling (NullFlavor value stored under regular modifier code)
+    assertTrue("Should have effectiveTime with NullFlavor value",
+        transformedXml.contains("code=\"effectiveTime\"") &&
         transformedXml.contains(">UNK<"));
-    assertTrue("Should have doseQuantityNullFlavor",
-        transformedXml.contains("code=\"doseQuantityNullFlavor\"") &&
+    assertTrue("Should have doseQuantity with NullFlavor value",
+        transformedXml.contains("code=\"doseQuantity\"") &&
         transformedXml.contains(">UNK<"));
-    assertTrue("Should have rateQuantityNullFlavor",
-        transformedXml.contains("code=\"rateQuantityNullFlavor\"") &&
+    assertTrue("Should have rateQuantity with NullFlavor value",
+        transformedXml.contains("code=\"rateQuantity\"") &&
         transformedXml.contains(">NAV<"));
   }
 
