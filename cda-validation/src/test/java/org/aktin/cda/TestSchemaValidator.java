@@ -1,9 +1,7 @@
 package org.aktin.cda;
 
 import java.io.InputStream;
-
 import javax.xml.transform.stream.StreamSource;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,11 +19,11 @@ public class TestSchemaValidator {
 	@Test
 	public void assumeValidSchemaForExampleDocuments() throws Exception{
 		String[][] validSchemaCollections = new String[][]{
-			TestValidator.v2024ExampleDocuments,
 			TestValidator.v2ExampleDocuments,
 			TestValidator.v1ExampleDocuments,
 			TestValidator.v1InvalidExampleDocuments,
-			TestValidator.v2InvalidExampleDocuments
+			TestValidator.v2InvalidExampleDocuments,
+			TestValidator.v2025trExampleDocuments
 		};
 		for( String[] collection : validSchemaCollections ){
 			for( String example : collection ){

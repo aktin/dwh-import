@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Test file for multiple triage score variations in the EAV transformation.
+    Tests scenarios where:
+    1. Initial assessment with MTS scoring system
+    2. Initial assessment with ESI scoring system  
+    3. Both MTS and ESI are present (dual triage)
+    4. Multiple triage entries at different times (re-triage)
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.92"/>
+    <id root="1.2.3.456" extension="test-triage-variations"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
+    <effectiveTime value="20240120120000"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <recordTarget>
+        <patientRole>
+            <id root="1.2.276.0.76.4.8" extension="TEST-TRIAGE-001"/>
+            <patient>
+                <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19850310"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author>
+        <time value="20240120120000"/>
+        <assignedAuthor>
+            <id root="1.2.3.456" extension="author-001"/>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.3.456" extension="org-001"/>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <componentOf>
+        <encompassingEncounter>
+            <id root="1.2.3.456" extension="encounter-triage-test"/>
+            <effectiveTime>
+                <low value="20240120100000"/>
+                <high value="20240120180000"/>
+            </effectiveTime>
+            <dischargeDispositionCode code="4"/>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.3.1.195.10.16"/>
+                    <code code="11283-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Acuity assessment [Function] at First encounter"/>
+                    <title>Ersteinschätzung - Multiple Triage Scores Test</title>
+                    <text>
+                        Test with multiple triage assessments:
+                        <list>
+                            <item>Initial MTS assessment at 10:15</item>
+                            <item>Initial ESI assessment at 10:20</item>
+                            <item>Re-triage with MTS at 11:30</item>
+                        </list>
+                    </text>
+
+                    <!-- Test Case 1: First Initial Assessment with MTS -->
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.18"/>
+                            <code code="273887006" codeSystem="2.16.840.1.113883.6.96" displayName="Triage index (assessment scale)">
+                                <translation code="75616-3" codeSystem="2.16.840.1.113883.6.1" displayName="Generic five level triage system"/>
+                            </code>
+                            <statusCode code="completed"/>
+                            <!-- First triage at 10:15 -->
+                            <effectiveTime value="202401201015"/>
+                            <value xsi:type="CE" code="LA21587-3" codeSystem="2.16.840.1.113883.6.1" displayName="Less urgent"/>
+                            <methodCode code="713009001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System (assessment scale)"/>
+                            <entryRelationship typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.19"/>
+                                    <code code="1255867001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System score (observable entity)"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="202401201015"/>
+                                    <value xsi:type="CE" code="4" codeSystem="1.2.276.0.76.5.438" displayName="normal - grün - 90 Minuten"/>
+                                    <entryRelationship typeCode="COMP">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <templateId root="1.2.276.0.76.3.1.195.10.21"/>
+                                            <code code="SCTPOCC-1269489004" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Präsentationsdiagramm"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="CE" code="17" codeSystem="1.2.276.0.76.3.1.195.5.101" displayName="Extremitätenprobleme"/>
+                                        </observation>
+                                    </entryRelationship>
+                                    <entryRelationship typeCode="COMP">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <templateId root="1.2.276.0.76.3.1.195.10.24"/>
+                                            <code code="SCTPOCC-255521000" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Indikatoren YELLOW"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="CE" code="101" codeSystem="1.2.276.0.76.3.1.195.5.102" displayName="Schmerzen bei Bewegung"/>
+                                        </observation>
+                                    </entryRelationship>
+                                </observation>
+                            </entryRelationship>
+                        </observation>
+                    </entry>
+
+                    <!-- Test Case 2: Second Initial Assessment with ESI (same visit, different system) -->
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.18"/>
+                            <code code="273887006" codeSystem="2.16.840.1.113883.6.96" displayName="Triage index (assessment scale)">
+                                <translation code="75616-3" codeSystem="2.16.840.1.113883.6.1" displayName="Generic five level triage system"/>
+                            </code>
+                            <statusCode code="completed"/>
+                            <!-- Second triage at 10:20 using ESI -->
+                            <effectiveTime value="202401201020"/>
+                            <value xsi:type="CE" code="LA21586-5" codeSystem="2.16.840.1.113883.6.1" displayName="Urgent"/>
+                            <methodCode code="713010006" codeSystem="2.16.840.1.113883.6.96" displayName="Emergency Severity Index (assessment scale)"/>
+                            <entryRelationship typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.20"/>
+                                    <code code="1292326000" codeSystem="2.16.840.1.113883.6.96" displayName="Emergency Severity Index score (observable entity)"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="202401201020"/>
+                                    <value xsi:type="CE" code="3" codeSystem="1.2.276.0.76.5.439" displayName="ESI Level 3 - Urgent"/>
+                                    <entryRelationship typeCode="COMP">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <templateId root="1.2.276.0.76.3.1.195.10.26"/>
+                                            <code code="ESI-FACTOR" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="ESI-Triagefaktoren"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="CE" code="1" codeSystem="1.2.276.0.76.3.1.195.5.103" displayName="Eine Ressource benötigt"/>
+                                        </observation>
+                                    </entryRelationship>
+                                </observation>
+                            </entryRelationship>
+                        </observation>
+                    </entry>
+
+                    <!-- Test Case 3: Re-triage with MTS at a later time (patient condition changed) -->
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.18"/>
+                            <code code="273887006" codeSystem="2.16.840.1.113883.6.96" displayName="Triage index (assessment scale)">
+                                <translation code="75616-3" codeSystem="2.16.840.1.113883.6.1" displayName="Generic five level triage system"/>
+                            </code>
+                            <statusCode code="completed"/>
+                            <!-- Re-triage at 11:30 - patient condition worsened, now orange -->
+                            <effectiveTime value="202401201130"/>
+                            <value xsi:type="CE" code="LA21585-7" codeSystem="2.16.840.1.113883.6.1" displayName="Very urgent"/>
+                            <methodCode code="713009001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System (assessment scale)"/>
+                            <entryRelationship typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.19"/>
+                                    <code code="1255867001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System score (observable entity)"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="202401201130"/>
+                                    <value xsi:type="CE" code="2" codeSystem="1.2.276.0.76.5.438" displayName="dringend - orange - 10 Minuten"/>
+                                    <entryRelationship typeCode="COMP">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <templateId root="1.2.276.0.76.3.1.195.10.21"/>
+                                            <code code="SCTPOCC-1269489004" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Präsentationsdiagramm"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="CE" code="01" codeSystem="1.2.276.0.76.3.1.195.5.101" displayName="Unwohlsein beim Erwachsenen"/>
+                                        </observation>
+                                    </entryRelationship>
+                                    <entryRelationship typeCode="COMP">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <templateId root="1.2.276.0.76.3.1.195.10.23"/>
+                                            <code code="SCTPOCC-25876001" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Indikatoren ORANGE"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="CE" code="148" codeSystem="1.2.276.0.76.3.1.195.5.102" displayName="Sehr heiß"/>
+                                        </observation>
+                                    </entryRelationship>
+                                    <entryRelationship typeCode="COMP">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <templateId root="1.2.276.0.76.3.1.195.10.22"/>
+                                            <code code="SCTPOCC-371240000" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Indikatoren RED"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="CE" code="050" codeSystem="1.2.276.0.76.3.1.195.5.102" displayName="Drohende Atemwegsverlegung"/>
+                                        </observation>
+                                    </entryRelationship>
+                                </observation>
+                            </entryRelationship>
+                        </observation>
+                    </entry>
+
+                    <!-- Test Case 4: MTS without a parent Initial Assessment (standalone MTS) -->
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.19"/>
+                            <code code="1255867001" codeSystem="2.16.840.1.113883.6.96" displayName="Manchester Triage System score (observable entity)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401201200"/>
+                            <value xsi:type="CE" code="5" codeSystem="1.2.276.0.76.5.438" displayName="nicht dringend - blau - 120 Minuten"/>
+                            <entryRelationship typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.25"/>
+                                    <code code="SCTPOCC-123456" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="MTS-Indikatoren GREEN"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="CE" code="200" codeSystem="1.2.276.0.76.3.1.195.5.102" displayName="Leichte Verletzung"/>
+                                </observation>
+                            </entryRelationship>
+                        </observation>
+                    </entry>
+
+                    <!-- Test Case 5: ESI without a parent Initial Assessment (standalone ESI) -->
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.20"/>
+                            <code code="1292326000" codeSystem="2.16.840.1.113883.6.96" displayName="Emergency Severity Index score (observable entity)"/>
+                            <statusCode code="completed"/>
+                            <effectiveTime value="202401201215"/>
+                            <value xsi:type="CE" code="4" codeSystem="1.2.276.0.76.5.439" displayName="ESI Level 4 - Less Urgent"/>
+                            <entryRelationship typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.26"/>
+                                    <code code="ESI-FACTOR-2" codeSystem="1.2.276.0.76.3.1.195.5.99" displayName="ESI-Triagefaktoren"/>
+                                    <statusCode code="completed"/>
+                                    <value xsi:type="CE" code="2" codeSystem="1.2.276.0.76.3.1.195.5.103" displayName="Zwei Ressourcen benötigt"/>
+                                </observation>
+                            </entryRelationship>
+                        </observation>
+                    </entry>
+
+                </section>
+            </component>
+
+        </structuredBody>
+    </component>
+</ClinicalDocument>
