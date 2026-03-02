@@ -3,23 +3,21 @@ package org.aktin.cda;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPathExpressionException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TestValidator {
-	private static final String v2024TemplateId = "1.2.276.0.76.3.1.195.10.2";
+	private static final String v2025trTemplateId = "1.2.276.0.76.3.1.195.10.92";
 	private static final String v2TemplateId = "1.2.276.0.76.10.1019";
-	private static final String v1TemplateId = "1.2.276.0.76.10.1015";
 
-	public static final String[] v2024ExampleDocuments = new String[]{
-		"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard01.xml",
-		"/CDA Beispiele Episodenzusammenfassung Notaufnahmeregister 2024/episodenzusammenfassung-notaufnahmeregister2024-beispiel-storyboard02.xml"
+	public static final String[] v2025trExampleDocuments = new String[]{
+			"/CDA-beispiele-episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard01.xml",
+			"/CDA-beispiele-episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard02.xml",
+			"/Additional Examples/maximalbeispiel-v2025tr.xml"
 	};
 	public static final String[] v2ExampleDocuments = new String[]{
 		"/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml",
@@ -48,7 +46,7 @@ public class TestValidator {
 	private CDAParser parser;
 
 	@Before
-	public void setup() throws Exception {
+	public void initialize() throws Exception {
 		validator = new Validator();
 		parser = new CDAParser();
 	}
@@ -86,25 +84,27 @@ public class TestValidator {
 	}
 
 	@Test
-	public void validateExampleDocuments2024_expectValid() throws Exception {
+	public void validateExampleDocuments2025tr_expectValid() throws Exception {
 		ValidationErrorPrinter p = new ValidationErrorPrinter();
 
-		for (String example : v2024ExampleDocuments) {
+		for (String example : v2025trExampleDocuments) {
 			p.setSystemId(example);
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);
-				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, p);
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2025trTemplateId, p);
 				Assert.assertTrue("Successful validation expected for " + example, isValid);
 			}
 		}
 	}
 
 	@Test
-	public void validateExampleDocuments2024_expectInvalid() throws Exception {
+	public void validateExampleDocuments2025tr_expectInvalid() throws Exception {
 		ArrayList<String> invalidDocuments = new ArrayList<>();
+		// Add invalid documents from previous versions
 		invalidDocuments.addAll(Arrays.asList(v2InvalidExampleDocuments));
 		invalidDocuments.addAll(Arrays.asList(v1InvalidExampleDocuments));
+		// Add valid documents from previous versions (which should be invalid in 2025)
 		invalidDocuments.addAll(Arrays.asList(v2ExampleDocuments));
 		invalidDocuments.addAll(Arrays.asList(v1ExampleDocuments));
 
@@ -112,7 +112,7 @@ public class TestValidator {
 			try (InputStream in = getClass().getResourceAsStream(example)) {
 				Assert.assertNotNull("File not found at " + example, in);
 				Assert.assertTrue("File is empty " + example, in.available() > 0);
-				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2024TemplateId, SuppressValidationErrors.staticInstance);
+				boolean isValid = validator.validate(parser.buildDOM(new StreamSource(in)), v2025trTemplateId, SuppressValidationErrors.staticInstance);
 				Assert.assertFalse("Validation failure expected for " + example, isValid);
 			}
 		}
