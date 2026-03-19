@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://sekmi.de/histream/ns/eav-data"
+           xmlns="http://sekmi.de/histream/ns/eav-data"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="types.xsd"/>
+
+    <xs:complexType name="modifierType">
+        <xs:sequence>
+            <xs:element name="value" type="valueType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="code" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="factType">
+        <xs:sequence>
+            <xs:element name="value" type="valueType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="modifier" type="modifierType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="patient" />
+        <xs:attribute type="xs:string" name="encounter" />
+        <xs:attribute type="xs:string" name="concept" use="required"/>
+        <xs:attribute type="partialDate" name="start" />
+        <xs:attribute type="partialDate" name="end"/>
+        <xs:attribute type="xs:string" name="location" />
+        <xs:attribute type="xs:string" name="provider" />
+        <xs:attribute type="xs:integer" name="instance_num"/> 
+    </xs:complexType>
+
+</xs:schema>

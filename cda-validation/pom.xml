@@ -14,12 +14,15 @@
 	<properties>
 		<schematronVersion2018>20180323T201638</schematronVersion2018>
 		<examplesVersion2018>20180322T121703</examplesVersion2018>
-		<schematronArchive>aktin-runtime-${schematronVersion2018}</schematronArchive>
-		<examplesArchive>aktin-xml-${examplesVersion2018}</examplesArchive>
+
 		<schematronVersion2025>20241202T134738</schematronVersion2025>
 		<examplesVersion2025>20241202T134738</examplesVersion2025>
-		<schematronArchive2>aktin-runtime-${schematronVersion2025}</schematronArchive2>
-		<examplesArchive2>aktin-xml-${examplesVersion2025}</examplesArchive2>
+
+		<schematronVersion2025tr>20251229T155034</schematronVersion2025tr>
+		<examplesVersion2025tr>20251229T155034</examplesVersion2025tr>
+
+		<schematronArchivePrefix>aktin-runtime-</schematronArchivePrefix>
+		<examplesArchivePrefix>aktin-xml-</examplesArchivePrefix>
 	</properties>
 	<build>
 		<resources>
@@ -55,10 +58,10 @@
 						<configuration>
 							<target>
 								<!-- schematron files for CDA version v2 -->
-								<get src="https://aktin.art-decor.pub/${schematronArchive}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${schematronArchivePrefix}${schematronVersion2018}.zip" dest="${project.build.directory}/schematron.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron.zip" dest="${project.build.directory}/schematron" />
 								<!-- examples for CDA version v2 -->
-								<get src="https://aktin.art-decor.pub/${examplesArchive}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${examplesArchivePrefix}${examplesVersion2018}.zip" dest="${project.build.directory}/examples.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/examples.zip" dest="${project.build.directory}/examples">
 									<patternset>
 										<include name="**/CDA Beispiele*/*" />
@@ -67,20 +70,24 @@
 									</patternset>
 									<cutdirsmapper dirs="1" />
 								</unzip>
-								<!-- schematron files for CDA version 2025 -->
-								<get src="https://aktin.art-decor.pub/${schematronArchive2}.zip" dest="${project.build.directory}/schematron-2024.zip" verbose="false" usetimestamp="true" />
-								<unzip src="${project.build.directory}/schematron-2024.zip" dest="${project.build.directory}/schematron" />
-								<!-- examples for CDA version 2025 -->
-								<get src="https://aktin.art-decor.pub/${examplesArchive2}.zip" dest="${project.build.directory}/examples-2024.zip" verbose="false" usetimestamp="true" />
-								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/examples">
+								<!-- schematron files for CDA version 2025tr -->
+								<get src="https://aktin.art-decor.pub/${schematronArchivePrefix}${schematronVersion2025tr}.zip" dest="${project.build.directory}/schematron-2025tr.zip" verbose="false" usetimestamp="true" />
+								<unzip src="${project.build.directory}/schematron-2025tr.zip" dest="${project.build.directory}/schematron" />
+								<!-- examples for CDA version 2025tr -->
+								<get src="https://aktin.art-decor.pub/${examplesArchivePrefix}${examplesVersion2025tr}.zip"
+									 dest="${project.build.directory}/examples-2025tr.zip" verbose="false" usetimestamp="true" />
+
+								<unzip src="${project.build.directory}/examples-2025tr.zip" dest="${project.build.directory}/examples">
 									<patternset>
 										<include name="**/CDA Beispiele*/*" />
+										<include name="**/CDA-beispiele*/*" />
+
 										<include name="**/stylesheets/*" />
 									</patternset>
 									<cutdirsmapper dirs="1" />
 								</unzip>
 								<!-- CDA schema definition and core schemas -->
-								<unzip src="${project.build.directory}/examples-2024.zip" dest="${project.build.directory}/schematron">
+								<unzip src="${project.build.directory}/examples-2025tr.zip" dest="${project.build.directory}/schematron">
 									<patternset>
 										<include name="**/schemas/*" />
 										<include name="**/coreschemas/*" />

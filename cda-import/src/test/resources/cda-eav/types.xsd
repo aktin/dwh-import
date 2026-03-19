@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://sekmi.de/histream/ns/eav-data"
+           xmlns="http://sekmi.de/histream/ns/eav-data"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="partialDate">
+        <xs:restriction base="xs:string">
+            <!-- Allows YYYY, YYYY-MM, YYYY-MM-DD, and varying time precisions -->
+            <xs:pattern value="[0-9]{4}(-[0-1][0-9](-[0-3][0-9](T[0-2][0-9](:[0-5][0-9](:[0-5][0-9])?)?)?)?)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 
+       valueType allows 'mixed' content (text + elements) to support 
+       rich text values like the <list> element found in diagnoses.
+    -->
+    <xs:complexType name="valueType" mixed="true">
+        <xs:sequence>
+            <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="unit" />
+        <xs:attribute type="xs:string" name="flag" />
+    </xs:complexType>
+
+    <!-- Specific types are derived from valueType to support xsi:type="numeric/string/boolean" -->
+    
+    <xs:complexType name="numeric">
+        <xs:complexContent>
+            <xs:extension base="valueType">
+                <xs:attribute type="xs:string" name="operator" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="string">
+        <xs:complexContent>
+            <xs:extension base="valueType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="boolean">
+        <xs:complexContent>
+            <xs:extension base="valueType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="sourceType">
+        <xs:attribute type="xs:string" name="timestamp" />
+        <xs:attribute type="xs:string" name="id" />
+        <xs:attribute name="author-name" type="xs:string"/>
+        <xs:attribute name="author-time" type="xs:string"/>
+        <xs:attribute name="confidentiality-code" type="xs:string"/>
+        <xs:attribute name="organization-name" type="xs:string"/>
+        <xs:attribute name="custodian-organization" type="xs:string"/>
+        <xs:attribute name="custodian-city" type="xs:string"/>
+        <xs:attribute name="custodian-postalCode" type="xs:string"/>
+        <xs:attribute name="custodian-country" type="xs:string"/>
+        <xs:attribute name="cda-language" type="xs:string"/>
+    </xs:complexType>
+
+</xs:schema>

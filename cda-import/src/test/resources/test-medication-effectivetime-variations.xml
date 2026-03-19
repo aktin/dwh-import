@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Test file for effectiveTime variations in medication subordinate substance administrations.
+    Tests all temporal data types: TS, PIVL_TS, EIVL_TS, SXPR_TS, and nullFlavor
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.92"/>
+    <id root="1.2.3.456" extension="test-effectivetime"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
+    <effectiveTime value="20240120120000"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <recordTarget>
+        <patientRole>
+            <id root="1.2.276.0.76.4.8" extension="TEST-EFFECTIVETIME-001"/>
+            <patient>
+                <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19850310"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author>
+        <time value="20240120120000"/>
+        <assignedAuthor>
+            <id root="1.2.3.456" extension="author-001"/>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.3.456" extension="org-001"/>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <componentOf>
+        <encompassingEncounter>
+            <id root="1.2.3.456" extension="encounter-effectivetime-test"/>
+            <effectiveTime>
+                <low value="20240120100000"/>
+                <high value="20240120180000"/>
+            </effectiveTime>
+            <dischargeDispositionCode code="4"/>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+            <component>
+                <section>
+                    <templateId root="1.2.276.0.76.3.1.195.10.64"/>
+                    <code code="29549-3" codeSystem="2.16.840.1.113883.6.1"/>
+                    <title>Medikation - EffectiveTime Variations Test</title>
+                    <text>
+                        <list>
+                            <item ID="med-simple-ts">Simple TS timestamp</item>
+                            <item ID="med-pivl-full">PIVL_TS with phase (low/high) and period</item>
+                            <item ID="med-eivl">EIVL_TS event-based timing (after meals)</item>
+                            <item ID="med-sxpr">SXPR_TS combined intervals</item>
+                            <item ID="med-nullflavor">Unknown effectiveTime (nullFlavor)</item>
+                        </list>
+                    </text>
+
+                    <!-- Test Case 1: Simple TS value -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-ts-001"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text><reference value="#med-simple-ts"/></text>
+                            <routeCode code="PO" codeSystem="2.16.840.1.113883.5.112" displayName="Oral"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" displayName="Paracetamol"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240120140000"/>
+                                    <doseQuantity value="500" unit="mg"/>
+                                    <consumable><manufacturedProduct><manufacturedMaterial nullFlavor="NA"/></manufacturedProduct></consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+
+                    <!-- Test Case 2: PIVL_TS with full phase (low/high), period, institutionSpecified -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-pivl-001"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text><reference value="#med-pivl-full"/></text>
+                            <routeCode code="PO" codeSystem="2.16.840.1.113883.5.112" displayName="Oral"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="J01CR02" codeSystem="2.16.840.1.113883.6.73" displayName="Amoxicillin with clavulanic acid"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true" operator="A">
+                                        <phase>
+                                            <low value="20240120080000"/>
+                                            <high value="20240122080000"/>
+                                        </phase>
+                                        <period value="8" unit="h"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="875" unit="mg"/>
+                                    <consumable><manufacturedProduct><manufacturedMaterial nullFlavor="NA"/></manufacturedProduct></consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+
+                    <!-- Test Case 3: EIVL_TS event-based timing (after meals, with offset) -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-eivl-001"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text><reference value="#med-eivl"/></text>
+                            <routeCode code="PO" codeSystem="2.16.840.1.113883.5.112" displayName="Oral"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="A02BC01" codeSystem="2.16.840.1.113883.6.73" displayName="Omeprazole"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="EIVL_TS">
+                                        <event code="ACM" displayName="After meal"/>
+                                        <offset value="30" unit="min"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="20" unit="mg"/>
+                                    <consumable><manufacturedProduct><manufacturedMaterial nullFlavor="NA"/></manufacturedProduct></consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+
+                    <!-- Test Case 4: SXPR_TS combined intervals with operator -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-sxpr-001"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text><reference value="#med-sxpr"/></text>
+                            <routeCode code="PO" codeSystem="2.16.840.1.113883.5.112" displayName="Oral"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="N06AB06" codeSystem="2.16.840.1.113883.6.73" displayName="Sertraline"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="SXPR_TS" operator="I">
+                                        <comp value="20240120080000"/>
+                                        <comp value="20240120200000"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="50" unit="mg"/>
+                                    <consumable><manufacturedProduct><manufacturedMaterial nullFlavor="NA"/></manufacturedProduct></consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+
+                    <!-- Test Case 5: NullFlavor for unknown effectiveTime, doseQuantity, rateQuantity -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-null-001"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text><reference value="#med-nullflavor"/></text>
+                            <routeCode code="IV" codeSystem="2.16.840.1.113883.5.112" displayName="Intravenous"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="B05BB01" codeSystem="2.16.840.1.113883.6.73" displayName="Electrolytes"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime nullFlavor="UNK"/>
+                                    <doseQuantity nullFlavor="UNK"/>
+                                    <rateQuantity nullFlavor="NAV"/>
+                                    <consumable><manufacturedProduct><manufacturedMaterial nullFlavor="NA"/></manufacturedProduct></consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+
+                </section>
+            </component>
+        </structuredBody>
+    </component>
+</ClinicalDocument>
