@@ -23,7 +23,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<build> 0
+	<build>
 		<plugins>
     			<plugin>
 				<groupId>org.apache.cxf</groupId>
