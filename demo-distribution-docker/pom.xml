@@ -6,12 +6,12 @@
 
   <groupId>org.aktin</groupId>
   <artifactId>demo-distribution-docker</artifactId>
-  <version>0.21rc2</version>
+  <version>0.21rc3-SNAPSHOT</version>
 
   <parent>
     <groupId>org.aktin</groupId>
     <artifactId>dwh-import</artifactId>
-    <version>0.21rc2</version>
+    <version>0.21rc3-SNAPSHOT</version>
   </parent>
 
   <properties>
