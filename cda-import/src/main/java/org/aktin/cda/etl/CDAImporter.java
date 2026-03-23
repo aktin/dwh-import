@@ -2,11 +2,16 @@ package org.aktin.cda.etl;
 
 import java.io.Flushable;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,10 +26,13 @@ import javax.sql.DataSource;
 import org.aktin.Preferences;
 import org.aktin.cda.CDAException;
 import org.aktin.cda.CDAStatus;
+import org.aktin.cda.CDAStatus.Status;
 import org.aktin.cda.CDASummary;
 import org.aktin.cda.DocumentNotFoundException;
 import org.aktin.dwh.Anonymizer;
 import org.aktin.dwh.PreferenceKey;
+import org.aktin.dwh.bloomfilter.BloomFilterConfig; // from patient-bloom-filter module
+import org.aktin.dwh.bloomfilter.PatientBloomFilter; // from patient-bloom-filter module
 import org.w3c.dom.Document;
 
 import de.sekmi.histream.Observation;
@@ -46,11 +54,20 @@ import de.sekmi.histream.i2b2.PostgresVisitStore;
 @Singleton
 public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 	private static final Logger log = Logger.getLogger(CDAImporter.class.getName());
+	private static final String BLOOM_FILTER_DELETE_SQL =
+			"DELETE FROM patient_bloomfilters WHERE study_id = ? AND pat_psn = ?";
+	private static final String BLOOM_FILTER_INSERT_SQL =
+			"INSERT INTO patient_bloomfilters (study_id, pat_psn, field_name, bloom_filter, created_timestamp) "
+			+ "VALUES (?, ?, ?, ?, current_timestamp)";
+
 	private I2b2Inserter inserter;
 	private ObservationFactory factory;
 	private ZoneId localZone;
 	private PostgresVisitStore visitStore;
 	private PostgresPatientStore patientStore;
+	/** studyId -> generator */
+	private Map<String, PatientBloomFilter> bloomFilterGenerators;
+	private DataSource crcDataSource;
 
 	/**
 	 * Construct a CDAImporter
@@ -78,10 +95,11 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 		String dsName = prefs.get(PreferenceKey.i2b2DatasourceCRC);//"java:/QueryToolDemoDS";
 		log.info("Connecting to i2b2 database via "+dsName);
 		DataSource crcDS = (DataSource)ctx.lookup(dsName);
+		this.crcDataSource = crcDS;
 		//DataSource ontDS = (DataSource)ctx.lookup("java:/OntologyDemoDS");
 		/* better approach: use i2b2 bootstrapDS to locate data source
 		 * DataSource bootstrapDS = (DataSource)ctx.lookup("java:/CRCBootStrapDS");
-		 * SELECT c_db_fullschema, c_db_datasource FROM i2b2hive.crc_db_lookup WHERE 
+		 * SELECT c_db_fullschema, c_db_datasource FROM i2b2hive.crc_db_lookup WHERE
 		 */
 		// data dialect
 		DataDialect dd = new DataDialect();
@@ -89,13 +107,31 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			inserter = new I2b2Inserter();
 			inserter.open(crcDS.getConnection(), dd);
 		}catch( SQLException e ){
-			// disconnect inserter and other resources 
+			// disconnect inserter and other resources
 			// if one the previous constructors fails
 			close();
 			throw e;
 		}
 
-		//inserter.setErrorHandler(handler);
+		// Initialize per-study Bloom filter generators
+		this.bloomFilterGenerators = new HashMap<>();
+		Set<String> bfStudyIds = BloomFilterConfig.discoverStudyIds(prefs.keySet(), prefs::get);
+		for( String studyId : bfStudyIds ){
+			try{
+				BloomFilterConfig bfConfig = BloomFilterConfig.loadForStudy(studyId, prefs.keySet(), prefs::get);
+				if( bfConfig.getFieldCount() > 0 ){
+					this.bloomFilterGenerators.put(studyId, new PatientBloomFilter(bfConfig));
+					log.info("Bloom filter generation enabled for study "+studyId+" with "+bfConfig.getFieldCount()+" fields");
+				}else{
+					log.warning("Bloom filter enabled for study "+studyId+" but no fields configured");
+				}
+			}catch( Exception e ){
+				log.log(Level.WARNING, "Failed to initialize Bloom filter generator for study "+studyId, e);
+			}
+		}
+		if( bloomFilterGenerators.isEmpty() ){
+			log.info("No per-study Bloom filter configurations found");
+		}
 	}
 
 	/**
@@ -200,7 +236,21 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			// TODO make sure that the previous facts are deleted
 			return CDAStatus.rejected(documentId);
 		}
-		
+
+		// Generate Bloom filters BEFORE XSLT transformation (which discards IDAT)
+		// Per-study: each study gets its own set of bloom filters
+		Map<String, Map<String, String>> perStudyBloomFilters = new HashMap<>();
+		for( Map.Entry<String, PatientBloomFilter> entry : bloomFilterGenerators.entrySet() ){
+			try{
+				Map<String, String> bfs = entry.getValue().generateFromCda(document);
+				if( bfs != null && !bfs.isEmpty() ){
+					perStudyBloomFilters.put(entry.getKey(), bfs);
+				}
+			}catch( Exception e ){
+				log.log(Level.WARNING, "Bloom filter generation failed for study "+entry.getKey()+", continuing without", e);
+			}
+		}
+
 		final List<ObservationException> insertErrors = new LinkedList<>();
 		inserter.setErrorHandler(insertErrors::add);
 		// process document
@@ -219,6 +269,15 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			}
 			throw e;
 		}
+
+		// Insert per-study Bloom filters into patient_bloomfilters table
+		if( !perStudyBloomFilters.isEmpty()
+				&& status != null && status.getStatus() != Status.Rejected ){
+			for( Map.Entry<String, Map<String, String>> entry : perStudyBloomFilters.entrySet() ){
+				insertBloomFiltersForPatient(entry.getKey(), entry.getValue(), patientId);
+			}
+		}
+
 		// flush after each document
 		try {
 			((Flushable)factory).flush();
@@ -226,6 +285,40 @@ public class CDAImporter extends AbstractCDAImporter implements AutoCloseable{
 			log.log(Level.SEVERE, "Unable to flush observation factory", e);
 		}
 		return status;
+	}
+
+	/**
+	 * Insert Bloom filters into patient_bloomfilters table via direct JDBC.
+	 * Uses DELETE+INSERT (UPSERT) to replace existing BFs for the patient within the given study.
+	 */
+	private void insertBloomFiltersForPatient(String studyId, Map<String, String> bloomFilters, String[] patientId) {
+		String patPsn = getAnonymizer().calculatePatientPseudonym(patientId[0], patientId[1]);
+
+		try( Connection conn = crcDataSource.getConnection() ){
+			conn.setAutoCommit(false);
+			try( PreparedStatement del = conn.prepareStatement(BLOOM_FILTER_DELETE_SQL) ){
+				del.setString(1, studyId);
+				del.setString(2, patPsn);
+				del.executeUpdate();
+			}
+			try( PreparedStatement ps = conn.prepareStatement(BLOOM_FILTER_INSERT_SQL) ){
+				for( Map.Entry<String, String> entry : bloomFilters.entrySet() ){
+					ps.setString(1, studyId);
+					ps.setString(2, patPsn);
+					ps.setString(3, entry.getKey());
+					ps.setString(4, entry.getValue());
+					ps.addBatch();
+				}
+				ps.executeBatch();
+				conn.commit();
+				log.info("Stored " + bloomFilters.size() + " Bloom filters for study " + studyId + ", patient " + patPsn);
+			}catch( SQLException e ){
+				conn.rollback();
+				throw e;
+			}
+		}catch( SQLException e ){
+			log.log(Level.WARNING, "Failed to store Bloom filters for study " + studyId + ", patient", e);
+		}
 	}
 
 	@Override
