@@ -140,8 +140,11 @@ public class BloomFilterConfig {
 				String xpath = getter.apply(key);
 				String seed = getter.apply(fieldPrefix + fieldName + ".seed");
 				if (xpath != null && !xpath.isEmpty()) {
+					if (seed == null || seed.isEmpty()) {
+						throw new IllegalArgumentException("Missing required Bloom filter seed for field: " + fieldPrefix + fieldName + ".seed");
+					}
 					config.fieldXPaths.put(fieldName, xpath);
-					config.fieldSeeds.put(fieldName, seed != null ? seed : "");
+					config.fieldSeeds.put(fieldName, seed);
 				}
 			}
 		}

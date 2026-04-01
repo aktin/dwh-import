@@ -1,7 +1,5 @@
 package org.aktin.dwh.bloomfilter;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -75,9 +73,11 @@ public class SecureRandom {
 			}
 
 			// Read 4 bytes as little-endian unsigned 32-bit integer
-			randomUint32 = ByteBuffer.wrap(cache, cacheIndex, 4)
-					.order(ByteOrder.LITTLE_ENDIAN)
-					.getInt() & 0xFFFFFFFFL;
+			int b0 = cache[cacheIndex] & 0xFF;
+			int b1 = cache[cacheIndex + 1] & 0xFF;
+			int b2 = cache[cacheIndex + 2] & 0xFF;
+			int b3 = cache[cacheIndex + 3] & 0xFF;
+			randomUint32 = ((long) (b0 | (b1 << 8) | (b2 << 16) | (b3 << 24))) & 0xFFFFFFFFL;
 			cacheIndex += 4;
 		} while (randomUint32 >= rejectionThreshold);
 

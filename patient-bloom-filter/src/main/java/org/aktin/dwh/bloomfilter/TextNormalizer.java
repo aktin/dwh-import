@@ -124,8 +124,8 @@ public class TextNormalizer {
 		// Step 2: Remove diacritical marks via NFD
 		normalized = removeDiacritics(normalized);
 
-		// Step 3: Lowercase
-		normalized = normalized.toLowerCase();
+		// Step 3: Lowercase (Locale.ROOT for cross-platform determinism)
+		normalized = normalized.toLowerCase(java.util.Locale.ROOT);
 
 		// Step 4: Normalize whitespace
 		normalized = normalizeWhitespace(normalized);
@@ -178,13 +178,14 @@ public class TextNormalizer {
 	 */
 	public static String replaceUnmappedChars(String str) {
 		StringBuilder result = new StringBuilder(str.length());
-		for (int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if (c < 256 && ALLOWED_LOOKUP[c]) {
-				result.append(c);
+		for (int i = 0; i < str.length(); ) {
+			int codePoint = str.codePointAt(i);
+			if (codePoint < 256 && ALLOWED_LOOKUP[codePoint]) {
+				result.append((char) codePoint);
 			} else {
 				result.append(FALLBACK_CHAR);
 			}
+			i += Character.charCount(codePoint);
 		}
 		return result.toString();
 	}

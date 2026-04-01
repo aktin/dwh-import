@@ -1,5 +1,6 @@
 package org.aktin.dwh.bloomfilter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -101,7 +102,7 @@ public class CdaIdatExtractor {
 
 		@Override
 		public Iterator<String> getPrefixes(String namespaceURI) {
-			return null;
+			return Collections.emptyIterator();
 		}
 	}
 }
