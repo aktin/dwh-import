@@ -4,12 +4,12 @@
 
 	<groupId>org.aktin</groupId>
 	<artifactId>cda-validation</artifactId>
-	<version>0.21rc3-SNAPSHOT</version>
+	<version>0.22-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.aktin</groupId>
 		<artifactId>dwh-import</artifactId>
-		<version>0.21rc3-SNAPSHOT</version>
+		<version>0.22-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<schematronVersion2018>20180323T201638</schematronVersion2018>
@@ -74,7 +74,8 @@
 								<get src="https://aktin.art-decor.pub/${schematronArchivePrefix}${schematronVersion2025tr}.zip" dest="${project.build.directory}/schematron-2025tr.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron-2025tr.zip" dest="${project.build.directory}/schematron" />
 								<!-- examples for CDA version 2025tr -->
-								<get src="https://aktin.art-decor.pub/${examplesArchivePrefix}${examplesVersion2025tr}.zip" dest="${project.build.directory}/examples-2025tr.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${examplesArchivePrefix}${examplesVersion2025tr}.zip"
+									 dest="${project.build.directory}/examples-2025tr.zip" verbose="false" usetimestamp="true" />
 
 								<unzip src="${project.build.directory}/examples-2025tr.zip" dest="${project.build.directory}/examples">
 									<patternset>
