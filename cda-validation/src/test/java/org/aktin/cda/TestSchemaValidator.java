@@ -23,7 +23,8 @@ public class TestSchemaValidator {
 			TestValidator.v1ExampleDocuments,
 			TestValidator.v1InvalidExampleDocuments,
 			TestValidator.v2InvalidExampleDocuments,
-			TestValidator.v2025trExampleDocuments
+			//TestValidator.v2026_1_2_ExampleDocuments
+				// TODO sample for 2026.1.2
 		};
 		for( String[] collection : validSchemaCollections ){
 			for( String example : collection ){
