@@ -8,13 +8,6 @@
     4. BL (Boolean) - boolean
     5. CD (Coded) - string with code, codeSystem, displayName
     6. ST (String) - string text content
-
-    TODO ??? change code of wdiags
-        find-pattern: code\=\"DIAG\-([A-Z]+)\-(\d+)\"
-        replace-pattern: code="VALUETYPE:$1:1"
-            [suffix is n-th test of VALUETYPE:XYZ]
-
-    TODO ??? change displayName of wdiags to description of test
 -->
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <realmCode code="DE"/>

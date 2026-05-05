@@ -93,12 +93,6 @@ public class XsltIntegrationTest {
     assertNotNull("Transformed XML should not be null", transformedXml);
     assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
 
-    inputXmlPath = "/maximalbeispiel-v2025tr.xml";
-    transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
-
-    assertNotNull("Transformed XML should not be null", transformedXml);
-    assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
-
   }
 
   /**

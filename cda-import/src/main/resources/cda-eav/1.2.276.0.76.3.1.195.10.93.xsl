@@ -707,7 +707,6 @@
         </xsl:if>
 
     <!-- ESI-Triagefaktoren (1.2.276.0.76.3.1.195.10.26) -->
-        <!-- TODO aktuell kann nur eine (genau eine) Triagefaktor angegeben werden, bei MTS sind es beliebige -->
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId">
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
         <fact>
@@ -1331,12 +1330,9 @@
                         </xsl:when>
                         <xsl:when test="../cda:value/@xsi:type = 'BL' or ../cda:value/@xsi:type = 'PQ' or ../cda:value/@xsi:type = 'INT' or ../cda:value/@xsi:type = 'REAL'"> <xsl:value-of select="../cda:value/@value" />
                         </xsl:when>
-                        <!-- TODO CHECK schema limits placement of value based on xsi:type -->
                         <xsl:when test="../cda:value/@xsi:type = 'ST'">
                             <xsl:value-of select="../cda:value/text()" />
                         </xsl:when>
-                        <!-- TODO CHECK are other values allowed? how do we want to handle it if not? -->
-                        <!-- TODO QUESTION is concatenation intended? -->
                         <xsl:otherwise>
                             <xsl:value-of select="../cda:value/@value | ../cda:value/text()" />
                         </xsl:otherwise>
@@ -1482,14 +1478,6 @@
             </xsl:if>
         </fact>
     </xsl:template>
-
-
-
-
-
-
-
-
 
     <!-- UV Subordinate Substance Administration 2.16.840.1.113883.10.21.4.6 -->
     <xsl:template match="cda:templateId[@root='2.16.840.1.113883.10.21.4.6']">
