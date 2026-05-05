@@ -232,20 +232,19 @@ public class TestTransformToEAV {
 	 	t.close();
 	 }
 
-	 @Ignore("Still to create for 2026")
 	 @Test
-	 public void transformMaximalExamplev2025tr() throws Exception {
+	 public void transformMaximalExamplev2026_1_2() throws Exception {
 	 	CDAParser parser = new CDAParser();
 	 	CDAImporterMockUp t = new CDAImporterMockUp();
 
 	 	try (InputStream in = CDAParser.class.getResourceAsStream(
-	 			"/maximalbeispiel-v2025tr.xml")) {
+	 			"/maximalbeispiel-v2026_1_2.xml")) {
 	 		Document dom = parser.buildDOM(new StreamSource(in));
 
 	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
 	 		try {
 	 			XSDCheck(temp);
-	 			writeEavOutput(temp, "eav-maximalbeispiel-v2025tr.xml");
+	 			writeEavOutput(temp, "eav-maximalbeispiel-v2026_1_2.xml");
 
 	 			try (InputStream eav = Files.newInputStream(temp)) {
 	 				GroupedXMLReader suppl = t.readEAV(eav);

@@ -17,7 +17,7 @@ public class TestValidator {
 	public static final String[] v2026_1_2_ExampleDocuments = new String[]{
 			"/CDA-beispiele-episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard01.xml",
 			"/CDA-beispiele-episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard02.xml",
-			//"/Additional Examples/maximalbeispiel-v2026_1_2_.xml"
+			"/Additional Examples/maximalbeispiel-v2026_1_2.xml"
 	};
 	public static final String[] v2ExampleDocuments = new String[]{
 		"/Additional Examples/basismodul-v2-beispiel-storyboard01-complete.xml",
