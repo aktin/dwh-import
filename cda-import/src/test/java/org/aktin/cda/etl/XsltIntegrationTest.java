@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class XsltIntegrationTest {
 
-  private static final String EAV_XSL_PATH = "/cda-eav/1.2.276.0.76.3.1.195.10.92.xsl";
+  private static final String EAV_XSL_PATH = "/cda-eav/1.2.276.0.76.3.1.195.10.93.xsl";
   private static final Path EAV_OUTPUT_DIR = Paths.get("target", "eav-output");
 
   private ConcatAnonymizer anonymizer;
@@ -81,19 +81,13 @@ public class XsltIntegrationTest {
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
-    String inputXmlPath = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard01.xml";
+    String inputXmlPath = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard01.xml";
     String transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
 
     assertNotNull("Transformed XML should not be null", transformedXml);
     assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
 
-    inputXmlPath = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard02.xml";
-    transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
-
-    assertNotNull("Transformed XML should not be null", transformedXml);
-    assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
-
-    inputXmlPath = "/maximalbeispiel-v2025tr.xml";
+    inputXmlPath = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard02.xml";
     transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
 
     assertNotNull("Transformed XML should not be null", transformedXml);
@@ -397,6 +391,27 @@ public class XsltIntegrationTest {
     // Test OTH datatype: type which is not predefined in schema
     assertTrue("OTH should have string type and concatenate value/@value and value/@text()",
             transformedXml.contains("xsi:type=\"string\">NOTE Patient asks a lot of questions."));
+  }
+
+  /**
+   * Test that vital parameters (like GCS) correctly inherit effectiveTime from the
+   * Vitalparameter-Container when they lack their own timestamp.
+   */
+  @Test
+  public void testVitalParameterEffectiveTimeFallback() throws Exception {
+    String inputXmlPath = "/test-vital-effectivetime-fallback.xml";
+    String transformedXml = performXsltTransformation(inputXmlPath, EAV_XSL_PATH);
+
+    assertNotNull("Transformed XML should not be null", transformedXml);
+    assertFalse("Transformed XML should be non-empty", transformedXml.trim().isEmpty());
+
+    // Verify GCS total has the inherited timestamp 2024-01-17T16:21:00
+    assertTrue("GCS Total should inherit start time 2024-01-17T16:21 from container",
+        transformedXml.contains("concept=\"LOINC:9269-2\" start=\"2024-01-17T16:21\""));
+        
+    // Verify GCS eye opening has the inherited timestamp 2024-01-17T16:21:00
+    assertTrue("GCS Eye should inherit start time 2024-01-17T16:21 from container",
+        transformedXml.contains("start=\"2024-01-17T16:21\" concept=\"LOINC:9267-6\""));
   }
 
   /**

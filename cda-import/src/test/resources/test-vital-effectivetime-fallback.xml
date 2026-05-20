@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.93"/>
+    <id root="1.2.276.0.76.4.17.9814184919" extension="14025fda-3f25-4c64-8883-4f7e6cabc0b6"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Admission evaluation note"/>
+    <title>Entlassbericht Notaufnahme (Registermeldung)</title>
+    <effectiveTime value="20240117173500"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <setId root="1.2.276.0.76.4.17.9814184919" extension="0ff0f2d6-ddc2-4300-a5e6-b0aecd1a7dcf"/>
+    <versionNumber value="1"/>
+    
+    <recordTarget typeCode="RCT" contextControlCode="OP">
+        <patientRole classCode="PAT">
+            <id extension="1234567890" root="1.2.276.0.76.4.8"/>
+            <addr><postalCode>80636</postalCode></addr>
+            <patient classCode="PSN" determinerCode="INSTANCE">
+                <name><family>Kicker</family></name>
+                <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19960531"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author typeCode="AUT" contextControlCode="OP">
+        <time value="20240117160900"/>
+        <assignedAuthor classCode="ASSIGNED">
+            <id root="1.2.276.0.76.3.2.123456789"/>
+            <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+                <name><family>Regensburger</family></name>
+            </assignedPerson>
+            <representedOrganization classCode="ORG" determinerCode="INSTANCE">
+                <id root="1.2.276.0.76.4.17" extension="9814184919"/>
+                <name>Klinikum</name>
+            </representedOrganization>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.276.0.76.4.17" extension="9814184919"/>
+                <name>Klinikum</name>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <documentationOf typeCode="DOC">
+        <serviceEvent classCode="ACT" moodCode="EVN">
+            <effectiveTime>
+                <low value="20240117160300"/>
+                <high value="20240117173500"/>
+            </effectiveTime>
+        </serviceEvent>
+    </documentationOf>
+    <componentOf>
+        <encompassingEncounter classCode="ENC" moodCode="EVN">
+            <id root="1.2.276.0.76.3.87686" extension="987654321-01"/>
+            <effectiveTime>
+                <low value="202401171603"/>
+                <high value="202401171735"/>
+            </effectiveTime>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+            <component typeCode="COMP" contextConductionInd="true">
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.3.1.195.10.96"/>
+                    <code code="8716-3" codeSystem="2.16.840.1.113883.6.1"/>
+                    <entry typeCode="COMP">
+                        <organizer classCode="CLUSTER" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.95"/>
+                            <code code="46680005" codeSystem="2.16.840.1.113883.6.96" displayName="Vital Signs"/>
+                            <statusCode code="completed"/>
+                            <!-- Container level effectiveTime -->
+                            <effectiveTime value="202401171621"/>
+                            
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4034"/>
+                                    <code code="9269-2" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score total"/>
+                                    <statusCode code="completed"/>
+                                    <!-- Missing effectiveTime for GCS! -->
+                                    <value xsi:type="PQ" value="12" unit="{score}"/>
+                                    
+                                    <entryRelationship typeCode="COMP" contextConductionInd="true">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="PQ" value="4" unit="{score}"/>
+                                        </observation>
+                                    </entryRelationship>
+                                </observation>
+                            </component>
+                        </organizer>
+                    </entry>
+                </section>
+            </component>
+        </structuredBody>
+    </component>
+</ClinicalDocument>

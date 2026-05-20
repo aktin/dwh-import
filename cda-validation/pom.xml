@@ -15,11 +15,8 @@
 		<schematronVersion2018>20180323T201638</schematronVersion2018>
 		<examplesVersion2018>20180322T121703</examplesVersion2018>
 
-		<schematronVersion2025>20241202T134738</schematronVersion2025>
-		<examplesVersion2025>20241202T134738</examplesVersion2025>
-
-		<schematronVersion2025tr>20251229T155034</schematronVersion2025tr>
-		<examplesVersion2025tr>20251229T155034</examplesVersion2025tr>
+		<schematronVersion2026_1_2>20260427T185033</schematronVersion2026_1_2>
+		<examplesVersion2026_1_2>20260427T185033</examplesVersion2026_1_2>
 
 		<schematronArchivePrefix>aktin-runtime-</schematronArchivePrefix>
 		<examplesArchivePrefix>aktin-xml-</examplesArchivePrefix>
@@ -71,10 +68,10 @@
 									<cutdirsmapper dirs="1" />
 								</unzip>
 								<!-- schematron files for CDA version 2025tr -->
-								<get src="https://aktin.art-decor.pub/${schematronArchivePrefix}${schematronVersion2025tr}.zip" dest="${project.build.directory}/schematron-2025tr.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${schematronArchivePrefix}${schematronVersion2026_1_2}.zip" dest="${project.build.directory}/schematron-2025tr.zip" verbose="false" usetimestamp="true" />
 								<unzip src="${project.build.directory}/schematron-2025tr.zip" dest="${project.build.directory}/schematron" />
 								<!-- examples for CDA version 2025tr -->
-								<get src="https://aktin.art-decor.pub/${examplesArchivePrefix}${examplesVersion2025tr}.zip" dest="${project.build.directory}/examples-2025tr.zip" verbose="false" usetimestamp="true" />
+								<get src="https://aktin.art-decor.pub/${examplesArchivePrefix}${examplesVersion2026_1_2}.zip" dest="${project.build.directory}/examples-2025tr.zip" verbose="false" usetimestamp="true" />
 
 								<unzip src="${project.build.directory}/examples-2025tr.zip" dest="${project.build.directory}/examples">
 									<patternset>

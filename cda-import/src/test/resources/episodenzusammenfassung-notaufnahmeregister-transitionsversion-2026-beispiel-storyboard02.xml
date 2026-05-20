@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../stylesheets/CDA.xsl"?>
 <!-- 
     AKTIN-Projekt
     
@@ -39,7 +40,7 @@
     erfolgt die Urinableitung über einen Blasendauerkatheter. Der
     Katheterurin ist trübe, dunkel eingefärbt und flockig. Die Patientin
     riecht nach Urin. Die Patientin ist somnolent und reagiert nur
-    Verzögert auf Fragen, eine zielgerichtete Kommunikation ist nicht
+    verzögert auf Fragen, eine zielgerichtete Kommunikation ist nicht
     möglich. Allergien sind keine bekannt, eine Isolation wird nicht
     durchgeführt, da kein Verdacht auf einen multiresistenten Keim
     besteht.
@@ -61,7 +62,7 @@
     R57.2 wird die Patientin um 21:04 auf der Intensivstation des Krankenhauses aufgenommen.
     
 -->
-<?xml-model href="../schematron-episodenzusammenfassung-notaufnahmeregister2024/aktin-nar2025.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../schematron-episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026/aktin-nartrv2026-2.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xsi:schemaLocation="urn:hl7-org:v3 ../schemas/CDA.xsd">
     <!--
         CDA Header
@@ -71,11 +72,11 @@
     <!-- Type Id (fix) -->
     <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
     <!-- Template Id (fix) -->
-    <templateId root="1.2.276.0.76.3.1.195.10.2"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.93"/>
     <!-- Identifikation des Dokuments -->
     <id root="1.2.276.0.76.4.17.9814184919" extension="5cc18aa4-1372-4db1-8d1f-6519e584f88f"/>
     <!-- Fixer Dokumententype-Code -->
-    <code code="97663-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Discharge summary"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Emergency medicine Emergency department Admission evaluation note"/>
     <!-- Datum und Zeit der Erstellung -->
     <effectiveTime value="20240116220525"/>
     <!-- Vertraulichkeitsstufe -->
@@ -96,6 +97,10 @@
                 <postalCode>52224</postalCode>
             </addr>
             <patient classCode="PSN" determinerCode="INSTANCE">
+                <!-- Name -->
+                <name>
+                    <family>Meier</family>
+                </name>
                 <!-- Geschlecht -->
                 <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
                 <!-- Geburtsdatum -->
@@ -136,7 +141,6 @@
     <!-- Aufnahme -->
     <documentationOf typeCode="DOC">
         <serviceEvent classCode="ACT" moodCode="EVN">
-            <code code="182813001" codeSystem="2.16.840.1.113883.6.96" displayName="Emergency treatment (procedure)"/>
             <!-- Behandlung -->
             <effectiveTime>
                 <!-- Start der Behandlung (Datum und Zeit), Zeitangabe genau bis auf die Minute -->
@@ -180,35 +184,37 @@
         <structuredBody>
             
             <component typeCode="COMP" contextConductionInd="true">
-                <!-- Demografische Informationen -->
+                <!-- Transportmittel -->
                 <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.7"/>
-                    <code code="45970-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Demographic information section"/>
-                    <title>Demographische Informationen</title>
-                    <text>Alter: 80 Jahre (*1941)</text>
+                    <templateId root="1.2.276.0.76.10.3045"/>
+                    <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Transport mode"/>
+                    <title>Transportmittel</title>
+                    <text>RTW</text>
                     <entry typeCode="COMP">
-                        <!-- Alter des Patienten -->
                         <observation classCode="OBS" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.3.1.195.10.8"/>
-                            <code code="424144002" codeSystem="2.16.840.1.113883.6.96" displayName="Current chronological age (observable entity)"/>
+                            <templateId root="1.2.276.0.76.10.4037"/>
+                            <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401171603"/>
-                            <value xsi:type="PQ" value="80" unit="y"/>
-                            <value xsi:type="CE" code="80+" codeSystem="1.2.276.0.76.3.1.195.5.100" displayName=">= 80 Jahre"/>
+                            <!-- Optional: Ankunftszeit -->
+                            <effectiveTime>
+                                <high value="202401171916"/>
+                            </effectiveTime>
+                            <!--<value xsi:type="CV" code="44613004" codeSystem="2.16.840.1.113883.6.96" displayName="Ground transport ambulance"/>-->
+                            <value xsi:type="CV" code="3" codeSystem="1.2.276.0.76.3.1.195.5.41"/>
                         </observation>
                     </entry>
+                    <!-- Medizinische Begleitung -->
                     <entry typeCode="COMP">
-                        <!-- Geburtsjahr des Patienten -->
-                        <observation classCode="OBS" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.3.1.195.10.9"/>
-                            <code code="80904-6" codeSystem="2.16.840.1.113883.6.1" displayName="Birth year"/>
+                        <procedure classCode="PROC" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.12"/>
+                            <code code="715933006" codeSystem="2.16.840.1.113883.6.96" displayName="Provision of medical patient escort"/>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401171603"/>
-                            <value xsi:type="INT" value="1943"/>
-                        </observation>
+                        </procedure>
                     </entry>
                 </section>
             </component>
+            
+            <!-- section: Wiedervorstellung nicht zutreffend -->
             
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Zuweisung -->
@@ -228,37 +234,6 @@
                                 </participantRole>
                             </participant>
                         </act>
-                    </entry>
-                </section>
-            </component>
-            
-            <component typeCode="COMP" contextConductionInd="true">
-                <!-- Transportmittel -->
-                <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.10"/>
-                    <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Transport mode"/>
-                    <title>Transportmittel</title>
-                    <text>RTW, Ankunft 16. Januar 2024 19:16 Uhr</text>
-                    <entry typeCode="COMP">
-                        <!-- Transportmethode -->
-                        <observation classCode="OBS" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.3.1.195.10.11"/>
-                            <code code="11459-5" codeSystem="2.16.840.1.113883.6.1" displayName="Transport method"/>
-                            <statusCode code="completed"/>
-                            <!-- Optional: Ankunftszeit -->
-                            <effectiveTime>
-                                <high value="202401171916"/>
-                            </effectiveTime>
-                            <value xsi:type="CV" code="44613004" codeSystem="2.16.840.1.113883.6.96" displayName="Ground transport ambulance"/>
-                        </observation>
-                    </entry>
-                    <!-- Medizinische Begleitung -->
-                    <entry typeCode="COMP">
-                        <procedure classCode="PROC" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.3.1.195.10.12"/>
-                            <code code="715933006" codeSystem="2.16.840.1.113883.6.96" displayName="Provision of medical patient escort"/>
-                            <statusCode code="completed"/>
-                        </procedure>
                     </entry>
                 </section>
             </component>
@@ -350,13 +325,11 @@
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Notfallanamnese -->
                 <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.27"/>
+                    <templateId root="1.2.276.0.76.10.3053"/>
                     <code code="10164-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of present illness"/>
                     <title>Notfallanamnese</title>
-                    <text>
-                        Bei einem Hausbesuch im Pflegeheim hat der KV-Notdienst eine
-                        AZ-Verschlechterung festgestellt und den Patienten zur Versorgung in
-                        die Klinik eingewiesen. Anamnestisch schlechter seit etwa 2 Tagen.
+                    <text>Bei einem Hausbesuch im Pflegeheim durch KV-Notdienst eine AZ-Verschlechterung festgestellt und Patienten zur Versorgung in die Klinik eingewiesen. 
+                        Die Ersteinschätzung wird um 19:21 nach Manchester Triage System durchgeführt und ergibt eine orange Einschätzung unter der dem Präsentationsdiagramm „Generelle Indikatoren“.
                         <br/>
                         Als Leitsymptom wird die AZ-Verschlechterung mit dem CEDIS-Code 007 festgestellt.
                         <br/>
@@ -368,11 +341,22 @@
                         ist trübe, dunkel eingefärbt und flockig. Die Patientin riecht nach Urin. Die Patientin ist somnolent 
                         und reagiert nur Verzögert auf Fragen, eine zielgerichtete Kommunikation ist nicht möglich.
                     </text>
+                </section>
+            </component>
+            
+            <component typeCode="COMP" contextConductionInd="true">
+                <!-- Beschwerden bei Vorstellung -->
+                <section classCode="DOCSECT">
+                    <templateId root="1.2.276.0.76.10.3048"/>
+                    <code code="46239-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Chief complaint+Reason for visit"/>
+                    <title>Beschwerden bei Vorstellung</title>
+                    <text>
+                        <content ID="compl-1">AZ-Verschlechterung</content>
+                    </text>
                     <entry typeCode="COMP">
-                        <!-- Beschwerden bei Vorstellung -->
                         <act classCode="ACT" moodCode="EVN">
                             <templateId root="1.2.276.0.76.10.4039"/>
-                            <id root="1.2.276.0.76.4.17.9814184919" extension="abcde192-416a-4e9c-97ce-2f3e279826e9"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="e2ff1102-bc44-400f-b236-b5813c2d8135"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                             <statusCode code="active"/>
                             <effectiveTime>
@@ -381,16 +365,16 @@
                             <entryRelationship typeCode="SUBJ">
                                 <observation classCode="OBS" moodCode="EVN">
                                     <templateId root="1.2.276.0.76.10.4040"/>
-                                    <id root="1.2.276.0.76.4.17.9814184919" extension="defab7c0-2111-43f2-a784-9a5fdfaa67f0"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="f28e99c8-061c-4dcf-a06f-02a795c360f7"/>
                                     <code code="75322-8" codeSystem="2.16.840.1.113883.6.1" displayName="Complaint"/>
                                     <text>
                                         <reference value="#compl-1"/>
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <width value="48" unit="h"/>
+                                        <width value="1" unit="h"/>
                                     </effectiveTime>
-                                    <value xsi:type="CE" code="007" codeSystem="1.2.276.0.76.5.439" displayName="Allgemeine Schwäche">
+                                    <value xsi:type="CE" code="007" codeSystem="1.2.276.0.76.5.439" displayName="General weakness">
                                         <originalText>AZ-Verschlechterung</originalText>
                                     </value>
                                 </observation>
@@ -401,11 +385,11 @@
             </component>
             
             <component typeCode="COMP" contextConductionInd="true">
+                <!--  Vitalparameter und Scores -->
                 <section classCode="DOCSECT">
-                    <!-- Vitalparameter/Scores -->
-                    <templateId root="1.2.276.0.76.3.1.195.10.33"/>
-                    <code code="8716-3" codeSystem="2.16.840.1.113883.6.1"/>
-                    <title>Vitalparameter/Scores</title>
+                    <templateId root="1.2.276.0.76.3.1.195.10.96"/>
+                    <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Vital signs"/>
+                    <title>Vitalparameter</title>
                     <text>
                         <table>
                             <thead>
@@ -442,143 +426,145 @@
                         </table>
                     </text>
                     <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Atemfrequenz -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.34"/>
-                            <code code="86290005" codeSystem="2.16.840.1.113883.6.96" displayName="Respiratory rate (observable entity)">
-                                <translation code="9279-1" codeSystem="2.16.840.1.113883.6.1" displayName="Respiratory rate"/>
-                            </code>
-                            <text>
-                                <reference value="#af"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401161928"/>
-                            <value xsi:type="PQ" value="22" unit="/min"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Pulsoximetrische Sauerstoffsättigung -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.35"/>
-                            <code code="103228002" codeSystem="2.16.840.1.113883.6.96" displayName="Hemoglobin saturation with oxygen (observable entity)">
-                                <translation code="59408-5" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation in Arterial blood by Pulse oximetry"/>
-                            </code>
-                            <text>
-                                <reference value="#so2"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401161928"/>
-                            <value xsi:type="PQ" value="91" unit="%"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
                         <organizer classCode="CLUSTER" moodCode="EVN">
-                            <!-- Blutdruck -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.36"/>
-                            <code code="85354-9" codeSystem="2.16.840.1.113883.6.1" displayName="Blood pressure panel with all children optional"/>
+                            <templateId root="1.2.276.0.76.3.1.195.10.95"/>
+                            <code code="46680005" codeSystem="2.16.840.1.113883.6.96" displayName="Vital Signs" codeSystemName="SNOMED CT"/>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401161928"/>
+                            <effectiveTime value="202401171621"/>
                             <component typeCode="COMP">
                                 <observation classCode="OBS" moodCode="EVN">
-                                    <!-- Blutdruck systolisch -->
-                                    <templateId root="1.2.276.0.76.3.1.195.10.37"/>
-                                    <code code="271649006" codeSystem="2.16.840.1.113883.6.96" displayName="Systolic blood pressure (observable entity)">
-                                        <translation code="8480-6" codeSystem="2.16.840.1.113883.6.1" displayName="Systolic blood pressure"/>
-                                    </code>
+                                    <templateId root="1.2.276.0.76.10.4030"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="db71e949-16a2-4cfe-a860-09a8c0e0e53b"/>
+                                    <code code="9279-1" codeSystem="2.16.840.1.113883.6.1" displayName="Respiratory Rate"/>
                                     <text>
-                                        <reference value="#rr"/>
+                                        <reference value="#af"/>
                                     </text>
                                     <statusCode code="completed"/>
+                                    <effectiveTime value="201501161924"/>
+                                    <value xsi:type="PQ" value="22" unit="/min"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.3.1.195.10.35"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="75c99f10-f84d-417e-90a8-0ce666d0e958"/>
+                                    <code code="103228002" codeSystem="2.16.840.1.113883.6.96" displayName="Hemoglobin saturation with oxygen (observable entity)">
+                                        <translation code="59408-5" codeSystem="2.16.840.1.113883.6.1" displayName="Oxygen saturation in Arterial blood by Pulse oximetry"/>
+                                    </code>
+                                    <text>
+                                        <reference value="#so2"/>
+                                    </text>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201501161924"/>
+                                    <value xsi:type="PQ" value="91.0" unit="%"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4032"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="4712b494-ede4-4c42-aa7a-a38418868579"/>
+                                    <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" displayName="Systolic blood pressure"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201501161924"/>
                                     <value xsi:type="PQ" value="93" unit="mm[Hg]"/>
                                 </observation>
                             </component>
                             <component typeCode="COMP">
                                 <observation classCode="OBS" moodCode="EVN">
-                                    <!-- Blutdruck diastolisch -->
-                                    <templateId root="1.2.276.0.76.3.1.195.10.38"/>
-                                    <code code="271650006" codeSystem="2.16.840.1.113883.6.96" displayName="Diastolic blood pressure (observable entity)">
-                                        <translation code="8462-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diastolic blood pressure"/>
-                                    </code>
-                                    <text>
-                                        <reference value="#rr"/>
-                                    </text>
+                                    <templateId root="1.2.276.0.76.10.4033"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="5e36b2d8-80ee-4e29-9a76-3056189c80c2"/>
+                                    <code code="8867-4" codeSystem="2.16.840.1.113883.6.1" displayName="Heart Rate"/>
                                     <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="65" unit="mm[Hg]"/>
+                                    <effectiveTime value="201501161924"/>
+                                    <value xsi:type="PQ" value="111" unit="/min"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4034"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="556c07de-bc7e-4d3f-a241-5778eb87aa98"/>
+                                    <code code="9269-2" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score total"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201501161924"/>
+                                    <value xsi:type="PQ" value="12" unit="{score}"/>
+                                    <entryRelationship typeCode="COMP" contextConductionInd="true">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <code code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="PQ" value="3" unit="{score}"/>
+                                        </observation>
+                                    </entryRelationship>
+                                    <entryRelationship typeCode="COMP" contextConductionInd="true">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <code code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="PQ" value="4" unit="{score}"/>
+                                        </observation>
+                                    </entryRelationship>
+                                    <entryRelationship typeCode="COMP" contextConductionInd="true">
+                                        <observation classCode="OBS" moodCode="EVN">
+                                            <code code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
+                                            <statusCode code="completed"/>
+                                            <value xsi:type="PQ" value="5" unit="{score}"/>
+                                        </observation>
+                                    </entryRelationship>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4046"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
+                                    <code code="SPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenweite"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201501161924"/>
+                                    <value xsi:type="CV" code="M" codeSystem="1.2.276.0.76.3.1.195.5.49" displayName="mittel"/>
+                                    <targetSiteCode code="L" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge links"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4046"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="6e2b76b9-8fef-4ddd-86f7-53afeaf02f69"/>
+                                    <code code="SPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenweite"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201501161924"/>
+                                    <value xsi:type="CV" code="M" codeSystem="1.2.276.0.76.3.1.195.5.49" displayName="mittel"/>
+                                    <targetSiteCode code="R" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge rechts"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4047"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
+                                    <code code="RPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenreaktion"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201503041234"/>
+                                    <value xsi:type="CV" code="B" codeSystem="1.2.276.0.76.3.1.195.5.50" displayName="prompt"/>
+                                    <targetSiteCode code="L" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge links"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4047"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="52abaec3-2ca0-4cb8-8fdd-9064a37cf900"/>
+                                    <code code="RPPL" codeSystem="1.2.276.0.76.3.1.195.5.1" displayName="Pupillenreaktion"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="201503041234"/>
+                                    <value xsi:type="CV" code="B" codeSystem="1.2.276.0.76.3.1.195.5.50" displayName="prompt"/>
+                                    <targetSiteCode code="R" codeSystem="1.2.276.0.76.3.1.195.5.48" displayName="Auge rechts"/>
+                                </observation>
+                            </component>
+                            <component typeCode="COMP">
+                                <observation classCode="OBS" moodCode="EVN">
+                                    <templateId root="1.2.276.0.76.10.4035"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="e613a2c3-f8c5-4a75-a6c3-a6373df2291c"/>
+                                    <code code="8329-5" codeSystem="2.16.840.1.113883.6.1" displayName="Body temperature - Core"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20131219"/>
+                                    <value xsi:type="PQ" value="39.2" unit="Cel"/>
                                 </observation>
                             </component>
                         </organizer>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Herzfrequenz -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.39"/>
-                            <code code="364075005" codeSystem="2.16.840.1.113883.6.96" displayName="Heart rate (observable entity)">
-                                <translation code="8867-4" codeSystem="2.16.840.1.113883.6.1" displayName="Heart rate"/>
-                            </code>
-                            <text>
-                                <reference value="#hf"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401161928"/>
-                            <value xsi:type="PQ" value="111" unit="/min"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Körperkerntemperatur -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.41"/>
-                            <code code="276885007" codeSystem="2.16.840.1.113883.6.96" displayName="Core body temperature (observable entity)">
-                                <translation code="8329-5" codeSystem="2.16.840.1.113883.6.1" displayName="Body temperature - Core"/>
-                            </code>
-                            <text>
-                                <reference value="#tp"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401161928"/>
-                            <value xsi:type="PQ" value="39.2" unit="Cel"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Glasgow coma score -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.42"/>
-                            <code code="248241002" codeSystem="2.16.840.1.113883.6.96" displayName="Glasgow coma score (observable entity)">
-                                <translation code="9269-2" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score total"/>
-                            </code>
-                            <text>
-                                <reference value="#gc"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401161928"/>
-                            <value unit="{score}" value="12" xsi:type="PQ"/>
-                            <entryRelationship typeCode="COMP" contextConductionInd="true">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <code code="281395000" codeSystem="2.16.840.1.113883.6.96" displayName="Glasgow Coma Score eye opening subscore (observable entity)">
-                                        <translation code="9267-6" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score eye opening"/>
-                                    </code>
-                                    <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="3" unit="{score}"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="COMP" contextConductionInd="true">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <code code="281397008" codeSystem="2.16.840.1.113883.6.96" displayName="Glasgow Coma Scale verbal response subscore (observable entity)">
-                                        <translation code="9270-0" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score verbal"/>
-                                    </code>
-                                    <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="4" unit="{score}"/>
-                                </observation>
-                            </entryRelationship>
-                            <entryRelationship typeCode="COMP" contextConductionInd="true">
-                                <observation classCode="OBS" moodCode="EVN">
-                                    <code code="281396004" codeSystem="2.16.840.1.113883.6.96" displayName="Glasgow Coma Scale motor response subscore (observable entity)">
-                                        <translation code="9268-4" codeSystem="2.16.840.1.113883.6.1" displayName="Glasgow coma score motor"/>
-                                    </code>
-                                    <statusCode code="completed"/>
-                                    <value xsi:type="PQ" value="5" unit="{score}"/>
-                                </observation>
-                            </entryRelationship>
-                        </observation>
                     </entry>
                 </section>
             </component>
@@ -586,18 +572,18 @@
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Diagnostik -->
                 <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.62"/>
+                    <templateId root="1.2.276.0.76.10.3050"/>
                     <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Relevant diagnostic tests &amp;or laboratory data"/>
                     <title>Diagnostik</title>
                     <text>
                         <list>
-                            <item ID="proc-2">BGA angefordert: ja (19:45 Uhr)</item>
-                            <item ID="proc-1">Laboruntersuchung angefordert: ja (19:40 Uhr)</item>
-                            <item ID="proc-3">Mikrobiologie angefordert: ja (19:50 Uhr)</item>
-                            <item ID="proc-4">EKG angefordert: ja (19:42 Uhr)</item>
+                            <item ID="proc-1">19:45: kapilläre BGA angefordert</item>
+                            <item ID="proc-2">19:50: Urinschnelltest pathol.</item>
+                            <item ID="proc-3">19:50: Urinkultur angefordert</item>
+                            <item ID="proc-4">19:42: Zwölfkanal-EKG angefordert</item>
                         </list>
                     </text>
-                    <entry typeCode="COMP" contextConductionInd="true">
+                    <entry typeCode="COMP">
                         <procedure classCode="PROC" moodCode="RQO" negationInd="false">
                             <templateId root="1.2.276.0.76.3.1.195.10.48"/>
                             <code code="278297009" codeSystem="2.16.840.1.113883.6.96" displayName="Blood gas analysis (procedure)"/>
@@ -605,40 +591,44 @@
                                 <reference value="#proc-1"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401161945"/>
+                            <effectiveTime value="201501161945"/>
                         </procedure>
                     </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">
-                        <procedure classCode="PROC" moodCode="RQO" negationInd="false">
-                            <templateId root="1.2.276.0.76.3.1.195.10.46"/>
-                            <code code="15220000" codeSystem="2.16.840.1.113883.6.96" displayName="Laboratory test (procedure)"/>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.10.4060"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="61380066-4f43-4c29-8e27-d367fd5957f0"/>
+                            <code code="50556-0" codeSystem="2.16.840.1.113883.6.1" displayName="Urinalysis dipstick panel"/>
                             <text>
-                                <reference value="#proc-1"/>
+                                <reference value="#proc-2"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401161940"/>
-                        </procedure>
+                            <effectiveTime value="201501161950"/>
+                            <value xsi:type="CE" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund"/>
+                        </observation>
                     </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">
-                        <procedure classCode="PROC" moodCode="RQO" negationInd="false">
-                            <templateId root="1.2.276.0.76.3.1.195.10.47"/>
-                            <code code="19851009" codeSystem="2.16.840.1.113883.6.96" displayName="Microbiology procedure (procedure)"/>
+                    <entry typeCode="COMP">
+                        <observation classCode="OBS" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.10.4057"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="65364066-4f43-4c29-8e27-d367fd595aff"/>
+                            <code code="26436-6" codeSystem="2.16.840.1.113883.6.1" displayName="Laboratory test"/>
                             <text>
-                                <reference value="#proc-1"/>
+                                <reference value="#proc-3"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401161950"/>
-                        </procedure>
+                            <effectiveTime value="201501161950"/>
+                            <value xsi:type="CE" code="PB" codeSystem="1.2.276.0.76.3.1.195.5.51" displayName="path. Befund"/>
+                        </observation>
                     </entry>
-                    <entry typeCode="COMP" contextConductionInd="true">
+                    <entry typeCode="COMP">
                         <procedure classCode="PROC" moodCode="RQO" negationInd="false">
                             <templateId root="1.2.276.0.76.3.1.195.10.49"/>
                             <code code="29303009" codeSystem="2.16.840.1.113883.6.96" displayName="Electrocardiographic procedure (procedure)"/>
                             <text>
-                                <reference value="#proc-1"/>
+                                <reference value="#proc-4"/>
                             </text>
                             <statusCode code="completed"/>
-                            <effectiveTime value="202401161942"/>
+                            <effectiveTime value="201501161942"/>
                         </procedure>
                     </entry>
                 </section>
@@ -647,8 +637,8 @@
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Prozeduren und Maßnahmen -->
                 <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.63"/>
-                    <code code="29554-3" codeSystem="2.16.840.1.113883.6.1"/>
+                    <templateId root="1.2.276.0.76.10.3054"/>
+                    <code code="67781-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Summarization of encounter note"/>
                     <title>Prozeduren und Maßnahmen</title>
                     <text>
                         <list>
@@ -756,56 +746,54 @@
             <component typeCode="COMP" contextConductionInd="true">
                 <!-- Abschlussdiagnosen -->
                 <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.68"/>
-                    <code code="11300-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="ED diagnosis"/>
+                    <templateId root="1.2.276.0.76.10.3055"/>
+                    <code code="11301-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="ED diagnosis"/>
                     <title>Abschlussdiagnosen</title>
                     <text>
                         <list>
-                            <item ID="diag-1">Urosepsis (A41.58) mit <content ID="diag-2">septischem Schock (R57.2)</content></item>
+                            <item ID="diag-1">Urosepsis (A41.58) mit <content ID="diag-2">septischem Schock (R57)</content></item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
-                        <!-- Abschlussdiagnosen -->
                         <act classCode="ACT" moodCode="EVN">
-                            <templateId root="1.2.276.0.76.3.1.195.10.69"/>
+                            <templateId root="1.2.276.0.76.10.4048"/>
+                            <id root="1.2.276.0.76.4.17.9814184919" extension="eb604766-d106-40cd-a7ee-b2b08312f0d9"/>
                             <code code="CONC" codeSystem="2.16.840.1.113883.5.6" displayName="Concern"/>
                             <statusCode code="active"/>
                             <effectiveTime>
-                                <low value="20240116"/>
+                                <low value="201501162104"/>
                             </effectiveTime>
                             <entryRelationship typeCode="SUBJ">
-                                <!-- Abschlussdiagnose 1 -->
                                 <observation classCode="OBS" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.3.1.195.10.70"/>
+                                    <templateId root="1.2.276.0.76.10.4049"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="3893e002-521c-4b27-8b8e-cba27ebd8e5d"/>
                                     <code code="29308-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
                                         <reference value="#diag-1"/>
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="20240116"/>
+                                        <low value="201501162104"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="A41.58" codeSystem="1.2.276.0.76.5.302" codeSystemName="icd10gm2024" displayName="Sepsis: Sonstige gramnegative Erreger">
+                                    <value xsi:type="CD" code="A41.58" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Sonstige gramnegative Erreger">
                                         <originalText>Urosepsis</originalText>
-                                        <translation code="721104000" codeSystem="2.16.840.1.113883.6.96" displayName="Sepsis due to urinary tract infection (disorder)"/>
                                     </value>
                                 </observation>
                             </entryRelationship>
                             <entryRelationship typeCode="SUBJ">
-                                <!-- Abschlussdiagnose 1 -->
                                 <observation classCode="OBS" moodCode="EVN">
-                                    <templateId root="1.2.276.0.76.3.1.195.10.70"/>
+                                    <templateId root="1.2.276.0.76.10.4049"/>
+                                    <id root="1.2.276.0.76.4.17.9814184919" extension="d1eced6c-7fff-4667-965f-9b50a29a2dd9"/>
                                     <code code="29308-4" codeSystem="2.16.840.1.113883.6.1" displayName="Diagnosis"/>
                                     <text>
-                                        <reference value="#diag-1"/>
+                                        <reference value="#diag-2"/>
                                     </text>
                                     <statusCode code="completed"/>
                                     <effectiveTime>
-                                        <low value="20240116"/>
+                                        <low value="201501162104"/>
                                     </effectiveTime>
-                                    <value xsi:type="CD" code="R57.2" codeSystem="1.2.276.0.76.5.302" codeSystemName="icd10gm2024" displayName="Septischer Schock">
+                                    <value xsi:type="CD" code="R57" codeSystem="1.2.276.0.76.5.424" codeSystemName="icd10gm2015" displayName="Schock, anderenorts nicht klassifiziert">
                                         <originalText>Septischer Schock</originalText>
-                                        <translation code="76571007" codeSystem="2.16.840.1.113883.6.96" displayName="Septic shock (disorder)"/>
                                     </value>
                                 </observation>
                             </entryRelationship>
@@ -815,25 +803,25 @@
             </component>
             
             <component typeCode="COMP" contextConductionInd="true">
-                <!-- Verlegungs-/Entlassungsinformationen -->
+                <!-- Weiteres Procedere / Therapieempfehlung / Weiterbehandler -->
                 <section classCode="DOCSECT">
-                    <templateId root="1.2.276.0.76.3.1.195.10.71"/>
+                    <templateId root="1.2.276.0.76.10.3056"/>
                     <code code="67661-9" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="EMS disposition"/>
-                    <title>Verlegungs-/Entlassungsinformationen</title>
+                    <title>Weiteres Procedere / Therapieempfehlung / Weiterbehandler</title>
                     <text>
                         <list>
-                            <item ID="refact">Auf Intensivstation (Aufnehmende Fachabteilung §301: Intensivmedizin)</item>
+                            <item ID="refact">Weiterbehandler: Intensivstation hier</item>
+                            <item ID="anfa301">Aufnehmende Fachabteilung § 301: Intensivmedizin (3600)</item>
                         </list>
                     </text>
                     <entry typeCode="COMP">
                         <act classCode="ACT" moodCode="INT">
-                            <templateId root="1.2.276.0.76.3.1.195.10.72"/>
-                            <code code="3" codeSystem="1.2.276.0.76.3.1.195.5.53" displayName="intern - Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"/>
+                            <templateId root="1.2.276.0.76.10.4067"/>
+                            <code code="1" codeSystem="1.2.276.0.76.3.1.195.5.53" displayName="intern: OP / Intervention (z.B. Herzkatheter, Endoskopie, ...)"/>
                             <text>
                                 <reference value="#refact"/>
                             </text>
                             <participant typeCode="DST">
-                                <!-- Aufnehmende Fachabteilung §301 -->
                                 <participantRole classCode="SDLOC">
                                     <code code="3600" codeSystem="1.2.276.0.76.3.1.195.5.104" displayName="Intensivmedizin"/>
                                 </participantRole>
@@ -901,110 +889,6 @@
                             <statusCode code="completed"/>
                             <effectiveTime value="202401171735"/>
                             <value xsi:type="TS" value="202401162104"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Kombination Typen Verlegung und Entlassung -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.74"/>
-                            <code code="FLN-123" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Kombination Typen Verlegung und Entlassung"/>
-                            <text>
-                                <reference value="#FLN-123"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="CE" code="3" codeSystem="1.2.276.0.76.3.1.195.5.53" displayName="intern - Überwachung (ICU / IMC / Chest-Pain-Unit / Stroke)"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Stunde Beginn patientenbezogene Dokumentation -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.78"/>
-                            <code code="FLN-127" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Stunde Beginn patientenbezogene Dokumentation"/>
-                            <text>
-                                <reference value="#FLN-127"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="INT" value="19"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Datum Beginn patientenbezogene Dokumentation -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.79"/>
-                            <code code="FLN-128" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Datum Beginn patientenbezogene Dokumentation"/>
-                            <text>
-                                <reference value="#FLN-128"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401161930"/>
-                            <value xsi:type="TS" value="20240116"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Zeit zwischen Ankunft und Aufnahme -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.80"/>
-                            <code code="FLN-129" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit zwischen Ankunft und Aufnahme"/>
-                            <text>
-                                <reference value="#FLN-129"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="PQ" value="5" unit="min"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Zeit zwischen Aufnahme und erster Ersteinschätzung -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.81"/>
-                            <code code="FLN-130" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit zwischen Aufnahme und erster Ersteinschätzung"/>
-                            <text>
-                                <reference value="#FLN-130"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="PQ" value="5" unit="min"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Zeit zwischen Aufnahme und erstem Arztkontakt -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.82"/>
-                            <code code="FLN-131" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit zwischen Aufnahme und erstem Arztkontakt"/>
-                            <text>
-                                <reference value="#FLN-131"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="PQ" value="14" unit="min"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.83"/>
-                            <code code="FLN-132" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit zwischen Aufnahme und Verlegungs-/Entlassungsfähigkeit des Patienten"/>
-                            <text>
-                                <reference value="#FLN-132"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="PQ" value="104" unit="min"/>
-                        </observation>
-                    </entry>
-                    <entry typeCode="COMP">
-                        <observation classCode="OBS" moodCode="EVN">
-                            <!-- Zeit zwischen Aufnahme und Verlassen des Patienten -->
-                            <templateId root="1.2.276.0.76.3.1.195.10.84"/>
-                            <code code="FLN-133" codeSystem="1.2.276.0.76.3.1.195.5.98" displayName="Zeit zwischen Aufnahme und Verlassen des Patienten"/>
-                            <text>
-                                <reference value="#FLN-133"/>
-                            </text>
-                            <statusCode code="completed"/>
-                            <effectiveTime value="202401171735"/>
-                            <value xsi:type="PQ" value="108" unit="min"/>
                         </observation>
                     </entry>
                 </section>

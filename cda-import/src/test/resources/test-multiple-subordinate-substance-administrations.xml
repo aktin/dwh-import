@@ -7,10 +7,10 @@
     3. Multiple approachSiteCode elements (should be numbered: approachSiteCode:1, approachSiteCode:2)
     4. Medication defined in subordinate substance administration not the outer medication statement
 -->
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ClinicalDocument xmlns="urn:hl7-org:v3">
     <realmCode code="DE"/>
     <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
-    <templateId root="1.2.276.0.76.3.1.195.10.92"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.93"/>
     <id root="1.2.3.456" extension="test-multi-subordinate"/>
     <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
     <effectiveTime value="20240117120000"/>

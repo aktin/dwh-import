@@ -442,7 +442,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4030']">
         <xsl:comment>Respiratory rate</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -452,7 +452,17 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4031']">
         <xsl:comment>Oxygen saturation</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
+        </fact>
+    </xsl:template>
+
+    <!-- Pulsoximetrische Sauerstoffsättigung (SpO2) 2024
+    <fact concept="L:59408-5">
+    -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.35']">
+        <xsl:comment>Oxygen saturation (SpO2) 2024</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -462,7 +472,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4032']">
         <xsl:comment>Systolic blood pressure</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -472,7 +482,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.38']">
         <xsl:comment>Diastolic blood pressure</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -484,7 +494,16 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4033']">
         <xsl:comment>Heart rate</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
+        </fact>
+    </xsl:template>
+
+    <!-- Pulsfrequenz (Pulse rate) 2024
+    -->
+    <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.40']">
+        <xsl:comment>Pulse rate</xsl:comment>
+        <fact>
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -493,11 +512,18 @@
     <xsl:template match="cda:code[@code='9267-6']">
         <xsl:comment>Glasgow Coma Scale Eye Opening</xsl:comment>
         <fact>
-            <xsl:if test="../../../cda:effectiveTime/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
-                </xsl:attribute>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="../../../cda:effectiveTime/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="ancestor::cda:organizer/cda:effectiveTime/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:organizer/cda:effectiveTime/@value)" />
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:call-template name="templateGetConceptCode" />
         </fact>
     </xsl:template>
@@ -507,11 +533,18 @@
     <xsl:template match="cda:code[@code='9270-0']">
         <xsl:comment>Glasgow Coma Scale Verbal Response</xsl:comment>
         <fact>
-            <xsl:if test="../../../cda:effectiveTime/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
-                </xsl:attribute>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="../../../cda:effectiveTime/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="ancestor::cda:organizer/cda:effectiveTime/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:organizer/cda:effectiveTime/@value)" />
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:call-template name="templateGetConceptCode" />
         </fact>
     </xsl:template>
@@ -521,11 +554,18 @@
     <xsl:template match="cda:code[@code='9268-4']">
         <xsl:comment>Glasgow Coma Scale Motor Response</xsl:comment>
         <fact>
-            <xsl:if test="../../../cda:effectiveTime/@value">
-                <xsl:attribute name="start">
-                    <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
-                </xsl:attribute>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="../../../cda:effectiveTime/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(../../../cda:effectiveTime/@value)" />
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="ancestor::cda:organizer/cda:effectiveTime/@value">
+                    <xsl:attribute name="start">
+                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:organizer/cda:effectiveTime/@value)" />
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:call-template name="templateGetConceptCode" />
         </fact>
     </xsl:template>
@@ -535,7 +575,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4034']">
         <xsl:comment>Glasgow Coma Scale</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -543,7 +583,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4046']">
         <xsl:comment>Pupil dilation on admission to the emergency department</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptValue" />
+            <xsl:call-template name="templateGetVitalConceptValue" />
             <modifier>
                 <xsl:attribute name="code">
                     <xsl:value-of select="$TargetSite-Prefix" /><xsl:value-of select="../cda:targetSiteCode/@code" />
@@ -556,7 +596,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4047']">
         <xsl:comment>Pupillary response</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptValue" />
+            <xsl:call-template name="templateGetVitalConceptValue" />
             <modifier>
                 <xsl:attribute name="code">
                     <xsl:value-of select="$TargetSite-Prefix" /><xsl:value-of select="../cda:targetSiteCode/@code" />
@@ -569,7 +609,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4035']">
         <xsl:comment>Core body temperature</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -579,7 +619,7 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4036']">
         <xsl:comment>Pain on admission</xsl:comment>
         <fact>
-            <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="templateGetVitalConceptCode" />
         </fact>
     </xsl:template>
 
@@ -667,7 +707,6 @@
         </xsl:if>
 
     <!-- ESI-Triagefaktoren (1.2.276.0.76.3.1.195.10.26) -->
-        <!-- TODO aktuell kann nur eine (genau eine) Triagefaktor angegeben werden, bei MTS sind es beliebige -->
         <xsl:for-each select="../cda:entryRelationship/cda:observation/cda:templateId">
             <xsl:comment><xsl:value-of select="../cda:code/@displayName"/></xsl:comment>
         <fact>
@@ -896,6 +935,19 @@
                 <xsl:attribute name="concept">
                     <xsl:value-of select="concat($acc-kin-Prefix, ../cda:value/cda:qualifier/cda:value/@code)" />
                 </xsl:attribute>
+
+                <xsl:choose>
+                    <xsl:when test="../cda:effectiveTime/@value">
+                        <xsl:attribute name="start">
+                            <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value">
+                        <xsl:attribute name="start">
+                            <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value)" />
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
 
                 <xsl:if test="../cda:value/@displayName">
                     <modifier code="displayName">
@@ -1278,12 +1330,9 @@
                         </xsl:when>
                         <xsl:when test="../cda:value/@xsi:type = 'BL' or ../cda:value/@xsi:type = 'PQ' or ../cda:value/@xsi:type = 'INT' or ../cda:value/@xsi:type = 'REAL'"> <xsl:value-of select="../cda:value/@value" />
                         </xsl:when>
-                        <!-- TODO CHECK schema limits placement of value based on xsi:type -->
                         <xsl:when test="../cda:value/@xsi:type = 'ST'">
                             <xsl:value-of select="../cda:value/text()" />
                         </xsl:when>
-                        <!-- TODO CHECK are other values allowed? how do we want to handle it if not? -->
-                        <!-- TODO QUESTION is concatenation intended? -->
                         <xsl:otherwise>
                             <xsl:value-of select="../cda:value/@value | ../cda:value/text()" />
                         </xsl:otherwise>
@@ -1429,14 +1478,6 @@
             </xsl:if>
         </fact>
     </xsl:template>
-
-
-
-
-
-
-
-
 
     <!-- UV Subordinate Substance Administration 2.16.840.1.113883.10.21.4.6 -->
     <xsl:template match="cda:templateId[@root='2.16.840.1.113883.10.21.4.6']">
@@ -2212,6 +2253,92 @@
         <xsl:call-template name="GetEffectiveTimes" />
     </xsl:template>
 
+    <!-- Vital parameter variant of templateGetConceptCode.
+         Falls back to ancestor organizer (Vitalparameter-Container) effectiveTime
+         when the observation itself has no effectiveTime. -->
+    <xsl:template name="templateGetVitalConceptCode">
+        <xsl:attribute name="concept">
+            <xsl:value-of select="concat(func:GetCodePrefix(../cda:code/@codeSystem), ../cda:code/@code)" />
+        </xsl:attribute>
+        <xsl:choose>
+            <xsl:when test="../cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:when>
+            <xsl:when test="../cda:effectiveTime/cda:low/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)" />
+                </xsl:attribute>
+            </xsl:when>
+            <!-- Fallback: use Vitalparameter-Container (organizer) effectiveTime -->
+            <xsl:when test="ancestor::cda:organizer/cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(ancestor::cda:organizer/cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:when>
+        </xsl:choose>
+        <xsl:call-template name="GetNumericValues" />
+        <xsl:call-template name="GetEffectiveTimes" />
+    </xsl:template>
+
+    <!-- Vital parameter variant of templateGetConceptValue.
+         Falls back to ancestor organizer (Vitalparameter-Container) effectiveTime
+         when the observation itself has no effectiveTime. -->
+    <xsl:template name="templateGetVitalConceptValue">
+        <xsl:attribute name="concept">
+            <xsl:choose>
+                <xsl:when test="../cda:code/@code='RPPL'"><xsl:value-of select="$AKTIN-Prefix" />RPPL:</xsl:when>
+                <xsl:when test="../cda:code/@code='SPPL'"><xsl:value-of select="$AKTIN-Prefix" />SPPL:</xsl:when>
+                <xsl:otherwise><xsl:value-of select="../cda:code/@code" />:</xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="../cda:value/@code">
+                    <xsl:value-of select="../cda:value/@code" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="../cda:value/@nullFlavor" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+        <xsl:choose>
+            <xsl:when test="../cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:when>
+            <xsl:when test="../cda:effectiveTime/cda:low/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)" />
+                </xsl:attribute>
+            </xsl:when>
+            <!-- Fallback: use Vitalparameter-Container (organizer) effectiveTime -->
+            <xsl:when test="ancestor::cda:organizer/cda:effectiveTime/@value">
+                <xsl:attribute name="start">
+                    <xsl:value-of select="func:ConvertDateTime(ancestor::cda:organizer/cda:effectiveTime/@value)" />
+                </xsl:attribute>
+            </xsl:when>
+        </xsl:choose>
+        <xsl:if test="../cda:value/@codeSystem">
+            <modifier>
+                <xsl:attribute name="code">codeSystem</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value/@codeSystem" />
+                </value>
+            </modifier>
+        </xsl:if>
+        <xsl:if test="../cda:value/@displayName">
+            <modifier>
+                <xsl:attribute name="code">displayName</xsl:attribute>
+                <value>
+                    <xsl:attribute name="xsi:type">string</xsl:attribute>
+                    <xsl:value-of select="../cda:value/@displayName" />
+                </value>
+            </modifier>
+        </xsl:if>
+        <xsl:call-template name="GetEffectiveTimes" />
+    </xsl:template>
 
 
 
