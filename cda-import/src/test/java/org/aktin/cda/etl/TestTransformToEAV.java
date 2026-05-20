@@ -17,6 +17,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.aktin.cda.CDAParser;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -153,19 +154,19 @@ public class TestTransformToEAV {
 
 	 @SuppressWarnings("deprecation")
 	 @Test
-	 public void transformExamplev2025tr() throws Exception {
+	 public void transformExamplev2026_1_2() throws Exception {
 	 	CDAParser parser = new CDAParser();
 	 	CDAImporterMockUp t = new CDAImporterMockUp();
 
 	 	// Storyboard 1
 	 	try (InputStream in = CDAParser.class.getResourceAsStream(
-	 			"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard01.xml")) {
+	 			"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard01.xml")) {
 	 		Document dom = parser.buildDOM(new StreamSource(in));
 
 	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
 	 		try {
 	 			XSDCheck(temp);
-	 			writeEavOutput(temp, "eav-storyboard01-2025tr.xml");
+	 			writeEavOutput(temp, "eav-storyboard01-2026_1_2.xml");
 
 	 			try (InputStream eav = Files.newInputStream(temp)) {
 	 				GroupedXMLReader suppl = t.readEAV(eav);
@@ -198,13 +199,13 @@ public class TestTransformToEAV {
 
 	 	// Storyboard 2
 	 	try (InputStream in = CDAParser.class.getResourceAsStream(
-	 			"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2025-beispiel-storyboard02.xml")) {
+	 			"/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard02.xml")) {
 	 		Document dom = parser.buildDOM(new StreamSource(in));
 
 	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
 	 		try {
 	 			XSDCheck(temp);
-	 			writeEavOutput(temp, "eav-storyboard02-2025tr.xml");
+	 			writeEavOutput(temp, "eav-storyboard02-2026_1_2.xml");
 
 	 			try (InputStream eav = Files.newInputStream(temp)) {
 	 				GroupedXMLReader suppl = t.readEAV(eav);
@@ -232,18 +233,18 @@ public class TestTransformToEAV {
 	 }
 
 	 @Test
-	 public void transformMaximalExamplev2025tr() throws Exception {
+	 public void transformMaximalExamplev2026_1_2() throws Exception {
 	 	CDAParser parser = new CDAParser();
 	 	CDAImporterMockUp t = new CDAImporterMockUp();
 
 	 	try (InputStream in = CDAParser.class.getResourceAsStream(
-	 			"/maximalbeispiel-v2025tr.xml")) {
+	 			"/maximalbeispiel-v2026_1_2.xml")) {
 	 		Document dom = parser.buildDOM(new StreamSource(in));
 
 	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
 	 		try {
 	 			XSDCheck(temp);
-	 			writeEavOutput(temp, "eav-maximalbeispiel-v2025tr.xml");
+	 			writeEavOutput(temp, "eav-maximalbeispiel-v2026_1_2.xml");
 
 	 			try (InputStream eav = Files.newInputStream(temp)) {
 	 				GroupedXMLReader suppl = t.readEAV(eav);
