@@ -1800,42 +1800,16 @@
             <!-- dosage modifiers -->
 
             <!-- doseQuantity IVL_PQ -->
-            <xsl:choose>
-                <xsl:when test="../cda:doseQuantity/@value">
-                    <modifier code="doseQuantity">
-                        <value xsi:type="numeric">
-                            <xsl:if test="../cda:doseQuantity/@unit">
-                                <xsl:attribute name="unit"><xsl:value-of select="../cda:doseQuantity/@unit"/></xsl:attribute>
-                            </xsl:if>
-                            <xsl:value-of select="../cda:doseQuantity/@value"/>
-                        </value>
-                    </modifier>
-                </xsl:when>
-                <xsl:when test="../cda:doseQuantity/@nullFlavor">
-                    <modifier code="doseQuantity">
-                        <value xsi:type="string"><xsl:value-of select="../cda:doseQuantity/@nullFlavor"/></value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="medication-ivl-pq-modifiers">
+                <xsl:with-param name="ivl" select="../cda:doseQuantity"/>
+                <xsl:with-param name="name" select="'doseQuantity'"/>
+            </xsl:call-template>
 
             <!-- rateQuantity IVL_PQ -->
-            <xsl:choose>
-                <xsl:when test="../cda:rateQuantity/@value">
-                    <modifier code="rateQuantity">
-                        <value xsi:type="numeric">
-                            <xsl:if test="../cda:rateQuantity/@unit">
-                                <xsl:attribute name="unit"><xsl:value-of select="../cda:rateQuantity/@unit"/></xsl:attribute>
-                            </xsl:if>
-                            <xsl:value-of select="../cda:rateQuantity/@value"/>
-                        </value>
-                    </modifier>
-                </xsl:when>
-                <xsl:when test="../cda:rateQuantity/@nullFlavor">
-                    <modifier code="rateQuantity">
-                        <value xsi:type="string"><xsl:value-of select="../cda:rateQuantity/@nullFlavor"/></value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="medication-ivl-pq-modifiers">
+                <xsl:with-param name="ivl" select="../cda:rateQuantity"/>
+                <xsl:with-param name="name" select="'rateQuantity'"/>
+            </xsl:call-template>
 
             <!-- maxDoseQuantity RTO_PQ_PQ (numerator/denominator) -->
             <xsl:choose>
@@ -2143,6 +2117,47 @@
         </fact>
     </xsl:template>
 
+
+    <!-- Modifiers for an IVL_PQ (doseQuantity, rateQuantity): a single value is stored as {name},
+         a range as {name}Low/{name}High. NullFlavors are stored as string under the respective code. -->
+    <xsl:template name="medication-ivl-pq-modifiers">
+        <xsl:param name="ivl"/>
+        <xsl:param name="name"/>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$ivl"/>
+            <xsl:with-param name="code" select="$name"/>
+        </xsl:call-template>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$ivl/cda:low"/>
+            <xsl:with-param name="code" select="concat($name, 'Low')"/>
+        </xsl:call-template>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$ivl/cda:high"/>
+            <xsl:with-param name="code" select="concat($name, 'High')"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="medication-pq-modifier">
+        <xsl:param name="pq"/>
+        <xsl:param name="code"/>
+        <xsl:choose>
+            <xsl:when test="$pq/@value">
+                <modifier code="{$code}">
+                    <value xsi:type="numeric">
+                        <xsl:if test="$pq/@unit">
+                            <xsl:attribute name="unit"><xsl:value-of select="$pq/@unit"/></xsl:attribute>
+                        </xsl:if>
+                        <xsl:value-of select="$pq/@value"/>
+                    </value>
+                </modifier>
+            </xsl:when>
+            <xsl:when test="$pq/@nullFlavor">
+                <modifier code="{$code}">
+                    <value xsi:type="string"><xsl:value-of select="$pq/@nullFlavor"/></value>
+                </modifier>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
 
     <!-- Medication Statement 1.2.276.0.76.3.1.195.10.67 -->
     <!-- Note: "At least one subordinate element SHALL be present unless medications are unknown or known absent."

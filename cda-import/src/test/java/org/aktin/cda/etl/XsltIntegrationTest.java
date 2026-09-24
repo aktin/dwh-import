@@ -414,6 +414,21 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("1.2.3.4.5.6", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:UCS:X-4711']/eav:modifier[@code='codeSystem']/eav:value)").toString());
   }
 
+  /**
+   * Dose and rate ranges (IVL_PQ with low/high) must be mapped to {name}Low/{name}High modifiers.
+   */
+  @Test
+  public void testMedicationDoseAndRateRanges() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:N02AB03']";
+
+    assertEquals("50 ug", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='doseQuantityLow']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("100 ug", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='doseQuantityHigh']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("1 ml/h", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='rateQuantityLow']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("UNK", xpath(eav, "string(" + fact + "/eav:modifier[@code='rateQuantityHigh']/eav:value)").toString());
+    assertEquals("0", xpath(eav, "count(" + fact + "/eav:modifier[@code=('doseQuantity','rateQuantity')])").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");
