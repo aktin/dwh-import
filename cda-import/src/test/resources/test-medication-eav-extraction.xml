@@ -62,6 +62,7 @@
                             <item ID="med-nullflavor-a">Unbekanntes Schmerzmittel, Applikationsort unbekannt</item>
                             <item ID="med-nullflavor-b">Hausmedikation: <content ID="med-nullflavor-b-name">Blutdrucktablette</content></item>
                             <item ID="med-code-systems">Metamizol (PZN), Aspirin (SNOMED CT), hausinterner Code</item>
+                            <item ID="med-timing-details">Insulin 8 IE 15-30 min vor dem Frühstück, zusätzlich zur Nacht als Infusion über 30 min</item>
                         </list>
                     </text>
                     <!-- Case mixed-a: narrative with mixed content, statement with subordinate -->
@@ -79,7 +80,7 @@
                                 <manufacturedProduct classCode="MANU">
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
                                     <manufacturedMaterial classCode="MMAT">
-                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" displayName="paracetamol"/>
+                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" codeSystemVersion="2024" displayName="paracetamol"/>
                                     </manufacturedMaterial>
                                 </manufacturedProduct>
                             </consumable>
@@ -109,6 +110,7 @@
                                 <reference value="#med-mixed-b"/>
                             </text>
                             <statusCode code="completed"/>
+                            <maxDoseQuantity nullFlavor="UNK"/>
                             <consumable typeCode="CSM">
                                 <manufacturedProduct classCode="MANU">
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
@@ -135,6 +137,10 @@
                                 <reference value="#med-ranges"/>
                             </text>
                             <statusCode code="completed"/>
+                            <maxDoseQuantity>
+                                <numerator value="200" unit="ug"/>
+                                <denominator value="1" unit="d"/>
+                            </maxDoseQuantity>
                             <consumable typeCode="CSM">
                                 <manufacturedProduct classCode="MANU">
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
@@ -156,6 +162,10 @@
                                         <low value="1" unit="ml/h"/>
                                         <high nullFlavor="UNK"/>
                                     </rateQuantity>
+                                    <maxDoseQuantity>
+                                        <numerator value="100" unit="ug"/>
+                                        <denominator value="4" unit="h"/>
+                                    </maxDoseQuantity>
                                     <administrationUnitCode code="INJSOL" codeSystem="2.16.840.1.113883.5.85" displayName="Injection Solution"/>
                                     <consumable>
                                         <manufacturedProduct>
@@ -302,7 +312,7 @@
                         <substanceAdministration classCode="SBADM" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
                             <id root="1.2.3.456" extension="med-nullflavor-b"/>
-                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <code nullFlavor="UNK"/>
                             <text>
                                 <reference value="#med-nullflavor-b"/>
                             </text>
@@ -336,7 +346,7 @@
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
                                     <manufacturedMaterial classCode="MMAT">
                                         <code code="01016788" codeSystem="1.2.276.0.76.4.6" displayName="Metamizol 500 mg Tabletten">
-                                            <translation code="N02BB02" codeSystem="2.16.840.1.113883.6.73" displayName="metamizole sodium"/>
+                                            <translation code="N02BB02" codeSystem="2.16.840.1.113883.6.73" codeSystemVersion="2024" displayName="metamizole sodium"/>
                                         </code>
                                     </manufacturedMaterial>
                                 </manufacturedProduct>
@@ -391,6 +401,63 @@
                                     </manufacturedMaterial>
                                 </manufacturedProduct>
                             </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case timing-details: statement without id; EIVL_TS offset as interval, PIVL_TS phase width and period nullFlavor -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="INT">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-timing-details"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="A10AB01" codeSystem="2.16.840.1.113883.6.73" displayName="insulin (human)"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="EIVL_TS">
+                                        <event code="ACM" displayName="Before breakfast"/>
+                                        <offset>
+                                            <low value="15" unit="min"/>
+                                            <high value="30" unit="min"/>
+                                        </offset>
+                                    </effectiveTime>
+                                    <doseQuantity value="8" unit="[IU]"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
+                                        <phase>
+                                            <low value="20240117220000"/>
+                                            <width value="30" unit="min"/>
+                                        </phase>
+                                        <period nullFlavor="UNK"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="8" unit="[IU]"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
                         </substanceAdministration>
                     </entry>
                 </section>

@@ -557,6 +557,91 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:J01DH51']/eav:modifier[@code='routeCode:displayName']/eav:value)").toString());
   }
 
+  /**
+   * statementIndex groups the facts of one medication statement, also if the statement has no id.
+   */
+  @Test
+  public void testMedicationStatementIndex() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String insulin = "//eav:fact[@concept='AKTIN:MED:ATC:A10AB01']";
+    assertEquals("2", xpath(eav, "count(" + insulin + ")").toString());
+    assertEquals("0", xpath(eav, "count(" + insulin + "/eav:modifier[starts-with(@code, 'parentMedicationStatementId')])").toString());
+    assertEquals("1", xpath(eav, "count(distinct-values(" + insulin + "/eav:modifier[@code='statementIndex']/eav:value))").toString());
+    // every medication statement has its own index
+    assertEquals(xpath(eav, "count(distinct-values(//eav:fact[starts-with(@concept, 'AKTIN:MED:')]/eav:modifier[@code='text']/../eav:modifier[@code='statementIndex']/eav:value))").toString(),
+        xpath(eav, "string(max(//eav:fact[starts-with(@concept, 'AKTIN:MED:')]/eav:modifier[@code='statementIndex']/eav:value/number(.)))").toString());
+
+    XdmNode storyboard = transform(STORYBOARD02_XML);
+    assertEquals("1", xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:J01DH51']/eav:modifier[@code='statementIndex']/eav:value)").toString());
+    assertEquals("2", xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:B05BB01']/eav:modifier[@code='statementIndex']/eav:value)").toString());
+  }
+
+  /**
+   * startSource tells whether fact/@start comes from the CDA or is left to histream (encounter start).
+   */
+  @Test
+  public void testMedicationStartSource() throws Exception {
+    XdmNode storyboard = transform(STORYBOARD02_XML);
+    assertEquals("effectiveTime", xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:J01DH51']/eav:modifier[@code='startSource']/eav:value)").toString());
+    assertEquals("effectiveTimePhaseLow", xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:B05BB01']/eav:modifier[@code='startSource']/eav:value)").toString());
+
+    XdmNode eav = transformMedicationTestDocument();
+    assertEquals("effectiveTimeComp:1", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:B01AB05']/eav:modifier[@code='startSource']/eav:value)").toString());
+    // EIVL_TS without absolute time and statement without subordinate
+    assertEquals("none", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:A10AB01'][not(@start)]/eav:modifier[@code='startSource']/eav:value)").toString());
+    assertEquals("none", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='startSource']/eav:value)").toString());
+  }
+
+  /**
+   * codeSystemVersion of the medication code and of translations must be preserved.
+   */
+  @Test
+  public void testMedicationCodeSystemVersion() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    assertEquals("2024", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']/eav:modifier[@code='codeSystemVersion']/eav:value)").toString());
+    assertEquals("2024", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:PZN:01016788']/eav:modifier[@code='translation:codeSystemVersion:1']/eav:value)").toString());
+  }
+
+  /**
+   * maxDoseQuantity of statement and subordinate are both kept; a nullFlavor of the ratio is kept as well.
+   */
+  @Test
+  public void testMedicationMaxDoseQuantity() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String fentanyl = "//eav:fact[@concept='AKTIN:MED:ATC:N02AB03']";
+    assertEquals("100 ug", xpath(eav, "string-join(" + fentanyl + "/eav:modifier[@code='maxDoseQuantityNumerator']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("4 h", xpath(eav, "string-join(" + fentanyl + "/eav:modifier[@code='maxDoseQuantityDenominator']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("200 ug", xpath(eav, "string-join(" + fentanyl + "/eav:modifier[@code='statementMaxDoseQuantityNumerator']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("1 d", xpath(eav, "string-join(" + fentanyl + "/eav:modifier[@code='statementMaxDoseQuantityDenominator']/eav:value/(., @unit), ' ')").toString());
+    // statement without subordinate
+    assertEquals("UNK", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='statementMaxDoseQuantity']/eav:value)").toString());
+  }
+
+  /**
+   * A nullFlavor of the statement code (instead of DRUG) must be preserved.
+   */
+  @Test
+  public void testMedicationStatementCodeNullFlavor() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String factB = "//eav:fact[eav:modifier[@code='parentMedicationStatementId:1']/eav:value='1.2.3.456:med-nullflavor-b']";
+    assertEquals("UNK", xpath(eav, "string(" + factB + "/eav:modifier[@code='statementCode']/eav:value)").toString());
+    assertEquals("0", xpath(eav, "count(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='statementCode'])").toString());
+  }
+
+  /**
+   * EIVL_TS offset as interval, PIVL_TS phase width and a period nullFlavor must be mapped.
+   */
+  @Test
+  public void testMedicationTimingDetails() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String eivl = "//eav:fact[@concept='AKTIN:MED:ATC:A10AB01'][eav:modifier[@code='effectiveTimeEventCode']]";
+    assertEquals("15 min", xpath(eav, "string-join(" + eivl + "/eav:modifier[@code='effectiveTimeEventOffsetLow']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("30 min", xpath(eav, "string-join(" + eivl + "/eav:modifier[@code='effectiveTimeEventOffsetHigh']/eav:value/(., @unit), ' ')").toString());
+    String pivl = "//eav:fact[@concept='AKTIN:MED:ATC:A10AB01'][eav:modifier[@code='effectiveTimePhaseLow']]";
+    assertEquals("30 min", xpath(eav, "string-join(" + pivl + "/eav:modifier[@code='effectiveTimePhaseWidth']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("UNK", xpath(eav, "string(" + pivl + "/eav:modifier[@code='effectiveTimePeriod']/eav:value)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");

@@ -1667,6 +1667,10 @@
             <xsl:if test="$start">
                 <xsl:attribute name="start"><xsl:value-of select="func:ConvertDateTime($start)"/></xsl:attribute>
             </xsl:if>
+            <!-- origin of the start attribute ('none': histream uses the encounter start) -->
+            <modifier code="startSource">
+                <value xsi:type="string"><xsl:value-of select="func:MedicationStartSource($start)"/></value>
+            </modifier>
 
 
 
@@ -1709,85 +1713,12 @@
                 </xsl:when>
             </xsl:choose>
 
-            <!-- maxDoseQuantity RTO_PQ_PQ (numerator/denominator) -->
-            <xsl:choose>
-                <!-- maxDoseQuantity from UV Subordinate Substance Administration -->
-                <xsl:when test="../cda:maxDoseQuantity">
-                    <xsl:choose>
-                        <xsl:when test="../cda:maxDoseQuantity/cda:numerator/@value">
-                            <modifier code="maxDoseQuantityNumerator">
-                                <value xsi:type="numeric">
-                                    <xsl:if test="../cda:maxDoseQuantity/cda:numerator/@unit">
-                                        <xsl:attribute name="unit"><xsl:value-of select="../cda:maxDoseQuantity/cda:numerator/@unit"/></xsl:attribute>
-                                    </xsl:if>
-                                    <xsl:value-of select="../cda:maxDoseQuantity/cda:numerator/@value"/>
-                                </value>
-                            </modifier>
-                        </xsl:when>
-                        <xsl:when test="../cda:maxDoseQuantity/cda:numerator/@nullFlavor">
-                            <modifier code="maxDoseQuantityNumerator">
-                                <value xsi:type="string"><xsl:value-of select="../cda:maxDoseQuantity/cda:numerator/@nullFlavor"/></value>
-                            </modifier>
-                        </xsl:when>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="../cda:maxDoseQuantity/cda:denominator/@value">
-                            <modifier code="maxDoseQuantityDenominator">
-                                <value xsi:type="numeric">
-                                    <xsl:if test="../cda:maxDoseQuantity/cda:denominator/@unit">
-                                        <xsl:attribute name="unit"><xsl:value-of select="../cda:maxDoseQuantity/cda:denominator/@unit"/></xsl:attribute>
-                                    </xsl:if>
-                                    <xsl:value-of select="../cda:maxDoseQuantity/cda:denominator/@value"/>
-                                </value>
-                            </modifier>
-                        </xsl:when>
-                        <xsl:when test="../cda:maxDoseQuantity/cda:denominator/@nullFlavor">
-                            <modifier code="maxDoseQuantityDenominator">
-                                <value xsi:type="string"><xsl:value-of select="../cda:maxDoseQuantity/cda:denominator/@nullFlavor"/></value>
-                            </modifier>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:when>
-                <!-- maxDoseQuantity from surrounding Medication Statement -->
-                <xsl:when test="$statement/cda:maxDoseQuantity">
-                    <xsl:choose>
-                        <xsl:when test="$statement/cda:maxDoseQuantity/cda:numerator/@value">
-                            <modifier code="maxDoseQuantityNumerator">
-                                <value xsi:type="numeric">
-                                    <xsl:if test="$statement/cda:maxDoseQuantity/cda:numerator/@unit">
-                                        <xsl:attribute name="unit"><xsl:value-of select="$statement/cda:maxDoseQuantity/cda:numerator/@unit"/></xsl:attribute>
-                                    </xsl:if>
-                                    <xsl:value-of select="$statement/cda:maxDoseQuantity/cda:numerator/@value"/>
-                                </value>
-                            </modifier>
-                        </xsl:when>
-                        <xsl:when test="$statement/cda:maxDoseQuantity/cda:numerator/@nullFlavor">
-                            <modifier code="maxDoseQuantityNumerator">
-                                <value xsi:type="string"><xsl:value-of select="$statement/cda:maxDoseQuantity/cda:numerator/@nullFlavor"/></value>
-                            </modifier>
-                        </xsl:when>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="$statement/cda:maxDoseQuantity/cda:denominator/@value">
-                            <modifier code="maxDoseQuantityDenominator">
-                                <value xsi:type="numeric">
-                                    <xsl:if test="$statement/cda:maxDoseQuantity/cda:denominator/@unit">
-                                        <xsl:attribute name="unit"><xsl:value-of select="$statement/cda:maxDoseQuantity/cda:denominator/@unit"/></xsl:attribute>
-                                    </xsl:if>
-                                    <xsl:value-of select="$statement/cda:maxDoseQuantity/cda:denominator/@value"/>
-                                </value>
-                            </modifier>
-                        </xsl:when>
-                        <xsl:when test="$statement/cda:maxDoseQuantity/cda:denominator/@nullFlavor">
-                            <modifier code="maxDoseQuantityDenominator">
-                                <value xsi:type="string"><xsl:value-of select="$statement/cda:maxDoseQuantity/cda:denominator/@nullFlavor"/></value>
-                            </modifier>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:when>
-            </xsl:choose>
-
-
+            <!-- maxDoseQuantity RTO_PQ_PQ (numerator/denominator) of the subordinate substance administration;
+                 the one of the Medication Statement is mapped as statementMaxDoseQuantity -->
+            <xsl:call-template name="medication-rto-pq-modifiers">
+                <xsl:with-param name="rto" select="../cda:maxDoseQuantity"/>
+                <xsl:with-param name="name" select="'maxDoseQuantity'"/>
+            </xsl:call-template>
 
             <!--######################################################################################################-->
 
@@ -1827,6 +1758,11 @@
 
             <!-- statusCode of the parent medication statement -->
             <xsl:call-template name="medication-statement-status-modifier">
+                <xsl:with-param name="statement" select="$statement"/>
+            </xsl:call-template>
+
+            <!-- statementIndex, statementCode, statementMaxDoseQuantity of the parent medication statement -->
+            <xsl:call-template name="medication-statement-modifiers">
                 <xsl:with-param name="statement" select="$statement"/>
             </xsl:call-template>
 
@@ -1985,17 +1921,12 @@
                         <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:event/@displayName"/></value>
                     </modifier>
                 </xsl:if>
-                <!-- Offset from event -->
-                <xsl:if test="$effectiveTime/cda:offset/@value">
-                    <modifier code="{$name}EventOffset{$suffix}">
-                        <value xsi:type="numeric">
-                            <xsl:if test="$effectiveTime/cda:offset/@unit">
-                                <xsl:attribute name="unit"><xsl:value-of select="$effectiveTime/cda:offset/@unit"/></xsl:attribute>
-                            </xsl:if>
-                            <xsl:value-of select="$effectiveTime/cda:offset/@value"/>
-                        </value>
-                    </modifier>
-                </xsl:if>
+                <!-- Offset from event (IVL_PQ: value, low/high, width) -->
+                <xsl:call-template name="medication-ivl-pq-modifiers">
+                    <xsl:with-param name="ivl" select="$effectiveTime/cda:offset"/>
+                    <xsl:with-param name="name" select="concat($name, 'EventOffset')"/>
+                    <xsl:with-param name="suffix" select="$suffix"/>
+                </xsl:call-template>
                 <xsl:call-template name="medication-effective-time-operator">
                     <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
                     <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
@@ -2005,28 +1936,27 @@
             <!-- PIVL_TS (Periodic Interval) -->
             <xsl:when test="$effectiveTime/cda:phase or $effectiveTime/cda:period or $effectiveTime/@institutionSpecified or $effectiveTime/@alignment">
                 <!-- Phase low (start time of interval) -->
-                <xsl:if test="$effectiveTime/cda:phase/cda:low/@value">
+                <xsl:if test="$effectiveTime/cda:phase/cda:low/(@value | @nullFlavor)">
                     <modifier code="{$name}PhaseLow{$suffix}">
-                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:low/@value"/></value>
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:low/(@value, @nullFlavor)[1]"/></value>
                     </modifier>
                 </xsl:if>
                 <!-- Phase high (end time of interval) -->
-                <xsl:if test="$effectiveTime/cda:phase/cda:high/@value">
+                <xsl:if test="$effectiveTime/cda:phase/cda:high/(@value | @nullFlavor)">
                     <modifier code="{$name}PhaseHigh{$suffix}">
-                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:high/@value"/></value>
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:high/(@value, @nullFlavor)[1]"/></value>
                     </modifier>
                 </xsl:if>
-                <!-- Period (frequency interval, e.g., "every 4 hours") -->
-                <xsl:if test="$effectiveTime/cda:period/@value">
-                    <modifier code="{$name}Period{$suffix}">
-                        <value xsi:type="numeric">
-                            <xsl:if test="$effectiveTime/cda:period/@unit">
-                                <xsl:attribute name="unit"><xsl:value-of select="$effectiveTime/cda:period/@unit"/></xsl:attribute>
-                            </xsl:if>
-                            <xsl:value-of select="$effectiveTime/cda:period/@value"/>
-                        </value>
-                    </modifier>
-                </xsl:if>
+                <!-- Phase width (duration of each administration, e.g. 30 min infusion) -->
+                <xsl:call-template name="medication-pq-modifier">
+                    <xsl:with-param name="pq" select="$effectiveTime/cda:phase/cda:width"/>
+                    <xsl:with-param name="code" select="concat($name, 'PhaseWidth', $suffix)"/>
+                </xsl:call-template>
+                <!-- Period (frequency interval, e.g., "every 4 hours"; value or nullFlavor) -->
+                <xsl:call-template name="medication-pq-modifier">
+                    <xsl:with-param name="pq" select="$effectiveTime/cda:period"/>
+                    <xsl:with-param name="code" select="concat($name, 'Period', $suffix)"/>
+                </xsl:call-template>
                 <!-- Institution specified flag -->
                 <xsl:if test="$effectiveTime/@institutionSpecified">
                     <modifier code="{$name}InstitutionSpecified{$suffix}">
@@ -2058,22 +1988,48 @@
         </xsl:if>
     </xsl:template>
 
-    <!-- Modifiers for an IVL_PQ (doseQuantity, rateQuantity): a single value is stored as {name},
-         a range as {name}Low/{name}High. NullFlavors are stored as string under the respective code. -->
+    <!-- Modifiers for an IVL_PQ (doseQuantity, rateQuantity, EIVL_TS offset): a single value is stored as
+         {name}{suffix}, a range as {name}Low{suffix}/{name}High{suffix}, a width as {name}Width{suffix}.
+         NullFlavors are stored as string under the respective code. -->
     <xsl:template name="medication-ivl-pq-modifiers">
         <xsl:param name="ivl"/>
         <xsl:param name="name"/>
+        <xsl:param name="suffix" select="''"/>
         <xsl:call-template name="medication-pq-modifier">
             <xsl:with-param name="pq" select="$ivl"/>
-            <xsl:with-param name="code" select="$name"/>
+            <xsl:with-param name="code" select="concat($name, $suffix)"/>
         </xsl:call-template>
         <xsl:call-template name="medication-pq-modifier">
             <xsl:with-param name="pq" select="$ivl/cda:low"/>
-            <xsl:with-param name="code" select="concat($name, 'Low')"/>
+            <xsl:with-param name="code" select="concat($name, 'Low', $suffix)"/>
         </xsl:call-template>
         <xsl:call-template name="medication-pq-modifier">
             <xsl:with-param name="pq" select="$ivl/cda:high"/>
-            <xsl:with-param name="code" select="concat($name, 'High')"/>
+            <xsl:with-param name="code" select="concat($name, 'High', $suffix)"/>
+        </xsl:call-template>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$ivl/cda:width"/>
+            <xsl:with-param name="code" select="concat($name, 'Width', $suffix)"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <!-- Modifiers for an RTO_PQ_PQ (maxDoseQuantity): {name}Numerator and {name}Denominator,
+         a nullFlavor of the whole ratio is stored as string under {name} -->
+    <xsl:template name="medication-rto-pq-modifiers">
+        <xsl:param name="rto"/>
+        <xsl:param name="name"/>
+        <xsl:if test="$rto/@nullFlavor">
+            <modifier code="{$name}">
+                <value xsi:type="string"><xsl:value-of select="$rto/@nullFlavor"/></value>
+            </modifier>
+        </xsl:if>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$rto/cda:numerator"/>
+            <xsl:with-param name="code" select="concat($name, 'Numerator')"/>
+        </xsl:call-template>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$rto/cda:denominator"/>
+            <xsl:with-param name="code" select="concat($name, 'Denominator')"/>
         </xsl:call-template>
     </xsl:template>
 
@@ -2097,6 +2053,32 @@
                 </modifier>
             </xsl:when>
         </xsl:choose>
+    </xsl:template>
+
+    <!-- Further modifiers of the Medication Statement 1.2.276.0.76.3.1.195.10.67, shared by both medication paths -->
+    <xsl:template name="medication-statement-modifiers">
+        <xsl:param name="statement"/>
+
+        <!-- statementIndex: position of the Medication Statement in the document. Groups the facts of one statement
+             (e.g. several subordinate substance administrations) also if the statement has no id (id is optional). -->
+        <modifier code="statementIndex">
+            <value xsi:type="numeric">
+                <xsl:value-of select="count($statement/preceding::cda:substanceAdministration[cda:templateId/@root = '1.2.276.0.76.3.1.195.10.67']) + 1"/>
+            </value>
+        </modifier>
+
+        <!-- statementCode: only if the statement code has a nullFlavor instead of the fixed code DRUG -->
+        <xsl:if test="$statement/cda:code/@nullFlavor">
+            <modifier code="statementCode">
+                <value xsi:type="string"><xsl:value-of select="$statement/cda:code/@nullFlavor"/></value>
+            </modifier>
+        </xsl:if>
+
+        <!-- maxDoseQuantity RTO_PQ_PQ of the Medication Statement -->
+        <xsl:call-template name="medication-rto-pq-modifiers">
+            <xsl:with-param name="rto" select="$statement/cda:maxDoseQuantity"/>
+            <xsl:with-param name="name" select="'statementMaxDoseQuantity'"/>
+        </xsl:call-template>
     </xsl:template>
 
     <!-- statusCode of the Medication Statement 1.2.276.0.76.3.1.195.10.67 as modifier statementStatusCode -->
@@ -2164,6 +2146,16 @@
             <xsl:with-param name="statement" select="$outer"/>
         </xsl:call-template>
 
+        <!-- statementIndex, statementCode, statementMaxDoseQuantity -->
+        <xsl:call-template name="medication-statement-modifiers">
+            <xsl:with-param name="statement" select="$outer"/>
+        </xsl:call-template>
+
+        <!-- the Medication Statement has no effectiveTime (prohibited), histream uses the encounter start -->
+        <modifier code="startSource">
+            <value xsi:type="string">none</value>
+        </modifier>
+
         <!-- Text/Description lookup -->
         <xsl:variable name="resolvedText" select="func:ResolveNarrative($outer/cda:text/cda:reference/@value)" />
         <xsl:if test="$resolvedText != ''">
@@ -2195,28 +2187,6 @@
                 </modifier>
             </xsl:if>
         </xsl:for-each>
-
-        <!-- maxDoseQuantity from outer element (RTO_PQ_PQ datatype: numerator/denominator) -->
-        <xsl:if test="$outer/cda:maxDoseQuantity/cda:numerator/@value">
-            <modifier code="maxDoseQuantityNumerator">
-                <value xsi:type="numeric">
-                    <xsl:if test="$outer/cda:maxDoseQuantity/cda:numerator/@unit">
-                        <xsl:attribute name="unit"><xsl:value-of select="$outer/cda:maxDoseQuantity/cda:numerator/@unit"/></xsl:attribute>
-                    </xsl:if>
-                    <xsl:value-of select="$outer/cda:maxDoseQuantity/cda:numerator/@value"/>
-                </value>
-            </modifier>
-            <xsl:if test="$outer/cda:maxDoseQuantity/cda:denominator/@value">
-                <modifier code="maxDoseQuantityDenominator">
-                    <value xsi:type="numeric">
-                        <xsl:if test="$outer/cda:maxDoseQuantity/cda:denominator/@unit">
-                            <xsl:attribute name="unit"><xsl:value-of select="$outer/cda:maxDoseQuantity/cda:denominator/@unit"/></xsl:attribute>
-                        </xsl:if>
-                        <xsl:value-of select="$outer/cda:maxDoseQuantity/cda:denominator/@value"/>
-                    </value>
-                </modifier>
-            </xsl:if>
-        </xsl:if>
 
         <!-- Product information (UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10) -->
         <xsl:call-template name="medication-product-modifiers">
@@ -2261,6 +2231,13 @@
             </modifier>
         </xsl:if>
 
+        <!-- codeSystemVersion of the medication code (e.g. ATC version, since ATC codes change over time) -->
+        <xsl:if test="$code/@codeSystemVersion">
+            <modifier code="codeSystemVersion">
+                <value xsi:type="string"><xsl:value-of select="$code/@codeSystemVersion"/></value>
+            </modifier>
+        </xsl:if>
+
         <!-- ATC code of the medication (code or translation), links every medication fact to ATC -->
         <xsl:call-template name="medication-atc-modifier">
             <xsl:with-param name="code" select="$code"/>
@@ -2279,6 +2256,11 @@
             <xsl:if test="@displayName">
                 <modifier code="translation:displayName:{position()}">
                     <value xsi:type="string"><xsl:value-of select="@displayName"/></value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="@codeSystemVersion">
+                <modifier code="translation:codeSystemVersion:{position()}">
+                    <value xsi:type="string"><xsl:value-of select="@codeSystemVersion"/></value>
                 </modifier>
             </xsl:if>
         </xsl:for-each>
@@ -2815,6 +2797,17 @@
         <xsl:sequence select="($effectiveTime/@value,
                                $effectiveTime/cda:phase/cda:low/@value,
                                $effectiveTime/cda:comp[not(@operator = 'E')]/(@value | cda:low/@value | cda:phase/cda:low/@value))[1]"/>
+    </xsl:function>
+
+    <!-- Origin of a start time returned by func:MedicationStartTime: effectiveTime, effectiveTimePhaseLow,
+         effectiveTimeComp:{n} (SXPR_TS component) or none (no absolute time; histream then uses the encounter start) -->
+    <xsl:function name="func:MedicationStartSource" as="xs:string">
+        <xsl:param name="start" as="attribute()?"/>
+        <xsl:sequence select="if (empty($start)) then 'none'
+                              else if ($start/ancestor::cda:comp)
+                              then concat('effectiveTimeComp:', count($start/ancestor::cda:comp[last()]/preceding-sibling::cda:comp) + 1)
+                              else if ($start/parent::cda:low/parent::cda:phase) then 'effectiveTimePhaseLow'
+                              else 'effectiveTime'"/>
     </xsl:function>
 
     <!-- Resolves a narrative reference (e.g. text/reference/@value="#med-1") to the normalized string value
