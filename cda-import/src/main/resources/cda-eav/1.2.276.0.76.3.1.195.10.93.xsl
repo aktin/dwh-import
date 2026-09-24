@@ -1888,10 +1888,10 @@
                 </modifier>
             </xsl:if>
 
-            <!-- routeCode -->
-            <xsl:if test="ancestor::cda:substanceAdministration[2]/cda:routeCode/@code">
+            <!-- routeCode (code or nullFlavor) -->
+            <xsl:if test="ancestor::cda:substanceAdministration[2]/cda:routeCode/(@code | @nullFlavor)">
                 <modifier code="routeCode">
-                    <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:routeCode/@code"/></value>
+                    <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:routeCode/(@code, @nullFlavor)[1]"/></value>
                 </modifier>
                 <xsl:if test="ancestor::cda:substanceAdministration[2]/cda:routeCode/@displayName">
                     <modifier code="AKTIN:MED:ROUTE:DN">
@@ -1900,10 +1900,10 @@
                 </xsl:if>
             </xsl:if>
 
-            <!-- approachSiteCode - numbered (approachSiteCode:1, approachSiteCode:2, etc.) -->
+            <!-- approachSiteCode (code or nullFlavor) - numbered (approachSiteCode:1, approachSiteCode:2, etc.) -->
             <xsl:for-each select="ancestor::cda:substanceAdministration[2]/cda:approachSiteCode">
                 <modifier code="approachSiteCode:{position()}">
-                    <value xsi:type="string"><xsl:value-of select="@code"/></value>
+                    <value xsi:type="string"><xsl:value-of select="(@code, @nullFlavor)[1]"/></value>
                 </modifier>
                 <xsl:if test="@displayName">
                     <modifier code="AKTIN:MED:SITE:DN:{position()}">
@@ -2196,10 +2196,10 @@
             </modifier>
         </xsl:if>
 
-        <!-- routeCode -->
-        <xsl:if test="$outer/cda:routeCode/@code">
+        <!-- routeCode (code or nullFlavor) -->
+        <xsl:if test="$outer/cda:routeCode/(@code | @nullFlavor)">
             <modifier code="routeCode">
-                <value xsi:type="string"><xsl:value-of select="$outer/cda:routeCode/@code"/></value>
+                <value xsi:type="string"><xsl:value-of select="$outer/cda:routeCode/(@code, @nullFlavor)[1]"/></value>
             </modifier>
             <xsl:if test="$outer/cda:routeCode/@displayName">
                 <modifier code="AKTIN:MED:ROUTE:DN">
@@ -2208,10 +2208,10 @@
             </xsl:if>
         </xsl:if>
 
-        <!-- approachSiteCode - numbered (approachSiteCode:1, approachSiteCode:2, etc.) -->
+        <!-- approachSiteCode (code or nullFlavor) - numbered (approachSiteCode:1, approachSiteCode:2, etc.) -->
         <xsl:for-each select="$outer/cda:approachSiteCode">
             <modifier code="approachSiteCode:{position()}">
-                <value xsi:type="string"><xsl:value-of select="@code"/></value>
+                <value xsi:type="string"><xsl:value-of select="(@code, @nullFlavor)[1]"/></value>
             </modifier>
             <xsl:if test="@displayName">
                 <modifier code="AKTIN:MED:SITE:DN:{position()}">
@@ -2267,6 +2267,23 @@
         <xsl:if test="$code/@displayName">
             <modifier code="displayName">
                 <value xsi:type="string"><xsl:value-of select="$code/@displayName"/></value>
+            </modifier>
+        </xsl:if>
+
+        <!-- nullFlavor of the medication code (the concept is AKTIN:MED:NA for every nullFlavor) -->
+        <xsl:if test="$code/@nullFlavor">
+            <modifier code="nullFlavor">
+                <value xsi:type="string"><xsl:value-of select="$code/@nullFlavor"/></value>
+            </modifier>
+        </xsl:if>
+
+        <!-- originalText of the medication code (only content information if the code has a nullFlavor) -->
+        <xsl:variable name="originalText" select="if ($code/cda:originalText/cda:reference/@value)
+                                                  then func:ResolveNarrative($code/cda:originalText/cda:reference/@value)
+                                                  else normalize-space(string($code/cda:originalText))"/>
+        <xsl:if test="$originalText != ''">
+            <modifier code="originalText">
+                <value xsi:type="string"><xsl:value-of select="$originalText"/></value>
             </modifier>
         </xsl:if>
 

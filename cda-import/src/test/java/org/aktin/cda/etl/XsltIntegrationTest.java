@@ -516,6 +516,26 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("DW", xpath(eav, "string(" + pivl + "/eav:modifier[@code='effectiveTimeAlignment']/eav:value)").toString());
   }
 
+  /**
+   * NullFlavors of the medication code and approachSiteCode must be differentiated, and the originalText
+   * (the only content information for a code with nullFlavor) must be preserved.
+   */
+  @Test
+  public void testMedicationNullFlavorsAndOriginalText() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String factA = "//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-nullflavor-a']";
+    String factB = "//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-nullflavor-b']";
+
+    assertEquals("AKTIN:MED:NA", xpath(eav, "string(" + factA + "/@concept)").toString());
+    assertEquals("UNK", xpath(eav, "string(" + factA + "/eav:modifier[@code='nullFlavor']/eav:value)").toString());
+    assertEquals("Unbekanntes Schmerzmittel", xpath(eav, "string(" + factA + "/eav:modifier[@code='originalText']/eav:value)").toString());
+    assertEquals("UNK", xpath(eav, "string(" + factA + "/eav:modifier[@code='approachSiteCode:1']/eav:value)").toString());
+
+    assertEquals("AKTIN:MED:NA", xpath(eav, "string(" + factB + "/@concept)").toString());
+    assertEquals("NI", xpath(eav, "string(" + factB + "/eav:modifier[@code='nullFlavor']/eav:value)").toString());
+    assertEquals("Blutdrucktablette", xpath(eav, "string(" + factB + "/eav:modifier[@code='originalText']/eav:value)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");

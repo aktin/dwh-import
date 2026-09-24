@@ -59,6 +59,8 @@
                             <item ID="med-ranges">Fentanyl 50-100 ug, Laufrate ab 1 ml/h</item>
                             <item ID="med-sxpr-start">Enoxaparin 40 mg s.c. täglich zur Nacht</item>
                             <item ID="med-eivl-pivl">Omeprazol 20 mg vor dem Frühstück, zusätzlich wöchentlich</item>
+                            <item ID="med-nullflavor-a">Unbekanntes Schmerzmittel, Applikationsort unbekannt</item>
+                            <item ID="med-nullflavor-b">Hausmedikation: <content ID="med-nullflavor-b-name">Blutdrucktablette</content></item>
                             <item ID="med-code-systems">Metamizol (PZN), Aspirin (SNOMED CT), hausinterner Code</item>
                         </list>
                     </text>
@@ -256,6 +258,65 @@
                                     </consumable>
                                 </substanceAdministration>
                             </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case nullflavor-a: medication code and approachSiteCode with nullFlavor, statement with subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-nullflavor-a"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-nullflavor-a"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <approachSiteCode nullFlavor="UNK"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code nullFlavor="UNK">
+                                            <originalText>Unbekanntes Schmerzmittel</originalText>
+                                        </code>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117103000"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case nullflavor-b: medication code with nullFlavor and originalText reference, statement without subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-nullflavor-b"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-nullflavor-b"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code nullFlavor="NI">
+                                            <originalText>
+                                                <reference value="#med-nullflavor-b-name"/>
+                                            </originalText>
+                                        </code>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
                         </substanceAdministration>
                     </entry>
                     <!-- Case code-systems: PZN with ATC translation (no subordinate), SNOMED CT (with subordinate), unknown code system -->
