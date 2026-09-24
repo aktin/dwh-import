@@ -418,4 +418,28 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         transformedXml.contains("concept=\"LOINC:74209-8\" start=\"2024-01-17\""));
   }
 
+  /**
+   * Test that displayName and codeSystem modifiers of the accident anamnesis are
+   * taken from the element that carries the code.
+   */
+  @Test
+  public void testAnamnesisDisplayNameAndCodeSystem() throws Exception {
+    String transformedXml = performXsltTransformation("/test-anamnesis-displayname-codesystem.xml", EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-anamnesis-displayname-codesystem.xml");
+
+    assertFalse("No modifier should have an empty value",
+        transformedXml.contains("<value xsi:type=\"string\"/>"));
+
+    assertTrue("Accident kinetics should have the displayName of the qualifier value",
+        getFact(transformedXml, "AKTIN:ACC:KIN:33036003").contains("Fall on same level (event)"));
+    assertFalse("Accident cause without displayName should have no displayName modifier",
+        getFact(transformedXml, "SNOMED:418019003").contains("code=\"displayName\""));
+
+    String injuryCause = getFact(transformedXml, "AKTIN:ACC:CAUSE:V49");
+    assertTrue("Injury cause should have a codeSystem modifier",
+        injuryCause.contains("code=\"codeSystem\"") && injuryCause.contains(">2.16.840.1.113883.6.3<"));
+    assertTrue("Injury cause should start at the accident time",
+        transformedXml.contains("concept=\"AKTIN:ACC:CAUSE:V49\" start=\"2024-01-17T15:30\""));
+  }
+
 }

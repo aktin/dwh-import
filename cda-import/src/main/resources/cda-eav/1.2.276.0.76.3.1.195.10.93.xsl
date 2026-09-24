@@ -989,7 +989,7 @@
 
                 <xsl:call-template name="GetAccidentTime" />
 
-                <xsl:if test="../cda:value/@displayName">
+                <xsl:if test="../cda:value/cda:qualifier/cda:value/@displayName">
                     <modifier code="displayName">
                         <value xsi:type="string">
                             <xsl:value-of select="../cda:value/cda:qualifier/cda:value/@displayName" />
@@ -1014,6 +1014,15 @@
             </xsl:attribute>
 
             <xsl:call-template name="GetAccidentTime" />
+
+            <!-- The value set mixes ICD-10, SNOMED CT and LOINC codes -->
+            <xsl:if test="../cda:value/@codeSystem">
+                <modifier code="codeSystem">
+                    <value xsi:type="string">
+                        <xsl:value-of select="../cda:value/@codeSystem" />
+                    </value>
+                </modifier>
+            </xsl:if>
 
             <!-- Optional displayName -->
             <xsl:if test="../cda:value/@displayName">
