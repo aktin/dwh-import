@@ -105,18 +105,9 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertTrue("Should have instance_num=\"2\"", transformedXml.contains("instance_num=\"2\""));
     assertTrue("Should have instance_num=\"3\"", transformedXml.contains("instance_num=\"3\""));
 
-    // Verify subordinate substance administration IDs are captured
-    assertTrue("Should have subordinate ID sub-para-001",
-        transformedXml.contains("code=\"id:1\"") &&
-        transformedXml.contains("1.2.3.456:sub-para-001"));
-    assertTrue("Should have subordinate ID sub-para-002",
-        transformedXml.contains("1.2.3.456:sub-para-002"));
-    assertTrue("Should have subordinate ID sub-para-003",
-        transformedXml.contains("1.2.3.456:sub-para-003"));
-    assertTrue("Should have subordinate ID sub-lido-001",
-        transformedXml.contains("1.2.3.456:sub-lido-001"));
-    assertTrue("Should have subordinate ID sub-morph-001",
-        transformedXml.contains("1.2.3.456:sub-morph-001"));
+    // Verify the medication statement ID links the subordinate substance administrations
+    assertEquals("Should have statement ID med-multi-001 for each Paracetamol administration", 3,
+        countOccurrences(transformedXml, "1.2.3.456:med-multi-001"));
 
     // Verify code translation from UV Medication Information (simple)
     assertTrue("Should have translation code",
