@@ -1665,15 +1665,11 @@
 
 
             <!--######################################################################################################-->
-            <!-- start attribute from effectiveTime -->
-                <xsl:choose>
-                    <xsl:when test="../cda:effectiveTime/@value">
-                        <xsl:attribute name="start"><xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)"/></xsl:attribute>
-                    </xsl:when>
-                    <xsl:when test="../cda:effectiveTime/cda:low/@value">
-                        <xsl:attribute name="start"><xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/cda:low/@value)"/></xsl:attribute>
-                    </xsl:when>
-                </xsl:choose>
+            <!-- start attribute from effectiveTime (TS, PIVL_TS phase/low or SXPR_TS component) -->
+            <xsl:variable name="start" select="func:MedicationStartTime(../cda:effectiveTime)"/>
+            <xsl:if test="$start">
+                <xsl:attribute name="start"><xsl:value-of select="func:ConvertDateTime($start)"/></xsl:attribute>
+            </xsl:if>
 
 
 
@@ -2777,6 +2773,17 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
+    </xsl:function>
+
+    <!-- Start time of a subordinate substance administration from its effectiveTime:
+         TS @value, IVL_TS low, PIVL_TS phase/low, or the first SXPR_TS component (not excluded via operator 'E')
+         that provides one of these. EIVL_TS has no absolute time and yields no start. -->
+    <xsl:function name="func:MedicationStartTime" as="attribute()?">
+        <xsl:param name="effectiveTime"/>
+        <xsl:sequence select="($effectiveTime/@value,
+                               $effectiveTime/cda:low/@value,
+                               $effectiveTime/cda:phase/cda:low/@value,
+                               $effectiveTime/cda:comp[not(@operator = 'E')]/(@value | cda:low/@value | cda:phase/cda:low/@value))[1]"/>
     </xsl:function>
 
     <!-- Resolves a narrative reference (e.g. text/reference/@value="#med-1") to the normalized string value

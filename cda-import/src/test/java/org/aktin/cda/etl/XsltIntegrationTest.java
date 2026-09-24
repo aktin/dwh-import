@@ -474,6 +474,20 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("Beispiel Pharma AG", xpath(eav, "string(" + fact + "/eav:modifier[@code='manufacturerOrganization']/eav:value)").toString());
   }
 
+  /**
+   * fact/@start must also be derived from PIVL_TS phase/low and from SXPR_TS components.
+   */
+  @Test
+  public void testMedicationStartFromPeriodicAndSetExpression() throws Exception {
+    // storyboard 02: electrolyte infusion as PIVL_TS with phase/low 202401162001
+    XdmNode storyboard = transform(STORYBOARD02_XML);
+    assertEquals("2024-01-16T20:01", xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:B05BB01']/@start)").toString());
+
+    // SXPR_TS with PIVL_TS as first component
+    XdmNode eav = transformMedicationTestDocument();
+    assertEquals("2024-01-17T20:00:00", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:B01AB05']/@start)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");
