@@ -144,6 +144,7 @@
                                         <low value="1" unit="ml/h"/>
                                         <high nullFlavor="UNK"/>
                                     </rateQuantity>
+                                    <administrationUnitCode code="INJSOL" codeSystem="2.16.840.1.113883.5.85" displayName="Injection Solution"/>
                                     <consumable>
                                         <manufacturedProduct>
                                             <manufacturedMaterial nullFlavor="NA"/>

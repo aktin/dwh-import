@@ -1811,6 +1811,25 @@
                 <xsl:with-param name="name" select="'rateQuantity'"/>
             </xsl:call-template>
 
+            <!-- administrationUnitCode CE (AdministrableDrugForm), 0..1 -->
+            <xsl:choose>
+                <xsl:when test="../cda:administrationUnitCode/@code">
+                    <modifier code="administrationUnitCode">
+                        <value xsi:type="string"><xsl:value-of select="../cda:administrationUnitCode/@code"/></value>
+                    </modifier>
+                    <xsl:if test="../cda:administrationUnitCode/@displayName">
+                        <modifier code="administrationUnitCode:displayName">
+                            <value xsi:type="string"><xsl:value-of select="../cda:administrationUnitCode/@displayName"/></value>
+                        </modifier>
+                    </xsl:if>
+                </xsl:when>
+                <xsl:when test="../cda:administrationUnitCode/@nullFlavor">
+                    <modifier code="administrationUnitCode">
+                        <value xsi:type="string"><xsl:value-of select="../cda:administrationUnitCode/@nullFlavor"/></value>
+                    </modifier>
+                </xsl:when>
+            </xsl:choose>
+
             <!-- maxDoseQuantity RTO_PQ_PQ (numerator/denominator) -->
             <xsl:choose>
                 <!-- maxDoseQuantity from UV Subordinate Substance Administration -->

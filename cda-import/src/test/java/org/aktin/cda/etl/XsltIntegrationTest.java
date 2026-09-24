@@ -429,6 +429,18 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("0", xpath(eav, "count(" + fact + "/eav:modifier[@code=('doseQuantity','rateQuantity')])").toString());
   }
 
+  /**
+   * The administrationUnitCode of the subordinate substance administration must be mapped.
+   */
+  @Test
+  public void testMedicationAdministrationUnitCode() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:N02AB03']";
+
+    assertEquals("INJSOL", xpath(eav, "string(" + fact + "/eav:modifier[@code='administrationUnitCode']/eav:value)").toString());
+    assertEquals("Injection Solution", xpath(eav, "string(" + fact + "/eav:modifier[@code='administrationUnitCode:displayName']/eav:value)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");
