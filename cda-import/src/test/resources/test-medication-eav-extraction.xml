@@ -58,6 +58,7 @@
                             <item ID="med-mixed-b">Ibuprofen <content>400 mg</content> p.o.</item>
                             <item ID="med-ranges">Fentanyl 50-100 ug, Laufrate ab 1 ml/h</item>
                             <item ID="med-sxpr-start">Enoxaparin 40 mg s.c. täglich zur Nacht</item>
+                            <item ID="med-eivl-pivl">Omeprazol 20 mg vor dem Frühstück, zusätzlich wöchentlich</item>
                             <item ID="med-code-systems">Metamizol (PZN), Aspirin (SNOMED CT), hausinterner Code</item>
                         </list>
                     </text>
@@ -196,6 +197,58 @@
                                         </comp>
                                     </effectiveTime>
                                     <doseQuantity value="40" unit="mg"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case eivl-pivl-attributes: EIVL_TS with operator, PIVL_TS with alignment -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="INT">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-eivl-pivl"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-eivl-pivl"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="A02BC01" codeSystem="2.16.840.1.113883.6.73" displayName="omeprazole"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="1"/>
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="EIVL_TS" operator="A">
+                                        <event code="ACM" displayName="Before breakfast"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="20" unit="mg"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="2"/>
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="PIVL_TS" alignment="DW" operator="A">
+                                        <period value="1" unit="wk"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="20" unit="mg"/>
                                     <consumable>
                                         <manufacturedProduct>
                                             <manufacturedMaterial nullFlavor="NA"/>

@@ -1845,112 +1845,12 @@
             </xsl:call-template>
 
             <!--######################################################################################################-->
-            <!-- effectiveTime -->
-            <!-- NOTE: Order matters! Check for specific child elements (comp, event, phase/period) before attributes -->
-            <xsl:choose>
-                <!-- Simple TS value -->
-                <xsl:when test="../cda:effectiveTime/@value">
-                    <modifier code="effectiveTime">
-                        <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/@value"/></value>
-                    </modifier>
-                </xsl:when>
-
-                <!-- Simple nullFlavor -->
-                <xsl:when test="../cda:effectiveTime/@nullFlavor">
-                    <modifier code="effectiveTime">
-                        <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/@nullFlavor"/></value>
-                    </modifier>
-                </xsl:when>
-
-                <!-- SXPR_TS (Set Expression) - CHECK FIRST because it also has @operator -->
-                <xsl:when test="../cda:effectiveTime/cda:comp">
-                    <!-- Operator for set expression (A, I, E, P) -->
-                    <xsl:if test="../cda:effectiveTime/@operator">
-                        <modifier code="effectiveTimeSetOperator">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/@operator"/></value>
-                        </modifier>
-                    </xsl:if>
-                    <!-- Handle each component - numbered for multiple components -->
-                    <xsl:for-each select="../cda:effectiveTime/cda:comp">
-                        <modifier code="effectiveTimeComp:{position()}">
-                            <value xsi:type="string">
-                                <xsl:choose>
-                                    <xsl:when test="@value"><xsl:value-of select="@value"/></xsl:when>
-                                    <xsl:when test="cda:low/@value and cda:high/@value">
-                                        <xsl:value-of select="concat(cda:low/@value, '-', cda:high/@value)"/>
-                                    </xsl:when>
-                                    <xsl:when test="cda:low/@value"><xsl:value-of select="concat(cda:low/@value, '-')"/></xsl:when>
-                                    <xsl:when test="cda:high/@value"><xsl:value-of select="concat('-', cda:high/@value)"/></xsl:when>
-                                </xsl:choose>
-                            </value>
-                        </modifier>
-                    </xsl:for-each>
-                </xsl:when>
-
-                <!-- EIVL_TS (Event-related Interval) -->
-                <xsl:when test="../cda:effectiveTime/cda:event">
-                    <xsl:if test="../cda:effectiveTime/cda:event/@code">
-                        <modifier code="effectiveTimeEventCode">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/cda:event/@code"/></value>
-                        </modifier>
-                    </xsl:if>
-                    <xsl:if test="../cda:effectiveTime/cda:event/@displayName">
-                        <modifier code="effectiveTimeEventDisplayName">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/cda:event/@displayName"/></value>
-                        </modifier>
-                    </xsl:if>
-                    <!-- Offset from event -->
-                    <xsl:if test="../cda:effectiveTime/cda:offset/@value">
-                        <modifier code="effectiveTimeEventOffset">
-                            <value xsi:type="numeric">
-                                <xsl:if test="../cda:effectiveTime/cda:offset/@unit">
-                                    <xsl:attribute name="unit"><xsl:value-of select="../cda:effectiveTime/cda:offset/@unit"/></xsl:attribute>
-                                </xsl:if>
-                                <xsl:value-of select="../cda:effectiveTime/cda:offset/@value"/>
-                            </value>
-                        </modifier>
-                    </xsl:if>
-                </xsl:when>
-
-                <!-- PIVL_TS (Periodic Interval) -->
-                <xsl:when test="../cda:effectiveTime/cda:phase or ../cda:effectiveTime/cda:period or ../cda:effectiveTime/@institutionSpecified">
-                    <!-- Phase low (start time of interval) -->
-                    <xsl:if test="../cda:effectiveTime/cda:phase/cda:low/@value">
-                        <modifier code="effectiveTimePhaseLow">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/cda:phase/cda:low/@value"/></value>
-                        </modifier>
-                    </xsl:if>
-                    <!-- Phase high (end time of interval) -->
-                    <xsl:if test="../cda:effectiveTime/cda:phase/cda:high/@value">
-                        <modifier code="effectiveTimePhaseHigh">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/cda:phase/cda:high/@value"/></value>
-                        </modifier>
-                    </xsl:if>
-                    <!-- Period (frequency interval, e.g., "every 4 hours") -->
-                    <xsl:if test="../cda:effectiveTime/cda:period/@value">
-                        <modifier code="effectiveTimePeriod">
-                            <value xsi:type="numeric">
-                                <xsl:if test="../cda:effectiveTime/cda:period/@unit">
-                                    <xsl:attribute name="unit"><xsl:value-of select="../cda:effectiveTime/cda:period/@unit"/></xsl:attribute>
-                                </xsl:if>
-                                <xsl:value-of select="../cda:effectiveTime/cda:period/@value"/>
-                            </value>
-                        </modifier>
-                    </xsl:if>
-                    <!-- Institution specified flag -->
-                    <xsl:if test="../cda:effectiveTime/@institutionSpecified">
-                        <modifier code="effectiveTimeInstitutionSpecified">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/@institutionSpecified"/></value>
-                        </modifier>
-                    </xsl:if>
-                    <!-- Operator (for set operations) -->
-                    <xsl:if test="../cda:effectiveTime/@operator">
-                        <modifier code="effectiveTimeOperator">
-                            <value xsi:type="string"><xsl:value-of select="../cda:effectiveTime/@operator"/></value>
-                        </modifier>
-                    </xsl:if>
-                </xsl:when>
-            </xsl:choose>
+            <!-- effectiveTime (TS, PIVL_TS, EIVL_TS, SXPR_TS) -->
+            <xsl:call-template name="medication-effective-time-modifiers">
+                <xsl:with-param name="effectiveTime" select="../cda:effectiveTime"/>
+                <xsl:with-param name="name" select="'effectiveTime'"/>
+                <xsl:with-param name="suffix" select="''"/>
+            </xsl:call-template>
 
 
             <!--######################################################################################################-->
@@ -2034,6 +1934,154 @@
         </fact>
     </xsl:template>
 
+
+    <!-- Modifiers for the effectiveTime of a subordinate substance administration.
+         Modifier codes are {name}{Part}{suffix}, e.g. effectiveTimePhaseLow at top level. SXPR_TS components are
+         handled recursively with name {name}Comp and suffix {suffix}:{position}, e.g. effectiveTimeCompPhaseLow:1,
+         so components of every type (TS, IVL_TS, PIVL_TS, EIVL_TS) are mapped completely.
+         NOTE: Order matters! Check for specific child elements (comp, event, phase/period) before attributes -->
+    <xsl:template name="medication-effective-time-modifiers">
+        <xsl:param name="effectiveTime"/>
+        <xsl:param name="name"/>
+        <xsl:param name="suffix"/>
+
+        <!-- datatype (xsi:type), e.g. PIVL_TS -->
+        <xsl:if test="$effectiveTime/@xsi:type">
+            <modifier code="{$name}Type{$suffix}">
+                <value xsi:type="string"><xsl:value-of select="$effectiveTime/@xsi:type"/></value>
+            </modifier>
+        </xsl:if>
+
+        <xsl:choose>
+            <!-- Simple TS value -->
+            <xsl:when test="$effectiveTime/@value">
+                <modifier code="{$name}{$suffix}">
+                    <value xsi:type="string"><xsl:value-of select="$effectiveTime/@value"/></value>
+                </modifier>
+            </xsl:when>
+
+            <!-- Simple nullFlavor -->
+            <xsl:when test="$effectiveTime/@nullFlavor">
+                <modifier code="{$name}{$suffix}">
+                    <value xsi:type="string"><xsl:value-of select="$effectiveTime/@nullFlavor"/></value>
+                </modifier>
+            </xsl:when>
+
+            <!-- SXPR_TS (Set Expression) - CHECK FIRST because it also has @operator -->
+            <xsl:when test="$effectiveTime/cda:comp">
+                <!-- Operator for set expression (A, I, E, P) -->
+                <xsl:if test="$effectiveTime/@operator">
+                    <modifier code="{$name}SetOperator{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/@operator"/></value>
+                    </modifier>
+                </xsl:if>
+                <!-- Handle each component - numbered for multiple components -->
+                <xsl:for-each select="$effectiveTime/cda:comp">
+                    <xsl:call-template name="medication-effective-time-modifiers">
+                        <xsl:with-param name="effectiveTime" select="."/>
+                        <xsl:with-param name="name" select="concat($name, 'Comp')"/>
+                        <xsl:with-param name="suffix" select="concat($suffix, ':', position())"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:when>
+
+            <!-- IVL_TS (Interval) -->
+            <xsl:when test="$effectiveTime/cda:low/@value or $effectiveTime/cda:high/@value">
+                <modifier code="{$name}{$suffix}">
+                    <value xsi:type="string">
+                        <xsl:value-of select="concat($effectiveTime/cda:low/@value, '-', $effectiveTime/cda:high/@value)"/>
+                    </value>
+                </modifier>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
+            </xsl:when>
+
+            <!-- EIVL_TS (Event-related Interval) -->
+            <xsl:when test="$effectiveTime/cda:event or $effectiveTime/cda:offset">
+                <xsl:if test="$effectiveTime/cda:event/@code">
+                    <modifier code="{$name}EventCode{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:event/@code"/></value>
+                    </modifier>
+                </xsl:if>
+                <xsl:if test="$effectiveTime/cda:event/@displayName">
+                    <modifier code="{$name}EventDisplayName{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:event/@displayName"/></value>
+                    </modifier>
+                </xsl:if>
+                <!-- Offset from event -->
+                <xsl:if test="$effectiveTime/cda:offset/@value">
+                    <modifier code="{$name}EventOffset{$suffix}">
+                        <value xsi:type="numeric">
+                            <xsl:if test="$effectiveTime/cda:offset/@unit">
+                                <xsl:attribute name="unit"><xsl:value-of select="$effectiveTime/cda:offset/@unit"/></xsl:attribute>
+                            </xsl:if>
+                            <xsl:value-of select="$effectiveTime/cda:offset/@value"/>
+                        </value>
+                    </modifier>
+                </xsl:if>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
+            </xsl:when>
+
+            <!-- PIVL_TS (Periodic Interval) -->
+            <xsl:when test="$effectiveTime/cda:phase or $effectiveTime/cda:period or $effectiveTime/@institutionSpecified or $effectiveTime/@alignment">
+                <!-- Phase low (start time of interval) -->
+                <xsl:if test="$effectiveTime/cda:phase/cda:low/@value">
+                    <modifier code="{$name}PhaseLow{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:low/@value"/></value>
+                    </modifier>
+                </xsl:if>
+                <!-- Phase high (end time of interval) -->
+                <xsl:if test="$effectiveTime/cda:phase/cda:high/@value">
+                    <modifier code="{$name}PhaseHigh{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:high/@value"/></value>
+                    </modifier>
+                </xsl:if>
+                <!-- Period (frequency interval, e.g., "every 4 hours") -->
+                <xsl:if test="$effectiveTime/cda:period/@value">
+                    <modifier code="{$name}Period{$suffix}">
+                        <value xsi:type="numeric">
+                            <xsl:if test="$effectiveTime/cda:period/@unit">
+                                <xsl:attribute name="unit"><xsl:value-of select="$effectiveTime/cda:period/@unit"/></xsl:attribute>
+                            </xsl:if>
+                            <xsl:value-of select="$effectiveTime/cda:period/@value"/>
+                        </value>
+                    </modifier>
+                </xsl:if>
+                <!-- Institution specified flag -->
+                <xsl:if test="$effectiveTime/@institutionSpecified">
+                    <modifier code="{$name}InstitutionSpecified{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/@institutionSpecified"/></value>
+                    </modifier>
+                </xsl:if>
+                <!-- Alignment (calendar cycle the period is aligned to, e.g. DW = day of the week) -->
+                <xsl:if test="$effectiveTime/@alignment">
+                    <modifier code="{$name}Alignment{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/@alignment"/></value>
+                    </modifier>
+                </xsl:if>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Operator (for set operations) of an effectiveTime or SXPR_TS component -->
+    <xsl:template name="medication-effective-time-operator">
+        <xsl:param name="effectiveTime"/>
+        <xsl:param name="code"/>
+        <xsl:if test="$effectiveTime/@operator">
+            <modifier code="{$code}">
+                <value xsi:type="string"><xsl:value-of select="$effectiveTime/@operator"/></value>
+            </modifier>
+        </xsl:if>
+    </xsl:template>
 
     <!-- Modifiers for an IVL_PQ (doseQuantity, rateQuantity): a single value is stored as {name},
          a range as {name}Low/{name}High. NullFlavors are stored as string under the respective code. -->

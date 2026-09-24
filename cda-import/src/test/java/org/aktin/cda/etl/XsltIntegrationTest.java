@@ -488,6 +488,34 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("2024-01-17T20:00:00", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:B01AB05']/@start)").toString());
   }
 
+  /**
+   * SXPR_TS components of type PIVL_TS or EIVL_TS must be mapped completely, including their
+   * datatype and operator.
+   */
+  @Test
+  public void testMedicationSetExpressionComponents() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:B01AB05']";
+
+    assertEquals("0", xpath(eav, "count(" + fact + "/eav:modifier[eav:value = ''])").toString());
+    // component 1: PIVL_TS
+    assertEquals("PIVL_TS", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompType:1']/eav:value)").toString());
+    assertEquals("20240117200000", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompPhaseLow:1']/eav:value)").toString());
+    assertEquals("24 h", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='effectiveTimeCompPeriod:1']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("true", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompInstitutionSpecified:1']/eav:value)").toString());
+    // component 2: EIVL_TS with operator
+    assertEquals("EIVL_TS", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompType:2']/eav:value)").toString());
+    assertEquals("I", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompOperator:2']/eav:value)").toString());
+    assertEquals("HS", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompEventCode:2']/eav:value)").toString());
+    assertEquals("30 min", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='effectiveTimeCompEventOffset:2']/eav:value/(., @unit), ' ')").toString());
+
+    // top level EIVL_TS operator and PIVL_TS alignment
+    String eivl = "//eav:fact[@concept='AKTIN:MED:ATC:A02BC01'][eav:modifier[@code='effectiveTimeEventCode']]";
+    assertEquals("A", xpath(eav, "string(" + eivl + "/eav:modifier[@code='effectiveTimeOperator']/eav:value)").toString());
+    String pivl = "//eav:fact[@concept='AKTIN:MED:ATC:A02BC01'][eav:modifier[@code='effectiveTimePeriod']]";
+    assertEquals("DW", xpath(eav, "string(" + pivl + "/eav:modifier[@code='effectiveTimeAlignment']/eav:value)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");
