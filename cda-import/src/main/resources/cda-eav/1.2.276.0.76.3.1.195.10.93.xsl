@@ -98,8 +98,12 @@
     <!-- Prefix for Import Transformation Template Information -->
     <xsl:variable name="TemplateVersion-Prefix">AKTIN:ITTI:</xsl:variable>
 
-    <!-- Concept Code Prefix for Medication Codes -->
+    <!-- Concept Code Prefix for Medication Codes, followed by a code system prefix (see func:GetMedicationConcept) -->
     <xsl:variable name="Medikation-Prefix">AKTIN:MED:</xsl:variable>
+
+    <!-- Code systems of medication codes -->
+    <xsl:variable name="ATC-OID">2.16.840.1.113883.6.73</xsl:variable>
+    <xsl:variable name="PZN-OID">1.2.276.0.76.4.6</xsl:variable>
 
     <!-- Concept Code Prefix for Wildcard Diagnostics -->
     <xsl:variable name="WildcardDiagnostik-Prefix">AKTIN:WDIAG:</xsl:variable>
@@ -1631,24 +1635,15 @@
     <xsl:template match="cda:templateId[@root='2.16.840.1.113883.10.21.4.6']">
         <xsl:comment>UV Substance Administration</xsl:comment>
         <fact>
+            <!-- case "compound medication": code from UV Subordinate Substance Administration -->
+            <!-- Note: although not specified, the code would be in a code-subelement because hl7:manufacturedMaterial
+                    is based on https://build.fhir.org/ig/HL7/CDA-core-sd/StructureDefinition-Material.html -->
+            <!-- case "simple medication": code from surrounding Medication Statement -->
+            <!-- Note: UV Substance Administration is a substanceAdministration element, meaning that the surrounding
+                    Medication Statement is the *SECOND* ancestor element substanceAdministration -->
             <xsl:attribute name="concept">
-                <xsl:value-of select="$Medikation-Prefix"/>
-                <xsl:choose>
-                    <!-- case "compound medication": get code from UV Subordinate Substance Administration -->
-                    <!-- Note: although not specified, the code would be in a code-subelement because hl7:manufacturedMaterial
-                            is based on https://build.fhir.org/ig/HL7/CDA-core-sd/StructureDefinition-Material.html -->
-                    <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
-                        <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
-                    </xsl:when>
-                    <!-- case "simple medication": get code from surrounding Medication Statement -->
-                    <!-- Note: UV Substance Administration is a substanceAdministration element, meaning that the surrounding
-                            Medication Statement is the *SECOND* ancestor element substanceAdministration -->
-                    <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
-                        <xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
-                    </xsl:when>
-                    <!-- Note: schema requires NA as @nullFlavor -->
-                    <xsl:otherwise>NA</xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="func:GetMedicationConcept((../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code[@code],
+                                                                 ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code)[1])"/>
             </xsl:attribute>
 
             <!-- instance_num only when parent has medication code (not compound medication) -->
@@ -1701,6 +1696,34 @@
                     </modifier>
                 </xsl:when>
             </xsl:choose>
+
+            <!-- Medication codeSystem (the concept code alone is ambiguous, e.g. ATC vs. PZN vs. SNOMED CT) -->
+            <xsl:choose>
+                <!-- case "compound medication": get codeSystem from UV Subordinate Substance Administration -->
+                <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
+                    <xsl:if test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem">
+                        <modifier code="codeSystem">
+                            <value xsi:type="string">
+                                <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem"/>
+                            </value>
+                        </modifier>
+                    </xsl:if>
+                </xsl:when>
+                <!-- case "simple medication": get codeSystem from surrounding Medication Statement -->
+                <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem">
+                    <modifier code="codeSystem">
+                        <value xsi:type="string">
+                            <xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem"/>
+                        </value>
+                    </modifier>
+                </xsl:when>
+            </xsl:choose>
+
+            <!-- ATC code of the medication (code or translation), links every medication fact to ATC -->
+            <xsl:call-template name="medication-atc-modifier">
+                <xsl:with-param name="code" select="(../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code[@code],
+                                                     ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code)[1]"/>
+            </xsl:call-template>
 
             <!--######################################################################################################-->
             <!-- UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10 additional fields -->
@@ -2127,17 +2150,9 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.67']">
         <!-- Only process if there are NO subordinate substance administrations -->
         <xsl:if test="not(../cda:entryRelationship/cda:substanceAdministration)">
-            <xsl:variable name="medCode" select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:value-of select="$Medikation-Prefix"/>
-                    <xsl:choose>
-                        <xsl:when test="$medCode">
-                            <xsl:value-of select="$medCode"/>
-                        </xsl:when>
-                        <!-- Note: schema requires NA as @nullFlavor -->
-                        <xsl:otherwise>NA</xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="func:GetMedicationConcept(../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code)"/>
                 </xsl:attribute>
 
                 <!-- Add modifiers from parent medication statement -->
@@ -2240,6 +2255,31 @@
                 <value xsi:type="string">
                     <xsl:value-of select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName"/>
                 </value>
+            </modifier>
+        </xsl:if>
+        <!-- Medication codeSystem (the concept code alone is ambiguous, e.g. ATC vs. PZN vs. SNOMED CT) -->
+        <xsl:if test="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem">
+            <modifier code="codeSystem">
+                <value xsi:type="string">
+                    <xsl:value-of select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem"/>
+                </value>
+            </modifier>
+        </xsl:if>
+        <!-- ATC code of the medication (code or translation), links every medication fact to ATC -->
+        <xsl:call-template name="medication-atc-modifier">
+            <xsl:with-param name="code" select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <!-- Modifier atcCode: the ATC code of a medication code, taken from the code itself or else from the first
+         translation with code system ATC. Allows to select medication facts by ATC independent of the code system
+         of the concept (e.g. PZN). -->
+    <xsl:template name="medication-atc-modifier">
+        <xsl:param name="code"/>
+        <xsl:variable name="atc" select="($code[@codeSystem = $ATC-OID]/@code, $code/cda:translation[@codeSystem = $ATC-OID]/@code)[1]"/>
+        <xsl:if test="$atc">
+            <modifier code="atcCode">
+                <value xsi:type="string"><xsl:value-of select="$atc"/></value>
             </modifier>
         </xsl:if>
     </xsl:template>
@@ -2746,6 +2786,28 @@
     <xsl:function name="func:ResolveNarrative" as="xs:string">
         <xsl:param name="ref"/>
         <xsl:sequence select="if ($ref[1]) then normalize-space(string(key('byId', substring-after($ref[1], '#'), root($ref[1]))[1])) else ''"/>
+    </xsl:function>
+
+    <!-- Concept code of a medication: AKTIN:MED:{code system}:{code}, e.g. AKTIN:MED:ATC:N02BE01.
+         The code system prefix makes the code unambiguous (the template binds no code system), while all medication
+         facts stay below AKTIN:MED:. A code with nullFlavor yields AKTIN:MED:NA (see modifier nullFlavor). -->
+    <xsl:function name="func:GetMedicationConcept" as="xs:string">
+        <xsl:param name="code"/>
+        <xsl:sequence select="if ($code/@code)
+                              then concat($Medikation-Prefix, func:GetMedicationCodePrefix($code/@codeSystem), $code/@code)
+                              else concat($Medikation-Prefix, 'NA')"/>
+    </xsl:function>
+
+    <!-- Code system prefix for medication codes -->
+    <xsl:function name="func:GetMedicationCodePrefix">
+        <xsl:param name="codeSystem"/>
+        <xsl:choose>
+            <xsl:when test="$codeSystem = $ATC-OID">ATC:</xsl:when>
+            <xsl:when test="$codeSystem = $PZN-OID">PZN:</xsl:when>
+            <xsl:when test="$codeSystem = '2.16.840.1.113883.6.96'"><xsl:value-of select="$SNOMED-Prefix"/></xsl:when>
+            <!--            Unknown Code System (UCS), see modifier codeSystem -->
+            <xsl:otherwise>UCS:</xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
 
     <!-- Generic Code System Prefix Function -->

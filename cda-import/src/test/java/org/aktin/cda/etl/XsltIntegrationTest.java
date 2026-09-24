@@ -53,26 +53,26 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     writeEavOutput(transformedXml, "eav-test-multiple-subordinate-substance-administrations.xml");
 
     // Test Case 1: Paracetamol (N02BE01) with 3 subordinates should create 3 facts
-    int paracetamolFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:N02BE01\"");
+    int paracetamolFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:ATC:N02BE01\"");
     assertEquals("Should have 3 facts for Paracetamol (one per subordinate)", 3, paracetamolFacts);
 
     // Test Case 2: Aspirin (N02BA01) without subordinate should create 1 fact
-    int aspirinFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:N02BA01\"");
+    int aspirinFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:ATC:N02BA01\"");
     assertEquals("Should have 1 fact for Aspirin (no subordinate)", 1, aspirinFacts);
 
     // Test Case 3: Lidocaine (N01BB02) with multiple approach sites
-    int lidocaineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:N01BB02\"");
+    int lidocaineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:ATC:N01BB02\"");
 
     assertEquals("Should have 1 fact for Lidocaine (single subordinate)", 1, lidocaineFacts);
 
     // Test Case 4: Compound Medication - each component should have 1 fact
-    int morphineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:N02AA01\"");
+    int morphineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:ATC:N02AA01\"");
     assertEquals("Should have 1 fact for Morphine (compound component)", 1, morphineFacts);
 
-    int atropineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:A03BA01\"");
+    int atropineFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:ATC:A03BA01\"");
     assertEquals("Should have 1 fact for Atropine (compound component)", 1, atropineFacts);
 
-    int dextroseFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:V06DC01\"");
+    int dextroseFacts = countOccurrences(transformedXml, "concept=\"AKTIN:MED:ATC:V06DC01\"");
     assertEquals("Should have 1 fact for Dextrose (compound component)", 1, dextroseFacts);
 
     // Verify numbered approachSiteCode modifiers
@@ -96,7 +96,7 @@ public class XsltIntegrationTest extends AbstractXsltTest {
 
     // Verify moodCode for standalone medication (INT = intended)
     assertTrue("Aspirin should have moodCode INT",
-        transformedXml.contains("concept=\"AKTIN:MED:N02BA01\"") &&
+        transformedXml.contains("concept=\"AKTIN:MED:ATC:N02BA01\"") &&
         transformedXml.contains("<value xsi:type=\"string\">INT</value>"));
 
     // Verify instance_num for multiple administrations of same medication
@@ -161,7 +161,7 @@ public class XsltIntegrationTest extends AbstractXsltTest {
 
     // Test Case 1: Simple TS value
     assertTrue("Should have simple effectiveTime value",
-        transformedXml.contains("concept=\"AKTIN:MED:N02BE01\"") &&
+        transformedXml.contains("concept=\"AKTIN:MED:ATC:N02BE01\"") &&
         transformedXml.contains("code=\"effectiveTime\"") &&
         transformedXml.contains("20240120140000"));
 
@@ -387,7 +387,31 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         xpath(eav, "string(//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-mixed-a']"
             + "/eav:modifier[@code='text']/eav:value)").toString());
     assertEquals("Ibuprofen 400 mg p.o.",
-        xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:M01AE01']/eav:modifier[@code='AKTIN:MED:DESC']/eav:value)").toString());
+        xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='AKTIN:MED:DESC']/eav:value)").toString());
+  }
+
+  /**
+   * The medication concept must identify the code system (AKTIN:MED:{system}:{code}), the code system OID is kept
+   * as modifier, and every fact with an ATC code (as code or translation) carries the modifier atcCode.
+   */
+  @Test
+  public void testMedicationCodeSystem() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String atc = "2.16.840.1.113883.6.73";
+
+    // ATC, statement with subordinate
+    assertEquals(atc, xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']/eav:modifier[@code='codeSystem']/eav:value)").toString());
+    assertEquals("N02BE01", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']/eav:modifier[@code='atcCode']/eav:value)").toString());
+    // ATC, statement without subordinate
+    assertEquals(atc, xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='codeSystem']/eav:value)").toString());
+    // PZN with ATC translation
+    assertEquals("1.2.276.0.76.4.6", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:PZN:01016788']/eav:modifier[@code='codeSystem']/eav:value)").toString());
+    assertEquals("N02BB02", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:PZN:01016788']/eav:modifier[@code='atcCode']/eav:value)").toString());
+    // SNOMED CT without ATC
+    assertEquals("1", xpath(eav, "count(//eav:fact[@concept='AKTIN:MED:SNOMED:387458008'])").toString());
+    assertEquals("0", xpath(eav, "count(//eav:fact[@concept='AKTIN:MED:SNOMED:387458008']/eav:modifier[@code='atcCode'])").toString());
+    // unknown code system
+    assertEquals("1.2.3.4.5.6", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:UCS:X-4711']/eav:modifier[@code='codeSystem']/eav:value)").toString());
   }
 
   private XdmNode transformMedicationTestDocument() throws Exception {

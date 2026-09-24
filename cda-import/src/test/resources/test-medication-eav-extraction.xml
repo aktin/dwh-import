@@ -56,6 +56,7 @@
                         <list>
                             <item ID="med-mixed-a">Paracetamol <content>1 g</content> i.v.</item>
                             <item ID="med-mixed-b">Ibuprofen <content>400 mg</content> p.o.</item>
+                            <item ID="med-code-systems">Metamizol (PZN), Aspirin (SNOMED CT), hausinterner Code</item>
                         </list>
                     </text>
                     <!-- Case mixed-a: narrative with mixed content, statement with subordinate -->
@@ -106,6 +107,78 @@
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
                                     <manufacturedMaterial classCode="MMAT">
                                         <code code="M01AE01" codeSystem="2.16.840.1.113883.6.73" displayName="ibuprofen"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case code-systems: PZN with ATC translation (no subordinate), SNOMED CT (with subordinate), unknown code system -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-pzn"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-code-systems"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="01016788" codeSystem="1.2.276.0.76.4.6" displayName="Metamizol 500 mg Tabletten">
+                                            <translation code="N02BB02" codeSystem="2.16.840.1.113883.6.73" displayName="metamizole sodium"/>
+                                        </code>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-snomed"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-code-systems"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="387458008" codeSystem="2.16.840.1.113883.6.96" displayName="Aspirin (substance)"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117120000"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-ucs"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-code-systems"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="X-4711" codeSystem="1.2.3.4.5.6" displayName="Hausinterner Code"/>
                                     </manufacturedMaterial>
                                 </manufacturedProduct>
                             </consumable>
