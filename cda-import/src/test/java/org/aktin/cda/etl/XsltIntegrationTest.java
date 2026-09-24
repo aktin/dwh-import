@@ -385,7 +385,7 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     XdmNode eav = transformMedicationTestDocument();
 
     assertEquals("Paracetamol 1 g i.v.",
-        xpath(eav, "string(//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-mixed-a']"
+        xpath(eav, "string(//eav:fact[eav:modifier[@code='parentMedicationStatementId:1']/eav:value='1.2.3.456:med-mixed-a']"
             + "/eav:modifier[@code='text']/eav:value)").toString());
     assertEquals("Ibuprofen 400 mg p.o.",
         xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='AKTIN:MED:DESC']/eav:value)").toString());
@@ -523,8 +523,8 @@ public class XsltIntegrationTest extends AbstractXsltTest {
   @Test
   public void testMedicationNullFlavorsAndOriginalText() throws Exception {
     XdmNode eav = transformMedicationTestDocument();
-    String factA = "//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-nullflavor-a']";
-    String factB = "//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-nullflavor-b']";
+    String factA = "//eav:fact[eav:modifier[@code='parentMedicationStatementId:1']/eav:value='1.2.3.456:med-nullflavor-a']";
+    String factB = "//eav:fact[eav:modifier[@code='parentMedicationStatementId:1']/eav:value='1.2.3.456:med-nullflavor-b']";
 
     assertEquals("AKTIN:MED:NA", xpath(eav, "string(" + factA + "/@concept)").toString());
     assertEquals("UNK", xpath(eav, "string(" + factA + "/eav:modifier[@code='nullFlavor']/eav:value)").toString());
@@ -534,6 +534,23 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("AKTIN:MED:NA", xpath(eav, "string(" + factB + "/@concept)").toString());
     assertEquals("NI", xpath(eav, "string(" + factB + "/eav:modifier[@code='nullFlavor']/eav:value)").toString());
     assertEquals("Blutdrucktablette", xpath(eav, "string(" + factB + "/eav:modifier[@code='originalText']/eav:value)").toString());
+  }
+
+  /**
+   * Multiple statement ids must result in numbered modifiers, since modifier codes must be unique within a fact.
+   */
+  @Test
+  public void testMedicationMultipleStatementIds() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+
+    // statement with subordinate
+    String factA = "//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']";
+    assertEquals("1.2.3.456:med-mixed-a", xpath(eav, "string(" + factA + "/eav:modifier[@code='parentMedicationStatementId:1']/eav:value)").toString());
+    assertEquals("1.2.3.789:med-mixed-a-alt", xpath(eav, "string(" + factA + "/eav:modifier[@code='parentMedicationStatementId:2']/eav:value)").toString());
+    // statement without subordinate
+    String factB = "//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']";
+    assertEquals("1.2.3.456:med-mixed-b", xpath(eav, "string(" + factB + "/eav:modifier[@code='parentMedicationStatementId:1']/eav:value)").toString());
+    assertEquals("1.2.3.789:med-mixed-b-alt", xpath(eav, "string(" + factB + "/eav:modifier[@code='parentMedicationStatementId:2']/eav:value)").toString());
   }
 
   private XdmNode transformMedicationTestDocument() throws Exception {

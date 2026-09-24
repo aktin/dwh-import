@@ -69,6 +69,7 @@
                         <substanceAdministration classCode="SBADM" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
                             <id root="1.2.3.456" extension="med-mixed-a"/>
+                            <id root="1.2.3.789" extension="med-mixed-a-alt"/>
                             <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
                             <text>
                                 <reference value="#med-mixed-a"/>
@@ -102,6 +103,7 @@
                         <substanceAdministration classCode="SBADM" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
                             <id root="1.2.3.456" extension="med-mixed-b"/>
+                            <id root="1.2.3.789" extension="med-mixed-b-alt"/>
                             <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
                             <text>
                                 <reference value="#med-mixed-b"/>

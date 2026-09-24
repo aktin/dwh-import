@@ -1856,9 +1856,10 @@
             <!--######################################################################################################-->
             <!-- information only available from parent Medication Statement -->
 
-            <!-- Parent Medication Statement ID - links subordinate administrations together -->
+            <!-- Parent Medication Statement IDs - link subordinate administrations together.
+                 Numbered (parentMedicationStatementId:1, ...), since modifier codes must be unique within a fact -->
             <xsl:for-each select="ancestor::cda:substanceAdministration[2]/cda:id">
-                <modifier code="parentMedicationStatementId">
+                <modifier code="parentMedicationStatementId:{position()}">
                     <value xsi:type="string">
                         <xsl:value-of select="@root"/>
                         <xsl:if test="@extension">
@@ -2171,9 +2172,10 @@
             </modifier>
         </xsl:if>
 
-        <!-- Parent Medication Statement ID - links subordinate administrations together -->
+        <!-- Medication Statement IDs - numbered (parentMedicationStatementId:1, ...),
+             since modifier codes must be unique within a fact -->
         <xsl:for-each select="$outer/cda:id">
-            <modifier code="parentMedicationStatementId">
+            <modifier code="parentMedicationStatementId:{position()}">
                 <value xsi:type="string">
                     <xsl:value-of select="@root"/>
                     <xsl:if test="@extension">
