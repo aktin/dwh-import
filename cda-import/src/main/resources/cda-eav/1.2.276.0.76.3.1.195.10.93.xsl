@@ -967,28 +967,7 @@
                 <xsl:value-of select="concat(func:GetCodePrefix(../cda:value/@codeSystem), ../cda:value/@code)" />
             </xsl:attribute>
 
-            <xsl:choose>
-                <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                    <modifier code="effectiveTime">
-                        <value xsi:type="string">
-                            <xsl:value-of select="ancestor::cda:act[1]/cda:effectiveTime/@value" />
-                        </value>
-                    </modifier>
-                </xsl:when>
-                <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value)" />
-                    </xsl:attribute>
-                    <modifier code="effectiveTimeLow">
-                        <value xsi:type="string">
-                            <xsl:value-of select="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value" />
-                        </value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="GetAccidentTime" />
 
             <!-- Optional displayName -->
             <xsl:if test="../cda:value/@displayName">
@@ -1005,21 +984,10 @@
             <xsl:comment>Accident kinetics (Unfallkinetik)</xsl:comment>
             <fact>
                 <xsl:attribute name="concept">
-                    <xsl:value-of select="concat($acc-kin-Prefix, ../cda:value/cda:qualifier/cda:value/@code)" />
+                    <xsl:value-of select="concat($acc-kin-Prefix, (../cda:value/cda:qualifier/cda:value/@code, ../cda:value/cda:qualifier/cda:value/@nullFlavor)[1])" />
                 </xsl:attribute>
 
-                <xsl:choose>
-                    <xsl:when test="../cda:effectiveTime/@value">
-                        <xsl:attribute name="start">
-                            <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
-                        </xsl:attribute>
-                    </xsl:when>
-                    <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value">
-                        <xsl:attribute name="start">
-                            <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value)" />
-                        </xsl:attribute>
-                    </xsl:when>
-                </xsl:choose>
+                <xsl:call-template name="GetAccidentTime" />
 
                 <xsl:if test="../cda:value/@displayName">
                     <modifier code="displayName">
@@ -1042,31 +1010,10 @@
         <fact>
             <!-- concept from value/@code (SNOMED injury cause code) instead of observation/code -->
             <xsl:attribute name="concept">
-                <xsl:value-of select="concat($acc-cause-Prefix, ../cda:value/@code)" />
+                <xsl:value-of select="concat($acc-cause-Prefix, (../cda:value/@code, ../cda:value/@nullFlavor)[1])" />
             </xsl:attribute>
 
-            <xsl:choose>
-                <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/@value)" />
-                    </xsl:attribute>
-                    <modifier code="effectiveTime">
-                        <value xsi:type="string">
-                            <xsl:value-of select="ancestor::cda:act[1]/cda:effectiveTime/@value" />
-                        </value>
-                    </modifier>
-                </xsl:when>
-                <xsl:when test="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value">
-                    <xsl:attribute name="start">
-                        <xsl:value-of select="func:ConvertDateTime(ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value)" />
-                    </xsl:attribute>
-                    <modifier code="effectiveTimeLow">
-                        <value xsi:type="string">
-                            <xsl:value-of select="ancestor::cda:act[1]/cda:effectiveTime/cda:low/@value" />
-                        </value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="GetAccidentTime" />
 
             <!-- Optional displayName -->
             <xsl:if test="../cda:value/@displayName">
@@ -1076,8 +1023,6 @@
                     </value>
                 </modifier>
             </xsl:if>
-
-            <xsl:call-template name="GetEffectiveTimes" />
         </fact>
     </xsl:template>
 

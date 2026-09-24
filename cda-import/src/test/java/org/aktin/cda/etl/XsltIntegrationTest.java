@@ -373,6 +373,39 @@ public class XsltIntegrationTest extends AbstractXsltTest {
   }
 
   /**
+   * Test that nullFlavors in the Notfallanamnese entries are mapped into the concept
+   * instead of producing concepts with an empty code.
+   */
+  @Test
+  public void testAnamnesisNullFlavors() throws Exception {
+    String transformedXml = performXsltTransformation("/test-anamnesis-nullflavors.xml", EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-anamnesis-nullflavors.xml");
+
+    assertFalse("Accident kinetics must not have an empty code",
+        transformedXml.contains("concept=\"AKTIN:ACC:KIN:\""));
+    assertTrue("Accident kinetics nullFlavor should be part of the concept",
+        transformedXml.contains("concept=\"AKTIN:ACC:KIN:UNK\""));
+
+    assertFalse("Injury cause must not have an empty code",
+        transformedXml.contains("concept=\"AKTIN:ACC:CAUSE:\""));
+    assertTrue("Injury cause nullFlavor should be part of the concept",
+        transformedXml.contains("concept=\"AKTIN:ACC:CAUSE:UNK\""));
+
+    String cause = getFact(transformedXml, "SNOMED:418019003");
+    assertFalse("Accident cause should have no start for unknown accident time",
+        cause.contains("start="));
+    assertTrue("Accident cause should keep the nullFlavor of the accident time",
+        cause.contains("code=\"effectiveTimeLow\"") && cause.contains(">UNK<"));
+    assertTrue("Injury cause should keep the nullFlavor of the accident time",
+        getFact(transformedXml, "AKTIN:ACC:CAUSE:UNK").contains("code=\"effectiveTimeLow\""));
+    assertTrue("Accident kinetics should keep the nullFlavor of the accident time",
+        getFact(transformedXml, "AKTIN:ACC:KIN:UNK").contains("code=\"effectiveTimeLow\""));
+
+    assertTrue("Substance influence nullFlavor should be part of the concept",
+        transformedXml.contains("concept=\"AKTIN:SUBINFLUENCE:NASK\""));
+  }
+
+  /**
    * Test that an accident is imported even if the accident anamnesis contains
    * nothing but the accident time.
    */
