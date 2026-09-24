@@ -1722,10 +1722,10 @@
 
             <!--######################################################################################################-->
 
-            <!-- moodCode -->
+            <!-- moodCode of the subordinate substance administration -->
             <!--    conformance: R -->
             <!--    cardinality: 1..1 -->
-            <!-- Note: SHALL be same as in parent medication statement -->
+            <!-- Note: may differ from the moodCode of the parent medication statement (see statementMoodCode) -->
             <xsl:choose>
                 <xsl:when test="../@moodCode">
                     <modifier code="moodCode">
@@ -1755,6 +1755,13 @@
                     </modifier>
                 </xsl:when>
             </xsl:choose>
+
+            <!-- moodCode of the parent medication statement (EVN, INT) -->
+            <xsl:if test="$statement/@moodCode">
+                <modifier code="statementMoodCode">
+                    <value xsi:type="string"><xsl:value-of select="$statement/@moodCode"/></value>
+                </modifier>
+            </xsl:if>
 
             <!-- statusCode of the parent medication statement -->
             <xsl:call-template name="medication-statement-status-modifier">
@@ -1869,6 +1876,10 @@
                 <modifier code="{$name}{$suffix}">
                     <value xsi:type="string"><xsl:value-of select="$effectiveTime/@value"/></value>
                 </modifier>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
             </xsl:when>
 
             <!-- Simple nullFlavor -->
@@ -1876,6 +1887,10 @@
                 <modifier code="{$name}{$suffix}">
                     <value xsi:type="string"><xsl:value-of select="$effectiveTime/@nullFlavor"/></value>
                 </modifier>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
             </xsl:when>
 
             <!-- SXPR_TS (Set Expression) - CHECK FIRST because it also has @operator -->
@@ -1896,11 +1911,22 @@
                 </xsl:for-each>
             </xsl:when>
 
-            <!-- IVL_TS (Interval) -->
-            <xsl:when test="$effectiveTime/cda:low/@value or $effectiveTime/cda:high/@value">
+            <!-- IVL_TS (Interval) given by center only (SXPR_TS component): center is stored as time, a nullFlavor as the nullFlavor -->
+            <xsl:when test="$effectiveTime/cda:center/(@value | @nullFlavor)">
+                <modifier code="{$name}{$suffix}">
+                    <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:center/(@value, @nullFlavor)[1]"/></value>
+                </modifier>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
+            </xsl:when>
+
+            <!-- IVL_TS (Interval) as {low}-{high}; a nullFlavor bound is stored as the nullFlavor -->
+            <xsl:when test="$effectiveTime/cda:low/(@value | @nullFlavor) or $effectiveTime/cda:high/(@value | @nullFlavor)">
                 <modifier code="{$name}{$suffix}">
                     <value xsi:type="string">
-                        <xsl:value-of select="concat($effectiveTime/cda:low/@value, '-', $effectiveTime/cda:high/@value)"/>
+                        <xsl:value-of select="concat($effectiveTime/cda:low/(@value, @nullFlavor)[1], '-', $effectiveTime/cda:high/(@value, @nullFlavor)[1])"/>
                     </value>
                 </modifier>
                 <xsl:call-template name="medication-effective-time-operator">
@@ -1989,7 +2015,8 @@
     </xsl:template>
 
     <!-- Modifiers for an IVL_PQ (doseQuantity, rateQuantity, EIVL_TS offset): a single value is stored as
-         {name}{suffix}, a range as {name}Low{suffix}/{name}High{suffix}, a width as {name}Width{suffix}.
+         {name}{suffix}, a range as {name}Low{suffix}/{name}High{suffix}, a center as {name}Center{suffix},
+         a width as {name}Width{suffix}.
          NullFlavors are stored as string under the respective code. -->
     <xsl:template name="medication-ivl-pq-modifiers">
         <xsl:param name="ivl"/>
@@ -2006,6 +2033,10 @@
         <xsl:call-template name="medication-pq-modifier">
             <xsl:with-param name="pq" select="$ivl/cda:high"/>
             <xsl:with-param name="code" select="concat($name, 'High', $suffix)"/>
+        </xsl:call-template>
+        <xsl:call-template name="medication-pq-modifier">
+            <xsl:with-param name="pq" select="$ivl/cda:center"/>
+            <xsl:with-param name="code" select="concat($name, 'Center', $suffix)"/>
         </xsl:call-template>
         <xsl:call-template name="medication-pq-modifier">
             <xsl:with-param name="pq" select="$ivl/cda:width"/>
@@ -2791,12 +2822,12 @@
 
     <!-- Start time of a subordinate substance administration from its effectiveTime (TS, PIVL_TS, EIVL_TS or SXPR_TS):
          TS @value, PIVL_TS phase/low, or the first SXPR_TS component (not excluded via operator 'E') that provides
-         a TS value, IVL_TS low or PIVL_TS phase/low. EIVL_TS has no absolute time and yields no start. -->
+         a TS value, IVL_TS low or center or PIVL_TS phase/low. EIVL_TS has no absolute time and yields no start. -->
     <xsl:function name="func:MedicationStartTime" as="attribute()?">
         <xsl:param name="effectiveTime"/>
         <xsl:sequence select="($effectiveTime/@value,
                                $effectiveTime/cda:phase/cda:low/@value,
-                               $effectiveTime/cda:comp[not(@operator = 'E')]/(@value | cda:low/@value | cda:phase/cda:low/@value))[1]"/>
+                               $effectiveTime/cda:comp[not(@operator = 'E')]/(@value | cda:low/@value | cda:center/@value | cda:phase/cda:low/@value))[1]"/>
     </xsl:function>
 
     <!-- Origin of a start time returned by func:MedicationStartTime: effectiveTime, effectiveTimePhaseLow,

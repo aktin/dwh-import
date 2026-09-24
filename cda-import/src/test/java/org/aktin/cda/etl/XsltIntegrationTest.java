@@ -18,6 +18,7 @@ public class XsltIntegrationTest extends AbstractXsltTest {
 
   private static final String MEDICATION_TEST_XML = "/test-medication-eav-extraction.xml";
   private static final String STORYBOARD02_XML = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard02.xml";
+  private static final String MEDICATION_TIMING_2026_XML = "/test-2026-medication-timing.xml";
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
@@ -640,6 +641,53 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     String pivl = "//eav:fact[@concept='AKTIN:MED:ATC:A10AB01'][eav:modifier[@code='effectiveTimePhaseLow']]";
     assertEquals("30 min", xpath(eav, "string-join(" + pivl + "/eav:modifier[@code='effectiveTimePhaseWidth']/eav:value/(., @unit), ' ')").toString());
     assertEquals("UNK", xpath(eav, "string(" + pivl + "/eav:modifier[@code='effectiveTimePeriod']/eav:value)").toString());
+  }
+
+  /**
+   * SXPR_TS components: the operator of every component is kept, an IVL_TS component given by center only
+   * provides time and start, and a nullFlavor bound or center is written as the nullFlavor.
+   */
+  @Test
+  public void testMedicationSetExpressionCenterOperatorAndNullFlavorBound() throws Exception {
+    XdmNode eav = transform(MEDICATION_TIMING_2026_XML);
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']";
+    assertEquals("1", xpath(eav, "count(" + fact + ")").toString());
+    // component 1: IVL_TS center only
+    assertEquals("20240118", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeComp:1']/eav:value)").toString());
+    assertEquals("2024-01-18", xpath(eav, "string(" + fact + "/@start)").toString());
+    assertEquals("effectiveTimeComp:1", xpath(eav, "string(" + fact + "/eav:modifier[@code='startSource']/eav:value)").toString());
+    // component 2: TS with operator E
+    assertEquals("20240119", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeComp:2']/eav:value)").toString());
+    assertEquals("E", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompOperator:2']/eav:value)").toString());
+    // component 3: IVL_TS with nullFlavor low
+    assertEquals("UNK-20240120", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeComp:3']/eav:value)").toString());
+    assertEquals("A", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompOperator:3']/eav:value)").toString());
+    // component 4: IVL_TS with nullFlavor center
+    assertEquals("UNK", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeComp:4']/eav:value)").toString());
+    assertEquals("A", xpath(eav, "string(" + fact + "/eav:modifier[@code='effectiveTimeCompOperator:4']/eav:value)").toString());
+  }
+
+  /**
+   * On the path with subordinate administrations the moodCode of the medication statement is kept as
+   * statementMoodCode next to the moodCode of the subordinate.
+   */
+  @Test
+  public void testMedicationStatementMoodCode() throws Exception {
+    XdmNode eav = transform(MEDICATION_TIMING_2026_XML);
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']";
+    assertEquals("EVN", xpath(eav, "string(" + fact + "/eav:modifier[@code='moodCode']/eav:value)").toString());
+    assertEquals("INT", xpath(eav, "string(" + fact + "/eav:modifier[@code='statementMoodCode']/eav:value)").toString());
+  }
+
+  /**
+   * doseQuantity and rateQuantity given as IVL_PQ center are mapped as {name}Center.
+   */
+  @Test
+  public void testMedicationDoseAndRateCenter() throws Exception {
+    XdmNode eav = transform(MEDICATION_TIMING_2026_XML);
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:N02BE01']";
+    assertEquals("5 mg", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='doseQuantityCenter']/eav:value/(., @unit), ' ')").toString());
+    assertEquals("10 mL/h", xpath(eav, "string-join(" + fact + "/eav:modifier[@code='rateQuantityCenter']/eav:value/(., @unit), ' ')").toString());
   }
 
   private XdmNode transformMedicationTestDocument() throws Exception {
