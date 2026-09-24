@@ -140,6 +140,7 @@
                         <procedure classCode="PROC" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.90"/>
                             <id root="1.2.3.456" extension="wproc-001"/>
+                            <id root="1.2.3.789" extension="wproc-001-alt"/>
                             <code code="WV-001" codeSystem="1.2.276.0.76.5.999" displayName="Primaere Wundversorgung"/>
                             <statusCode code="completed"/>
                             <effectiveTime xsi:type="IVL_TS">

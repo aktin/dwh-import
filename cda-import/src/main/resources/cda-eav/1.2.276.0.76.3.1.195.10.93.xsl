@@ -1339,17 +1339,17 @@
                     </xsl:choose>
                 </value>
 
-                <!-- CD metadata as modifiers -->
+                <!-- CD metadata as modifiers (prefixed with 'value', since codeSystem/displayName describe the observation code) -->
                 <xsl:if test="../cda:value/@xsi:type = 'CD'">
                     <xsl:if test="../cda:value/@codeSystem">
-                        <modifier code="codeSystem">
+                        <modifier code="valueCodeSystem">
                             <value xsi:type="string">
                                 <xsl:value-of select="../cda:value/@codeSystem" />
                             </value>
                         </modifier>
                     </xsl:if>
                     <xsl:if test="../cda:value/@displayName">
-                        <modifier code="displayName">
+                        <modifier code="valueDisplayName">
                             <value xsi:type="string">
                                 <xsl:value-of select="../cda:value/@displayName" />
                             </value>
@@ -1358,9 +1358,9 @@
                 </xsl:if>
             </xsl:if>
 
-            <!-- IDs (multiple allowed) -->
+            <!-- IDs (multiple allowed) - numbered (id:1, id:2, ...), since modifier codes must be unique within a fact -->
             <xsl:for-each select="../cda:id">
-                <modifier code="id">
+                <modifier code="id:{position()}">
                     <value xsi:type="string">
                         <xsl:value-of select="@root" />
                         <xsl:if test="@extension">:<xsl:value-of select="@extension" /></xsl:if>
@@ -1430,9 +1430,9 @@
                 </xsl:when>
             </xsl:choose>
 
-            <!-- IDs -->
+            <!-- IDs (multiple allowed) - numbered (id:1, id:2, ...), since modifier codes must be unique within a fact -->
             <xsl:for-each select="../cda:id">
-                <modifier code="id">
+                <modifier code="id:{position()}">
                     <value xsi:type="string">
                         <xsl:value-of select="@root" />
                         <xsl:if test="@extension">:<xsl:value-of select="@extension" /></xsl:if>

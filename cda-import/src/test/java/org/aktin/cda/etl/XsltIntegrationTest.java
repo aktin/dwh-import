@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.StringReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XPathCompiler;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
@@ -312,6 +314,11 @@ public class XsltIntegrationTest {
     assertTrue("Should have SCHIENE-002 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:SCHIENE-002\""));
     assertTrue("Should have INF-003 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:INF-003\""));
     assertTrue("Should have LA-004 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:LA-004\""));
+
+    // Multiple ids are numbered
+    assertTrue("Should have id:2 for WV-001",
+        transformedXml.contains("code=\"id:2\"") && transformedXml.contains("1.2.3.789:wproc-001-alt"));
+    assertNoDuplicateModifiers(transformedXml);
   }
 
   /**
@@ -378,11 +385,15 @@ public class XsltIntegrationTest {
     // Test CD datatype: string value with code/codeSystem/displayName modifiers
     assertTrue("CD should have string type with code",
         transformedXml.contains("xsi:type=\"string\">ALERT</value>"));
-    assertTrue("CD should have codeSystem modifier with value codeSystem",
-        transformedXml.contains("code=\"codeSystem\"") &&
+    assertTrue("CD should have valueCodeSystem modifier with the code system of the value",
+        transformedXml.contains("code=\"valueCodeSystem\"") &&
         transformedXml.contains("2.16.840.1.113883.5.1001"));
-    assertTrue("CD should have displayName modifier with Alert and oriented",
+    assertTrue("CD should have valueDisplayName modifier with Alert and oriented",
+        transformedXml.contains("code=\"valueDisplayName\"") &&
         transformedXml.contains(">Alert and oriented</value>"));
+    assertTrue("Multiple ids should be numbered",
+        transformedXml.contains("code=\"id:2\"") && transformedXml.contains("1.2.3.789:wdiag-cd-alt"));
+    assertNoDuplicateModifiers(transformedXml);
 
     // Test ST datatype: string value
     assertTrue("ST should have string type",
@@ -412,6 +423,19 @@ public class XsltIntegrationTest {
     // Verify GCS eye opening has the inherited timestamp 2024-01-17T16:21:00
     assertTrue("GCS Eye should inherit start time 2024-01-17T16:21 from container",
         transformedXml.contains("start=\"2024-01-17T16:21\" concept=\"LOINC:9267-6\""));
+  }
+
+  /**
+   * Asserts that no fact contains two modifiers with the same code. histream writes every modifier with the
+   * fact's concept_cd, start_date and instance_num, so duplicates collide with the primary key of observation_fact.
+   */
+  private void assertNoDuplicateModifiers(String eavXml) throws Exception {
+    XdmNode eav = processor.newDocumentBuilder().build(new StreamSource(new StringReader(eavXml)));
+    XPathCompiler compiler = processor.newXPathCompiler();
+    compiler.declareNamespace("eav", "http://sekmi.de/histream/ns/eav-data");
+    String duplicates = compiler.evaluate("string-join(//eav:fact[some $m in eav:modifier satisfies "
+        + "count(eav:modifier[@code = $m/@code]) > 1]/@concept, ', ')", eav).toString();
+    assertEquals("Facts with duplicate modifier codes", "", duplicates);
   }
 
   /**
