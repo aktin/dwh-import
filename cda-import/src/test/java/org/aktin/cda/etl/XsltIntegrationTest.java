@@ -11,9 +11,12 @@ import java.net.URL;
 import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.s9api.XPathCompiler;
 import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.s9api.XdmValue;
 import org.junit.Test;
 
 public class XsltIntegrationTest extends AbstractXsltTest {
+
+  private static final String MEDICATION_TEST_XML = "/test-medication-eav-extraction.xml";
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
@@ -371,4 +374,35 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         + "count(eav:modifier[@code = $m/@code]) > 1]/@concept, ', ')", eav).toString();
     assertEquals("Facts with duplicate modifier codes", "", duplicates);
   }
+
+  /**
+   * Narrative references to elements with mixed content (text and child elements) must be resolved to
+   * a single string instead of aborting the transformation of the whole document.
+   */
+  @Test
+  public void testMedicationNarrativeWithMixedContent() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+
+    assertEquals("Paracetamol 1 g i.v.",
+        xpath(eav, "string(//eav:fact[eav:modifier[@code='parentMedicationStatementId']/eav:value='1.2.3.456:med-mixed-a']"
+            + "/eav:modifier[@code='text']/eav:value)").toString());
+    assertEquals("Ibuprofen 400 mg p.o.",
+        xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:M01AE01']/eav:modifier[@code='AKTIN:MED:DESC']/eav:value)").toString());
+  }
+
+  private XdmNode transformMedicationTestDocument() throws Exception {
+    String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");
+    return processor.newDocumentBuilder().build(new StreamSource(new StringReader(transformedXml)));
+  }
+
+  /**
+   * Evaluates an XPath expression on the EAV output. The prefix {@code eav} is bound to the EAV namespace.
+   */
+  private XdmValue xpath(XdmNode eav, String expression) throws Exception {
+    XPathCompiler compiler = processor.newXPathCompiler();
+    compiler.declareNamespace("eav", "http://sekmi.de/histream/ns/eav-data");
+    return compiler.evaluate(expression, eav);
+  }
+
 }

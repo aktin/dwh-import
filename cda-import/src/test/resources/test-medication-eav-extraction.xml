@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Test file for the medication EAV extraction (Medication Statement 1.2.276.0.76.3.1.195.10.67 with
+    UV Subordinate Substance Administration 2.16.840.1.113883.10.21.4.6).
+    Each entry is labelled with the case it covers.
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.93"/>
+    <id root="1.2.3.456" extension="test-medication-eav-extraction"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
+    <effectiveTime value="20240117120000"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <recordTarget>
+        <patientRole>
+            <id root="1.2.276.0.76.4.8" extension="TEST-MED-EAV-001"/>
+            <patient>
+                <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19800515"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author>
+        <time value="20240117120000"/>
+        <assignedAuthor>
+            <id root="1.2.3.456" extension="author-001"/>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.3.456" extension="org-001"/>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <componentOf>
+        <encompassingEncounter>
+            <id root="1.2.3.456" extension="encounter-med-eav-test"/>
+            <effectiveTime>
+                <low value="20240117100000"/>
+                <high value="20240117180000"/>
+            </effectiveTime>
+            <dischargeDispositionCode code="4"/>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+            <component>
+                <section>
+                    <templateId root="1.2.276.0.76.3.1.195.10.64"/>
+                    <code code="29549-3" codeSystem="2.16.840.1.113883.6.1"/>
+                    <title>Medikation - Test EAV Extraction</title>
+                    <text>
+                        <list>
+                            <item ID="med-mixed-a">Paracetamol <content>1 g</content> i.v.</item>
+                            <item ID="med-mixed-b">Ibuprofen <content>400 mg</content> p.o.</item>
+                        </list>
+                    </text>
+                    <!-- Case mixed-a: narrative with mixed content, statement with subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-mixed-a"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-mixed-a"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" displayName="paracetamol"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117110000"/>
+                                    <doseQuantity value="1" unit="g"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case mixed-b: narrative with mixed content, statement without subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-mixed-b"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-mixed-b"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="M01AE01" codeSystem="2.16.840.1.113883.6.73" displayName="ibuprofen"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                </section>
+            </component>
+        </structuredBody>
+    </component>
+</ClinicalDocument>

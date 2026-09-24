@@ -2067,15 +2067,11 @@
             </xsl:for-each>
 
             <!-- Text/Description lookup -->
-            <xsl:variable name="refVal" select="ancestor::cda:substanceAdministration[2]/cda:text/cda:reference/@value" />
-            <xsl:if test="$refVal">
-                <xsl:variable name="refId" select="substring-after($refVal,'#')" />
-                <xsl:variable name="resolvedText" select="key('byId', $refId)/text()" />
-                <xsl:if test="$resolvedText and normalize-space($resolvedText) != ''">
-                    <modifier code="text">
-                        <value xsi:type="string"><xsl:value-of select="normalize-space($resolvedText)"/></value>
-                    </modifier>
-                </xsl:if>
+            <xsl:variable name="resolvedText" select="func:ResolveNarrative(ancestor::cda:substanceAdministration[2]/cda:text/cda:reference/@value)" />
+            <xsl:if test="$resolvedText != ''">
+                <modifier code="text">
+                    <value xsi:type="string"><xsl:value-of select="$resolvedText"/></value>
+                </modifier>
             </xsl:if>
 
             <!-- routeCode -->
@@ -2178,15 +2174,11 @@
         <!-- statusCode from subordinate (not from outer) - subordinate is 1..1(R) and must match parent -->
 
         <!-- Text/Description lookup -->
-        <xsl:variable name="refVal" select="$outer/cda:text/cda:reference/@value" />
-        <xsl:if test="$refVal">
-            <xsl:variable name="refId" select="substring-after($refVal,'#')" />
-            <xsl:variable name="resolvedText" select="key('byId', $refId)/text()" />
-            <xsl:if test="$resolvedText and normalize-space($resolvedText) != ''">
-                <modifier code="AKTIN:MED:DESC">
-                    <value xsi:type="string"><xsl:value-of select="normalize-space($resolvedText)"/></value>
-                </modifier>
-            </xsl:if>
+        <xsl:variable name="resolvedText" select="func:ResolveNarrative($outer/cda:text/cda:reference/@value)" />
+        <xsl:if test="$resolvedText != ''">
+            <modifier code="AKTIN:MED:DESC">
+                <value xsi:type="string"><xsl:value-of select="$resolvedText"/></value>
+            </modifier>
         </xsl:if>
 
         <!-- routeCode -->
@@ -2746,6 +2738,14 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
+    </xsl:function>
+
+    <!-- Resolves a narrative reference (e.g. text/reference/@value="#med-1") to the normalized string value
+         of the referenced narrative element. The string value includes the text of child elements, so mixed
+         content like 'Paracetamol <content>1 g</content> i.v.' yields a single string. -->
+    <xsl:function name="func:ResolveNarrative" as="xs:string">
+        <xsl:param name="ref"/>
+        <xsl:sequence select="if ($ref[1]) then normalize-space(string(key('byId', substring-after($ref[1], '#'), root($ref[1]))[1])) else ''"/>
     </xsl:function>
 
     <!-- Generic Code System Prefix Function -->
