@@ -371,4 +371,75 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         + "count(eav:modifier[@code = $m/@code]) > 1]/@concept, ', ')", eav).toString();
     assertEquals("Facts with duplicate modifier codes", "", duplicates);
   }
+
+  /**
+   * Test that nullFlavors in the Notfallanamnese entries are mapped into the concept
+   * instead of producing concepts with an empty code.
+   */
+  @Test
+  public void testAnamnesisNullFlavors() throws Exception {
+    String transformedXml = performXsltTransformation("/test-anamnesis-nullflavors.xml", EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-anamnesis-nullflavors.xml");
+
+    assertFalse("Accident kinetics must not have an empty code",
+        transformedXml.contains("concept=\"AKTIN:ACC:KIN:\""));
+    assertTrue("Accident kinetics nullFlavor should be part of the concept",
+        transformedXml.contains("concept=\"AKTIN:ACC:KIN:UNK\""));
+
+    assertFalse("Injury cause must not have an empty code",
+        transformedXml.contains("concept=\"AKTIN:ACC:CAUSE:\""));
+    assertTrue("Injury cause nullFlavor should be part of the concept",
+        transformedXml.contains("concept=\"AKTIN:ACC:CAUSE:UNK\""));
+
+    String cause = getFact(transformedXml, "SNOMED:418019003");
+    assertFalse("Accident cause should have no start for unknown accident time",
+        cause.contains("start="));
+    assertTrue("Accident cause should keep the nullFlavor of the accident time",
+        cause.contains("code=\"effectiveTimeLow\"") && cause.contains(">UNK<"));
+    assertTrue("Injury cause should keep the nullFlavor of the accident time",
+        getFact(transformedXml, "AKTIN:ACC:CAUSE:UNK").contains("code=\"effectiveTimeLow\""));
+    assertTrue("Accident kinetics should keep the nullFlavor of the accident time",
+        getFact(transformedXml, "AKTIN:ACC:KIN:UNK").contains("code=\"effectiveTimeLow\""));
+
+    assertTrue("Substance influence nullFlavor should be part of the concept",
+        transformedXml.contains("concept=\"AKTIN:SUBINFLUENCE:NASK\""));
+  }
+
+  /**
+   * Test that an accident is imported even if the accident anamnesis contains
+   * nothing but the accident time.
+   */
+  @Test
+  public void testAnamnesisAccidentDateOnly() throws Exception {
+    String transformedXml = performXsltTransformation("/test-anamnesis-accident-date-only.xml", EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-anamnesis-accident-date-only.xml");
+
+    assertTrue("Accident anamnesis should create a fact with the accident time",
+        transformedXml.contains("concept=\"LOINC:74209-8\" start=\"2024-01-17\""));
+  }
+
+  /**
+   * Test that displayName and codeSystem modifiers of the accident anamnesis are
+   * taken from the element that carries the code.
+   */
+  @Test
+  public void testAnamnesisDisplayNameAndCodeSystem() throws Exception {
+    String transformedXml = performXsltTransformation("/test-anamnesis-displayname-codesystem.xml", EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-anamnesis-displayname-codesystem.xml");
+
+    assertFalse("No modifier should have an empty value",
+        transformedXml.contains("<value xsi:type=\"string\"/>"));
+
+    assertTrue("Accident kinetics should have the displayName of the qualifier value",
+        getFact(transformedXml, "AKTIN:ACC:KIN:33036003").contains("Fall on same level (event)"));
+    assertFalse("Accident cause without displayName should have no displayName modifier",
+        getFact(transformedXml, "SNOMED:418019003").contains("code=\"displayName\""));
+
+    String injuryCause = getFact(transformedXml, "AKTIN:ACC:CAUSE:V49");
+    assertTrue("Injury cause should have a codeSystem modifier",
+        injuryCause.contains("code=\"codeSystem\"") && injuryCause.contains(">2.16.840.1.113883.6.3<"));
+    assertTrue("Injury cause should start at the accident time",
+        transformedXml.contains("concept=\"AKTIN:ACC:CAUSE:V49\" start=\"2024-01-17T15:30\""));
+  }
+
 }
