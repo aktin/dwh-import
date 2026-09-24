@@ -1895,7 +1895,7 @@
                     <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:routeCode/(@code, @nullFlavor)[1]"/></value>
                 </modifier>
                 <xsl:if test="ancestor::cda:substanceAdministration[2]/cda:routeCode/@displayName">
-                    <modifier code="AKTIN:MED:ROUTE:DN">
+                    <modifier code="routeCode:displayName">
                         <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:routeCode/@displayName"/></value>
                     </modifier>
                 </xsl:if>
@@ -1907,7 +1907,7 @@
                     <value xsi:type="string"><xsl:value-of select="(@code, @nullFlavor)[1]"/></value>
                 </modifier>
                 <xsl:if test="@displayName">
-                    <modifier code="AKTIN:MED:SITE:DN:{position()}">
+                    <modifier code="approachSiteCode:displayName:{position()}">
                         <value xsi:type="string"><xsl:value-of select="@displayName"/></value>
                     </modifier>
                 </xsl:if>
@@ -2193,7 +2193,7 @@
         <!-- Text/Description lookup -->
         <xsl:variable name="resolvedText" select="func:ResolveNarrative($outer/cda:text/cda:reference/@value)" />
         <xsl:if test="$resolvedText != ''">
-            <modifier code="AKTIN:MED:DESC">
+            <modifier code="text">
                 <value xsi:type="string"><xsl:value-of select="$resolvedText"/></value>
             </modifier>
         </xsl:if>
@@ -2204,7 +2204,7 @@
                 <value xsi:type="string"><xsl:value-of select="$outer/cda:routeCode/(@code, @nullFlavor)[1]"/></value>
             </modifier>
             <xsl:if test="$outer/cda:routeCode/@displayName">
-                <modifier code="AKTIN:MED:ROUTE:DN">
+                <modifier code="routeCode:displayName">
                     <value xsi:type="string"><xsl:value-of select="$outer/cda:routeCode/@displayName"/></value>
                 </modifier>
             </xsl:if>
@@ -2216,7 +2216,7 @@
                 <value xsi:type="string"><xsl:value-of select="(@code, @nullFlavor)[1]"/></value>
             </modifier>
             <xsl:if test="@displayName">
-                <modifier code="AKTIN:MED:SITE:DN:{position()}">
+                <modifier code="approachSiteCode:displayName:{position()}">
                     <value xsi:type="string"><xsl:value-of select="@displayName"/></value>
                 </modifier>
             </xsl:if>
@@ -2242,15 +2242,6 @@
                     </value>
                 </modifier>
             </xsl:if>
-        </xsl:if>
-
-        <!-- Consumable code -->
-        <xsl:if test="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
-            <modifier code="AKTIN:MED:CONSUMABLE">
-                <value xsi:type="string">
-                    <xsl:value-of select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code"/>
-                </value>
-            </modifier>
         </xsl:if>
 
         <!-- Product information (UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10) -->

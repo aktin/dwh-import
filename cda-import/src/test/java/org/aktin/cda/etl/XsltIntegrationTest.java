@@ -82,9 +82,9 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertTrue("Should have approachSiteCode:3", transformedXml.contains("code=\"approachSiteCode:3\""));
 
     // Verify numbered display name modifiers
-    assertTrue("Should have AKTIN:MED:SITE:DN:1", transformedXml.contains("code=\"AKTIN:MED:SITE:DN:1\""));
-    assertTrue("Should have AKTIN:MED:SITE:DN:2", transformedXml.contains("code=\"AKTIN:MED:SITE:DN:2\""));
-    assertTrue("Should have AKTIN:MED:SITE:DN:3", transformedXml.contains("code=\"AKTIN:MED:SITE:DN:3\""));
+    assertTrue("Should have approachSiteCode:displayName:1", transformedXml.contains("code=\"approachSiteCode:displayName:1\""));
+    assertTrue("Should have approachSiteCode:displayName:2", transformedXml.contains("code=\"approachSiteCode:displayName:2\""));
+    assertTrue("Should have approachSiteCode:displayName:3", transformedXml.contains("code=\"approachSiteCode:displayName:3\""));
 
     // Verify different doses for Paracetamol subordinates
     assertTrue("Should have 500mg dose", transformedXml.contains("unit=\"mg\">500</value>"));
@@ -388,7 +388,7 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         xpath(eav, "string(//eav:fact[eav:modifier[@code='parentMedicationStatementId:1']/eav:value='1.2.3.456:med-mixed-a']"
             + "/eav:modifier[@code='text']/eav:value)").toString());
     assertEquals("Ibuprofen 400 mg p.o.",
-        xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='AKTIN:MED:DESC']/eav:value)").toString());
+        xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='text']/eav:value)").toString());
   }
 
   /**
@@ -551,6 +551,19 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     String factB = "//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']";
     assertEquals("1.2.3.456:med-mixed-b", xpath(eav, "string(" + factB + "/eav:modifier[@code='parentMedicationStatementId:1']/eav:value)").toString());
     assertEquals("1.2.3.789:med-mixed-b-alt", xpath(eav, "string(" + factB + "/eav:modifier[@code='parentMedicationStatementId:2']/eav:value)").toString());
+  }
+
+  /**
+   * Both medication paths must use the same modifier vocabulary (unprefixed codes, no redundant consumable code).
+   */
+  @Test
+  public void testMedicationModifierVocabulary() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    assertEquals("0", xpath(eav, "count(//eav:fact[starts-with(@concept, 'AKTIN:MED:')]/eav:modifier[starts-with(@code, 'AKTIN:')])").toString());
+
+    XdmNode storyboard = transform(STORYBOARD02_XML);
+    assertEquals("Infusion, intravenous",
+        xpath(storyboard, "string(//eav:fact[@concept='AKTIN:MED:ATC:J01DH51']/eav:modifier[@code='routeCode:displayName']/eav:value)").toString());
   }
 
   private XdmNode transformMedicationTestDocument() throws Exception {
