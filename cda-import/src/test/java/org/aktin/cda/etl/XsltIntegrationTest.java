@@ -458,6 +458,22 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("completed", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='statementStatusCode']/eav:value)").toString());
   }
 
+  /**
+   * Product information (translation, lotNumberText, manufacturerOrganization) must be mapped for
+   * medication statements without subordinate substance administration as well.
+   */
+  @Test
+  public void testMedicationProductInformationWithoutSubordinate() throws Exception {
+    XdmNode eav = transformMedicationTestDocument();
+    String fact = "//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']";
+
+    assertEquals("1234567", xpath(eav, "string(" + fact + "/eav:modifier[@code='translation:1']/eav:value)").toString());
+    assertEquals("1.2.276.0.76.4.6", xpath(eav, "string(" + fact + "/eav:modifier[@code='translation:codeSystem:1']/eav:value)").toString());
+    assertEquals("Ibuprofen 400 mg Filmtabletten", xpath(eav, "string(" + fact + "/eav:modifier[@code='translation:displayName:1']/eav:value)").toString());
+    assertEquals("LOT-IBU-42", xpath(eav, "string(" + fact + "/eav:modifier[@code='lotNumberText']/eav:value)").toString());
+    assertEquals("Beispiel Pharma AG", xpath(eav, "string(" + fact + "/eav:modifier[@code='manufacturerOrganization']/eav:value)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");

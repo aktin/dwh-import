@@ -1677,124 +1677,21 @@
 
 
 
-            <!-- Medication displayName -->
-            <xsl:choose>
-                <!-- case "compound medication": get displayName from UV Subordinate Substance Administration -->
-                <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName">
-                    <modifier code="displayName">
-                        <value xsi:type="string">
-                            <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName"/>
-                        </value>
-                    </modifier>
-                </xsl:when>
-                <!-- case "simple medication": get displayName from surrounding Medication Statement -->
-                <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName">
-                    <modifier code="displayName">
-                        <value xsi:type="string">
-                            <xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName"/>
-                        </value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
-
-            <!-- Medication codeSystem (the concept code alone is ambiguous, e.g. ATC vs. PZN vs. SNOMED CT) -->
-            <xsl:choose>
-                <!-- case "compound medication": get codeSystem from UV Subordinate Substance Administration -->
-                <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
-                    <xsl:if test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem">
-                        <modifier code="codeSystem">
-                            <value xsi:type="string">
-                                <xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem"/>
-                            </value>
-                        </modifier>
-                    </xsl:if>
-                </xsl:when>
-                <!-- case "simple medication": get codeSystem from surrounding Medication Statement -->
-                <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem">
-                    <modifier code="codeSystem">
-                        <value xsi:type="string">
-                            <xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem"/>
-                        </value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
-
-            <!-- ATC code of the medication (code or translation), links every medication fact to ATC -->
-            <xsl:call-template name="medication-atc-modifier">
-                <xsl:with-param name="code" select="(../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code[@code],
-                                                     ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code)[1]"/>
+            <!-- Product information (UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10) -->
+            <xsl:call-template name="medication-product-modifiers">
+                <xsl:with-param name="product" as="element()*">
+                    <xsl:choose>
+                        <!-- case "compound medication": product from UV Subordinate Substance Administration -->
+                        <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
+                            <xsl:sequence select="../cda:consumable/cda:manufacturedProduct"/>
+                        </xsl:when>
+                        <!-- case "simple medication": product from surrounding Medication Statement -->
+                        <xsl:otherwise>
+                            <xsl:sequence select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
             </xsl:call-template>
-
-            <!--######################################################################################################-->
-            <!-- UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10 additional fields -->
-
-            <!-- Code translations (alternate coding systems) -->
-            <xsl:choose>
-                <!-- compound medication: translations from subordinate's consumable -->
-                <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/cda:translation">
-                    <xsl:for-each select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/cda:translation">
-                        <modifier code="translation:{position()}">
-                            <value xsi:type="string"><xsl:value-of select="@code"/></value>
-                        </modifier>
-                        <xsl:if test="@codeSystem">
-                            <modifier code="translation:codeSystem:{position()}">
-                                <value xsi:type="string"><xsl:value-of select="@codeSystem"/></value>
-                            </modifier>
-                        </xsl:if>
-                        <xsl:if test="@displayName">
-                            <modifier code="translation:displayName:{position()}">
-                                <value xsi:type="string"><xsl:value-of select="@displayName"/></value>
-                            </modifier>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:when>
-                <!-- simple medication: translations from parent's consumable -->
-                <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/cda:translation">
-                    <xsl:for-each select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/cda:translation">
-                        <modifier code="translation:{position()}">
-                            <value xsi:type="string"><xsl:value-of select="@code"/></value>
-                        </modifier>
-                        <xsl:if test="@codeSystem">
-                            <modifier code="translation:codeSystem:{position()}">
-                                <value xsi:type="string"><xsl:value-of select="@codeSystem"/></value>
-                            </modifier>
-                        </xsl:if>
-                        <xsl:if test="@displayName">
-                            <modifier code="translation:displayName:{position()}">
-                                <value xsi:type="string"><xsl:value-of select="@displayName"/></value>
-                            </modifier>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:when>
-            </xsl:choose>
-
-            <!-- lotNumberText (batch/lot number) -->
-            <xsl:choose>
-                <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:lotNumberText">
-                    <modifier code="lotNumberText">
-                        <value xsi:type="string"><xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:lotNumberText"/></value>
-                    </modifier>
-                </xsl:when>
-                <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:lotNumberText">
-                    <modifier code="lotNumberText">
-                        <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:lotNumberText"/></value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
-
-            <!-- manufacturerOrganization (manufacturer name) -->
-            <xsl:choose>
-                <xsl:when test="../cda:consumable/cda:manufacturedProduct/cda:manufacturerOrganization/cda:name">
-                    <modifier code="manufacturerOrganization">
-                        <value xsi:type="string"><xsl:value-of select="../cda:consumable/cda:manufacturedProduct/cda:manufacturerOrganization/cda:name"/></value>
-                    </modifier>
-                </xsl:when>
-                <xsl:when test="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturerOrganization/cda:name">
-                    <modifier code="manufacturerOrganization">
-                        <value xsi:type="string"><xsl:value-of select="ancestor::cda:substanceAdministration[2]/cda:consumable/cda:manufacturedProduct/cda:manufacturerOrganization/cda:name"/></value>
-                    </modifier>
-                </xsl:when>
-            </xsl:choose>
 
             <!--######################################################################################################-->
             <!-- dosage modifiers -->
@@ -2301,7 +2198,7 @@
             </xsl:if>
         </xsl:if>
 
-        <!-- Consumable (code + displayName) -->
+        <!-- Consumable code -->
         <xsl:if test="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@code">
             <modifier code="AKTIN:MED:CONSUMABLE">
                 <value xsi:type="string">
@@ -2309,25 +2206,68 @@
                 </value>
             </modifier>
         </xsl:if>
-        <xsl:if test="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName">
+
+        <!-- Product information (UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10) -->
+        <xsl:call-template name="medication-product-modifiers">
+            <xsl:with-param name="product" select="$outer/cda:consumable/cda:manufacturedProduct"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <!-- Named template for product information of a manufacturedProduct
+         (UV Medication Information (simple) 2.16.840.1.113883.10.21.4.10), shared by both medication paths -->
+    <xsl:template name="medication-product-modifiers">
+        <xsl:param name="product"/>
+        <xsl:variable name="code" select="$product/cda:manufacturedMaterial/cda:code"/>
+
+        <!-- Medication displayName -->
+        <xsl:if test="$code/@displayName">
             <modifier code="displayName">
-                <value xsi:type="string">
-                    <xsl:value-of select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@displayName"/>
-                </value>
+                <value xsi:type="string"><xsl:value-of select="$code/@displayName"/></value>
             </modifier>
         </xsl:if>
+
         <!-- Medication codeSystem (the concept code alone is ambiguous, e.g. ATC vs. PZN vs. SNOMED CT) -->
-        <xsl:if test="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem">
+        <xsl:if test="$code/@codeSystem">
             <modifier code="codeSystem">
-                <value xsi:type="string">
-                    <xsl:value-of select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/@codeSystem"/>
-                </value>
+                <value xsi:type="string"><xsl:value-of select="$code/@codeSystem"/></value>
             </modifier>
         </xsl:if>
+
         <!-- ATC code of the medication (code or translation), links every medication fact to ATC -->
         <xsl:call-template name="medication-atc-modifier">
-            <xsl:with-param name="code" select="$outer/cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code"/>
+            <xsl:with-param name="code" select="$code"/>
         </xsl:call-template>
+
+        <!-- Code translations (alternate coding systems) -->
+        <xsl:for-each select="$code/cda:translation">
+            <modifier code="translation:{position()}">
+                <value xsi:type="string"><xsl:value-of select="@code"/></value>
+            </modifier>
+            <xsl:if test="@codeSystem">
+                <modifier code="translation:codeSystem:{position()}">
+                    <value xsi:type="string"><xsl:value-of select="@codeSystem"/></value>
+                </modifier>
+            </xsl:if>
+            <xsl:if test="@displayName">
+                <modifier code="translation:displayName:{position()}">
+                    <value xsi:type="string"><xsl:value-of select="@displayName"/></value>
+                </modifier>
+            </xsl:if>
+        </xsl:for-each>
+
+        <!-- lotNumberText (batch/lot number) -->
+        <xsl:if test="$product/cda:manufacturedMaterial/cda:lotNumberText">
+            <modifier code="lotNumberText">
+                <value xsi:type="string"><xsl:value-of select="$product/cda:manufacturedMaterial/cda:lotNumberText"/></value>
+            </modifier>
+        </xsl:if>
+
+        <!-- manufacturerOrganization (manufacturer name) -->
+        <xsl:if test="$product/cda:manufacturerOrganization/cda:name">
+            <modifier code="manufacturerOrganization">
+                <value xsi:type="string"><xsl:value-of select="$product/cda:manufacturerOrganization/cda:name"/></value>
+            </modifier>
+        </xsl:if>
     </xsl:template>
 
     <!-- Modifier atcCode: the ATC code of a medication code, taken from the code itself or else from the first

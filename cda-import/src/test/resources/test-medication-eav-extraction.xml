@@ -107,8 +107,14 @@
                                 <manufacturedProduct classCode="MANU">
                                     <templateId root="2.16.840.1.113883.10.21.4.10"/>
                                     <manufacturedMaterial classCode="MMAT">
-                                        <code code="M01AE01" codeSystem="2.16.840.1.113883.6.73" displayName="ibuprofen"/>
+                                        <code code="M01AE01" codeSystem="2.16.840.1.113883.6.73" displayName="ibuprofen">
+                                            <translation code="1234567" codeSystem="1.2.276.0.76.4.6" displayName="Ibuprofen 400 mg Filmtabletten"/>
+                                        </code>
+                                        <lotNumberText>LOT-IBU-42</lotNumberText>
                                     </manufacturedMaterial>
+                                    <manufacturerOrganization>
+                                        <name>Beispiel Pharma AG</name>
+                                    </manufacturerOrganization>
                                 </manufacturedProduct>
                             </consumable>
                         </substanceAdministration>
