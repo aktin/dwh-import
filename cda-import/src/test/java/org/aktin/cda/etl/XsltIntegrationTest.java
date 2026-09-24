@@ -5,81 +5,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.StringReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import javax.xml.transform.stream.StreamSource;
-import net.sf.saxon.Configuration;
-import net.sf.saxon.s9api.Processor;
-import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XPathCompiler;
 import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.s9api.XsltCompiler;
-import net.sf.saxon.s9api.XsltExecutable;
-import net.sf.saxon.s9api.XsltTransformer;
-import org.aktin.cda.etl.transform.fun.CalculateEncounterHash;
-import org.aktin.cda.etl.transform.fun.CalculatePatientHash;
-import org.aktin.cda.etl.transform.fun.CalculateSourceId;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class XsltIntegrationTest {
-
-  private static final String EAV_XSL_PATH = "/cda-eav/1.2.276.0.76.3.1.195.10.93.xsl";
-  private static final Path EAV_OUTPUT_DIR = Paths.get("target", "eav-output");
-
-  private ConcatAnonymizer anonymizer;
-  private Processor processor;
-
-  @BeforeClass
-  public static void setupOutputDirectory() throws Exception {
-    Files.createDirectories(EAV_OUTPUT_DIR);
-  }
-
-  @Before
-  public void setUp() {
-    anonymizer = new ConcatAnonymizer();
-    processor = new Processor(false);
-    Configuration config = processor.getUnderlyingConfiguration();
-
-    config.registerExtensionFunction(new CalculateEncounterHash(anonymizer));
-    config.registerExtensionFunction(new CalculatePatientHash(anonymizer));
-    config.registerExtensionFunction(new CalculateSourceId(anonymizer));
-  }
-
-  private String performXsltTransformation(String inputResourcePath, String xsltResourcePath) throws Exception {
-    URL inputUrl = getClass().getResource(inputResourcePath);
-    URL xslUrl = getClass().getResource(xsltResourcePath);
-
-    assertNotNull("Input XML resource not found: " + inputResourcePath, inputUrl);
-    assertNotNull("XSLT resource not found: " + xsltResourcePath, xslUrl);
-
-    File inputFile = new File(inputUrl.toURI());
-    File xslFile = new File(xslUrl.toURI());
-
-    net.sf.saxon.s9api.DocumentBuilder saxonBuilder = processor.newDocumentBuilder();
-    XdmNode source = saxonBuilder.build(new StreamSource(inputFile));
-
-    XsltCompiler compiler = processor.newXsltCompiler();
-    XsltExecutable exec = compiler.compile(new StreamSource(xslFile));
-    XsltTransformer transformer = exec.load();
-
-    transformer.setInitialContextNode(source);
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    Serializer outSerializer = processor.newSerializer(baos);
-    outSerializer.setOutputProperty(Serializer.Property.INDENT, "yes");
-    transformer.setDestination(outSerializer);
-    transformer.transform();
-
-    return baos.toString(StandardCharsets.UTF_8.name());
-  }
+public class XsltIntegrationTest extends AbstractXsltTest {
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
@@ -305,15 +239,15 @@ public class XsltIntegrationTest {
     assertEquals("Should have 4 Wildcard Therapie facts", 4, wtherapyFacts);
 
     // Verify specific diagnostik codes
-    assertTrue("Should have SONO-ABD-001 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:SONO-ABD-001\""));
-    assertTrue("Should have EKG-SPECIAL-002 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:EKG-SPECIAL-002\""));
-    assertTrue("Should have LAB-TROP-003 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:LAB-TROP-003\""));
+    assertTrue("Should have SONO-ABD-001 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:SONO-ABD-001\""));
+    assertTrue("Should have EKG-SPECIAL-002 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:EKG-SPECIAL-002\""));
+    assertTrue("Should have LAB-TROP-003 diagnostik", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:LAB-TROP-003\""));
 
     // Verify specific therapie codes
-    assertTrue("Should have WV-001 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:WV-001\""));
-    assertTrue("Should have SCHIENE-002 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:SCHIENE-002\""));
-    assertTrue("Should have INF-003 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:INF-003\""));
-    assertTrue("Should have LA-004 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:LA-004\""));
+    assertTrue("Should have WV-001 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:UCS:WV-001\""));
+    assertTrue("Should have SCHIENE-002 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:UCS:SCHIENE-002\""));
+    assertTrue("Should have INF-003 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:UCS:INF-003\""));
+    assertTrue("Should have LA-004 therapie", transformedXml.contains("concept=\"AKTIN:WTHERAPY:UCS:LA-004\""));
 
     // Multiple ids are numbered
     assertTrue("Should have id:2 for WV-001",
@@ -327,7 +261,7 @@ public class XsltIntegrationTest {
    * 1. PQ (Physical Quantity) - transforms to numeric with unit
    * 2. INT (Integer) - transforms to numeric
    * 3. REAL (Real number) - transforms to numeric
-   * 4. BL (Boolean) - transforms to boolean
+   * 4. BL (Boolean) - transforms to string
    * 5. CD (Coded) - transforms to string with code/codeSystem/displayName modifiers
    * 6. ST (String) - transforms to string
    */
@@ -356,14 +290,14 @@ public class XsltIntegrationTest {
     assertEquals("Should have 8 Wildcard Diagnostik facts (all datatypes)", 8, wdiagFacts);
 
     // Verify all diagnostic codes are present
-    assertTrue("Should have DIAG-PQ-001", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-PQ-001\""));
-    assertTrue("Should have DIAG-INT-002", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-INT-002\""));
-    assertTrue("Should have DIAG-REAL-003", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-REAL-003\""));
-    assertTrue("Should have DIAG-BL-004", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-BL-004\""));
-    assertTrue("Should have DIAG-BL-005", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-BL-005\""));
-    assertTrue("Should have DIAG-CD-006", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-CD-006\""));
-    assertTrue("Should have DIAG-ST-007", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-ST-007\""));
-    assertTrue("Should have DIAG-OTH-008", transformedXml.contains("concept=\"AKTIN:WDIAG:DIAG-OTH-008\""));
+    assertTrue("Should have DIAG-PQ-001", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-PQ-001\""));
+    assertTrue("Should have DIAG-INT-002", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-INT-002\""));
+    assertTrue("Should have DIAG-REAL-003", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-REAL-003\""));
+    assertTrue("Should have DIAG-BL-004", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-BL-004\""));
+    assertTrue("Should have DIAG-BL-005", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-BL-005\""));
+    assertTrue("Should have DIAG-CD-006", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-CD-006\""));
+    assertTrue("Should have DIAG-ST-007", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-ST-007\""));
+    assertTrue("Should have DIAG-OTH-008", transformedXml.contains("concept=\"AKTIN:WDIAG:UCS:DIAG-OTH-008\""));
 
     // Test PQ datatype: numeric with unit
     assertTrue("PQ should have numeric type", transformedXml.contains("xsi:type=\"numeric\" unit=\"Cel\">37.5</value>"));
@@ -376,11 +310,11 @@ public class XsltIntegrationTest {
     assertTrue("REAL should have numeric type with value 14.5",
         transformedXml.contains("xsi:type=\"numeric\">14.5</value>"));
 
-    // Test BL datatype: boolean true and false
-    assertTrue("BL should have boolean type with true",
-        transformedXml.contains("xsi:type=\"boolean\">true</value>"));
-    assertTrue("BL should have boolean type with false",
-        transformedXml.contains("xsi:type=\"boolean\">false</value>"));
+    // Test BL datatype: string true and false (histream has no boolean value type)
+    assertTrue("BL should have string type with true",
+        transformedXml.contains("xsi:type=\"string\">true</value>"));
+    assertTrue("BL should have string type with false",
+        transformedXml.contains("xsi:type=\"string\">false</value>"));
 
     // Test CD datatype: string value with code/codeSystem/displayName modifiers
     assertTrue("CD should have string type with code",
@@ -436,27 +370,5 @@ public class XsltIntegrationTest {
     String duplicates = compiler.evaluate("string-join(//eav:fact[some $m in eav:modifier satisfies "
         + "count(eav:modifier[@code = $m/@code]) > 1]/@concept, ', ')", eav).toString();
     assertEquals("Facts with duplicate modifier codes", "", duplicates);
-  }
-
-  /**
-   * Writes the EAV content to a file in the output directory.
-   */
-  private void writeEavOutput(String eavContent, String outputFileName) throws Exception {
-    Path outputPath = EAV_OUTPUT_DIR.resolve(outputFileName);
-    Files.write(outputPath, eavContent.getBytes(StandardCharsets.UTF_8));
-    System.out.println("EAV output written to: " + outputPath.toAbsolutePath());
-  }
-
-  /**
-   * Counts occurrences of a substring in a string.
-   */
-  private int countOccurrences(String str, String sub) {
-    int count = 0;
-    int idx = 0;
-    while ((idx = str.indexOf(sub, idx)) != -1) {
-      count++;
-      idx += sub.length();
-    }
-    return count;
   }
 }
