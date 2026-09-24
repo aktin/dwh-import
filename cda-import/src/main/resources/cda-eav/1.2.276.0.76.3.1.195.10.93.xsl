@@ -31,11 +31,6 @@
     <xsl:variable name="aktin.module.template">1.2.276.0.76.3.1.195.10.93</xsl:variable>
     <xsl:variable name="aktin.release.version">${project.version}</xsl:variable>
 
-    <!-- Source of encounter id and import id: first encompassingEncounter/id without nullFlavor,
-    setId as fallback (setId is mandatory without nullFlavor) -->
-    <xsl:variable name="EncounterIdSource"
-                  select="(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[not(@nullFlavor)], /cda:ClinicalDocument/cda:setId)[1]" />
-
     <!-- CONSTANT Definitions -->
 
     <!-- Concept Code Prefix for LOINC Codes -->
@@ -152,6 +147,13 @@
     <!-- MAIN Template -->
 
     <xsl:template match="/">
+        <!-- Patient id and encounter id identify the data in the DWH, they cannot be derived from anything else -->
+        <xsl:if test="not(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id[normalize-space(@root)][normalize-space(@extension)])">
+            <xsl:sequence select="error((), 'XSL-Transformation Error: Patient id (recordTarget/patientRole/id) needs @root and @extension, nullFlavor is not supported')"/>
+        </xsl:if>
+        <xsl:if test="not(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1][normalize-space(@root)][normalize-space(@extension)])">
+            <xsl:sequence select="error((), 'XSL-Transformation Error: Encounter id (encompassingEncounter/id[1]) needs @root and @extension, nullFlavor is not supported')"/>
+        </xsl:if>
         <eav-data>
             <meta>
                 <etl-strategy>insert</etl-strategy>
@@ -238,12 +240,12 @@
     <!-- SetID(@root/@extension) identical, versionNumber for updates! // shall be present to enable
     further updates to this ClinicalDocument. -->
     <xsl:template name="encounter-id">
-        <xsl:value-of select="aktin:encounter-hash(string($EncounterIdSource/@root), string($EncounterIdSource/@extension))" />
+        <xsl:value-of select="aktin:encounter-hash(/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root, /cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension)" />
     </xsl:template>
 
-    <!-- Internal encounter indicators (ids without nullFlavor after the one used as encounter id) -->
+    <!-- Internal encounter indicators (further ids with @root and @extension, an id with nullFlavor is skipped) -->
     <xsl:template name="process-ids">
-        <xsl:for-each select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[not(@nullFlavor)][position() >= 2]">
+        <xsl:for-each select="/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[position() >= 2][normalize-space(@root)][normalize-space(@extension)]">
             <fact>
                 <xsl:attribute name="concept">
                     <xsl:value-of select="$AKTIN-Prefix"/>
@@ -254,7 +256,7 @@
                 </xsl:attribute>
                 <value>
                     <xsl:attribute name="xsi:type">string</xsl:attribute>
-                    <xsl:value-of select="aktin:encounter-hash(string(./@root), string(./@extension))"/>
+                    <xsl:value-of select="aktin:encounter-hash(./@root, ./@extension)"/>
                 </value>
             </fact>
         </xsl:for-each>
@@ -273,7 +275,7 @@
     <!-- Patient ID in the base module -->
     <!-- <xsl:comment>Patient ID in the base module</xsl:comment> -->
     <xsl:template match="/cda:ClinicalDocument/cda:recordTarget/cda:patientRole">
-        <xsl:value-of select="aktin:patient-hash(string(./cda:id/@root), string(./cda:id/@extension))" />
+        <xsl:value-of select="aktin:patient-hash(./cda:id/@root, ./cda:id/@extension)" />
     </xsl:template>
 
     <!--  Hauptkostenträger (Id 	1.2.276.0.76.3.1.195.10.4) OR  CDA participant Kostentraeger
@@ -359,7 +361,7 @@
 
     <xsl:template name="import-id">
         <!-- generate a unique id for encounter and module  -->
-        <xsl:value-of select="aktin:import-hash(string(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root),string(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension),string($EncounterIdSource/@root),string($EncounterIdSource/@extension),$aktin.module.id)"/>
+        <xsl:value-of select="aktin:import-hash(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@root,/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:id/@extension,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@root,/cda:ClinicalDocument/cda:componentOf/cda:encompassingEncounter/cda:id[1]/@extension,$aktin.module.id)"/>
     </xsl:template>
 
     <xsl:template name="EAV-Geschlecht">
