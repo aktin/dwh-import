@@ -902,6 +902,14 @@
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.28']">
         <xsl:comment>Accident Anamnesis (incl. vehicle)</xsl:comment>
 
+        <!-- Emit the accident itself, so that it is kept even without vehicle, cause and injury cause -->
+        <fact>
+            <xsl:attribute name="concept">
+                <xsl:value-of select="concat(func:GetCodePrefix(../cda:code/@codeSystem), ../cda:code/@code)" />
+            </xsl:attribute>
+            <xsl:call-template name="GetAccidentTime" />
+        </fact>
+
         <!-- Emit vehicle as its own fact with SNOMED code as concept -->
         <xsl:if test="../cda:participant/cda:participantRole/cda:code/@code">
             <fact>
@@ -930,6 +938,23 @@
             </fact>
         </xsl:if>
 
+    </xsl:template>
+
+    <!-- start and effectiveTimeLow modifier from the accident time (act/effectiveTime/low) -->
+    <xsl:template name="GetAccidentTime">
+        <xsl:variable name="low" select="ancestor::cda:act[1]/cda:effectiveTime/cda:low" />
+        <xsl:if test="$low/@value">
+            <xsl:attribute name="start">
+                <xsl:value-of select="func:ConvertDateTime($low/@value)" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="$low/@value or $low/@nullFlavor">
+            <modifier code="effectiveTimeLow">
+                <value xsi:type="string">
+                    <xsl:value-of select="($low/@value, $low/@nullFlavor)[1]" />
+                </value>
+            </modifier>
+        </xsl:if>
     </xsl:template>
 
     <!-- Accident cause and kinetics (1.2.276.0.76.3.1.195.10.29) -->

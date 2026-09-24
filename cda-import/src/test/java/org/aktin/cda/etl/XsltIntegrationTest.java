@@ -371,4 +371,18 @@ public class XsltIntegrationTest extends AbstractXsltTest {
         + "count(eav:modifier[@code = $m/@code]) > 1]/@concept, ', ')", eav).toString();
     assertEquals("Facts with duplicate modifier codes", "", duplicates);
   }
+
+  /**
+   * Test that an accident is imported even if the accident anamnesis contains
+   * nothing but the accident time.
+   */
+  @Test
+  public void testAnamnesisAccidentDateOnly() throws Exception {
+    String transformedXml = performXsltTransformation("/test-anamnesis-accident-date-only.xml", EAV_XSL_PATH);
+    writeEavOutput(transformedXml, "eav-test-anamnesis-accident-date-only.xml");
+
+    assertTrue("Accident anamnesis should create a fact with the accident time",
+        transformedXml.contains("concept=\"LOINC:74209-8\" start=\"2024-01-17\""));
+  }
+
 }
