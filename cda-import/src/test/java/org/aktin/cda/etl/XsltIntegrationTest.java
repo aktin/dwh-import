@@ -17,6 +17,7 @@ import org.junit.Test;
 public class XsltIntegrationTest extends AbstractXsltTest {
 
   private static final String MEDICATION_TEST_XML = "/test-medication-eav-extraction.xml";
+  private static final String STORYBOARD02_XML = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard02.xml";
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
@@ -441,9 +442,30 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     assertEquals("Injection Solution", xpath(eav, "string(" + fact + "/eav:modifier[@code='administrationUnitCode:displayName']/eav:value)").toString());
   }
 
+  /**
+   * The statusCode of the medication statement may differ from the one of the subordinate substance
+   * administration (storyboard 02: statement 'completed', subordinate 'active') and must be preserved.
+   */
+  @Test
+  public void testMedicationStatementStatusCode() throws Exception {
+    XdmNode storyboard = transform(STORYBOARD02_XML);
+    String imipenem = "//eav:fact[@concept='AKTIN:MED:ATC:J01DH51']";
+    assertEquals("active", xpath(storyboard, "string(" + imipenem + "/eav:modifier[@code='statusCode']/eav:value)").toString());
+    assertEquals("completed", xpath(storyboard, "string(" + imipenem + "/eav:modifier[@code='statementStatusCode']/eav:value)").toString());
+
+    // statement without subordinate
+    XdmNode eav = transformMedicationTestDocument();
+    assertEquals("completed", xpath(eav, "string(//eav:fact[@concept='AKTIN:MED:ATC:M01AE01']/eav:modifier[@code='statementStatusCode']/eav:value)").toString());
+  }
+
   private XdmNode transformMedicationTestDocument() throws Exception {
     String transformedXml = performXsltTransformation(MEDICATION_TEST_XML, EAV_XSL_PATH);
     writeEavOutput(transformedXml, "eav-test-medication-eav-extraction.xml");
+    return processor.newDocumentBuilder().build(new StreamSource(new StringReader(transformedXml)));
+  }
+
+  private XdmNode transform(String inputResourcePath) throws Exception {
+    String transformedXml = performXsltTransformation(inputResourcePath, EAV_XSL_PATH);
     return processor.newDocumentBuilder().build(new StreamSource(new StringReader(transformedXml)));
   }
 

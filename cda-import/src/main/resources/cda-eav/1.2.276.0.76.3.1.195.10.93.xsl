@@ -1929,10 +1929,10 @@
                 </xsl:when>
             </xsl:choose>
 
-            <!-- statusCode -->
+            <!-- statusCode of the subordinate substance administration -->
             <!--    conformance: M -->
             <!--    cardinality: 1..1 -->
-            <!-- Note: SHALL be same as in parent medication statement -->
+            <!-- Note: may differ from the statusCode of the parent medication statement (see statementStatusCode) -->
             <xsl:choose>
                 <xsl:when test="../cda:statusCode/@code">
                     <modifier code="statusCode">
@@ -1945,6 +1945,11 @@
                     </modifier>
                 </xsl:when>
             </xsl:choose>
+
+            <!-- statusCode of the parent medication statement -->
+            <xsl:call-template name="medication-statement-status-modifier">
+                <xsl:with-param name="statement" select="ancestor::cda:substanceAdministration[2]"/>
+            </xsl:call-template>
 
             <!--######################################################################################################-->
             <!-- effectiveTime -->
@@ -2178,6 +2183,23 @@
         </xsl:choose>
     </xsl:template>
 
+    <!-- statusCode of the Medication Statement 1.2.276.0.76.3.1.195.10.67 as modifier statementStatusCode -->
+    <xsl:template name="medication-statement-status-modifier">
+        <xsl:param name="statement"/>
+        <xsl:choose>
+            <xsl:when test="$statement/cda:statusCode/@code">
+                <modifier code="statementStatusCode">
+                    <value xsi:type="string"><xsl:value-of select="$statement/cda:statusCode/@code"/></value>
+                </modifier>
+            </xsl:when>
+            <xsl:when test="$statement/cda:statusCode/@nullFlavor">
+                <modifier code="statementStatusCode">
+                    <value xsi:type="string"><xsl:value-of select="$statement/cda:statusCode/@nullFlavor"/></value>
+                </modifier>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
     <!-- Medication Statement 1.2.276.0.76.3.1.195.10.67 -->
     <!-- Note: "At least one subordinate element SHALL be present unless medications are unknown or known absent."
             This template handles medications WITHOUT subordinate substance administrations. -->
@@ -2220,7 +2242,10 @@
             </modifier>
         </xsl:for-each>
 
-        <!-- statusCode from subordinate (not from outer) - subordinate is 1..1(R) and must match parent -->
+        <!-- statusCode of the medication statement -->
+        <xsl:call-template name="medication-statement-status-modifier">
+            <xsl:with-param name="statement" select="$outer"/>
+        </xsl:call-template>
 
         <!-- Text/Description lookup -->
         <xsl:variable name="resolvedText" select="func:ResolveNarrative($outer/cda:text/cda:reference/@value)" />
