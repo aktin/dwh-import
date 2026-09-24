@@ -2536,7 +2536,8 @@
                 <xsl:when test="../cda:code/@code='SCTPOCC-25876001'"><xsl:value-of select="$MTS-Prefix" />IND:ORANGE:</xsl:when>
                 <xsl:when test="../cda:code/@code='SCTPOCC-103391001'"><xsl:value-of select="$MTS-Prefix" />IND:YELLOW:</xsl:when>
                 <xsl:when test="../cda:code/@code='SCTPOCC-394848005'"><xsl:value-of select="$MTS-Prefix" />IND:GREEN:</xsl:when>
-                <xsl:when test="../cda:code/@code='SCTPOCC-713012003'"><xsl:value-of select="$ESI-Prefix" />FACTOR:</xsl:when>
+                <!-- ESI factor outside the ESI: namespace, which holds only the ESI score -->
+                <xsl:when test="../cda:code/@code='SCTPOCC-713012003'"><xsl:value-of select="$AKTIN-Prefix" />ESI:FACTOR:</xsl:when>
                 <xsl:when test="../cda:code/@code='FLN-13'"><xsl:value-of select="$Future-LOINC-Prefix" />FLN-13:</xsl:when>
                 <xsl:otherwise><xsl:value-of select="../cda:code/@code" />:</xsl:otherwise>  <!--
                 Default Prefix code/code -->
