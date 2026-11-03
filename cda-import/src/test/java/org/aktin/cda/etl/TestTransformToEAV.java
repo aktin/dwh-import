@@ -1,6 +1,7 @@
 package org.aktin.cda.etl;
 
 import de.sekmi.histream.DateTimeAccuracy;
+import de.sekmi.histream.Modifier;
 import de.sekmi.histream.Observation;
 import de.sekmi.histream.ext.Patient;
 import de.sekmi.histream.ext.Visit;
@@ -12,7 +13,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.xml.transform.stream.StreamSource;
 import org.aktin.cda.CDAParser;
 import org.junit.Assert;
@@ -321,6 +327,46 @@ public class TestTransformToEAV {
 			}
 		}
 
+		t.close();
+	}
+
+	/**
+	 * The EAV of the medication test document must be valid and readable by histream. Modifier codes
+	 * must be unique within a fact (e.g. for multiple statement ids), because the I2b2Inserter writes
+	 * each modifier with the fact's concept_cd, start_date and instance_num, so duplicates collide with
+	 * the primary key of observation_fact.
+	 */
+	@Test
+	public void transformMedicationEavExtraction() throws Exception {
+		CDAParser parser = new CDAParser();
+		CDAImporterMockUp t = new CDAImporterMockUp();
+
+		try (InputStream in = CDAParser.class.getResourceAsStream("/test-medication-eav-extraction.xml")) {
+			Document dom = parser.buildDOM(new StreamSource(in));
+
+			Path temp = t.transform(dom, parser.extractTemplateId(dom));
+			try {
+				XSDCheck(temp);
+				try (InputStream eav = Files.newInputStream(temp)) {
+					GroupedXMLReader suppl = t.readEAV(eav);
+					List<Observation> medication = suppl.stream()
+							.filter(x -> x.getConceptId().startsWith("AKTIN:MED:"))
+							.collect(Collectors.toList());
+					Assert.assertFalse("Expected medication observations", medication.isEmpty());
+					for (Observation o : medication) {
+						Set<String> codes = new HashSet<>();
+						Iterator<Modifier> modifiers = o.getModifiers();
+						while (modifiers.hasNext()) {
+							String code = modifiers.next().getConceptId();
+							Assert.assertTrue("Duplicate modifier " + code + " in fact " + o.getConceptId(), codes.add(code));
+						}
+					}
+					suppl.close();
+				}
+			} finally {
+				Files.delete(temp);
+			}
+		}
 		t.close();
 	}
 
