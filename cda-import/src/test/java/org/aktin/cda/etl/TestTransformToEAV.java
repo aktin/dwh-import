@@ -244,13 +244,13 @@ public class TestTransformToEAV {
 	 	CDAImporterMockUp t = new CDAImporterMockUp();
 
 	 	try (InputStream in = CDAParser.class.getResourceAsStream(
-	 			"/maximalbeispiel-v2026_1_2.xml")) {
+	 			"/maximalbeispiel-v2026_1_3.xml")) {
 	 		Document dom = parser.buildDOM(new StreamSource(in));
 
 	 		Path temp = t.transform(dom, parser.extractTemplateId(dom));
 	 		try {
 	 			XSDCheck(temp);
-	 			writeEavOutput(temp, "eav-maximalbeispiel-v2026_1_2.xml");
+	 			writeEavOutput(temp, "eav-maximalbeispiel-v2026_1_3.xml");
 
 	 			try (InputStream eav = Files.newInputStream(temp)) {
 	 				GroupedXMLReader suppl = t.readEAV(eav);

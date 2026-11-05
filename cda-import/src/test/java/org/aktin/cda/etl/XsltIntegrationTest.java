@@ -18,7 +18,7 @@ public class XsltIntegrationTest extends AbstractXsltTest {
 
   private static final String MEDICATION_TEST_XML = "/test-medication-eav-extraction.xml";
   private static final String STORYBOARD02_XML = "/episodenzusammenfassung-notaufnahmeregister-transitionsversion-2026-beispiel-storyboard02.xml";
-  private static final String MEDICATION_TIMING_2026_XML = "/test-2026-medication-timing.xml";
+  private static final String MEDICATION_TIMING_2026_XML = "/test-2026_1_3-medication-timing.xml";
 
   @Test
   public void testTransformationGeneratesNonEmptyOutput() throws Exception {
@@ -708,6 +708,9 @@ public class XsltIntegrationTest extends AbstractXsltTest {
     XPathCompiler compiler = processor.newXPathCompiler();
     compiler.declareNamespace("eav", "http://sekmi.de/histream/ns/eav-data");
     return compiler.evaluate(expression, eav);
+  }
+
+  /**
    * Test that nullFlavors in the Notfallanamnese entries are mapped into the concept
    * instead of producing concepts with an empty code.
    */

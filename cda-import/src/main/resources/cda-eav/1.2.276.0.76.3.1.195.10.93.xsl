@@ -287,14 +287,28 @@
     <xsl:template match="cda:participant/cda:associatedEntity">
         <xsl:comment>Insurance Information</xsl:comment>
         <!-- Health insurance Name -->
-        <fact>
-            <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix" />KKNAME</xsl:attribute>
-            <value>
-                <xsl:attribute name="xsi:type">string</xsl:attribute>
-                <xsl:value-of select="./cda:scopingOrganization/cda:name" />
-            </value>
-            <xsl:call-template name="KvFallModifier" />
-        </fact>
+        <xsl:variable name="name" select="./cda:scopingOrganization/cda:name" />
+        <xsl:if test="$name[normalize-space()] or $name/@nullFlavor">
+            <fact>
+                <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix" />KKNAME</xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="$name[normalize-space()]">
+                        <value>
+                            <xsl:attribute name="xsi:type">string</xsl:attribute>
+                            <xsl:value-of select="$name" />
+                        </value>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <modifier code="nullFlavor">
+                            <value xsi:type="string">
+                                <xsl:value-of select="$name/@nullFlavor" />
+                            </value>
+                        </modifier>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:call-template name="KvFallModifier" />
+            </fact>
+        </xsl:if>
         <!-- IKNR -->
         <fact>
             <xsl:attribute name="concept"><xsl:value-of select="$AKTIN-Prefix" />IKNR</xsl:attribute>
@@ -558,6 +572,7 @@
                 </xsl:when>
             </xsl:choose>
             <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="GcsComponentOccurrence" />
         </fact>
     </xsl:template>
 
@@ -579,6 +594,7 @@
                 </xsl:when>
             </xsl:choose>
             <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="GcsComponentOccurrence" />
         </fact>
     </xsl:template>
 
@@ -600,6 +616,7 @@
                 </xsl:when>
             </xsl:choose>
             <xsl:call-template name="templateGetConceptCode" />
+            <xsl:call-template name="GcsComponentOccurrence" />
         </fact>
     </xsl:template>
 
@@ -705,7 +722,7 @@
 
     <!-- Manchester Triage System (1.2.276.0.76.3.1.195.10.19) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.19']">
-        <xsl:if test="../cda:value/@code">
+        <xsl:if test="../cda:value/(@code | @nullFlavor)">
             <xsl:comment>MTS Bewertung</xsl:comment>
             <fact>
                 <!-- Use effectiveTime from parent initial assessment observation if the MTS observation has none -->
@@ -746,7 +763,7 @@
 
     <!-- Emergency Severity Index (1.2.276.0.76.3.1.195.10.20) -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.3.1.195.10.20']">
-        <xsl:if test="../cda:value/@code">
+        <xsl:if test="../cda:value/(@code | @nullFlavor)">
             <xsl:comment>ESI Bewertung</xsl:comment>
             <fact>
                 <!-- Use effectiveTime from parent initial assessment observation if the ESI observation has none -->
@@ -1084,12 +1101,6 @@
                         </xsl:attribute>
                     </modifier>
                 </xsl:if>
-                <!-- negated diagnosis: ausgeschlossen, unless already set by the qualifier -->
-                <xsl:if test="../@negationInd='true' and not($certainty='A')">
-                    <modifier>
-                        <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>A</xsl:attribute>
-                    </modifier>
-                </xsl:if>
                 <xsl:if test="../../cda:sequenceNumber/@value='1'">
                     <modifier>
                         <xsl:attribute name="code"><xsl:value-of select="$Diagnosis-Prefix"/>F</xsl:attribute>
@@ -1115,9 +1126,15 @@
     <!-- Complaints on presentation (CEDIS)
     incl. symptom duration -->
     <xsl:template match="cda:templateId[@root='1.2.276.0.76.10.4040']">
+        <xsl:variable name="concern" select="ancestor::cda:act[1][ancestor::cda:section[1]/cda:templateId/@root='1.2.276.0.76.10.3053']" />
         <xsl:comment>Complaints on presentation (CEDIS)</xsl:comment>
         <fact>
             <xsl:call-template name="templateGetConceptValue" />
+            <xsl:if test="not(../cda:effectiveTime/cda:low)">
+                <xsl:call-template name="ConcernOnsetModifier">
+                    <xsl:with-param name="concern" select="$concern" />
+                </xsl:call-template>
+            </xsl:if>
         </fact>
 
         <xsl:if test="../cda:effectiveTime/cda:width/@value">
@@ -1131,7 +1148,21 @@
                     <xsl:attribute name="xsi:type">numeric</xsl:attribute>
                     <xsl:value-of select="../cda:effectiveTime/cda:width/@value" />
                 </value>
+                <xsl:call-template name="ConcernOnsetModifier">
+                    <xsl:with-param name="concern" select="$concern" />
+                </xsl:call-template>
             </fact>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="ConcernOnsetModifier">
+        <xsl:param name="concern" />
+        <xsl:if test="exists($concern)">
+            <modifier code="effectiveTimeLow">
+                <value xsi:type="string">
+                    <xsl:value-of select="($concern/cda:effectiveTime/cda:low/(@value, @nullFlavor), 'NI')[1]" />
+                </value>
+            </modifier>
         </xsl:if>
     </xsl:template>
 
@@ -1250,6 +1281,13 @@
                         </value>
                     </modifier>
                 </xsl:if>
+                <xsl:if test="normalize-space(cda:originalText)">
+                    <modifier code="departmentOriginalText">
+                        <value xsi:type="string">
+                            <xsl:value-of select="normalize-space(cda:originalText)" />
+                        </value>
+                    </modifier>
+                </xsl:if>
             </xsl:for-each>
             <xsl:call-template name="GetEffectiveTimes" />
         </fact>
@@ -1287,14 +1325,15 @@
                         <xsl:value-of select="func:ConvertDateTime(../cda:effectiveTime/@value)" />
                     </xsl:attribute>
                 </xsl:if>
-                <xsl:if test="../@classCode">
+                <xsl:variable name="basismodul" select="@root = (for $n in 4050 to 4064 return concat('1.2.276.0.76.10.', $n))" />
+                <xsl:if test="../@classCode and not($basismodul)">
                     <modifier code="classCode">
                         <value xsi:type="string">
                             <xsl:value-of select="../@classCode" />
                         </value>
                     </modifier>
                 </xsl:if>
-                <xsl:if test="../@moodCode">
+                <xsl:if test="../@moodCode and not($basismodul)">
                     <modifier code="moodCode">
                         <value xsi:type="string">
                             <xsl:value-of select="../@moodCode" />
@@ -1512,19 +1551,37 @@
                     </value>
                 </modifier>
             </xsl:if>
+            <xsl:call-template name="WildcardCodeOriginalText" />
 
             <!-- Effective times -->
             <xsl:call-template name="GetEffectiveTimes" />
 
             <!-- External definition -->
-            <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
-                <modifier code="AKTIN:EXTDEF">
-                    <value xsi:type="string">
-                        <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value" />
-                    </value>
-                </modifier>
-            </xsl:if>
+            <xsl:call-template name="WildcardDefinitionReferences" />
         </fact>
+    </xsl:template>
+
+    <xsl:template name="WildcardCodeOriginalText">
+        <xsl:variable name="originalText" select="../cda:code/cda:originalText" />
+        <xsl:variable name="text" select="if (normalize-space($originalText)) then normalize-space($originalText)
+                                          else func:ResolveNarrative($originalText/cda:reference/@value)" />
+        <xsl:if test="$text != ''">
+            <modifier code="originalText">
+                <value xsi:type="string">
+                    <xsl:value-of select="$text" />
+                </value>
+            </modifier>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="WildcardDefinitionReferences">
+        <xsl:for-each select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
+            <modifier code="AKTIN:EXTDEF{if (position() gt 1) then concat(':', position()) else ''}">
+                <value xsi:type="string">
+                    <xsl:value-of select="." />
+                </value>
+            </modifier>
+        </xsl:for-each>
     </xsl:template>
 
     <!-- Numeric modifier of a wildcard value component (IVL_PQ bound, RTO numerator/denominator) -->
@@ -1597,18 +1654,13 @@
                     </value>
                 </modifier>
             </xsl:if>
+            <xsl:call-template name="WildcardCodeOriginalText" />
 
             <!-- Effective times using template -->
             <xsl:call-template name="GetEffectiveTimes" />
 
             <!-- External definition-->
-            <xsl:if test="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value">
-                <modifier code="AKTIN:EXTDEF">
-                    <value xsi:type="string">
-                        <xsl:value-of select="../cda:reference/cda:externalDocument/cda:text/cda:reference/@value" />
-                    </value>
-                </modifier>
-            </xsl:if>
+            <xsl:call-template name="WildcardDefinitionReferences" />
         </fact>
     </xsl:template>
 
@@ -1768,7 +1820,7 @@
 
             <!-- Parent Medication Statement IDs - link subordinate administrations together.
                  Numbered (parentMedicationStatementId:1, ...), since modifier codes must be unique within a fact -->
-            <xsl:for-each select="$statement/cda:id">
+            <xsl:for-each select="$statement/cda:id[normalize-space(@root)]">
                 <modifier code="parentMedicationStatementId:{position()}">
                     <value xsi:type="string">
                         <xsl:value-of select="@root"/>
@@ -1897,6 +1949,10 @@
                 <modifier code="{$name}{$suffix}">
                     <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:center/(@value, @nullFlavor)[1]"/></value>
                 </modifier>
+                <xsl:call-template name="medication-pq-modifier">
+                    <xsl:with-param name="pq" select="$effectiveTime/cda:width"/>
+                    <xsl:with-param name="code" select="concat($name, 'Width', $suffix)"/>
+                </xsl:call-template>
                 <xsl:call-template name="medication-effective-time-operator">
                     <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
                     <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
@@ -1910,6 +1966,21 @@
                         <xsl:value-of select="concat($effectiveTime/cda:low/(@value, @nullFlavor)[1], '-', $effectiveTime/cda:high/(@value, @nullFlavor)[1])"/>
                     </value>
                 </modifier>
+                <xsl:call-template name="medication-pq-modifier">
+                    <xsl:with-param name="pq" select="$effectiveTime/cda:width"/>
+                    <xsl:with-param name="code" select="concat($name, 'Width', $suffix)"/>
+                </xsl:call-template>
+                <xsl:call-template name="medication-effective-time-operator">
+                    <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
+                    <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
+                </xsl:call-template>
+            </xsl:when>
+
+            <xsl:when test="$effectiveTime/cda:width">
+                <xsl:call-template name="medication-pq-modifier">
+                    <xsl:with-param name="pq" select="$effectiveTime/cda:width"/>
+                    <xsl:with-param name="code" select="concat($name, 'Width', $suffix)"/>
+                </xsl:call-template>
                 <xsl:call-template name="medication-effective-time-operator">
                     <xsl:with-param name="effectiveTime" select="$effectiveTime"/>
                     <xsl:with-param name="code" select="concat($name, 'Operator', $suffix)"/>
@@ -1918,9 +1989,9 @@
 
             <!-- EIVL_TS (Event-related Interval) -->
             <xsl:when test="$effectiveTime/cda:event or $effectiveTime/cda:offset">
-                <xsl:if test="$effectiveTime/cda:event/@code">
+                <xsl:if test="$effectiveTime/cda:event/(@code | @nullFlavor)">
                     <modifier code="{$name}EventCode{$suffix}">
-                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:event/@code"/></value>
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:event/(@code, @nullFlavor)[1]"/></value>
                     </modifier>
                 </xsl:if>
                 <xsl:if test="$effectiveTime/cda:event/@displayName">
@@ -1942,6 +2013,16 @@
 
             <!-- PIVL_TS (Periodic Interval) -->
             <xsl:when test="$effectiveTime/cda:phase or $effectiveTime/cda:period or $effectiveTime/@institutionSpecified or $effectiveTime/@alignment">
+                <xsl:if test="$effectiveTime/cda:phase/(@value | @nullFlavor)">
+                    <modifier code="{$name}Phase{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/(@value, @nullFlavor)[1]"/></value>
+                    </modifier>
+                </xsl:if>
+                <xsl:if test="$effectiveTime/cda:phase/cda:center/(@value | @nullFlavor)">
+                    <modifier code="{$name}PhaseCenter{$suffix}">
+                        <value xsi:type="string"><xsl:value-of select="$effectiveTime/cda:phase/cda:center/(@value, @nullFlavor)[1]"/></value>
+                    </modifier>
+                </xsl:if>
                 <!-- Phase low (start time of interval) -->
                 <xsl:if test="$effectiveTime/cda:phase/cda:low/(@value | @nullFlavor)">
                     <modifier code="{$name}PhaseLow{$suffix}">
@@ -2142,7 +2223,7 @@
 
         <!-- Medication Statement IDs - numbered (parentMedicationStatementId:1, ...),
              since modifier codes must be unique within a fact -->
-        <xsl:for-each select="$outer/cda:id">
+        <xsl:for-each select="$outer/cda:id[normalize-space(@root)]">
             <modifier code="parentMedicationStatementId:{position()}">
                 <value xsi:type="string">
                     <xsl:value-of select="@root"/>
@@ -2505,6 +2586,14 @@
         </xsl:choose>
         <xsl:call-template name="GetNumericValues" />
         <xsl:call-template name="GetEffectiveTimes" />
+        <xsl:if test="not(../cda:effectiveTime)">
+            <xsl:variable name="root" select="@root" />
+            <xsl:variable name="time" select="string(ancestor::cda:organizer[1]/cda:effectiveTime/@value)" />
+            <xsl:call-template name="VitalOccurrenceModifier">
+                <xsl:with-param name="earlier" select="count(preceding::cda:templateId[@root = $root][not(../cda:effectiveTime)]
+                                                       [string(ancestor::cda:organizer[1]/cda:effectiveTime/@value) = $time])" />
+            </xsl:call-template>
+        </xsl:if>
     </xsl:template>
 
     <!-- Vital parameter variant of templateGetConceptValue.
@@ -2563,6 +2652,28 @@
             </modifier>
         </xsl:if>
         <xsl:call-template name="GetEffectiveTimes" />
+    </xsl:template>
+
+    <xsl:template name="GcsComponentOccurrence">
+        <xsl:if test="not(../cda:effectiveTime)">
+            <xsl:variable name="code" select="@code" />
+            <xsl:variable name="time" select="string((../../../cda:effectiveTime/@value, ancestor::cda:organizer/cda:effectiveTime/@value)[1])" />
+            <xsl:call-template name="VitalOccurrenceModifier">
+                <xsl:with-param name="earlier" select="count(preceding::cda:code[@code = $code][not(../cda:effectiveTime)]
+                                                       [string((../../../cda:effectiveTime/@value, ancestor::cda:organizer/cda:effectiveTime/@value)[1]) = $time])" />
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="VitalOccurrenceModifier">
+        <xsl:param name="earlier" />
+        <xsl:if test="$earlier gt 0">
+            <modifier code="occurrence">
+                <value xsi:type="numeric">
+                    <xsl:value-of select="$earlier + 1" />
+                </value>
+            </modifier>
+        </xsl:if>
     </xsl:template>
 
 
@@ -2803,23 +2914,29 @@
     </xsl:function>
 
     <!-- Start time of a subordinate substance administration from its effectiveTime (TS, PIVL_TS, EIVL_TS or SXPR_TS):
-         TS @value, PIVL_TS phase/low, or the first SXPR_TS component (not excluded via operator 'E') that provides
-         a TS value, IVL_TS low or center or PIVL_TS phase/low. EIVL_TS has no absolute time and yields no start. -->
+         TS @value, PIVL_TS phase (low, value or center), or the first SXPR_TS component (not excluded via operator 'E')
+         that provides a TS value, IVL_TS low or center or PIVL_TS phase. EIVL_TS has no absolute time and yields no start. -->
     <xsl:function name="func:MedicationStartTime" as="attribute()?">
         <xsl:param name="effectiveTime"/>
         <xsl:sequence select="($effectiveTime/@value,
                                $effectiveTime/cda:phase/cda:low/@value,
-                               $effectiveTime/cda:comp[not(@operator = 'E')]/(@value | cda:low/@value | cda:center/@value | cda:phase/cda:low/@value))[1]"/>
+                               $effectiveTime/cda:phase/@value,
+                               $effectiveTime/cda:phase/cda:center/@value,
+                               $effectiveTime/cda:comp[not(@operator = 'E')]/(@value | cda:low/@value | cda:center/@value
+                                   | cda:phase/cda:low/@value | cda:phase/@value | cda:phase/cda:center/@value))[1]"/>
     </xsl:function>
 
     <!-- Origin of a start time returned by func:MedicationStartTime: effectiveTime, effectiveTimePhaseLow,
-         effectiveTimeComp:{n} (SXPR_TS component) or none (no absolute time; histream then uses the encounter start) -->
+         effectiveTimePhase, effectiveTimePhaseCenter, effectiveTimeComp:{n} (SXPR_TS component) or none
+         (no absolute time; histream then uses the encounter start) -->
     <xsl:function name="func:MedicationStartSource" as="xs:string">
         <xsl:param name="start" as="attribute()?"/>
         <xsl:sequence select="if (empty($start)) then 'none'
                               else if ($start/ancestor::cda:comp)
                               then concat('effectiveTimeComp:', count($start/ancestor::cda:comp[last()]/preceding-sibling::cda:comp) + 1)
                               else if ($start/parent::cda:low/parent::cda:phase) then 'effectiveTimePhaseLow'
+                              else if ($start/parent::cda:center/parent::cda:phase) then 'effectiveTimePhaseCenter'
+                              else if ($start/parent::cda:phase) then 'effectiveTimePhase'
                               else 'effectiveTime'"/>
     </xsl:function>
 
