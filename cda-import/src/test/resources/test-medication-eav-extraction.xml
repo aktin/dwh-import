@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Test file for the medication EAV extraction (Medication Statement 1.2.276.0.76.3.1.195.10.67 with
+    UV Subordinate Substance Administration 2.16.840.1.113883.10.21.4.6).
+    Each entry is labelled with the case it covers.
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <realmCode code="DE"/>
+    <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+    <templateId root="1.2.276.0.76.3.1.195.10.93"/>
+    <id root="1.2.3.456" extension="test-medication-eav-extraction"/>
+    <code code="68552-9" codeSystem="2.16.840.1.113883.6.1"/>
+    <effectiveTime value="20240117120000"/>
+    <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+    <languageCode code="de-DE"/>
+    <recordTarget>
+        <patientRole>
+            <id root="1.2.276.0.76.4.8" extension="TEST-MED-EAV-001"/>
+            <patient>
+                <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+                <birthTime value="19800515"/>
+            </patient>
+        </patientRole>
+    </recordTarget>
+    <author>
+        <time value="20240117120000"/>
+        <assignedAuthor>
+            <id root="1.2.3.456" extension="author-001"/>
+        </assignedAuthor>
+    </author>
+    <custodian>
+        <assignedCustodian>
+            <representedCustodianOrganization>
+                <id root="1.2.3.456" extension="org-001"/>
+            </representedCustodianOrganization>
+        </assignedCustodian>
+    </custodian>
+    <componentOf>
+        <encompassingEncounter>
+            <id root="1.2.3.456" extension="encounter-med-eav-test"/>
+            <effectiveTime>
+                <low value="20240117100000"/>
+                <high value="20240117180000"/>
+            </effectiveTime>
+            <dischargeDispositionCode code="4"/>
+        </encompassingEncounter>
+    </componentOf>
+    <component>
+        <structuredBody>
+            <component>
+                <section>
+                    <templateId root="1.2.276.0.76.3.1.195.10.64"/>
+                    <code code="29549-3" codeSystem="2.16.840.1.113883.6.1"/>
+                    <title>Medikation - Test EAV Extraction</title>
+                    <text>
+                        <list>
+                            <item ID="med-mixed-a">Paracetamol <content>1 g</content> i.v.</item>
+                            <item ID="med-mixed-b">Ibuprofen <content>400 mg</content> p.o.</item>
+                            <item ID="med-ranges">Fentanyl 50-100 ug, Laufrate ab 1 ml/h</item>
+                            <item ID="med-sxpr-start">Enoxaparin 40 mg s.c. täglich zur Nacht</item>
+                            <item ID="med-eivl-pivl">Omeprazol 20 mg vor dem Frühstück, zusätzlich wöchentlich</item>
+                            <item ID="med-nullflavor-a">Unbekanntes Schmerzmittel, Applikationsort unbekannt</item>
+                            <item ID="med-nullflavor-b">Hausmedikation: <content ID="med-nullflavor-b-name">Blutdrucktablette</content></item>
+                            <item ID="med-code-systems">Metamizol (PZN), Aspirin (SNOMED CT), hausinterner Code</item>
+                            <item ID="med-timing-details">Insulin 8 IE 15-30 min vor dem Frühstück, zusätzlich zur Nacht als Infusion über 30 min</item>
+                        </list>
+                    </text>
+                    <!-- Case mixed-a: narrative with mixed content, statement with subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-mixed-a"/>
+                            <id root="1.2.3.789" extension="med-mixed-a-alt"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-mixed-a"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="N02BE01" codeSystem="2.16.840.1.113883.6.73" codeSystemVersion="2024" displayName="paracetamol"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117110000"/>
+                                    <doseQuantity value="1" unit="g"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case mixed-b: narrative with mixed content, statement without subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-mixed-b"/>
+                            <id root="1.2.3.789" extension="med-mixed-b-alt"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-mixed-b"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <maxDoseQuantity nullFlavor="UNK"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="M01AE01" codeSystem="2.16.840.1.113883.6.73" displayName="ibuprofen">
+                                            <translation code="1234567" codeSystem="1.2.276.0.76.4.6" displayName="Ibuprofen 400 mg Filmtabletten"/>
+                                        </code>
+                                        <lotNumberText>LOT-IBU-42</lotNumberText>
+                                    </manufacturedMaterial>
+                                    <manufacturerOrganization>
+                                        <name>Beispiel Pharma AG</name>
+                                    </manufacturerOrganization>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case ranges: dose and rate given as IVL_PQ range -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-ranges"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-ranges"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <maxDoseQuantity>
+                                <numerator value="200" unit="ug"/>
+                                <denominator value="1" unit="d"/>
+                            </maxDoseQuantity>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="N02AB03" codeSystem="2.16.840.1.113883.6.73" displayName="fentanyl"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117113000"/>
+                                    <doseQuantity>
+                                        <low value="50" unit="ug"/>
+                                        <high value="100" unit="ug"/>
+                                    </doseQuantity>
+                                    <rateQuantity>
+                                        <low value="1" unit="ml/h"/>
+                                        <high nullFlavor="UNK"/>
+                                    </rateQuantity>
+                                    <maxDoseQuantity>
+                                        <numerator value="100" unit="ug"/>
+                                        <denominator value="4" unit="h"/>
+                                    </maxDoseQuantity>
+                                    <administrationUnitCode code="INJSOL" codeSystem="2.16.840.1.113883.5.85" displayName="Injection Solution"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case sxpr-start: SXPR_TS whose first component is a PIVL_TS with phase/low -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-sxpr-start"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-sxpr-start"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="B01AB05" codeSystem="2.16.840.1.113883.6.73" displayName="enoxaparin"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="SXPR_TS">
+                                        <comp xsi:type="PIVL_TS" institutionSpecified="true">
+                                            <phase>
+                                                <low value="20240117200000"/>
+                                            </phase>
+                                            <period value="24" unit="h"/>
+                                        </comp>
+                                        <comp xsi:type="EIVL_TS" operator="I">
+                                            <event code="HS" displayName="Before sleep"/>
+                                            <offset value="30" unit="min"/>
+                                        </comp>
+                                    </effectiveTime>
+                                    <doseQuantity value="40" unit="mg"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case eivl-pivl-attributes: EIVL_TS with operator, PIVL_TS with alignment -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="INT">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-eivl-pivl"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-eivl-pivl"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="A02BC01" codeSystem="2.16.840.1.113883.6.73" displayName="omeprazole"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="1"/>
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="EIVL_TS" operator="A">
+                                        <event code="ACM" displayName="Before breakfast"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="20" unit="mg"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP">
+                                <sequenceNumber value="2"/>
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="PIVL_TS" alignment="DW" operator="A">
+                                        <period value="1" unit="wk"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="20" unit="mg"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case nullflavor-a: medication code and approachSiteCode with nullFlavor, statement with subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-nullflavor-a"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-nullflavor-a"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <approachSiteCode nullFlavor="UNK"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code nullFlavor="UNK">
+                                            <originalText>Unbekanntes Schmerzmittel</originalText>
+                                        </code>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117103000"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case nullflavor-b: medication code with nullFlavor and originalText reference, statement without subordinate -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-nullflavor-b"/>
+                            <code nullFlavor="UNK"/>
+                            <text>
+                                <reference value="#med-nullflavor-b"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code nullFlavor="NI">
+                                            <originalText>
+                                                <reference value="#med-nullflavor-b-name"/>
+                                            </originalText>
+                                        </code>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case code-systems: PZN with ATC translation (no subordinate), SNOMED CT (with subordinate), unknown code system -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-pzn"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-code-systems"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="01016788" codeSystem="1.2.276.0.76.4.6" displayName="Metamizol 500 mg Tabletten">
+                                            <translation code="N02BB02" codeSystem="2.16.840.1.113883.6.73" codeSystemVersion="2024" displayName="metamizole sodium"/>
+                                        </code>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-snomed"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-code-systems"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="387458008" codeSystem="2.16.840.1.113883.6.96" displayName="Aspirin (substance)"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="EVN">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="completed"/>
+                                    <effectiveTime value="20240117120000"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-ucs"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-code-systems"/>
+                            </text>
+                            <statusCode code="completed"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="X-4711" codeSystem="1.2.3.4.5.6" displayName="Hausinterner Code"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                        </substanceAdministration>
+                    </entry>
+                    <!-- Case timing-details: statement without id; EIVL_TS offset as interval, PIVL_TS phase width and period nullFlavor -->
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="INT">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-timing-details"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="A10AB01" codeSystem="2.16.840.1.113883.6.73" displayName="insulin (human)"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="EIVL_TS">
+                                        <event code="ACM" displayName="Before breakfast"/>
+                                        <offset>
+                                            <low value="15" unit="min"/>
+                                            <high value="30" unit="min"/>
+                                        </offset>
+                                    </effectiveTime>
+                                    <doseQuantity value="8" unit="[IU]"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                            <entryRelationship typeCode="COMP">
+                                <substanceAdministration classCode="SBADM" moodCode="INT">
+                                    <templateId root="2.16.840.1.113883.10.21.4.6"/>
+                                    <statusCode code="active"/>
+                                    <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
+                                        <phase>
+                                            <low value="20240117220000"/>
+                                            <width value="30" unit="min"/>
+                                        </phase>
+                                        <period nullFlavor="UNK"/>
+                                    </effectiveTime>
+                                    <doseQuantity value="8" unit="[IU]"/>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
+                                        </manufacturedProduct>
+                                    </consumable>
+                                </substanceAdministration>
+                            </entryRelationship>
+                        </substanceAdministration>
+                    </entry>
+                </section>
+            </component>
+        </structuredBody>
+    </component>
+</ClinicalDocument>

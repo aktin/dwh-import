@@ -5,7 +5,7 @@
     1. Medication with MULTIPLE subordinate administrations (should create separate facts)
     2. Medication WITHOUT subordinate (edge case - single fact with medication info only)
     3. Multiple approachSiteCode elements (should be numbered: approachSiteCode:1, approachSiteCode:2)
-    4. Medication defined in subordinate substance administration not the outer medication statement
+    4. Compound medication, expressed as one medication statement per substance
 -->
 <ClinicalDocument xmlns="urn:hl7-org:v3">
     <realmCode code="DE"/>
@@ -93,7 +93,6 @@
                                 <sequenceNumber value="1"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-para-001"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="20240117080000"/>
                                     <doseQuantity value="500" unit="mg"/>
@@ -109,7 +108,6 @@
                                 <sequenceNumber value="2"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-para-002"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="20240117120000"/>
                                     <doseQuantity value="1000" unit="mg"/>
@@ -125,7 +123,6 @@
                                 <sequenceNumber value="3"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-para-003"/>
                                     <statusCode code="active"/>
                                     <effectiveTime value="20240117200000"/>
                                     <doseQuantity value="500" unit="mg"/>
@@ -193,7 +190,6 @@
                             <entryRelationship typeCode="COMP">
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-lido-001"/>
                                     <statusCode code="completed"/>
                                     <effectiveTime value="20240117143000"/>
                                     <doseQuantity value="20" unit="ml"/>
@@ -207,70 +203,101 @@
                         </substanceAdministration>
                     </entry>
 
-                    <!-- Test Case 4: Compound Medication - multiple substances in subordinates -->
+                    <!-- Test Case 4: Compound Medication - one Medication Statement per substance, since the
+                         manufacturedMaterial of the subordinate substance administration is fixed to nullFlavor NA -->
                     <entry typeCode="COMP">
                         <substanceAdministration classCode="SBADM" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.67"/>
-                            <id root="1.2.3.456" extension="med-compound-001"/>
+                            <id root="1.2.3.456" extension="med-compound-morph"/>
                             <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
                             <text>
                                 <reference value="#med-compound"/>
                             </text>
                             <statusCode code="active"/>
                             <routeCode code="IVC" codeSystem="2.16.840.1.113883.5.112" displayName="Infusion, intravenous catheter"/>
-                            <!-- Subordinate 1: Morphine -->
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="N02AA01" codeSystem="2.16.840.1.113883.6.73" displayName="Morphine"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="1"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-morph-001"/>
                                     <statusCode code="active"/>
                                     <effectiveTime value="20240117150000"/>
                                     <doseQuantity value="10" unit="mg"/>
-                                    <consumable typeCode="CSM">
-                                        <manufacturedProduct classCode="MANU">
-                                            <templateId root="2.16.840.1.113883.10.21.4.10"/>
-                                            <manufacturedMaterial classCode="MMAT">
-                                                <code code="N02AA01" codeSystem="2.16.840.1.113883.6.73" displayName="Morphine"/>
-                                            </manufacturedMaterial>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
                                         </manufacturedProduct>
                                     </consumable>
                                 </substanceAdministration>
                             </entryRelationship>
-                            <!-- Subordinate 2: Atropine -->
+                        </substanceAdministration>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-compound-atrop"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-compound"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <routeCode code="IVC" codeSystem="2.16.840.1.113883.5.112" displayName="Infusion, intravenous catheter"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="A03BA01" codeSystem="2.16.840.1.113883.6.73" displayName="Atropine"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="2"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-atrop-001"/>
                                     <statusCode code="active"/>
                                     <effectiveTime value="20240117150000"/>
                                     <doseQuantity value="0.5" unit="mg"/>
-                                    <consumable typeCode="CSM">
-                                        <manufacturedProduct classCode="MANU">
-                                            <templateId root="2.16.840.1.113883.10.21.4.10"/>
-                                            <manufacturedMaterial classCode="MMAT">
-                                                <code code="A03BA01" codeSystem="2.16.840.1.113883.6.73" displayName="Atropine"/>
-                                            </manufacturedMaterial>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
                                         </manufacturedProduct>
                                     </consumable>
                                 </substanceAdministration>
                             </entryRelationship>
-                            <!-- Subordinate 3: Dextrose -->
+                        </substanceAdministration>
+                    </entry>
+                    <entry typeCode="COMP">
+                        <substanceAdministration classCode="SBADM" moodCode="EVN">
+                            <templateId root="1.2.276.0.76.3.1.195.10.67"/>
+                            <id root="1.2.3.456" extension="med-compound-dext"/>
+                            <code code="DRUG" codeSystem="2.16.840.1.113883.5.4"/>
+                            <text>
+                                <reference value="#med-compound"/>
+                            </text>
+                            <statusCode code="active"/>
+                            <routeCode code="IVC" codeSystem="2.16.840.1.113883.5.112" displayName="Infusion, intravenous catheter"/>
+                            <consumable typeCode="CSM">
+                                <manufacturedProduct classCode="MANU">
+                                    <templateId root="2.16.840.1.113883.10.21.4.10"/>
+                                    <manufacturedMaterial classCode="MMAT">
+                                        <code code="V06DC01" codeSystem="2.16.840.1.113883.6.73" displayName="Dextrose"/>
+                                    </manufacturedMaterial>
+                                </manufacturedProduct>
+                            </consumable>
                             <entryRelationship typeCode="COMP">
-                                <sequenceNumber value="3"/>
                                 <substanceAdministration classCode="SBADM" moodCode="EVN">
                                     <templateId root="2.16.840.1.113883.10.21.4.6"/>
-                                    <id root="1.2.3.456" extension="sub-dext-001"/>
                                     <statusCode code="active"/>
                                     <effectiveTime value="20240117150000"/>
                                     <doseQuantity value="5" unit="ml"/>
-                                    <consumable typeCode="CSM">
-                                        <manufacturedProduct classCode="MANU">
-                                            <templateId root="2.16.840.1.113883.10.21.4.10"/>
-                                            <manufacturedMaterial classCode="MMAT">
-                                                <code code="V06DC01" codeSystem="2.16.840.1.113883.6.73" displayName="Dextrose"/>
-                                            </manufacturedMaterial>
+                                    <consumable>
+                                        <manufacturedProduct>
+                                            <manufacturedMaterial nullFlavor="NA"/>
                                         </manufacturedProduct>
                                     </consumable>
                                 </substanceAdministration>

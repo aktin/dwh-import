@@ -135,6 +135,7 @@
                         <observation classCode="OBS" moodCode="EVN">
                             <templateId root="1.2.276.0.76.3.1.195.10.89"/>
                             <id root="1.2.3.456" extension="wdiag-cd"/>
+                            <id root="1.2.3.789" extension="wdiag-cd-alt"/>
                             <code code="DIAG-CD-006" codeSystem="1.2.276.0.76.5.999" displayName="Consciousness Level"/>
                             <statusCode code="completed"/>
                             <effectiveTime value="20240117130000"/>
